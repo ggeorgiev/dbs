@@ -1,3 +1,9 @@
 [submodule "gtest"]
 	path = 3rdparty/gtest
 	url = https://github.com/google/googletest.git
+[submodule "llvm"]
+	path = 3rdparty/llvm
+	url = https://github.com/llvm-mirror/llvm.git
+[submodule "clang"]
+	path = 3rdparty/clang
+	url = https://github.com/llvm-mirror/clang.git
