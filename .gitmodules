@@ -1,12 +1,20 @@
-[submodule "gtest"]
-	path = 3rdparty/gtest
-	url = https://github.com/google/googletest.git
+[submodule "cmake"]
+   path = 3rdparty/cmake
+   url = git://cmake.org/cmake.git
+
 [submodule "llvm"]
 	path = 3rdparty/llvm
 	url = https://github.com/llvm-mirror/llvm.git
 [submodule "clang"]
 	path = 3rdparty/clang
 	url = https://github.com/llvm-mirror/clang.git
-[submodule "cmake"]
-	path = 3rdparty/cmake
-	url = git://cmake.org/cmake.git
+[submodule "libcxx"]
+	path = 3rdparty/libcxx
+	url = https://github.com/llvm-mirror/libcxx.git
+[submodule "libcxxabi"]
+	path = 3rdparty/libcxxabi
+	url = https://github.com/llvm-mirror/libcxxabi.git
+
+[submodule "gtest"]
+   path = 3rdparty/gtest
+   url = https://github.com/google/googletest.git
