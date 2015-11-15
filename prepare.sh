@@ -2,6 +2,8 @@
 
 BASEDIR=$(pwd)/$(dirname $0)
 
+cd $BASEDIR
+
 # Download all submodules
 git submodule init || exit 1
 git submodule update || exit 1
@@ -102,3 +104,5 @@ then
    rm -rf 3rdparty/gtest/build || exit 1
 fi
 
+echo Update git hooks
+cp git-hooks/* .git/hooks/

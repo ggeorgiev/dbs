@@ -1,0 +1,10 @@
+#!/bin/sh
+
+BASEDIR=$(pwd)/$(dirname $0)/../..
+cd $BASEDIR
+
+PATH=$BASEDIR/clang/bin:$PATH
+
+git-clang-format --diff
+
+git-clang-format
