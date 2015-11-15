@@ -1,3 +1,7 @@
+#!/bin/sh
+
+BASEDIR=$(pwd)/$(dirname $0)
+
 # Download all submodules
 git submodule init || exit 1
 git submodule update || exit 1
@@ -7,7 +11,7 @@ if [ ! -e cmake ]
 then
    pushd 3rdparty/cmake || exit 1
 
-   ./bootstrap --prefix=../../cmake
+   ./bootstrap --prefix=$BASEDIR/cmake
    make
    make install
    git clean -fdx
@@ -15,11 +19,12 @@ then
    popd
 fi
 
+CMAKE=$BASEDIR/cmake/bin/cmake
+
 
 if [ ! -e clang ]
 then
    pushd 3rdparty || exit 1
-
 
    echo Build clang ...
 
@@ -43,11 +48,11 @@ then
    cd clang-build || exit 1
 
    echo Prepare make files ...
-   ../../cmake/bin/cmake \
+   $CMAKE \
       -G "Unix Makefiles" \
       -DCMAKE_INSTALL_PREFIX:PATH=../../clang \
       -DCMAKE_BUILD_TYPE=Release \
-      ../llvm
+      ../llvm || exit 1
 
    echo Make ...
    make -j 8 || exit 1
@@ -62,5 +67,38 @@ then
    rm -rf llvm/projects/libcxxabi
 
    popd
+fi
+
+CLANG=$BASEDIR/clang/bin/clang++
+
+if [ ! -e gtest ]
+then
+   pushd 3rdparty/gtest || exit 1
+
+   echo Build gtest ...
+
+   rm -rf build || exit 1
+   mkdir build || exit 1
+   cd build || exit 1
+
+   $CMAKE \
+      -G "Unix Makefiles" \
+      -DCMAKE_CXX_COMPILER=$CLANG \
+      -DBUILD_SHARED_LIBS=OFF \
+      -Wno-dev \
+      -Dgtest_build_samples=ON \
+      .. || exit 1
+
+   make || exit 1
+
+   popd
+
+   mkdir -p gtest/include || exit 1
+   cp -r 3rdparty/gtest/include/gtest gtest/include | exit 1
+
+   mkdir -p gtest/lib || exit 1
+   cp 3rdparty/gtest/build/lib*.a gtest/lib || exit 1
+
+   rm -rf 3rdparty/gtest/build || exit 1
 fi
 
