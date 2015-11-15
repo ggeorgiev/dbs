@@ -1,1 +1,3 @@
-cmake
+cmake/
+clang/
+3rdparty/build_llvm/
