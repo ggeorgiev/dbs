@@ -7,3 +7,6 @@
 [submodule "clang"]
 	path = 3rdparty/clang
 	url = https://github.com/llvm-mirror/clang.git
+[submodule "cmake"]
+	path = 3rdparty/cmake
+	url = git://cmake.org/cmake.git
