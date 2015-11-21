@@ -71,7 +71,8 @@ then
     popd
 fi
 
-CLANG=$BASEDIR/clang/bin/clang++
+CLANGBIN=$BASEDIR/clang/bin
+CLANG=$CLANGBIN/clang++
 
 if [ ! -e gtest ]
 then
@@ -106,21 +107,31 @@ fi
 
 if [ ! -e boost ]
 then
-   pushd 3rdparty/boost || exit 1
+    pushd 3rdparty/boost || exit 1
 
-    git submodule update --init tools/build  || exit 1
-    git submodule update --init tools/inspect  || exit 1
-    git submodule update --init libs/config  || exit 1
+    git submodule update --init tools/build     || exit 1
+    git submodule update --init tools/inspect   || exit 1
+    git submodule update --init libs/assert     || exit 1
+    git submodule update --init libs/config     || exit 1
+    git submodule update --init libs/core       || exit 1
+    git submodule update --init libs/predef     || exit 1
+    git submodule update --init libs/system     || exit 1
+    git submodule update --init libs/utility    || exit 1
 
     echo Build boost ...
 
-    ./bootstrap.sh || exit 1
+    ./bootstrap.sh --prefix=../../boost --includedir=../../boost/include || exit 1
 
-    PATH=../../clang/bin:$PATH ./b2 toolset=clang --stagedir=stage || exit 1
+    PATH=$CLANGBIN:$PATH \
+        ./b2 \
+        toolset=clang \
+        cxxflags="-std=c++11 -stdlib=libc++ -isystem/Developer/SDKs/MacOSX10.7.sdk/usr/include" \
+        linkflags="-stdlib=libc++" \
+        install threading=multi link=static
 
     git clean -fdx
 
-    cd libs/config > /dev/null
+    cd libs/config
     git clean -fdx
 
     popd
