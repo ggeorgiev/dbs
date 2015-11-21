@@ -105,6 +105,8 @@ then
     rm -rf 3rdparty/gtest/build || exit 1
 fi
 
+
+
 if [ ! -e boost ]
 then
     pushd 3rdparty/boost || exit 1
@@ -118,16 +120,26 @@ then
     git submodule update --init libs/system     || exit 1
     git submodule update --init libs/utility    || exit 1
 
+    git submodule foreach -q 'git checkout boost-1.59.0'
+
     echo Build boost ...
 
-    ./bootstrap.sh --prefix=../../boost --includedir=../../boost/include || exit 1
+    ./bootstrap.sh || exit 1
 
-    PATH=$CLANGBIN:$PATH \
-        ./b2 \
-        toolset=clang \
-        cxxflags="-std=c++11 -stdlib=libc++ -isystem/Developer/SDKs/MacOSX10.7.sdk/usr/include" \
-        linkflags="-stdlib=libc++" \
-        install threading=multi link=static
+    build_boost() {
+        BOOSTBUILD=PATH=$CLANGBIN:$PATH \
+            ./b2 \
+            toolset=clang \
+            cxxflags="-std=c++11 -stdlib=libc++ -isystem/Developer/SDKs/MacOSX10.7.sdk/usr/include" \
+            linkflags="-stdlib=libc++" \
+            --layout=tagged \
+            --build-type=complete \
+            --prefix=../../boost \
+            threading=multi link=static $1
+    }
+
+    build_boost headers || exit 1
+    build_boost install || exit 1
 
     git clean -fdx
 
