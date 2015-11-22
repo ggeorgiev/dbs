@@ -2,3 +2,4 @@ boost/
 clang/
 cmake/
 gtest/
+build/

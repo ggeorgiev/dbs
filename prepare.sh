@@ -132,7 +132,7 @@ then
             toolset=clang \
             cxxflags="-std=c++11 -stdlib=libc++ -isystem/Developer/SDKs/MacOSX10.7.sdk/usr/include" \
             linkflags="-stdlib=libc++" \
-            --layout=tagged \
+            --layout=system \
             --build-type=complete \
             --prefix=../../boost \
             threading=multi link=static $1
