@@ -16,8 +16,8 @@ enum ECode
 
 struct Location
 {
-     Location(const char* file, size_t line, const char* function)
-         : mFile(file), mLine(line), mFunction(function)
+    Location(const char* file, size_t line, const char* function)
+        : mFile(file), mLine(line), mFunction(function)
     {
     }
 
@@ -29,11 +29,9 @@ struct Location
 class Error
 {
 public:
-     Error(ECode code, Location location) : mCode(code) { mCallstack.push_back(location); }
-
+    Error(ECode code, Location location) : mCode(code) { mCallstack.push_back(location); }
     std::string message() { return mMessage.str(); }
     std::stringstream& message_stream() { return mMessage; }
-
     std::string callstack()
     {
         std::stringstream stream;
@@ -53,33 +51,36 @@ private:
 
 typedef Error* ErrorRPtr;
 
-thread_local ErrorRPtr gError;
+extern thread_local ErrorRPtr gError;
 
 #define EH_STRINGIZE(arg) EH_STRINGIZE1(arg)
 #define EH_STRINGIZE1(arg) EH_STRINGIZE2(arg)
 #define EH_STRINGIZE2(arg) #arg
 
-// Make a FOREACH macro
-#define EHFE_1(WHAT, X) WHAT(X) << "\n"
+#define EHFE_1(WHAT, X) WHAT(X)
 #define EHFE_2(WHAT, X, ...) WHAT(X) EHFE_1(WHAT##_, __VA_ARGS__)
 #define EHFE_3(WHAT, X, ...) WHAT(X) EHFE_2(WHAT##_, __VA_ARGS__)
 #define EHFE_4(WHAT, X, ...) WHAT(X) EHFE_3(WHAT##_, __VA_ARGS__)
 #define EHFE_5(WHAT, X, ...) WHAT(X) EHFE_4(WHAT##_, __VA_ARGS__)
-//... repeat as needed
 
 #define EH_GET_MACRO(_1, _2, _3, _4, _5, NAME, ...) NAME
 #define EH_FOR_EACH(action, ...) \
     EH_GET_MACRO(__VA_ARGS__, EHFE_5, EHFE_4, EHFE_3, EHFE_2, EHFE_1, )(action, __VA_ARGS__)
 
-// Example
-// Some actions
 #define EH_HELPER_SERIALIZE(X) EH_STRINGIZE(X) "(" << (X) << ")"
 #define EH_HELPER_SERIALIZE_(X) ": " EH_STRINGIZE(X) " = " << (X)
 #define EH_HELPER_SERIALIZE__(X) << ", " EH_STRINGIZE(X) " = " << (X)
 #define EH_HELPER_SERIALIZE___(X) EH_HELPER_SERIALIZE__(X)
 #define EH_HELPER_SERIALIZE____(X) EH_HELPER_SERIALIZE__(X)
-
 #define EH_SERIALIZE(...) EH_FOR_EACH(EH_HELPER_SERIALIZE, __VA_ARGS__)
+
+#define EH_STR(X) boost::lexical_cast<std::string>(X)
+#define EH_HELPER_CONCATENATE(X) EH_STRINGIZE(X) "(" + EH_STR(X) + ")"
+#define EH_HELPER_CONCATENATE_(X) ": " EH_STRINGIZE(X) " = " + EH_STR(X)
+#define EH_HELPER_CONCATENATE__(X) +", " EH_STRINGIZE(X) " = " + EH_STR(X)
+#define EH_HELPER_CONCATENATE___(X) EH_HELPER_CONCATENATE__(X)
+#define EH_HELPER_CONCATENATE____(X) EH_HELPER_CONCATENATE__(X)
+#define EH_CONCATENATE(...) EH_FOR_EACH(EH_HELPER_CONCATENATE, __VA_ARGS__)
 
 #define EH_CODE(code, ...) code
 
@@ -88,7 +89,7 @@ thread_local ErrorRPtr gError;
 #define EHRET(...)                                                     \
     ECode __EHRET__code = EH_CODE(__VA_ARGS__);                        \
     (gError = new Error(__EHRET__code, EH_LOCATION))->message_stream() \
-        << EH_SERIALIZE(__VA_ARGS__);                                  \
+        << EH_SERIALIZE(__VA_ARGS__) << "\n";                          \
     return __EHRET__code
 
 #define EH_RESET   \

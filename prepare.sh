@@ -111,14 +111,28 @@ if [ ! -e boost ]
 then
     pushd 3rdparty/boost || exit 1
 
-    git submodule update --init tools/build     || exit 1
-    git submodule update --init tools/inspect   || exit 1
-    git submodule update --init libs/assert     || exit 1
-    git submodule update --init libs/config     || exit 1
-    git submodule update --init libs/core       || exit 1
-    git submodule update --init libs/predef     || exit 1
-    git submodule update --init libs/system     || exit 1
-    git submodule update --init libs/utility    || exit 1
+    git submodule update --init tools/build          || exit 1
+    git submodule update --init tools/inspect        || exit 1
+    git submodule update --init libs/array           || exit 1
+    git submodule update --init libs/assert          || exit 1
+    git submodule update --init libs/chrono          || exit 1
+    git submodule update --init libs/concept_check   || exit 1
+    git submodule update --init libs/config          || exit 1
+    git submodule update --init libs/container       || exit 1
+    git submodule update --init libs/core            || exit 1
+    git submodule update --init libs/integer         || exit 1
+    git submodule update --init libs/lexical_cast    || exit 1
+    git submodule update --init libs/math            || exit 1
+    git submodule update --init libs/mpl             || exit 1
+    git submodule update --init libs/numeric         || exit 1
+    git submodule update --init libs/predef          || exit 1
+    git submodule update --init libs/preprocessor    || exit 1
+    git submodule update --init libs/range           || exit 1
+    git submodule update --init libs/ratio           || exit 1
+    git submodule update --init libs/throw_exception || exit 1
+    git submodule update --init libs/type_traits     || exit 1
+    git submodule update --init libs/system          || exit 1
+    git submodule update --init libs/utility         || exit 1
 
     git submodule foreach -q 'git checkout boost-1.59.0'
 
@@ -133,8 +147,8 @@ then
             cxxflags="-std=c++11 -stdlib=libc++ -isystem/Developer/SDKs/MacOSX10.7.sdk/usr/include" \
             linkflags="-stdlib=libc++" \
             --layout=system \
-            --build-type=complete \
             --prefix=../../boost \
+            --with-system --with-chrono \
             threading=multi link=static $1
     }
 
