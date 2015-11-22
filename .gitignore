@@ -1,5 +1,5 @@
-boost/
-clang/
-cmake/
-gtest/
-build/
+/boost/
+/clang/
+/cmake/
+/gtest/
+/build/

@@ -11,3 +11,13 @@ CXXFLAGS="$CXXFLAGS -Isrc/err/include"
 
 mkdir -p build
 PATH=$CLANGBIN:$PATH $CLANG $CXXFLAGS src/main.cpp -o build/main
+
+
+CXXFLAGS="$CXXFLAGS -Igtest/include"
+CXXFLAGS="$CXXFLAGS -Lgtest/lib"
+
+FILES="src/gtest/main.cpp src/err/gtest/err.cpp"
+
+PATH=$CLANGBIN:$PATH $CLANG $CXXFLAGS $FILES -o build/gtest-main -lgtest
+
+build/gtest-main

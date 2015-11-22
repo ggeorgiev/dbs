@@ -5,36 +5,50 @@
  */
 
 #include <sstream>
+#include <vector>
 
 enum ECode
 {
     kSuccess = 0,
 
-    kError = 1,
+    kExpected = 1,
+};
+
+struct Location
+{
+     Location(const char* file, size_t line, const char* function)
+         : mFile(file), mLine(line), mFunction(function)
+    {
+    }
+
+    const char* mFile;
+    size_t mLine;
+    const char* mFunction;
 };
 
 class Error
 {
 public:
-    Error(ECode code)
-        : mCode(code)
-    {
-    }
+     Error(ECode code, Location location) : mCode(code) { mCallstack.push_back(location); }
 
-    std::stringstream& message()
-    {
-        return mMessage;
-    }
+    std::string message() { return mMessage.str(); }
+    std::stringstream& message_stream() { return mMessage; }
 
-    std::stringstream& callstack()
+    std::string callstack()
     {
-        return mCallstack;
+        std::stringstream stream;
+        for (auto location : mCallstack)
+        {
+            stream << location.mFile << ":" << location.mLine << ": @ " << location.mFunction
+                   << "\n";
+        }
+        return stream.str();
     }
 
 private:
     ECode mCode;
     std::stringstream mMessage;
-    std::stringstream mCallstack;
+    std::vector<Location> mCallstack;
 };
 
 typedef Error* ErrorRPtr;
@@ -69,9 +83,14 @@ thread_local ErrorRPtr gError;
 
 #define EH_CODE(code, ...) code
 
-#define EHRET(...)                                  \
-    ECode __EHRET__code = EH_CODE(__VA_ARGS__);     \
-    gError = new Error(__EHRET__code);              \
-    gError->message() << EH_SERIALIZE(__VA_ARGS__); \
-    std::cout << gError->message().str();           \
+#define EH_LOCATION Location(__FILE__, __LINE__, __FUNCTION__)
+
+#define EHRET(...)                                                     \
+    ECode __EHRET__code = EH_CODE(__VA_ARGS__);                        \
+    (gError = new Error(__EHRET__code, EH_LOCATION))->message_stream() \
+        << EH_SERIALIZE(__VA_ARGS__);                                  \
     return __EHRET__code
+
+#define EH_RESET   \
+    delete gError; \
+    gError = NULL;
