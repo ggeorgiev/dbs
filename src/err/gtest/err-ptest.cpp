@@ -1,4 +1,7 @@
 #include "err/err.h"
+#include "err/err_concatenate.h"
+#include "err/err_serialize.h"
+#include "err/err_cppformat.h"
 #include "gtest/err.h"
 
 #include "gtest/gtest.h"
@@ -31,6 +34,14 @@ private:
     std::string mString;
 };
 
+struct SerialiazeFormat : public SerialiazeBase
+{
+    void operator()() { mString += EH_CPPFORMAT(kExpected, mA, mB, mC, mD); }
+private:
+    std::string mString;
+};
+
+
 struct SerialiazePrintf : public SerialiazeBase
 {
     void operator()()
@@ -57,7 +68,7 @@ public:
     typedef T Functor;
 };
 
-typedef ::testing::Types<SerialiazeStringStream, SerialiazeConcatenate, SerialiazePrintf>
+typedef ::testing::Types<SerialiazeStringStream, SerialiazeConcatenate, SerialiazeFormat, SerialiazePrintf>
     SerialiazePerformanceTypes;
 
 TYPED_TEST_CASE(SerialiazePerformanceTests, SerialiazePerformanceTypes);

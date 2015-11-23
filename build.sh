@@ -22,11 +22,15 @@ CXXFLAGS="$CXXFLAGS -Lgtest/lib"
 CXXFLAGS="$CXXFLAGS -Iboost/include"
 CXXFLAGS="$CXXFLAGS -Lboost/lib"
 
+CXXFLAGS="$CXXFLAGS -Icppformat/include"
+CXXFLAGS="$CXXFLAGS -Lcppformat/lib"
+
+
 FILES="$FILES src/gtest/time_monitor.cpp src/gtest/performance_arbiter.cpp"
 FILES="$FILES src/err/gtest/err-utest.cpp"
 FILES="$FILES src/err/gtest/err-ptest.cpp"
 
-LIBRARIES="-lgtest -lboost_system -lboost_chrono"
+LIBRARIES="-lgtest -lboost_system -lboost_chrono -lcppformat"
 
 DEFINES=""
 
