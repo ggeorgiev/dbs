@@ -23,6 +23,27 @@ fi
 CMAKE=$BASEDIR/cmake/bin/cmake
 
 
+if [ ! -e cppformat ]
+then
+    pushd 3rdparty/cppformat || exit 1
+
+    echo Build cppformat ...
+
+    mkdir build
+    cd build
+
+    $CMAKE -DCMAKE_INSTALL_PREFIX:PATH=../../../cppformat .. || exit 1
+    make || exit 1
+    make test || exit 1
+    make install || exit 1
+
+    cd ..
+
+    git clean -fdx
+
+    popd
+fi
+
 if [ ! -e clang ]
 then
     pushd 3rdparty || exit 1

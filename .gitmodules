@@ -22,3 +22,7 @@
 [submodule "3rdparty/boost"]
 	path = 3rdparty/boost
 	url = https://github.com/boostorg/boost.git
+
+[submodule "cppformat"]
+	path = 3rdparty/cppformat
+	url = https://github.com/cppformat/cppformat
