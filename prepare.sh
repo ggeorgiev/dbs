@@ -120,7 +120,10 @@ then
     git submodule update --init libs/config          || exit 1
     git submodule update --init libs/container       || exit 1
     git submodule update --init libs/core            || exit 1
+    git submodule update --init libs/detail          || exit 1
+    git submodule update --init libs/functional      || exit 1
     git submodule update --init libs/integer         || exit 1
+    git submodule update --init libs/iterator        || exit 1
     git submodule update --init libs/lexical_cast    || exit 1
     git submodule update --init libs/math            || exit 1
     git submodule update --init libs/mpl             || exit 1
@@ -131,6 +134,7 @@ then
     git submodule update --init libs/ratio           || exit 1
     git submodule update --init libs/throw_exception || exit 1
     git submodule update --init libs/type_traits     || exit 1
+    git submodule update --init libs/static_assert   || exit 1
     git submodule update --init libs/system          || exit 1
     git submodule update --init libs/utility         || exit 1
 
