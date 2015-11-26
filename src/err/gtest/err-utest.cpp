@@ -10,11 +10,11 @@ ECode return0()
 
 TEST(ErrTest, return0)
 {
-    auto err = return0();
-    ASSERT_STREQ("kExpected(1)\n", gError->message().c_str());
-    ASSERT_STREQ("src/err/gtest/err-utest.cpp:8: @ return0\n", gError->callstack().c_str());
+    auto code = return0();
+    ASSERT_STREQ("kExpected(1)\n", err::gError->message().c_str());
+    ASSERT_STREQ("src/err/gtest/err-utest.cpp:8: @ return0\n", err::gError->callstack().c_str());
     EH_RESET;
-    ASSERT_EQ(kExpected, err);
+    ASSERT_EQ(err::kExpected, code);
 }
 
 ECode return1()
@@ -25,11 +25,11 @@ ECode return1()
 
 TEST(ErrTest, return1)
 {
-    auto err = return1();
-    ASSERT_STREQ("kExpected(1): a = 5\n", gError->message().c_str());
-    ASSERT_STREQ("src/err/gtest/err-utest.cpp:23: @ return1\n", gError->callstack().c_str());
+    auto code = return1();
+    ASSERT_STREQ("kExpected(1): a = 5\n", err::gError->message().c_str());
+    ASSERT_STREQ("src/err/gtest/err-utest.cpp:23: @ return1\n", err::gError->callstack().c_str());
     EH_RESET;
-    ASSERT_EQ(kExpected, err);
+    ASSERT_EQ(err::kExpected, code);
 }
 
 ECode return2()
@@ -40,11 +40,11 @@ ECode return2()
 
 TEST(ErrTest, return2)
 {
-    auto err = return2();
-    ASSERT_STREQ("kExpected(1): a = 5, a = 5\n", gError->message().c_str());
-    ASSERT_STREQ("src/err/gtest/err-utest.cpp:38: @ return2\n", gError->callstack().c_str());
+    auto code = return2();
+    ASSERT_STREQ("kExpected(1): a = 5, a = 5\n", err::gError->message().c_str());
+    ASSERT_STREQ("src/err/gtest/err-utest.cpp:38: @ return2\n", err::gError->callstack().c_str());
     EH_RESET;
-    ASSERT_EQ(kExpected, err);
+    ASSERT_EQ(err::kExpected, code);
 }
 
 ECode return3()
@@ -55,11 +55,11 @@ ECode return3()
 
 TEST(ErrTest, return3)
 {
-    auto err = return3();
-    ASSERT_STREQ("kExpected(1): a = 5, a = 5, a = 5\n", gError->message().c_str());
-    ASSERT_STREQ("src/err/gtest/err-utest.cpp:53: @ return3\n", gError->callstack().c_str());
+    auto code = return3();
+    ASSERT_STREQ("kExpected(1): a = 5, a = 5, a = 5\n", err::gError->message().c_str());
+    ASSERT_STREQ("src/err/gtest/err-utest.cpp:53: @ return3\n", err::gError->callstack().c_str());
     EH_RESET;
-    ASSERT_EQ(kExpected, err);
+    ASSERT_EQ(err::kExpected, code);
 }
 
 ECode return4()
@@ -70,9 +70,9 @@ ECode return4()
 
 TEST(ErrTest, return4)
 {
-    auto err = return4();
-    ASSERT_STREQ("kExpected(1): a = 5, a = 5, a = 5, a = 5\n", gError->message().c_str());
-    ASSERT_STREQ("src/err/gtest/err-utest.cpp:68: @ return4\n", gError->callstack().c_str());
+    auto code = return4();
+    ASSERT_STREQ("kExpected(1): a = 5, a = 5, a = 5, a = 5\n", err::gError->message().c_str());
+    ASSERT_STREQ("src/err/gtest/err-utest.cpp:68: @ return4\n", err::gError->callstack().c_str());
     EH_RESET;
-    ASSERT_EQ(kExpected, err);
+    ASSERT_EQ(err::kExpected, code);
 }

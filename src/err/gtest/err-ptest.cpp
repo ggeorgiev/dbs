@@ -4,7 +4,7 @@
 #include "err/err_cppformat.h"
 #include "gtest/err.h"
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 #include <boost/lexical_cast.hpp>
 
@@ -41,7 +41,6 @@ private:
     std::string mString;
 };
 
-
 struct SerialiazePrintf : public SerialiazeBase
 {
     void operator()()
@@ -49,7 +48,7 @@ struct SerialiazePrintf : public SerialiazeBase
         char buffer[1024];
         sprintf(buffer,
                 "kExpected(%d): mA = %d, mB = %s, mC = %d, mD = %s\n",
-                kExpected,
+                err::kExpected,
                 mA,
                 mB.c_str(),
                 mC,
@@ -62,18 +61,20 @@ private:
 };
 
 template <typename T>
-class SerialiazePerformanceTests : public ::testing::Test
+class SerialiazePerformanceTest : public ::testing::Test
 {
 public:
     typedef T Functor;
 };
 
-typedef ::testing::Types<SerialiazeStringStream, SerialiazeConcatenate, SerialiazeFormat, SerialiazePrintf>
-    SerialiazePerformanceTypes;
+typedef ::testing::Types<SerialiazeStringStream,
+                         SerialiazeConcatenate,
+                         SerialiazeFormat,
+                         SerialiazePrintf> SerialiazePerformanceType;
 
-TYPED_TEST_CASE(SerialiazePerformanceTests, SerialiazePerformanceTypes);
+TYPED_TEST_CASE(SerialiazePerformanceTest, SerialiazePerformanceType);
 
-TYPED_TEST(SerialiazePerformanceTests, PERFORMANCE_CPU)
+TYPED_TEST(SerialiazePerformanceTest, PERFORMANCE_CPU)
 {
     for (size_t i = 0; i < 2000; ++i)
     {

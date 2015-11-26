@@ -9,6 +9,8 @@
 #include <sstream>
 #include <vector>
 
+namespace err
+{
 enum ECode
 {
     kSuccess = 0,
@@ -54,17 +56,20 @@ private:
 typedef Error* ErrorRPtr;
 
 extern thread_local ErrorRPtr gError;
+}
 
-#define EH_CODE(code, ...) code
+typedef err::ECode ECode;
 
-#define EH_LOCATION Location(__FILE__, __LINE__, __FUNCTION__)
+#define EH_CODE(code, ...) err::code
 
-#define EHRET(...)                                                     \
-    ECode __EHRET__code = EH_CODE(__VA_ARGS__);                        \
-    (gError = new Error(__EHRET__code, EH_LOCATION))->message_stream() \
-        << EH_CPPFORMAT(__VA_ARGS__);                          \
+#define EH_LOCATION err::Location(__FILE__, __LINE__, __FUNCTION__)
+
+#define EHRET(...)                                                               \
+    ECode __EHRET__code = EH_CODE(__VA_ARGS__);                                  \
+    (err::gError = new err::Error(__EHRET__code, EH_LOCATION))->message_stream() \
+        << EH_CPPFORMAT(__VA_ARGS__);                                            \
     return __EHRET__code
 
-#define EH_RESET   \
-    delete gError; \
-    gError = NULL;
+#define EH_RESET        \
+    delete err::gError; \
+    err::gError = NULL;

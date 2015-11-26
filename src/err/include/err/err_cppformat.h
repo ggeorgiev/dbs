@@ -10,5 +10,6 @@
 #define EH_HELPER_CPPFORMAT___(X) EH_HELPER_CPPFORMAT__(X)
 #define EH_HELPER_CPPFORMAT____(X) EH_HELPER_CPPFORMAT__(X)
 
-#define EH_CPPFORMAT(...) \
-    fmt::format(EH_FOR_EACH(EH_HELPER_CPPFORMAT, __VA_ARGS__) "\n", __VA_ARGS__)
+#define EH_CPPFORMAT(code, ...) \
+    fmt::format(                \
+        EH_FOR_EACH(EH_HELPER_CPPFORMAT, code, ##__VA_ARGS__) "\n", err::code, ##__VA_ARGS__)
