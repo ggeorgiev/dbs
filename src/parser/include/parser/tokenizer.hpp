@@ -10,6 +10,9 @@
 #include <memory>
 #include <iostream>
 
+namespace parser
+{
+
 template <typename S>
 class Tokenizer
 {
@@ -69,3 +72,4 @@ private:
 
     StreamSPtr mStream;
 };
+}

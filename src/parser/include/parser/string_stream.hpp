@@ -7,6 +7,9 @@
 
 #include <string>
 
+namespace parser
+{
+
 extern const char* kEmptyStringLiteral;
 
 template <typename C1, typename C2 = C1, typename E = fixed_encoding_traits<C1, C2>>
@@ -27,7 +30,6 @@ public:
     }
 
     bool has() { return *mPosition != 0; }
-
     Code get()
     {
         ASSERT(has());
@@ -52,3 +54,4 @@ private:
     const Char* mPosition;
     string mString;
 };
+}

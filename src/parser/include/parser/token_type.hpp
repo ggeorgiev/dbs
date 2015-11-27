@@ -5,6 +5,9 @@
 
 #include <string>
 
+namespace parser
+{
+
 enum class TokenType
 {
     kNil = 0,
@@ -40,4 +43,5 @@ inline TokenType& operator|=(TokenType& t1, TokenType t2)
 {
     t1 = t1 | t2;
     return t1;
+}
 }

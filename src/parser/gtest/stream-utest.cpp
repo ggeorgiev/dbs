@@ -12,7 +12,7 @@ public:
     typedef T Functor;
 };
 
-typedef ::testing::Types<StringStream<char>> StreamType;
+typedef ::testing::Types<parser::StringStream<char>> StreamType;
 
 TYPED_TEST_CASE(StreamTest, StreamType);
 

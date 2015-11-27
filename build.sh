@@ -9,8 +9,9 @@ CLANG=clang++
 CXXFLAGS="-std=c++11 -stdlib=libc++"
 CXXFLAGS="$CXXFLAGS -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk"
 
-CXXFLAGS="$CXXFLAGS -Isrc/gom/include"
+CXXFLAGS="$CXXFLAGS -Isrc/im/include"
 CXXFLAGS="$CXXFLAGS -Isrc/err/include"
+CXXFLAGS="$CXXFLAGS -Isrc/dom/include"
 CXXFLAGS="$CXXFLAGS -Isrc/parser/include"
 
 FILES="src/err/err.cpp"
@@ -31,10 +32,12 @@ CXXFLAGS="$CXXFLAGS -Lcppformat/lib"
 
 FILES="$FILES src/gtest/time_monitor.cpp src/gtest/performance_arbiter.cpp"
 
-FILES="$FILES src/gom/gtest/global_object_manager-utest.cpp"
+FILES="$FILES src/im/gtest/initialization_manager-utest.cpp"
 
 FILES="$FILES src/err/gtest/err-utest.cpp"
 FILES="$FILES src/err/gtest/err-ptest.cpp"
+
+FILES="$FILES src/dom/gtest/cpp_program-utest.cpp"
 
 FILES="$FILES src/parser/gtest/parser-utest.cpp"
 FILES="$FILES src/parser/gtest/stream-utest.cpp"

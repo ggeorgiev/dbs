@@ -1,3 +1,5 @@
+#include "im/initialization_manager.hpp"
+
 #include "time_monitor.h"
 #include "performance_arbiter.h"
 
@@ -5,6 +7,8 @@
 
 int main(int argc, char* argv[])
 {
+    im::InitializationManager im;
+
     testing::TimeMonitor* timeMonitor = new testing::TimeMonitor();
     testing::PerformanceArbiter* performanceArbiter = new testing::PerformanceArbiter();
 

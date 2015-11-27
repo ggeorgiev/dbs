@@ -6,13 +6,13 @@
 #include <map>
 #include <vector>
 
-namespace gom
+namespace im
 {
-class GlobalObjectManager
+class InitializationManager
 {
 public:
-    typedef bool (*InitializeFunction)();
-    typedef void (*UninitializeFunction)();
+    typedef std::function<bool()> InitializeFunction;
+    typedef std::function<void()> UninitializeFunction;
 
     struct InitializeRecord
     {
@@ -22,17 +22,29 @@ public:
 
     typedef std::multimap<int, InitializeRecord> Initializers;
 
-    GlobalObjectManager() { initialize_objects(); }
-    ~GlobalObjectManager() { uninitialize_objects(); }
+    InitializationManager() { initialize_objects(); }
+    ~InitializationManager() { uninitialize_objects(); }
     static inline int rank_base() { return 1; }
     static inline int rank_step() { return 2; }
     template <typename T>
-    static T subscribe(int rank,
+    static inline T subscribe(int rank,
                        InitializeFunction fnInitializer,
                        UninitializeFunction fnUninitializer)
     {
         add(rank, fnInitializer, fnUninitializer);
         return T();
+    }
+
+    template <typename T>
+    static inline std::shared_ptr<T> subscribe(std::shared_ptr<T>& shared)
+    {
+        add(T::initialization_rank(),
+            [&shared]() -> bool {
+                shared = std::make_shared<T>();
+                return true;
+            },
+            [&shared]() -> void { shared.reset(); });
+        return nullptr;
     }
 
 private:
@@ -90,11 +102,11 @@ private:
 };
 
 template <>
-bool GlobalObjectManager::subscribe(int rank,
-                                    InitializeFunction fnInitializer,
-                                    UninitializeFunction fnUninitializer)
+inline bool InitializationManager::subscribe(int rank,
+                                      InitializeFunction fnInitializer,
+                                      UninitializeFunction fnUninitializer)
 {
-    GlobalObjectManager::add(rank, fnInitializer, fnUninitializer);
+    add(rank, fnInitializer, fnUninitializer);
     return true;
 }
 }

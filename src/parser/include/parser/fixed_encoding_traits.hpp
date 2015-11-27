@@ -5,6 +5,9 @@
 
 #include <cstddef>
 
+namespace parser
+{
+
 template <typename C1, typename C2 = C1>
 class fixed_encoding_traits
 {
@@ -15,3 +18,4 @@ public:
     static size_t sequence_length(const Char* position) { return 1U; }
     static Code to_code(const Char* position) { return *position; }
 };
+}

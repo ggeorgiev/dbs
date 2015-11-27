@@ -1,10 +1,10 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "gom/global_object_manager.hpp"
+#include "dom/cpp/cpp_program.hpp"
 
 #include <gtest/gtest.h>
 
-TEST(GlobalObjectManagerTest, foo)
+TEST(CppProgramTest, foo)
 {
 }

@@ -21,7 +21,7 @@ public:
     typedef typename Tokenizer::TokenSPtr TokenSPtr;
 };
 
-typedef ::testing::Types<Tokenizer<StringStream<char>>> TokenizerType;
+typedef ::testing::Types<parser::Tokenizer<parser::StringStream<char>>> TokenizerType;
 
 TYPED_TEST_CASE(TokenizerTest, TokenizerType);
 
@@ -42,7 +42,7 @@ TYPED_TEST(TokenizerTest, empty)
     auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
     tokenizer->initialize(stream);
 
-    ASSERT_EQ(TokenType::kNil, tokenizer->next());
+    ASSERT_EQ(parser::TokenType::kNil, tokenizer->next());
 }
 
 TYPED_TEST(TokenizerTest, path)
@@ -71,7 +71,7 @@ TYPED_TEST(TokenizerTest, path)
 
         auto type = tokenizer->next();
 
-        ASSERT_EQ(TokenType::kPath, type & TokenType::kPath);
+        ASSERT_EQ(parser::TokenType::kPath, type & parser::TokenType::kPath);
 
         ASSERT_EQ(14, tokenizer->length()) << path;
     }
@@ -82,26 +82,28 @@ TYPED_TEST(TokenizerTest, sequence)
     struct Sequence
     {
         std::string str;
-        std::array<TokenType, 10> types;
+        std::array<parser::TokenType, 10> types;
     };
 
     std::array<Sequence, 3> sequences{
         Sequence{.str = "file.cpp",
                  .types =
                      {
-                         TokenType::kPath, TokenType::kNil,
+                         parser::TokenType::kPath, parser::TokenType::kNil,
                      }},
         Sequence{.str = "directory/file.py",
                  .types =
                      {
-                         TokenType::kPath, TokenType::kNil,
+                         parser::TokenType::kPath, parser::TokenType::kNil,
                      }},
-        Sequence{
-            .str = "directory/file.py directory/file.py",
-            .types =
-                {
-                    TokenType::kPath, TokenType::kWhiteSpace, TokenType::kPath, TokenType::kNil,
-                }},
+        Sequence{.str = "directory/file.py directory/file.py",
+                 .types =
+                     {
+                         parser::TokenType::kPath,
+                         parser::TokenType::kWhiteSpace,
+                         parser::TokenType::kPath,
+                         parser::TokenType::kNil,
+                     }},
     };
 
     for (auto sequence : sequences)
@@ -116,7 +118,7 @@ TYPED_TEST(TokenizerTest, sequence)
         {
             ASSERT_EQ(type, tokenizer->next()) << "in \"" << sequence.str << "\"";
 
-            if (type == TokenType::kNil)
+            if (type == parser::TokenType::kNil)
                 break;
         }
     }
