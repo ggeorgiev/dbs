@@ -5,6 +5,4 @@
 
 #include "dom/fs/fs_manager.h"
 
-#include "im/initialization_manager.h"
-
 FsManagerSPtr gFsManager = InitializationManager::subscribe(gFsManager);

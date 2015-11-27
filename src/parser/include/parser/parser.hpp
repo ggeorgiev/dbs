@@ -3,10 +3,8 @@
 
 namespace parser
 {
-
 template <typename T>
 class Parser
 {
 };
-
 }

@@ -28,8 +28,8 @@ public:
     static inline int rank_step() { return 2; }
     template <typename T>
     static inline T subscribe(int rank,
-                       InitializeFunction fnInitializer,
-                       UninitializeFunction fnUninitializer)
+                              InitializeFunction fnInitializer,
+                              UninitializeFunction fnUninitializer)
     {
         add(rank, fnInitializer, fnUninitializer);
         return T();
@@ -43,7 +43,7 @@ public:
                 shared = std::make_shared<T>();
                 return true;
             },
-            [&shared]() -> void { shared.reset(); });
+            [&shared]() { shared.reset(); });
         return nullptr;
     }
 
@@ -103,8 +103,8 @@ private:
 
 template <>
 inline bool InitializationManager::subscribe(int rank,
-                                      InitializeFunction fnInitializer,
-                                      UninitializeFunction fnUninitializer)
+                                             InitializeFunction fnInitializer,
+                                             UninitializeFunction fnUninitializer)
 {
     add(rank, fnInitializer, fnUninitializer);
     return true;

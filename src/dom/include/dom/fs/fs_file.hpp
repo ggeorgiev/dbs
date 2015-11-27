@@ -13,7 +13,6 @@ namespace dom
 class FsFile
 {
 public:
-
 private:
     FsDirectory mDirectory;
     std::string mName;

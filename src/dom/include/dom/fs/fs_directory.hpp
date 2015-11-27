@@ -10,7 +10,6 @@ namespace dom
 class FsDirectory
 {
 public:
-
 private:
     FdDirectorySPtr mParent;
 };

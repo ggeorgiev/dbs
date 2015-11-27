@@ -22,28 +22,6 @@ fi
 
 CMAKE=$BASEDIR/cmake/bin/cmake
 
-
-if [ ! -e cppformat ]
-then
-    pushd 3rdparty/cppformat || exit 1
-
-    echo Build cppformat ...
-
-    mkdir build
-    cd build
-
-    $CMAKE -DCMAKE_INSTALL_PREFIX:PATH=../../../cppformat .. || exit 1
-    make || exit 1
-    make test || exit 1
-    make install || exit 1
-
-    cd ..
-
-    git clean -fdx
-
-    popd
-fi
-
 if [ ! -e clang ]
 then
     pushd 3rdparty || exit 1
@@ -51,17 +29,17 @@ then
     echo Build clang ...
 
     echo Copy clang to llvm ...
-    rm -rf llvm/tools/clang || exit 1
+    rm -rf llvm/tools/clang
     mkdir llvm/tools/clang || exit 1
     cp -r clang llvm/tools || exit 1
 
     echo Copy libcxx to llvm ...
-    rm -rf llvm/projects/libcxx || exit 1
+    rm -rf llvm/projects/libcxx
     mkdir llvm/projects/libcxx || exit 1
     cp -r libcxx llvm/projects || exit 1
 
     echo Copy libcxxabi to llvm ...
-    rm -rf llvm/projects/libcxxabi || exit 1
+    rm -rf llvm/projects/libcxxabi
     mkdir llvm/projects/libcxxabi || exit 1
     cp -r libcxxabi llvm/projects || exit 1
 
@@ -77,7 +55,7 @@ then
         ../llvm || exit 1
 
     echo Make ...
-    make -j 8 || exit 1
+    make || exit 1
 
     echo Install ...
     make install || exit 1
@@ -92,8 +70,35 @@ then
     popd
 fi
 
-CLANGBIN=$BASEDIR/clang/bin
+CLANGDIR=$BASEDIR/clang
+CLANGBIN=$CLANGDIR/bin
 CLANG=$CLANGBIN/clang++
+
+if [ ! -e iwyu ]
+then
+    pushd 3rdparty/iwyu || exit 1
+
+    echo Build Include what you use ...
+
+    rm -rf build || exit 1
+    mkdir build || exit 1
+    cd build || exit 1
+
+    $CMAKE \
+        -G "Unix Makefiles" \
+        -DLLVM_PATH=$CLANGDIR \
+        -DCMAKE_INSTALL_PREFIX:PATH=../../../iwyu \
+        .. || exit 1
+
+    make || exit 1
+    make install || exit 1
+
+    cd ..
+
+    git clean -fdx
+
+    popd
+fi
 
 if [ ! -e gtest ]
 then
@@ -115,18 +120,18 @@ then
 
     make || exit 1
 
+    cd ..
+
+    mkdir -p ../../gtest/include || exit 1
+    cp -r include/gtest ../../gtest/include | exit 1
+
+    mkdir -p ../../gtest/lib || exit 1
+    cp build/lib*.a ../../gtest/lib || exit 1
+
+    git clean -fdx
+
     popd
-
-    mkdir -p gtest/include || exit 1
-    cp -r 3rdparty/gtest/include/gtest gtest/include | exit 1
-
-    mkdir -p gtest/lib || exit 1
-    cp 3rdparty/gtest/build/lib*.a gtest/lib || exit 1
-
-    rm -rf 3rdparty/gtest/build || exit 1
 fi
-
-
 
 if [ ! -e boost ]
 then
@@ -186,6 +191,31 @@ then
     git clean -fdx
 
     popd
+fi
+
+if [ ! -e cppformat ]
+then
+    pushd 3rdparty/cppformat || exit 1
+
+    echo Build cppformat ...
+
+    mkdir build
+    cd build
+
+    $CMAKE -DCMAKE_INSTALL_PREFIX:PATH=../../../cppformat .. || exit 1
+    make || exit 1
+    make test || exit 1
+    make install || exit 1
+
+    cd ..
+
+    git clean -fdx
+
+    popd
+
+    mv cppformat/include/ cppformat/cppformat || exit 1
+    mkdir -p cppformat/include || exit 1
+    mv cppformat/cppformat cppformat/include || exit 1
 fi
 
 

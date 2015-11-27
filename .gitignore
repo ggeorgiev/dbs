@@ -3,4 +3,5 @@
 /cmake/
 /cppformat/
 /gtest/
+/iwyu/
 /build/

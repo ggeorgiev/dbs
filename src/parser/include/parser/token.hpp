@@ -9,7 +9,6 @@
 
 namespace parser
 {
-
 template <typename C>
 class Token
 {
@@ -55,5 +54,4 @@ public:
 private:
     Type mTypes;
 };
-
 }

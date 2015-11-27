@@ -7,7 +7,6 @@
 
 namespace parser
 {
-
 enum class TokenType
 {
     kNil = 0,

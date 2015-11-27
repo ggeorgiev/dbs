@@ -15,6 +15,10 @@
 	path = 3rdparty/libcxxabi
 	url = https://github.com/llvm-mirror/libcxxabi.git
 
+[submodule "iwyu"]
+    path = 3rdparty/iwyu
+    url = https://github.com/include-what-you-use/include-what-you-use.git
+
 [submodule "gtest"]
    path = 3rdparty/gtest
    url = https://github.com/google/googletest.git
@@ -26,3 +30,4 @@
 [submodule "cppformat"]
 	path = 3rdparty/cppformat
 	url = https://github.com/cppformat/cppformat
+

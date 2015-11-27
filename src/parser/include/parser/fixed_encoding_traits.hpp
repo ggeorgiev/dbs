@@ -7,7 +7,6 @@
 
 namespace parser
 {
-
 template <typename C1, typename C2 = C1>
 class fixed_encoding_traits
 {

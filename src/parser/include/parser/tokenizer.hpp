@@ -12,7 +12,6 @@
 
 namespace parser
 {
-
 template <typename S>
 class Tokenizer
 {

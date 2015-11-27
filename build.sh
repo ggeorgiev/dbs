@@ -6,6 +6,9 @@ cd $BASEDIR
 CLANGBIN=$BASEDIR/clang/bin
 CLANG=clang++
 
+#CLANGBIN=$BASEDIR/iwyu/bin
+#CLANG=include-what-you-use
+
 CXXFLAGS="-std=c++11 -stdlib=libc++"
 CXXFLAGS="$CXXFLAGS -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk"
 
@@ -44,7 +47,7 @@ FILES="$FILES src/parser/gtest/stream-utest.cpp"
 FILES="$FILES src/parser/gtest/token-utest.cpp"
 FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
 
-LIBRARIES="-lgtest -lboost_system -lboost_chrono -lcppformat"
+LIBRARIES="-lgtest -lboost_system -lboost_chrono -lformat"
 
 #DEFINES="-DNDEBUG"
 DEFINES=""
