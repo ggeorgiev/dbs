@@ -14,6 +14,7 @@ CXXFLAGS="$CXXFLAGS -Isrc/err/include"
 CXXFLAGS="$CXXFLAGS -Isrc/parser/include"
 
 FILES="src/err/err.cpp"
+FILES="$FILES src/parser/string.cpp"
 
 mkdir -p build
 #PATH=$CLANGBIN:$PATH $CLANG $CXXFLAGS src/main.cpp $FILES -o build/main

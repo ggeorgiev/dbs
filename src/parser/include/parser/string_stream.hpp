@@ -7,6 +7,8 @@
 
 #include <string>
 
+extern const char* kEmptyStringLiteral;
+
 template <typename C1, typename C2 = C1, typename E = fixed_encoding_traits<C1, C2>>
 class StringStream
 {
@@ -17,25 +19,33 @@ public:
 
     typedef std::basic_string<Char> string;
 
-    StringStream() : mPosition(0) {}
+    StringStream() : mPosition(kEmptyStringLiteral) {}
     void initialize(const string& str)
     {
         mString = str;
         mPosition = mString.c_str();
     }
 
-    bool has() { return mPosition != nullptr; }
-    Code next()
+    bool has() { return *mPosition != 0; }
+
+    Code get()
     {
         ASSERT(has());
+        return EncodingTraits::to_code(mPosition);
+    }
 
-        int ch = EncodingTraits::to_code(mPosition);
-        if (ch == 0)
-            mPosition = nullptr;
-        else
-            mPosition += EncodingTraits::sequence_length(mPosition);
-
+    Code take()
+    {
+        ASSERT(has());
+        auto ch = EncodingTraits::to_code(mPosition);
+        move();
         return ch;
+    }
+
+    void move()
+    {
+        ASSERT(has());
+        mPosition += EncodingTraits::sequence_length(mPosition);
     }
 
 private:

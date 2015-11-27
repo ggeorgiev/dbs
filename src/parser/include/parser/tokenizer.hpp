@@ -8,6 +8,7 @@
 #include "err/err_assert.h"
 
 #include <memory>
+#include <iostream>
 
 template <typename S>
 class Tokenizer
@@ -33,7 +34,7 @@ public:
         if (!mStream->has())
             return Token::Type::kNil;
 
-        auto ch = mStream->next();
+        auto ch = mStream->take();
         mTokenTypes = Token::types(0, ch);
         mPosition = 1;
 
@@ -44,22 +45,24 @@ public:
     {
         while (mStream->has())
         {
-            auto ch = mStream->next();
+            auto ch = mStream->get();
             auto mask = Token::types(mPosition, ch);
 
             auto types = mTokenTypes & ~mask;
 
             mTokenTypes &= mask;
-            ++mPosition;
 
             if (types != Token::Type::kNil)
                 return types;
+
+            ++mPosition;
+            mStream->move();
         }
 
         return mTokenTypes;
     }
 
-    size_t length() { return mPosition - 1; }
+    size_t length() { return mPosition; }
 private:
     size_t mPosition;
     typename Token::Type mTokenTypes;

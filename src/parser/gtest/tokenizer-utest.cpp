@@ -47,12 +47,19 @@ TYPED_TEST(TokenizerTest, empty)
 
 TYPED_TEST(TokenizerTest, path)
 {
-    std::array<const char*, 6> paths{"this_is_a_path",
-                                     "this_is_a_path ",
-                                     "this_is_a_path\n",
-                                     "this/is/a/path",
-                                     "this+is-a~path",
-                                     "this+is-a~path\\"};
+    std::array<const char*, 11> paths{
+        "this_is_a_path",
+        "this_is_a_path ",
+        "this_is_a_path\n",
+        "this/is/a/path",
+        "this+is-a~path",
+        "this+is-a~path\\",
+        "01234567890123 ",
+        "this.is.a.path ",
+        "this.is.a.path ",
+        "this_is_a_path,",
+        "this_is_a_path;",
+    };
 
     for (auto path : paths)
     {
@@ -66,6 +73,51 @@ TYPED_TEST(TokenizerTest, path)
 
         ASSERT_EQ(TokenType::kPath, type & TokenType::kPath);
 
-        ASSERT_EQ(14, tokenizer->length());
+        ASSERT_EQ(14, tokenizer->length()) << path;
+    }
+}
+
+TYPED_TEST(TokenizerTest, sequence)
+{
+    struct Sequence
+    {
+        std::string str;
+        std::array<TokenType, 10> types;
+    };
+
+    std::array<Sequence, 3> sequences{
+        Sequence{.str = "file.cpp",
+                 .types =
+                     {
+                         TokenType::kPath, TokenType::kNil,
+                     }},
+        Sequence{.str = "directory/file.py",
+                 .types =
+                     {
+                         TokenType::kPath, TokenType::kNil,
+                     }},
+        Sequence{
+            .str = "directory/file.py directory/file.py",
+            .types =
+                {
+                    TokenType::kPath, TokenType::kWhiteSpace, TokenType::kPath, TokenType::kNil,
+                }},
+    };
+
+    for (auto sequence : sequences)
+    {
+        auto stream = std::make_shared<typename TestFixture::Stream>();
+        stream->initialize(sequence.str);
+
+        auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
+        tokenizer->initialize(stream);
+
+        for (auto type : sequence.types)
+        {
+            ASSERT_EQ(type, tokenizer->next()) << "in \"" << sequence.str << "\"";
+
+            if (type == TokenType::kNil)
+                break;
+        }
     }
 }
