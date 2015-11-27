@@ -3,15 +3,42 @@
 
 #pragma once
 
+#include "parser/fixed_encoding_traits.hpp"
+
 #include <string>
 
-template <typename C, typename T = std::char_traits<C>>
+template <typename C1, typename C2 = C1, typename E = fixed_encoding_traits<C1, C2>>
 class StringStream
 {
 public:
-    typedef C Char;
-    typedef T CharTraits;
+    typedef C1 Char;
+    typedef C2 Code;
+    typedef E EncodingTraits;
+
+    typedef std::basic_string<Char> string;
+
+    StringStream() : mPosition(0) {}
+    void initialize(const string& str)
+    {
+        mString = str;
+        mPosition = mString.c_str();
+    }
+
+    bool has() { return mPosition != nullptr; }
+    Code next()
+    {
+        ASSERT(has());
+
+        int ch = EncodingTraits::to_code(mPosition);
+        if (ch == 0)
+            mPosition = nullptr;
+        else
+            mPosition += EncodingTraits::sequence_length(mPosition);
+
+        return ch;
+    }
 
 private:
-    std::basic_string<Char, CharTraits> mString;
+    const Char* mPosition;
+    string mString;
 };

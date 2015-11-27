@@ -3,14 +3,50 @@
 
 #pragma once
 
+#include "parser/token_type.hpp"
+
 #include <string>
 
-template <typename C, typename T = std::char_traits<C>>
+template <typename C>
 class Token
 {
 public:
-    typedef C Char;
-    typedef T CharTraits;
+    typedef C Code;
+    typedef TokenType Type;
+
+    static Type types(int position, Code code)
+    {
+        Type type = Type::kNil;
+
+        switch (code)
+        {
+            case ' ':
+            case '\t':
+            case '\n':
+            case '\v':
+            case '\f':
+            case '\r':
+                type |= Type::kWhiteSpace;
+                break;
+
+            case '\\':
+            case ':':
+            case '*':
+            case '?':
+            case '"':
+            case '<':
+            case '>':
+            case '|':
+                break;
+
+            default:
+                type |= Type::kPath;
+                break;
+        }
+
+        return type;
+    }
 
 private:
+    Type mTypes;
 };
