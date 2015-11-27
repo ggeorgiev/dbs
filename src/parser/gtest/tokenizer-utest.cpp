@@ -1,11 +1,16 @@
-#include "parser/tokenizer.hpp"
+#include "parser/tokenizer.hpp" // IWYU pragma: keep
 #include "parser/string_stream.hpp"
+#include "parser/token_type.hpp"
 
 #include "gtest/err_assert.h"
 
+#include <gtest/gtest-message.h>
+#include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
 
 #include <array>
+#include <memory>
+#include <ostream>
 
 template <typename T>
 class TokenizerTest : public ::testing::Test

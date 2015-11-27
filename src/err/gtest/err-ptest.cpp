@@ -1,14 +1,14 @@
 #include "err/err.h"
 #include "err/err_concatenate.h"
-#include "err/err_serialize.h"
 #include "err/err_cppformat.h"
-#include "gtest/err.h"
+#include "err/err_serialize.h"
 
+#include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
 
-#include <boost/lexical_cast.hpp>
-
 #include <cstdio>
+#include <sstream>
+#include <string>
 
 struct SerialiazeBase
 {

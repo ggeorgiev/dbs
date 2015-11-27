@@ -1,9 +1,13 @@
 #pragma once
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
+
+#include <stddef.h>
+#include <iosfwd>
 
 namespace testing
 {
+class TestPartResult;
 
 class TimeMonitor : public TestEventListener
 {

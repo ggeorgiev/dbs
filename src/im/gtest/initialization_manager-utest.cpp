@@ -5,6 +5,9 @@
 
 #include <gtest/gtest.h>
 
+#include <functional>
+#include <memory>
+
 class GlobalObject
 {
 public:

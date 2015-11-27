@@ -1,6 +1,7 @@
 #include "parser/token.hpp"
+#include "parser/token_type.hpp"
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 TEST(TokenTest, types)
 {

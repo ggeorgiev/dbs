@@ -6,8 +6,7 @@ cd $BASEDIR
 CLANGBIN=$BASEDIR/clang/bin
 CLANG=clang++
 
-#CLANGBIN=$BASEDIR/iwyu/bin
-#CLANG=include-what-you-use
+IWYU=include-what-you-use
 
 CXXFLAGS="-std=c++11 -stdlib=libc++"
 CXXFLAGS="$CXXFLAGS -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk"
@@ -20,18 +19,17 @@ CXXFLAGS="$CXXFLAGS -Isrc/parser/include"
 FILES="src/err/err.cpp"
 FILES="$FILES src/parser/string.cpp"
 
+CXXFLAGS="$CXXFLAGS -isystemgtest/include"
+LIBRARIES="$LIBRARIES -Lgtest/lib"
+
+CXXFLAGS="$CXXFLAGS -isystemboost/include"
+LIBRARIES="$LIBRARIES -Lboost/lib"
+
+CXXFLAGS="$CXXFLAGS -isystemcppformat/include"
+LIBRARIES="$LIBRARIES -Lcppformat/lib"
+
 mkdir -p build
 #PATH=$CLANGBIN:$PATH $CLANG $CXXFLAGS src/main.cpp $FILES -o build/main
-
-
-CXXFLAGS="$CXXFLAGS -Igtest/include"
-CXXFLAGS="$CXXFLAGS -Lgtest/lib"
-
-CXXFLAGS="$CXXFLAGS -Iboost/include"
-CXXFLAGS="$CXXFLAGS -Lboost/lib"
-
-CXXFLAGS="$CXXFLAGS -Icppformat/include"
-CXXFLAGS="$CXXFLAGS -Lcppformat/lib"
 
 FILES="$FILES src/gtest/time_monitor.cpp src/gtest/performance_arbiter.cpp"
 
@@ -47,12 +45,28 @@ FILES="$FILES src/parser/gtest/stream-utest.cpp"
 FILES="$FILES src/parser/gtest/token-utest.cpp"
 FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
 
-LIBRARIES="-lgtest -lboost_system -lboost_chrono -lformat"
+LIBRARIES="$LIBRARIES -lgtest -lboost_system -lboost_chrono -lformat"
 
 #DEFINES="-DNDEBUG"
 DEFINES=""
 
-PATH=$CLANGBIN:$PATH $CLANG -O3 $CXXFLAGS src/gtest/main.cpp $FILES -o build/gtest-main \
-    $DEFINES $LIBRARIES || exit 1
+if [ 1 == 1 ]
+then
+    PATH=$CLANGBIN:$PATH $CLANG -O3 $CXXFLAGS src/gtest/main.cpp $FILES -o build/gtest-main \
+        $DEFINES $LIBRARIES || exit 1
 
-build/gtest-main --gtest_filter=-*.PERFORMANCE_* || exit 1
+    build/gtest-main --gtest_filter=-*.PERFORMANCE_* || exit 1
+
+else
+
+    echo > build/iwyu.log
+    for FILE in src/parser/gtest/tokenizer-utest.cpp #src/gtest/main.cpp $FILES
+    do
+        echo include what you using $FILE ...
+        PATH=$CLANGBIN:$PATH $IWYU -O3 $CXXFLAGS $FILE $DEFINES 2>&1 | tee -a build/iwyu.log
+    done
+
+    #iwyu/bin/fix_includes.py --nosafe_headers < build/iwyu.log
+fi
+
+

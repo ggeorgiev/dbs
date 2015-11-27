@@ -4,10 +4,13 @@
 
 #include <boost/chrono/process_cpu_clocks.hpp>
 
+#include <iosfwd>
+#include <string>
 #include <unordered_map>
 
 namespace testing
 {
+class TestPartResult;
 
 class PerformanceArbiter : public TestEventListener
 {

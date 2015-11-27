@@ -1,7 +1,10 @@
 #include "performance_arbiter.h"
 
+#include "boost/chrono/process_cpu_clocks.hpp"
+
 namespace testing
 {
+class TestPartResult;
 
 PerformanceArbiter::PerformanceArbiter() : mMode(kObserve)
 {

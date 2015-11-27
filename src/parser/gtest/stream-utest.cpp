@@ -3,7 +3,8 @@
 
 #include "parser/string_stream.hpp"
 
-#include "gtest/gtest.h"
+#include <gtest/gtest-typed-test.h>
+#include <gtest/gtest.h>
 
 template <typename T>
 class StreamTest : public ::testing::Test

@@ -98,6 +98,8 @@ then
     git clean -fdx
 
     popd
+
+    cp iwyu/bin/* $CLANGBIN
 fi
 
 if [ ! -e gtest ]

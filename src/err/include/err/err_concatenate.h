@@ -2,6 +2,8 @@
 
 #include "err/err_variadic.h"
 
+#include <boost/lexical_cast.hpp>
+
 #define EH_STR(X) boost::lexical_cast<std::string>(X)
 #define EH_HELPER_CONCATENATE(X) EH_STRINGIZE(X) "(" + EH_STR(X) + ")"
 #define EH_HELPER_CONCATENATE_(X) ": " EH_STRINGIZE(X) " = " + EH_STR(X)

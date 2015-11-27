@@ -6,6 +6,7 @@
 
 #include "err/err_cppformat.h"
 
+#include <stddef.h>
 #include <sstream>
 #include <vector>
 

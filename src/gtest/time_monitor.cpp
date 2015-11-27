@@ -1,9 +1,16 @@
 #include "time_monitor.h"
 
+#include <gtest/gtest-message.h>
+#include <gtest/gtest.h>
+
+#include <string.h>
 #include <limits>
+#include <ostream>
 
 namespace testing
 {
+class TestPartResult;
+
 TimeMonitor::TimeMonitor() : mMode(kObserve)
 {
 }
