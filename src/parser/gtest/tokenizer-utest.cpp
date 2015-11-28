@@ -30,7 +30,7 @@ typedef ::testing::Types<parser::Tokenizer<parser::StringStream<char>>> Tokenize
 
 TYPED_TEST_CASE(TokenizerTest, TokenizerType);
 
-TYPED_TEST(TokenizerTest, initiliaze)
+TYPED_TEST(TokenizerTest, initialize)
 {
     auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
 

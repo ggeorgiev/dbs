@@ -5,11 +5,12 @@
 
 #include "parser/fixed_encoding_traits.hpp"
 
+#include "const/constants.h"
+
 #include <string>
 
 namespace parser
 {
-extern const char* kEmptyStringLiteral;
 
 template <typename C1, typename C2 = C1, typename E = fixed_encoding_traits<C1, C2>>
 class StringStream

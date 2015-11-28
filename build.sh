@@ -11,13 +11,17 @@ IWYU=include-what-you-use
 CXXFLAGS="-std=c++11 -stdlib=libc++"
 CXXFLAGS="$CXXFLAGS -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk"
 
+CXXFLAGS="$CXXFLAGS -Isrc/const/include"
 CXXFLAGS="$CXXFLAGS -Isrc/im/include"
 CXXFLAGS="$CXXFLAGS -Isrc/err/include"
 CXXFLAGS="$CXXFLAGS -Isrc/dom/include"
 CXXFLAGS="$CXXFLAGS -Isrc/parser/include"
 
 FILES="src/err/err.cpp"
-FILES="$FILES src/parser/string.cpp"
+
+FILES="$FILES src/const/constants.cpp"
+
+FILES="$FILES src/dom/fs/fs_manager.cpp"
 
 CXXFLAGS="$CXXFLAGS -isystemgtest/include"
 LIBRARIES="$LIBRARIES -Lgtest/lib"
@@ -39,6 +43,8 @@ FILES="$FILES src/err/gtest/err-utest.cpp"
 FILES="$FILES src/err/gtest/err-ptest.cpp"
 
 FILES="$FILES src/dom/gtest/cpp_program-utest.cpp"
+FILES="$FILES src/dom/gtest/fs_manager-utest.cpp"
+FILES="$FILES src/dom/gtest/fs_directory-utest.cpp"
 
 FILES="$FILES src/parser/gtest/parser-utest.cpp"
 FILES="$FILES src/parser/gtest/stream-utest.cpp"
@@ -48,9 +54,9 @@ FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
 LIBRARIES="$LIBRARIES -lgtest -lboost_system -lboost_chrono -lformat"
 
 #DEFINES="-DNDEBUG"
-DEFINES=""
+DEFINES="-DDEBUG"
 
-if [ 1 == 1 ]
+if [ 1 == 0 ]
 then
     PATH=$CLANGBIN:$PATH $CLANG -O3 $CXXFLAGS src/gtest/main.cpp $FILES -o build/gtest-main \
         $DEFINES $LIBRARIES || exit 1
@@ -60,13 +66,13 @@ then
 else
 
     echo > build/iwyu.log
-    for FILE in src/parser/gtest/tokenizer-utest.cpp #src/gtest/main.cpp $FILES
+    for FILE in src/gtest/main.cpp $FILES
     do
         echo include what you using $FILE ...
         PATH=$CLANGBIN:$PATH $IWYU -O3 $CXXFLAGS $FILE $DEFINES 2>&1 | tee -a build/iwyu.log
     done
 
-    #iwyu/bin/fix_includes.py --nosafe_headers < build/iwyu.log
+    iwyu/bin/fix_includes.py --nosafe_headers < build/iwyu.log
 fi
 
 
