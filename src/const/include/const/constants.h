@@ -9,6 +9,9 @@
 extern std::string kEmptyString;
 extern const char* kEmptyStringLiteral;
 
+extern std::string kCurrentDirectoryString;
+extern std::string kParentDirectoryString;
+
 inline char slash()
 {
     return '/';

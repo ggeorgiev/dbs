@@ -32,24 +32,32 @@ FsDirectorySPtr FsManager::obtainDirectory(const FsDirectorySPtr& base,
     auto pos = begin;
 
     auto parent = base;
-    while (pos != end)
+    while (pos < end)
     {
         auto next = std::find(pos, end, slash());
 
         if (next != pos || parent == nullptr)
         {
-            if (working == nullptr)
-                working = std::make_shared<FsDirectory>();
-            working->set_parent(parent);
-            working->set_name(std::string(pos, next));
+            std::string name(pos, next);
+            if (name == kParentDirectoryString)
+            {
+                if (parent == nullptr)
+                    return parent;
+                parent = parent->parent();
+            }
+            else if (name != kCurrentDirectoryString)
+            {
+                if (working == nullptr)
+                    working = std::make_shared<FsDirectory>();
+                working->set_parent(parent);
+                working->set_name(name);
 
-            parent = *mDirectories.emplace(working).first;
-
+                parent = *mDirectories.emplace(working).first;
+                if (parent == working)
+                    working.reset();
+            }
             if (next == end)
                 return parent;
-
-            if (parent == working)
-                working.reset();
         }
 
         pos = next + 1;

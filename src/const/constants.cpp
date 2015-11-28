@@ -7,3 +7,6 @@
 
 std::string kEmptyString;
 const char* kEmptyStringLiteral = "";
+
+std::string kCurrentDirectoryString = ".";
+std::string kParentDirectoryString = "..";

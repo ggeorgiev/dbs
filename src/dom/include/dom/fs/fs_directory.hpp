@@ -20,17 +20,41 @@ class FsDirectory
 public:
     std::string path(const FsDirectorySPtr& directory)
     {
-        if (this == directory.get())
-            return kEmptyString;
+        size_t dlevel = (directory == nullptr) ? 0 : directory->level();
+        size_t clevel = level();
+
+        FsDirectorySPtr base = directory;
 
         std::string path;
-        calculate(directory, 0, path);
+        while (dlevel > clevel)
+        {
+            path += "../";
+            base = base->parent();
+            --dlevel;
+        }
+
+        if (this == base.get())
+            return path;
+
+        calculate(directory, path.size(), path);
         return path;
     }
     const std::string& name() const { return mName; }
     void set_name(const std::string& name) { mName = name; }
     const FsDirectorySPtr& parent() const { return mParent; }
     void set_parent(const FsDirectorySPtr& parent) { mParent = parent; }
+    size_t level()
+    {
+        size_t level = 1;
+        auto current = parent();
+        while (current != nullptr)
+        {
+            ++level;
+            current = current->parent();
+        }
+        return level;
+    }
+
 private:
     void calculate(const FsDirectorySPtr& directory, size_t length, std::string& path)
     {

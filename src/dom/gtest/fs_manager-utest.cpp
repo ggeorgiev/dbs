@@ -47,9 +47,15 @@ TEST(FsManagerTest, obtainUnique)
     auto foo4 = dom::gFsManager->obtainDirectory(foo1, "");
     ASSERT_EQ(foo1, foo4);
 
+    auto foo5 = dom::gFsManager->obtainDirectory(nullptr, "/foo/../foo");
+    ASSERT_EQ(foo1, foo5);
+
     auto bar1 = dom::gFsManager->obtainDirectory(root1, "bar/");
     auto bar2 = dom::gFsManager->obtainDirectory(foo1, "bar/");
     ASSERT_NE(bar1, bar2);
+
+    auto bar3 = dom::gFsManager->obtainDirectory(foo1, "../foo/bar/");
+    ASSERT_NE(bar1, bar3);
 }
 
 TEST(FsManagerTest, obtain)
@@ -62,20 +68,24 @@ TEST(FsManagerTest, obtain)
         std::string relative;
     };
 
-    std::array<Test, 6> tests{
+    Test tests[]{
         Test{.root = "", .dir = "/", .absolute = "/", .relative = "/"},
         Test{.root = "/", .dir = "", .absolute = "/", .relative = ""},
         Test{.root = "", .dir = "////", .absolute = "/", .relative = "/"},
         Test{.root = "", .dir = "/foo", .absolute = "/foo/", .relative = "/foo/"},
         Test{.root = "", .dir = "/foo/", .absolute = "/foo/", .relative = "/foo/"},
         Test{.root = "", .dir = "///foo///", .absolute = "/foo/", .relative = "/foo/"},
+        Test{.root = "/foo/", .dir = "bar", .absolute = "/foo/bar/", .relative = "bar/"},
+        Test{.root = "/foo/", .dir = "..", .absolute = "/", .relative = "../"},
+        Test{.root = "/foo/bar", .dir = "../", .absolute = "/foo/", .relative = "../"},
+        Test{.root = "/foo/bar", .dir = "../../foo", .absolute = "/foo/", .relative = "../"},
     };
 
     for (auto test : tests)
     {
         dom::FsDirectorySPtr root = dom::gFsManager->obtainDirectory(nullptr, test.root);
-
         dom::FsDirectorySPtr directory = dom::gFsManager->obtainDirectory(root, test.dir);
+        ASSERT_NE(nullptr, directory);
 
         ASSERT_EQ(test.absolute, directory->path(nullptr)) << "root: \"" << test.root
                                                            << "\", dir: \"" << test.dir << "\"";

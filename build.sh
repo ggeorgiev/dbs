@@ -56,7 +56,7 @@ LIBRARIES="$LIBRARIES -lgtest -lboost_system -lboost_chrono -lformat"
 #DEFINES="-DNDEBUG"
 DEFINES="-DDEBUG"
 
-if [ 1 == 0 ]
+if [ 1 == 1 ]
 then
     PATH=$CLANGBIN:$PATH $CLANG -O3 $CXXFLAGS src/gtest/main.cpp $FILES -o build/gtest-main \
         $DEFINES $LIBRARIES || exit 1

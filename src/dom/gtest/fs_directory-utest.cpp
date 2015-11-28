@@ -23,3 +23,13 @@ TEST(FsDirectoryTest, path)
     directory->set_parent(root);
     ASSERT_STREQ("foo/", directory->path(root).c_str());
 }
+
+TEST(FsDirectoryTest, level)
+{
+    dom::FsDirectorySPtr root = std::make_shared<dom::FsDirectory>();
+    ASSERT_EQ(1u, root->level());
+
+    dom::FsDirectorySPtr directory = std::make_shared<dom::FsDirectory>();
+    directory->set_parent(root);
+    ASSERT_EQ(2u, directory->level());
+}
