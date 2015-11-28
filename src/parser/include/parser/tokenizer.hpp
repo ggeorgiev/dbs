@@ -20,6 +20,8 @@ public:
     typedef S Stream;
     typedef std::shared_ptr<Stream> StreamSPtr;
 
+    typedef typename Stream::String String;
+
     typedef typename Stream::Char Char;
     typedef typename Stream::Code Code;
 
@@ -33,10 +35,13 @@ public:
         EHEnd;
     }
 
+    String token() { return String(mTokeBegin, mStream->iterator()); }
     typename Token::Type next()
     {
         if (!mStream->has())
             return Token::Type::kNil;
+
+        mTokeBegin = mStream->iterator();
 
         auto ch = mStream->take();
         mTokenTypes = Token::types(0, ch);
@@ -68,6 +73,8 @@ public:
 
     size_t length() { return mPosition; }
 private:
+    typename String::const_iterator mTokeBegin;
+
     size_t mPosition;
     typename Token::Type mTokenTypes;
 

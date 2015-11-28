@@ -52,8 +52,8 @@ TYPED_TEST(ParserTest, parseFiles)
     Test tests[]{
         Test{.files = "", .count = 0},
         Test{.files = "   ", .count = 0},
-        Test{.files = "foo", .count = 0},
-        Test{.files = "  foo  ", .count = 0},
+        Test{.files = "foo", .count = 1},
+        Test{.files = "  foo  ", .count = 1},
     };
 
     for (auto test : tests)

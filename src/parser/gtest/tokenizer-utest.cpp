@@ -51,6 +51,39 @@ TYPED_TEST(TokenizerTest, empty)
     ASSERT_EQ(parser::TokenType::kNil, tokenizer->next());
 }
 
+TYPED_TEST(TokenizerTest, token)
+{
+    struct Test
+    {
+        std::string str;
+        std::string tokens[10];
+    };
+
+    Test tests[]{
+        Test{.str = "", .tokens = {""}},
+        Test{.str = "  ", .tokens = {"  ", ""}},
+        Test{.str = "  foo   ", .tokens = {"  ", "foo", "   ", ""}},
+    };
+
+    for (auto test : tests)
+    {
+        auto stream = std::make_shared<typename TestFixture::Stream>();
+        stream->initialize(test.str);
+
+        auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
+        tokenizer->initialize(stream);
+
+        for (auto token : test.tokens)
+        {
+            if (token.empty())
+                break;
+
+            ASSERT_NE(parser::TokenType::kNil, tokenizer->next()) << test.str;
+            ASSERT_EQ(token, tokenizer->token()) << test.str;
+        }
+    }
+}
+
 TYPED_TEST(TokenizerTest, path)
 {
     const char* paths[]{

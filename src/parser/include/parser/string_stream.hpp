@@ -13,7 +13,6 @@
 
 namespace parser
 {
-
 template <typename C1, typename C2 = C1, typename E = fixed_encoding_traits<C1, C2>>
 class StringStream
 {
@@ -22,28 +21,35 @@ public:
     typedef C2 Code;
     typedef E EncodingTraits;
 
-    typedef std::basic_string<Char> string;
+    typedef std::basic_string<Char> String;
 
-    StringStream() : mPosition(kEmptyStringLiteral) {}
-    ECode initialize(const string& str)
+    StringStream() : mPosition(mString.begin()) {}
+    ECode initialize(const String& str)
     {
         mString = str;
-        mPosition = mString.c_str();
+        mPosition = mString.begin();
 
         EHEnd;
     }
 
-    bool has() { return *mPosition != 0; }
+    String range(const typename String::const_iterator& begin,
+                 const typename String::const_iterator& end)
+    {
+        return String(begin, end);
+    }
+
+    typename String::const_iterator iterator() const { return mPosition; }
+    bool has() { return mPosition != mString.end(); }
     Code get()
     {
         ASSERT(has());
-        return EncodingTraits::to_code(mPosition);
+        return EncodingTraits::to_code(&*mPosition);
     }
 
     Code take()
     {
         ASSERT(has());
-        auto ch = EncodingTraits::to_code(mPosition);
+        auto ch = EncodingTraits::to_code(&*mPosition);
         move();
         return ch;
     }
@@ -51,11 +57,11 @@ public:
     void move()
     {
         ASSERT(has());
-        mPosition += EncodingTraits::sequence_length(mPosition);
+        mPosition += EncodingTraits::sequence_length(&*mPosition);
     }
 
 private:
-    const Char* mPosition;
-    string mString;
+    String mString;
+    typename String::const_iterator mPosition;
 };
 }
