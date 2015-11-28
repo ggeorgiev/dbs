@@ -10,7 +10,6 @@
 #include <__hash_table>
 #include <algorithm>
 #include <functional>
-#include <iostream>
 #include <utility>
 
 namespace dom
@@ -52,8 +51,9 @@ FsDirectorySPtr FsManager::obtainDirectory(const FsDirectorySPtr& base,
                 working->set_parent(parent);
                 working->set_name(name);
 
-                parent = *mDirectories.emplace(working).first;
-                if (parent == working)
+                auto emplace = mDirectories.emplace(working);
+                parent = *emplace.first;
+                if (emplace.second)
                     working.reset();
             }
             if (next == end)
@@ -64,10 +64,34 @@ FsDirectorySPtr FsManager::obtainDirectory(const FsDirectorySPtr& base,
     }
 
     if (parent == nullptr)
-    {
         parent = std::make_shared<FsDirectory>();
-    }
 
     return *mDirectories.emplace(parent).first;
+}
+
+FsFileSPtr FsManager::obtainFile(const FsDirectorySPtr& base,
+                                 const std::string::const_iterator& begin,
+                                 const std::string::const_iterator& end)
+{
+    auto pos = end;
+    while (--pos >= begin)
+    {
+        if (*pos == slash())
+            break;
+    }
+    ++pos;
+
+    if (pos == end)
+        return FsFileSPtr();
+
+    auto directory = obtainDirectory(base, begin, pos);
+    if (directory == nullptr)
+        return FsFileSPtr();
+
+    auto working = std::make_shared<FsFile>();
+    working->set_directory(directory);
+    working->set_name(std::string(pos, end));
+
+    return *mFiles.emplace(working).first;
 }
 }

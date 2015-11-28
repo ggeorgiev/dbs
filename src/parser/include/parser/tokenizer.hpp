@@ -5,6 +5,7 @@
 
 #include "parser/token.hpp"
 
+#include "err/err.h"
 #include "err/err_assert.h"
 
 #include <memory>
@@ -25,10 +26,11 @@ public:
     typedef Token<Code> Token;
     typedef std::shared_ptr<Token> TokenSPtr;
 
-    void initialize(const StreamSPtr& stream)
+    ECode initialize(const StreamSPtr& stream)
     {
-        ASSERT(stream != nullptr);
+        EHAssert(stream != nullptr);
         mStream = stream;
+        EHEnd;
     }
 
     typename Token::Type next()

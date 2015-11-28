@@ -2,19 +2,18 @@
 //
 
 #include "dom/fs/fs_directory.hpp"
+#include "dom/fs/fs_file.hpp"
 #include "dom/fs/fs_manager.h"
 
 #include "gtest/err_assert.h"
 
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
-
-#include <array>
 #include <memory>
 #include <ostream>
 #include <string>
 
-TEST(FsManagerTest, obtainEmpty)
+TEST(FsManagerTest, obtainEmptyDirectory)
 {
     auto emptyDir = dom::gFsManager->obtainDirectory(nullptr, "");
     ASSERT_EQ(nullptr, emptyDir);
@@ -27,11 +26,11 @@ TEST(FsManagerTest, obtainEmpty)
     auto dir = dom::gFsManager->obtainDirectory(rootDir, "");
     ASSERT_EQ(dir, rootDir);
 
-    EXPECT_ASSERT(dom::gFsManager->obtainDirectory(nullptr, "bar/"));
-    EXPECT_ASSERT(dom::gFsManager->obtainDirectory(rootDir, "/bar/"));
+    ASSERT_ASSERT(dom::gFsManager->obtainDirectory(nullptr, "bar/"));
+    ASSERT_ASSERT(dom::gFsManager->obtainDirectory(rootDir, "/bar/"));
 }
 
-TEST(FsManagerTest, obtainUnique)
+TEST(FsManagerTest, obtainUniqueDirectory)
 {
     auto root1 = dom::gFsManager->obtainDirectory(nullptr, "/");
     auto root2 = dom::gFsManager->obtainDirectory(nullptr, "/");
@@ -58,7 +57,7 @@ TEST(FsManagerTest, obtainUnique)
     ASSERT_NE(bar1, bar3);
 }
 
-TEST(FsManagerTest, obtain)
+TEST(FsManagerTest, obtainDirectory)
 {
     struct Test
     {
@@ -79,12 +78,15 @@ TEST(FsManagerTest, obtain)
         Test{.root = "/foo/", .dir = "..", .absolute = "/", .relative = "../"},
         Test{.root = "/foo/bar", .dir = "../", .absolute = "/foo/", .relative = "../"},
         Test{.root = "/foo/bar", .dir = "../../foo", .absolute = "/foo/", .relative = "../"},
+
+        // TODO: add absolute dirs.
+        // TODO: add independent directories.
     };
 
     for (auto test : tests)
     {
-        dom::FsDirectorySPtr root = dom::gFsManager->obtainDirectory(nullptr, test.root);
-        dom::FsDirectorySPtr directory = dom::gFsManager->obtainDirectory(root, test.dir);
+        auto root = dom::gFsManager->obtainDirectory(nullptr, test.root);
+        auto directory = dom::gFsManager->obtainDirectory(root, test.dir);
         ASSERT_NE(nullptr, directory);
 
         ASSERT_EQ(test.absolute, directory->path(nullptr)) << "root: \"" << test.root
@@ -92,4 +94,29 @@ TEST(FsManagerTest, obtain)
         ASSERT_EQ(test.relative, directory->path(root)) << "root: \"" << test.root << "\", dir: \""
                                                         << test.dir << "\"";
     }
+}
+
+TEST(FsManagerTest, obtainEmptyFile)
+{
+    ASSERT_EQ(nullptr, dom::gFsManager->obtainFile(nullptr, ""));
+    ASSERT_EQ(nullptr, dom::gFsManager->obtainFile(nullptr, "foo.cpp"));
+
+    auto root = dom::gFsManager->obtainDirectory(nullptr, "/");
+    ASSERT_EQ(nullptr, dom::gFsManager->obtainFile(root, "/"));
+    ASSERT_EQ(nullptr, dom::gFsManager->obtainFile(root, "foo/"));
+
+    auto rootFoo1 = dom::gFsManager->obtainFile(nullptr, "/foo.cpp");
+    ASSERT_NE(nullptr, rootFoo1);
+
+    auto rootFoo2 = dom::gFsManager->obtainFile(rootFoo1->directory(), "foo.cpp");
+    ASSERT_NE(nullptr, rootFoo2);
+}
+
+TEST(FsManagerTest, obtainUniqueFile)
+{
+    auto root = dom::gFsManager->obtainDirectory(nullptr, "/");
+
+    auto rootFoo1 = dom::gFsManager->obtainFile(root, "foo.cpp");
+    auto rootFoo2 = dom::gFsManager->obtainFile(nullptr, "/foo.cpp");
+    ASSERT_EQ(rootFoo1, rootFoo2);
 }

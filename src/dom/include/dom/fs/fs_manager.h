@@ -32,16 +32,21 @@ public:
     FsDirectorySPtr obtainDirectory(const FsDirectorySPtr& base,
                                     const std::string::const_iterator& begin,
                                     const std::string::const_iterator& end);
+    FsFileSPtr obtainFile(const FsDirectorySPtr& base, const std::string& file)
+    {
+        return obtainFile(base, file.begin(), file.end());
+    }
+
     FsFileSPtr obtainFile(const FsDirectorySPtr& base,
                           const std::string::const_iterator& begin,
                           const std::string::const_iterator& end);
 
 private:
-    struct Hasher
+    struct DirectoryHasher
     {
         std::size_t operator()(const FsDirectorySPtr& directory) const
         {
-            return std::hash<const FsDirectory*>()(directory->parent().get()) ^
+            return std::hash<FsDirectorySPtr>()(directory->parent()) ^
                    std::hash<std::string>()(directory->name());
         }
 
@@ -51,8 +56,23 @@ private:
                    directory1->name() == directory2->name();
         }
     };
+    std::unordered_set<FsDirectorySPtr, DirectoryHasher, DirectoryHasher> mDirectories;
 
-    std::unordered_set<FsDirectorySPtr, Hasher, Hasher> mDirectories;
+    struct FileHasher
+    {
+        std::size_t operator()(const FsFileSPtr& file) const
+        {
+            return std::hash<FsDirectorySPtr>()(file->directory()) ^
+                   std::hash<std::string>()(file->name());
+        }
+
+        bool operator()(const FsFileSPtr& file1, const FsFileSPtr& file2) const
+        {
+            return file1->directory() == file2->directory() && file1->name() == file2->name();
+        }
+    };
+
+    std::unordered_set<FsFileSPtr, FileHasher, FileHasher> mFiles;
 };
 
 typedef std::shared_ptr<FsManager> FsManagerSPtr;

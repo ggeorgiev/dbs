@@ -53,12 +53,12 @@ FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
 
 LIBRARIES="$LIBRARIES -lgtest -lboost_system -lboost_chrono -lformat"
 
-#DEFINES="-DNDEBUG"
-DEFINES="-DDEBUG"
+#DEFINES="-DNDEBUG" && OPTOMIZATION="-O3"
+DEFINES="-DDEBUG" && OPTOMIZATION="-O0"
 
 if [ 1 == 1 ]
 then
-    PATH=$CLANGBIN:$PATH $CLANG -O3 $CXXFLAGS src/gtest/main.cpp $FILES -o build/gtest-main \
+    PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/gtest/main.cpp $FILES -o build/gtest-main \
         $DEFINES $LIBRARIES || exit 1
 
     build/gtest-main --gtest_filter=-*.PERFORMANCE_* || exit 1
@@ -69,7 +69,7 @@ else
     for FILE in src/gtest/main.cpp $FILES
     do
         echo include what you using $FILE ...
-        PATH=$CLANGBIN:$PATH $IWYU -O3 $CXXFLAGS $FILE $DEFINES 2>&1 | tee -a build/iwyu.log
+        PATH=$CLANGBIN:$PATH $IWYU $CXXFLAGS $FILE $DEFINES 2>&1 | tee -a build/iwyu.log
     done
 
     iwyu/bin/fix_includes.py --nosafe_headers < build/iwyu.log

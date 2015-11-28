@@ -2,15 +2,16 @@
 #include "parser/string_stream.hpp"
 #include "parser/token_type.hpp"
 
+#include "err/err.h"
+
 #include "gtest/err_assert.h"
 
 #include <gtest/gtest-message.h>
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
 
-#include <array>
 #include <memory>
-#include <ostream>
+#include <sstream>
 
 template <typename T>
 class TokenizerTest : public ::testing::Test
@@ -35,7 +36,7 @@ TYPED_TEST(TokenizerTest, initialize)
     auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
 
     typename TestFixture::StreamSPtr stream;
-    EXPECT_ASSERT(tokenizer->initialize(stream));
+    ASSERT_EHASSERT(tokenizer->initialize(stream));
 
     stream = std::make_shared<typename TestFixture::Stream>();
     tokenizer->initialize(stream);
@@ -52,7 +53,7 @@ TYPED_TEST(TokenizerTest, empty)
 
 TYPED_TEST(TokenizerTest, path)
 {
-    std::array<const char*, 11> paths{
+    const char* paths[]{
         "this_is_a_path",
         "this_is_a_path ",
         "this_is_a_path\n",
@@ -87,10 +88,10 @@ TYPED_TEST(TokenizerTest, sequence)
     struct Sequence
     {
         std::string str;
-        std::array<parser::TokenType, 10> types;
+        parser::TokenType types[10];
     };
 
-    std::array<Sequence, 3> sequences{
+    Sequence sequences[]{
         Sequence{.str = "file.cpp",
                  .types =
                      {

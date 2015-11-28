@@ -5,6 +5,8 @@
 
 #include "parser/fixed_encoding_traits.hpp"
 
+#include "err/err.h"
+
 #include "const/constants.h"
 
 #include <string>
@@ -23,10 +25,12 @@ public:
     typedef std::basic_string<Char> string;
 
     StringStream() : mPosition(kEmptyStringLiteral) {}
-    void initialize(const string& str)
+    ECode initialize(const string& str)
     {
         mString = str;
         mPosition = mString.c_str();
+
+        EHEnd;
     }
 
     bool has() { return *mPosition != 0; }

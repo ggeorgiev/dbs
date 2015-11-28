@@ -13,8 +13,12 @@ namespace dom
 class FsFile
 {
 public:
+    const std::string& name() const { return mName; }
+    void set_name(const std::string& name) { mName = name; }
+    const FsDirectorySPtr& directory() const { return mDirectory; }
+    void set_directory(const FsDirectorySPtr& directory) { mDirectory = directory; }
 private:
-    FsDirectory mDirectory;
+    FsDirectorySPtr mDirectory;
     std::string mName;
 };
 

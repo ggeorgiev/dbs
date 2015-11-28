@@ -2,7 +2,7 @@
 
 namespace err
 {
-inline void assert(bool expression)
+inline void err_assert(bool expression)
 {
     if (!expression)
         throw nullptr;
@@ -12,5 +12,5 @@ inline void assert(bool expression)
 #if defined(NDEBUG)
 #define ASSERT(X) ((void)0)
 #else
-#define ASSERT(X) err::assert(X)
+#define ASSERT(X) err::err_assert(X)
 #endif
