@@ -12,7 +12,7 @@
 #include <sys/errno.h>
 #include <unistd.h>
 #include <iostream>
-#include <iterator>
+#include <fstream>
 #include <memory>
 
 typedef parser::StringStream<char> Stream;

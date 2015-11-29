@@ -3,11 +3,22 @@
 
 #pragma once
 
-#include "parser/token_type.hpp"
-#include "parser/keyword.hpp"
-#include "parser/operator.hpp"
-
 #include <string>
+#include <bitset>
+
+#define BITMASK_1(WHAT, X) WHAT(X)
+#define BITMASK_2(WHAT, X, ...) WHAT(X) BITMASK_1(WHAT, __VA_ARGS__)
+#define BITMASK_3(WHAT, X, ...) WHAT(X) BITMASK_2(WHAT, __VA_ARGS__)
+#define BITMASK_4(WHAT, X, ...) WHAT(X) BITMASK_3(WHAT, __VA_ARGS__)
+#define BITMASK_5(WHAT, X, ...) WHAT(X) BITMASK_4(WHAT, __VA_ARGS__)
+
+#define BITMASK_GET_MACRO(_1, _2, _3, _4, _5, NAME, ...) NAME
+#define BITMASK_FOR_EACH(action, ...)                                                       \
+    BITMASK_GET_MACRO(__VA_ARGS__, BITMASK_5, BITMASK_4, BITMASK_3, BITMASK_2, BITMASK_1, ) \
+    (action, __VA_ARGS__)
+
+#define BITMASK0(X) (1 << (X))
+#define BITMASK0_FROM_INDEX(...) (0 + BITMASK_FOR_EACH(BITMASK0, __VA_ARGS__))
 
 namespace parser
 {
@@ -16,27 +27,27 @@ class Token
 {
 public:
     typedef C Code;
-    typedef TokenType Type;
-    typedef Keyword Keyword;
-    typedef Operator Operator;
 
-    static Type types(Code code)
+    enum Index
     {
-        Type type = Type::kNil;
+        kKeywordCppProgram = 0,
+        kOperatorColon,
+        kPath,
+        kWhiteSpace,
+
+        kCount
+    };
+
+    typedef std::bitset<kCount> Type;
+
+    static Type typeBody(size_t position, Code code)
+    {
+        Type type;
 
         switch (code)
         {
-            case ' ':
-            case '\t':
-            case '\n':
-            case '\v':
-            case '\f':
-            case '\r':
-                type |= Type::kWhiteSpace;
-                break;
-
+            case 0:
             case '\\':
-            case ':':
             case ',':
             case ';':
             case '*':
@@ -47,167 +58,169 @@ public:
             case '|':
                 break;
 
+            case ' ':
+            case '\t':
+            case '\n':
+            case '\v':
+            case '\f':
+            case '\r':
+                type.set(kWhiteSpace);
+                break;
+
+            case ':':
+                switch (position)
+                {
+                    case 0:
+                        type.set(kOperatorColon);
+                        break;
+                }
+                break;
+
+            case '_':
+                type.set(kPath);
+                switch (position)
+                {
+                    case 3:
+                        type.set(kKeywordCppProgram);
+                        break;
+                }
+                break;
+
+            case 'a':
+                type.set(kPath);
+                switch (position)
+                {
+                    case 9:
+                        type.set(kKeywordCppProgram);
+                        break;
+                }
+                break;
+
+            case 'c':
+                type.set(kPath);
+                switch (position)
+                {
+                    case 0:
+                        type.set(kKeywordCppProgram);
+                        break;
+                }
+                break;
+
+            case 'o':
+                type.set(kPath);
+                switch (position)
+                {
+                    case 6:
+                        type.set(kKeywordCppProgram);
+                        break;
+                }
+                break;
+
+            case 'g':
+                type.set(kPath);
+                switch (position)
+                {
+                    case 7:
+                        type.set(kKeywordCppProgram);
+                        break;
+                }
+                break;
+            case 'm':
+                type.set(kPath);
+                switch (position)
+                {
+                    case 10:
+                        type.set(kKeywordCppProgram);
+                        break;
+                }
+                break;
+
+            case 'r':
+                type.set(kPath);
+                switch (position)
+                {
+                    case 5:
+                    case 8:
+                        type.set(kKeywordCppProgram);
+                        break;
+                }
+                break;
+
+            case 'p':
+                type.set(kPath);
+                switch (position)
+                {
+                    case 1:
+                    case 2:
+                    case 4:
+                        type.set(kKeywordCppProgram);
+                        break;
+                }
+                break;
+
             default:
-                type |= Type::kPath;
+                type.set(kPath);
                 break;
         }
 
         return type;
     }
-
-    static Keyword keywordBody(int position, Code code)
-    {
-        Keyword keyword = Keyword::kNil;
-
-        switch (position)
-        {
-            case 0:
-                switch (code)
-                {
-                    case 'c':
-                        keyword |= Keyword::kCppProgram;
-                        break;
-                }
-                break;
-            case 1:
-                switch (code)
-                {
-                    case 'p':
-                        keyword |= Keyword::kCppProgram;
-                        break;
-                }
-                break;
-            case 2:
-                switch (code)
-                {
-                    case 'p':
-                        keyword |= Keyword::kCppProgram;
-                        break;
-                }
-                break;
-            case 3:
-                switch (code)
-                {
-                    case '_':
-                        keyword |= Keyword::kCppProgram;
-                        break;
-                }
-                break;
-            case 4:
-                switch (code)
-                {
-                    case 'p':
-                        keyword |= Keyword::kCppProgram;
-                        break;
-                }
-                break;
-            case 5:
-                switch (code)
-                {
-                    case 'r':
-                        keyword |= Keyword::kCppProgram;
-                        break;
-                }
-                break;
-            case 6:
-                switch (code)
-                {
-                    case 'o':
-                        keyword |= Keyword::kCppProgram;
-                        break;
-                }
-                break;
-            case 7:
-                switch (code)
-                {
-                    case 'g':
-                        keyword |= Keyword::kCppProgram;
-                        break;
-                }
-                break;
-            case 8:
-                switch (code)
-                {
-                    case 'r':
-                        keyword |= Keyword::kCppProgram;
-                        break;
-                }
-                break;
-            case 9:
-                switch (code)
-                {
-                    case 'a':
-                        keyword |= Keyword::kCppProgram;
-                        break;
-                }
-                break;
-            case 10:
-                switch (code)
-                {
-                    case 'm':
-                        keyword |= Keyword::kCppProgram;
-                        break;
-                }
-                break;
-        }
-        return keyword;
-    }
-
     static bool isidentifier(Code code)
     {
         if (isalpha(code))
             return true;
         if (isdigit(code))
             return true;
+        if (code == '_')
+            return true;
         return false;
     }
 
-    static Keyword keywordEnd(int position, Code code)
+    static Type typeEnd(const Type& current, size_t position, Code code)
     {
-        Keyword keyword = Keyword::kNil;
-
-        switch (position)
-        {
-            case 11:
-                if (!isidentifier(code))
-                    keyword |= Keyword::kCppProgram;
-                break;
-        }
-        return keyword;
-    }
-
-    static Operator operatorBody(int position, Code code)
-    {
-        Operator operator_ = Operator::kNil;
-
-        switch (position)
-        {
-            case 0:
-                switch (code)
-                {
-                    case ':':
-                        operator_ |= Operator::kColon;
-                        break;
-                }
-                break;
-        }
-        return operator_;
-    }
-
-    static Operator operatorEnd(int position, Code code)
-    {
-        Operator operator_ = Operator::kNil;
+        Type type;
 
         switch (position)
         {
             case 1:
-                operator_ |= Operator::kColon;
+                type.set(kOperatorColon, current[kOperatorColon]);
+                break;
+            case 11:
+                if (!isidentifier(code))
+                    type.set(kKeywordCppProgram, current[kKeywordCppProgram]);
                 break;
         }
-        return operator_;
-    }
 
-private:
-    Type mTypes;
+        switch (code)
+        {
+            case 0:
+            case '\\':
+            case ',':
+            case ';':
+            case '*':
+            case '?':
+            case '"':
+            case '<':
+            case '>':
+            case '|':
+                type.set(kWhiteSpace, current[kWhiteSpace]);
+                type.set(kPath, current[kPath]);
+                break;
+
+            case ' ':
+            case '\t':
+            case '\n':
+            case '\v':
+            case '\f':
+            case '\r':
+                type.set(kPath, current[kPath]);
+                break;
+
+            default:
+                type.set(kWhiteSpace, current[kWhiteSpace]);
+        }
+
+        return type;
+    }
 };
 }

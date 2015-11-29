@@ -1,10 +1,11 @@
 #include "parser/token.hpp"
-#include "parser/token_type.hpp"
 
 #include <gtest/gtest.h>
 
+typedef parser::Token<int> Token;
+
 TEST(TokenTest, types)
 {
-    auto type = parser::Token<int>::types('p');
-    ASSERT_EQ(parser::TokenType::kPath, type & parser::TokenType::kPath);
+    auto type = Token::typeBody(0, 'p');
+    ASSERT_TRUE(type.test(Token::kPath));
 }

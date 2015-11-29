@@ -1,6 +1,4 @@
-#include "parser/keyword.hpp"
 #include "parser/string_stream.hpp"
-#include "parser/token_type.hpp"
 #include "parser/tokenizer.hpp" // IWYU pragma: keep
 
 #include "err/err.h"
@@ -50,7 +48,7 @@ TYPED_TEST(TokenizerTest, empty)
     auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
     tokenizer->initialize(stream);
 
-    ASSERT_EQ(parser::TokenType::kNil, tokenizer->next());
+    ASSERT_TRUE(tokenizer->next().none());
 }
 
 TYPED_TEST(TokenizerTest, token)
@@ -69,6 +67,8 @@ TYPED_TEST(TokenizerTest, token)
 
     for (auto test : tests)
     {
+        SCOPED_TRACE(::testing::Message() << "String: \"" << test.str << "\"");
+
         auto stream = std::make_shared<typename TestFixture::Stream>();
         stream->initialize(test.str);
 
@@ -77,10 +77,12 @@ TYPED_TEST(TokenizerTest, token)
 
         for (auto token : test.tokens)
         {
+            SCOPED_TRACE(::testing::Message() << "Token: \"" << token << "\"");
+
             if (token.empty())
                 break;
 
-            ASSERT_NE(parser::TokenType::kNil, tokenizer->next()) << test.str;
+            ASSERT_TRUE(tokenizer->next().any()) << test.str;
             ASSERT_EQ(token, tokenizer->token()) << test.str;
         }
     }
@@ -110,144 +112,120 @@ TYPED_TEST(TokenizerTest, path)
         auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
         tokenizer->initialize(stream);
 
-        auto type = tokenizer->next();
-
-        ASSERT_TRUE(type && parser::TokenType::kPath);
+        ASSERT_TRUE(tokenizer->next().test(TestFixture::Token::kPath));
         ASSERT_EQ(14, tokenizer->length()) << path;
     }
 }
 
 TYPED_TEST(TokenizerTest, sequence)
 {
-    struct Sequence
-    {
-        std::string str;
-        parser::TokenType types[10];
-    };
-
-    Sequence sequences[]{
-        Sequence{.str = "file.cpp",
-                 .types =
-                     {
-                         parser::TokenType::kPath, parser::TokenType::kNil,
-                     }},
-        Sequence{.str = "directory/file.py",
-                 .types =
-                     {
-                         parser::TokenType::kPath, parser::TokenType::kNil,
-                     }},
-        Sequence{.str = "directory/file.py directory/file.py",
-                 .types =
-                     {
-                         parser::TokenType::kPath,
-                         parser::TokenType::kWhiteSpace,
-                         parser::TokenType::kPath,
-                         parser::TokenType::kNil,
-                     }},
-    };
-
-    for (auto sequence : sequences)
-    {
-        auto stream = std::make_shared<typename TestFixture::Stream>();
-        stream->initialize(sequence.str);
-
-        auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
-        tokenizer->initialize(stream);
-
-        for (auto type : sequence.types)
-        {
-            ASSERT_EQ(type, tokenizer->next()) << "in \"" << sequence.str << "\"";
-
-            if (type == parser::TokenType::kNil)
-                break;
-        }
-    }
-}
-
-TYPED_TEST(TokenizerTest, keywords)
-{
-    const char* keywords[]{
-        "cpp_program", "cpp_program ",
-    };
-
-    for (auto keyword : keywords)
-    {
-        auto stream = std::make_shared<typename TestFixture::Stream>();
-        stream->initialize(keyword);
-
-        auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
-        tokenizer->initialize(stream);
-
-        auto type = tokenizer->next();
-
-        ASSERT_TRUE(type && parser::TokenType::kKeyword) << keyword;
-    }
-}
-
-TYPED_TEST(TokenizerTest, no_keywords)
-{
-    const char* keywords[]{
-        "cpp_pro", "sdfw45", "cpp_programfoo",
-    };
-
-    for (auto keyword : keywords)
-    {
-        auto stream = std::make_shared<typename TestFixture::Stream>();
-        stream->initialize(keyword);
-
-        auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
-        tokenizer->initialize(stream);
-
-        auto type = tokenizer->next();
-
-        ASSERT_FALSE(type && parser::TokenType::kKeyword) << keyword;
-    }
-}
-
-TYPED_TEST(TokenizerTest, operators)
-{
-    const char* operators[]{
-        ":", ": ",
-    };
-
-    for (auto operator_ : operators)
-    {
-        auto stream = std::make_shared<typename TestFixture::Stream>();
-        stream->initialize(operator_);
-
-        auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
-        tokenizer->initialize(stream);
-
-        auto type = tokenizer->next();
-
-        ASSERT_TRUE(type && parser::TokenType::kOperator) << operator_;
-    }
-}
-
-TYPED_TEST(TokenizerTest, expectOperators)
-{
+    typedef typename TestFixture::Tokenizer::Token Token;
     struct Test
     {
         std::string str;
-        parser::Operator operator_;
-        bool expected;
+        typename Token::Type types[10];
     };
 
     Test tests[]{
-        Test{.str = ":", .operator_ = parser::Operator::kColon, .expected = true},
-        Test{.str = ": ", .operator_ = parser::Operator::kColon, .expected = true},
-        Test{.str = "k", .operator_ = parser::Operator::kColon, .expected = false},
+        Test{.str = "file.cpp",
+             .types =
+                 {
+                     BITMASK0_FROM_INDEX(Token::kPath), 0,
+                 }},
+        Test{.str = "directory/file.py",
+             .types =
+                 {
+                     BITMASK0_FROM_INDEX(Token::kPath), 0,
+                 }},
+        Test{.str = "directory/file.py directory/file.py",
+             .types =
+                 {
+                     BITMASK0_FROM_INDEX(Token::kPath),
+                     BITMASK0_FROM_INDEX(Token::kWhiteSpace),
+                     BITMASK0_FROM_INDEX(Token::kPath),
+                     0,
+                 }},
     };
 
     for (auto test : tests)
     {
+        SCOPED_TRACE(::testing::Message() << "String: " << test.str);
+
         auto stream = std::make_shared<typename TestFixture::Stream>();
         stream->initialize(test.str);
 
         auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
         tokenizer->initialize(stream);
 
-        ASSERT_EQ(test.expected, tokenizer->expectOperator(test.operator_)) << "\"" << test.str
-                                                                            << "\"";
+        for (auto type : test.types)
+        {
+            SCOPED_TRACE(::testing::Message() << "Type: " << type);
+
+            ASSERT_TRUE((tokenizer->next() & type) == type);
+
+            if (type.none())
+                break;
+        }
+    }
+}
+
+TYPED_TEST(TokenizerTest, type)
+{
+    typedef typename TestFixture::Tokenizer::Token Token;
+
+    struct Test
+    {
+        const char* str;
+        typename Token::Index expected;
+    };
+
+    Test tests[]{
+        Test{.str = "cpp_program", .expected = Token::kKeywordCppProgram},
+        Test{.str = "cpp_program ", .expected = Token::kKeywordCppProgram},
+        Test{.str = ":", .expected = Token::kOperatorColon},
+        Test{.str = ": ", .expected = Token::kOperatorColon},
+    };
+
+    for (auto test : tests)
+    {
+        SCOPED_TRACE(::testing::Message() << "String: " << test.str);
+
+        auto stream = std::make_shared<typename TestFixture::Stream>();
+        stream->initialize(test.str);
+
+        auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
+        tokenizer->initialize(stream);
+
+        ASSERT_TRUE(tokenizer->next().test(test.expected));
+    }
+}
+
+TYPED_TEST(TokenizerTest, negatove_type)
+{
+    typedef typename TestFixture::Tokenizer::Token Token;
+
+    struct Test
+    {
+        const char* str;
+        typename Token::Index unexpected;
+    };
+
+    Test tests[]{
+        Test{.str = "cpp_pro", .unexpected = Token::kKeywordCppProgram},
+        Test{.str = "cpp_programfoo", .unexpected = Token::kKeywordCppProgram},
+        Test{.str = "cpp_program_foo", .unexpected = Token::kKeywordCppProgram},
+    };
+
+    for (auto test : tests)
+    {
+        SCOPED_TRACE(::testing::Message() << "String: " << test.str);
+
+        auto stream = std::make_shared<typename TestFixture::Stream>();
+        stream->initialize(test.str);
+
+        auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
+        tokenizer->initialize(stream);
+
+        ASSERT_FALSE(tokenizer->next().test(test.unexpected));
     }
 }

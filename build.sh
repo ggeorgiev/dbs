@@ -35,13 +35,13 @@ LIBRARIES="$LIBRARIES -Lcppformat/lib"
 LIBRARIES="$LIBRARIES -lboost_system -lboost_chrono -lformat"
 
 #DEFINES="-DNDEBUG" && OPTOMIZATION="-O3"
-DEFINES="-DDEBUG" && OPTOMIZATION="-O0 -g"
+DEFINES="-DDEBUG" && OPTOMIZATION="-O0"
 
 mkdir -p build
 #PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \
 #    src/main.cpp $FILES \
-#    -o build/main \
-#    $DEFINES $LIBRARIES || exit 1
+#    $DEFINES $LIBRARIES \
+#    -o build/main  || exit 1
 
 if [ 1 == 1 ]
 then

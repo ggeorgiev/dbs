@@ -25,6 +25,8 @@ public:
     typedef Tokenizer<Stream> Tokenizer;
     typedef std::shared_ptr<Tokenizer> TokenizerSPtr;
 
+    typedef typename Tokenizer::Token Token;
+
     ECode initialize(const StreamSPtr& stream, const dom::FsFileSPtr& location)
     {
         EHAssert(stream != nullptr);
@@ -53,10 +55,10 @@ public:
         for (;;)
         {
             auto type = mTokenizer->next();
-            if (type == TokenType::kNil)
+            if (type.none())
                 break;
 
-            if (type && TokenType::kPath)
+            if (type.test(Token::kPath))
             {
                 auto token = mTokenizer->token();
                 auto file = dom::gFsManager->obtainFile(directory, token);
