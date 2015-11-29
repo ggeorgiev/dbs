@@ -32,47 +32,58 @@ LIBRARIES="$LIBRARIES -Lboost/lib"
 CXXFLAGS="$CXXFLAGS -isystemcppformat/include"
 LIBRARIES="$LIBRARIES -Lcppformat/lib"
 
-mkdir -p build
-#PATH=$CLANGBIN:$PATH $CLANG $CXXFLAGS src/main.cpp $FILES -o build/main
-
-FILES="$FILES src/gtest/time_monitor.cpp src/gtest/performance_arbiter.cpp"
-
-FILES="$FILES src/im/gtest/initialization_manager-utest.cpp"
-
-FILES="$FILES src/err/gtest/err-utest.cpp"
-FILES="$FILES src/err/gtest/err-ptest.cpp"
-
-FILES="$FILES src/dom/gtest/cpp_program-utest.cpp"
-FILES="$FILES src/dom/gtest/fs_manager-utest.cpp"
-FILES="$FILES src/dom/gtest/fs_directory-utest.cpp"
-
-FILES="$FILES src/parser/gtest/parser-utest.cpp"
-FILES="$FILES src/parser/gtest/stream-utest.cpp"
-FILES="$FILES src/parser/gtest/token-utest.cpp"
-FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
-
-LIBRARIES="$LIBRARIES -lgtest -lboost_system -lboost_chrono -lformat"
+LIBRARIES="$LIBRARIES -lboost_system -lboost_chrono -lformat"
 
 #DEFINES="-DNDEBUG" && OPTOMIZATION="-O3"
 DEFINES="-DDEBUG" && OPTOMIZATION="-O0"
 
+mkdir -p build
+PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \
+    src/main.cpp $FILES \
+    -o build/main \
+    $DEFINES $LIBRARIES || exit 1
+
 if [ 1 == 1 ]
 then
-    PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/gtest/main.cpp $FILES -o build/gtest-main \
-        $DEFINES $LIBRARIES || exit 1
 
-    build/gtest-main --gtest_filter=-*.PERFORMANCE_* || exit 1
+    FILES="$FILES src/gtest/time_monitor.cpp src/gtest/performance_arbiter.cpp"
 
-else
+    FILES="$FILES src/im/gtest/initialization_manager-utest.cpp"
 
-    echo > build/iwyu.log
-    for FILE in src/gtest/main.cpp $FILES
-    do
-        echo include what you using $FILE ...
-        PATH=$CLANGBIN:$PATH $IWYU $CXXFLAGS $FILE $DEFINES 2>&1 | tee -a build/iwyu.log
-    done
+    FILES="$FILES src/err/gtest/err-utest.cpp"
+    FILES="$FILES src/err/gtest/err-ptest.cpp"
 
-    iwyu/bin/fix_includes.py --nosafe_headers < build/iwyu.log
+    FILES="$FILES src/dom/gtest/cpp_program-utest.cpp"
+    FILES="$FILES src/dom/gtest/fs_manager-utest.cpp"
+    FILES="$FILES src/dom/gtest/fs_directory-utest.cpp"
+
+    FILES="$FILES src/parser/gtest/parser-utest.cpp"
+    FILES="$FILES src/parser/gtest/stream-utest.cpp"
+    FILES="$FILES src/parser/gtest/token-utest.cpp"
+    FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
+
+    LIBRARIES="$LIBRARIES -lgtest"
+
+    if [ 1 == 1 ]
+    then
+        PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \
+            src/gtest/main.cpp $FILES \
+            -o build/gtest-main \
+            $DEFINES $LIBRARIES || exit 1
+
+        build/gtest-main --gtest_filter=-*.PERFORMANCE_* || exit 1
+
+    else
+
+        echo > build/iwyu.log
+        for FILE in src/main.cpp src/gtest/main.cpp $FILES
+        do
+            echo include what you using $FILE ...
+            PATH=$CLANGBIN:$PATH $IWYU $CXXFLAGS $FILE $DEFINES 2>&1 | \
+                tee -a build/iwyu.log || exit 1
+        done
+
+        iwyu/bin/fix_includes.py --nosafe_headers < build/iwyu.log
+    fi
+
 fi
-
-

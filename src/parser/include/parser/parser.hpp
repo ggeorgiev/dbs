@@ -3,6 +3,8 @@
 
 #include "parser/tokenizer.hpp"
 
+#include "dom/cpp/cpp_program.hpp"
+
 #include "dom/fs/fs_manager.h"
 #include "dom/fs/fs_file.hpp"
 
@@ -23,17 +25,31 @@ public:
     typedef Tokenizer<Stream> Tokenizer;
     typedef std::shared_ptr<Tokenizer> TokenizerSPtr;
 
-    ECode initialize(const StreamSPtr& stream)
+    ECode initialize(const StreamSPtr& stream, const dom::FsFileSPtr& location)
     {
         EHAssert(stream != nullptr);
+        EHAssert(location != nullptr);
+
+        mLocation = location;
         mTokenizer = std::make_shared<Tokenizer>();
         EHTest(mTokenizer->initialize(stream));
         EHEnd;
     }
 
-    ECode parseFiles(std::unordered_set<dom::FsFileSPtr>& files) const
+    dom::CppProgramSPtr cppProgram() const { return mCppProgram; }
+    ECode parse()
     {
-        auto root = dom::gFsManager->obtainDirectory(nullptr, "/");
+        mCppProgram = std::make_shared<dom::CppProgram>();
+
+        std::unordered_set<dom::FsFileSPtr> files;
+        EHTest(parseFiles(mLocation->directory(), files));
+        EHTest(mCppProgram->updateCppFiles(files));
+        EHEnd;
+    }
+
+    ECode parseFiles(const dom::FsDirectorySPtr& directory,
+                     std::unordered_set<dom::FsFileSPtr>& files) const
+    {
         for (;;)
         {
             auto type = mTokenizer->next();
@@ -43,7 +59,7 @@ public:
             if ((type & TokenType::kPath) != TokenType::kNil)
             {
                 auto token = mTokenizer->token();
-                auto file = dom::gFsManager->obtainFile(root, token);
+                auto file = dom::gFsManager->obtainFile(directory, token);
                 files.emplace(file);
             }
         }
@@ -51,6 +67,9 @@ public:
     }
 
 private:
+    dom::FsFileSPtr mLocation;
+
+    dom::CppProgramSPtr mCppProgram;
     TokenizerSPtr mTokenizer;
 };
 }

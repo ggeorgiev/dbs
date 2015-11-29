@@ -37,8 +37,16 @@ TYPED_TEST_CASE(ParserTest, ParserType);
 TYPED_TEST(ParserTest, initialize)
 {
     typename TestFixture::StreamSPtr stream;
+    dom::FsFileSPtr location;
     auto parser = std::make_shared<typename TestFixture::Parser>();
-    ASSERT_EHASSERT(parser->initialize(stream));
+    ASSERT_EHASSERT(parser->initialize(stream, location));
+
+    stream = std::make_shared<typename TestFixture::Stream>();
+    ASSERT_EHASSERT(parser->initialize(stream, location));
+    stream.reset();
+
+    location = dom::gFsManager->obtainFile(nullptr, "/foo.dbs");
+    ASSERT_EHASSERT(parser->initialize(stream, location));
 }
 
 TYPED_TEST(ParserTest, parseFiles)
@@ -54,7 +62,11 @@ TYPED_TEST(ParserTest, parseFiles)
         Test{.files = "   ", .count = 0},
         Test{.files = "foo", .count = 1},
         Test{.files = "  foo  ", .count = 1},
+        Test{.files = "foo  bar foo bar", .count = 2},
     };
+
+    auto directory = dom::gFsManager->obtainDirectory(nullptr, "/");
+    auto location = dom::gFsManager->obtainFile(nullptr, "/foo.dbs");
 
     for (auto test : tests)
     {
@@ -62,10 +74,10 @@ TYPED_TEST(ParserTest, parseFiles)
         stream->initialize(test.files);
 
         auto parser = std::make_shared<typename TestFixture::Parser>();
-        ASSERT_OKAY(parser->initialize(stream));
+        ASSERT_OKAY(parser->initialize(stream, location));
 
         std::unordered_set<dom::FsFileSPtr> files;
-        parser->parseFiles(files);
+        ASSERT_OKAY(parser->parseFiles(directory, files));
 
         ASSERT_EQ(test.count, files.size()) << test.files;
     }

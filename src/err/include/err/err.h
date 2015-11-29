@@ -89,8 +89,8 @@ using err::ECode;
         {                                                                                   \
             err::gError->message_stream() << EH_CPPFORMAT_CONTEXT(preserve, ##__VA_ARGS__); \
             err::gError->addLocation(EH_LOCATION);                                          \
+            return preserve;                                                                \
         }                                                                                   \
-        return preserve;                                                                    \
     } while (false)
 
 #define EHReset                                      \
