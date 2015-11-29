@@ -56,7 +56,7 @@ public:
             if (type == TokenType::kNil)
                 break;
 
-            if ((type & TokenType::kPath) != TokenType::kNil)
+            if (type && TokenType::kPath)
             {
                 auto token = mTokenizer->token();
                 auto file = dom::gFsManager->obtainFile(directory, token);

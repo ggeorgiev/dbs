@@ -5,6 +5,7 @@
 
 #include "parser/token_type.hpp"
 #include "parser/keyword.hpp"
+#include "parser/operator.hpp"
 
 #include <string>
 
@@ -17,6 +18,7 @@ public:
     typedef C Code;
     typedef TokenType Type;
     typedef Keyword Keyword;
+    typedef Operator Operator;
 
     static Type types(Code code)
     {
@@ -172,6 +174,37 @@ public:
                 break;
         }
         return keyword;
+    }
+
+    static Operator operatorBody(int position, Code code)
+    {
+        Operator operator_ = Operator::kNil;
+
+        switch (position)
+        {
+            case 0:
+                switch (code)
+                {
+                    case ':':
+                        operator_ |= Operator::kColon;
+                        break;
+                }
+                break;
+        }
+        return operator_;
+    }
+
+    static Operator operatorEnd(int position, Code code)
+    {
+        Operator operator_ = Operator::kNil;
+
+        switch (position)
+        {
+            case 1:
+                operator_ |= Operator::kColon;
+                break;
+        }
+        return operator_;
     }
 
 private:

@@ -7,13 +7,18 @@
 
 namespace parser
 {
+inline std::string CppProgram()
+{
+    return "cpp_program";
+}
+
 enum class Keyword
 {
     kNil = 0,
 
     kCppProgram = 1 << 0,
 
-    kAll = (1 << 3) - 1,
+    kAll = (1 << 1) - 1,
 };
 
 inline constexpr Keyword operator~(Keyword t1)

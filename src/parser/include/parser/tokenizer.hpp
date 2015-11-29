@@ -28,6 +28,10 @@ public:
     typedef Token<Code> Token;
     typedef std::shared_ptr<Token> TokenSPtr;
 
+    typedef typename Token::Type Type;
+    typedef typename Token::Keyword Keyword;
+    typedef typename Token::Operator Operator;
+
     ECode initialize(const StreamSPtr& stream)
     {
         EHAssert(stream != nullptr);
@@ -36,60 +40,88 @@ public:
     }
 
     String token() { return String(mTokeBegin, mStream->iterator()); }
-    typename Token::Type next()
+    size_t length() { return mPosition; }
+    bool expectOperator(Operator operator_)
     {
         if (!mStream->has())
-            return Token::Type::kNil;
+            return false;
+
+        mTokeBegin = mStream->iterator();
+
+        mTokenTypes = Type::kNil;
+        mKeywords = Keyword::kNil;
+        mOperators = operator_;
+        mPosition = 0;
+
+        return expand() == Type::kOperator;
+    }
+
+    Type next()
+    {
+        if (!mStream->has())
+            return Type::kNil;
 
         mTokeBegin = mStream->iterator();
 
         auto ch = mStream->take();
 
-        mKeywords = Token::keywordBody(0, ch);
         mTokenTypes = Token::types(ch);
+        mKeywords = Token::keywordBody(0, ch);
+        mOperators = Token::operatorBody(0, ch);
         mPosition = 1;
 
         return expand();
     }
 
-    typename Token::Type expand()
+    Type expand()
     {
         for (;;)
         {
             auto ch = mStream->zget();
             auto types =
-                ((mKeywords != Keyword::kNil) && (mKeywords && Token::keywordEnd(mPosition, ch)))
-                    ? Token::Type::kKeyword
-                    : Token::Type::kNil;
+                ((mKeywords != Keyword::kNil) && (mKeywords && Token::keywordEnd(mPosition, ch))
+                     ? Type::kKeyword
+                     : Type::kNil) |
+                ((mOperators != Operator::kNil) && (mOperators && Token::operatorEnd(mPosition, ch))
+                     ? Type::kOperator
+                     : Type::kNil);
 
             if (!mStream->has())
                 return mTokenTypes | types;
 
-            auto mask = Token::types(ch);
+            auto mask = mTokenTypes != Type::kNil ? Token::types(ch) : Type::kNil;
 
             types |= mTokenTypes & ~mask;
 
             mTokenTypes &= mask;
             if (mKeywords != Keyword::kNil)
-                mKeywords |= Token::keywordBody(mPosition, ch);
+                mKeywords &= Token::keywordBody(mPosition, ch);
+            if (mOperators != Operator::kNil)
+                mOperators &= Token::operatorBody(mPosition, ch);
 
-            if (types != Token::Type::kNil)
+            if (types != Type::kNil)
                 return types;
+
+            if (mTokenTypes == Type::kNil && mKeywords == Keyword::kNil &&
+                mOperators == Operator::kNil && )
+            {
+                return Type::kNil;
+            }
 
             ++mPosition;
             mStream->move();
         }
 
-        return Token::Type::kNil;
+        return Type::kNil;
     }
 
-    size_t length() { return mPosition; }
 private:
     typename String::const_iterator mTokeBegin;
 
     size_t mPosition;
-    typename Token::Type mTokenTypes;
-    typename Token::Keyword mKeywords;
+    Type mTokenTypes;
+    Keyword mKeywords;
+    Operator mOperators;
 
     StreamSPtr mStream;
 };

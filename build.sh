@@ -35,7 +35,7 @@ LIBRARIES="$LIBRARIES -Lcppformat/lib"
 LIBRARIES="$LIBRARIES -lboost_system -lboost_chrono -lformat"
 
 #DEFINES="-DNDEBUG" && OPTOMIZATION="-O3"
-DEFINES="-DDEBUG" && OPTOMIZATION="-O0"
+DEFINES="-DDEBUG" && OPTOMIZATION="-O0 -g"
 
 mkdir -p build
 #PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \
@@ -64,7 +64,7 @@ then
 
     LIBRARIES="$LIBRARIES -lgtest"
 
-    if [ 1 == 0 ]
+    if [ 1 == 1 ]
     then
         PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \
             src/gtest/main.cpp $FILES \

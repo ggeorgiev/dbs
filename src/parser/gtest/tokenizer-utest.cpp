@@ -112,8 +112,7 @@ TYPED_TEST(TokenizerTest, path)
 
         auto type = tokenizer->next();
 
-        ASSERT_EQ(parser::TokenType::kPath, type & parser::TokenType::kPath);
-
+        ASSERT_TRUE(type && parser::TokenType::kPath);
         ASSERT_EQ(14, tokenizer->length()) << path;
     }
 }
@@ -181,7 +180,7 @@ TYPED_TEST(TokenizerTest, keywords)
 
         auto type = tokenizer->next();
 
-        ASSERT_EQ(parser::TokenType::kKeyword, type & parser::TokenType::kKeyword) << keyword;
+        ASSERT_TRUE(type && parser::TokenType::kKeyword) << keyword;
     }
 }
 
@@ -201,6 +200,54 @@ TYPED_TEST(TokenizerTest, no_keywords)
 
         auto type = tokenizer->next();
 
-        ASSERT_EQ(parser::TokenType::kNil, type & parser::TokenType::kKeyword) << keyword;
+        ASSERT_FALSE(type && parser::TokenType::kKeyword) << keyword;
+    }
+}
+
+TYPED_TEST(TokenizerTest, operators)
+{
+    const char* operators[]{
+        ":", ": ",
+    };
+
+    for (auto operator_ : operators)
+    {
+        auto stream = std::make_shared<typename TestFixture::Stream>();
+        stream->initialize(operator_);
+
+        auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
+        tokenizer->initialize(stream);
+
+        auto type = tokenizer->next();
+
+        ASSERT_TRUE(type && parser::TokenType::kOperator) << operator_;
+    }
+}
+
+TYPED_TEST(TokenizerTest, expectOperators)
+{
+    struct Test
+    {
+        std::string str;
+        parser::Operator operator_;
+        bool expected;
+    };
+
+    Test tests[]{
+        Test{.str = ":", .operator_ = parser::Operator::kColon, .expected = true},
+        Test{.str = ": ", .operator_ = parser::Operator::kColon, .expected = true},
+        Test{.str = "k", .operator_ = parser::Operator::kColon, .expected = false},
+    };
+
+    for (auto test : tests)
+    {
+        auto stream = std::make_shared<typename TestFixture::Stream>();
+        stream->initialize(test.str);
+
+        auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
+        tokenizer->initialize(stream);
+
+        ASSERT_EQ(test.expected, tokenizer->expectOperator(test.operator_)) << "\"" << test.str
+                                                                            << "\"";
     }
 }
