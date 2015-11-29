@@ -130,20 +130,17 @@ TYPED_TEST(TokenizerTest, sequence)
         Test{.str = "file.cpp",
              .types =
                  {
-                     BITMASK0_FROM_INDEX(Token::kPath), 0,
+                     Token::kPathMask, 0,
                  }},
         Test{.str = "directory/file.py",
              .types =
                  {
-                     BITMASK0_FROM_INDEX(Token::kPath), 0,
+                     Token::kPathMask, 0,
                  }},
         Test{.str = "directory/file.py directory/file.py",
              .types =
                  {
-                     BITMASK0_FROM_INDEX(Token::kPath),
-                     BITMASK0_FROM_INDEX(Token::kWhiteSpace),
-                     BITMASK0_FROM_INDEX(Token::kPath),
-                     0,
+                     Token::kPathMask, Token::kWhiteSpaceMask, Token::kPathMask, 0,
                  }},
     };
 
@@ -180,10 +177,20 @@ TYPED_TEST(TokenizerTest, type)
     };
 
     Test tests[]{
+        Test{.str = "foo", .expected = Token::kIdentifier},
         Test{.str = "cpp_program", .expected = Token::kKeywordCppProgram},
-        Test{.str = "cpp_program ", .expected = Token::kKeywordCppProgram},
+        Test{.str = "cpp_file", .expected = Token::kKeywordCppFile},
         Test{.str = ":", .expected = Token::kOperatorColon},
+        Test{.str = ";", .expected = Token::kOperatorSemicolon},
+        Test{.str = "foo/bar", .expected = Token::kPath},
+        Test{.str = "  ", .expected = Token::kWhiteSpace},
+
+        // special cases:
+        Test{.str = "bar123_  ", .expected = Token::kIdentifier},
+        Test{.str = "cpp_program ", .expected = Token::kKeywordCppProgram},
+        Test{.str = "cpp_program:", .expected = Token::kKeywordCppProgram},
         Test{.str = ": ", .expected = Token::kOperatorColon},
+
     };
 
     for (auto test : tests)
@@ -211,9 +218,12 @@ TYPED_TEST(TokenizerTest, negatove_type)
     };
 
     Test tests[]{
+        Test{.str = "123_", .unexpected = Token::kIdentifier},
         Test{.str = "cpp_pro", .unexpected = Token::kKeywordCppProgram},
         Test{.str = "cpp_programfoo", .unexpected = Token::kKeywordCppProgram},
         Test{.str = "cpp_program_foo", .unexpected = Token::kKeywordCppProgram},
+        Test{.str = "cpp_fi", .unexpected = Token::kKeywordCppFile},
+        Test{.str = "cpp_filefoo", .unexpected = Token::kKeywordCppFile},
     };
 
     for (auto test : tests)

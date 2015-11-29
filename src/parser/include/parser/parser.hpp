@@ -44,6 +44,7 @@ public:
         for (;;)
         {
             auto type = mTokenizer->next();
+
             if (type.none())
                 break;
 
@@ -66,14 +67,47 @@ public:
         if (type.test(Token::kWhiteSpace))
             type = mTokenizer->next();
 
+        if (!type.test(Token::kIdentifier))
+            EHBan(kUnable, type);
+
+        type = mTokenizer->next();
+        if (type.test(Token::kWhiteSpace))
+            type = mTokenizer->next();
+
         if (!type.test(Token::kOperatorColon))
             EHBan(kUnable);
 
         mCppProgram = std::make_shared<dom::CppProgram>();
 
-        std::unordered_set<dom::FsFileSPtr> files;
-        EHTest(parseFiles(mLocation->directory(), files));
-        EHTest(mCppProgram->updateCppFiles(files));
+        for (;;)
+        {
+            auto type = mTokenizer->next();
+
+            if (type.none())
+                EHBan(kUnable);
+
+            if (type.test(Token::kOperatorSemicolon))
+                break;
+
+            if (type.test(Token::kWhiteSpace))
+                continue;
+
+            if (type.test(Token::kKeywordCppFile))
+            {
+                type = mTokenizer->next();
+                if (type.test(Token::kWhiteSpace))
+                    type = mTokenizer->next();
+
+                if (!type.test(Token::kOperatorColon))
+                    EHBan(kUnable);
+
+                std::unordered_set<dom::FsFileSPtr> files;
+                EHTest(parseFiles(mLocation->directory(), files));
+                EHTest(mCppProgram->updateCppFiles(files));
+
+                continue;
+            }
+        }
 
         EHEnd;
     }
@@ -85,6 +119,9 @@ public:
         {
             auto type = mTokenizer->next();
             if (type.none())
+                EHBan(kUnable);
+
+            if (type.test(Token::kOperatorSemicolon))
                 break;
 
             if (type.test(Token::kPath))
