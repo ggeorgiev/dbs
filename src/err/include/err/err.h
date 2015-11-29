@@ -20,6 +20,8 @@ enum ECode
     // Error handling system codes
     kExpected = 1,
     kAssert = 2,
+
+    kUnable = 10,
 };
 
 struct Location

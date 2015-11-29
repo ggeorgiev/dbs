@@ -20,6 +20,9 @@
 #define BITMASK0(X) (1 << (X))
 #define BITMASK0_FROM_INDEX(...) (0 + BITMASK_FOR_EACH(BITMASK0, __VA_ARGS__))
 
+#define BITMASK1(X) (1 << ((X)-64))
+#define BITMASK1_FROM_INDEX(...) (0 + BITMASK_FOR_EACH(BITMASK1, __VA_ARGS__))
+
 namespace parser
 {
 template <typename C>

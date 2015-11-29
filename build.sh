@@ -38,12 +38,12 @@ LIBRARIES="$LIBRARIES -lboost_system -lboost_chrono -lformat"
 DEFINES="-DDEBUG" && OPTOMIZATION="-O0"
 
 mkdir -p build
-#PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \
-#    src/main.cpp $FILES \
-#    $DEFINES $LIBRARIES \
-#    -o build/main  || exit 1
+PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \
+    src/main.cpp $FILES \
+    $DEFINES $LIBRARIES \
+    -o build/main  || exit 1
 
-if [ 1 == 1 ]
+if [ 1 == 0 ]
 then
 
     FILES="$FILES src/gtest/time_monitor.cpp src/gtest/performance_arbiter.cpp"

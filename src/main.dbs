@@ -1,3 +1,4 @@
-err/err.cpp
-const/constants.cpp
-dom/fs/fs_manager.cpp
+cpp_program:
+    err/err.cpp
+    const/constants.cpp
+    dom/fs/fs_manager.cpp

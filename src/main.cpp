@@ -1,7 +1,5 @@
-#include "parser/keyword.hpp"
 #include "parser/parser.hpp" // IWYU pragma: keep
 #include "parser/string_stream.hpp"
-#include "parser/token_type.hpp"
 
 #include "dom/cpp/cpp_program.hpp"
 #include "dom/fs/fs_manager.h"

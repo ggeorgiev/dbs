@@ -41,11 +41,40 @@ public:
     dom::CppProgramSPtr cppProgram() const { return mCppProgram; }
     ECode parse()
     {
+        for (;;)
+        {
+            auto type = mTokenizer->next();
+            if (type.none())
+                break;
+
+            if (type.test(Token::kWhiteSpace))
+                continue;
+
+            if (type.test(Token::kKeywordCppProgram))
+            {
+                EHTest(parseCppProgram());
+                continue;
+            }
+        }
+
+        EHEnd;
+    }
+
+    ECode parseCppProgram()
+    {
+        auto type = mTokenizer->next();
+        if (type.test(Token::kWhiteSpace))
+            type = mTokenizer->next();
+
+        if (!type.test(Token::kOperatorColon))
+            EHBan(kUnable);
+
         mCppProgram = std::make_shared<dom::CppProgram>();
 
         std::unordered_set<dom::FsFileSPtr> files;
         EHTest(parseFiles(mLocation->directory(), files));
         EHTest(mCppProgram->updateCppFiles(files));
+
         EHEnd;
     }
 
