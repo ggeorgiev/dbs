@@ -38,7 +38,7 @@ public:
     {
         std::stringstream stream;
 
-        stream << "CLANGBIN=/Users/george/github/dbs/clang/bin\n"
+        stream << "CLANGBIN=" << directory->path(nullptr) << "clang/bin\n"
                << "CLANG=clang++\n"
 
                << "CXXFLAGS=\"-std=c++11 -stdlib=libc++\"\n"

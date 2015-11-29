@@ -44,7 +44,9 @@ public:
         mTokeBegin = mStream->iterator();
 
         auto ch = mStream->take();
-        mTokenTypes = Token::types(0, ch);
+
+        mKeywords = Token::keywordBody(0, ch);
+        mTokenTypes = Token::types(ch);
         mPosition = 1;
 
         return expand();
@@ -52,14 +54,24 @@ public:
 
     typename Token::Type expand()
     {
-        while (mStream->has())
+        for (;;)
         {
-            auto ch = mStream->get();
-            auto mask = Token::types(mPosition, ch);
+            auto ch = mStream->zget();
+            auto types =
+                ((mKeywords != Keyword::kNil) && (mKeywords && Token::keywordEnd(mPosition, ch)))
+                    ? Token::Type::kKeyword
+                    : Token::Type::kNil;
 
-            auto types = mTokenTypes & ~mask;
+            if (!mStream->has())
+                return mTokenTypes | types;
+
+            auto mask = Token::types(ch);
+
+            types |= mTokenTypes & ~mask;
 
             mTokenTypes &= mask;
+            if (mKeywords != Keyword::kNil)
+                mKeywords |= Token::keywordBody(mPosition, ch);
 
             if (types != Token::Type::kNil)
                 return types;
@@ -68,7 +80,7 @@ public:
             mStream->move();
         }
 
-        return mTokenTypes;
+        return Token::Type::kNil;
     }
 
     size_t length() { return mPosition; }
@@ -77,6 +89,7 @@ private:
 
     size_t mPosition;
     typename Token::Type mTokenTypes;
+    typename Token::Keyword mKeywords;
 
     StreamSPtr mStream;
 };

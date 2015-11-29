@@ -1,6 +1,7 @@
-#include "parser/tokenizer.hpp" // IWYU pragma: keep
+#include "parser/keyword.hpp"
 #include "parser/string_stream.hpp"
 #include "parser/token_type.hpp"
+#include "parser/tokenizer.hpp" // IWYU pragma: keep
 
 #include "err/err.h"
 
@@ -12,6 +13,7 @@
 
 #include <memory>
 #include <sstream>
+#include <string>
 
 template <typename T>
 class TokenizerTest : public ::testing::Test
@@ -160,5 +162,45 @@ TYPED_TEST(TokenizerTest, sequence)
             if (type == parser::TokenType::kNil)
                 break;
         }
+    }
+}
+
+TYPED_TEST(TokenizerTest, keywords)
+{
+    const char* keywords[]{
+        "cpp_program", "cpp_program ",
+    };
+
+    for (auto keyword : keywords)
+    {
+        auto stream = std::make_shared<typename TestFixture::Stream>();
+        stream->initialize(keyword);
+
+        auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
+        tokenizer->initialize(stream);
+
+        auto type = tokenizer->next();
+
+        ASSERT_EQ(parser::TokenType::kKeyword, type & parser::TokenType::kKeyword) << keyword;
+    }
+}
+
+TYPED_TEST(TokenizerTest, no_keywords)
+{
+    const char* keywords[]{
+        "cpp_pro", "sdfw45", "cpp_programfoo",
+    };
+
+    for (auto keyword : keywords)
+    {
+        auto stream = std::make_shared<typename TestFixture::Stream>();
+        stream->initialize(keyword);
+
+        auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
+        tokenizer->initialize(stream);
+
+        auto type = tokenizer->next();
+
+        ASSERT_EQ(parser::TokenType::kNil, type & parser::TokenType::kKeyword) << keyword;
     }
 }

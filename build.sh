@@ -38,10 +38,10 @@ LIBRARIES="$LIBRARIES -lboost_system -lboost_chrono -lformat"
 DEFINES="-DDEBUG" && OPTOMIZATION="-O0"
 
 mkdir -p build
-PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \
-    src/main.cpp $FILES \
-    -o build/main \
-    $DEFINES $LIBRARIES || exit 1
+#PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \
+#    src/main.cpp $FILES \
+#    -o build/main \
+#    $DEFINES $LIBRARIES || exit 1
 
 if [ 1 == 1 ]
 then
@@ -64,7 +64,7 @@ then
 
     LIBRARIES="$LIBRARIES -lgtest"
 
-    if [ 1 == 1 ]
+    if [ 1 == 0 ]
     then
         PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \
             src/gtest/main.cpp $FILES \

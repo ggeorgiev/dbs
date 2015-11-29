@@ -45,7 +45,7 @@ public:
         ASSERT(has());
         return EncodingTraits::to_code(&*mPosition);
     }
-
+    Code zget() { return EncodingTraits::to_code(&*mPosition); }
     Code take()
     {
         ASSERT(has());

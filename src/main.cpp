@@ -1,12 +1,19 @@
+#include "parser/keyword.hpp"
 #include "parser/parser.hpp" // IWYU pragma: keep
 #include "parser/string_stream.hpp"
+#include "parser/token_type.hpp"
 
-#include "err/err.h"
+#include "dom/cpp/cpp_program.hpp"
+#include "dom/fs/fs_manager.h"
 
 #include "im/initialization_manager.hpp"
 
+#include <stdio.h>
+#include <sys/errno.h>
+#include <unistd.h>
 #include <iostream>
-#include <fstream>
+#include <iterator>
+#include <memory>
 
 typedef parser::StringStream<char> Stream;
 typedef std::shared_ptr<Stream> StreamSPtr;
@@ -18,7 +25,12 @@ int main(int argc, const char* argv[])
 {
     im::InitializationManager im;
 
-    auto location = dom::gFsManager->obtainFile(nullptr, "/Users/george/github/dbs/src/main.dbs");
+    char current[FILENAME_MAX];
+    if (!getcwd(current, sizeof(current)))
+        return errno;
+
+    auto cwd = dom::gFsManager->obtainDirectory(nullptr, current);
+    auto location = dom::gFsManager->obtainFile(cwd, argv[1]);
 
     std::ifstream t(argv[1]);
     std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
@@ -31,12 +43,10 @@ int main(int argc, const char* argv[])
 
     parser->parse();
 
-    auto directory = dom::gFsManager->obtainDirectory(nullptr, "/Users/george/github/dbs");
-
     auto cppProgram = parser->cppProgram();
 
     std::string script;
-    cppProgram->dumpShell(directory, script);
+    cppProgram->dumpShell(cwd, script);
 
     std::cout << script;
     return 0;

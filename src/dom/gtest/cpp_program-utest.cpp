@@ -2,8 +2,11 @@
 //
 
 #include "dom/cpp/cpp_program.hpp"
+#include "dom/fs/fs_file.hpp"
 
 #include <gtest/gtest.h>
+
+#include <unordered_set>
 
 TEST(CppProgramTest, foo)
 {

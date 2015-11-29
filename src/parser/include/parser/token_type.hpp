@@ -11,10 +11,11 @@ enum class TokenType
 {
     kNil = 0,
 
-    kWhiteSpace = 1 << 0,
+    kKeyword = 1 << 0,
     kPath = 1 << 1,
+    kWhiteSpace = 1 << 2,
 
-    kAll = (1 << 2) - 1,
+    kAll = (1 << 3) - 1,
 };
 
 inline constexpr TokenType operator~(TokenType t1)

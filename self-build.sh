@@ -8,4 +8,6 @@ rm build/self.sh
 build/main src/main.dbs | tee build/self.sh
 chmod 755 build/self.sh
 
+echo
+echo running ...
 build/self.sh

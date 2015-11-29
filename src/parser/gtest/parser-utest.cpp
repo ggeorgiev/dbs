@@ -1,10 +1,13 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
+#include "parser/keyword.hpp"
 #include "parser/parser.hpp" // IWYU pragma: keep
 #include "parser/string_stream.hpp"
+#include "parser/token_type.hpp"
 
 #include "dom/fs/fs_file.hpp"
+#include "dom/fs/fs_manager.h"
 
 #include "err/err.h"
 
