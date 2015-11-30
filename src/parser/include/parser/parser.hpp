@@ -3,7 +3,11 @@
 
 #include "parser/tokenizer.hpp"
 
+#include "dom/generic/object.hpp"
+#include "dom/generic/manager.h"
+
 #include "dom/cpp/cpp_program.hpp"
+#include "dom/cpp/cpp_manager.h"
 
 #include "dom/fs/fs_manager.h"
 #include "dom/fs/fs_file.hpp"
@@ -43,19 +47,81 @@ public:
     {
         for (;;)
         {
-            auto type = mTokenizer->next();
+            auto type = nextMeaningfulToken();
 
             if (type.none())
                 break;
 
-            if (type.test(Token::kWhiteSpace))
+            if (type.test(Token::kKeywordCppLibrary))
+            {
+                EHTest(parseCppLibrary());
                 continue;
+            }
 
             if (type.test(Token::kKeywordCppProgram))
             {
                 EHTest(parseCppProgram());
                 continue;
             }
+        }
+
+        EHEnd;
+    }
+
+    ECode parseCppLibrary()
+    {
+        auto type = nextMeaningfulToken();
+
+        if (!type.test(Token::kIdentifier))
+            EHBan(kUnable, type);
+
+        auto name = mTokenizer->token();
+        auto object = dom::gManager->obtainObject(mLocation->directory(),
+                                                  dom::Object::Type::kCppLibrary,
+                                                  name);
+        auto library = dom::gCppManager->obtainCppLibrary(object);
+
+        for (;;)
+        {
+            auto type = nextMeaningfulToken();
+
+            if (type.test(Token::kOperatorColon))
+                break;
+
+            if (type.test(Token::kOperatorAt))
+            {
+                dom::Attribute attribute;
+                EHTest(parseAttribute(attribute));
+                EHTest(library->updateAttribute(attribute));
+                continue;
+            }
+
+            EHBan(kUnable);
+        }
+
+        for (;;)
+        {
+            auto type = nextMeaningfulToken();
+
+            if (type.test(Token::kOperatorSemicolon))
+                break;
+
+            if (type.test(Token::kKeywordCppPublicDirectory))
+            {
+                auto type = nextMeaningfulToken();
+
+                std::unordered_set<dom::FsDirectorySPtr> directories;
+                EHTest(parseDirectories(mLocation->directory(), 1, directories));
+
+                if (directories.size() < 1)
+                    EHBan(kUnable);
+
+                EHTest(library->updatePublicHeadersDirectory(*directories.begin()));
+
+                continue;
+            }
+
+            EHBan(kUnable);
         }
 
         EHEnd;
@@ -81,14 +147,9 @@ public:
             if (type.test(Token::kOperatorSemicolon))
                 break;
 
-            if (type.test(Token::kWhiteSpace))
-                continue;
-
             if (type.test(Token::kKeywordCppFile))
             {
-                type = mTokenizer->next();
-                if (type.test(Token::kWhiteSpace))
-                    type = mTokenizer->next();
+                auto type = nextMeaningfulToken();
 
                 if (!type.test(Token::kOperatorColon))
                     EHBan(kUnable);
@@ -100,9 +161,81 @@ public:
                 continue;
             }
 
+            if (type.test(Token::kKeywordCppLibrary))
+            {
+                auto type = nextMeaningfulToken();
+
+                if (!type.test(Token::kOperatorColon))
+                    EHBan(kUnable);
+
+                std::unordered_set<dom::ObjectSPtr> objects;
+                EHTest(
+                    parseObjects(mLocation->directory(), dom::Object::Type::kCppLibrary, objects));
+
+                std::unordered_set<dom::CppLibrarySPtr> libraries;
+                for (auto object : objects)
+                    libraries.emplace(dom::gCppManager->obtainCppLibrary(object));
+
+                EHTest(mCppProgram->updateCppLibraries(libraries));
+
+                continue;
+            }
+
             EHBan(kUnable);
         }
 
+        EHEnd;
+    }
+
+    ECode parseObjects(const dom::LocationSPtr& location,
+                       const dom::Object::Type objectType,
+                       std::unordered_set<dom::ObjectSPtr>& objects)
+    {
+        for (;;)
+        {
+            auto type = nextMeaningfulToken();
+
+            if (type.test(Token::kOperatorSemicolon))
+                break;
+
+            if (type.test(Token::kPath))
+            {
+                auto token = mTokenizer->token();
+                auto object = dom::gManager->obtainObject(location, objectType, token);
+                objects.emplace(object);
+                continue;
+            }
+
+            EHBan(kUnable);
+        }
+        EHEnd;
+    }
+
+    ECode parseDirectories(const dom::FsDirectorySPtr& directory,
+                           const size_t limit,
+                           std::unordered_set<dom::FsDirectorySPtr>& directories)
+    {
+        for (;;)
+        {
+            auto type = nextMeaningfulToken();
+
+            if (type.test(Token::kOperatorSemicolon))
+                break;
+
+            if (type.test(Token::kPath))
+            {
+                auto token = mTokenizer->token();
+                auto dir = dom::gFsManager->obtainDirectory(directory, token);
+                directories.emplace(dir);
+
+                if (directories.size() > limit)
+                    EHBan(kUnable);
+
+                continue;
+            }
+
+            EHBan(kUnable);
+        }
         EHEnd;
     }
 
@@ -126,6 +259,24 @@ public:
 
             EHBan(kUnable);
         }
+        EHEnd;
+    }
+
+    ECode parseAttribute(dom::Attribute& attribute)
+    {
+        auto type = nextMeaningfulToken();
+
+        if (!type.test(Token::kIdentifier))
+            EHBan(kUnable, type);
+
+        attribute.mName = mTokenizer->token();
+
+        type = nextMeaningfulToken();
+        if (!type.test(Token::kIdentifier))
+            EHBan(kUnable, type);
+
+        attribute.mValue = mTokenizer->token();
+
         EHEnd;
     }
 

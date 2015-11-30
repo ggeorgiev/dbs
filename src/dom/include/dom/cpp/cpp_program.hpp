@@ -3,12 +3,13 @@
 
 #pragma once
 
+#include "dom/cpp/cpp_library.hpp"
 #include "dom/fs/fs_file.hpp"
 
 #include "err/err.h"
 
 #include <memory>
-#include <vector>
+#include <set>
 #include <unordered_set>
 
 namespace dom
@@ -28,9 +29,13 @@ public:
 
     ECode updateCppFiles(std::unordered_set<dom::FsFileSPtr>& files)
     {
-        auto addedFiles = difference<dom::FsFileSPtr>(files, mCppFiles);
-        auto deletedFiles = difference<dom::FsFileSPtr>(mCppFiles, files);
         mCppFiles.swap(files);
+        EHEnd;
+    }
+
+    ECode updateCppLibraries(std::unordered_set<dom::CppLibrarySPtr>& libraries)
+    {
+        mCppLibraries.swap(libraries);
         EHEnd;
     }
 
@@ -52,33 +57,33 @@ public:
                << "CXXFLAGS=\"$CXXFLAGS -Isrc/dom/include\"\n"
                << "CXXFLAGS=\"$CXXFLAGS -Isrc/parser/include\"\n";
 
-        std::vector<std::string> files;
+        std::set<std::string> files;
         for (auto cppFile : mCppFiles)
-        {
-            files.push_back(cppFile->path(directory));
-        }
-        std::sort(files.begin(), files.end());
+            files.emplace(cppFile->path(directory));
 
         stream << "FILES=\"";
         for (auto file : files)
             stream << " " << file;
         stream << "\"\n";
 
-        stream << "CXXFLAGS=\"$CXXFLAGS -isystemgtest/include\"\n"
-               << "LIBRARIES=\"$LIBRARIES -Lgtest/lib\"\n"
+        std::set<std::string> isystems;
+        for (auto cppLibrary : mCppLibraries)
+            isystems.emplace(cppLibrary->publicHeadersDirectory()->path(directory));
 
-               << "CXXFLAGS=\"$CXXFLAGS -isystemboost/include\"\n"
-               << "LIBRARIES=\"$LIBRARIES -Lboost/lib\"\n"
+        stream << "ISYSTEM=\"";
+        for (auto isystem : isystems)
+            stream << " -isystem " << isystem;
+        stream << "\"\n";
 
-               << "CXXFLAGS=\"$CXXFLAGS -isystemcppformat/include\"\n"
+
+        stream << "LIBRARIES=\"$LIBRARIES -Lboost/lib\"\n"
                << "LIBRARIES=\"$LIBRARIES -Lcppformat/lib\"\n"
-
                << "LIBRARIES=\"$LIBRARIES -lboost_system -lboost_chrono -lformat\"\n"
 
                << "DEFINES=\"-DDEBUG\" && OPTOMIZATION=\"-O0\"\n"
 
                << "mkdir -p build\n"
-               << "PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \\\n"
+               << "PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $ISYSTEM $CXXFLAGS \\\n"
                << "    src/main.cpp $FILES \\\n"
                << "    -o build/main \\\n"
                << "    $DEFINES $LIBRARIES || exit 1\n"
@@ -89,6 +94,7 @@ public:
     }
 
 private:
+    std::unordered_set<dom::CppLibrarySPtr> mCppLibraries;
     std::unordered_set<dom::FsFileSPtr> mCppFiles;
 };
 

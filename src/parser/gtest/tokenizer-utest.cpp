@@ -191,8 +191,12 @@ TYPED_TEST(TokenizerTest, type)
     Test tests[]{
         Test{.str = "#foo", .expected = Token::kComment},
         Test{.str = "foo", .expected = Token::kIdentifier},
-        Test{.str = "cpp_program", .expected = Token::kKeywordCppProgram},
         Test{.str = "cpp_file", .expected = Token::kKeywordCppFile},
+        Test{.str = "cpp_library", .expected = Token::kKeywordCppLibrary},
+        Test{.str = "cpp_program", .expected = Token::kKeywordCppProgram},
+        Test{.str = "cpp_public_directory", .expected = Token::kKeywordCppPublicDirectory},
+        Test{.str = "=", .expected = Token::kOperatorAssignment},
+        Test{.str = "@", .expected = Token::kOperatorAt},
         Test{.str = ":", .expected = Token::kOperatorColon},
         Test{.str = ";", .expected = Token::kOperatorSemicolon},
         Test{.str = "foo/bar", .expected = Token::kPath},
@@ -203,7 +207,6 @@ TYPED_TEST(TokenizerTest, type)
         Test{.str = "cpp_program ", .expected = Token::kKeywordCppProgram},
         Test{.str = "cpp_program:", .expected = Token::kKeywordCppProgram},
         Test{.str = ": ", .expected = Token::kOperatorColon},
-
     };
 
     for (auto test : tests)

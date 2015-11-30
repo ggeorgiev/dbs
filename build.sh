@@ -22,6 +22,7 @@ FILES="src/err/err.cpp"
 FILES="$FILES src/const/constants.cpp"
 
 FILES="$FILES src/dom/generic/manager.cpp"
+FILES="$FILES src/dom/cpp/cpp_manager.cpp"
 FILES="$FILES src/dom/fs/fs_manager.cpp"
 
 CXXFLAGS="$CXXFLAGS -isystemgtest/include"
@@ -39,8 +40,8 @@ LIBRARIES="$LIBRARIES -lboost_system -lboost_chrono -lformat"
 DEFINES="-DDEBUG" && OPTOMIZATION="-O0 -g"
 
 mkdir -p build
-#PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES $DEFINES $LIBRARIES \
-#    -o build/main || exit 1
+PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES $DEFINES $LIBRARIES \
+    -o build/main || exit 1
 
 if [ 1 == 1 ]
 then

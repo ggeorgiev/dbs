@@ -1,16 +1,36 @@
-#cpp_library boost:
-#    @origin=3rdparty
-#
-#    binary:
-#        @linkage=static
-#
+cpp_library boost_chrono:
+    cpp_public_directory:
+        ../boost/include
+    ;
+;
+
+cpp_library boost_system:
+    cpp_public_directory:
+        ../boost/include
+    ;
+;
+
+cpp_library cppformat:
+    cpp_public_directory:
+        ../cppformat/include
+    ;
+;
 
 cpp_program dbs:
+    cpp_library:
+        boost_chrono
+        boost_system
+
+        cppformat
+    ;
 
     cpp_file:
         const/constants.cpp
+
         err/err.cpp
-        dom/generic/manager.cpp
+
+        dom/cpp/cpp_manager.cpp
         dom/fs/fs_manager.cpp
+        dom/generic/manager.cpp
     ;
 ;
