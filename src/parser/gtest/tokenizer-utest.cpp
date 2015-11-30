@@ -8,7 +8,7 @@
 #include <gtest/gtest-message.h>
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
-
+#include <bitset>
 #include <memory>
 #include <sstream>
 #include <string>
@@ -142,6 +142,16 @@ TYPED_TEST(TokenizerTest, sequence)
                  {
                      Token::kPathMask, Token::kWhiteSpaceMask, Token::kPathMask, 0,
                  }},
+
+        Test{.str = "file1.py#file2.py file3.py\nfile4.py",
+             .types =
+                 {
+                     Token::kPathMask,
+                     Token::kCommentMask,
+                     Token::kWhiteSpaceMask,
+                     Token::kPathMask,
+                     0,
+                 }},
     };
 
     for (auto test : tests)
@@ -158,7 +168,9 @@ TYPED_TEST(TokenizerTest, sequence)
         {
             SCOPED_TRACE(::testing::Message() << "Type: " << type);
 
-            ASSERT_TRUE((tokenizer->next() & type) == type);
+            auto result = tokenizer->next();
+            ASSERT_EQ(result & type, type) << "Result: " << result << ", Token: \""
+                                           << tokenizer->token() << "\"";
 
             if (type.none())
                 break;
@@ -177,6 +189,7 @@ TYPED_TEST(TokenizerTest, type)
     };
 
     Test tests[]{
+        Test{.str = "#foo", .expected = Token::kComment},
         Test{.str = "foo", .expected = Token::kIdentifier},
         Test{.str = "cpp_program", .expected = Token::kKeywordCppProgram},
         Test{.str = "cpp_file", .expected = Token::kKeywordCppFile},
@@ -195,7 +208,7 @@ TYPED_TEST(TokenizerTest, type)
 
     for (auto test : tests)
     {
-        SCOPED_TRACE(::testing::Message() << "String: " << test.str);
+        SCOPED_TRACE(::testing::Message() << "String: \"" << test.str << "\"");
 
         auto stream = std::make_shared<typename TestFixture::Stream>();
         stream->initialize(test.str);
@@ -203,7 +216,8 @@ TYPED_TEST(TokenizerTest, type)
         auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
         tokenizer->initialize(stream);
 
-        ASSERT_TRUE(tokenizer->next().test(test.expected));
+        auto type = tokenizer->next();
+        ASSERT_TRUE(type.test(test.expected)) << "Type: " << type;
     }
 }
 

@@ -1,17 +1,23 @@
-#include "parser/parser.hpp" // IWYU pragma: keep
+#include "parser/parser.hpp"
 #include "parser/string_stream.hpp"
 
 #include "dom/cpp/cpp_program.hpp"
+#include "dom/fs/fs_file.hpp"
 #include "dom/fs/fs_manager.h"
+
+#include "err/err.h"
 
 #include "im/initialization_manager.hpp"
 
 #include <stdio.h>
 #include <sys/errno.h>
 #include <unistd.h>
+#include <fstream> // IWYU pragma: keep
 #include <iostream>
-#include <fstream>
+#include <iterator>
 #include <memory>
+
+// IWYU pragma: no_include <sstream>
 
 typedef parser::StringStream<char> Stream;
 typedef std::shared_ptr<Stream> StreamSPtr;

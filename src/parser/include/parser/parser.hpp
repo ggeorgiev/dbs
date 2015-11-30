@@ -63,17 +63,12 @@ public:
 
     ECode parseCppProgram()
     {
-        auto type = mTokenizer->next();
-        if (type.test(Token::kWhiteSpace))
-            type = mTokenizer->next();
+        auto type = nextMeaningfulToken();
 
         if (!type.test(Token::kIdentifier))
             EHBan(kUnable, type);
 
-        type = mTokenizer->next();
-        if (type.test(Token::kWhiteSpace))
-            type = mTokenizer->next();
-
+        type = nextMeaningfulToken();
         if (!type.test(Token::kOperatorColon))
             EHBan(kUnable);
 
@@ -81,10 +76,7 @@ public:
 
         for (;;)
         {
-            auto type = mTokenizer->next();
-
-            if (type.none())
-                EHBan(kUnable);
+            auto type = nextMeaningfulToken();
 
             if (type.test(Token::kOperatorSemicolon))
                 break;
@@ -107,19 +99,19 @@ public:
 
                 continue;
             }
+
+            EHBan(kUnable);
         }
 
         EHEnd;
     }
 
     ECode parseFiles(const dom::FsDirectorySPtr& directory,
-                     std::unordered_set<dom::FsFileSPtr>& files) const
+                     std::unordered_set<dom::FsFileSPtr>& files)
     {
         for (;;)
         {
-            auto type = mTokenizer->next();
-            if (type.none())
-                EHBan(kUnable);
+            auto type = nextMeaningfulToken();
 
             if (type.test(Token::kOperatorSemicolon))
                 break;
@@ -129,9 +121,22 @@ public:
                 auto token = mTokenizer->token();
                 auto file = dom::gFsManager->obtainFile(directory, token);
                 files.emplace(file);
+                continue;
             }
+
+            EHBan(kUnable);
         }
         EHEnd;
+    }
+
+    typename Token::Type nextMeaningfulToken()
+    {
+        typename Token::Type type;
+        do
+        {
+            type = mTokenizer->next();
+        } while (type.test(Token::kWhiteSpace) || type.test(Token::kComment));
+        return type;
     }
 
 private:

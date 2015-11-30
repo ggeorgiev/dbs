@@ -1,3 +1,10 @@
+#cpp_library boost:
+#    @origin=3rdparty
+#
+#    binary:
+#        @linkage=static
+#
+
 cpp_program dbs:
 
     cpp_file:

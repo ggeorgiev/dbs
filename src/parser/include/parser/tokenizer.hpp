@@ -48,10 +48,12 @@ public:
 
         auto ch = mStream->take();
 
-        mTokenTypes = Token::typeBody(0, ch);
-#if 0
-        std::cout << "Position: 0, code: " << ch
-                  << ", Current: " << mTokenTypes << "\n";
+        mTokenTypes = Token::typeBody(Type(), 0, ch);
+
+//#define TOKENIZER_DUMP
+
+#if defined(TOKENIZER_DUMP)
+        std::cout << "Position: 0, code: " << ch << ", Current: " << mTokenTypes << "\n";
 #endif
         mPosition = 1;
 
@@ -64,7 +66,7 @@ public:
         {
             auto ch = mStream->zget();
             auto typeEnd = Token::typeEnd(mTokenTypes, mPosition, ch);
-#if 0
+#if defined(TOKENIZER_DUMP)
             std::cout << "Position: " << mPosition << ", code: " << ch
                       << ", Current: " << mTokenTypes << ", End: " << typeEnd << "\n";
 #endif
@@ -72,7 +74,11 @@ public:
             if (typeEnd.any() || !mStream->has())
                 return typeEnd;
 
-            mTokenTypes &= Token::typeBody(mPosition, ch);
+            auto typeBody = Token::typeBody(mTokenTypes, mPosition, ch);
+#if defined(TOKENIZER_DUMP)
+            std::cout << "Body: " << typeBody << "\n";
+#endif
+            mTokenTypes &= typeBody;
 
             if (mTokenTypes.none())
                 break;

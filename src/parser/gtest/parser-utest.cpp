@@ -12,6 +12,7 @@
 #include "gtest/err.h"
 #include "gtest/err_assert.h"
 
+#include <gtest/gtest-message.h>
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
 
@@ -71,6 +72,8 @@ TYPED_TEST(ParserTest, parseFiles)
 
     for (auto test : tests)
     {
+        SCOPED_TRACE(::testing::Message() << "Files: \"" << test.files << "\"");
+
         auto stream = std::make_shared<typename TestFixture::Stream>();
         stream->initialize(test.files);
 

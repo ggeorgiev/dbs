@@ -18,7 +18,8 @@ public:
 
     enum Index
     {
-        kIdentifier = 0,
+        kComment = 0,
+        kIdentifier,
         kKeywordCppProgram,
         kKeywordCppFile,
         kOperatorColon,
@@ -29,6 +30,7 @@ public:
         kCount
     };
 
+    BITMASK0(kComment);
     BITMASK0(kIdentifier);
     BITMASK0(kKeywordCppProgram);
     BITMASK0(kKeywordCppFile);
@@ -39,13 +41,18 @@ public:
 
     typedef std::bitset<kCount> Type;
 
-    static Type typeBody(size_t position, Code code)
+    static Type typeBody(const Type& current, size_t position, Code code)
     {
         Type type;
+        if (current.test(kComment))
+            type.set(kComment);
 
         switch (code)
         {
             case 0:
+                type.set(kComment, false);
+                break;
+
             case '\\':
             case ',':
             case '*':
@@ -56,12 +63,14 @@ public:
             case '|':
                 break;
 
+            case '\n':
+            case '\r':
+                type.set(kComment, false);
+            //  no break;
             case ' ':
             case '\t':
-            case '\n':
             case '\v':
             case '\f':
-            case '\r':
                 type.set(kWhiteSpace);
                 break;
 
@@ -81,6 +90,15 @@ public:
                         break;
                     default:
                         type.set(kIdentifier);
+                }
+                break;
+
+            case '#':
+                switch (position)
+                {
+                    case 0:
+                        type.set(kComment);
+                        break;
                 }
                 break;
 
@@ -266,6 +284,8 @@ public:
         switch (code)
         {
             case 0:
+                type.set(kComment, current[kComment]);
+            //  no break;
             case '\\':
             case ',':
             case ':':
@@ -276,17 +296,20 @@ public:
             case '<':
             case '>':
             case '|':
+            case '#':
                 type.set(kWhiteSpace, current[kWhiteSpace]);
                 type.set(kPath, current[kPath]);
                 type.set(kIdentifier, current[kIdentifier]);
                 break;
 
+            case '\r':
+            case '\n':
+                type.set(kComment, current[kComment]);
+            //  no break;
             case ' ':
             case '\t':
-            case '\n':
             case '\v':
             case '\f':
-            case '\r':
                 type.set(kPath, current[kPath]);
                 type.set(kIdentifier, current[kIdentifier]);
                 break;
