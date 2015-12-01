@@ -64,7 +64,7 @@ private:
         // initialize all global objects
         auto initializers = _initializers();
 
-        for (auto pair : initializers)
+        for (const auto& pair : initializers)
         {
             auto record = pair.second;
 
@@ -90,6 +90,8 @@ private:
             UninitializeFunction& uninitializer = *it;
             uninitializer();
         }
+
+        uninitializers.clear();
     }
 
     static Initializers& _initializers()

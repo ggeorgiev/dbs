@@ -1,25 +1,27 @@
-cpp_library boost_chrono:
-    cpp_public_directory:
-        ../boost/include
-    ;
+cpp_library boost_template:
+    cpp_public_directory: ../boost/include;
 ;
 
 cpp_library boost_system:
-    cpp_public_directory:
-        ../boost/include
-    ;
+    cpp_public_directory: ../boost/include;
+    cpp_binary: ../boost/lib/libboost_system.a;
+;
+
+cpp_library boost_chrono:
+    cpp_public_directory: ../boost/include;
+    cpp_binary: ../boost/lib/libboost_chrono.a;
 ;
 
 cpp_library cppformat:
-    cpp_public_directory:
-        ../cppformat/include
-    ;
+    cpp_public_directory: ../cppformat/include;
+    cpp_binary: ../cppformat/lib/libformat.a;
 ;
 
 cpp_program dbs:
     cpp_library:
-        boost_chrono
+        boost_template
         boost_system
+        boost_chrono
 
         cppformat
     ;

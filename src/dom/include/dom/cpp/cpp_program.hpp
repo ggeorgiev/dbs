@@ -58,29 +58,41 @@ public:
                << "CXXFLAGS=\"$CXXFLAGS -Isrc/parser/include\"\n";
 
         std::set<std::string> files;
-        for (auto cppFile : mCppFiles)
+        for (const auto& cppFile : mCppFiles)
             files.emplace(cppFile->path(directory));
 
         stream << "FILES=\"";
-        for (auto file : files)
+        for (const auto& file : files)
             stream << " " << file;
         stream << "\"\n";
 
         std::set<std::string> isystems;
-        for (auto cppLibrary : mCppLibraries)
+        std::set<std::string> lib_directories;
+        std::set<std::string> lib_binaries;
+        for (const auto& cppLibrary : mCppLibraries)
+        {
             isystems.emplace(cppLibrary->publicHeadersDirectory()->path(directory));
+            if (cppLibrary->binary() != nullptr)
+            {
+                lib_directories.emplace(cppLibrary->binary()->directory()->path(directory));
+                std::string name = cppLibrary->binary()->name();
+                lib_binaries.emplace(name.substr(3, name.size() - 5));
+            }
+        }
 
         stream << "ISYSTEM=\"";
-        for (auto isystem : isystems)
+        for (const auto& isystem : isystems)
             stream << " -isystem " << isystem;
         stream << "\"\n";
 
+        stream << "LIBRARIES=\"";
+        for (const auto& lib_directory : lib_directories)
+            stream << " -L" << lib_directory;
+        for (const auto& lib_binary : lib_binaries)
+            stream << " -l" << lib_binary;
+        stream << "\"\n";
 
-        stream << "LIBRARIES=\"$LIBRARIES -Lboost/lib\"\n"
-               << "LIBRARIES=\"$LIBRARIES -Lcppformat/lib\"\n"
-               << "LIBRARIES=\"$LIBRARIES -lboost_system -lboost_chrono -lformat\"\n"
-
-               << "DEFINES=\"-DDEBUG\" && OPTOMIZATION=\"-O0\"\n"
+        stream << "DEFINES=\"-DDEBUG\" && OPTOMIZATION=\"-O0\"\n"
 
                << "mkdir -p build\n"
                << "PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $ISYSTEM $CXXFLAGS \\\n"

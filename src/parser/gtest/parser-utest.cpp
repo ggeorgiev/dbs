@@ -70,7 +70,7 @@ TYPED_TEST(ParserTest, parseFiles)
     auto directory = dom::gFsManager->obtainDirectory(nullptr, "/");
     auto location = dom::gFsManager->obtainFile(nullptr, "/foo.dbs");
 
-    for (auto test : tests)
+    for (const auto& test : tests)
     {
         SCOPED_TRACE(::testing::Message() << "Files: \"" << test.files << "\"");
 
@@ -81,7 +81,7 @@ TYPED_TEST(ParserTest, parseFiles)
         ASSERT_OKAY(parser->initialize(stream, location));
 
         std::unordered_set<dom::FsFileSPtr> files;
-        ASSERT_OKAY(parser->parseFiles(directory, files));
+        ASSERT_OKAY(parser->parseFiles(directory, std::numeric_limits<size_t>::max(), files));
 
         ASSERT_EQ(test.count, files.size()) << test.files;
     }

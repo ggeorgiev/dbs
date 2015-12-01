@@ -46,7 +46,7 @@ public:
 
         mTokeBegin = mStream->iterator();
 
-        auto ch = mStream->take();
+        const auto& ch = mStream->take();
 
         mTokenTypes = Token::typeBody(Type(), 0, ch);
 

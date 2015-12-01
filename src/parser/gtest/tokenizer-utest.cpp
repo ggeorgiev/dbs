@@ -65,17 +65,17 @@ TYPED_TEST(TokenizerTest, token)
         Test{.str = "  foo   ", .tokens = {"  ", "foo", "   ", ""}},
     };
 
-    for (auto test : tests)
+    for (const auto& test : tests)
     {
         SCOPED_TRACE(::testing::Message() << "String: \"" << test.str << "\"");
 
-        auto stream = std::make_shared<typename TestFixture::Stream>();
+        const auto& stream = std::make_shared<typename TestFixture::Stream>();
         stream->initialize(test.str);
 
-        auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
+        const auto& tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
         tokenizer->initialize(stream);
 
-        for (auto token : test.tokens)
+        for (const auto& token : test.tokens)
         {
             SCOPED_TRACE(::testing::Message() << "Token: \"" << token << "\"");
 
@@ -104,7 +104,7 @@ TYPED_TEST(TokenizerTest, path)
         "this_is_a_path;",
     };
 
-    for (auto path : paths)
+    for (const auto& path : paths)
     {
         auto stream = std::make_shared<typename TestFixture::Stream>();
         stream->initialize(path);
@@ -154,7 +154,7 @@ TYPED_TEST(TokenizerTest, sequence)
                  }},
     };
 
-    for (auto test : tests)
+    for (const auto& test : tests)
     {
         SCOPED_TRACE(::testing::Message() << "String: " << test.str);
 
@@ -164,7 +164,7 @@ TYPED_TEST(TokenizerTest, sequence)
         auto tokenizer = std::make_shared<typename TestFixture::Tokenizer>();
         tokenizer->initialize(stream);
 
-        for (auto type : test.types)
+        for (const auto& type : test.types)
         {
             SCOPED_TRACE(::testing::Message() << "Type: " << type);
 
@@ -191,6 +191,7 @@ TYPED_TEST(TokenizerTest, type)
     Test tests[]{
         Test{.str = "#foo", .expected = Token::kComment},
         Test{.str = "foo", .expected = Token::kIdentifier},
+        Test{.str = "cpp_binary", .expected = Token::kKeywordCppBinary},
         Test{.str = "cpp_file", .expected = Token::kKeywordCppFile},
         Test{.str = "cpp_library", .expected = Token::kKeywordCppLibrary},
         Test{.str = "cpp_program", .expected = Token::kKeywordCppProgram},
@@ -209,7 +210,7 @@ TYPED_TEST(TokenizerTest, type)
         Test{.str = ": ", .expected = Token::kOperatorColon},
     };
 
-    for (auto test : tests)
+    for (const auto& test : tests)
     {
         SCOPED_TRACE(::testing::Message() << "String: \"" << test.str << "\"");
 
@@ -243,7 +244,7 @@ TYPED_TEST(TokenizerTest, negatove_type)
         Test{.str = "cpp_filefoo", .unexpected = Token::kKeywordCppFile},
     };
 
-    for (auto test : tests)
+    for (const auto& test : tests)
     {
         SCOPED_TRACE(::testing::Message() << "String: " << test.str);
 

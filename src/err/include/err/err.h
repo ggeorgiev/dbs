@@ -47,7 +47,7 @@ public:
     std::string callstack()
     {
         std::stringstream stream;
-        for (auto location : mCallstack)
+        for (const auto& location : mCallstack)
         {
             stream << location.mFile << ":" << location.mLine << ": @ " << location.mFunction
                    << "\n";

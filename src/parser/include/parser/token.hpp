@@ -20,6 +20,7 @@ public:
     {
         kComment = 0,
         kIdentifier,
+        kKeywordCppBinary,
         kKeywordCppFile,
         kKeywordCppLibrary,
         kKeywordCppProgram,
@@ -36,6 +37,7 @@ public:
 
     BITMASK0(kComment);
     BITMASK0(kIdentifier);
+    BITMASK0(kKeywordCppBinary);
     BITMASK0(kKeywordCppFile);
     BITMASK0(kKeywordCppLibrary);
     BITMASK0(kKeywordCppProgram);
@@ -151,8 +153,9 @@ public:
                 switch (position)
                 {
                     case 3:
-                        type |= Type(kKeywordCppFileMask | kKeywordCppLibraryMask |
-                                     kKeywordCppProgramMask | kKeywordCppPublicDirectoryMask);
+                        type |= Type(kKeywordCppBinaryMask | kKeywordCppFileMask |
+                                     kKeywordCppLibraryMask | kKeywordCppProgramMask |
+                                     kKeywordCppPublicDirectoryMask);
                         break;
 
                     case 10:
@@ -165,6 +168,9 @@ public:
                 type |= Type(kIdentifierMask | kPathMask);
                 switch (position)
                 {
+                    case 7:
+                        type |= Type(kKeywordCppBinaryMask);
+                        break;
                     case 8:
                         type |= Type(kKeywordCppLibraryMask);
                         break;
@@ -178,6 +184,9 @@ public:
                 type |= Type(kIdentifierMask | kPathMask);
                 switch (position)
                 {
+                    case 4:
+                        type |= Type(kKeywordCppBinaryMask);
+                        break;
                     case 6:
                         type |= Type(kKeywordCppLibraryMask | kKeywordCppPublicDirectoryMask);
                         break;
@@ -189,8 +198,9 @@ public:
                 switch (position)
                 {
                     case 0:
-                        type |= Type(kKeywordCppFileMask | kKeywordCppLibraryMask |
-                                     kKeywordCppProgramMask | kKeywordCppPublicDirectoryMask);
+                        type |= Type(kKeywordCppBinaryMask | kKeywordCppFileMask |
+                                     kKeywordCppLibraryMask | kKeywordCppProgramMask |
+                                     kKeywordCppPublicDirectoryMask);
                         break;
                     case 9:
                     case 15:
@@ -244,7 +254,8 @@ public:
                 switch (position)
                 {
                     case 5:
-                        type |= Type(kKeywordCppFileMask | kKeywordCppLibraryMask);
+                        type |= Type(kKeywordCppBinaryMask | kKeywordCppFileMask |
+                                     kKeywordCppLibraryMask);
                         break;
                     case 8:
                         type |= Type(kKeywordCppPublicDirectoryMask);
@@ -281,6 +292,16 @@ public:
                 }
                 break;
 
+            case 'n':
+                type |= Type(kIdentifierMask | kPathMask);
+                switch (position)
+                {
+                    case 6:
+                        type |= Type(kKeywordCppBinaryMask);
+                        break;
+                }
+                break;
+
             case 'o':
                 type |= Type(kIdentifierMask | kPathMask);
                 switch (position)
@@ -300,8 +321,9 @@ public:
                 {
                     case 1:
                     case 2:
-                        type |= Type(kKeywordCppFileMask | kKeywordCppLibraryMask |
-                                     kKeywordCppProgramMask | kKeywordCppPublicDirectoryMask);
+                        type |= Type(kKeywordCppBinaryMask | kKeywordCppFileMask |
+                                     kKeywordCppLibraryMask | kKeywordCppProgramMask |
+                                     kKeywordCppPublicDirectoryMask);
                         break;
                     case 4:
                         type |= Type(kKeywordCppProgramMask | kKeywordCppPublicDirectoryMask);
@@ -313,15 +335,19 @@ public:
                 type |= Type(kIdentifierMask | kPathMask);
                 switch (position)
                 {
+                    case 5:
+                        type |= Type(kKeywordCppProgramMask);
+                        break;
                     case 7:
+                        type |= Type(kKeywordCppLibraryMask);
+                        break;
+                    case 8:
+                        type |= Type(kKeywordCppBinaryMask | kKeywordCppProgramMask);
+                        break;
                     case 9:
                         type |= Type(kKeywordCppLibraryMask);
                         break;
 
-                    case 5:
-                    case 8:
-                        type |= Type(kKeywordCppProgramMask);
-                        break;
                     case 13:
                     case 18:
                         type |= Type(kKeywordCppPublicDirectoryMask);
@@ -353,6 +379,9 @@ public:
                 type |= Type(kIdentifierMask | kPathMask);
                 switch (position)
                 {
+                    case 9:
+                        type |= Type(kKeywordCppBinaryMask);
+                        break;
                     case 10:
                         type |= Type(kKeywordCppLibraryMask);
                         break;
@@ -395,6 +424,10 @@ public:
             case 8:
                 if (!isidentifier(code))
                     type.set(kKeywordCppFile, current[kKeywordCppFile]);
+                break;
+            case 10:
+                if (!isidentifier(code))
+                    type.set(kKeywordCppBinary, current[kKeywordCppBinary]);
                 break;
             case 11:
                 if (!isidentifier(code))

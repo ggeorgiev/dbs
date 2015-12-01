@@ -121,7 +121,22 @@ public:
                 continue;
             }
 
-            EHBan(kUnable);
+            if (type.test(Token::kKeywordCppBinary))
+            {
+                auto type = nextMeaningfulToken();
+
+                std::unordered_set<dom::FsFileSPtr> files;
+                EHTest(parseFiles(mLocation->directory(), 1, files));
+
+                if (files.size() < 1)
+                    EHBan(kUnable);
+
+                EHTest(library->updateBinary(*files.begin()));
+
+                continue;
+            }
+
+            EHBan(kUnable, type, mTokenizer->token());
         }
 
         EHEnd;
@@ -155,7 +170,8 @@ public:
                     EHBan(kUnable);
 
                 std::unordered_set<dom::FsFileSPtr> files;
-                EHTest(parseFiles(mLocation->directory(), files));
+                EHTest(
+                    parseFiles(mLocation->directory(), std::numeric_limits<size_t>::max(), files));
                 EHTest(mCppProgram->updateCppFiles(files));
 
                 continue;
@@ -173,7 +189,7 @@ public:
                     parseObjects(mLocation->directory(), dom::Object::Type::kCppLibrary, objects));
 
                 std::unordered_set<dom::CppLibrarySPtr> libraries;
-                for (auto object : objects)
+                for (const auto& object : objects)
                     libraries.emplace(dom::gCppManager->obtainCppLibrary(object));
 
                 EHTest(mCppProgram->updateCppLibraries(libraries));
@@ -224,8 +240,8 @@ public:
 
             if (type.test(Token::kPath))
             {
-                auto token = mTokenizer->token();
-                auto dir = dom::gFsManager->obtainDirectory(directory, token);
+                const auto& token = mTokenizer->token();
+                const auto& dir = dom::gFsManager->obtainDirectory(directory, token);
                 directories.emplace(dir);
 
                 if (directories.size() > limit)
@@ -240,6 +256,7 @@ public:
     }
 
     ECode parseFiles(const dom::FsDirectorySPtr& directory,
+                     const size_t limit,
                      std::unordered_set<dom::FsFileSPtr>& files)
     {
         for (;;)
@@ -251,9 +268,13 @@ public:
 
             if (type.test(Token::kPath))
             {
-                auto token = mTokenizer->token();
-                auto file = dom::gFsManager->obtainFile(directory, token);
+                const auto& token = mTokenizer->token();
+                const auto& file = dom::gFsManager->obtainFile(directory, token);
                 files.emplace(file);
+
+                if (files.size() > limit)
+                    EHBan(kUnable);
+
                 continue;
             }
 

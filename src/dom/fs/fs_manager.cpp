@@ -33,7 +33,7 @@ FsDirectorySPtr FsManager::obtainDirectory(const FsDirectorySPtr& base,
     auto parent = base;
     while (pos < end)
     {
-        auto next = std::find(pos, end, slash());
+        const auto& next = std::find(pos, end, slash());
 
         if (next != pos || parent == nullptr)
         {
@@ -51,7 +51,7 @@ FsDirectorySPtr FsManager::obtainDirectory(const FsDirectorySPtr& base,
                 working->set_parent(parent);
                 working->set_name(name);
 
-                auto emplace = mDirectories.emplace(working);
+                const auto& emplace = mDirectories.emplace(working);
                 parent = *emplace.first;
                 if (emplace.second)
                     working.reset();
@@ -84,7 +84,7 @@ FsFileSPtr FsManager::obtainFile(const FsDirectorySPtr& base,
     if (pos == end)
         return FsFileSPtr();
 
-    auto directory = obtainDirectory(base, begin, pos);
+    const auto& directory = obtainDirectory(base, begin, pos);
     if (directory == nullptr)
         return FsFileSPtr();
 

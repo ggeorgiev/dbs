@@ -30,6 +30,7 @@ public:
         EHEnd;
     }
 
+    FsFileSPtr binary() { return mBinary; }
     FsDirectorySPtr publicHeadersDirectory() { return mPublicHeaders; }
 private:
     FsFileSPtr mBinary;
