@@ -71,7 +71,7 @@ private:
             if (record.mFnInitialize())
             {
                 UninitializeFunction uninitializer = record.mFnUninitialize;
-                if (uninitializer != NULL)
+                if (uninitializer != nullptr)
                     uninitializers.push_back(uninitializer);
             }
         }

@@ -13,7 +13,7 @@ class TimeMonitor : public TestEventListener
 {
 public:
     TimeMonitor();
-    ~TimeMonitor() override;
+    ~TimeMonitor() = default;
 
     static size_t limit(const TestInfo& test_info);
 

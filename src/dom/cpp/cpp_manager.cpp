@@ -8,4 +8,4 @@
 namespace dom
 {
 CppManagerSPtr gCppManager = im::InitializationManager::subscribe(gCppManager);
-}
+} // namespace dom

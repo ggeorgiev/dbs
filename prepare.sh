@@ -30,17 +30,22 @@ then
 
     echo Copy clang to llvm ...
     rm -rf llvm/tools/clang
-    mkdir llvm/tools/clang || exit 1
+    mkdir -p llvm/tools/clang || exit 1
     cp -r clang llvm/tools || exit 1
+
+    echo Copy clang extra tools to llvm ...
+    rm -rf llvm/tools/clang/tools/extra
+    mkdir -p llvm/tools/clang/tools/extra || exit 1
+    cp -r clang-tools-extra/ llvm/tools/clang/tools/extra/ || exit 1
 
     echo Copy libcxx to llvm ...
     rm -rf llvm/projects/libcxx
-    mkdir llvm/projects/libcxx || exit 1
+    mkdir -p llvm/projects/libcxx || exit 1
     cp -r libcxx llvm/projects || exit 1
 
     echo Copy libcxxabi to llvm ...
     rm -rf llvm/projects/libcxxabi
-    mkdir llvm/projects/libcxxabi || exit 1
+    mkdir -p llvm/projects/libcxxabi || exit 1
     cp -r libcxxabi llvm/projects || exit 1
 
     rm -rf clang-build || exit 1

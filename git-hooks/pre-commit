@@ -3,6 +3,8 @@
 BASEDIR=$(pwd)/$(dirname $0)/../..
 cd $BASEDIR
 
+$BASEDIR/git-hooks/copyright.sh
+
 PATH=$BASEDIR/clang/bin:$PATH
 
 git-clang-format --diff

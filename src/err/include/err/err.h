@@ -70,7 +70,7 @@ using err::ECode;
 
 #define EH_CODE(code, ...) err::code
 
-#define EH_LOCATION err::Location(__FILE__, __LINE__, __FUNCTION__)
+#define EH_LOCATION err::Location(__FILE__, __LINE__, static_cast<const char*>(__FUNCTION__))
 
 #define EHEnd return err::kSuccess
 

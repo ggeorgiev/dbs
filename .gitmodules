@@ -31,3 +31,6 @@
 	path = 3rdparty/cppformat
 	url = https://github.com/cppformat/cppformat
 
+[submodule "clang-tools-extra"]
+	path = 3rdparty/clang-tools-extra
+	url = https://github.com/llvm-mirror/clang-tools-extra.git

@@ -136,6 +136,21 @@ public:
                 continue;
             }
 
+            if (type.test(Token::kKeywordCppFile))
+            {
+                auto type = nextMeaningfulToken();
+
+                if (!type.test(Token::kOperatorColon))
+                    EHBan(kUnable);
+
+                std::unordered_set<dom::FsFileSPtr> files;
+                EHTest(
+                    parseFiles(mLocation->directory(), std::numeric_limits<size_t>::max(), files));
+                EHTest(library->updateCppFiles(files));
+
+                continue;
+            }
+
             EHBan(kUnable, type, mTokenizer->token());
         }
 
@@ -288,13 +303,17 @@ public:
         auto type = nextMeaningfulToken();
 
         if (!type.test(Token::kIdentifier))
-            EHBan(kUnable, type);
+            EHBan(kUnable, type, mTokenizer->token());
 
         attribute.mName = mTokenizer->token();
 
         type = nextMeaningfulToken();
+        if (!type.test(Token::kOperatorAssignment))
+            EHBan(kUnable, type, mTokenizer->token());
+
+        type = nextMeaningfulToken();
         if (!type.test(Token::kIdentifier))
-            EHBan(kUnable, type);
+            EHBan(kUnable, type, mTokenizer->token());
 
         attribute.mValue = mTokenizer->token();
 

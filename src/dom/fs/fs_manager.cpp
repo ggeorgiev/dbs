@@ -90,8 +90,8 @@ FsFileSPtr FsManager::obtainFile(const FsDirectorySPtr& base,
 
     auto working = std::make_shared<FsFile>();
     working->set_directory(directory);
-    working->set_name(std::string(pos, end));
+    working->set_name(std::move(std::string(pos, end)));
 
     return *mFiles.emplace(working).first;
 }
-}
+} // namespace dom

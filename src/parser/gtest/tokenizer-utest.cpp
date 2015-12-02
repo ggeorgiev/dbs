@@ -8,6 +8,7 @@
 #include <gtest/gtest-message.h>
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
+
 #include <bitset>
 #include <memory>
 #include <sstream>

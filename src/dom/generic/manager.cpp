@@ -40,4 +40,4 @@ ObjectSPtr Manager::obtainObject(const LocationSPtr& base,
 
     return *mObjects.emplace(working).first;
 }
-}
+} // namespace dom

@@ -43,12 +43,12 @@ ECode run(const dom::FsFileSPtr& dbsFile, dom::CppProgramSPtr& program)
     EHEnd;
 }
 
-int main(int argc, const char* argv[])
+int main(int /*argc*/, const char* argv[])
 {
     im::InitializationManager im;
 
     char current[FILENAME_MAX];
-    if (!getcwd(current, sizeof(current)))
+    if (getcwd(current, sizeof(current)) == nullptr)
         return errno;
 
     auto cwd = dom::gFsManager->obtainDirectory(nullptr, current);

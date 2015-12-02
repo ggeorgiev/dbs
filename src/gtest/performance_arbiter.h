@@ -16,7 +16,7 @@ class PerformanceArbiter : public TestEventListener
 {
 public:
     PerformanceArbiter();
-    ~PerformanceArbiter() override;
+    ~PerformanceArbiter() = default;
 
     void OnTestProgramStart(const UnitTest& unit_test) override;
     void OnTestIterationStart(const UnitTest& unit_test, int iteration) override;

@@ -3,19 +3,15 @@
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
 
-#include <string.h>
 #include <limits>
 #include <ostream>
+#include <string.h>
 
 namespace testing
 {
 class TestPartResult;
 
 TimeMonitor::TimeMonitor() : mMode(kObserve)
-{
-}
-
-TimeMonitor::~TimeMonitor()
 {
 }
 
@@ -40,32 +36,32 @@ bool TimeMonitor::reset()
     return true;
 }
 
-void TimeMonitor::OnTestProgramStart(const UnitTest& unit_test)
+void TimeMonitor::OnTestProgramStart(const UnitTest& /*unit_test*/)
 {
     mFailedFilter.clear();
 }
 
-void TimeMonitor::OnTestIterationStart(const UnitTest& unit_test, int iteration)
+void TimeMonitor::OnTestIterationStart(const UnitTest& /*unit_test*/, int /*iteration*/)
 {
 }
 
-void TimeMonitor::OnEnvironmentsSetUpStart(const UnitTest& unit_test)
+void TimeMonitor::OnEnvironmentsSetUpStart(const UnitTest& /*unit_test*/)
 {
 }
 
-void TimeMonitor::OnEnvironmentsSetUpEnd(const UnitTest& unit_test)
+void TimeMonitor::OnEnvironmentsSetUpEnd(const UnitTest& /*unit_test*/)
 {
 }
 
-void TimeMonitor::OnTestCaseStart(const TestCase& test_case)
+void TimeMonitor::OnTestCaseStart(const TestCase& /*test_case*/)
 {
 }
 
-void TimeMonitor::OnTestStart(const TestInfo& test_info)
+void TimeMonitor::OnTestStart(const TestInfo& /*test_info*/)
 {
 }
 
-void TimeMonitor::OnTestPartResult(const TestPartResult& result)
+void TimeMonitor::OnTestPartResult(const TestPartResult& /*result*/)
 {
 }
 
@@ -73,7 +69,7 @@ void TimeMonitor::OnTestEnd(const TestInfo& test_info)
 {
     size_t expected = limit(test_info);
 
-    if ((size_t)test_info.result()->elapsed_time() <= expected)
+    if (static_cast<size_t>(test_info.result()->elapsed_time()) <= expected)
         return;
 
     if (mMode == kObserve)
@@ -91,23 +87,23 @@ void TimeMonitor::OnTestEnd(const TestInfo& test_info)
                  << "instead the expected " << expected << " ms.";
 }
 
-void TimeMonitor::OnTestCaseEnd(const TestCase& test_case)
+void TimeMonitor::OnTestCaseEnd(const TestCase& /*test_case*/)
 {
 }
 
-void TimeMonitor::OnEnvironmentsTearDownStart(const UnitTest& unit_test)
+void TimeMonitor::OnEnvironmentsTearDownStart(const UnitTest& /*unit_test*/)
 {
 }
 
-void TimeMonitor::OnEnvironmentsTearDownEnd(const UnitTest& unit_test)
+void TimeMonitor::OnEnvironmentsTearDownEnd(const UnitTest& /*unit_test*/)
 {
 }
 
-void TimeMonitor::OnTestIterationEnd(const UnitTest& unit_test, int iteration)
+void TimeMonitor::OnTestIterationEnd(const UnitTest& /*unit_test*/, int /*iteration*/)
 {
 }
 
-void TimeMonitor::OnTestProgramEnd(const UnitTest& unit_test)
+void TimeMonitor::OnTestProgramEnd(const UnitTest& /*unit_test*/)
 {
 }
-}
+} // namespace testing

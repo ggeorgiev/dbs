@@ -9,8 +9,8 @@ int main(int argc, char* argv[])
 {
     im::InitializationManager im;
 
-    testing::TimeMonitor* timeMonitor = new testing::TimeMonitor();
-    testing::PerformanceArbiter* performanceArbiter = new testing::PerformanceArbiter();
+    auto timeMonitor = new testing::TimeMonitor();
+    auto performanceArbiter = new testing::PerformanceArbiter();
 
     testing::TestEventListeners& listeners = testing::UnitTest::GetInstance()->listeners();
     listeners.Append(timeMonitor);

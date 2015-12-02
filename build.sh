@@ -40,8 +40,8 @@ DEFINES="-DNDEBUG" && OPTOMIZATION="-O3"
 #DEFINES="-DDEBUG" && OPTOMIZATION="-O0 -g"
 
 mkdir -p build
-#PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES $DEFINES $LIBRARIES \
-#    -o build/main || exit 1
+PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES $DEFINES $LIBRARIES \
+    -o build/main || exit 1
 
 if [ 1 == 1 ]
 then
@@ -64,16 +64,52 @@ then
 
     LIBRARIES="$LIBRARIES -lgtest"
 
+    COMPILE_DATABASE=build/compile_commands.json
+
+    echo "[" > $COMPILE_DATABASE
+    for FILE in src/main.cpp src/gtest/main.cpp $FILES
+    do
+        echo '  { "directory": "'$BASEDIR'", ' >> $COMPILE_DATABASE
+        echo '    "command": "'$PATH/$CLANG' -c '$OPTOMIZATION' '$CXXFLAGS' ' \
+             $FILE' '$DEFINES' -o build/'$FILE'.o", ' >> $COMPILE_DATABASE
+        echo '    "file": "'$FILE'" }, ' >> $COMPILE_DATABASE
+        echo >> $COMPILE_DATABASE
+    done
+    echo "]" >> $COMPILE_DATABASE
+
     if [ 1 == 1 ]
     then
+        mkdir -p build/src/gtest
+        mkdir -p build/src/err/gtest
+        mkdir -p build/src/const/gtest
+        mkdir -p build/src/dom/gtest
+        mkdir -p build/src/dom/generic/gtest
+        mkdir -p build/src/dom/cpp/gtest
+        mkdir -p build/src/dom/fs/gtest
+        mkdir -p build/src/im/gtest
+        mkdir -p build/src/parser/gtest
+
+        OBJFILES=
+        for FILE in src/gtest/main.cpp $FILES
+        do
+            echo clang compile $FILE ...
+
+            PATH=$CLANGBIN:$PATH $CLANG -c $OPTOMIZATION $CXXFLAGS \
+                $FILE \
+                $DEFINES \
+                -o build/$FILE.o || exit 1
+            OBJFILES="$OBJFILES build/$FILE.o"
+        done
+
         PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \
-            src/gtest/main.cpp $FILES \
-            -o build/gtest-main \
-            $DEFINES $LIBRARIES || exit 1
+             $OBJFILES \
+             $DEFINES $LIBRARIES \
+             -o build/gtest-main || exit 1
 
         build/gtest-main --gtest_filter=-*.PERFORMANCE_* || exit 1
 
-    else
+    elif [ 1 == 0 ]
+    then
 
         echo > build/iwyu.log
         for FILE in src/main.cpp src/gtest/main.cpp $FILES
@@ -84,6 +120,11 @@ then
         done
 
         iwyu/bin/fix_includes.py --nosafe_headers < build/iwyu.log
+    else
+        for FILE in src/main.cpp src/gtest/main.cpp $FILES
+        do
+            echo clang tidy $FILE ...
+            PATH=$CLANGBIN:$PATH clang-tidy -checks=*,-google-readability-todo,-cppcoreguidelines-pro-type-vararg,-google-readability-braces-around-statements,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-readability-braces-around-statements -p build $FILE 2>&1 || exit 1
+        done
     fi
-
 fi

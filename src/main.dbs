@@ -1,20 +1,67 @@
-cpp_library boost_template:
+cpp_library boost_template
+    @type=system:
     cpp_public_directory: ../boost/include;
 ;
 
-cpp_library boost_system:
+cpp_library boost_system
+    @type=system:
     cpp_public_directory: ../boost/include;
     cpp_binary: ../boost/lib/libboost_system.a;
 ;
 
-cpp_library boost_chrono:
+cpp_library boost_chrono
+    @type=system:
     cpp_public_directory: ../boost/include;
     cpp_binary: ../boost/lib/libboost_chrono.a;
 ;
 
-cpp_library cppformat:
+cpp_library cppformat
+    @type=system:
     cpp_public_directory: ../cppformat/include;
     cpp_binary: ../cppformat/lib/libformat.a;
+;
+
+
+
+cpp_library err
+    @type=user:
+    cpp_public_directory: err/include;
+
+    cpp_file:
+        err/err.cpp
+    ;
+;
+
+cpp_library const
+    @type=user:
+    cpp_public_directory: const/include;
+
+    cpp_file:
+        const/constants.cpp
+    ;
+;
+
+cpp_library im
+    @type=user:
+
+    cpp_public_directory: im/include;
+;
+
+cpp_library dom
+    @type=user:
+
+    cpp_public_directory: dom/include;
+
+    cpp_file:
+        dom/cpp/cpp_manager.cpp
+        dom/fs/fs_manager.cpp
+        dom/generic/manager.cpp
+    ;
+;
+
+cpp_library parser
+    @type=user:
+    cpp_public_directory: parser/include;
 ;
 
 cpp_program dbs:
@@ -22,17 +69,16 @@ cpp_program dbs:
         boost_template
         boost_system
         boost_chrono
-
         cppformat
+
+        err
+        const
+        im
+        dom
+        parser
     ;
 
     cpp_file:
-        const/constants.cpp
-
-        err/err.cpp
-
-        dom/cpp/cpp_manager.cpp
-        dom/fs/fs_manager.cpp
-        dom/generic/manager.cpp
+        main.cpp
     ;
 ;

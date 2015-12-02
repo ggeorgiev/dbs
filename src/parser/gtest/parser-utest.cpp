@@ -1,8 +1,8 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "parser/parser.hpp" // IWYU pragma: keep
 #include "parser/string_stream.hpp"
+#include "parser/parser.hpp" // IWYU pragma: keep
 
 #include "dom/fs/fs_file.hpp"
 #include "dom/fs/fs_manager.h"
@@ -16,9 +16,9 @@
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
 
-#include <stddef.h>
 #include <memory>
 #include <sstream>
+#include <stddef.h>
 #include <unordered_set>
 
 template <typename T>

@@ -460,6 +460,7 @@ public:
             case '>':
             case '|':
             case '#':
+            case '=':
                 type.set(kWhiteSpace, current[kWhiteSpace]);
                 type.set(kPath, current[kPath]);
                 type.set(kIdentifier, current[kIdentifier]);

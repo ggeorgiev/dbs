@@ -1,14 +1,15 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "dom/fs/fs_directory.hpp"
 #include "dom/fs/fs_file.hpp"
+#include "dom/fs/fs_directory.hpp"
 #include "dom/fs/fs_manager.h"
 
 #include "gtest/err_assert.h"
 
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
+
 #include <memory>
 #include <ostream>
 #include <string>
