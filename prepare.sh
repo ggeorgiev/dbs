@@ -155,12 +155,16 @@ then
     git submodule update --init libs/core            || exit 1
     git submodule update --init libs/detail          || exit 1
     git submodule update --init libs/functional      || exit 1
+    git submodule update --init libs/heap            || exit 1
     git submodule update --init libs/integer         || exit 1
+    git submodule update --init libs/intrusive       || exit 1
     git submodule update --init libs/iterator        || exit 1
     git submodule update --init libs/lexical_cast    || exit 1
     git submodule update --init libs/math            || exit 1
     git submodule update --init libs/mpl             || exit 1
+    git submodule update --init libs/move            || exit 1
     git submodule update --init libs/numeric         || exit 1
+    git submodule update --init libs/parameter       || exit 1
     git submodule update --init libs/predef          || exit 1
     git submodule update --init libs/preprocessor    || exit 1
     git submodule update --init libs/range           || exit 1

@@ -35,7 +35,9 @@ public:
                 mType = Type::kUser;
             else
                 EHBan(kUnable, attribute.mName, attribute.mValue);
-        } else {
+        }
+        else
+        {
             EHBan(kUnable, attribute.mName);
         }
         EHEnd;

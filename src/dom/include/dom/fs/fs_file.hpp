@@ -21,7 +21,7 @@ public:
 
     const std::string& name() const { return mName; }
     void set_name(const std::string& name) { mName = name; }
-    //void set_name(std::string&& name) { mName = std::forward<std::string>(name); }
+    // void set_name(std::string&& name) { mName = std::forward<std::string>(name); }
     const FsDirectorySPtr& directory() const { return mDirectory; }
     void set_directory(const FsDirectorySPtr& directory) { mDirectory = directory; }
 private:

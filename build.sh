@@ -16,8 +16,12 @@ CXXFLAGS="$CXXFLAGS -Isrc/im/include"
 CXXFLAGS="$CXXFLAGS -Isrc/err/include"
 CXXFLAGS="$CXXFLAGS -Isrc/dom/include"
 CXXFLAGS="$CXXFLAGS -Isrc/parser/include"
+CXXFLAGS="$CXXFLAGS -Isrc/tpool/include"
 
-FILES="src/err/err.cpp"
+
+FILES="src/tpool/gtest/tpool-utest.cpp"
+
+FILES="$FILES src/err/err.cpp"
 
 FILES="$FILES src/const/constants.cpp"
 
@@ -36,31 +40,33 @@ LIBRARIES="$LIBRARIES -Lcppformat/lib"
 
 LIBRARIES="$LIBRARIES -lboost_system -lboost_chrono -lformat"
 
-DEFINES="-DNDEBUG" && OPTOMIZATION="-O3"
-#DEFINES="-DDEBUG" && OPTOMIZATION="-O0 -g"
+#DEFINES="-DNDEBUG" && OPTOMIZATION="-O3"
+DEFINES="-DDEBUG" && OPTOMIZATION="-O0 -g"
 
 mkdir -p build
-PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES $DEFINES $LIBRARIES \
-    -o build/main || exit 1
+#PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES $DEFINES $LIBRARIES \
+#    -o build/main || exit 1
 
 if [ 1 == 1 ]
 then
 
     FILES="$FILES src/gtest/time_monitor.cpp src/gtest/performance_arbiter.cpp"
 
-    FILES="$FILES src/im/gtest/initialization_manager-utest.cpp"
+    #FILES="$FILES src/im/gtest/initialization_manager-utest.cpp"
 
-    FILES="$FILES src/err/gtest/err-utest.cpp"
-    FILES="$FILES src/err/gtest/err-ptest.cpp"
+    #FILES="$FILES src/err/gtest/err-utest.cpp"
+    #FILES="$FILES src/err/gtest/err-ptest.cpp"
 
-    FILES="$FILES src/dom/gtest/cpp_program-utest.cpp"
-    FILES="$FILES src/dom/gtest/fs_manager-utest.cpp"
-    FILES="$FILES src/dom/gtest/fs_directory-utest.cpp"
+    #FILES="$FILES src/dom/gtest/cpp_program-utest.cpp"
+    #FILES="$FILES src/dom/gtest/fs_manager-utest.cpp"
+    #FILES="$FILES src/dom/gtest/fs_directory-utest.cpp"
 
-    FILES="$FILES src/parser/gtest/parser-utest.cpp"
-    FILES="$FILES src/parser/gtest/stream-utest.cpp"
-    FILES="$FILES src/parser/gtest/token-utest.cpp"
-    FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
+    #FILES="$FILES src/parser/gtest/parser-utest.cpp"
+    #FILES="$FILES src/parser/gtest/stream-utest.cpp"
+    #FILES="$FILES src/parser/gtest/token-utest.cpp"
+    #FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
+
+#    FILES="$FILES src/tpool/gtest/tpool-utest.cpp"
 
     LIBRARIES="$LIBRARIES -lgtest"
 
@@ -88,6 +94,7 @@ then
         mkdir -p build/src/dom/fs/gtest
         mkdir -p build/src/im/gtest
         mkdir -p build/src/parser/gtest
+        mkdir -p build/src/tpool/gtest
 
         OBJFILES=
         for FILE in src/gtest/main.cpp $FILES

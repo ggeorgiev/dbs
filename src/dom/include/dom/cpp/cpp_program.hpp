@@ -18,7 +18,8 @@ class CppProgram
 {
 public:
     template <typename T>
-    std::vector<T> difference(const std::unordered_set<T>& a, const std::unordered_set<T>& b)
+    std::vector<T> difference(const std::unordered_set<T>& a,
+                              const std::unordered_set<T>& b)
     {
         std::vector<T> result;
         std::copy_if(a.begin(), a.end(), back_inserter(result), [&b](T needle) {
@@ -48,8 +49,8 @@ public:
 
                << "CXXFLAGS=\"-std=c++11 -stdlib=libc++\"\n"
                << "CXXFLAGS=\"$CXXFLAGS -isysroot "
-                  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/"
-                  "SDKs/MacOSX10.11.sdk\"\n";
+                  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/"
+                  "Developer/SDKs/MacOSX10.11.sdk\"\n";
 
         std::set<std::string> files;
         std::set<std::string> fileDirectories;
@@ -72,7 +73,8 @@ public:
             }
             if (cppLibrary->binary() != nullptr)
             {
-                lib_directories.emplace(cppLibrary->binary()->directory()->path(directory));
+                lib_directories.emplace(
+                    cppLibrary->binary()->directory()->path(directory));
                 std::string name = cppLibrary->binary()->name();
                 lib_binaries.emplace(name.substr(3, name.size() - 5));
             }
@@ -81,7 +83,8 @@ public:
                 for (const auto& cppFile : cppLibrary->cppFiles())
                 {
                     files.emplace(cppFile->path(directory));
-                    fileDirectories.emplace("build/" + cppFile->directory()->path(directory));
+                    fileDirectories.emplace("build/" +
+                                            cppFile->directory()->path(directory));
                 }
             }
         }
@@ -107,8 +110,8 @@ public:
         std::stringstream objFilesStream;
         for (const auto& file : files)
         {
-            stream << "PATH=$CLANGBIN:$PATH $CLANG $CXXFLAGS -c " << file << " -o build/" << file
-                   << ".o" << arguments << "\n";
+            stream << "PATH=$CLANGBIN:$PATH $CLANG $CXXFLAGS -c " << file << " -o build/"
+                   << file << ".o" << arguments << "\n";
 
             objFilesStream << " build/" << file << ".o";
         }
