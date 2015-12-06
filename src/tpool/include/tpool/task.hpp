@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "tpool/priority.hpp"
+
 #include "err/err.h"
 
 #include <boost/heap/fibonacci_heap.hpp>
@@ -31,15 +33,34 @@ public:
     typedef std::function<ECode()> Function;
     typedef std::future<ECode> Future;
 
-    Task(int priority, Function&& function) : mPriority(priority), mFunction(function) {}
-    void run() { mFunction(); }
-    int priority() { return mPriority; }
-    void setPriority(int priority) { mPriority = priority; }
-    Heap::handle_type& handle() { return mHandle; }
-    void setHandle(Heap::handle_type&& handle) { mHandle = handle; }
+    Task(int priority, Function&& function)
+        : mFunction(function)
+    {
+    }
+    void run()
+    {
+        mFunction();
+    }
+    int priority()
+    {
+        return mPriority->value();
+    }
+    void setPriority(int priority)
+    {
+        // mPriority->update(priority);
+    }
+    Heap::handle_type& handle()
+    {
+        return mHandle;
+    }
+    void setHandle(Heap::handle_type&& handle)
+    {
+        mHandle = handle;
+    }
+
 private:
     Heap::handle_type mHandle;
-    int mPriority;
+    PrioritySPtr mPriority;
     Function mFunction;
 };
 

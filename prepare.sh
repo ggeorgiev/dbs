@@ -73,6 +73,11 @@ then
     rm -rf llvm/projects/libcxxabi
 
     popd
+
+    if [ -e iwyu ]
+    then
+        cp iwyu/bin/* $CLANGBIN
+    fi
 fi
 
 CLANGDIR=$BASEDIR/clang
@@ -164,6 +169,7 @@ then
     git submodule update --init libs/mpl             || exit 1
     git submodule update --init libs/move            || exit 1
     git submodule update --init libs/numeric         || exit 1
+    git submodule update --init libs/optional        || exit 1
     git submodule update --init libs/parameter       || exit 1
     git submodule update --init libs/predef          || exit 1
     git submodule update --init libs/preprocessor    || exit 1

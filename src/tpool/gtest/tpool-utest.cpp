@@ -18,7 +18,7 @@ public:
 typedef ::testing::Types<tpool::TPool> TPoolType;
 
 TYPED_TEST_CASE(TPoolTest, TPoolType);
-
+/*
 TYPED_TEST(TPoolTest, initialize)
 {
     std::srand(std::time(0));
@@ -31,9 +31,8 @@ TYPED_TEST(TPoolTest, initialize)
             for (int j = 0; j < 10; ++j)
             {
                 auto task =
-                    std::make_shared<tpool::Task>(priority, [priority]() -> ECode {
-                        EHEnd;
-                    });
+                    std::make_shared<tpool::Task>(priority,
+                                                  [priority]() -> ECode { EHEnd; });
                 pool->schedule(task);
             }
             EHEnd;
@@ -42,3 +41,4 @@ TYPED_TEST(TPoolTest, initialize)
     }
     pool->join();
 }
+*/

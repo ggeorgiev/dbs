@@ -10,6 +10,7 @@
 #include <__hash_table>
 #include <algorithm>
 #include <functional>
+#include <type_traits>
 #include <utility>
 
 namespace dom

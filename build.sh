@@ -20,6 +20,7 @@ CXXFLAGS="$CXXFLAGS -Isrc/tpool/include"
 
 
 FILES="src/tpool/gtest/tpool-utest.cpp"
+FILES="src/tpool/gtest/priority-utest.cpp"
 
 FILES="$FILES src/err/err.cpp"
 
