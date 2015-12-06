@@ -3,8 +3,8 @@
 
 #include "parser/tokenizer.hpp"
 
-#include "dom/cpp/cpp_program.hpp"
-#include "dom/cpp/cpp_manager.h"
+#include "dom/cxx/cxx_program.hpp"
+#include "dom/cxx/cxx_manager.h"
 
 #include "doim/generic/object.hpp"
 #include "doim/generic/manager.h"
@@ -42,9 +42,9 @@ public:
         EHEnd;
     }
 
-    dom::CppProgramSPtr cppProgram() const
+    dom::CxxProgramSPtr cxxProgram() const
     {
-        return mCppProgram;
+        return mCxxProgram;
     }
     ECode parse()
     {
@@ -55,15 +55,15 @@ public:
             if (type.none())
                 break;
 
-            if (type.test(Token::kKeywordCppLibrary))
+            if (type.test(Token::kKeywordCxxLibrary))
             {
-                EHTest(parseCppLibrary());
+                EHTest(parseCxxLibrary());
                 continue;
             }
 
-            if (type.test(Token::kKeywordCppProgram))
+            if (type.test(Token::kKeywordCxxProgram))
             {
-                EHTest(parseCppProgram());
+                EHTest(parseCxxProgram());
                 continue;
             }
         }
@@ -71,7 +71,7 @@ public:
         EHEnd;
     }
 
-    ECode parseCppLibrary()
+    ECode parseCxxLibrary()
     {
         auto type = nextMeaningfulToken();
 
@@ -80,9 +80,9 @@ public:
 
         auto name = mTokenizer->token();
         auto object = doim::gManager->obtainObject(mLocation->directory(),
-                                                   doim::Object::Type::kCppLibrary,
+                                                   doim::Object::Type::kCxxLibrary,
                                                    name);
-        auto library = dom::gCppManager->obtainCppLibrary(object);
+        auto library = dom::gCxxManager->obtainCxxLibrary(object);
 
         for (;;)
         {
@@ -109,7 +109,7 @@ public:
             if (type.test(Token::kOperatorSemicolon))
                 break;
 
-            if (type.test(Token::kKeywordCppPublicDirectory))
+            if (type.test(Token::kKeywordCxxPublicDirectory))
             {
                 auto type = nextMeaningfulToken();
 
@@ -124,7 +124,7 @@ public:
                 continue;
             }
 
-            if (type.test(Token::kKeywordCppBinary))
+            if (type.test(Token::kKeywordCxxBinary))
             {
                 auto type = nextMeaningfulToken();
 
@@ -139,7 +139,7 @@ public:
                 continue;
             }
 
-            if (type.test(Token::kKeywordCppFile))
+            if (type.test(Token::kKeywordCxxFile))
             {
                 auto type = nextMeaningfulToken();
 
@@ -150,7 +150,7 @@ public:
                 EHTest(parseFiles(mLocation->directory(),
                                   std::numeric_limits<size_t>::max(),
                                   files));
-                EHTest(library->updateCppFiles(files));
+                EHTest(library->updateCxxFiles(files));
 
                 continue;
             }
@@ -161,7 +161,7 @@ public:
         EHEnd;
     }
 
-    ECode parseCppProgram()
+    ECode parseCxxProgram()
     {
         auto type = nextMeaningfulToken();
 
@@ -172,7 +172,7 @@ public:
         if (!type.test(Token::kOperatorColon))
             EHBan(kUnable);
 
-        mCppProgram = std::make_shared<dom::CppProgram>();
+        mCxxProgram = std::make_shared<dom::CxxProgram>();
 
         for (;;)
         {
@@ -181,7 +181,7 @@ public:
             if (type.test(Token::kOperatorSemicolon))
                 break;
 
-            if (type.test(Token::kKeywordCppFile))
+            if (type.test(Token::kKeywordCxxFile))
             {
                 auto type = nextMeaningfulToken();
 
@@ -192,12 +192,12 @@ public:
                 EHTest(parseFiles(mLocation->directory(),
                                   std::numeric_limits<size_t>::max(),
                                   files));
-                EHTest(mCppProgram->updateCppFiles(files));
+                EHTest(mCxxProgram->updateCxxFiles(files));
 
                 continue;
             }
 
-            if (type.test(Token::kKeywordCppLibrary))
+            if (type.test(Token::kKeywordCxxLibrary))
             {
                 auto type = nextMeaningfulToken();
 
@@ -206,14 +206,14 @@ public:
 
                 std::unordered_set<doim::ObjectSPtr> objects;
                 EHTest(parseObjects(mLocation->directory(),
-                                    doim::Object::Type::kCppLibrary,
+                                    doim::Object::Type::kCxxLibrary,
                                     objects));
 
-                std::unordered_set<dom::CppLibrarySPtr> libraries;
+                std::unordered_set<dom::CxxLibrarySPtr> libraries;
                 for (const auto& object : objects)
-                    libraries.emplace(dom::gCppManager->obtainCppLibrary(object));
+                    libraries.emplace(dom::gCxxManager->obtainCxxLibrary(object));
 
-                EHTest(mCppProgram->updateCppLibraries(libraries));
+                EHTest(mCxxProgram->updateCxxLibraries(libraries));
 
                 continue;
             }
@@ -339,7 +339,7 @@ public:
 private:
     doim::FsFileSPtr mLocation;
 
-    dom::CppProgramSPtr mCppProgram;
+    dom::CxxProgramSPtr mCxxProgram;
     TokenizerSPtr mTokenizer;
 };
 }

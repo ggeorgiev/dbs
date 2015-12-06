@@ -25,8 +25,8 @@ public:
     enum class Type
     {
         kInvalid = 0,
-        kCppLibrary,
-        kCppProgram,
+        kCxxLibrary,
+        kCxxProgram,
     };
 
     Object()

@@ -9,7 +9,8 @@ CLANG=clang++
 IWYU=include-what-you-use
 
 CXXFLAGS="-std=c++11 -stdlib=libc++"
-CXXFLAGS="$CXXFLAGS -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk"
+CXXFLAGS="$CXXFLAGS -isysroot /Applications/Xcode.app/Contents/Developer/Platforms"
+CXXFLAGS="$CXXFLAGS/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk"
 
 CXXFLAGS="$CXXFLAGS -Isrc/const/include"
 CXXFLAGS="$CXXFLAGS -Isrc/im/include"
@@ -29,7 +30,7 @@ FILES="$FILES src/const/constants.cpp"
 FILES="$FILES src/doim/generic/manager.cpp"
 FILES="$FILES src/doim/fs/fs_manager.cpp"
 
-FILES="$FILES src/dom/cpp/cpp_manager.cpp"
+FILES="$FILES src/dom/cxx/cxx_manager.cpp"
 
 CXXFLAGS="$CXXFLAGS -isystemgtest/include"
 LIBRARIES="$LIBRARIES -Lgtest/lib"
@@ -59,7 +60,7 @@ then
     FILES="$FILES src/err/gtest/err-utest.cpp"
     FILES="$FILES src/err/gtest/err-ptest.cpp"
 
-    FILES="$FILES src/dom/gtest/cpp_program-utest.cpp"
+    FILES="$FILES src/dom/gtest/cxx_program-utest.cpp"
 
     FILES="$FILES src/doim/gtest/fs_manager-utest.cpp"
     FILES="$FILES src/doim/gtest/fs_directory-utest.cpp"
@@ -94,7 +95,7 @@ then
         mkdir -p build/src/err/gtest
         mkdir -p build/src/const/gtest
         mkdir -p build/src/dom/gtest
-        mkdir -p build/src/dom/cpp/gtest
+        mkdir -p build/src/dom/cxx/gtest
         mkdir -p build/src/dom/generic/gtest
         mkdir -p build/src/doim/gtest
         mkdir -p build/src/doim/generic/gtest

@@ -19,7 +19,7 @@ typedef ::testing::Types<tpool::TPool> TPoolType;
 
 TYPED_TEST_CASE(TPoolTest, TPoolType);
 
-TYPED_TEST(TPoolTest, initialize)
+TYPED_TEST(TPoolTest, SLOW_initialize)
 {
     std::srand(std::time(0));
 

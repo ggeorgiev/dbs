@@ -128,7 +128,7 @@ TYPED_TEST(TokenizerTest, sequence)
     };
 
     Test tests[]{
-        Test{.str = "file.cpp",
+        Test{.str = "file.cxx",
              .types =
                  {
                      Token::kPathMask, 0,
@@ -192,11 +192,12 @@ TYPED_TEST(TokenizerTest, type)
     Test tests[]{
         Test{.str = "#foo", .expected = Token::kComment},
         Test{.str = "foo", .expected = Token::kIdentifier},
-        Test{.str = "cpp_binary", .expected = Token::kKeywordCppBinary},
-        Test{.str = "cpp_file", .expected = Token::kKeywordCppFile},
-        Test{.str = "cpp_library", .expected = Token::kKeywordCppLibrary},
-        Test{.str = "cpp_program", .expected = Token::kKeywordCppProgram},
-        Test{.str = "cpp_public_directory", .expected = Token::kKeywordCppPublicDirectory},
+        Test{.str = "cxx_binary", .expected = Token::kKeywordCxxBinary},
+        Test{.str = "cxx_file", .expected = Token::kKeywordCxxFile},
+        Test{.str = "cxx_library", .expected = Token::kKeywordCxxLibrary},
+        Test{.str = "cxx_program", .expected = Token::kKeywordCxxProgram},
+        Test{.str = "cxx_public_directory",
+             .expected = Token::kKeywordCxxPublicDirectory},
         Test{.str = "=", .expected = Token::kOperatorAssignment},
         Test{.str = "@", .expected = Token::kOperatorAt},
         Test{.str = ":", .expected = Token::kOperatorColon},
@@ -206,8 +207,8 @@ TYPED_TEST(TokenizerTest, type)
 
         // special cases:
         Test{.str = "bar123_  ", .expected = Token::kIdentifier},
-        Test{.str = "cpp_program ", .expected = Token::kKeywordCppProgram},
-        Test{.str = "cpp_program:", .expected = Token::kKeywordCppProgram},
+        Test{.str = "cxx_program ", .expected = Token::kKeywordCxxProgram},
+        Test{.str = "cxx_program:", .expected = Token::kKeywordCxxProgram},
         Test{.str = ": ", .expected = Token::kOperatorColon},
     };
 
@@ -238,11 +239,11 @@ TYPED_TEST(TokenizerTest, negatove_type)
 
     Test tests[]{
         Test{.str = "123_", .unexpected = Token::kIdentifier},
-        Test{.str = "cpp_pro", .unexpected = Token::kKeywordCppProgram},
-        Test{.str = "cpp_programfoo", .unexpected = Token::kKeywordCppProgram},
-        Test{.str = "cpp_program_foo", .unexpected = Token::kKeywordCppProgram},
-        Test{.str = "cpp_fi", .unexpected = Token::kKeywordCppFile},
-        Test{.str = "cpp_filefoo", .unexpected = Token::kKeywordCppFile},
+        Test{.str = "cxx_pro", .unexpected = Token::kKeywordCxxProgram},
+        Test{.str = "cxx_programfoo", .unexpected = Token::kKeywordCxxProgram},
+        Test{.str = "cxx_program_foo", .unexpected = Token::kKeywordCxxProgram},
+        Test{.str = "cxx_fi", .unexpected = Token::kKeywordCxxFile},
+        Test{.str = "cxx_filefoo", .unexpected = Token::kKeywordCxxFile},
     };
 
     for (const auto& test : tests)

@@ -11,16 +11,20 @@ namespace testing
 {
 class TestPartResult;
 
-TimeMonitor::TimeMonitor() : mMode(kObserve)
+TimeMonitor::TimeMonitor()
+    : mMode(kObserve)
 {
 }
 
 static const char kPerformance[] = "PERFORMANCE_";
+static const char kSlow[] = "SLOW_";
 
 size_t TimeMonitor::limit(const TestInfo& test_info)
 {
     if (::strncmp(test_info.name(), kPerformance, sizeof(kPerformance) - 1) == 0)
         return std::numeric_limits<size_t>::max();
+    if (::strncmp(test_info.name(), kSlow, sizeof(kSlow) - 1) == 0)
+        return 100U;
     return 15U;
 }
 
