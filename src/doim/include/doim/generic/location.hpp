@@ -3,15 +3,15 @@
 
 #pragma once
 
-#include "dom/fs/fs_directory.hpp"
+#include "doim/fs/fs_directory.hpp"
 
-namespace dom
+namespace doim
 {
 /*
  * Generic Location
  *
- * For sake of simplicity and code efficiency the generic location is the shared with the fs
- * directory infrastructure.
+ * For sake of simplicity and code efficiency the generic location is the shared with the
+ * fs directory infrastructure.
  *
  */
 

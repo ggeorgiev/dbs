@@ -53,7 +53,8 @@ public:
 
         auto it = mDependees.find(dependee);
 
-        int value = dependee->value();
+        // Every priority should exceed all its dependees
+        int value = dependee->value() - 1;
 
         // We cannot find this dependee.
         if (it == mDependees.end())
@@ -88,8 +89,11 @@ private:
         auto value = mExplicitValue.value_or(std::numeric_limits<int>::max());
 
         if (minDependee != mDependees.end())
-            if (minDependee->second < value)
-                value = minDependee->second;
+        {
+            int dependee = minDependee->second;
+            if (dependee < value)
+                value = dependee;
+        }
 
         if (mValue == value)
             return false;

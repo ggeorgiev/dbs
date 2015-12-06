@@ -1,7 +1,7 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "dom/generic/manager.h"
+#include "doim/generic/manager.h"
 
 #include "const/constants.h"
 
@@ -9,7 +9,7 @@
 #include <functional>
 #include <utility>
 
-namespace dom
+namespace doim
 {
 ManagerSPtr gManager = im::InitializationManager::subscribe(gManager);
 
@@ -40,4 +40,4 @@ ObjectSPtr Manager::obtainObject(const LocationSPtr& base,
 
     return *mObjects.emplace(working).first;
 }
-} // namespace dom
+} // namespace doim

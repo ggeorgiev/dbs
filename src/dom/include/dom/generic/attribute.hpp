@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "dom/fs/fs_directory.hpp"
+#include <string>
 
 namespace dom
 {

@@ -3,14 +3,14 @@
 
 #include "parser/tokenizer.hpp"
 
-#include "dom/generic/object.hpp"
-#include "dom/generic/manager.h"
-
 #include "dom/cpp/cpp_program.hpp"
 #include "dom/cpp/cpp_manager.h"
 
-#include "dom/fs/fs_manager.h"
-#include "dom/fs/fs_file.hpp"
+#include "doim/generic/object.hpp"
+#include "doim/generic/manager.h"
+
+#include "doim/fs/fs_manager.h"
+#include "doim/fs/fs_file.hpp"
 
 #include "err/err.h"
 
@@ -31,7 +31,7 @@ public:
 
     typedef typename Tokenizer::Token Token;
 
-    ECode initialize(const StreamSPtr& stream, const dom::FsFileSPtr& location)
+    ECode initialize(const StreamSPtr& stream, const doim::FsFileSPtr& location)
     {
         EHAssert(stream != nullptr);
         EHAssert(location != nullptr);
@@ -42,7 +42,10 @@ public:
         EHEnd;
     }
 
-    dom::CppProgramSPtr cppProgram() const { return mCppProgram; }
+    dom::CppProgramSPtr cppProgram() const
+    {
+        return mCppProgram;
+    }
     ECode parse()
     {
         for (;;)
@@ -76,9 +79,9 @@ public:
             EHBan(kUnable, type);
 
         auto name = mTokenizer->token();
-        auto object = dom::gManager->obtainObject(mLocation->directory(),
-                                                  dom::Object::Type::kCppLibrary,
-                                                  name);
+        auto object = doim::gManager->obtainObject(mLocation->directory(),
+                                                   doim::Object::Type::kCppLibrary,
+                                                   name);
         auto library = dom::gCppManager->obtainCppLibrary(object);
 
         for (;;)
@@ -110,7 +113,7 @@ public:
             {
                 auto type = nextMeaningfulToken();
 
-                std::unordered_set<dom::FsDirectorySPtr> directories;
+                std::unordered_set<doim::FsDirectorySPtr> directories;
                 EHTest(parseDirectories(mLocation->directory(), 1, directories));
 
                 if (directories.size() < 1)
@@ -125,7 +128,7 @@ public:
             {
                 auto type = nextMeaningfulToken();
 
-                std::unordered_set<dom::FsFileSPtr> files;
+                std::unordered_set<doim::FsFileSPtr> files;
                 EHTest(parseFiles(mLocation->directory(), 1, files));
 
                 if (files.size() < 1)
@@ -143,9 +146,10 @@ public:
                 if (!type.test(Token::kOperatorColon))
                     EHBan(kUnable);
 
-                std::unordered_set<dom::FsFileSPtr> files;
-                EHTest(
-                    parseFiles(mLocation->directory(), std::numeric_limits<size_t>::max(), files));
+                std::unordered_set<doim::FsFileSPtr> files;
+                EHTest(parseFiles(mLocation->directory(),
+                                  std::numeric_limits<size_t>::max(),
+                                  files));
                 EHTest(library->updateCppFiles(files));
 
                 continue;
@@ -184,9 +188,10 @@ public:
                 if (!type.test(Token::kOperatorColon))
                     EHBan(kUnable);
 
-                std::unordered_set<dom::FsFileSPtr> files;
-                EHTest(
-                    parseFiles(mLocation->directory(), std::numeric_limits<size_t>::max(), files));
+                std::unordered_set<doim::FsFileSPtr> files;
+                EHTest(parseFiles(mLocation->directory(),
+                                  std::numeric_limits<size_t>::max(),
+                                  files));
                 EHTest(mCppProgram->updateCppFiles(files));
 
                 continue;
@@ -199,9 +204,10 @@ public:
                 if (!type.test(Token::kOperatorColon))
                     EHBan(kUnable);
 
-                std::unordered_set<dom::ObjectSPtr> objects;
-                EHTest(
-                    parseObjects(mLocation->directory(), dom::Object::Type::kCppLibrary, objects));
+                std::unordered_set<doim::ObjectSPtr> objects;
+                EHTest(parseObjects(mLocation->directory(),
+                                    doim::Object::Type::kCppLibrary,
+                                    objects));
 
                 std::unordered_set<dom::CppLibrarySPtr> libraries;
                 for (const auto& object : objects)
@@ -218,9 +224,9 @@ public:
         EHEnd;
     }
 
-    ECode parseObjects(const dom::LocationSPtr& location,
-                       const dom::Object::Type objectType,
-                       std::unordered_set<dom::ObjectSPtr>& objects)
+    ECode parseObjects(const doim::LocationSPtr& location,
+                       const doim::Object::Type objectType,
+                       std::unordered_set<doim::ObjectSPtr>& objects)
     {
         for (;;)
         {
@@ -232,7 +238,7 @@ public:
             if (type.test(Token::kPath))
             {
                 auto token = mTokenizer->token();
-                auto object = dom::gManager->obtainObject(location, objectType, token);
+                auto object = doim::gManager->obtainObject(location, objectType, token);
                 objects.emplace(object);
                 continue;
             }
@@ -242,9 +248,9 @@ public:
         EHEnd;
     }
 
-    ECode parseDirectories(const dom::FsDirectorySPtr& directory,
+    ECode parseDirectories(const doim::FsDirectorySPtr& directory,
                            const size_t limit,
-                           std::unordered_set<dom::FsDirectorySPtr>& directories)
+                           std::unordered_set<doim::FsDirectorySPtr>& directories)
     {
         for (;;)
         {
@@ -256,7 +262,7 @@ public:
             if (type.test(Token::kPath))
             {
                 const auto& token = mTokenizer->token();
-                const auto& dir = dom::gFsManager->obtainDirectory(directory, token);
+                const auto& dir = doim::gFsManager->obtainDirectory(directory, token);
                 directories.emplace(dir);
 
                 if (directories.size() > limit)
@@ -270,9 +276,9 @@ public:
         EHEnd;
     }
 
-    ECode parseFiles(const dom::FsDirectorySPtr& directory,
+    ECode parseFiles(const doim::FsDirectorySPtr& directory,
                      const size_t limit,
-                     std::unordered_set<dom::FsFileSPtr>& files)
+                     std::unordered_set<doim::FsFileSPtr>& files)
     {
         for (;;)
         {
@@ -284,7 +290,7 @@ public:
             if (type.test(Token::kPath))
             {
                 const auto& token = mTokenizer->token();
-                const auto& file = dom::gFsManager->obtainFile(directory, token);
+                const auto& file = doim::gFsManager->obtainFile(directory, token);
                 files.emplace(file);
 
                 if (files.size() > limit)
@@ -331,7 +337,7 @@ public:
     }
 
 private:
-    dom::FsFileSPtr mLocation;
+    doim::FsFileSPtr mLocation;
 
     dom::CppProgramSPtr mCppProgram;
     TokenizerSPtr mTokenizer;

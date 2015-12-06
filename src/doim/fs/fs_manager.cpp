@@ -1,7 +1,7 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "dom/fs/fs_manager.h"
+#include "doim/fs/fs_manager.h"
 
 #include "err/err_assert.h"
 
@@ -13,7 +13,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace dom
+namespace doim
 {
 FsManagerSPtr gFsManager = im::InitializationManager::subscribe(gFsManager);
 
@@ -27,9 +27,9 @@ FsDirectorySPtr FsManager::obtainDirectory(const FsDirectorySPtr& base,
     ASSERT(base != nullptr || *begin == slash());
     ASSERT(base == nullptr || *begin != slash());
 
-    FsDirectorySPtr working;
-
     auto pos = begin;
+
+    FsDirectory::Builder builder;
 
     auto parent = base;
     while (pos < end)
@@ -47,15 +47,13 @@ FsDirectorySPtr FsManager::obtainDirectory(const FsDirectorySPtr& base,
             }
             else if (name != kCurrentDirectoryString)
             {
-                if (working == nullptr)
-                    working = std::make_shared<FsDirectory>();
-                working->set_parent(parent);
-                working->set_name(name);
-
-                const auto& emplace = mDirectories.emplace(working);
+                builder.ensure();
+                builder.set_parent(parent);
+                builder.set_name(name);
+                const auto& emplace = mDirectories.emplace(builder.reference());
                 parent = *emplace.first;
                 if (emplace.second)
-                    working.reset();
+                    builder.reset();
             }
             if (next == end)
                 return parent;
@@ -89,10 +87,7 @@ FsFileSPtr FsManager::obtainFile(const FsDirectorySPtr& base,
     if (directory == nullptr)
         return FsFileSPtr();
 
-    auto working = std::make_shared<FsFile>();
-    working->set_directory(directory);
-    working->set_name(std::move(std::string(pos, end)));
-
+    auto working = std::make_shared<FsFile>(directory, std::string(pos, end));
     return *mFiles.emplace(working).first;
 }
-} // namespace dom
+} // namespace doim

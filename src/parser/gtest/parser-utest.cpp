@@ -4,8 +4,8 @@
 #include "parser/string_stream.hpp"
 #include "parser/parser.hpp" // IWYU pragma: keep
 
-#include "dom/fs/fs_file.hpp"
-#include "dom/fs/fs_manager.h"
+#include "doim/fs/fs_file.hpp"
+#include "doim/fs/fs_manager.h"
 
 #include "err/err.h"
 
@@ -39,7 +39,7 @@ TYPED_TEST_CASE(ParserTest, ParserType);
 TYPED_TEST(ParserTest, initialize)
 {
     typename TestFixture::StreamSPtr stream;
-    dom::FsFileSPtr location;
+    doim::FsFileSPtr location;
     auto parser = std::make_shared<typename TestFixture::Parser>();
     ASSERT_EHASSERT(parser->initialize(stream, location));
 
@@ -47,7 +47,7 @@ TYPED_TEST(ParserTest, initialize)
     ASSERT_EHASSERT(parser->initialize(stream, location));
     stream.reset();
 
-    location = dom::gFsManager->obtainFile(nullptr, "/foo.dbs");
+    location = doim::gFsManager->obtainFile(nullptr, "/foo.dbs");
     ASSERT_EHASSERT(parser->initialize(stream, location));
 }
 
@@ -67,8 +67,8 @@ TYPED_TEST(ParserTest, parseFiles)
         Test{.files = "foo  bar foo bar;", .count = 2},
     };
 
-    auto directory = dom::gFsManager->obtainDirectory(nullptr, "/");
-    auto location = dom::gFsManager->obtainFile(nullptr, "/foo.dbs");
+    auto directory = doim::gFsManager->obtainDirectory(nullptr, "/");
+    auto location = doim::gFsManager->obtainFile(nullptr, "/foo.dbs");
 
     for (const auto& test : tests)
     {
@@ -80,8 +80,9 @@ TYPED_TEST(ParserTest, parseFiles)
         auto parser = std::make_shared<typename TestFixture::Parser>();
         ASSERT_OKAY(parser->initialize(stream, location));
 
-        std::unordered_set<dom::FsFileSPtr> files;
-        ASSERT_OKAY(parser->parseFiles(directory, std::numeric_limits<size_t>::max(), files));
+        std::unordered_set<doim::FsFileSPtr> files;
+        ASSERT_OKAY(
+            parser->parseFiles(directory, std::numeric_limits<size_t>::max(), files));
 
         ASSERT_EQ(test.count, files.size()) << test.files;
     }

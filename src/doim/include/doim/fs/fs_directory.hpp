@@ -9,7 +9,7 @@
 #include <string>
 #include <iostream>
 
-namespace dom
+namespace doim
 {
 class FsDirectory;
 typedef std::shared_ptr<FsDirectory> FsDirectorySPtr;
@@ -17,6 +17,49 @@ typedef std::shared_ptr<FsDirectory> FsDirectorySPtr;
 class FsDirectory
 {
 public:
+    class Builder
+    {
+    public:
+        const FsDirectorySPtr& reference()
+        {
+            return mFsDirectory;
+        }
+
+        void ensure()
+        {
+            if (mFsDirectory == nullptr)
+                mFsDirectory = std::make_shared<FsDirectory>();
+        }
+
+        void reset()
+        {
+            mFsDirectory.reset();
+        }
+
+        void set_parent(const FsDirectorySPtr& parent) const
+        {
+            mFsDirectory->mParent = parent;
+        }
+
+        void set_name(const std::string& name) const
+        {
+            mFsDirectory->mName = name;
+        }
+
+    private:
+        FsDirectorySPtr mFsDirectory;
+    };
+
+    FsDirectory()
+    {
+    }
+
+    FsDirectory(const FsDirectorySPtr& parent, const std::string& name)
+        : mParent(parent)
+        , mName(name)
+    {
+    }
+
     std::string path(const FsDirectorySPtr& directory)
     {
         size_t dlevel = (directory == nullptr) ? 0 : directory->level();
@@ -38,10 +81,17 @@ public:
         calculate(directory, path.size(), path);
         return path;
     }
-    const std::string& name() const { return mName; }
-    void set_name(const std::string& name) { mName = name; }
-    const FsDirectorySPtr& parent() const { return mParent; }
-    void set_parent(const FsDirectorySPtr& parent) { mParent = parent; }
+
+    const std::string& name() const
+    {
+        return mName;
+    }
+
+    const FsDirectorySPtr& parent() const
+    {
+        return mParent;
+    }
+
     size_t level()
     {
         size_t level = 1;

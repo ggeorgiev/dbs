@@ -4,7 +4,8 @@
 #pragma once
 
 #include "dom/cpp/cpp_library.hpp"
-#include "dom/fs/fs_file.hpp"
+
+#include "doim/fs/fs_file.hpp"
 
 #include "err/err.h"
 
@@ -28,19 +29,19 @@ public:
         return result;
     }
 
-    ECode updateCppFiles(std::unordered_set<dom::FsFileSPtr>& files)
+    ECode updateCppFiles(std::unordered_set<doim::FsFileSPtr>& files)
     {
         mCppFiles.swap(files);
         EHEnd;
     }
 
-    ECode updateCppLibraries(std::unordered_set<dom::CppLibrarySPtr>& libraries)
+    ECode updateCppLibraries(std::unordered_set<CppLibrarySPtr>& libraries)
     {
         mCppLibraries.swap(libraries);
         EHEnd;
     }
 
-    ECode dumpShell(const dom::FsDirectorySPtr& directory, std::string& dump)
+    ECode dumpShell(const doim::FsDirectorySPtr& directory, std::string& dump)
     {
         std::stringstream stream;
 
@@ -133,8 +134,8 @@ public:
     }
 
 private:
-    std::unordered_set<dom::CppLibrarySPtr> mCppLibraries;
-    std::unordered_set<dom::FsFileSPtr> mCppFiles;
+    std::unordered_set<CppLibrarySPtr> mCppLibraries;
+    std::unordered_set<doim::FsFileSPtr> mCppFiles;
 };
 
 typedef std::shared_ptr<CppProgram> CppProgramSPtr;

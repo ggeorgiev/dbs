@@ -2,7 +2,8 @@
 //
 
 #include "dom/cpp/cpp_program.hpp"
-#include "dom/fs/fs_file.hpp"
+
+#include "doim/fs/fs_file.hpp"
 
 #include <gtest/gtest.h>
 
@@ -12,6 +13,6 @@ TEST(CppProgramTest, foo)
 {
     dom::CppProgram cppProgram;
 
-    std::unordered_set<dom::FsFileSPtr> files;
+    std::unordered_set<doim::FsFileSPtr> files;
     cppProgram.updateCppFiles(files);
 }

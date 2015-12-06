@@ -4,7 +4,8 @@
 #pragma once
 
 #include "dom/cpp/cpp_library.hpp"
-#include "dom/generic/object.hpp"
+
+#include "doim/generic/object.hpp"
 
 #include "im/initialization_manager.hpp"
 
@@ -17,21 +18,21 @@ namespace dom
 class CppManager
 {
 public:
-    typedef std::unordered_map<ObjectSPtr, CppLibrarySPtr> LibraryMap;
+    typedef std::unordered_map<doim::ObjectSPtr, CppLibrarySPtr> LibraryMap;
 
     static inline int initialization_rank()
     {
-        return im::InitializationManager::rank_base() + im::InitializationManager::rank_step();
+        return im::InitializationManager::rank_base() +
+               im::InitializationManager::rank_step();
     }
 
-    CppLibrarySPtr obtainCppLibrary(const ObjectSPtr& object)
+    CppLibrarySPtr obtainCppLibrary(const doim::ObjectSPtr& object)
     {
         auto it = mCppLibraries.find(object);
         if (it == mCppLibraries.end())
         {
-            it =
-                mCppLibraries.insert(LibraryMap::value_type(object, std::make_shared<CppLibrary>()))
-                    .first;
+            auto value = LibraryMap::value_type(object, std::make_shared<CppLibrary>());
+            it = mCppLibraries.insert(value).first;
         }
         return it->second;
     }

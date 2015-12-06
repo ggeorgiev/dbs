@@ -15,20 +15,21 @@ CXXFLAGS="$CXXFLAGS -Isrc/const/include"
 CXXFLAGS="$CXXFLAGS -Isrc/im/include"
 CXXFLAGS="$CXXFLAGS -Isrc/err/include"
 CXXFLAGS="$CXXFLAGS -Isrc/dom/include"
+CXXFLAGS="$CXXFLAGS -Isrc/doim/include"
 CXXFLAGS="$CXXFLAGS -Isrc/parser/include"
 CXXFLAGS="$CXXFLAGS -Isrc/tpool/include"
 
 
-FILES="src/tpool/gtest/tpool-utest.cpp"
-FILES="src/tpool/gtest/priority-utest.cpp"
+FILES=""
 
 FILES="$FILES src/err/err.cpp"
 
 FILES="$FILES src/const/constants.cpp"
 
-FILES="$FILES src/dom/generic/manager.cpp"
+FILES="$FILES src/doim/generic/manager.cpp"
+FILES="$FILES src/doim/fs/fs_manager.cpp"
+
 FILES="$FILES src/dom/cpp/cpp_manager.cpp"
-FILES="$FILES src/dom/fs/fs_manager.cpp"
 
 CXXFLAGS="$CXXFLAGS -isystemgtest/include"
 LIBRARIES="$LIBRARIES -Lgtest/lib"
@@ -53,21 +54,24 @@ then
 
     FILES="$FILES src/gtest/time_monitor.cpp src/gtest/performance_arbiter.cpp"
 
-    #FILES="$FILES src/im/gtest/initialization_manager-utest.cpp"
+    FILES="$FILES src/im/gtest/initialization_manager-utest.cpp"
 
-    #FILES="$FILES src/err/gtest/err-utest.cpp"
-    #FILES="$FILES src/err/gtest/err-ptest.cpp"
+    FILES="$FILES src/err/gtest/err-utest.cpp"
+    FILES="$FILES src/err/gtest/err-ptest.cpp"
 
-    #FILES="$FILES src/dom/gtest/cpp_program-utest.cpp"
-    #FILES="$FILES src/dom/gtest/fs_manager-utest.cpp"
-    #FILES="$FILES src/dom/gtest/fs_directory-utest.cpp"
+    FILES="$FILES src/dom/gtest/cpp_program-utest.cpp"
 
-    #FILES="$FILES src/parser/gtest/parser-utest.cpp"
-    #FILES="$FILES src/parser/gtest/stream-utest.cpp"
-    #FILES="$FILES src/parser/gtest/token-utest.cpp"
-    #FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
+    FILES="$FILES src/doim/gtest/fs_manager-utest.cpp"
+    FILES="$FILES src/doim/gtest/fs_directory-utest.cpp"
 
-#    FILES="$FILES src/tpool/gtest/tpool-utest.cpp"
+    FILES="$FILES src/parser/gtest/parser-utest.cpp"
+    FILES="$FILES src/parser/gtest/stream-utest.cpp"
+    FILES="$FILES src/parser/gtest/token-utest.cpp"
+    FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
+
+    FILES="$FILES src/tpool/gtest/tpool-utest.cpp"
+    FILES="$FILES src/tpool/gtest/priority-utest.cpp"
+
 
     LIBRARIES="$LIBRARIES -lgtest"
 
@@ -90,9 +94,11 @@ then
         mkdir -p build/src/err/gtest
         mkdir -p build/src/const/gtest
         mkdir -p build/src/dom/gtest
-        mkdir -p build/src/dom/generic/gtest
         mkdir -p build/src/dom/cpp/gtest
-        mkdir -p build/src/dom/fs/gtest
+        mkdir -p build/src/dom/generic/gtest
+        mkdir -p build/src/doim/gtest
+        mkdir -p build/src/doim/generic/gtest
+        mkdir -p build/src/doim/fs/gtest
         mkdir -p build/src/im/gtest
         mkdir -p build/src/parser/gtest
         mkdir -p build/src/tpool/gtest

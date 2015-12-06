@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include "dom/fs/fs_manager.h"
-#include "dom/generic/location.hpp"
-#include "dom/generic/object.hpp"
+#include "doim/fs/fs_manager.h"
+#include "doim/generic/location.hpp"
+#include "doim/generic/object.hpp"
 
 #include "im/initialization_manager.hpp"
 
@@ -16,7 +16,7 @@
 #include <string>
 #include <unordered_set>
 
-namespace dom
+namespace doim
 {
 class Manager
 {
@@ -63,7 +63,8 @@ private:
         bool operator()(const ObjectSPtr& object1, const ObjectSPtr& object2) const
         {
             return object1->type() == object1->type() &&
-                   object1->location() == object1->location() && object1->name() == object2->name();
+                   object1->location() == object1->location() &&
+                   object1->name() == object2->name();
         }
     };
 

@@ -5,7 +5,7 @@
 
 #include "dom/generic/attribute.hpp"
 
-#include "dom/fs/fs_file.hpp"
+#include "doim/fs/fs_file.hpp"
 
 #include "err/err.h"
 
@@ -24,7 +24,10 @@ public:
         kUser,
     };
 
-    CppLibrary() : mType(Type::kUser) {}
+    CppLibrary()
+        : mType(Type::kUser)
+    {
+    }
     ECode updateAttribute(const Attribute& attribute)
     {
         if (attribute.mName == "type")
@@ -42,32 +45,45 @@ public:
         }
         EHEnd;
     }
-    ECode updateBinary(const FsFileSPtr& binary)
+    ECode updateBinary(const doim::FsFileSPtr& binary)
     {
         mBinary = binary;
         EHEnd;
     }
-    ECode updatePublicHeadersDirectory(const FsDirectorySPtr& publicHeaders)
+    ECode updatePublicHeadersDirectory(const doim::FsDirectorySPtr& publicHeaders)
     {
         mPublicHeaders = publicHeaders;
         EHEnd;
     }
 
-    ECode updateCppFiles(std::unordered_set<dom::FsFileSPtr>& files)
+    ECode updateCppFiles(std::unordered_set<doim::FsFileSPtr>& files)
     {
         mCppFiles.swap(files);
         EHEnd;
     }
 
-    Type type() { return mType; }
-    const std::unordered_set<dom::FsFileSPtr>& cppFiles() { return mCppFiles; }
-    FsFileSPtr binary() { return mBinary; }
-    FsDirectorySPtr publicHeadersDirectory() { return mPublicHeaders; }
+    Type type()
+    {
+        return mType;
+    }
+    const std::unordered_set<doim::FsFileSPtr>& cppFiles()
+    {
+        return mCppFiles;
+    }
+    doim::FsFileSPtr binary()
+    {
+        return mBinary;
+    }
+    doim::FsDirectorySPtr publicHeadersDirectory()
+    {
+        return mPublicHeaders;
+    }
+
 private:
     Type mType;
-    FsFileSPtr mBinary;
-    FsDirectorySPtr mPublicHeaders;
-    std::unordered_set<dom::FsFileSPtr> mCppFiles;
+    doim::FsFileSPtr mBinary;
+    doim::FsDirectorySPtr mPublicHeaders;
+    std::unordered_set<doim::FsFileSPtr> mCppFiles;
 };
 
 typedef std::shared_ptr<CppLibrary> CppLibrarySPtr;
