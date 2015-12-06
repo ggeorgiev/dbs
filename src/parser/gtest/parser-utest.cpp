@@ -4,8 +4,9 @@
 #include "parser/string_stream.hpp"
 #include "parser/parser.hpp" // IWYU pragma: keep
 
+#include "doim/manager.h"
+
 #include "doim/fs/fs_file.hpp"
-#include "doim/fs/fs_manager.h"
 
 #include "err/err.h"
 
@@ -47,7 +48,7 @@ TYPED_TEST(ParserTest, initialize)
     ASSERT_EHASSERT(parser->initialize(stream, location));
     stream.reset();
 
-    location = doim::gFsManager->obtainFile(nullptr, "/foo.dbs");
+    location = doim::gManager->obtainFile(nullptr, "/foo.dbs");
     ASSERT_EHASSERT(parser->initialize(stream, location));
 }
 
@@ -67,8 +68,8 @@ TYPED_TEST(ParserTest, parseFiles)
         Test{.files = "foo  bar foo bar;", .count = 2},
     };
 
-    auto directory = doim::gFsManager->obtainDirectory(nullptr, "/");
-    auto location = doim::gFsManager->obtainFile(nullptr, "/foo.dbs");
+    auto directory = doim::gManager->obtainDirectory(nullptr, "/");
+    auto location = doim::gManager->obtainFile(nullptr, "/foo.dbs");
 
     for (const auto& test : tests)
     {

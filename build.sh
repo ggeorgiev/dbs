@@ -8,7 +8,7 @@ CLANG=clang++
 
 IWYU=include-what-you-use
 
-CXXFLAGS="-std=c++11 -stdlib=libc++"
+CXXFLAGS="-std=c++14 -stdlib=libc++"
 CXXFLAGS="$CXXFLAGS -isysroot /Applications/Xcode.app/Contents/Developer/Platforms"
 CXXFLAGS="$CXXFLAGS/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk"
 
@@ -27,10 +27,9 @@ FILES="$FILES src/err/err.cpp"
 
 FILES="$FILES src/const/constants.cpp"
 
-FILES="$FILES src/doim/generic/manager.cpp"
-FILES="$FILES src/doim/fs/fs_manager.cpp"
+FILES="$FILES src/doim/manager.cpp"
 
-FILES="$FILES src/dom/cxx/cxx_manager.cpp"
+FILES="$FILES src/dom/manager.cpp"
 
 CXXFLAGS="$CXXFLAGS -isystemgtest/include"
 LIBRARIES="$LIBRARIES -Lgtest/lib"
@@ -62,8 +61,8 @@ then
 
     FILES="$FILES src/dom/gtest/cxx_program-utest.cpp"
 
-    FILES="$FILES src/doim/gtest/fs_manager-utest.cpp"
-    FILES="$FILES src/doim/gtest/fs_directory-utest.cpp"
+    FILES="$FILES src/doim/gtest/manager-utest.cpp"
+    FILES="$FILES src/doim/gtest/fs/fs_directory-utest.cpp"
 
     FILES="$FILES src/parser/gtest/parser-utest.cpp"
     FILES="$FILES src/parser/gtest/stream-utest.cpp"
@@ -97,7 +96,7 @@ then
         mkdir -p build/src/dom/gtest
         mkdir -p build/src/dom/cxx/gtest
         mkdir -p build/src/dom/generic/gtest
-        mkdir -p build/src/doim/gtest
+        mkdir -p build/src/doim/gtest/fs
         mkdir -p build/src/doim/generic/gtest
         mkdir -p build/src/doim/fs/gtest
         mkdir -p build/src/im/gtest

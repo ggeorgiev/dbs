@@ -3,13 +3,14 @@
 
 #include "parser/tokenizer.hpp"
 
+#include "dom/manager.h"
+
 #include "dom/cxx/cxx_program.hpp"
-#include "dom/cxx/cxx_manager.h"
+
+#include "doim/manager.h"
 
 #include "doim/generic/object.hpp"
-#include "doim/generic/manager.h"
 
-#include "doim/fs/fs_manager.h"
 #include "doim/fs/fs_file.hpp"
 
 #include "err/err.h"
@@ -82,7 +83,7 @@ public:
         auto object = doim::gManager->obtainObject(mLocation->directory(),
                                                    doim::Object::Type::kCxxLibrary,
                                                    name);
-        auto library = dom::gCxxManager->obtainCxxLibrary(object);
+        auto library = dom::gManager->obtainCxxLibrary(object);
 
         for (;;)
         {
@@ -211,7 +212,7 @@ public:
 
                 std::unordered_set<dom::CxxLibrarySPtr> libraries;
                 for (const auto& object : objects)
-                    libraries.emplace(dom::gCxxManager->obtainCxxLibrary(object));
+                    libraries.emplace(dom::gManager->obtainCxxLibrary(object));
 
                 EHTest(mCxxProgram->updateCxxLibraries(libraries));
 
@@ -262,7 +263,7 @@ public:
             if (type.test(Token::kPath))
             {
                 const auto& token = mTokenizer->token();
-                const auto& dir = doim::gFsManager->obtainDirectory(directory, token);
+                const auto& dir = doim::gManager->obtainDirectory(directory, token);
                 directories.emplace(dir);
 
                 if (directories.size() > limit)
@@ -290,7 +291,7 @@ public:
             if (type.test(Token::kPath))
             {
                 const auto& token = mTokenizer->token();
-                const auto& file = doim::gFsManager->obtainFile(directory, token);
+                const auto& file = doim::gManager->obtainFile(directory, token);
                 files.emplace(file);
 
                 if (files.size() > limit)

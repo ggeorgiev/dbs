@@ -29,33 +29,24 @@ public:
         kCxxProgram,
     };
 
-    Object()
-        : mType(Type::kInvalid)
+    Object(const Type type, const std::string& name, const LocationSPtr& location)
+        : mType(type)
+        , mName(name)
+        , mLocation(location)
     {
     }
+
     Type type()
     {
         return mType;
-    }
-    void set_type(const Type type)
-    {
-        mType = type;
     }
     const std::string& name() const
     {
         return mName;
     }
-    void set_name(const std::string& name)
-    {
-        mName = name;
-    }
     const LocationSPtr& location() const
     {
         return mLocation;
-    }
-    void set_location(const LocationSPtr& location)
-    {
-        mLocation = location;
     }
 
 private:

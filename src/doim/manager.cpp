@@ -1,25 +1,47 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "doim/fs/fs_manager.h"
+#include "doim/manager.h"
 
-#include "err/err_assert.h"
+#include "err/err.h"
 
 #include "const/constants.h"
 
 #include <__hash_table>
-#include <algorithm>
 #include <functional>
-#include <type_traits>
 #include <utility>
 
 namespace doim
 {
-FsManagerSPtr gFsManager = im::InitializationManager::subscribe(gFsManager);
+ManagerSPtr gManager = im::InitializationManager::subscribe(gManager);
 
-FsDirectorySPtr FsManager::obtainDirectory(const FsDirectorySPtr& base,
-                                           const std::string::const_iterator& begin,
-                                           const std::string::const_iterator& end)
+ObjectSPtr Manager::obtainObject(const LocationSPtr& base,
+                                 const Object::Type type,
+                                 const std::string::const_iterator& begin,
+                                 const std::string::const_iterator& end)
+{
+    auto pos = end;
+    while (--pos >= begin)
+    {
+        if (*pos == slash())
+            break;
+    }
+    ++pos;
+
+    if (pos == end)
+        return ObjectSPtr();
+
+    auto location = obtainLocation(base, begin, pos);
+    if (location == nullptr)
+        return ObjectSPtr();
+
+    auto working = std::make_shared<Object>(type, std::string(pos, end), location);
+    return *mObjects.emplace(working).first;
+}
+
+FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
+                                         const std::string::const_iterator& begin,
+                                         const std::string::const_iterator& end)
 {
     if (begin == end)
         return base;
@@ -68,9 +90,9 @@ FsDirectorySPtr FsManager::obtainDirectory(const FsDirectorySPtr& base,
     return *mDirectories.emplace(parent).first;
 }
 
-FsFileSPtr FsManager::obtainFile(const FsDirectorySPtr& base,
-                                 const std::string::const_iterator& begin,
-                                 const std::string::const_iterator& end)
+FsFileSPtr Manager::obtainFile(const FsDirectorySPtr& base,
+                               const std::string::const_iterator& begin,
+                               const std::string::const_iterator& end)
 {
     auto pos = end;
     while (--pos >= begin)
@@ -90,4 +112,5 @@ FsFileSPtr FsManager::obtainFile(const FsDirectorySPtr& base,
     auto working = std::make_shared<FsFile>(directory, std::string(pos, end));
     return *mFiles.emplace(working).first;
 }
+
 } // namespace doim

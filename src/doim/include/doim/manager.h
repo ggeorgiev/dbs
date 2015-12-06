@@ -3,12 +3,14 @@
 
 #pragma once
 
-#include "doim/fs/fs_directory.hpp"
 #include "doim/fs/fs_file.hpp"
+#include "doim/generic/location.hpp"
+#include "doim/generic/object.hpp"
 
 #include "im/initialization_manager.hpp"
 
 #include <stddef.h>
+#include <functional>
 #include <iosfwd>
 #include <memory>
 #include <string>
@@ -16,7 +18,7 @@
 
 namespace doim
 {
-class FsManager
+class Manager
 {
 public:
     static inline int initialization_rank()
@@ -24,6 +26,30 @@ public:
         return im::InitializationManager::rank_base() +
                im::InitializationManager::rank_step();
     }
+
+    LocationSPtr obtainLocation(const LocationSPtr& base, const std::string& location)
+    {
+        return obtainDirectory(base, location.begin(), location.end());
+    }
+
+    LocationSPtr obtainLocation(const LocationSPtr& base,
+                                const std::string::const_iterator& begin,
+                                const std::string::const_iterator& end)
+    {
+        return obtainDirectory(base, begin, end);
+    }
+
+    ObjectSPtr obtainObject(const LocationSPtr& base,
+                            const Object::Type type,
+                            const std::string& object)
+    {
+        return obtainObject(base, type, object.begin(), object.end());
+    }
+
+    ObjectSPtr obtainObject(const LocationSPtr& base,
+                            const Object::Type type,
+                            const std::string::const_iterator& begin,
+                            const std::string::const_iterator& end);
 
     FsDirectorySPtr obtainDirectory(const FsDirectorySPtr& base,
                                     const std::string& directory)
@@ -44,6 +70,23 @@ public:
                           const std::string::const_iterator& end);
 
 private:
+    struct ObjectHasher
+    {
+        std::size_t operator()(const ObjectSPtr& object) const
+        {
+            return std::hash<int>()(static_cast<int>(object->type())) ^
+                   std::hash<LocationSPtr>()(object->location()) ^
+                   std::hash<std::string>()(object->name());
+        }
+
+        bool operator()(const ObjectSPtr& object1, const ObjectSPtr& object2) const
+        {
+            return object1->type() == object1->type() &&
+                   object1->location() == object1->location() &&
+                   object1->name() == object2->name();
+        }
+    };
+
     struct DirectoryHasher
     {
         std::size_t operator()(const FsDirectorySPtr& directory) const
@@ -59,7 +102,6 @@ private:
                    directory1->name() == directory2->name();
         }
     };
-    std::unordered_set<FsDirectorySPtr, DirectoryHasher, DirectoryHasher> mDirectories;
 
     struct FileHasher
     {
@@ -76,10 +118,12 @@ private:
         }
     };
 
+    std::unordered_set<ObjectSPtr, ObjectHasher, ObjectHasher> mObjects;
+    std::unordered_set<FsDirectorySPtr, DirectoryHasher, DirectoryHasher> mDirectories;
     std::unordered_set<FsFileSPtr, FileHasher, FileHasher> mFiles;
 };
 
-typedef std::shared_ptr<FsManager> FsManagerSPtr;
+typedef std::shared_ptr<Manager> ManagerSPtr;
 
-extern FsManagerSPtr gFsManager;
+extern ManagerSPtr gManager;
 }
