@@ -4,9 +4,8 @@
 #include "parser/string_stream.hpp"
 #include "parser/parser.hpp" // IWYU pragma: keep
 
-#include "doim/manager.h"
-
 #include "doim/fs/fs_file.hpp"
+#include "doim/manager.h"
 
 #include "err/err.h"
 
@@ -17,6 +16,7 @@
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
 
+#include <limits>
 #include <memory>
 #include <sstream>
 #include <stddef.h>

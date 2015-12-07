@@ -1,14 +1,3 @@
-#include "parser/parser.hpp"
-#include "parser/string_stream.hpp"
-
-#include "dom/cpp/cpp_program.hpp"
-#include "dom/fs/fs_file.hpp"
-#include "dom/fs/fs_manager.h"
-
-#include "err/err.h"
-
-#include "im/initialization_manager.hpp"
-
 #include <stdio.h>
 #include <sys/errno.h>
 #include <unistd.h>
@@ -16,6 +5,15 @@
 #include <iostream>
 #include <iterator>
 #include <memory>
+
+#include "doim/fs/fs_file.hpp"
+#include "doim/manager.h"
+#include "dom/cxx/cxx_program.hpp"
+#include "err/err.h"
+#include "im/initialization_manager.hpp"
+#include "parser/parser.hpp"
+#include "parser/string_stream.hpp"
+#include "tool/cxx_compiler.hpp"
 
 // IWYU pragma: no_include <sstream>
 
@@ -25,7 +23,7 @@ typedef std::shared_ptr<Stream> StreamSPtr;
 typedef parser::Parser<Stream> Parser;
 typedef std::shared_ptr<Parser> ParserSPtr;
 
-ECode run(const dom::FsFileSPtr& dbsFile, dom::CppProgramSPtr& program)
+ECode run(const doim::FsFileSPtr& dbsFile, dom::CxxProgramSPtr& program)
 {
     std::ifstream t(dbsFile->path(nullptr));
     std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
@@ -38,7 +36,7 @@ ECode run(const dom::FsFileSPtr& dbsFile, dom::CppProgramSPtr& program)
 
     EHTest(parser->parse());
 
-    program = parser->cppProgram();
+    program = parser->cxxProgram();
 
     EHEnd;
 }
@@ -51,10 +49,10 @@ int main(int /*argc*/, const char* argv[])
     if (getcwd(current, sizeof(current)) == nullptr)
         return errno;
 
-    auto cwd = dom::gFsManager->obtainDirectory(nullptr, current);
-    auto file = dom::gFsManager->obtainFile(cwd, argv[1]);
+    auto cwd = doim::gManager->obtainDirectory(nullptr, current);
+    auto file = doim::gManager->obtainFile(cwd, argv[1]);
 
-    dom::CppProgramSPtr program;
+    dom::CxxProgramSPtr program;
 
     ECode code = run(file, program);
     if (code != err::kSuccess)
@@ -64,8 +62,9 @@ int main(int /*argc*/, const char* argv[])
         return 1;
     }
 
-    std::string script;
-    EHTest(program->dumpShell(cwd, script));
+    const auto& binary = doim::gManager->obtainFile(cwd, "clang/bin/clang++");
+    const auto& compiler = std::make_shared<tool::CxxCompiler>(binary);
+    const auto& script = compiler->command(cwd, program);
 
     std::cout << script;
     return 0;

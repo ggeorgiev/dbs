@@ -19,6 +19,9 @@ namespace doim
  *
  */
 
+class Object;
+typedef std::shared_ptr<Object> ObjectSPtr;
+
 class Object
 {
 public:
@@ -49,11 +52,26 @@ public:
         return mLocation;
     }
 
+    struct Hasher
+    {
+        std::size_t operator()(const ObjectSPtr& object) const
+        {
+            return std::hash<int>()(static_cast<int>(object->type())) ^
+                   std::hash<LocationSPtr>()(object->location()) ^
+                   std::hash<std::string>()(object->name());
+        }
+
+        bool operator()(const ObjectSPtr& object1, const ObjectSPtr& object2) const
+        {
+            return object1->type() == object1->type() &&
+                   object1->location() == object1->location() &&
+                   object1->name() == object2->name();
+        }
+    };
+
 private:
     Type mType;
     LocationSPtr mLocation;
     std::string mName;
 };
-
-typedef std::shared_ptr<Object> ObjectSPtr;
 }

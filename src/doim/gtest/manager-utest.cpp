@@ -3,8 +3,8 @@
 
 #include "doim/manager.h"
 
-#include "doim/fs/fs_file.hpp"
 #include "doim/fs/fs_directory.hpp"
+#include "doim/fs/fs_file.hpp"
 
 #include "gtest/err_assert.h"
 
@@ -13,7 +13,6 @@
 
 #include <memory>
 #include <ostream>
-#include <string>
 
 TEST(ManagerTest, obtainEmptyDirectory)
 {
@@ -98,6 +97,37 @@ TEST(ManagerTest, obtainDirectory)
             << "root: \"" << test.root << "\", dir: \"" << test.dir << "\"";
         ASSERT_EQ(test.relative, directory->path(root))
             << "root: \"" << test.root << "\", dir: \"" << test.dir << "\"";
+    }
+}
+
+TEST(ManagerTest, obtainCorrespondingDirectory)
+{
+    struct Test
+    {
+        std::string dir;
+        std::string from;
+        std::string to;
+        std::string corresponding;
+    };
+
+    Test tests[]{
+        Test{.from = "/",
+             .dir = "foo/bar",
+             .to = "/baz",
+             .corresponding = "/baz/foo/bar"},
+    };
+
+    for (const auto& test : tests)
+    {
+        const auto& from = doim::gManager->obtainDirectory(nullptr, test.from);
+        const auto& directory = doim::gManager->obtainDirectory(from, test.dir);
+        const auto& to = doim::gManager->obtainDirectory(nullptr, test.to);
+        const auto& expected =
+            doim::gManager->obtainDirectory(nullptr, test.corresponding);
+        const auto& actual =
+            doim::gManager->obtainCorrespondingDirectory(directory, from, to);
+
+        ASSERT_EQ(expected->path(nullptr), actual->path(nullptr));
     }
 }
 

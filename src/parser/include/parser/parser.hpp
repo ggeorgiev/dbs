@@ -140,6 +140,27 @@ public:
                 continue;
             }
 
+            if (type.test(Token::kKeywordCxxLibrary))
+            {
+                auto type = nextMeaningfulToken();
+
+                if (!type.test(Token::kOperatorColon))
+                    EHBan(kUnable);
+
+                std::unordered_set<doim::ObjectSPtr> objects;
+                EHTest(parseObjects(mLocation->directory(),
+                                    doim::Object::Type::kCxxLibrary,
+                                    objects));
+
+                std::unordered_set<dom::CxxLibrarySPtr> libraries;
+                for (const auto& object : objects)
+                    libraries.insert(dom::gManager->obtainCxxLibrary(object));
+
+                EHTest(library->updateCxxLibraries(libraries));
+
+                continue;
+            }
+
             if (type.test(Token::kKeywordCxxFile))
             {
                 auto type = nextMeaningfulToken();
@@ -212,7 +233,7 @@ public:
 
                 std::unordered_set<dom::CxxLibrarySPtr> libraries;
                 for (const auto& object : objects)
-                    libraries.emplace(dom::gManager->obtainCxxLibrary(object));
+                    libraries.insert(dom::gManager->obtainCxxLibrary(object));
 
                 EHTest(mCxxProgram->updateCxxLibraries(libraries));
 
@@ -240,7 +261,7 @@ public:
             {
                 auto token = mTokenizer->token();
                 auto object = doim::gManager->obtainObject(location, objectType, token);
-                objects.emplace(object);
+                objects.insert(object);
                 continue;
             }
 
@@ -264,7 +285,7 @@ public:
             {
                 const auto& token = mTokenizer->token();
                 const auto& dir = doim::gManager->obtainDirectory(directory, token);
-                directories.emplace(dir);
+                directories.insert(dir);
 
                 if (directories.size() > limit)
                     EHBan(kUnable);
@@ -292,7 +313,7 @@ public:
             {
                 const auto& token = mTokenizer->token();
                 const auto& file = doim::gManager->obtainFile(directory, token);
-                files.emplace(file);
+                files.insert(file);
 
                 if (files.size() > limit)
                     EHBan(kUnable);

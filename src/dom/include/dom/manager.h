@@ -3,15 +3,15 @@
 
 #pragma once
 
-#include "dom/cxx/cxx_library.hpp"
 
 #include "doim/generic/object.hpp"
+
+#include "dom/cxx/cxx_library.hpp"
 
 #include "im/initialization_manager.hpp"
 
 #include <memory>
 #include <unordered_map>
-#include <utility>
 
 namespace dom
 {

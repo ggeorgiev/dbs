@@ -15,6 +15,9 @@
 
 namespace dom
 {
+class CxxProgram;
+typedef std::shared_ptr<CxxProgram> CxxProgramSPtr;
+
 class CxxProgram
 {
 public:
@@ -29,114 +32,71 @@ public:
         return result;
     }
 
-    ECode updateCxxFiles(std::unordered_set<doim::FsFileSPtr>& files)
-    {
-        mCxxFiles.swap(files);
-        EHEnd;
-    }
-
     ECode updateCxxLibraries(std::unordered_set<CxxLibrarySPtr>& libraries)
     {
         mCxxLibraries.swap(libraries);
         EHEnd;
     }
 
-    ECode dumpShell(const doim::FsDirectorySPtr& directory, std::string& dump)
+    ECode updateCxxFiles(std::unordered_set<doim::FsFileSPtr>& files)
     {
-        std::stringstream stream;
+        mCxxFiles.swap(files);
+        EHEnd;
+    }
 
-        stream << "CLANGBIN=" << directory->path(nullptr) << "clang/bin\n"
-               << "CLANG=clang++\n"
+    const std::unordered_set<CxxLibrarySPtr>& cxxLibraries()
+    {
+        return mCxxLibraries;
+    }
 
-               << "CXXFLAGS=\"-std=c++11 -stdlib=libc++\"\n"
-               << "CXXFLAGS=\"$CXXFLAGS -isysroot "
-                  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/"
-                  "Developer/SDKs/MacOSX10.11.sdk\"\n";
+    const std::unordered_set<doim::FsFileSPtr>& cxxFiles()
+    {
+        return mCxxFiles;
+    }
 
-        std::set<std::string> files;
-        std::set<std::string> fileDirectories;
+    // Computations
+    std::unordered_set<doim::CxxIncludeDirectorySPtr> cxxIncludeDirectories(
+        const doim::FsDirectorySPtr& root) const
+    {
+        std::unordered_set<doim::CxxIncludeDirectorySPtr> directories;
 
-        std::set<std::string> ies;
-        std::set<std::string> isystems;
-        std::set<std::string> lib_directories;
-        std::set<std::string> lib_binaries;
         for (const auto& cxxLibrary : mCxxLibraries)
         {
-            const auto& headerDir = cxxLibrary->publicHeadersDirectory()->path(directory);
-            switch (cxxLibrary->type())
-            {
-                case dom::CxxLibrary::Type::kSystem:
-                    isystems.emplace(headerDir);
-                    break;
-                case dom::CxxLibrary::Type::kUser:
-                    ies.emplace(headerDir);
-                    break;
-            }
-            if (cxxLibrary->binary() != nullptr)
-            {
-                lib_directories.emplace(
-                    cxxLibrary->binary()->directory()->path(directory));
-                std::string name = cxxLibrary->binary()->name();
-                lib_binaries.emplace(name.substr(3, name.size() - 5));
-            }
-            else
-            {
-                for (const auto& cxxFile : cxxLibrary->cxxFiles())
-                {
-                    files.emplace(cxxFile->path(directory));
-                    fileDirectories.emplace("build/" +
-                                            cxxFile->directory()->path(directory));
-                }
-            }
+            const auto& libDirectories = cxxLibrary->cxxIncludeDirectories(root);
+            directories.insert(libDirectories.begin(), libDirectories.end());
         }
+
+        return directories;
+    }
+
+    std::unordered_set<doim::CxxObjectFileSPtr> cxxObjectFiles(
+        const doim::FsDirectorySPtr& root,
+        const doim::FsDirectorySPtr& intermediate) const
+    {
+        std::unordered_set<doim::CxxObjectFileSPtr> cxxObjectFiles;
+
+        const auto& directories = cxxIncludeDirectories(root);
 
         for (const auto& cxxFile : mCxxFiles)
-            files.emplace(cxxFile->path(directory));
-
-        std::stringstream argumentStream;
-
-        for (const auto& isystem : isystems)
-            argumentStream << " -isystem " << isystem;
-
-        for (const auto& i : ies)
-            argumentStream << " -I " << i;
-
-        argumentStream << " -DDEBUG -O0";
-
-        auto arguments = argumentStream.str();
-
-        for (const auto& dir : fileDirectories)
-            stream << "mkdir -p " << dir << "\n";
-
-        std::stringstream objFilesStream;
-        for (const auto& file : files)
         {
-            stream << "PATH=$CLANGBIN:$PATH $CLANG $CXXFLAGS -c " << file << " -o build/"
-                   << file << ".o" << arguments << "\n";
+            const auto& directory =
+                doim::gManager->obtainCorrespondingDirectory(cxxFile->directory(),
+                                                             root,
+                                                             intermediate);
+            const auto& output =
+                doim::gManager->obtainFile(directory, cxxFile->name() + ".o");
 
-            objFilesStream << " build/" << file << ".o";
+            auto objectFile =
+                std::make_shared<doim::CxxObjectFile>(cxxFile, directories, output);
+            objectFile = doim::gManager->unique(objectFile);
+
+            cxxObjectFiles.insert(objectFile);
         }
-
-        for (const auto& lib_directory : lib_directories)
-            objFilesStream << " -L" << lib_directory;
-
-        for (const auto& lib_binary : lib_binaries)
-            objFilesStream << " -l" << lib_binary;
-
-        stream << "PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \\\n"
-               << "    " << objFilesStream.str() << "\\\n"
-               << "    -o build/main \\\n"
-               << "    $DEFINES $LIBRARIES || exit 1\n"
-               << "echo done.\n";
-
-        dump = stream.str();
-        EHEnd;
+        return cxxObjectFiles;
     }
 
 private:
     std::unordered_set<CxxLibrarySPtr> mCxxLibraries;
     std::unordered_set<doim::FsFileSPtr> mCxxFiles;
 };
-
-typedef std::shared_ptr<CxxProgram> CxxProgramSPtr;
 }

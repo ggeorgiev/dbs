@@ -104,6 +104,22 @@ public:
         return level;
     }
 
+    struct Hasher
+    {
+        std::size_t operator()(const FsDirectorySPtr& directory) const
+        {
+            return std::hash<FsDirectorySPtr>()(directory->parent()) ^
+                   std::hash<std::string>()(directory->name());
+        }
+
+        bool operator()(const FsDirectorySPtr& directory1,
+                        const FsDirectorySPtr& directory2) const
+        {
+            return directory1->parent() == directory2->parent() &&
+                   directory1->name() == directory2->name();
+        }
+    };
+
 private:
     void calculate(const FsDirectorySPtr& directory, size_t length, std::string& path)
     {

@@ -11,6 +11,9 @@
 
 namespace doim
 {
+class FsFile;
+typedef std::shared_ptr<FsFile> FsFileSPtr;
+
 class FsFile
 {
 public:
@@ -35,10 +38,23 @@ public:
         return mDirectory;
     }
 
+    struct Hasher
+    {
+        std::size_t operator()(const FsFileSPtr& file) const
+        {
+            return std::hash<FsDirectorySPtr>()(file->directory()) ^
+                   std::hash<std::string>()(file->name());
+        }
+
+        bool operator()(const FsFileSPtr& file1, const FsFileSPtr& file2) const
+        {
+            return file1->directory() == file2->directory() &&
+                   file1->name() == file2->name();
+        }
+    };
+
 private:
     FsDirectorySPtr mDirectory;
     std::string mName;
 };
-
-typedef std::shared_ptr<FsFile> FsFileSPtr;
 }

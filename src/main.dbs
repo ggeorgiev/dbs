@@ -1,71 +1,97 @@
-cpp_library boost_template
+cxx_library boost_template
     @type=system:
-    cpp_public_directory: ../boost/include;
+    cxx_public_directory: ../boost/include;
 ;
 
-cpp_library boost_system
+cxx_library boost_system
     @type=system:
-    cpp_public_directory: ../boost/include;
-    cpp_binary: ../boost/lib/libboost_system.a;
+    cxx_public_directory: ../boost/include;
+    cxx_binary: ../boost/lib/libboost_system.a;
 ;
 
-cpp_library boost_chrono
+cxx_library boost_chrono
     @type=system:
-    cpp_public_directory: ../boost/include;
-    cpp_binary: ../boost/lib/libboost_chrono.a;
+    cxx_public_directory: ../boost/include;
+    cxx_binary: ../boost/lib/libboost_chrono.a;
 ;
 
-cpp_library cppformat
+cxx_library cppformat
     @type=system:
-    cpp_public_directory: ../cppformat/include;
-    cpp_binary: ../cppformat/lib/libformat.a;
+    cxx_public_directory: ../cppformat/include;
+    cxx_binary: ../cppformat/lib/libformat.a;
 ;
 
-
-
-cpp_library err
+cxx_library err
     @type=user:
-    cpp_public_directory: err/include;
+    cxx_public_directory: err/include;
 
-    cpp_file:
+    cxx_library:
+        cppformat
+    ;
+
+    cxx_file:
         err/err.cpp
     ;
 ;
 
-cpp_library const
+cxx_library const
     @type=user:
-    cpp_public_directory: const/include;
+    cxx_public_directory: const/include;
 
-    cpp_file:
+    cxx_file:
         const/constants.cpp
     ;
 ;
 
-cpp_library im
+cxx_library im
     @type=user:
 
-    cpp_public_directory: im/include;
+    cxx_public_directory: im/include;
 ;
 
-cpp_library dom
+cxx_library doim
     @type=user:
 
-    cpp_public_directory: dom/include;
+    cxx_public_directory: doim/include;
 
-    cpp_file:
-        dom/cpp/cpp_manager.cpp
-        dom/fs/fs_manager.cpp
-        dom/generic/manager.cpp
+    cxx_library:
+        const
+        im
+        err
+    ;
+
+    cxx_file:
+        doim/manager.cpp
     ;
 ;
 
-cpp_library parser
+cxx_library dom
     @type=user:
-    cpp_public_directory: parser/include;
+
+    cxx_public_directory: dom/include;
+
+    cxx_library:
+        doim
+    ;
+
+    cxx_file:
+        dom/manager.cpp
+    ;
 ;
 
-cpp_program dbs:
-    cpp_library:
+
+cxx_library parser
+    @type=user:
+    cxx_public_directory: parser/include;
+;
+
+cxx_library tool
+    @type=user:
+    cxx_public_directory: tool/include;
+;
+
+cxx_program dbs:
+    cxx_library:
         boost_template
         boost_system
         boost_chrono
@@ -74,11 +100,13 @@ cpp_program dbs:
         err
         const
         im
+        doim
         dom
         parser
+        tool
     ;
 
-    cpp_file:
+    cxx_file:
         main.cpp
     ;
 ;

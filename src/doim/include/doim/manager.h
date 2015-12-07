@@ -3,18 +3,20 @@
 
 #pragma once
 
+#include "doim/cxx/cxx_include_directory.hpp"
+#include "doim/cxx/cxx_object_file.hpp"
+#include "doim/fs/fs_directory.hpp"
 #include "doim/fs/fs_file.hpp"
 #include "doim/generic/location.hpp"
 #include "doim/generic/object.hpp"
 
 #include "im/initialization_manager.hpp"
 
-#include <stddef.h>
-#include <functional>
+#include <__hash_table>
 #include <iosfwd>
 #include <memory>
-#include <string>
 #include <unordered_set>
+#include <utility>
 
 namespace doim
 {
@@ -27,11 +29,13 @@ public:
                im::InitializationManager::rank_step();
     }
 
+    // Obtain an unique location.
     LocationSPtr obtainLocation(const LocationSPtr& base, const std::string& location)
     {
         return obtainDirectory(base, location.begin(), location.end());
     }
 
+    // Obtain an unique location.
     LocationSPtr obtainLocation(const LocationSPtr& base,
                                 const std::string::const_iterator& begin,
                                 const std::string::const_iterator& end)
@@ -39,6 +43,7 @@ public:
         return obtainDirectory(base, begin, end);
     }
 
+    // Obtain an unique object.
     ObjectSPtr obtainObject(const LocationSPtr& base,
                             const Object::Type type,
                             const std::string& object)
@@ -46,20 +51,30 @@ public:
         return obtainObject(base, type, object.begin(), object.end());
     }
 
+    // Obtain an unique object.
     ObjectSPtr obtainObject(const LocationSPtr& base,
                             const Object::Type type,
                             const std::string::const_iterator& begin,
                             const std::string::const_iterator& end);
 
+    // Obtain an unique directory.
     FsDirectorySPtr obtainDirectory(const FsDirectorySPtr& base,
                                     const std::string& directory)
     {
         return obtainDirectory(base, directory.begin(), directory.end());
     }
 
+    // Obtain an unique directory.
     FsDirectorySPtr obtainDirectory(const FsDirectorySPtr& base,
                                     const std::string::const_iterator& begin,
                                     const std::string::const_iterator& end);
+
+    // Obtain an the unique corresponding directory of directory in toDirectory to that in
+    // fromDirectory. Note that directory must be subdirectory of fromDirectory.
+    FsDirectorySPtr obtainCorrespondingDirectory(const FsDirectorySPtr& directory,
+                                                 const FsDirectorySPtr& fromDirectory,
+                                                 const FsDirectorySPtr& toDirectory);
+
     FsFileSPtr obtainFile(const FsDirectorySPtr& base, const std::string& file)
     {
         return obtainFile(base, file.begin(), file.end());
@@ -69,58 +84,32 @@ public:
                           const std::string::const_iterator& begin,
                           const std::string::const_iterator& end);
 
+    // Obtain an unique directory.
+    CxxIncludeDirectorySPtr obtainCxxIncludeDirectory(CxxIncludeDirectory::Type type,
+                                                      const FsDirectorySPtr& directory)
+    {
+        return *mCxxIncludeDirectory.insert(
+                                        std::make_shared<CxxIncludeDirectory>(type,
+                                                                              directory))
+                    .first;
+    }
+
+    CxxObjectFileSPtr unique(const CxxObjectFileSPtr& cxxObjectFile)
+    {
+        return *mCxxObjectFile.insert(cxxObjectFile).first;
+    }
+
 private:
-    struct ObjectHasher
-    {
-        std::size_t operator()(const ObjectSPtr& object) const
-        {
-            return std::hash<int>()(static_cast<int>(object->type())) ^
-                   std::hash<LocationSPtr>()(object->location()) ^
-                   std::hash<std::string>()(object->name());
-        }
+    std::unordered_set<ObjectSPtr, Object::Hasher, Object::Hasher> mObjects;
+    std::unordered_set<FsDirectorySPtr, FsDirectory::Hasher, FsDirectory::Hasher>
+        mDirectories;
+    std::unordered_set<FsFileSPtr, FsFile::Hasher, FsFile::Hasher> mFiles;
 
-        bool operator()(const ObjectSPtr& object1, const ObjectSPtr& object2) const
-        {
-            return object1->type() == object1->type() &&
-                   object1->location() == object1->location() &&
-                   object1->name() == object2->name();
-        }
-    };
-
-    struct DirectoryHasher
-    {
-        std::size_t operator()(const FsDirectorySPtr& directory) const
-        {
-            return std::hash<FsDirectorySPtr>()(directory->parent()) ^
-                   std::hash<std::string>()(directory->name());
-        }
-
-        bool operator()(const FsDirectorySPtr& directory1,
-                        const FsDirectorySPtr& directory2) const
-        {
-            return directory1->parent() == directory2->parent() &&
-                   directory1->name() == directory2->name();
-        }
-    };
-
-    struct FileHasher
-    {
-        std::size_t operator()(const FsFileSPtr& file) const
-        {
-            return std::hash<FsDirectorySPtr>()(file->directory()) ^
-                   std::hash<std::string>()(file->name());
-        }
-
-        bool operator()(const FsFileSPtr& file1, const FsFileSPtr& file2) const
-        {
-            return file1->directory() == file2->directory() &&
-                   file1->name() == file2->name();
-        }
-    };
-
-    std::unordered_set<ObjectSPtr, ObjectHasher, ObjectHasher> mObjects;
-    std::unordered_set<FsDirectorySPtr, DirectoryHasher, DirectoryHasher> mDirectories;
-    std::unordered_set<FsFileSPtr, FileHasher, FileHasher> mFiles;
+    std::unordered_set<CxxIncludeDirectorySPtr,
+                       CxxIncludeDirectory::Hasher,
+                       CxxIncludeDirectory::Hasher> mCxxIncludeDirectory;
+    std::unordered_set<CxxObjectFileSPtr, CxxObjectFile::Hasher, CxxObjectFile::Hasher>
+        mCxxObjectFile;
 };
 
 typedef std::shared_ptr<Manager> ManagerSPtr;

@@ -1,5 +1,4 @@
 #include "err/err.h"
-#include "err/err_concatenate.h"
 #include "err/err_cppformat.h"
 #include "err/err_serialize.h"
 
@@ -12,7 +11,14 @@
 
 struct SerialiazeBase
 {
-    SerialiazeBase() : mA(0), mB("1010101"), mC(111), mD("17777177771777717777") {}
+    SerialiazeBase()
+        : mA(0)
+        , mB("1010101")
+        , mC(111)
+        , mD("17777177771777717777")
+    {
+    }
+
 protected:
     int mA;
     std::string mB;
@@ -22,21 +28,22 @@ protected:
 
 struct SerialiazeStringStream : public SerialiazeBase
 {
-    void operator()() { mStream << EH_SERIALIZE(kExpected, mA, mB, mC, mD); }
+    void operator()()
+    {
+        mStream << EH_SERIALIZE(kExpected, mA, mB, mC, mD);
+    }
+
 private:
     std::stringstream mStream;
 };
 
-struct SerialiazeConcatenate : public SerialiazeBase
-{
-    void operator()() { mString += EH_CONCATENATE(kExpected, mA, mB, mC, mD); }
-private:
-    std::string mString;
-};
-
 struct SerialiazeFormat : public SerialiazeBase
 {
-    void operator()() { mString += EH_CPPFORMAT(kExpected, mA, mB, mC, mD); }
+    void operator()()
+    {
+        mString += EH_CPPFORMAT(kExpected, mA, mB, mC, mD);
+    }
+
 private:
     std::string mString;
 };
@@ -68,7 +75,7 @@ public:
 };
 
 typedef ::testing::Types<SerialiazeStringStream,
-                         SerialiazeConcatenate,
+                         // SerialiazeConcatenate,
                          SerialiazeFormat,
                          SerialiazePrintf> SerialiazePerformanceType;
 
@@ -79,7 +86,7 @@ TYPED_TEST(SerialiazePerformanceTest, PERFORMANCE_CPU)
     for (size_t i = 0; i < 2000; ++i)
     {
         typename TestFixture::Functor functor;
-        for (size_t i = 0; i < 25; ++i)
+        for (size_t j = 0; j < 25; ++j)
             functor();
     }
 }

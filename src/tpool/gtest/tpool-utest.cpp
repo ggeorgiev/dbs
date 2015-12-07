@@ -1,11 +1,18 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
+#include "tpool/task.hpp" // IWYU pragma: keep
 #include "tpool/tpool.hpp"
 
+#include "err/err.h"
+
+#include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
 
-#include <chrono>
+#include <cstdlib>
+#include <ctime>
+#include <functional>
+#include <memory>
 
 template <typename T>
 class TPoolTest : public ::testing::Test

@@ -3,13 +3,14 @@
 
 #include "doim/manager.h"
 
-#include "err/err.h"
+#include <__hash_table>
+#include <algorithm>
+#include <functional>
+#include <string>
+#include <utility>
 
 #include "const/constants.h"
-
-#include <__hash_table>
-#include <functional>
-#include <utility>
+#include "err/err_assert.h"
 
 namespace doim
 {
@@ -36,7 +37,7 @@ ObjectSPtr Manager::obtainObject(const LocationSPtr& base,
         return ObjectSPtr();
 
     auto working = std::make_shared<Object>(type, std::string(pos, end), location);
-    return *mObjects.emplace(working).first;
+    return *mObjects.insert(working).first;
 }
 
 FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
@@ -72,9 +73,9 @@ FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
                 builder.ensure();
                 builder.set_parent(parent);
                 builder.set_name(name);
-                const auto& emplace = mDirectories.emplace(builder.reference());
-                parent = *emplace.first;
-                if (emplace.second)
+                const auto& insert = mDirectories.insert(builder.reference());
+                parent = *insert.first;
+                if (insert.second)
                     builder.reset();
             }
             if (next == end)
@@ -87,7 +88,22 @@ FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
     if (parent == nullptr)
         parent = std::make_shared<FsDirectory>();
 
-    return *mDirectories.emplace(parent).first;
+    return *mDirectories.insert(parent).first;
+}
+
+FsDirectorySPtr Manager::obtainCorrespondingDirectory(
+    const FsDirectorySPtr& directory,
+    const FsDirectorySPtr& fromDirectory,
+    const FsDirectorySPtr& toDirectory)
+{
+    ASSERT(directory != nullptr);
+
+    if (directory == fromDirectory)
+        return toDirectory;
+
+    auto parent =
+        obtainCorrespondingDirectory(directory->parent(), fromDirectory, toDirectory);
+    return obtainDirectory(parent, directory->name());
 }
 
 FsFileSPtr Manager::obtainFile(const FsDirectorySPtr& base,
@@ -110,7 +126,7 @@ FsFileSPtr Manager::obtainFile(const FsDirectorySPtr& base,
         return FsFileSPtr();
 
     auto working = std::make_shared<FsFile>(directory, std::string(pos, end));
-    return *mFiles.emplace(working).first;
+    return *mFiles.insert(working).first;
 }
 
 } // namespace doim
