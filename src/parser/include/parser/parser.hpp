@@ -32,7 +32,8 @@ public:
 
     typedef typename Tokenizer::Token Token;
 
-    ECode initialize(const StreamSPtr& stream, const doim::FsFileSPtr& location)
+    ECode initialize(const StreamSPtr& stream,
+        const doim::FsFileSPtr& location)
     {
         EHAssert(stream != nullptr);
         EHAssert(location != nullptr);
@@ -42,6 +43,10 @@ public:
         EHTest(mTokenizer->initialize(stream));
         EHEnd;
     }
+
+
+
+
 
     dom::CxxProgramSPtr cxxProgram() const
     {
