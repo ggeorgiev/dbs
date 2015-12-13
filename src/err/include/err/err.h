@@ -21,7 +21,8 @@ enum ECode
     kExpected = 1,
     kAssert = 2,
 
-    kUnable = 10,
+    kNotFound = 10,
+    kUnable = 11,
 };
 
 struct Location

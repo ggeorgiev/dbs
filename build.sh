@@ -24,6 +24,7 @@ CXXFLAGS="$CXXFLAGS -Isrc/task/include"
 
 
 FILES=""
+FILES="$FILES src/task/gtest/cxx/cxx_file_crc_task-utest.cpp"
 
 FILES="$FILES src/err/err.cpp"
 
@@ -42,14 +43,14 @@ LIBRARIES="$LIBRARIES -Lboost/lib"
 CXXFLAGS="$CXXFLAGS -isystemcppformat/include"
 LIBRARIES="$LIBRARIES -Lcppformat/lib"
 
-LIBRARIES="$LIBRARIES -lboost_system -lboost_chrono -lformat"
+LIBRARIES="$LIBRARIES -lboost_filesystem -lboost_chrono -lboost_system -lformat"
 
 #DEFINES="-DNDEBUG" && OPTOMIZATION="-O3"
 DEFINES="-DDEBUG" && OPTOMIZATION="-O0 -g"
 
 mkdir -p build
-PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES $DEFINES $LIBRARIES \
-    -o build/main || exit 1
+#PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES $DEFINES $LIBRARIES \
+#    -o build/main || exit 1
 
 if [ 1 == 1 ]
 then
@@ -72,11 +73,12 @@ then
 #    FILES="$FILES src/parser/gtest/stream-utest.cpp"
 #    FILES="$FILES src/parser/gtest/token-utest.cpp"
 #    FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
+    FILES="$FILES src/parser/gtest/cxx/cxx_parser-utest.cpp"
 
 #    FILES="$FILES src/tpool/gtest/tpool-utest.cpp"
 #    FILES="$FILES src/tpool/gtest/priority-utest.cpp"
 
-    FILES="$FILES src/task/gtest/cxx/cxx_file_crc_task-utest.cpp"
+#    FILES="$FILES src/task/gtest/cxx/cxx_file_crc_task-utest.cpp"
 
 
     LIBRARIES="$LIBRARIES -lgtest"
@@ -84,7 +86,7 @@ then
     COMPILE_DATABASE=build/compile_commands.json
 
     echo "[" > $COMPILE_DATABASE
-    for FILE in src/main.cpp src/gtest/main.cpp $FILES
+    for FILE in $FILES src/main.cpp src/gtest/main.cpp
     do
         echo '  { "directory": "'$BASEDIR'", ' >> $COMPILE_DATABASE
         echo '    "command": "'$PATH/$CLANG' -c '$OPTOMIZATION' '$CXXFLAGS' ' \
@@ -106,7 +108,7 @@ then
         mkdir -p build/src/doim/generic/gtest
         mkdir -p build/src/doim/fs/gtest
         mkdir -p build/src/im/gtest
-        mkdir -p build/src/parser/gtest
+        mkdir -p build/src/parser/gtest/cxx
         mkdir -p build/src/tpool/gtest
         mkdir -p build/src/task/gtest/cxx
 
