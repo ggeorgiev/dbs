@@ -95,6 +95,11 @@ public:
                     .first;
     }
 
+    CxxIncludeDirectorySetSPtr unique(const CxxIncludeDirectorySetSPtr& directories)
+    {
+        return *mCxxIncludeDirectorySets.insert(directories).first;
+    }
+
     CxxFileSPtr unique(const CxxFileSPtr& cxxFile)
     {
         return *mCxxFiles.insert(cxxFile).first;
@@ -114,6 +119,10 @@ private:
     std::unordered_set<CxxIncludeDirectorySPtr,
                        CxxIncludeDirectory::Hasher,
                        CxxIncludeDirectory::Hasher> mCxxIncludeDirectory;
+    std::unordered_set<CxxIncludeDirectorySetSPtr,
+                       CxxIncludeDirectorySetHasher,
+                       CxxIncludeDirectorySetHasher> mCxxIncludeDirectorySets;
+
     std::unordered_set<CxxFileSPtr, CxxFile::Hasher, CxxFile::Hasher> mCxxFiles;
     std::unordered_set<CxxObjectFileSPtr, CxxObjectFile::Hasher, CxxObjectFile::Hasher>
         mCxxObjectFiles;

@@ -54,6 +54,8 @@ PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES $DEFINES
 if [ 1 == 1 ]
 then
 
+    CXXFLAGS="$CXXFLAGS -Isrc/gtest/include"
+
     FILES="$FILES src/gtest/time_monitor.cpp src/gtest/performance_arbiter.cpp"
 
 #    FILES="$FILES src/im/gtest/initialization_manager-utest.cpp"

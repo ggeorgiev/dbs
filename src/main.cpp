@@ -25,8 +25,9 @@ typedef std::shared_ptr<Parser> ParserSPtr;
 
 ECode run(const doim::FsFileSPtr& dbsFile, dom::CxxProgramSPtr& program)
 {
-    std::ifstream t(dbsFile->path(nullptr));
-    std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+    std::ifstream fstream(dbsFile->path(nullptr));
+    std::string str((std::istreambuf_iterator<char>(fstream)),
+                    std::istreambuf_iterator<char>());
 
     auto stream = std::make_shared<Stream>();
     EHTest(stream->initialize(str));

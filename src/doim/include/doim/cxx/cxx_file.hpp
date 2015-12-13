@@ -41,12 +41,15 @@ public:
     {
         std::size_t operator()(const CxxFileSPtr& cxxFile) const
         {
-            return std::hash<FsFileSPtr>()(cxxFile->file());
+            return std::hash<FsFileSPtr>()(cxxFile->file()) ^
+                   std::hash<CxxIncludeDirectorySetSPtr>()(
+                       cxxFile->cxxIncludeDirectories());
         }
 
         bool operator()(const CxxFileSPtr& cxxFile1, const CxxFileSPtr& cxxFile2) const
         {
-            return cxxFile1->file() == cxxFile2->file();
+            return cxxFile1->file() == cxxFile2->file() &&
+                   cxxFile1->cxxIncludeDirectories() == cxxFile2->cxxIncludeDirectories();
         }
     };
 

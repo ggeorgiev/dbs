@@ -56,7 +56,7 @@ public:
             directories->insert(libDirectories->begin(), libDirectories->end());
         }
 
-        return directories;
+        return doim::gManager->unique(directories);
     }
 
 private:
