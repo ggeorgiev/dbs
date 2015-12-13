@@ -4,6 +4,7 @@
 #pragma once
 
 #include "doim/cxx/cxx_include_directory.hpp"
+#include "doim/cxx/cxx_file.hpp"
 #include "doim/cxx/cxx_object_file.hpp"
 #include "doim/fs/fs_directory.hpp"
 #include "doim/fs/fs_file.hpp"
@@ -94,9 +95,14 @@ public:
                     .first;
     }
 
+    CxxFileSPtr unique(const CxxFileSPtr& cxxFile)
+    {
+        return *mCxxFiles.insert(cxxFile).first;
+    }
+
     CxxObjectFileSPtr unique(const CxxObjectFileSPtr& cxxObjectFile)
     {
-        return *mCxxObjectFile.insert(cxxObjectFile).first;
+        return *mCxxObjectFiles.insert(cxxObjectFile).first;
     }
 
 private:
@@ -108,8 +114,9 @@ private:
     std::unordered_set<CxxIncludeDirectorySPtr,
                        CxxIncludeDirectory::Hasher,
                        CxxIncludeDirectory::Hasher> mCxxIncludeDirectory;
+    std::unordered_set<CxxFileSPtr, CxxFile::Hasher, CxxFile::Hasher> mCxxFiles;
     std::unordered_set<CxxObjectFileSPtr, CxxObjectFile::Hasher, CxxObjectFile::Hasher>
-        mCxxObjectFile;
+        mCxxObjectFiles;
 };
 
 typedef std::shared_ptr<Manager> ManagerSPtr;

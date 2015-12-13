@@ -20,6 +20,7 @@ CXXFLAGS="$CXXFLAGS -Isrc/doim/include"
 CXXFLAGS="$CXXFLAGS -Isrc/parser/include"
 CXXFLAGS="$CXXFLAGS -Isrc/tpool/include"
 CXXFLAGS="$CXXFLAGS -Isrc/tool/include"
+CXXFLAGS="$CXXFLAGS -Isrc/task/include"
 
 
 FILES=""
@@ -55,23 +56,25 @@ then
 
     FILES="$FILES src/gtest/time_monitor.cpp src/gtest/performance_arbiter.cpp"
 
-    FILES="$FILES src/im/gtest/initialization_manager-utest.cpp"
+#    FILES="$FILES src/im/gtest/initialization_manager-utest.cpp"
 
-    FILES="$FILES src/err/gtest/err-utest.cpp"
-    FILES="$FILES src/err/gtest/err-ptest.cpp"
+#    FILES="$FILES src/err/gtest/err-utest.cpp"
+#    FILES="$FILES src/err/gtest/err-ptest.cpp"
 
-    FILES="$FILES src/dom/gtest/cxx_program-utest.cpp"
+#    FILES="$FILES src/dom/gtest/cxx_program-utest.cpp"
 
-    FILES="$FILES src/doim/gtest/manager-utest.cpp"
-    FILES="$FILES src/doim/gtest/fs/fs_directory-utest.cpp"
+#    FILES="$FILES src/doim/gtest/manager-utest.cpp"
+#    FILES="$FILES src/doim/gtest/fs/fs_directory-utest.cpp"
 
-    FILES="$FILES src/parser/gtest/parser-utest.cpp"
-    FILES="$FILES src/parser/gtest/stream-utest.cpp"
-    FILES="$FILES src/parser/gtest/token-utest.cpp"
-    FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
+#    FILES="$FILES src/parser/gtest/parser-utest.cpp"
+#    FILES="$FILES src/parser/gtest/stream-utest.cpp"
+#    FILES="$FILES src/parser/gtest/token-utest.cpp"
+#    FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
 
-    FILES="$FILES src/tpool/gtest/tpool-utest.cpp"
-    FILES="$FILES src/tpool/gtest/priority-utest.cpp"
+#    FILES="$FILES src/tpool/gtest/tpool-utest.cpp"
+#    FILES="$FILES src/tpool/gtest/priority-utest.cpp"
+
+    FILES="$FILES src/task/gtest/cxx/cxx_file_crc_task-utest.cpp"
 
 
     LIBRARIES="$LIBRARIES -lgtest"
@@ -103,6 +106,7 @@ then
         mkdir -p build/src/im/gtest
         mkdir -p build/src/parser/gtest
         mkdir -p build/src/tpool/gtest
+        mkdir -p build/src/task/gtest/cxx
 
         OBJFILES=
         for FILE in src/gtest/main.cpp $FILES

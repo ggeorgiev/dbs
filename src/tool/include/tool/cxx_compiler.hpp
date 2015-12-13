@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "doim/cxx/cxx_object_file.hpp"
+#include "doim/cxx/cxx_file.hpp"
 
 #include "dom/cxx/cxx_program.hpp"
 
@@ -25,12 +25,11 @@ public:
     {
     }
 
-    std::string commandArg(
-        const doim::FsDirectorySPtr& directory,
-        const std::unordered_set<doim::CxxIncludeDirectorySPtr>& includeDirectories)
+    std::string commandArg(const doim::FsDirectorySPtr& directory,
+                           const doim::CxxIncludeDirectorySetSPtr& includeDirectories)
     {
         std::stringstream stream;
-        for (const auto& includeDirectory : includeDirectories)
+        for (const auto& includeDirectory : *includeDirectories)
         {
             switch (includeDirectory->type())
             {
@@ -51,16 +50,15 @@ public:
                         const doim::CxxObjectFileSPtr& objectFile)
     {
         std::stringstream stream;
-        stream << "mkdir -p " << objectFile->outputFile()->directory()->path(directory)
-               << "\n";
+        stream << "mkdir -p " << objectFile->file()->directory()->path(directory) << "\n";
 
         stream << mBinary->path(directory);
         stream << " $CXXFLAGS";
 
-        stream << " -c " << objectFile->cxxFile()->path(directory);
-        stream << " -o " << objectFile->outputFile()->path(directory);
+        stream << " -c " << objectFile->cxxFile()->file()->path(directory);
+        stream << " -o " << objectFile->file()->path(directory);
 
-        stream << commandArg(directory, objectFile->cxxIncludeDirectories());
+        stream << commandArg(directory, objectFile->cxxFile()->cxxIncludeDirectories());
         return stream.str();
     }
 
@@ -96,7 +94,7 @@ public:
 
                 for (const auto& objectFile : objectFiles)
                 {
-                    files.insert(objectFile->cxxFile()->path(directory));
+                    files.insert(objectFile->cxxFile()->file()->path(directory));
                     stream << command(directory, objectFile) << " || exit 1\n";
                 }
             }
@@ -105,7 +103,7 @@ public:
         const auto& objectFiles = program->cxxObjectFiles(directory, intermediate);
         for (const auto& objectFile : objectFiles)
         {
-            files.insert(objectFile->cxxFile()->path(directory));
+            files.insert(objectFile->cxxFile()->file()->path(directory));
             stream << command(directory, objectFile) << " || exit 1\n";
         }
 

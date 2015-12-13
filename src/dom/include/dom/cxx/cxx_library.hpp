@@ -4,9 +4,10 @@
 #pragma once
 
 #include "dom/generic/attribute.hpp"
+#include "dom/cxx/cxx_files_mixin.hpp"
 
 #include "doim/manager.h"
-#include "doim/cxx/cxx_object_file.hpp"
+#include "doim/cxx/cxx_file.hpp"
 #include "doim/fs/fs_file.hpp"
 
 #include "err/err.h"
@@ -20,7 +21,7 @@ namespace dom
 class CxxLibrary;
 typedef std::shared_ptr<CxxLibrary> CxxLibrarySPtr;
 
-class CxxLibrary
+class CxxLibrary : public CxxFilesMixin<CxxLibrary>
 {
 public:
     enum class Type
@@ -57,7 +58,9 @@ public:
         mBinary = binary;
         EHEnd;
     }
-    ECode updatePublicHeadersDirectory(const doim::FsDirectorySPtr& publicHeaders)
+    ECode updatePublicHeadersDirectory(
+
+        const doim::FsDirectorySPtr& publicHeaders)
     {
         mPublicHeaders = publicHeaders;
         EHEnd;
@@ -66,12 +69,6 @@ public:
     ECode updateCxxLibraries(std::unordered_set<CxxLibrarySPtr>& libraries)
     {
         mCxxLibraries.swap(libraries);
-        EHEnd;
-    }
-
-    ECode updateCxxFiles(std::unordered_set<doim::FsFileSPtr>& files)
-    {
-        mCxxFiles.swap(files);
         EHEnd;
     }
 
@@ -96,27 +93,22 @@ public:
         return mCxxLibraries;
     }
 
-    const std::unordered_set<doim::FsFileSPtr>& cxxFiles() const
-    {
-        return mCxxFiles;
-    }
-
     // Computations
-    std::unordered_set<doim::CxxIncludeDirectorySPtr> cxxIncludeDirectories(
+    doim::CxxIncludeDirectorySetSPtr cxxIncludeDirectories(
         const doim::FsDirectorySPtr& root) const
     {
-        std::unordered_set<doim::CxxIncludeDirectorySPtr> directories;
+        auto directories = std::make_shared<doim::CxxIncludeDirectorySet>();
 
         switch (mType)
         {
             case Type::kUser:
-                directories.insert(
+                directories->insert(
                     doim::gManager->obtainCxxIncludeDirectory(doim::CxxIncludeDirectory::
                                                                   Type::kUser,
                                                               publicHeadersDirectory()));
                 break;
             case Type::kSystem:
-                directories.insert(
+                directories->insert(
                     doim::gManager->obtainCxxIncludeDirectory(doim::CxxIncludeDirectory::
                                                                   Type::kSystem,
                                                               publicHeadersDirectory()));
@@ -126,36 +118,10 @@ public:
         for (const auto& cxxLibrary : mCxxLibraries)
         {
             const auto& libDirectories = cxxLibrary->cxxIncludeDirectories(root);
-            directories.insert(libDirectories.begin(), libDirectories.end());
+            directories->insert(libDirectories->begin(), libDirectories->end());
         }
 
         return directories;
-    }
-
-    std::unordered_set<doim::CxxObjectFileSPtr> cxxObjectFiles(
-        const doim::FsDirectorySPtr& root,
-        const doim::FsDirectorySPtr& intermediate) const
-    {
-        std::unordered_set<doim::CxxObjectFileSPtr> cxxObjectFiles;
-
-        const auto& directories = cxxIncludeDirectories(root);
-
-        for (const auto& cxxFile : mCxxFiles)
-        {
-            const auto& directory =
-                doim::gManager->obtainCorrespondingDirectory(cxxFile->directory(),
-                                                             root,
-                                                             intermediate);
-            const auto& output =
-                doim::gManager->obtainFile(directory, cxxFile->name() + ".o");
-
-            auto objectFile =
-                std::make_shared<doim::CxxObjectFile>(cxxFile, directories, output);
-            objectFile = doim::gManager->unique(objectFile);
-
-            cxxObjectFiles.insert(objectFile);
-        }
-        return cxxObjectFiles;
     }
 
 private:
@@ -163,6 +129,5 @@ private:
     doim::FsFileSPtr mBinary;
     doim::FsDirectorySPtr mPublicHeaders;
     std::unordered_set<CxxLibrarySPtr> mCxxLibraries;
-    std::unordered_set<doim::FsFileSPtr> mCxxFiles;
 };
 }

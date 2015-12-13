@@ -158,11 +158,14 @@ then
     git submodule update --init libs/config          || exit 1
     git submodule update --init libs/container       || exit 1
     git submodule update --init libs/core            || exit 1
+    git submodule update --init libs/crc             || exit 1
     git submodule update --init libs/detail          || exit 1
+    git submodule update --init libs/filesystem      || exit 1
     git submodule update --init libs/functional      || exit 1
     git submodule update --init libs/heap            || exit 1
     git submodule update --init libs/integer         || exit 1
     git submodule update --init libs/intrusive       || exit 1
+    git submodule update --init libs/io              || exit 1
     git submodule update --init libs/iterator        || exit 1
     git submodule update --init libs/lexical_cast    || exit 1
     git submodule update --init libs/math            || exit 1
@@ -177,6 +180,7 @@ then
     git submodule update --init libs/ratio           || exit 1
     git submodule update --init libs/throw_exception || exit 1
     git submodule update --init libs/type_traits     || exit 1
+    git submodule update --init libs/smart_ptr       || exit 1
     git submodule update --init libs/static_assert   || exit 1
     git submodule update --init libs/system          || exit 1
     git submodule update --init libs/utility         || exit 1
@@ -187,15 +191,18 @@ then
 
     ./bootstrap.sh || exit 1
 
+    SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms"
+    SYSROOT="$SYSROOT/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk"
+
     build_boost() {
         BOOSTBUILD=PATH=$CLANGBIN:$PATH \
             ./b2 \
             toolset=clang \
-            cxxflags="-std=c++11 -stdlib=libc++ -isystem/Developer/SDKs/MacOSX10.7.sdk/usr/include" \
+            cxxflags="-std=c++11 -stdlib=libc++ -isystem=$SYSROOT" \
             linkflags="-stdlib=libc++" \
             --layout=system \
             --prefix=../../boost \
-            --with-system --with-chrono \
+            --with-chrono --with-filesystem --with-system \
             threading=multi link=static $1
     }
 

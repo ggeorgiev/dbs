@@ -9,6 +9,7 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include <unordered_set>
 
 namespace doim
 {
@@ -60,4 +61,7 @@ private:
     Type mType;
     FsDirectorySPtr mDirectory;
 };
+
+typedef std::unordered_set<CxxIncludeDirectorySPtr> CxxIncludeDirectorySet;
+typedef std::shared_ptr<CxxIncludeDirectorySet> CxxIncludeDirectorySetSPtr;
 }

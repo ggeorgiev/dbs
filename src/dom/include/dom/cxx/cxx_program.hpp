@@ -4,6 +4,7 @@
 #pragma once
 
 #include "dom/cxx/cxx_library.hpp"
+#include "dom/cxx/cxx_files_mixin.hpp"
 
 #include "doim/fs/fs_file.hpp"
 
@@ -18,7 +19,7 @@ namespace dom
 class CxxProgram;
 typedef std::shared_ptr<CxxProgram> CxxProgramSPtr;
 
-class CxxProgram
+class CxxProgram : public CxxFilesMixin<CxxProgram>
 {
 public:
     template <typename T>
@@ -38,65 +39,27 @@ public:
         EHEnd;
     }
 
-    ECode updateCxxFiles(std::unordered_set<doim::FsFileSPtr>& files)
-    {
-        mCxxFiles.swap(files);
-        EHEnd;
-    }
-
     const std::unordered_set<CxxLibrarySPtr>& cxxLibraries()
     {
         return mCxxLibraries;
     }
 
-    const std::unordered_set<doim::FsFileSPtr>& cxxFiles()
-    {
-        return mCxxFiles;
-    }
-
     // Computations
-    std::unordered_set<doim::CxxIncludeDirectorySPtr> cxxIncludeDirectories(
+    doim::CxxIncludeDirectorySetSPtr cxxIncludeDirectories(
         const doim::FsDirectorySPtr& root) const
     {
-        std::unordered_set<doim::CxxIncludeDirectorySPtr> directories;
+        auto directories = std::make_shared<doim::CxxIncludeDirectorySet>();
 
         for (const auto& cxxLibrary : mCxxLibraries)
         {
             const auto& libDirectories = cxxLibrary->cxxIncludeDirectories(root);
-            directories.insert(libDirectories.begin(), libDirectories.end());
+            directories->insert(libDirectories->begin(), libDirectories->end());
         }
 
         return directories;
     }
 
-    std::unordered_set<doim::CxxObjectFileSPtr> cxxObjectFiles(
-        const doim::FsDirectorySPtr& root,
-        const doim::FsDirectorySPtr& intermediate) const
-    {
-        std::unordered_set<doim::CxxObjectFileSPtr> cxxObjectFiles;
-
-        const auto& directories = cxxIncludeDirectories(root);
-
-        for (const auto& cxxFile : mCxxFiles)
-        {
-            const auto& directory =
-                doim::gManager->obtainCorrespondingDirectory(cxxFile->directory(),
-                                                             root,
-                                                             intermediate);
-            const auto& output =
-                doim::gManager->obtainFile(directory, cxxFile->name() + ".o");
-
-            auto objectFile =
-                std::make_shared<doim::CxxObjectFile>(cxxFile, directories, output);
-            objectFile = doim::gManager->unique(objectFile);
-
-            cxxObjectFiles.insert(objectFile);
-        }
-        return cxxObjectFiles;
-    }
-
 private:
     std::unordered_set<CxxLibrarySPtr> mCxxLibraries;
-    std::unordered_set<doim::FsFileSPtr> mCxxFiles;
 };
 }

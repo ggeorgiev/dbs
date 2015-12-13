@@ -32,8 +32,7 @@ public:
 
     typedef typename Tokenizer::Token Token;
 
-    ECode initialize(const StreamSPtr& stream,
-        const doim::FsFileSPtr& location)
+    ECode initialize(const StreamSPtr& stream, const doim::FsFileSPtr& location)
     {
         EHAssert(stream != nullptr);
         EHAssert(location != nullptr);
@@ -43,10 +42,6 @@ public:
         EHTest(mTokenizer->initialize(stream));
         EHEnd;
     }
-
-
-
-
 
     dom::CxxProgramSPtr cxxProgram() const
     {
@@ -177,7 +172,7 @@ public:
                 EHTest(parseFiles(mLocation->directory(),
                                   std::numeric_limits<size_t>::max(),
                                   files));
-                EHTest(library->updateCxxFiles(files));
+                EHTest(library->updateCxxFilesList(files));
 
                 continue;
             }
@@ -219,7 +214,7 @@ public:
                 EHTest(parseFiles(mLocation->directory(),
                                   std::numeric_limits<size_t>::max(),
                                   files));
-                EHTest(mCxxProgram->updateCxxFiles(files));
+                EHTest(mCxxProgram->updateCxxFilesList(files));
 
                 continue;
             }
