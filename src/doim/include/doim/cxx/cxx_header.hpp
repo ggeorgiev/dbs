@@ -3,8 +3,6 @@
 
 #pragma once
 
-#include "doim/cxx/cxx_include_directory.hpp"
-#include "doim/cxx/cxx_header.hpp"
 #include "doim/fs/fs_file.hpp"
 
 #include <memory>
@@ -15,15 +13,18 @@
 
 namespace doim
 {
-class CxxFile;
-typedef std::shared_ptr<CxxFile> CxxFileSPtr;
+class CxxHeader;
+typedef std::shared_ptr<CxxHeader> CxxHeaderSPtr;
 
-class CxxFile
+typedef std::unordered_set<CxxHeaderSPtr> CxxHeaderSet;
+typedef std::shared_ptr<CxxHeaderSet> CxxHeaderSetSPtr;
+
+class CxxHeader
 {
 public:
-    CxxFile(const FsFileSPtr& file,
-            const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories,
-            const CxxHeaderSetSPtr& cxxHeaders)
+    CxxHeader(const FsFileSPtr& file,
+              const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories,
+              const CxxHeaderSetSPtr& cxxHeaders)
         : mFile(file)
         , mCxxIncludeDirectories(cxxIncludeDirectories)
         , mCxxHeaders(cxxHeaders)
@@ -47,7 +48,7 @@ public:
 
     struct Hasher
     {
-        std::size_t operator()(const CxxFileSPtr& cxxFile) const
+        std::size_t operator()(const CxxHeaderSPtr& cxxFile) const
         {
             return std::hash<FsFileSPtr>()(cxxFile->file()) ^
                    std::hash<CxxIncludeDirectorySetSPtr>()(
@@ -55,7 +56,8 @@ public:
                    std::hash<CxxHeaderSetSPtr>()(cxxFile->cxxHeaders());
         }
 
-        bool operator()(const CxxFileSPtr& cxxFile1, const CxxFileSPtr& cxxFile2) const
+        bool operator()(const CxxHeaderSPtr& cxxFile1,
+                        const CxxHeaderSPtr& cxxFile2) const
         {
             return cxxFile1->file() == cxxFile2->file() &&
                    cxxFile1->cxxIncludeDirectories() ==
@@ -68,5 +70,27 @@ private:
     FsFileSPtr mFile;
     CxxIncludeDirectorySetSPtr mCxxIncludeDirectories;
     CxxHeaderSetSPtr mCxxHeaders;
+};
+
+struct CxxHeaderSetHasher
+{
+    std::size_t operator()(const CxxHeaderSetSPtr& headers) const
+    {
+        std::vector<CxxHeaderSPtr> vector(headers->size());
+        vector.insert(vector.begin(), headers->begin(), headers->end());
+        std::sort(vector.begin(), vector.end());
+
+        std::size_t hash = 0;
+        for (const auto& header : vector)
+            hash ^ std::hash<CxxHeaderSPtr>()(header);
+
+        return hash;
+    }
+
+    bool operator()(const CxxHeaderSetSPtr& headers1,
+                    const CxxHeaderSetSPtr& headers2) const
+    {
+        return *headers1 == *headers2;
+    }
 };
 }

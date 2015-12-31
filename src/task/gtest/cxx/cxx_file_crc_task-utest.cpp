@@ -12,12 +12,14 @@
 
 TEST(SearchTaskTest, simple)
 {
-    doim::FsFileSPtr file =
+    auto file =
         doim::gManager->obtainFile(testing::gTestResourceDirectory, "cxx/simple.cxx");
-    doim::CxxIncludeDirectorySetSPtr cxxIncludeDirectories =
+    auto cxxIncludeDirectories =
         doim::gManager->unique(std::make_shared<doim::CxxIncludeDirectorySet>());
+    auto cxxHeaders = doim::gManager->unique(std::make_shared<doim::CxxHeaderSet>());
 
-    auto cxxFile = std::make_shared<doim::CxxFile>(file, cxxIncludeDirectories);
+    auto cxxFile =
+        std::make_shared<doim::CxxFile>(file, cxxIncludeDirectories, cxxHeaders);
     auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
 
     ASSERT_OKAY((*task)());
@@ -38,8 +40,10 @@ TEST(SearchTaskTest, includes)
                                                   directory));
 
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
+    auto cxxHeaders = doim::gManager->unique(std::make_shared<doim::CxxHeaderSet>());
 
-    auto cxxFile = std::make_shared<doim::CxxFile>(file, cxxIncludeDirectories);
+    auto cxxFile =
+        std::make_shared<doim::CxxFile>(file, cxxIncludeDirectories, cxxHeaders);
     auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
 
     // ASSERT_OKAY((*task)());

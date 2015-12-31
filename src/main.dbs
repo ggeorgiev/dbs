@@ -1,29 +1,50 @@
 cxx_library boost_template
     @type=system:
-    cxx_public_directory: ../boost/include;
+
+    cxx_public_header
+        @directory=../boost/include:
+
+    ;
 ;
 
 cxx_library boost_system
     @type=system:
-    cxx_public_directory: ../boost/include;
+    cxx_public_header
+        @directory=../boost/include:
+
+    ;
+
     cxx_binary: ../boost/lib/libboost_system.a;
 ;
 
 cxx_library boost_chrono
     @type=system:
-    cxx_public_directory: ../boost/include;
+    cxx_public_header
+        @directory=../boost/include:
+
+    ;
+
     cxx_binary: ../boost/lib/libboost_chrono.a;
 ;
 
 cxx_library cppformat
     @type=system:
-    cxx_public_directory: ../cppformat/include;
+
+    cxx_public_header
+        @directory=../cppformat/include:
+
+    ;
+
     cxx_binary: ../cppformat/lib/libformat.a;
 ;
 
 cxx_library err
     @type=user:
-    cxx_public_directory: err/include;
+
+    cxx_public_header
+        @directory=err/include:
+
+    ;
 
     cxx_library:
         cppformat
@@ -36,7 +57,11 @@ cxx_library err
 
 cxx_library const
     @type=user:
-    cxx_public_directory: const/include;
+
+    cxx_public_header
+        @directory=const/include:
+
+    ;
 
     cxx_file:
         const/constants.cpp
@@ -46,13 +71,19 @@ cxx_library const
 cxx_library im
     @type=user:
 
-    cxx_public_directory: im/include;
+    cxx_public_header
+        @directory=im/include:
+
+    ;
 ;
 
 cxx_library doim
     @type=user:
 
-    cxx_public_directory: doim/include;
+    cxx_public_header
+        @directory=doim/include:
+
+    ;
 
     cxx_library:
         const
@@ -68,7 +99,10 @@ cxx_library doim
 cxx_library dom
     @type=user:
 
-    cxx_public_directory: dom/include;
+    cxx_public_header
+        @directory=dom/include:
+
+    ;
 
     cxx_library:
         doim
@@ -82,12 +116,20 @@ cxx_library dom
 
 cxx_library parser
     @type=user:
-    cxx_public_directory: parser/include;
+
+    cxx_public_header
+        @directory=parser/include:
+
+    ;
 ;
 
 cxx_library tool
     @type=user:
-    cxx_public_directory: tool/include;
+
+    cxx_public_header
+        @directory=tool/include:
+
+    ;
 ;
 
 cxx_program dbs:

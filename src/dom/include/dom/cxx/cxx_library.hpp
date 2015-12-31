@@ -5,6 +5,7 @@
 
 #include "dom/generic/attribute.hpp"
 #include "dom/cxx/cxx_files_mixin.hpp"
+#include "dom/cxx/cxx_private_headers_mixin.hpp"
 
 #include "doim/manager.h"
 #include "doim/cxx/cxx_file.hpp"
@@ -21,7 +22,8 @@ namespace dom
 class CxxLibrary;
 typedef std::shared_ptr<CxxLibrary> CxxLibrarySPtr;
 
-class CxxLibrary : public CxxFilesMixin<CxxLibrary>
+class CxxLibrary : public CxxFilesMixin<CxxLibrary>,
+                   public CxxPrivateHeadersMixin<CxxLibrary>
 {
 public:
     enum class Type
@@ -58,11 +60,12 @@ public:
         mBinary = binary;
         EHEnd;
     }
-    ECode updatePublicHeadersDirectory(
 
-        const doim::FsDirectorySPtr& publicHeaders)
+    ECode updateCxxPublicHeaders(const doim::FsDirectorySPtr& directory,
+                                 std::unordered_set<doim::FsFileSPtr>& files)
     {
-        mPublicHeaders = publicHeaders;
+        mPublicHeadersDirectory = directory;
+        mCxxPublicHeadersList.swap(files);
         EHEnd;
     }
 
@@ -85,7 +88,12 @@ public:
 
     doim::FsDirectorySPtr publicHeadersDirectory() const
     {
-        return mPublicHeaders;
+        return mPublicHeadersDirectory;
+    }
+
+    const std::unordered_set<doim::FsFileSPtr>& publicHeaders() const
+    {
+        return mCxxPublicHeadersList;
     }
 
     const std::unordered_set<CxxLibrarySPtr>& cxxLibraries() const
@@ -124,10 +132,25 @@ public:
         return doim::gManager->unique(directories);
     }
 
+    doim::CxxHeaderSetSPtr cxxHeaders(const doim::FsDirectorySPtr& root) const
+    {
+        auto headers = std::make_shared<doim::CxxHeaderSet>();
+
+        return doim::gManager->unique(headers);
+    }
+
 private:
     Type mType;
     doim::FsFileSPtr mBinary;
-    doim::FsDirectorySPtr mPublicHeaders;
+
+    // TODO: So far we assume that all headers are coming from a single public directory
+    //       Obviously this is not going to be true for all components.
+    //       We should have this computed based on the header files, that will give us
+    //       the ability to have optionally move all public headers in a intermediate
+    //       directory.
+    doim::FsDirectorySPtr mPublicHeadersDirectory;
+    std::unordered_set<doim::FsFileSPtr> mCxxPublicHeadersList;
+
     std::unordered_set<CxxLibrarySPtr> mCxxLibraries;
 };
 }

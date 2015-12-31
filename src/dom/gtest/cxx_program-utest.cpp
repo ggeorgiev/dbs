@@ -14,5 +14,5 @@ TEST(CxxProgramTest, foo)
     dom::CxxProgram cxxProgram;
 
     std::unordered_set<doim::FsFileSPtr> files;
-    cxxProgram.updateCxxFiles(files);
+    cxxProgram.updateCxxFilesList(files);
 }

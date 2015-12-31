@@ -24,7 +24,7 @@ public:
         kKeywordCxxFile,
         kKeywordCxxLibrary,
         kKeywordCxxProgram,
-        kKeywordCxxPublicDirectory,
+        kKeywordCxxPublicHeader,
         kOperatorAssignment,
         kOperatorAt,
         kOperatorColon,
@@ -41,7 +41,7 @@ public:
     BITMASK0(kKeywordCxxFile);
     BITMASK0(kKeywordCxxLibrary);
     BITMASK0(kKeywordCxxProgram);
-    BITMASK0(kKeywordCxxPublicDirectory);
+    BITMASK0(kKeywordCxxPublicHeader);
     BITMASK0(kOperatorAssignment);
     BITMASK0(kOperatorAt);
     BITMASK0(kOperatorColon);
@@ -155,11 +155,11 @@ public:
                     case 3:
                         type |= Type(kKeywordCxxBinaryMask | kKeywordCxxFileMask |
                                      kKeywordCxxLibraryMask | kKeywordCxxProgramMask |
-                                     kKeywordCxxPublicDirectoryMask);
+                                     kKeywordCxxPublicHeaderMask);
                         break;
 
                     case 10:
-                        type |= Type(kKeywordCxxPublicDirectoryMask);
+                        type |= Type(kKeywordCxxPublicHeaderMask);
                         break;
                 }
                 break;
@@ -177,6 +177,9 @@ public:
                     case 9:
                         type |= Type(kKeywordCxxProgramMask);
                         break;
+                    case 13:
+                        type |= Type(kKeywordCxxPublicHeaderMask);
+                        break;
                 }
                 break;
 
@@ -189,7 +192,7 @@ public:
                         break;
                     case 6:
                         type |=
-                            Type(kKeywordCxxLibraryMask | kKeywordCxxPublicDirectoryMask);
+                            Type(kKeywordCxxLibraryMask | kKeywordCxxPublicHeaderMask);
                         break;
                 }
                 break;
@@ -201,11 +204,10 @@ public:
                     case 0:
                         type |= Type(kKeywordCxxBinaryMask | kKeywordCxxFileMask |
                                      kKeywordCxxLibraryMask | kKeywordCxxProgramMask |
-                                     kKeywordCxxPublicDirectoryMask);
+                                     kKeywordCxxPublicHeaderMask);
                         break;
                     case 9:
-                    case 15:
-                        type |= Type(kKeywordCxxPublicDirectoryMask);
+                        type |= Type(kKeywordCxxPublicHeaderMask);
                         break;
                 }
                 break;
@@ -213,8 +215,8 @@ public:
                 type |= Type(kIdentifierMask | kPathMask);
                 switch (position)
                 {
-                    case 11:
-                        type |= Type(kKeywordCxxPublicDirectoryMask);
+                    case 14:
+                        type |= Type(kKeywordCxxPublicHeaderMask);
                         break;
                 }
                 break;
@@ -225,8 +227,9 @@ public:
                     case 7:
                         type |= Type(kKeywordCxxFileMask);
                         break;
-                    case 14:
-                        type |= Type(kKeywordCxxPublicDirectoryMask);
+                    case 12:
+                    case 15:
+                        type |= Type(kKeywordCxxPublicHeaderMask);
                         break;
                 }
                 break;
@@ -250,6 +253,16 @@ public:
                 }
                 break;
 
+            case 'h':
+                type |= Type(kIdentifierMask | kPathMask);
+                switch (position)
+                {
+                    case 11:
+                        type |= Type(kKeywordCxxPublicHeaderMask);
+                        break;
+                }
+                break;
+
             case 'i':
                 type |= Type(kIdentifierMask | kPathMask);
                 switch (position)
@@ -259,10 +272,7 @@ public:
                                      kKeywordCxxLibraryMask);
                         break;
                     case 8:
-                        type |= Type(kKeywordCxxPublicDirectoryMask);
-                        break;
-                    case 12:
-                        type |= Type(kKeywordCxxPublicDirectoryMask);
+                        type |= Type(kKeywordCxxPublicHeaderMask);
                         break;
                 }
                 break;
@@ -278,7 +288,7 @@ public:
                         type |= Type(kKeywordCxxFileMask);
                         break;
                     case 7:
-                        type |= Type(kKeywordCxxPublicDirectoryMask);
+                        type |= Type(kKeywordCxxPublicHeaderMask);
                         break;
                 }
                 break;
@@ -310,9 +320,6 @@ public:
                     case 6:
                         type |= Type(kKeywordCxxProgramMask);
                         break;
-                    case 17:
-                        type |= Type(kKeywordCxxPublicDirectoryMask);
-                        break;
                 }
                 break;
 
@@ -322,7 +329,7 @@ public:
                 {
                     case 4:
                         type |=
-                            Type(kKeywordCxxProgramMask | kKeywordCxxPublicDirectoryMask);
+                            Type(kKeywordCxxProgramMask | kKeywordCxxPublicHeaderMask);
                         break;
                 }
                 break;
@@ -343,20 +350,8 @@ public:
                     case 9:
                         type |= Type(kKeywordCxxLibraryMask);
                         break;
-
-                    case 13:
-                    case 18:
-                        type |= Type(kKeywordCxxPublicDirectoryMask);
-                        break;
-                }
-                break;
-
-            case 't':
-                type |= Type(kIdentifierMask | kPathMask);
-                switch (position)
-                {
                     case 16:
-                        type |= Type(kKeywordCxxPublicDirectoryMask);
+                        type |= Type(kKeywordCxxPublicHeaderMask);
                         break;
                 }
                 break;
@@ -366,7 +361,7 @@ public:
                 switch (position)
                 {
                     case 5:
-                        type |= Type(kKeywordCxxPublicDirectoryMask);
+                        type |= Type(kKeywordCxxPublicHeaderMask);
                         break;
                 }
                 break;
@@ -379,7 +374,7 @@ public:
                     case 2:
                         type |= Type(kKeywordCxxBinaryMask | kKeywordCxxFileMask |
                                      kKeywordCxxLibraryMask | kKeywordCxxProgramMask |
-                                     kKeywordCxxPublicDirectoryMask);
+                                     kKeywordCxxPublicHeaderMask);
                         break;
                 }
 
@@ -392,9 +387,6 @@ public:
                         break;
                     case 10:
                         type |= Type(kKeywordCxxLibraryMask);
-                        break;
-                    case 19:
-                        type |= Type(kKeywordCxxPublicDirectoryMask);
                         break;
                 }
                 break;
@@ -444,12 +436,9 @@ public:
                     type.set(kKeywordCxxProgram, current[kKeywordCxxProgram]);
                 }
                 break;
-            case 20:
+            case 17:
                 if (!isidentifier(code))
-                {
-                    type.set(kKeywordCxxPublicDirectory,
-                             current[kKeywordCxxPublicDirectory]);
-                }
+                    type.set(kKeywordCxxPublicHeader, current[kKeywordCxxPublicHeader]);
                 break;
         }
 

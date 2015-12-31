@@ -4,6 +4,7 @@
 #pragma once
 
 #include "doim/cxx/cxx_include_directory.hpp"
+#include "doim/cxx/cxx_header.hpp"
 #include "doim/cxx/cxx_file.hpp"
 #include "doim/cxx/cxx_object_file.hpp"
 #include "doim/fs/fs_directory.hpp"
@@ -85,7 +86,6 @@ public:
                           const std::string::const_iterator& begin,
                           const std::string::const_iterator& end);
 
-    // Obtain an unique directory.
     CxxIncludeDirectorySPtr obtainCxxIncludeDirectory(CxxIncludeDirectory::Type type,
                                                       const FsDirectorySPtr& directory)
     {
@@ -98,6 +98,11 @@ public:
     CxxIncludeDirectorySetSPtr unique(const CxxIncludeDirectorySetSPtr& directories)
     {
         return *mCxxIncludeDirectorySets.insert(directories).first;
+    }
+
+    CxxHeaderSetSPtr unique(const CxxHeaderSetSPtr& headers)
+    {
+        return *mCxxHeaderSets.insert(headers).first;
     }
 
     CxxFileSPtr unique(const CxxFileSPtr& cxxFile)
@@ -122,6 +127,9 @@ private:
     std::unordered_set<CxxIncludeDirectorySetSPtr,
                        CxxIncludeDirectorySetHasher,
                        CxxIncludeDirectorySetHasher> mCxxIncludeDirectorySets;
+
+    std::unordered_set<CxxHeaderSetSPtr, CxxHeaderSetHasher, CxxHeaderSetHasher>
+        mCxxHeaderSets;
 
     std::unordered_set<CxxFileSPtr, CxxFile::Hasher, CxxFile::Hasher> mCxxFiles;
     std::unordered_set<CxxObjectFileSPtr, CxxObjectFile::Hasher, CxxObjectFile::Hasher>

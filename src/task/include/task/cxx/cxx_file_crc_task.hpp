@@ -55,16 +55,16 @@ public:
         crc.process_bytes(content.data(), content.size());
 
         mCrc64 = crc.checksum();
+        /*
+                parser::CxxParser parser;
+                const auto& includes = parser.includes(content);
 
-        parser::CxxParser parser;
-        const auto& includes = parser.includes(content);
-
-        for (const auto& include : includes)
-        {
-            doim::FsFileSPtr file;
-            EHTest(find(mCxxFile->cxxIncludeDirectories(), include, file));
-        }
-
+                for (const auto& include : includes)
+                {
+                    doim::FsFileSPtr file;
+                    EHTest(find(mCxxFile->cxxIncludeDirectories(), include, file));
+                }
+        */
         EHEnd;
     }
 

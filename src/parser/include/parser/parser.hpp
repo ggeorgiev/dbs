@@ -47,6 +47,7 @@ public:
     {
         return mCxxProgram;
     }
+
     ECode parse()
     {
         for (;;)
@@ -110,17 +111,30 @@ public:
             if (type.test(Token::kOperatorSemicolon))
                 break;
 
-            if (type.test(Token::kKeywordCxxPublicDirectory))
+            if (type.test(Token::kKeywordCxxPublicHeader))
             {
                 auto type = nextMeaningfulToken();
 
-                std::unordered_set<doim::FsDirectorySPtr> directories;
-                EHTest(parseDirectories(mLocation->directory(), 1, directories));
+                auto directory = mLocation->directory();
+                if (type.test(Token::kOperatorAt))
+                {
+                    dom::Attribute attribute;
+                    EHTest(parseAttribute(attribute));
+                    if (attribute.mName == "directory")
+                    {
+                        directory =
+                            doim::gManager->obtainDirectory(directory, attribute.mValue);
+                    }
 
-                if (directories.size() < 1)
+                    type = nextMeaningfulToken();
+                }
+
+                if (!type.test(Token::kOperatorColon))
                     EHBan(kUnable);
 
-                EHTest(library->updatePublicHeadersDirectory(*directories.begin()));
+                std::unordered_set<doim::FsFileSPtr> files;
+                EHTest(parseFiles(directory, std::numeric_limits<size_t>::max(), files));
+                EHTest(library->updateCxxPublicHeaders(directory, files));
 
                 continue;
             }

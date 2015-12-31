@@ -19,7 +19,8 @@ namespace dom
 class CxxProgram;
 typedef std::shared_ptr<CxxProgram> CxxProgramSPtr;
 
-class CxxProgram : public CxxFilesMixin<CxxProgram>
+class CxxProgram : public CxxFilesMixin<CxxProgram>,
+                   public CxxPrivateHeadersMixin<CxxProgram>
 {
 public:
     template <typename T>
@@ -57,6 +58,13 @@ public:
         }
 
         return doim::gManager->unique(directories);
+    }
+
+    doim::CxxHeaderSetSPtr cxxHeaders(const doim::FsDirectorySPtr& root) const
+    {
+        auto headers = std::make_shared<doim::CxxHeaderSet>();
+
+        return doim::gManager->unique(headers);
     }
 
 private:

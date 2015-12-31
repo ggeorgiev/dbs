@@ -42,10 +42,11 @@ public:
 
         const auto& directories =
             static_cast<const Subject*>(this)->cxxIncludeDirectories(root);
+        const auto& headers = static_cast<const Subject*>(this)->cxxHeaders(root);
 
         for (const auto& fsFile : mCxxFilesList)
         {
-            auto cxxFile = std::make_shared<doim::CxxFile>(fsFile, directories);
+            auto cxxFile = std::make_shared<doim::CxxFile>(fsFile, directories, headers);
             cxxFiles.insert(doim::gManager->unique(cxxFile));
         }
 

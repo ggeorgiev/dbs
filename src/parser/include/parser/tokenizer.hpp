@@ -50,7 +50,7 @@ public:
 
         mTokenTypes = Token::typeBody(Type(), 0, ch);
 
-//#define TOKENIZER_DUMP
+// #define TOKENIZER_DUMP
 
 #if defined(TOKENIZER_DUMP)
         std::cout << "Position: 0, code: " << ch << ", Current: " << mTokenTypes << "\n";
