@@ -107,21 +107,22 @@ public:
     {
         auto directories = std::make_shared<doim::CxxIncludeDirectorySet>();
 
+        doim::CxxIncludeDirectorySPtr directory;
         switch (mType)
         {
             case Type::kUser:
-                directories->insert(
-                    doim::gManager->obtainCxxIncludeDirectory(doim::CxxIncludeDirectory::
-                                                                  Type::kUser,
-                                                              publicHeadersDirectory()));
+                directory = std::make_shared<
+                    doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kUser,
+                                               publicHeadersDirectory());
                 break;
             case Type::kSystem:
-                directories->insert(
-                    doim::gManager->obtainCxxIncludeDirectory(doim::CxxIncludeDirectory::
-                                                                  Type::kSystem,
-                                                              publicHeadersDirectory()));
+                directory = std::make_shared<
+                    doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kSystem,
+                                               publicHeadersDirectory());
                 break;
         }
+
+        directories->insert(doim::gManager->unique(directory));
 
         for (const auto& cxxLibrary : mCxxLibraries)
         {
@@ -143,7 +144,8 @@ private:
     Type mType;
     doim::FsFileSPtr mBinary;
 
-    // TODO: So far we assume that all headers are coming from a single public directory
+    // TODO: So far we assume that all headers are coming from a single public
+    // directory
     //       Obviously this is not going to be true for all components.
     //       We should have this computed based on the header files, that will give us
     //       the ability to have optionally move all public headers in a intermediate

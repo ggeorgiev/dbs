@@ -37,7 +37,7 @@ ObjectSPtr Manager::obtainObject(const LocationSPtr& base,
         return ObjectSPtr();
 
     auto working = std::make_shared<Object>(type, std::string(pos, end), location);
-    return *mObjects.insert(working).first;
+    return unique(working);
 }
 
 FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
@@ -73,7 +73,8 @@ FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
                 builder.ensure();
                 builder.set_parent(parent);
                 builder.set_name(name);
-                const auto& insert = mDirectories.insert(builder.reference());
+                const auto& insert =
+                    ManagerMixin<FsDirectory>::mMixinObjects.insert(builder.reference());
                 parent = *insert.first;
                 if (insert.second)
                     builder.reset();
@@ -88,7 +89,7 @@ FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
     if (parent == nullptr)
         parent = std::make_shared<FsDirectory>();
 
-    return *mDirectories.insert(parent).first;
+    return unique(parent);
 }
 
 FsDirectorySPtr Manager::obtainCorrespondingDirectory(
@@ -126,7 +127,7 @@ FsFileSPtr Manager::obtainFile(const FsDirectorySPtr& base,
         return FsFileSPtr();
 
     auto working = std::make_shared<FsFile>(directory, std::string(pos, end));
-    return *mFiles.insert(working).first;
+    return unique(working);
 }
 
 } // namespace doim

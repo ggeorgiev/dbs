@@ -35,9 +35,10 @@ TEST(SearchTaskTest, includes)
     auto file = doim::gManager->obtainFile(directory, "includes.cxx");
     auto cxxIncludeDirectories = std::make_shared<doim::CxxIncludeDirectorySet>();
 
-    cxxIncludeDirectories->insert(
-        doim::gManager->obtainCxxIncludeDirectory(doim::CxxIncludeDirectory::Type::kUser,
-                                                  directory));
+    auto cxxIncludeDirectory = std::make_shared<
+        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kUser, directory);
+
+    cxxIncludeDirectories->insert(doim::gManager->unique(cxxIncludeDirectory));
 
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
     auto cxxHeaders = doim::gManager->unique(std::make_shared<doim::CxxHeaderSet>());
