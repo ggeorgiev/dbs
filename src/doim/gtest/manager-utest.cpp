@@ -14,6 +14,48 @@
 #include <memory>
 #include <ostream>
 
+TEST(ManagerTest, obtainObject)
+{
+    const auto& obj =
+        doim::gManager->obtainObject(nullptr, doim::Object::Type::kCxxLibrary, "/foo/obj");
+    ASSERT_EQ(doim::Object::Type::kCxxLibrary, obj->type());
+    ASSERT_STREQ("obj", obj->name().c_str());
+}
+
+TEST(ManagerTest, obtainEmptyObject)
+{
+    ASSERT_EQ(nullptr,
+              doim::gManager->obtainObject(nullptr, doim::Object::Type::kInvalid, ""));
+    ASSERT_EQ(nullptr,
+              doim::gManager->obtainObject(nullptr, doim::Object::Type::kInvalid, "obj"));
+
+    const auto& root = doim::gManager->obtainLocation(nullptr, "/");
+    ASSERT_EQ(nullptr,
+              doim::gManager->obtainObject(root, doim::Object::Type::kInvalid, "/"));
+    ASSERT_EQ(nullptr,
+              doim::gManager->obtainObject(root, doim::Object::Type::kInvalid, "foo/"));
+
+    const auto& rootFoo1 =
+        doim::gManager->obtainObject(nullptr, doim::Object::Type::kInvalid, "/obj");
+    ASSERT_NE(nullptr, rootFoo1);
+
+    const auto& rootFoo2 = doim::gManager->obtainObject(rootFoo1->location(),
+                                                        doim::Object::Type::kInvalid,
+                                                        "obj");
+    ASSERT_NE(nullptr, rootFoo2);
+}
+
+TEST(ManagerTest, obtainUniqueObject)
+{
+    const auto& root = doim::gManager->obtainLocation(nullptr, "/");
+
+    const auto& rootFoo1 =
+        doim::gManager->obtainObject(root, doim::Object::Type::kInvalid, "obj");
+    const auto& rootFoo2 =
+        doim::gManager->obtainObject(nullptr, doim::Object::Type::kInvalid, "/obj");
+    ASSERT_EQ(rootFoo1, rootFoo2);
+}
+
 TEST(ManagerTest, obtainEmptyDirectory)
 {
     const auto& emptyDir = doim::gManager->obtainDirectory(nullptr, "");

@@ -29,18 +29,11 @@ public:
     {
     }
 
-    ECode find(const doim::CxxIncludeDirectorySetSPtr& directories,
-               const std::string& file,
-               doim::FsFileSPtr& fsFile)
+    ECode findInclude(const std::string& file, doim::FsFileSPtr& fsFile)
     {
         for (const auto& directory : *mCxxFile->cxxIncludeDirectories())
         {
-            boost::filesystem::path path(directory->directory()->path(nullptr) + file);
-            boost::system::error_code ec;
-            if (boost::filesystem::is_regular_file(path, ec))
-            {
-                EHEnd;
-            }
+
         }
         EHBan(kNotFound, file);
     }
@@ -55,16 +48,15 @@ public:
         crc.process_bytes(content.data(), content.size());
 
         mCrc64 = crc.checksum();
-        /*
-                parser::CxxParser parser;
-                const auto& includes = parser.includes(content);
 
-                for (const auto& include : includes)
-                {
-                    doim::FsFileSPtr file;
-                    EHTest(find(mCxxFile->cxxIncludeDirectories(), include, file));
-                }
-        */
+        parser::CxxParser parser;
+        const auto& includes = parser.includes(content);
+
+        for (const auto& include : includes)
+        {
+            doim::FsFileSPtr file;
+            EHTest(findInclude(include, file));
+        }
         EHEnd;
     }
 

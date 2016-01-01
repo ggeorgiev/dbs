@@ -20,6 +20,8 @@
 #include <unordered_set>
 #include <utility>
 
+#include <experimental/string_view>
+
 namespace doim
 {
 template <typename T, typename H = typename T::Hasher>
@@ -57,17 +59,10 @@ public:
     }
 
     // Obtain an unique location.
-    LocationSPtr obtainLocation(const LocationSPtr& base, const std::string& location)
-    {
-        return obtainDirectory(base, location.begin(), location.end());
-    }
-
-    // Obtain an unique location.
     LocationSPtr obtainLocation(const LocationSPtr& base,
-                                const std::string::const_iterator& begin,
-                                const std::string::const_iterator& end)
+                                const std::experimental::string_view& location)
     {
-        return obtainDirectory(base, begin, end);
+        return obtainDirectory(base, location);
     }
 
     using ManagerMixin<Object>::unique;
@@ -75,31 +70,13 @@ public:
     // Obtain an unique object.
     ObjectSPtr obtainObject(const LocationSPtr& base,
                             const Object::Type type,
-                            const std::string& object)
-    {
-        return obtainObject(base, type, object.begin(), object.end());
-    }
-
-    // Obtain an unique object.
-    ObjectSPtr obtainObject(const LocationSPtr& base,
-                            const Object::Type type,
-                            const std::string::const_iterator& begin,
-                            const std::string::const_iterator& end);
-
+                            const std::experimental::string_view& object);
 
     using ManagerMixin<FsDirectory>::unique;
 
     // Obtain an unique directory.
     FsDirectorySPtr obtainDirectory(const FsDirectorySPtr& base,
-                                    const std::string& directory)
-    {
-        return obtainDirectory(base, directory.begin(), directory.end());
-    }
-
-    // Obtain an unique directory.
-    FsDirectorySPtr obtainDirectory(const FsDirectorySPtr& base,
-                                    const std::string::const_iterator& begin,
-                                    const std::string::const_iterator& end);
+                                    const std::experimental::string_view& directory);
 
     // Obtain an the unique corresponding directory of directory in toDirectory to that in
     // fromDirectory. Note that directory must be subdirectory of fromDirectory.
@@ -109,14 +86,8 @@ public:
 
     using ManagerMixin<FsFile>::unique;
 
-    FsFileSPtr obtainFile(const FsDirectorySPtr& base, const std::string& file)
-    {
-        return obtainFile(base, file.begin(), file.end());
-    }
-
     FsFileSPtr obtainFile(const FsDirectorySPtr& base,
-                          const std::string::const_iterator& begin,
-                          const std::string::const_iterator& end);
+                          const std::experimental::string_view& file);
 
     using ManagerMixin<CxxIncludeDirectory>::unique;
 

@@ -18,46 +18,47 @@ ManagerSPtr gManager = im::InitializationManager::subscribe(gManager);
 
 ObjectSPtr Manager::obtainObject(const LocationSPtr& base,
                                  const Object::Type type,
-                                 const std::string::const_iterator& begin,
-                                 const std::string::const_iterator& end)
+                                 const std::experimental::string_view& object)
 {
-    auto pos = end;
-    while (--pos >= begin)
+    auto pos = object.size();
+    while (pos-- > 0)
     {
-        if (*pos == slash())
+        if (object[pos] == slash())
             break;
     }
     ++pos;
 
-    if (pos == end)
+    if (pos == object.size())
         return ObjectSPtr();
 
-    auto location = obtainLocation(base, begin, pos);
+    auto location =
+        obtainLocation(base, std::experimental::string_view(object.begin(), pos));
     if (location == nullptr)
         return ObjectSPtr();
 
-    auto working = std::make_shared<Object>(type, std::string(pos, end), location);
+    auto working =
+        std::make_shared<Object>(type,
+                                 std::string(object.begin() + pos, object.end()),
+                                 location);
     return unique(working);
 }
 
 FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
-                                         const std::string::const_iterator& begin,
-                                         const std::string::const_iterator& end)
+                                         const std::experimental::string_view& directory)
 {
-    if (begin == end)
+    if (directory.empty())
         return base;
 
-    ASSERT(base != nullptr || *begin == slash());
-    ASSERT(base == nullptr || *begin != slash());
-
-    auto pos = begin;
+    ASSERT(base != nullptr || directory.front() == slash());
+    ASSERT(base == nullptr || directory.front() != slash());
 
     FsDirectory::Builder builder;
-
     auto parent = base;
-    while (pos < end)
+
+    auto pos = directory.begin();
+    while (pos < directory.end())
     {
-        const auto& next = std::find(pos, end, slash());
+        const auto& next = std::find(pos, directory.end(), slash());
 
         if (next != pos || parent == nullptr)
         {
@@ -65,7 +66,7 @@ FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
             if (name == kParentDirectoryString)
             {
                 if (parent == nullptr)
-                    return parent;
+                    return nullptr;
                 parent = parent->parent();
             }
             else if (name != kCurrentDirectoryString)
@@ -79,7 +80,7 @@ FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
                 if (insert.second)
                     builder.reset();
             }
-            if (next == end)
+            if (next == directory.end())
                 return parent;
         }
 
@@ -108,25 +109,26 @@ FsDirectorySPtr Manager::obtainCorrespondingDirectory(
 }
 
 FsFileSPtr Manager::obtainFile(const FsDirectorySPtr& base,
-                               const std::string::const_iterator& begin,
-                               const std::string::const_iterator& end)
+                               const std::experimental::string_view& file)
 {
-    auto pos = end;
-    while (--pos >= begin)
+    auto pos = file.size();
+    while (pos-- > 0)
     {
-        if (*pos == slash())
+        if (file[pos] == slash())
             break;
     }
     ++pos;
 
-    if (pos == end)
+    if (pos == file.size())
         return FsFileSPtr();
 
-    const auto& directory = obtainDirectory(base, begin, pos);
+    const auto& directory =
+        obtainDirectory(base, std::experimental::string_view(file.begin(), pos));
     if (directory == nullptr)
         return FsFileSPtr();
 
-    auto working = std::make_shared<FsFile>(directory, std::string(pos, end));
+    auto working =
+        std::make_shared<FsFile>(directory, std::string(file.begin() + pos, file.end()));
     return unique(working);
 }
 
