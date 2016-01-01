@@ -2,7 +2,6 @@
 //
 
 #include "dom/manager.h"
-
 #include <functional>
 
 namespace dom

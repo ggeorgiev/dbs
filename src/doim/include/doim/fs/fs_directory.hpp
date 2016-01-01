@@ -4,10 +4,9 @@
 #pragma once
 
 #include "const/constants.h"
-
+#include <iostream>
 #include <memory>
 #include <string>
-#include <iostream>
 
 namespace doim
 {

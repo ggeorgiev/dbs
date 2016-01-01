@@ -2,15 +2,13 @@
 //
 
 #include "doim/manager.h"
-
-#include <__hash_table>
-#include <algorithm>
-#include <functional>
-#include <string>
-#include <utility>
-
 #include "const/constants.h"
 #include "err/err_assert.h"
+#include <algorithm>
+#include <functional>
+#include <iosfwd>
+#include <string>
+#include <utility>
 
 namespace doim
 {

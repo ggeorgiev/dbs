@@ -2,7 +2,6 @@
 //
 
 #include "parser/string_stream.hpp"
-
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
 

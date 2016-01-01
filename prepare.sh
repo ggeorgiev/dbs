@@ -60,7 +60,7 @@ then
         ../llvm || exit 1
 
     echo Make ...
-    make || exit 1
+    make -j 8 || exit 1
 
     echo Install ...
     make install || exit 1

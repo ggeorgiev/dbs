@@ -4,12 +4,11 @@
 #pragma once
 
 #include <tpool/task.hpp>
-
-#include <thread>
-#include <mutex>
 #include <condition_variable>
-#include <queue>
 #include <memory>
+#include <mutex>
+#include <queue>
+#include <thread>
 #include <vector>
 
 template <class T>

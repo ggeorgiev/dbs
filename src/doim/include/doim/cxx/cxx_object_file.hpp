@@ -4,12 +4,11 @@
 #pragma once
 
 #include "doim/cxx/cxx_file.hpp"
-
 #include <memory>
 #include <string>
+#include <unordered_set>
 #include <utility>
 #include <vector>
-#include <unordered_set>
 
 namespace doim
 {

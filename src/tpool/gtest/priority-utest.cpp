@@ -2,9 +2,7 @@
 //
 
 #include "tpool/priority.hpp"
-
 #include <gtest/gtest.h>
-
 #include <limits>
 #include <memory>
 

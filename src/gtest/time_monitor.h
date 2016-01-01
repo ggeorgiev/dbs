@@ -1,9 +1,11 @@
+//  Copyright © 2015 George Georgiev. All rights reserved.
+//
+
 #pragma once
 
 #include <gtest/gtest.h>
-
-#include <stddef.h>
 #include <iosfwd>
+#include <stddef.h>
 
 namespace testing
 {

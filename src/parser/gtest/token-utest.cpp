@@ -1,5 +1,7 @@
-#include "parser/token.hpp"
+//  Copyright © 2015 George Georgiev. All rights reserved.
+//
 
+#include "parser/token.hpp"
 #include <gtest/gtest.h>
 #include <bitset>
 

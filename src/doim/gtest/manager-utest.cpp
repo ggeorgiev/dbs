@@ -1,23 +1,21 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "doim/manager.h"
-
 #include "doim/fs/fs_directory.hpp"
 #include "doim/fs/fs_file.hpp"
-
+#include "doim/generic/object.hpp"
+#include "doim/manager.h"
 #include "gtest/err_assert.h"
-
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
-
 #include <memory>
 #include <ostream>
 
 TEST(ManagerTest, obtainObject)
 {
-    const auto& obj =
-        doim::gManager->obtainObject(nullptr, doim::Object::Type::kCxxLibrary, "/foo/obj");
+    const auto& obj = doim::gManager->obtainObject(nullptr,
+                                                   doim::Object::Type::kCxxLibrary,
+                                                   "/foo/obj");
     ASSERT_EQ(doim::Object::Type::kCxxLibrary, obj->type());
     ASSERT_STREQ("obj", obj->name().c_str());
 }

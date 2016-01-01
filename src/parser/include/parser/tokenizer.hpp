@@ -4,12 +4,10 @@
 #pragma once
 
 #include "parser/token.hpp"
-
 #include "err/err.h"
 #include "err/err_assert.h"
-
-#include <memory>
 #include <iostream>
+#include <memory>
 
 namespace parser
 {
@@ -37,8 +35,14 @@ public:
         EHEnd;
     }
 
-    String token() { return String(mTokeBegin, mStream->iterator()); }
-    size_t length() { return mPosition; }
+    String token()
+    {
+        return String(mTokeBegin, mStream->iterator());
+    }
+    size_t length()
+    {
+        return mPosition;
+    }
     Type next()
     {
         if (!mStream->has())

@@ -4,14 +4,12 @@
 #pragma once
 
 #include "err/err.h"
-
 #include <boost/optional.hpp>
-
-#include <thread>
-#include <mutex>
 #include <condition_variable>
-#include <queue>
 #include <memory>
+#include <mutex>
+#include <queue>
+#include <thread>
 #include <unordered_map>
 
 namespace tpool

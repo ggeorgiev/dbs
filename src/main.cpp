@@ -1,3 +1,6 @@
+//  Copyright © 2015 George Georgiev. All rights reserved.
+//
+
 #include <stdio.h>
 #include <sys/errno.h>
 #include <unistd.h>
@@ -5,7 +8,6 @@
 #include <iostream>
 #include <iterator>
 #include <memory>
-
 #include "doim/fs/fs_file.hpp"
 #include "doim/manager.h"
 #include "dom/cxx/cxx_program.hpp"

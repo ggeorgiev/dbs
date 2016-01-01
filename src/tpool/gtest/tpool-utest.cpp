@@ -3,12 +3,9 @@
 
 #include "tpool/task.hpp" // IWYU pragma: keep
 #include "tpool/tpool.hpp"
-
 #include "err/err.h"
-
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
-
 #include <cstdlib>
 #include <ctime>
 #include <functional>

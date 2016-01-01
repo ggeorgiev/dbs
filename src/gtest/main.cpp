@@ -1,12 +1,16 @@
-#include "im/initialization_manager.hpp"
+//  Copyright © 2015 George Georgiev. All rights reserved.
+//
 
-#include "gtest/test_resource.h"
-#include "time_monitor.h"
-#include "performance_arbiter.h"
-
+#include "doim/fs/fs_directory.hpp"
 #include "doim/manager.h"
-
+#include "im/initialization_manager.hpp"
 #include "gtest/gtest.h"
+#include "performance_arbiter.h"
+#include "time_monitor.h"
+#include <memory>
+#include <stdio.h>
+#include <sys/errno.h>
+#include <unistd.h>
 
 namespace testing
 {

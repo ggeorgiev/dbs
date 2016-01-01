@@ -1,14 +1,19 @@
+//  Copyright © 2015 George Georgiev. All rights reserved.
+//
+
 #include "task/cxx/cxx_file_crc_task.hpp"
-
+#include "doim/cxx/cxx_file.hpp"
+#include "doim/cxx/cxx_header.hpp"
+#include "doim/cxx/cxx_include_directory.hpp"
 #include "doim/manager.h"
-
-#include "gtest/test_resource.h"
-
+#include "err/err.h"
 #include "gtest/err.h"
-
+#include "gtest/test_resource.h"
+#include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
-
-#include <bitset>
+#include <ios>
+#include <memory>
+#include <unordered_set>
 
 TEST(SearchTaskTest, simple)
 {

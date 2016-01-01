@@ -1,8 +1,9 @@
+//  Copyright © 2015 George Georgiev. All rights reserved.
+//
+
 #include "err/err.h"
 #include "err/err_cppformat.h"
-
 #include <gtest/gtest.h>
-
 #include <sstream>
 
 ECode return0()

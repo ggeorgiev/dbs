@@ -1,14 +1,15 @@
-#pragma once
+//  Copyright © 2015 George Georgiev. All rights reserved.
+//
+//
+// Err is an error handling system that allows call stack tracking.
+//
 
-/*
- * Err is an error handling system that allows call stack tracking.
- */
+#pragma once
 
 #include "err/err_assert.h"
 #include "err/err_cppformat.h"
-
-#include <stddef.h>
 #include <sstream>
+#include <stddef.h>
 #include <vector>
 
 namespace err

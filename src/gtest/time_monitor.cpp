@@ -1,8 +1,9 @@
-#include "time_monitor.h"
+//  Copyright © 2015 George Georgiev. All rights reserved.
+//
 
+#include "time_monitor.h"
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
-
 #include <limits>
 #include <ostream>
 #include <string.h>

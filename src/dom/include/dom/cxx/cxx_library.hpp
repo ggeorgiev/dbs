@@ -3,19 +3,16 @@
 
 #pragma once
 
-#include "dom/generic/attribute.hpp"
 #include "dom/cxx/cxx_files_mixin.hpp"
 #include "dom/cxx/cxx_private_headers_mixin.hpp"
-
-#include "doim/manager.h"
+#include "dom/generic/attribute.hpp"
 #include "doim/cxx/cxx_file.hpp"
 #include "doim/fs/fs_file.hpp"
-
+#include "doim/manager.h"
 #include "err/err.h"
-
 #include <memory>
-#include <vector>
 #include <unordered_set>
+#include <vector>
 
 namespace dom
 {

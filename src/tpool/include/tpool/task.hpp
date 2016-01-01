@@ -4,14 +4,11 @@
 #pragma once
 
 #include "tpool/priority.hpp"
-
 #include "err/err.h"
-
 #include <boost/heap/fibonacci_heap.hpp>
-
-#include <thread>
-#include <future>
 #include <functional>
+#include <future>
+#include <thread>
 
 namespace tpool
 {

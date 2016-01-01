@@ -1,3 +1,6 @@
+//  Copyright © 2015 George Georgiev. All rights reserved.
+//
+
 #pragma once
 
 #include "err/err_variadic.h"

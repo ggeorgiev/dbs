@@ -4,11 +4,8 @@
 #pragma once
 
 #include "parser/fixed_encoding_traits.hpp"
-
-#include "err/err.h"
-
 #include "const/constants.h"
-
+#include "err/err.h"
 #include <string>
 
 namespace parser

@@ -3,24 +3,22 @@
 
 #pragma once
 
-#include "doim/cxx/cxx_include_directory.hpp"
 #include "doim/cxx/cxx_header.hpp"
-#include "doim/cxx/cxx_file.hpp"
-#include "doim/cxx/cxx_object_file.hpp"
+#include "doim/cxx/cxx_include_directory.hpp"
 #include "doim/fs/fs_directory.hpp"
 #include "doim/fs/fs_file.hpp"
 #include "doim/generic/location.hpp"
 #include "doim/generic/object.hpp"
-
 #include "im/initialization_manager.hpp"
-
-#include <__hash_table>
-#include <iosfwd>
+#include <experimental/string_view>
 #include <memory>
 #include <unordered_set>
-#include <utility>
 
-#include <experimental/string_view>
+namespace doim
+{
+class CxxFile;
+class CxxObjectFile;
+} // namespace doim
 
 namespace doim
 {

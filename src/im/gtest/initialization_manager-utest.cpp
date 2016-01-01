@@ -2,9 +2,7 @@
 //
 
 #include "im/initialization_manager.hpp"
-
 #include <gtest/gtest.h>
-
 #include <functional>
 #include <memory>
 

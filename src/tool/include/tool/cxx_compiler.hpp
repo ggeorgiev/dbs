@@ -3,14 +3,12 @@
 
 #pragma once
 
-#include "doim/cxx/cxx_file.hpp"
-
 #include "dom/cxx/cxx_program.hpp"
-
+#include "doim/cxx/cxx_file.hpp"
 #include <memory>
-#include <string>
-#include <sstream>
 #include <set>
+#include <sstream>
+#include <string>
 
 namespace tool
 {

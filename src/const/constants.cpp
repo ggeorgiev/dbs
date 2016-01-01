@@ -2,7 +2,6 @@
 //
 
 #include "const/constants.h"
-
 #include <string>
 
 std::string kEmptyString;

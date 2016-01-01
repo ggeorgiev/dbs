@@ -1,14 +1,13 @@
+//  Copyright © 2015 George Georgiev. All rights reserved.
+//
+
 #include "parser/string_stream.hpp"
 #include "parser/tokenizer.hpp" // IWYU pragma: keep
-
 #include "err/err.h"
-
 #include "gtest/err_assert.h"
-
 #include <gtest/gtest-message.h>
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
-
 #include <bitset>
 #include <memory>
 #include <sstream>

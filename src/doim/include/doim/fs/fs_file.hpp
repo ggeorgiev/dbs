@@ -4,7 +4,6 @@
 #pragma once
 
 #include "doim/fs/fs_directory.hpp"
-
 #include <memory>
 #include <string>
 #include <utility>

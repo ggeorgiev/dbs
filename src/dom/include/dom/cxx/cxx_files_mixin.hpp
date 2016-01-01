@@ -4,14 +4,11 @@
 #pragma once
 
 #include "dom/cxx/cxx_library.hpp"
-
-#include "doim/manager.h"
 #include "doim/cxx/cxx_file.hpp"
 #include "doim/cxx/cxx_object_file.hpp"
 #include "doim/fs/fs_file.hpp"
-
+#include "doim/manager.h"
 #include "err/err.h"
-
 #include <memory>
 #include <set>
 #include <unordered_set>

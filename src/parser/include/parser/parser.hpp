@@ -2,19 +2,12 @@
 //
 
 #include "parser/tokenizer.hpp"
-
-#include "dom/manager.h"
-
 #include "dom/cxx/cxx_program.hpp"
-
-#include "doim/manager.h"
-
-#include "doim/generic/object.hpp"
-
+#include "dom/manager.h"
 #include "doim/fs/fs_file.hpp"
-
+#include "doim/generic/object.hpp"
+#include "doim/manager.h"
 #include "err/err.h"
-
 #include <memory>
 #include <unordered_set>
 

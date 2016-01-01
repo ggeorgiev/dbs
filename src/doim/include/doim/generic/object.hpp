@@ -4,7 +4,6 @@
 #pragma once
 
 #include "doim/generic/location.hpp"
-
 #include <memory>
 #include <string>
 

@@ -3,16 +3,12 @@
 
 #pragma once
 
-#include "doim/cxx/cxx_file.hpp"
-
-#include "parser/cxx/cxx_parser.hpp"
-
 #include "tpool/task.hpp"
-
+#include "parser/cxx/cxx_parser.hpp"
+#include "doim/cxx/cxx_file.hpp"
 #include <boost/crc.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/system/error_code.hpp>
-
 #include <fstream>
 #include <regex>
 
@@ -33,7 +29,6 @@ public:
     {
         for (const auto& directory : *mCxxFile->cxxIncludeDirectories())
         {
-
         }
         EHBan(kNotFound, file);
     }

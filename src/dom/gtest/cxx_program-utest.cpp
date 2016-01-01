@@ -2,11 +2,8 @@
 //
 
 #include "dom/cxx/cxx_program.hpp"
-
 #include "doim/fs/fs_file.hpp"
-
 #include <gtest/gtest.h>
-
 #include <unordered_set>
 
 TEST(CxxProgramTest, foo)

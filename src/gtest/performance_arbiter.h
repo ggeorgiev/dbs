@@ -1,9 +1,10 @@
+//  Copyright © 2015 George Georgiev. All rights reserved.
+//
+
 #pragma once
 
 #include <gtest/gtest.h>
-
 #include <boost/chrono/process_cpu_clocks.hpp>
-
 #include <iosfwd>
 #include <string>
 #include <unordered_map>
