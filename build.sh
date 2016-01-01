@@ -94,7 +94,7 @@ then
     done
     echo "]" >> $COMPILE_DATABASE
 
-    if [ 1 == 0 ]
+    if [ 1 == 1 ]
     then
         mkdir -p build/src/gtest
         mkdir -p build/src/err/gtest
@@ -129,7 +129,7 @@ then
 
         build/gtest-main --gtest_filter=-*.PERFORMANCE_* || exit 1
 
-    elif [ 1 == 1 ]
+    elif [ 1 == 0 ]
     then
 
         echo > build/iwyu.log
@@ -145,7 +145,7 @@ then
         for FILE in src/main.cpp src/gtest/main.cpp $FILES
         do
             echo clang tidy $FILE ...
-            PATH=$CLANGBIN:$PATH clang-tidy -checks=*,-google-readability-todo,-cppcoreguidelines-pro-type-vararg,-google-readability-braces-around-statements,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-readability-braces-around-statements -p build $FILE 2>&1 || exit 1
+            PATH=$CLANGBIN:$PATH clang-tidy -checks=*,-llvm-include-order,-google-readability-todo,-cppcoreguidelines-pro-type-vararg,-google-readability-braces-around-statements,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-readability-braces-around-statements -p build $FILE 2>&1 || exit 1
         done
     fi
 fi

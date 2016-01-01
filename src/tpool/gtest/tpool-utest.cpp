@@ -25,7 +25,7 @@ TYPED_TEST_CASE(TPoolTest, TPoolType);
 
 TYPED_TEST(TPoolTest, SLOW_initialize)
 {
-    std::srand(std::time(0));
+    std::srand(std::time(nullptr));
 
     auto pool = std::make_shared<tpool::TPool>(100);
     for (int i = 0; i < 10; ++i)

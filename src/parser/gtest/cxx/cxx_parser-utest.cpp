@@ -1,16 +1,12 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
+#include "parser/cxx/cxx_parser.hpp" // IWYU pragma: keep
 #include <gtest/gtest-message.h>
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
 #include <ostream>
 #include <stddef.h>
-
-namespace parser
-{
-class CxxParser;
-} // namespace parser
 
 template <typename T>
 class CxxParserTest : public ::testing::Test

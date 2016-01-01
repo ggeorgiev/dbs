@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include "dom/cxx/cxx_library.hpp"
 #include "doim/cxx/cxx_file.hpp"
 #include "doim/cxx/cxx_object_file.hpp"
 #include "doim/fs/fs_file.hpp"

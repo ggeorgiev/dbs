@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "doim/cxx/cxx_include_directory.hpp"
 #include "doim/fs/fs_file.hpp"
 #include <memory>
 #include <string>

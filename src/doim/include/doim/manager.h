@@ -3,8 +3,10 @@
 
 #pragma once
 
+#include "doim/cxx/cxx_file.hpp" // IWYU pragma: keep
 #include "doim/cxx/cxx_header.hpp"
 #include "doim/cxx/cxx_include_directory.hpp"
+#include "doim/cxx/cxx_object_file.hpp" // IWYU pragma: keep
 #include "doim/fs/fs_directory.hpp"
 #include "doim/fs/fs_file.hpp"
 #include "doim/generic/location.hpp"
@@ -13,12 +15,6 @@
 #include <experimental/string_view>
 #include <memory>
 #include <unordered_set>
-
-namespace doim
-{
-class CxxFile;
-class CxxObjectFile;
-} // namespace doim
 
 namespace doim
 {

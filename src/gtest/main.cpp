@@ -15,7 +15,7 @@
 namespace testing
 {
 doim::FsDirectorySPtr gTestResourceDirectory;
-}
+} // namespace testing
 
 int main(int argc, char* argv[])
 {
