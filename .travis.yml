@@ -1,7 +1,12 @@
+language: cpp
+
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -q
   - sudo apt-get install g++-4.9 -y
+  - sudo update-alternatives --auto g++
+  - sudo update-alternatives --auto gcc
+  - sudo update-alternatives --auto cpp-bin
 
 install: ./prepare.sh
 script: ./build.sh
