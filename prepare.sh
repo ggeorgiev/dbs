@@ -10,21 +10,21 @@ git submodule update --init || exit 1
 #Build cmake
 if [ ! -e cmake ]
 then
-    pushd 3rdparty/cmake || exit 1
+    cd 3rdparty/cmake || exit 1
 
     ./bootstrap --prefix=$BASEDIR/cmake
     make
     make install
     git clean -fdx
 
-    popd
+    cd ../.. || exit 1
 fi
 
 CMAKE=$BASEDIR/cmake/bin/cmake
 
 if [ ! -e clang ]
 then
-    pushd 3rdparty || exit 1
+    cd 3rdparty || exit 1
 
     echo Build clang ...
 
@@ -65,14 +65,15 @@ then
     echo Install ...
     make install || exit 1
 
-    cd ..
+    cd .. || exit 1
+
     rm -rf clang-build
 
     rm -rf llvm/tools/clang
     rm -rf llvm/projects/libcxx
     rm -rf llvm/projects/libcxxabi
 
-    popd
+    cd .. || exit 1
 
     if [ -e iwyu ]
     then
@@ -88,7 +89,7 @@ if [ ! -e clang/plugin ]
 then
     mkdir -p clang/plugin || exit 1
 
-    pushd 3rdparty/clang-plugin || exit 1
+    cd 3rdparty/clang-plugin || exit 1
 
     echo Build clang plugins ...
 
@@ -100,13 +101,15 @@ then
 
     make clean
 
-    popd
+    cd .. || exit 1
+
+    cd ../..  || exit 1
 fi
 
 
 if [ ! -e iwyu ]
 then
-    pushd 3rdparty/iwyu || exit 1
+    cd 3rdparty/iwyu || exit 1
 
     echo Build Include what you use ...
 
@@ -127,14 +130,14 @@ then
 
     git clean -fdx
 
-    popd
+    cd ../.. || exit 1
 
     cp iwyu/bin/* $CLANGBIN
 fi
 
 if [ ! -e gtest ]
 then
-    pushd 3rdparty/gtest || exit 1
+    cd 3rdparty/gtest || exit 1
 
     echo Build gtest ...
 
@@ -162,12 +165,12 @@ then
 
     git clean -fdx
 
-    popd
+    cd ../..
 fi
 
 if [ ! -e boost ]
 then
-    pushd 3rdparty/boost || exit 1
+    cd 3rdparty/boost || exit 1
 
     git submodule update --init tools/build          || exit 1
     git submodule update --init tools/inspect        || exit 1
@@ -234,12 +237,12 @@ then
     cd libs/config
     git clean -fdx
 
-    popd
+    cd ../..
 fi
 
 if [ ! -e cppformat ]
 then
-    pushd 3rdparty/cppformat || exit 1
+    cd 3rdparty/cppformat || exit 1
 
     echo Build cppformat ...
 
@@ -255,7 +258,7 @@ then
 
     git clean -fdx
 
-    popd
+    cd ../.. || exit 1
 
     mv cppformat/include/ cppformat/cppformat || exit 1
     mkdir -p cppformat/include || exit 1
