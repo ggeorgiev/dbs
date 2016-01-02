@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <sys/errno.h>
 #include <unistd.h>
+#include <vector>
 
 // IWYU pragma: no_include <sstream>
 
@@ -44,8 +45,11 @@ ECode run(const doim::FsFileSPtr& dbsFile, dom::CxxProgramSPtr& program)
     EHEnd;
 }
 
-int main(int /*argc*/, const char* argv[])
+int main(int argc, const char* argv[])
 {
+    // TODO: replace this with array_view when available
+    std::vector<const char*> arg(argc, *argv);
+
     im::InitializationManager im;
 
     char current[FILENAME_MAX];
@@ -53,7 +57,7 @@ int main(int /*argc*/, const char* argv[])
         return errno;
 
     auto cwd = doim::gManager->obtainDirectory(nullptr, current);
-    auto file = doim::gManager->obtainFile(cwd, argv[1]);
+    auto file = doim::gManager->obtainFile(cwd, arg[1]);
 
     dom::CxxProgramSPtr program;
 

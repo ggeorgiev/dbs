@@ -84,6 +84,26 @@ CLANGDIR=$BASEDIR/clang
 CLANGBIN=$CLANGDIR/bin
 CLANG=$CLANGBIN/clang++
 
+if [ ! -e clang/plugin ]
+then
+    mkdir -p clang/plugin || exit 1
+
+    pushd 3rdparty/clang-plugin || exit 1
+
+    echo Build clang plugins ...
+
+    cd param_check || exit 1
+
+    LLVM_DIR=$CLANGDIR make || exit 1
+
+    cp *.so ../../../clang/plugin
+
+    make clean
+
+    popd
+fi
+
+
 if [ ! -e iwyu ]
 then
     pushd 3rdparty/iwyu || exit 1

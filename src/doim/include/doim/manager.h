@@ -29,6 +29,8 @@ public:
 
     MixinObjectSPtr unique(const MixinObjectSPtr& object)
     {
+        if (object == nullptr)
+            return object;
         return *mMixinObjects.insert(object).first;
     }
 
@@ -80,8 +82,14 @@ public:
 
     using ManagerMixin<FsFile>::unique;
 
-    FsFileSPtr obtainFile(const FsDirectorySPtr& base,
+    FsFileSPtr createFile(const FsDirectorySPtr& base,
                           const std::experimental::string_view& file);
+
+    FsFileSPtr obtainFile(const FsDirectorySPtr& base,
+                          const std::experimental::string_view& file)
+    {
+        return unique(createFile(base, file));
+    }
 
     using ManagerMixin<CxxIncludeDirectory>::unique;
 

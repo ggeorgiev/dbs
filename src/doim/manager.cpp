@@ -101,12 +101,12 @@ FsDirectorySPtr Manager::obtainCorrespondingDirectory(
     if (directory == fromDirectory)
         return toDirectory;
 
-    auto parent =
+    const auto& parent =
         obtainCorrespondingDirectory(directory->parent(), fromDirectory, toDirectory);
     return obtainDirectory(parent, directory->name());
 }
 
-FsFileSPtr Manager::obtainFile(const FsDirectorySPtr& base,
+FsFileSPtr Manager::createFile(const FsDirectorySPtr& base,
                                const std::experimental::string_view& file)
 {
     auto pos = file.size();
@@ -125,9 +125,8 @@ FsFileSPtr Manager::obtainFile(const FsDirectorySPtr& base,
     if (directory == nullptr)
         return FsFileSPtr();
 
-    auto working =
-        std::make_shared<FsFile>(directory, std::string(file.begin() + pos, file.end()));
-    return unique(working);
+    return std::make_shared<FsFile>(directory,
+                                    std::string(file.begin() + pos, file.end()));
 }
 
 } // namespace doim

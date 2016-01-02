@@ -73,8 +73,10 @@ IncludeCategories:
     Priority:        120
   - Regex:           '^".*'
     Priority:        1000
-  - Regex:           '^<.*'
+  - Regex:           '^<.*?.h>'
     Priority:        2000
+  - Regex:           '^<.*'
+    Priority:        3000
 IndentCaseLabels: true
 IndentWidth:     4
 IndentWrappedFunctionNames: false

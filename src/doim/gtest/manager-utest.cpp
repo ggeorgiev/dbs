@@ -177,6 +177,7 @@ TEST(ManagerTest, obtainEmptyFile)
     ASSERT_EQ(nullptr, doim::gManager->obtainFile(nullptr, "foo.cpp"));
 
     const auto& root = doim::gManager->obtainDirectory(nullptr, "/");
+    ASSERT_EQ(nullptr, doim::gManager->obtainFile(root, ""));
     ASSERT_EQ(nullptr, doim::gManager->obtainFile(root, "/"));
     ASSERT_EQ(nullptr, doim::gManager->obtainFile(root, "foo/"));
 

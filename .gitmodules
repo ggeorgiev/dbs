@@ -34,3 +34,7 @@
 [submodule "clang-tools-extra"]
 	path = 3rdparty/clang-tools-extra
 	url = https://github.com/llvm-mirror/clang-tools-extra.git
+
+[submodule "clang-plugin"]
+	path = 3rdparty/clang-plugin
+	url = https://github.com/ggeorgiev/clang-plugin.git

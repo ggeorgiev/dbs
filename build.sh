@@ -12,6 +12,15 @@ CXXFLAGS="-std=c++11 -stdlib=libc++"
 CXXFLAGS="$CXXFLAGS -isysroot /Applications/Xcode.app/Contents/Developer/Platforms"
 CXXFLAGS="$CXXFLAGS/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk"
 
+PLUGINS="-fcolor-diagnostics"
+
+PLUGIN=$BASEDIR/clang/plugin/param_check/ParameterNameChecker.so
+if [ -e $PLUGIN ]
+then
+    PLUGINS="$PLUGINS -Xclang -load -Xclang $PLUGIN"
+    PLUGINS="$PLUGINS -Xclang -plugin -Xclang check-parameter-names"
+fi
+
 CXXFLAGS="$CXXFLAGS -Isrc/const/include"
 CXXFLAGS="$CXXFLAGS -Isrc/im/include"
 CXXFLAGS="$CXXFLAGS -Isrc/err/include"
@@ -43,8 +52,9 @@ LIBRARIES="$LIBRARIES -Lcppformat/lib"
 
 LIBRARIES="$LIBRARIES -lboost_filesystem -lboost_chrono -lboost_system -lformat"
 
-#DEFINES="-DNDEBUG" && OPTOMIZATION="-O3"
-DEFINES="-DDEBUG" && OPTOMIZATION="-O0 -g"
+#DEFINES=" -DNDEBUG" && OPTOMIZATION="-O3"
+DEFINES=" -DDEBUG" && OPTOMIZATION="-O0 -g"
+
 
 mkdir -p build
 #PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
@@ -66,6 +76,7 @@ then
 
     FILES="$FILES src/doim/gtest/manager-utest.cpp"
     FILES="$FILES src/doim/gtest/fs/fs_directory-utest.cpp"
+    FILES="$FILES src/doim/gtest/fs/fs_file-ptest.cpp"
 
     FILES="$FILES src/parser/gtest/parser-utest.cpp"
     FILES="$FILES src/parser/gtest/stream-utest.cpp"
@@ -115,9 +126,9 @@ then
         do
             echo clang compile $FILE ...
 
-            PATH=$CLANGBIN:$PATH $CLANG -c $OPTOMIZATION $CXXFLAGS \
-                $FILE \
+            PATH=$CLANGBIN:$PATH $CLANG $PLUGINS -c $OPTOMIZATION $CXXFLAGS \
                 $DEFINES \
+                $FILE \
                 -o build/$FILE.o || exit 1
             OBJFILES="$OBJFILES build/$FILE.o"
         done
@@ -146,6 +157,10 @@ then
         do
             echo clang tidy $FILE ...
             PATH=$CLANGBIN:$PATH clang-tidy -checks=*,-llvm-include-order,-google-readability-todo,-cppcoreguidelines-pro-type-vararg,-google-readability-braces-around-statements,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-readability-braces-around-statements -p build $FILE 2>&1 || exit 1
+            echo
+            echo clang check $FILE ...
+            PATH=$CLANGBIN:$PATH clang-check -analyze -extra-arg -Xclang -extra-arg -analyzer-output=text -p build $FILE 2>&1 || exit 1
+            echo
         done
     fi
 fi
