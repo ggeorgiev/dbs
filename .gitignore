@@ -4,4 +4,5 @@
 /cppformat/
 /gtest/
 /iwyu/
+/rocksdb/
 /build/

@@ -265,6 +265,23 @@ then
     mv cppformat/cppformat cppformat/include || exit 1
 fi
 
+if [ ! -e rocksdb ]
+then
+    cd 3rdparty/rocksdb || exit 1
+
+    echo Build RocksDB ...
+
+    make static_lib || exit 1
+
+    mkdir -p ../../rocksdb/lib
+    cp -r include ../../rocksdb || exit 1
+    cp librocksdb.a ../../rocksdb/lib || exit 1
+
+    git clean -fdx
+
+    cd ../.. || exit 1
+fi
+
 
 echo Update git hooks
 cp git-hooks/* .git/hooks/
