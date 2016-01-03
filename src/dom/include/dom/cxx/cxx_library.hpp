@@ -62,7 +62,7 @@ public:
                                  std::unordered_set<doim::FsFileSPtr>& files)
     {
         mPublicHeadersDirectory = directory;
-        mCxxPublicHeadersList.swap(files);
+        (mCxxPublicHeaders = std::make_shared<doim::FsFileSet>())->swap(files);
         EHEnd;
     }
 
@@ -88,9 +88,9 @@ public:
         return mPublicHeadersDirectory;
     }
 
-    const std::unordered_set<doim::FsFileSPtr>& publicHeaders() const
+    const doim::FsFileSetSPtr publicHeaders() const
     {
-        return mCxxPublicHeadersList;
+        return mCxxPublicHeaders;
     }
 
     const std::unordered_set<CxxLibrarySPtr>& cxxLibraries() const
@@ -110,12 +110,14 @@ public:
             case Type::kUser:
                 directory = std::make_shared<
                     doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kUser,
-                                               publicHeadersDirectory());
+                                               publicHeadersDirectory(),
+                                               publicHeaders());
                 break;
             case Type::kSystem:
                 directory = std::make_shared<
                     doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kSystem,
-                                               publicHeadersDirectory());
+                                               publicHeadersDirectory(),
+                                               publicHeaders());
                 break;
         }
 
@@ -133,7 +135,6 @@ public:
     doim::CxxHeaderSetSPtr cxxHeaders(const doim::FsDirectorySPtr& root) const
     {
         auto headers = std::make_shared<doim::CxxHeaderSet>();
-
         return doim::gManager->unique(headers);
     }
 
@@ -148,7 +149,7 @@ private:
     //       the ability to have optionally move all public headers in a intermediate
     //       directory.
     doim::FsDirectorySPtr mPublicHeadersDirectory;
-    std::unordered_set<doim::FsFileSPtr> mCxxPublicHeadersList;
+    doim::FsFileSetSPtr mCxxPublicHeaders;
 
     std::unordered_set<CxxLibrarySPtr> mCxxLibraries;
 };

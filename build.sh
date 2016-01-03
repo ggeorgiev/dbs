@@ -90,6 +90,7 @@ then
     FILES="$FILES src/tpool/gtest/priority-utest.cpp"
 
     FILES="$FILES src/task/gtest/cxx/cxx_file_crc_task-utest.cpp"
+    FILES="$FILES src/task/gtest/cxx/cxx_header_crc_task-utest.cpp"
 
 
     LIBRARIES="$LIBRARIES -lgtest"
@@ -107,7 +108,7 @@ then
     done
     echo "]" >> $COMPILE_DATABASE
 
-    if [ 1 == 1 ]
+    if [ 1 == 0 ]
     then
         mkdir -p build/src/gtest
         mkdir -p build/src/err/gtest

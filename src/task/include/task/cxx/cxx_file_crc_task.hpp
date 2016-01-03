@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "task/cxx/cxx_crc_task_mixin.hpp"
+#include "task/cxx/cxx_header_crc_task.hpp"
 #include "tpool/task.hpp"
 #include "parser/cxx/cxx_parser.hpp"
 #include "doim/cxx/cxx_file.hpp"
@@ -15,81 +17,34 @@
 
 namespace task
 {
-class CxxFileCrcTask : public tpool::Task
+class CxxFileCrcTask : public CxxCrcTaskMixin
 {
 public:
-    typedef boost::crc_optimal<64, 0x04C11DB7, 0, 0, false, false> Crc;
-
     CxxFileCrcTask(const doim::CxxFileSPtr& cxxFile)
-        : tpool::Task(0, nullptr)
-        , mCxxFile(cxxFile)
+        : mCxxFile(cxxFile)
     {
-    }
-
-    ECode findInclude(const std::experimental::string_view& include,
-                      doim::CxxHeaderSPtr& cxxHeader)
-    {
-        doim::FsFileSPtr file;
-        for (const auto& directory : *mCxxFile->cxxIncludeDirectories())
-        {
-            const auto& curr = doim::gManager->find(
-                doim::gManager->createFile(directory->directory(), include));
-            if (curr == nullptr)
-                continue;
-
-            if (file != nullptr)
-                EHBan(kTooMany, include);
-
-            file = curr;
-        }
-
-        if (file == nullptr)
-            EHBan(kNotFound, include);
-
-        for (const auto& header : *mCxxFile->cxxHeaders())
-        {
-            if (file == header->file())
-            {
-                cxxHeader = header;
-                EHEnd;
-            }
-        }
-
-        EHBan(kNotFound, include);
-        EHEnd;
     }
 
     ECode operator()()
     {
-        std::ifstream fstream(mCxxFile->file()->path(nullptr));
-        std::string content((std::istreambuf_iterator<char>(fstream)),
-                            std::istreambuf_iterator<char>());
+        doim::CxxHeaderSet includes;
+        EHTest(calculate(mCxxFile->file(),
+                         mCxxFile->cxxIncludeDirectories(),
+                         mCxxFile->cxxHeaders(),
+                         includes));
 
-        Crc crc;
-        crc.process_bytes(content.data(), content.size());
-
-        mCrc64 = crc.checksum();
-
-        parser::CxxParser parser;
-        const auto& includes = parser.includes(content);
-
-        for (const auto& include : includes)
+        for (const auto& header : includes)
         {
-            doim::CxxHeaderSPtr file;
-            EHTest(findInclude(std::experimental::string_view(include.data() + 1,
-                                                              include.size() - 2),
-                               file));
+            auto task =
+                std::make_shared<CxxHeaderCrcTask>(header, mCxxFile->cxxHeaders());
+            EHTest((*task)());
+            mCrc64 = mCrc64 ^ task->crc();
         }
-        EHEnd;
-    }
 
-    uint64_t crc()
-    {
-        return mCrc64;
+        EHEnd;
     }
 
 private:
     doim::CxxFileSPtr mCxxFile;
-    uint64_t mCrc64;
 };
 }

@@ -51,6 +51,7 @@ protected:
 class Manager : public ManagerMixin<Object>,
                 public ManagerMixin<FsDirectory>,
                 public ManagerMixin<FsFile>,
+                public ManagerMixin<FsFileSet, FsFileSetHasher>,
                 public ManagerMixin<CxxIncludeDirectory>,
                 public ManagerMixin<CxxIncludeDirectorySet, CxxIncludeDirectorySetHasher>,
                 public ManagerMixin<CxxHeader>,
@@ -85,7 +86,7 @@ public:
     FsDirectorySPtr obtainDirectory(const FsDirectorySPtr& base,
                                     const std::experimental::string_view& directory);
 
-    // Obtain an the unique corresponding directory of directory in toDirectory to that in
+    // Obtain the unique corresponding directory of directory in toDirectory to that in
     // fromDirectory. Note that directory must be subdirectory of fromDirectory.
     FsDirectorySPtr obtainCorrespondingDirectory(const FsDirectorySPtr& directory,
                                                  const FsDirectorySPtr& fromDirectory,
@@ -102,6 +103,8 @@ public:
     {
         return unique(createFile(base, file));
     }
+
+    using ManagerMixin<FsFileSet, FsFileSetHasher>::unique;
 
     using ManagerMixin<CxxIncludeDirectory>::unique;
 

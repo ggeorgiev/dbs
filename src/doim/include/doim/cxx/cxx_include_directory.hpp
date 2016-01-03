@@ -4,6 +4,7 @@
 #pragma once
 
 #include "doim/fs/fs_directory.hpp"
+#include "doim/fs/fs_file.hpp"
 #include <memory>
 #include <string>
 #include <unordered_set>
@@ -24,9 +25,12 @@ public:
         kSystem,
     };
 
-    CxxIncludeDirectory(const Type type, const FsDirectorySPtr& directory)
+    CxxIncludeDirectory(const Type type,
+                        const FsDirectorySPtr& directory,
+                        const FsFileSetSPtr& headerFiles)
         : mType(type)
         , mDirectory(directory)
+        , mHeaderFiles(headerFiles)
     {
     }
 
@@ -40,25 +44,33 @@ public:
         return mDirectory;
     }
 
+    const FsFileSetSPtr& headerFiles()
+    {
+        return mHeaderFiles;
+    }
+
     struct Hasher
     {
         std::size_t operator()(const CxxIncludeDirectorySPtr& directory) const
         {
             return std::hash<int>()(static_cast<int>(directory->type())) ^
-                   std::hash<FsDirectorySPtr>()(directory->directory());
+                   std::hash<FsDirectorySPtr>()(directory->directory()) ^
+                   std::hash<FsFileSetSPtr>()(directory->headerFiles());
         }
 
         bool operator()(const CxxIncludeDirectorySPtr& directory1,
                         const CxxIncludeDirectorySPtr& directory2) const
         {
             return directory1->type() == directory2->type() &&
-                   directory1->directory() == directory2->directory();
+                   directory1->directory() == directory2->directory() &&
+                   directory1->headerFiles() == directory2->headerFiles();
         }
     };
 
 private:
     Type mType;
     FsDirectorySPtr mDirectory;
+    FsFileSetSPtr mHeaderFiles;
 };
 
 typedef std::unordered_set<CxxIncludeDirectorySPtr> CxxIncludeDirectorySet;
