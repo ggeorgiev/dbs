@@ -6,14 +6,16 @@
 
 #pragma once
 
-#include "err/err_assert.h"
-#include "err/err_cppformat.h"
-#include "err/pparg.h"
-#include "im/initialization_manager.hpp"
+#include <memory>
 #include <sstream>
 #include <stddef.h>
 #include <unordered_map>
 #include <vector>
+
+#include "err/err_assert.h"
+#include "err/err_cppformat.h"
+#include "err/pparg.h"
+#include "im/initialization_manager.hpp"
 
 namespace err
 {
@@ -130,18 +132,16 @@ using err::ECode;
 
 #define EHEnd return err::kSuccess
 
-#define EHBan(...)                                                         \
-    do                                                                     \
-    {                                                                      \
-        ASSERT(err::gError == nullptr);                                    \
-        ECode __EHBan__code = EH_CODE(__VA_ARGS__);                        \
-        err::ErrorRPtr error = new err::Error(__EHBan__code, EH_LOCATION); \
-        if (PP_NARG(__VA_ARGS__) > 0)                                      \
-        {                                                                  \
-            error->message_stream() << EH_CPPFORMAT(__VA_ARGS__);          \
-        }                                                                  \
-        err::gError.reset(error);                                          \
-        return __EHBan__code;                                              \
+#define EHBan(...)                                                \
+    do                                                            \
+    {                                                             \
+        ASSERT(err::gError == nullptr);                           \
+        auto __EHBan__code = EH_CODE(__VA_ARGS__);                \
+        auto error = new err::Error(__EHBan__code, EH_LOCATION);  \
+        if (PP_NARG(__VA_ARGS__) > 0)                             \
+            error->message_stream() << EH_CPPFORMAT(__VA_ARGS__); \
+        err::gError.reset(error);                                 \
+        return __EHBan__code;                                     \
     } while (false)
 
 #define EHTest(expression, ...)                                       \
@@ -165,7 +165,7 @@ using err::ECode;
     {                                                \
         ASSERT(err::gError != nullptr);              \
         ASSERT(err::gError->code() != err::kAssert); \
-        err::gError = NULL;                          \
+        err::gError.reset();                         \
     } while (false)
 
 #if defined(NDEBUG)

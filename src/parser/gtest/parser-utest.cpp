@@ -1,8 +1,8 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "parser/string_stream.hpp"
 #include "parser/parser.hpp" // IWYU pragma: keep
+#include "parser/string_stream.hpp"
 #include "doim/fs/fs_file.hpp"
 #include "doim/manager.h"
 #include "err/err.h"
@@ -15,6 +15,7 @@
 #include <memory>
 #include <sstream>
 #include <stddef.h>
+#include <string>
 #include <unordered_set>
 
 template <typename T>

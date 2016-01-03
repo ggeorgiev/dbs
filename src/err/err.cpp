@@ -3,6 +3,8 @@
 
 #include "err/err.h"
 
+#include <functional>
+
 namespace err
 {
 thread_local ErrorUPtr gError;

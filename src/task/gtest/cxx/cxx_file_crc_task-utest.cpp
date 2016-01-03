@@ -13,6 +13,8 @@
 #include <gtest/gtest.h>
 #include <ios>
 #include <memory>
+#include <ostream>
+#include <string>
 #include <unordered_set>
 
 TEST(SearchTaskTest, simple)

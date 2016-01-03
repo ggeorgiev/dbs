@@ -74,20 +74,20 @@ then
     FILES="$FILES src/err/gtest/err-ptest.cpp"
     FILES="$FILES src/err/gtest/pparg-utest.cpp"
 
-    #FILES="$FILES src/dom/gtest/cxx_program-utest.cpp"
+    FILES="$FILES src/dom/gtest/cxx_program-utest.cpp"
 
-    #FILES="$FILES src/doim/gtest/manager-utest.cpp"
-    #FILES="$FILES src/doim/gtest/fs/fs_directory-utest.cpp"
-    #FILES="$FILES src/doim/gtest/fs/fs_file-ptest.cpp"
+    FILES="$FILES src/doim/gtest/manager-utest.cpp"
+    FILES="$FILES src/doim/gtest/fs/fs_directory-utest.cpp"
+    FILES="$FILES src/doim/gtest/fs/fs_file-ptest.cpp"
 
-    #FILES="$FILES src/parser/gtest/parser-utest.cpp"
-    #FILES="$FILES src/parser/gtest/stream-utest.cpp"
-    #FILES="$FILES src/parser/gtest/token-utest.cpp"
-    #FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
-    #FILES="$FILES src/parser/gtest/cxx/cxx_parser-utest.cpp"
+    FILES="$FILES src/parser/gtest/parser-utest.cpp"
+    FILES="$FILES src/parser/gtest/stream-utest.cpp"
+    FILES="$FILES src/parser/gtest/token-utest.cpp"
+    FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
+    FILES="$FILES src/parser/gtest/cxx/cxx_parser-utest.cpp"
 
-    #FILES="$FILES src/tpool/gtest/tpool-utest.cpp"
-    #FILES="$FILES src/tpool/gtest/priority-utest.cpp"
+    FILES="$FILES src/tpool/gtest/tpool-utest.cpp"
+    FILES="$FILES src/tpool/gtest/priority-utest.cpp"
 
     FILES="$FILES src/task/gtest/cxx/cxx_file_crc_task-utest.cpp"
 
@@ -142,7 +142,7 @@ then
 
         build/gtest-main --gtest_filter=-*.PERFORMANCE_* || exit 1
 
-    elif [ 1 == 0 ]
+    elif [ 1 == 1 ]
     then
 
         echo > build/iwyu.log

@@ -16,7 +16,6 @@
     {                                  \
         ECode code = (expression);     \
         ASSERT_EQ(err::kAssert, code); \
-        delete err::gError;            \
-        err::gError = NULL;            \
+        err::gError.reset();           \
     } while (false)
 #endif

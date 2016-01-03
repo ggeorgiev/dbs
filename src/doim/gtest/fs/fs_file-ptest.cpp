@@ -1,13 +1,11 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
+#include <gtest/gtest.h>
+#include <memory>
+
 #include "doim/fs/fs_directory.hpp"
 #include "doim/fs/fs_file.hpp"
-
-#include <gtest/gtest.h>
-
-#include <iosfwd>
-#include <memory>
 
 TEST(FsFileTest, SLOW_construct)
 {
