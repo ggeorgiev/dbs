@@ -22,10 +22,26 @@ public:
 
     typedef std::multimap<int, InitializeRecord> Initializers;
 
-    InitializationManager() { initialize_objects(); }
-    ~InitializationManager() { uninitialize_objects(); }
-    static inline int rank_base() { return 1; }
-    static inline int rank_step() { return 2; }
+    InitializationManager()
+    {
+        initialize_objects();
+    }
+
+    ~InitializationManager()
+    {
+        uninitialize_objects();
+    }
+
+    static inline int rank_base()
+    {
+        return 1;
+    }
+
+    static inline int rank_step()
+    {
+        return 2;
+    }
+
     template <typename T>
     static inline T subscribe(int rank,
                               InitializeFunction fnInitializer,
@@ -83,7 +99,8 @@ private:
     void uninitialize_objects()
     {
         // uninitialize all global objects
-        for (std::vector<UninitializeFunction>::reverse_iterator it = uninitializers.rbegin();
+        for (std::vector<UninitializeFunction>::reverse_iterator it =
+                 uninitializers.rbegin();
              it != uninitializers.rend();
              ++it)
         {

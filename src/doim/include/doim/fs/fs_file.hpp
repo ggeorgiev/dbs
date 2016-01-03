@@ -22,7 +22,7 @@ public:
     {
     }
 
-    std::string path(const FsDirectorySPtr& directory)
+    std::string path(const FsDirectorySPtr& directory = nullptr)
     {
         return mDirectory->path(directory) + mName;
     }

@@ -12,7 +12,8 @@ CXXFLAGS="-std=c++11 -stdlib=libc++"
 CXXFLAGS="$CXXFLAGS -isysroot /Applications/Xcode.app/Contents/Developer/Platforms"
 CXXFLAGS="$CXXFLAGS/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk"
 
-PLUGINS="-fcolor-diagnostics"
+#PLUGINS="-fcolor-diagnostics"
+PLUGINS=
 
 PLUGIN=$BASEDIR/clang/plugin/param_check/ParameterNameChecker.so
 if [ -e $PLUGIN ]
@@ -71,21 +72,22 @@ then
 
     FILES="$FILES src/err/gtest/err-utest.cpp"
     FILES="$FILES src/err/gtest/err-ptest.cpp"
+    FILES="$FILES src/err/gtest/pparg-utest.cpp"
 
-    FILES="$FILES src/dom/gtest/cxx_program-utest.cpp"
+    #FILES="$FILES src/dom/gtest/cxx_program-utest.cpp"
 
-    FILES="$FILES src/doim/gtest/manager-utest.cpp"
-    FILES="$FILES src/doim/gtest/fs/fs_directory-utest.cpp"
-    FILES="$FILES src/doim/gtest/fs/fs_file-ptest.cpp"
+    #FILES="$FILES src/doim/gtest/manager-utest.cpp"
+    #FILES="$FILES src/doim/gtest/fs/fs_directory-utest.cpp"
+    #FILES="$FILES src/doim/gtest/fs/fs_file-ptest.cpp"
 
-    FILES="$FILES src/parser/gtest/parser-utest.cpp"
-    FILES="$FILES src/parser/gtest/stream-utest.cpp"
-    FILES="$FILES src/parser/gtest/token-utest.cpp"
-    FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
-    FILES="$FILES src/parser/gtest/cxx/cxx_parser-utest.cpp"
+    #FILES="$FILES src/parser/gtest/parser-utest.cpp"
+    #FILES="$FILES src/parser/gtest/stream-utest.cpp"
+    #FILES="$FILES src/parser/gtest/token-utest.cpp"
+    #FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
+    #FILES="$FILES src/parser/gtest/cxx/cxx_parser-utest.cpp"
 
-    FILES="$FILES src/tpool/gtest/tpool-utest.cpp"
-    FILES="$FILES src/tpool/gtest/priority-utest.cpp"
+    #FILES="$FILES src/tpool/gtest/tpool-utest.cpp"
+    #FILES="$FILES src/tpool/gtest/priority-utest.cpp"
 
     FILES="$FILES src/task/gtest/cxx/cxx_file_crc_task-utest.cpp"
 

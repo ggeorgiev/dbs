@@ -6,6 +6,7 @@
 #include "tpool/task.hpp"
 #include "parser/cxx/cxx_parser.hpp"
 #include "doim/cxx/cxx_file.hpp"
+#include "doim/manager.h"
 #include <boost/crc.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/system/error_code.hpp>
@@ -25,12 +26,37 @@ public:
     {
     }
 
-    ECode findInclude(const std::string& file, doim::FsFileSPtr& fsFile)
+    ECode findInclude(const std::experimental::string_view& include,
+                      doim::CxxHeaderSPtr& cxxHeader)
     {
+        doim::FsFileSPtr file;
         for (const auto& directory : *mCxxFile->cxxIncludeDirectories())
         {
+            const auto& curr = doim::gManager->find(
+                doim::gManager->createFile(directory->directory(), include));
+            if (curr == nullptr)
+                continue;
+
+            if (file != nullptr)
+                EHBan(kTooMany, include);
+
+            file = curr;
         }
-        EHBan(kNotFound, file);
+
+        if (file == nullptr)
+            EHBan(kNotFound, include);
+
+        for (const auto& header : *mCxxFile->cxxHeaders())
+        {
+            if (file == header->file())
+            {
+                cxxHeader = header;
+                EHEnd;
+            }
+        }
+
+        EHBan(kNotFound, include);
+        EHEnd;
     }
 
     ECode operator()()
@@ -49,8 +75,10 @@ public:
 
         for (const auto& include : includes)
         {
-            doim::FsFileSPtr file;
-            EHTest(findInclude(include, file));
+            doim::CxxHeaderSPtr file;
+            EHTest(findInclude(std::experimental::string_view(include.data() + 1,
+                                                              include.size() - 2),
+                               file));
         }
         EHEnd;
     }

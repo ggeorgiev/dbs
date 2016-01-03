@@ -59,7 +59,7 @@ public:
     {
     }
 
-    std::string path(const FsDirectorySPtr& directory)
+    std::string path(const FsDirectorySPtr& directory = nullptr)
     {
         size_t dlevel = (directory == nullptr) ? 0 : directory->level();
         size_t clevel = level();

@@ -45,10 +45,11 @@ ECode run(const doim::FsFileSPtr& dbsFile, dom::CxxProgramSPtr& program)
     EHEnd;
 }
 
-int main(int argc, const char* argv[])
+int main(int argc, char* argv[])
 {
     // TODO: replace this with array_view when available
-    std::vector<const char*> arg(argc, *argv);
+    std::vector<const char*> arg;
+    arg.insert(arg.begin(), argv, argv + argc);
 
     im::InitializationManager im;
 

@@ -34,6 +34,16 @@ public:
         return *mMixinObjects.insert(object).first;
     }
 
+    MixinObjectSPtr find(const MixinObjectSPtr& object) const
+    {
+        if (object == nullptr)
+            return object;
+        auto it = mMixinObjects.find(object);
+        if (it == mMixinObjects.end())
+            return nullptr;
+        return *it;
+    }
+
 protected:
     std::unordered_set<MixinObjectSPtr, Hasher, Hasher> mMixinObjects;
 };
@@ -43,6 +53,7 @@ class Manager : public ManagerMixin<Object>,
                 public ManagerMixin<FsFile>,
                 public ManagerMixin<CxxIncludeDirectory>,
                 public ManagerMixin<CxxIncludeDirectorySet, CxxIncludeDirectorySetHasher>,
+                public ManagerMixin<CxxHeader>,
                 public ManagerMixin<CxxHeaderSet, CxxHeaderSetHasher>,
                 public ManagerMixin<CxxFile>,
                 public ManagerMixin<CxxObjectFile>
@@ -81,6 +92,7 @@ public:
                                                  const FsDirectorySPtr& toDirectory);
 
     using ManagerMixin<FsFile>::unique;
+    using ManagerMixin<FsFile>::find;
 
     FsFileSPtr createFile(const FsDirectorySPtr& base,
                           const std::experimental::string_view& file);
@@ -94,6 +106,8 @@ public:
     using ManagerMixin<CxxIncludeDirectory>::unique;
 
     using ManagerMixin<CxxIncludeDirectorySet, CxxIncludeDirectorySetHasher>::unique;
+
+    using ManagerMixin<CxxHeader>::unique;
     using ManagerMixin<CxxHeaderSet, CxxHeaderSetHasher>::unique;
 
     using ManagerMixin<CxxFile>::unique;

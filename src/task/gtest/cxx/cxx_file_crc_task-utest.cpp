@@ -51,8 +51,25 @@ TEST(SearchTaskTest, includes)
     auto cxxFile =
         std::make_shared<doim::CxxFile>(file, cxxIncludeDirectories, cxxHeaders);
     auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
+    ASSERT_BANNED(kNotFound, (*task)());
 
-    // ASSERT_OKAY((*task)());
+    auto user = doim::gManager->obtainFile(directory, "user.h");
+
+    ASSERT_BANNED(kNotFound, (*task)());
+
+    auto cxxHeader = doim::gManager->unique(
+        std::make_shared<doim::CxxHeader>(user, cxxIncludeDirectories));
+
+    auto cxxUserHeaders = std::make_shared<doim::CxxHeaderSet>();
+    cxxUserHeaders->insert(cxxHeader);
+    cxxUserHeaders = doim::gManager->unique(cxxUserHeaders);
+
+    cxxFile =
+        std::make_shared<doim::CxxFile>(file, cxxIncludeDirectories, cxxUserHeaders);
+
+    task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
+
+    ASSERT_OKAY((*task)());
 
     // EXPECT_EQ(0x9dd10acde5de7bda, task->crc()) << std::hex << task->crc();
 }

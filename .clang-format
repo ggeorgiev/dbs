@@ -59,11 +59,11 @@ IncludeCategories:
     Priority:        50
   - Regex:           '^["<]doim/*.'
     Priority:        60
-  - Regex:           '^["<]im/*.'
-    Priority:        70
-  - Regex:           '^["<]const/*.'
-    Priority:        80
   - Regex:           '^["<]err/*.'
+    Priority:        70
+  - Regex:           '^["<]im/*.'
+    Priority:        80
+  - Regex:           '^["<]const/*.'
     Priority:        90
   - Regex:           '^["<]gtest/*.'
     Priority:        100

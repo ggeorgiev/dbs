@@ -38,6 +38,15 @@ cxx_library cppformat
     cxx_binary: ../cppformat/lib/libformat.a;
 ;
 
+cxx_library im
+    @type=user:
+
+    cxx_public_header
+        @directory=im/include:
+
+    ;
+;
+
 cxx_library err
     @type=user:
 
@@ -48,6 +57,7 @@ cxx_library err
 
     cxx_library:
         cppformat
+        im
     ;
 
     cxx_file:
@@ -65,15 +75,6 @@ cxx_library const
 
     cxx_file:
         const/constants.cpp
-    ;
-;
-
-cxx_library im
-    @type=user:
-
-    cxx_public_header
-        @directory=im/include:
-
     ;
 ;
 
