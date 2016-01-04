@@ -2,8 +2,8 @@
 //
 
 #include "doim/manager.h"
-#include "const/constants.h"
 #include "err/err_assert.h"
+#include "const/constants.h"
 #include <algorithm>
 #include <functional>
 #include <iosfwd>

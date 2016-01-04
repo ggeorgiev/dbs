@@ -8,7 +8,8 @@ namespace testing
 {
 class TestPartResult;
 
-PerformanceArbiter::PerformanceArbiter() : mMode(kObserve)
+PerformanceArbiter::PerformanceArbiter()
+    : mMode(kObserve)
 {
 }
 
@@ -16,7 +17,8 @@ void PerformanceArbiter::OnTestProgramStart(const UnitTest& /*unit_test*/)
 {
 }
 
-void PerformanceArbiter::OnTestIterationStart(const UnitTest& /*unit_test*/, int /*iteration*/)
+void PerformanceArbiter::OnTestIterationStart(const UnitTest& /*unit_test*/,
+                                              int /*iteration*/)
 {
 }
 
@@ -34,7 +36,8 @@ void PerformanceArbiter::OnTestCaseStart(const TestCase& /*test_case*/)
 
 void PerformanceArbiter::OnTestStart(const TestInfo& /*test_info*/)
 {
-    boost::chrono::process_cpu_clock::time_point now = boost::chrono::process_cpu_clock::now();
+    boost::chrono::process_cpu_clock::time_point now =
+        boost::chrono::process_cpu_clock::now();
 }
 
 void PerformanceArbiter::OnTestPartResult(const TestPartResult& /*result*/)
@@ -57,7 +60,8 @@ void PerformanceArbiter::OnEnvironmentsTearDownEnd(const UnitTest& /*unit_test*/
 {
 }
 
-void PerformanceArbiter::OnTestIterationEnd(const UnitTest& /*unit_test*/, int /*iteration*/)
+void PerformanceArbiter::OnTestIterationEnd(const UnitTest& /*unit_test*/,
+                                            int /*iteration*/)
 {
 }
 

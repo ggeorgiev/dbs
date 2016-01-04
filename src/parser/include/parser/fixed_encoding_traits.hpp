@@ -14,7 +14,13 @@ public:
     typedef C1 Char;
     typedef C2 Code;
 
-    static size_t sequence_length(const Char* position) { return 1U; }
-    static Code to_code(const Char* position) { return *position; }
+    static size_t sequence_length(const Char* position)
+    {
+        return 1U;
+    }
+    static Code to_code(const Char* position)
+    {
+        return *position;
+    }
 };
 }

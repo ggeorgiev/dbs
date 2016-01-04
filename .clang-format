@@ -47,36 +47,36 @@ DisableFormat:   false
 ExperimentalAutoDetectBinPacking: false
 ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH ]
 IncludeCategories:
-  - Regex:           '^["<]task/*.'
+  - Regex:           '^"task/*.'
     Priority:        10
-  - Regex:           '^["<]tpool/*.'
+  - Regex:           '^"tpool/*.'
     Priority:        20
-  - Regex:           '^["<]tool/*.'
+  - Regex:           '^"tool/*.'
     Priority:        30
-  - Regex:           '^["<]parser/*.'
+  - Regex:           '^"parser/*.'
     Priority:        40
-  - Regex:           '^["<]dom/*.'
+  - Regex:           '^"dom/*.'
     Priority:        50
-  - Regex:           '^["<]doim/*.'
+  - Regex:           '^"doim/*.'
     Priority:        60
-  - Regex:           '^["<]err/*.'
+  - Regex:           '^\"err/*.'
     Priority:        70
-  - Regex:           '^["<]im/*.'
+  - Regex:           '^"im/*.'
     Priority:        80
-  - Regex:           '^["<]const/*.'
+  - Regex:           '^"const/*.'
     Priority:        90
-  - Regex:           '^["<]gtest/*.'
+  - Regex:           '^"gtest/*.'
     Priority:        100
-  - Regex:           '^["<]cppformat/*.'
+  - Regex:           '^<gtest/*.'
     Priority:        110
-  - Regex:           '^["<]boost/*.'
+  - Regex:           '^<cppformat/*.'
     Priority:        120
-  - Regex:           '^".*'
+  - Regex:           '^<boost/*.'
+    Priority:        130
+  - Regex:           '^".*"$'
     Priority:        1000
-  - Regex:           '^<.*?.h>'
+  - Regex:           '<.*>'
     Priority:        2000
-  - Regex:           '^<.*'
-    Priority:        3000
 IndentCaseLabels: true
 IndentWidth:     4
 IndentWrappedFunctionNames: false

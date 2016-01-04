@@ -11,7 +11,8 @@ class GlobalObject
 public:
     static inline int initialization_rank()
     {
-        return im::InitializationManager::rank_base() + im::InitializationManager::rank_step();
+        return im::InitializationManager::rank_base() +
+               im::InitializationManager::rank_step();
     }
 };
 

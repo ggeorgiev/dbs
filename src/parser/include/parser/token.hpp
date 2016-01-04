@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <string>
 #include <bitset>
+#include <string>
 
 #define BITMASK0(X) static const uint64_t X##Mask = 1 << X
 

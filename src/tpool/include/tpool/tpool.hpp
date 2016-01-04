@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <tpool/task.hpp>
+#include "tpool/task.hpp"
 #include <condition_variable>
 #include <memory>
 #include <mutex>
@@ -15,8 +15,15 @@ template <class T>
 class unlock_guard
 {
 public:
-    unlock_guard(T& mutex) : mMutex(mutex) { mMutex.unlock(); }
-    ~unlock_guard() { mMutex.lock(); }
+    unlock_guard(T& mutex)
+        : mMutex(mutex)
+    {
+        mMutex.unlock();
+    }
+    ~unlock_guard()
+    {
+        mMutex.lock();
+    }
     unlock_guard(const unlock_guard&) = delete;
     unlock_guard& operator=(const unlock_guard&) = delete;
 
@@ -35,7 +42,10 @@ public:
     typedef std::future<ECode> Future;
 
     TPool(size_t maxThreads)
-        : mMaxThreads(maxThreads), mFreeThreads(0), mThreads(0), mJoined(false)
+        : mMaxThreads(maxThreads)
+        , mFreeThreads(0)
+        , mThreads(0)
+        , mJoined(false)
     {
     }
     void schedule(const TaskSPtr& task)
@@ -59,7 +69,10 @@ public:
             mTasksCondition.notify_one();
         }
     }
-    void updatePriority(const TaskSPtr& task) { mTasks.update(task->handle()); }
+    void updatePriority(const TaskSPtr& task)
+    {
+        mTasks.update(task->handle());
+    }
     void run()
     {
         bool bNeeded = true;

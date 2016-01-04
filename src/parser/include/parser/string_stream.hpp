@@ -4,8 +4,8 @@
 #pragma once
 
 #include "parser/fixed_encoding_traits.hpp"
-#include "const/constants.h"
 #include "err/err.h"
+#include "const/constants.h"
 #include <string>
 
 namespace parser
@@ -20,7 +20,10 @@ public:
 
     typedef std::basic_string<Char> String;
 
-    StringStream() : mPosition(mString.begin()) {}
+    StringStream()
+        : mPosition(mString.begin())
+    {
+    }
     ECode initialize(const String& str)
     {
         mString = str;
@@ -35,14 +38,23 @@ public:
         return String(begin, end);
     }
 
-    typename String::const_iterator iterator() const { return mPosition; }
-    bool has() { return mPosition != mString.end(); }
+    typename String::const_iterator iterator() const
+    {
+        return mPosition;
+    }
+    bool has()
+    {
+        return mPosition != mString.end();
+    }
     Code get()
     {
         ASSERT(has());
         return EncodingTraits::to_code(&*mPosition);
     }
-    Code zget() { return EncodingTraits::to_code(&*mPosition); }
+    Code zget()
+    {
+        return EncodingTraits::to_code(&*mPosition);
+    }
     Code take()
     {
         ASSERT(has());

@@ -39,7 +39,8 @@ public:
         kReportError
     };
 
-    typedef std::unordered_map<std::string, boost::chrono::process_cpu_clock::time_point> TrackMap;
+    typedef std::unordered_map<std::string, boost::chrono::process_cpu_clock::time_point>
+        TrackMap;
 
 private:
     Mode mMode;

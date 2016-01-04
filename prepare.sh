@@ -238,6 +238,8 @@ then
     git clean -fdx
 
     cd ../..
+
+    cd ../..
 fi
 
 if [ ! -e cppformat ]

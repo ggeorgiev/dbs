@@ -1,18 +1,18 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include <gtest/gtest-message.h>
-#include <gtest/gtest.h>
-#include <memory>
-#include <ostream>
-#include <string>
-#include "task/cxx/cxx_header_crc_task.hpp"
 #include "doim/cxx/cxx_header.hpp"
+#include "task/cxx/cxx_header_crc_task.hpp"
 #include "doim/cxx/cxx_include_directory.hpp"
 #include "doim/manager.h"
 #include "err/err.h"
 #include "gtest/err.h"
 #include "gtest/test_resource.h"
+#include <gtest/gtest-message.h>
+#include <gtest/gtest.h>
+#include <memory>
+#include <ostream>
+#include <string>
 
 TEST(CxxHeaderCrcTaskTest, simple)
 {

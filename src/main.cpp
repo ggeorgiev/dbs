@@ -7,8 +7,8 @@
 #include "dom/cxx/cxx_program.hpp"
 #include "doim/fs/fs_file.hpp"
 #include "doim/manager.h"
-#include "im/initialization_manager.hpp"
 #include "err/err.h"
+#include "im/initialization_manager.hpp"
 #include <fstream> // IWYU pragma: keep
 #include <iostream>
 #include <iterator>
