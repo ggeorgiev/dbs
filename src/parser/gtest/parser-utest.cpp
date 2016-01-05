@@ -14,9 +14,9 @@
 #include <limits>
 #include <memory>
 #include <sstream>
-#include <stddef.h>
 #include <string>
 #include <unordered_set>
+#include <stddef.h>
 
 template <typename T>
 class ParserTest : public ::testing::Test

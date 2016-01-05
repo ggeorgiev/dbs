@@ -18,7 +18,7 @@ TEST(ErrTest, return0)
     EXPECT_STREQ("kExpected(1)\n", err::gError->message().c_str());
     EXPECT_STREQ("src/err/gtest/err-utest.cpp:12: @ return0\n",
                  err::gError->callstack().c_str());
-    EHReset;
+    EHEnsureClear;
     ASSERT_EQ(err::kExpected, code);
 }
 
@@ -34,7 +34,7 @@ TEST(ErrTest, return1)
     EXPECT_STREQ("kExpected(1): a = 5\n", err::gError->message().c_str());
     EXPECT_STREQ("src/err/gtest/err-utest.cpp:28: @ return1\n",
                  err::gError->callstack().c_str());
-    EHReset;
+    EHEnsureClear;
     ASSERT_EQ(err::kExpected, code);
 }
 
@@ -50,7 +50,7 @@ TEST(ErrTest, return2)
     EXPECT_STREQ("kExpected(1): a = 5, a = 5\n", err::gError->message().c_str());
     EXPECT_STREQ("src/err/gtest/err-utest.cpp:44: @ return2\n",
                  err::gError->callstack().c_str());
-    EHReset;
+    EHEnsureClear;
     ASSERT_EQ(err::kExpected, code);
 }
 
@@ -66,7 +66,7 @@ TEST(ErrTest, return3)
     EXPECT_STREQ("kExpected(1): a = 5, a = 5, a = 5\n", err::gError->message().c_str());
     EXPECT_STREQ("src/err/gtest/err-utest.cpp:60: @ return3\n",
                  err::gError->callstack().c_str());
-    EHReset;
+    EHEnsureClear;
     ASSERT_EQ(err::kExpected, code);
 }
 
@@ -83,6 +83,6 @@ TEST(ErrTest, return4)
                  err::gError->message().c_str());
     EXPECT_STREQ("src/err/gtest/err-utest.cpp:76: @ return4\n",
                  err::gError->callstack().c_str());
-    EHReset;
+    EHEnsureClear;
     ASSERT_EQ(err::kExpected, code);
 }

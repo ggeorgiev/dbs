@@ -20,6 +20,9 @@ static bool init()
     gNames[kTooMany] = "too many";
     gNames[kUnable] = "unable";
 
+    gNames[kDatabase] = "database";
+    gNames[kFileSystem] = "file system";
+
     return true;
 }
 

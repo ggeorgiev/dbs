@@ -7,6 +7,7 @@
 #include "gtest/gtest.h"
 #include "performance_arbiter.h"
 #include "time_monitor.h"
+#include <iosfwd>
 #include <memory>
 #include <stdio.h>
 #include <sys/errno.h>
@@ -14,6 +15,9 @@
 
 namespace testing
 {
+std::string gIntermittentDirectory;
+doim::FsDirectorySPtr gIntermittentFsDirectory;
+
 doim::FsDirectorySPtr gTestResourceDirectory;
 } // namespace testing
 
@@ -26,6 +30,10 @@ int main(int argc, char* argv[])
         return errno;
 
     auto cwd = doim::gManager->obtainDirectory(nullptr, current);
+    testing::gIntermittentFsDirectory =
+        doim::gManager->obtainDirectory(cwd, "build/test");
+    testing::gIntermittentDirectory = testing::gIntermittentFsDirectory->path();
+
     testing::gTestResourceDirectory =
         doim::gManager->obtainDirectory(cwd, "test_resource");
 

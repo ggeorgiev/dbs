@@ -1,10 +1,15 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "err/pparg.h"
+#include "err/macro.h"
 #include <gtest/gtest.h>
 
-TEST(PPArgTest, sanity)
+TEST(MacroTest, PP_STRINGIZE)
+{
+    EXPECT_STREQ("foo", PP_STRINGIZE(foo));
+}
+
+TEST(MacroTest, PP_NARG)
 {
     EXPECT_EQ(0, PP_NARG());
     EXPECT_EQ(1, PP_NARG(a));

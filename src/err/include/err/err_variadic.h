@@ -1,9 +1,5 @@
 #pragma once
 
-#define EH_STRINGIZE(arg) EH_STRINGIZE1(arg)
-#define EH_STRINGIZE1(arg) EH_STRINGIZE2(arg)
-#define EH_STRINGIZE2(arg) #arg
-
 #define EH_FE_1(WHAT, X) WHAT(X)
 #define EH_FE_2(WHAT, X, ...) WHAT(X) EH_FE_1(WHAT##_, __VA_ARGS__)
 #define EH_FE_3(WHAT, X, ...) WHAT(X) EH_FE_2(WHAT##_, __VA_ARGS__)

@@ -59,7 +59,9 @@ IncludeCategories:
     Priority:        50
   - Regex:           '^"doim/*.'
     Priority:        60
-  - Regex:           '^\"err/*.'
+  - Regex:           '^"db/*.'
+    Priority:        70
+  - Regex:           '^"err/*.'
     Priority:        70
   - Regex:           '^"im/*.'
     Priority:        80
@@ -72,9 +74,13 @@ IncludeCategories:
   - Regex:           '^<cppformat/*.'
     Priority:        120
   - Regex:           '^<boost/*.'
-    Priority:        130
+    Priority:        120
+  - Regex:           '^<rocksdb/*.'
+    Priority:        120
   - Regex:           '^".*"$'
     Priority:        1000
+  - Regex:           '<.*[.]h>'
+    Priority:        2010
   - Regex:           '<.*>'
     Priority:        2000
 IndentCaseLabels: true

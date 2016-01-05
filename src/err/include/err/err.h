@@ -6,15 +6,16 @@
 
 #pragma once
 
+#include <cppformat/format.h>
 #include <memory>
 #include <sstream>
-#include <stddef.h>
 #include <unordered_map>
 #include <vector>
+#include <stddef.h>
 
 #include "err/err_assert.h"
 #include "err/err_cppformat.h"
-#include "err/pparg.h"
+#include "err/macro.h"
 #include "im/initialization_manager.hpp"
 
 namespace err
@@ -33,9 +34,14 @@ enum ECode
     kExpected = 1,
     kAssert = 2,
 
+    // Action error codes
     kNotFound = 10,
     kTooMany = 11,
     kUnable = 12,
+
+    // Subsystems error codes
+    kDatabase = 20,
+    kFileSystem = 21,
 };
 
 struct EnumHasher
@@ -102,13 +108,15 @@ public:
 
     std::string callstack()
     {
-        std::stringstream stream;
+        std::string stack;
         for (const auto& location : mCallstack)
         {
-            stream << location.mFile << ":" << location.mLine << ": @ "
-                   << location.mFunction << "\n";
+            stack += fmt::format("{}:{}: @ {}\n",
+                                 location.mFile,
+                                 location.mLine,
+                                 location.mFunction);
         }
-        return stream.str();
+        return stack;
     }
 
 private:
@@ -132,10 +140,16 @@ using err::ECode;
 
 #define EHEnd return err::kSuccess
 
-#define EHBan(...)                                                \
+#define EHBan(...)                        \
+    do                                    \
+    {                                     \
+        EHAssert(err::gError == nullptr); \
+        EHBan_(__VA_ARGS__);              \
+    } while (false)
+
+#define EHBan_(...)                                               \
     do                                                            \
     {                                                             \
-        ASSERT(err::gError == nullptr);                           \
         auto __EHBan__code = EH_CODE(__VA_ARGS__);                \
         auto error = new err::Error(__EHBan__code, EH_LOCATION);  \
         if (PP_NARG(__VA_ARGS__) > 0)                             \
@@ -160,22 +174,27 @@ using err::ECode;
         }                                                             \
     } while (false)
 
-#define EHReset                                      \
-    do                                               \
-    {                                                \
-        ASSERT(err::gError != nullptr);              \
-        ASSERT(err::gError->code() != err::kAssert); \
-        err::gError.reset();                         \
+#define EHReset                                        \
+    do                                                 \
+    {                                                  \
+        EHAssert(err::gError != nullptr);              \
+        EHAssert(err::gError->code() != err::kAssert); \
+        err::gError.reset();                           \
     } while (false)
 
+#define EHEnsureClear err::gError.reset();
+
+// EHAssert is similar to ASSERT, but it can be used only from functions that return
+// ECode. The benefit over ASSERT is that it will construct the call stack that will
+// simplify triaging.
 #if defined(NDEBUG)
-#define EHAssert(X) ASSERT(X)
+#define EHAssert(X, ...) ASSERT(X)
 #else
-#define EHAssert(X)            \
-    do                         \
-    {                          \
-        bool expression = (X); \
-        if (!expression)       \
-            EHBan(kAssert, X); \
+#define EHAssert(X, ...)                       \
+    do                                         \
+    {                                          \
+        bool expression = (X);                 \
+        if (!expression)                       \
+            EHBan_(kAssert, X, ##__VA_ARGS__); \
     } while (false)
 #endif

@@ -25,6 +25,7 @@ fi
 CXXFLAGS="$CXXFLAGS -Isrc/const/include"
 CXXFLAGS="$CXXFLAGS -Isrc/im/include"
 CXXFLAGS="$CXXFLAGS -Isrc/err/include"
+CXXFLAGS="$CXXFLAGS -Isrc/db/include"
 CXXFLAGS="$CXXFLAGS -Isrc/dom/include"
 CXXFLAGS="$CXXFLAGS -Isrc/doim/include"
 CXXFLAGS="$CXXFLAGS -Isrc/parser/include"
@@ -35,11 +36,9 @@ CXXFLAGS="$CXXFLAGS -Isrc/task/include"
 
 FILES=""
 FILES="$FILES src/err/err.cpp"
-
 FILES="$FILES src/const/constants.cpp"
-
+FILES="$FILES src/db/database.cpp"
 FILES="$FILES src/doim/manager.cpp"
-
 FILES="$FILES src/dom/manager.cpp"
 
 CXXFLAGS="$CXXFLAGS -isystemgtest/include"
@@ -51,7 +50,11 @@ LIBRARIES="$LIBRARIES -Lboost/lib"
 CXXFLAGS="$CXXFLAGS -isystemcppformat/include"
 LIBRARIES="$LIBRARIES -Lcppformat/lib"
 
+CXXFLAGS="$CXXFLAGS -isystemrocksdb/include"
+LIBRARIES="$LIBRARIES -Lrocksdb/lib"
+
 LIBRARIES="$LIBRARIES -lboost_filesystem -lboost_chrono -lboost_system -lformat"
+LIBRARIES="$LIBRARIES -lrocksdb -lz -lbz2"
 
 #DEFINES=" -DNDEBUG" && OPTOMIZATION="-O3"
 DEFINES=" -DDEBUG" && OPTOMIZATION="-O0 -g"
@@ -72,7 +75,9 @@ then
 
     FILES="$FILES src/err/gtest/err-utest.cpp"
     FILES="$FILES src/err/gtest/err-ptest.cpp"
-    FILES="$FILES src/err/gtest/pparg-utest.cpp"
+    FILES="$FILES src/err/gtest/macro-utest.cpp"
+
+    FILES="$FILES src/db/gtest/database-utest.cpp"
 
     FILES="$FILES src/dom/gtest/cxx_program-utest.cpp"
 
@@ -108,11 +113,12 @@ then
     done
     echo "]" >> $COMPILE_DATABASE
 
-    if [ 1 == 0 ]
+    if [ 1 == 1 ]
     then
         mkdir -p build/src/gtest
         mkdir -p build/src/err/gtest
         mkdir -p build/src/const/gtest
+        mkdir -p build/src/db/gtest
         mkdir -p build/src/dom/gtest
         mkdir -p build/src/dom/cxx/gtest
         mkdir -p build/src/dom/generic/gtest

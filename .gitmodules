@@ -38,6 +38,7 @@
 [submodule "clang-plugin"]
 	path = 3rdparty/clang-plugin
 	url = https://github.com/ggeorgiev/clang-plugin.git
+
 [submodule "rocksdb"]
 	path = 3rdparty/rocksdb
 	url = https://github.com/facebook/rocksdb.git

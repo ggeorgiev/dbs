@@ -7,19 +7,20 @@
 #define ASSERT_BANNED(expected, expression)      \
     do                                           \
     {                                            \
-        ASSERT_NE(err::expected, err::kSuccess); \
+        EXPECT_NE(err::expected, err::kSuccess); \
                                                  \
         ECode code = (expression);               \
-        ASSERT_EQ(err::expected, code);          \
-        EHReset;                                 \
+        EXPECT_EQ(err::expected, code);          \
+        EHEnsureClear;                           \
     } while (false)
 
 #define ASSERT_OKAY(expression)                                                     \
     do                                                                              \
     {                                                                               \
         ECode code = (expression);                                                  \
-        ASSERT_EQ(err::kSuccess, code) << "There is an error: <" << err::name(code) \
+        EXPECT_EQ(err::kSuccess, code) << "There is an error: <" << err::name(code) \
                                        << " | " << code << ">" << std::endl         \
                                        << err::gError->message() << std::endl       \
                                        << err::gError->callstack();                 \
+        EHEnsureClear;                                                              \
     } while (false)
