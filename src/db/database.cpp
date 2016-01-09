@@ -47,4 +47,46 @@ void Database::close()
     mRocksDb.reset();
 }
 
+ECode Database::get(const std::experimental::string_view& key, std::string& value)
+{
+    const auto& status = mRocksDb->Get(rocksdb::ReadOptions(),
+                                       rocksdb::Slice(key.data(), key.size()),
+                                       &value);
+    if (!status.ok())
+    {
+        if (status.code() == rocksdb::Status::kNotFound)
+            EHBan(kNotFound, key);
+
+        const auto& msg = status.ToString();
+        EHBan(kDatabase, msg);
+    }
+    EHEnd;
+}
+
+ECode Database::put(const std::experimental::string_view& key,
+                    const std::experimental::string_view& value)
+{
+    const auto& status = mRocksDb->Put(rocksdb::WriteOptions(),
+                                       rocksdb::Slice(key.data(), key.size()),
+                                       rocksdb::Slice(value.data(), value.size()));
+    if (!status.ok())
+    {
+        const auto& msg = status.ToString();
+        EHBan(kDatabase, msg);
+    }
+    EHEnd;
+}
+
+ECode Database::erase(const std::experimental::string_view& key)
+{
+    const auto& status =
+        mRocksDb->Delete(rocksdb::WriteOptions(), rocksdb::Slice(key.data(), key.size()));
+    if (!status.ok())
+    {
+        const auto& msg = status.ToString();
+        EHBan(kDatabase, msg);
+    }
+    EHEnd;
+}
+
 } // namespace db
