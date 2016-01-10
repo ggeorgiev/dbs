@@ -1,9 +1,59 @@
+cxx_library cstd
+    @type=system:
+
+    cxx_public_header
+        @directory=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk:
+
+        sys/errno.h
+        stddef.h
+        stdio.h
+        unistd.h
+        cstddef
+    ;
+;
+
+cxx_library stl
+    @type=system:
+
+    cxx_public_header
+        @directory=../clang/include/c++/v1:
+
+        experimental/string_view
+        algorithm
+        bitset
+        condition_variable
+        fstream
+        functional
+        future
+        iosfwd
+        iostream
+        iterator
+        map
+        memory
+        mutex
+        queue
+        regex
+        set
+        sstream
+        string
+        thread
+        unordered_map
+        unordered_set
+        utility
+        vector
+    ;
+;
+
+
 cxx_library boost_template
     @type=system:
 
     cxx_public_header
         @directory=../boost/include:
 
+        boost/crc.hpp
+        boost/heap/fibonacci_heap.hpp
+        boost/optional.hpp
     ;
 ;
 
@@ -12,9 +62,27 @@ cxx_library boost_system
     cxx_public_header
         @directory=../boost/include:
 
+        boost/system/error_code.hpp
     ;
 
     cxx_binary: ../boost/lib/libboost_system.a;
+;
+
+cxx_library boost_filesystem
+    @type=system:
+    cxx_public_header
+        @directory=../boost/include:
+
+        boost/filesystem/operations.hpp
+        boost/filesystem/path.hpp
+        boost/filesystem.hpp
+    ;
+
+    cxx_library:
+        boost_system
+    ;
+
+    cxx_binary: ../boost/lib/libboost_filesystem.a;
 ;
 
 cxx_library boost_chrono
@@ -33,9 +101,25 @@ cxx_library cppformat
     cxx_public_header
         @directory=../cppformat/include:
 
+        cppformat/format.h
     ;
 
     cxx_binary: ../cppformat/lib/libformat.a;
+;
+
+cxx_library rocksdb
+    @type=system:
+
+    cxx_public_header
+        @directory=../rocksdb/include:
+
+        rocksdb/db.h
+        rocksdb/options.h
+        rocksdb/slice.h
+        rocksdb/status.h
+    ;
+
+    cxx_binary: ../rocksdb/lib/librocksdb.a;
 ;
 
 cxx_library im
@@ -44,6 +128,11 @@ cxx_library im
     cxx_public_header
         @directory=im/include:
 
+        im/initialization_manager.hpp
+    ;
+
+    cxx_library:
+        stl
     ;
 ;
 
@@ -53,9 +142,17 @@ cxx_library err
     cxx_public_header
         @directory=err/include:
 
+        err/err.h
+        err/err_assert.h
+        err/err_cppformat.h
+        err/err_variadic.h
+        err/macro.h
     ;
 
     cxx_library:
+        cstd
+        stl
+
         cppformat
         im
     ;
@@ -65,16 +162,61 @@ cxx_library err
     ;
 ;
 
+cxx_library db
+    @type=user:
+
+    cxx_public_header
+        @directory=db/include:
+
+        db/database.h
+    ;
+
+    cxx_library:
+        stl
+
+        boost_filesystem
+        rocksdb
+
+        err
+    ;
+
+    cxx_file:
+        db/database.cpp
+    ;
+;
+
 cxx_library const
     @type=user:
 
     cxx_public_header
         @directory=const/include:
 
+        const/constants.h
+    ;
+
+    cxx_library:
+        stl
     ;
 
     cxx_file:
         const/constants.cpp
+    ;
+;
+
+cxx_library tpool
+    @type=user:
+
+    cxx_public_header
+        @directory=tpool/include:
+
+        tpool/task.hpp
+        tpool/priority.hpp
+    ;
+
+    cxx_library:
+        boost_template
+
+        err
     ;
 ;
 
@@ -84,6 +226,15 @@ cxx_library doim
     cxx_public_header
         @directory=doim/include:
 
+        doim/cxx/cxx_file.hpp
+        doim/cxx/cxx_include_directory.hpp
+        doim/cxx/cxx_header.hpp
+        doim/cxx/cxx_object_file.hpp
+        doim/fs/fs_directory.hpp
+        doim/fs/fs_file.hpp
+        doim/generic/location.hpp
+        doim/generic/object.hpp
+        doim/manager.h
     ;
 
     cxx_library:
@@ -103,6 +254,12 @@ cxx_library dom
     cxx_public_header
         @directory=dom/include:
 
+        dom/cxx/cxx_files_mixin.hpp
+        dom/cxx/cxx_library.hpp
+        dom/cxx/cxx_private_headers_mixin.hpp
+        dom/cxx/cxx_program.hpp
+        dom/generic/attribute.hpp
+        dom/manager.h
     ;
 
     cxx_library:
@@ -121,6 +278,37 @@ cxx_library parser
     cxx_public_header
         @directory=parser/include:
 
+        parser/cxx/cxx_parser.hpp
+        parser/fixed_encoding_traits.hpp
+        parser/parser.hpp
+        parser/string_stream.hpp
+        parser/tokenizer.hpp
+        parser/token.hpp
+    ;
+
+    cxx_library:
+        dom
+    ;
+;
+
+cxx_library task
+    @type=user:
+
+    cxx_public_header
+        @directory=task/include:
+
+        task/cxx/cxx_file_crc_task.hpp
+        task/cxx/cxx_crc_task_mixin.hpp
+        task/cxx/cxx_header_crc_task.hpp
+    ;
+
+    cxx_library:
+        boost_template
+        boost_filesystem
+
+        err
+        tpool
+        parser
     ;
 ;
 
@@ -130,16 +318,27 @@ cxx_library tool
     cxx_public_header
         @directory=tool/include:
 
+        tool/cxx_compiler.hpp
+    ;
+
+    cxx_library:
+        db
+        dom
+        task
     ;
 ;
 
 cxx_program dbs:
     cxx_library:
+        stdc
+        stl
+
         boost_template
-        boost_system
+        boost_filesystem
         boost_chrono
         cppformat
 
+        db
         err
         const
         im
@@ -147,6 +346,8 @@ cxx_program dbs:
         dom
         parser
         tool
+        task
+        tpool
     ;
 
     cxx_file:

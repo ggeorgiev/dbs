@@ -84,7 +84,9 @@ TEST(CxxFileCrcTaskTest, include)
 
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
     auto cxxHeader = doim::gManager->unique(
-        std::make_shared<doim::CxxHeader>(user, cxxIncludeDirectories));
+        std::make_shared<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
+                                          user,
+                                          cxxIncludeDirectories));
 
     auto cxxHeaders = std::make_shared<doim::CxxHeaderSet>();
     cxxHeaders->insert(cxxHeader);

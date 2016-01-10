@@ -5,6 +5,7 @@
 
 #include "doim/fs/fs_directory.hpp"
 #include "doim/fs/fs_file.hpp"
+#include "err/err_assert.h"
 #include <memory>
 #include <string>
 #include <unordered_set>
@@ -32,9 +33,10 @@ public:
         , mDirectory(directory)
         , mHeaderFiles(headerFiles)
     {
+        ASSERT(mDirectory != nullptr);
     }
 
-    Type& type()
+    Type type()
     {
         return mType;
     }

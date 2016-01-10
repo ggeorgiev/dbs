@@ -24,6 +24,34 @@ public:
     ECode open(const std::string& file);
     void close();
 
+    template <typename K, typename V>
+    ECode get(const std::shared_ptr<K>& object, V& value)
+    {
+        const auto& key = object->key();
+        V dflt = V();
+
+        std::string buffer;
+        EHTest(get(key,
+                   std::experimental::string_view(reinterpret_cast<const char*>(&dflt),
+                                                  sizeof(dflt)),
+                   buffer));
+        value = *reinterpret_cast<const V*>(buffer.data());
+        EHEnd;
+    }
+
+    template <typename K, typename V>
+    ECode put(const std::shared_ptr<K>& object, const V& value)
+    {
+        const auto& key = object->key();
+        EHTest(put(key,
+                   std::experimental::string_view(reinterpret_cast<const char*>(&value),
+                                                  sizeof(value))));
+        EHEnd;
+    }
+
+    ECode get(const std::experimental::string_view& key,
+              const std::experimental::string_view& dflt,
+              std::string& value);
     ECode get(const std::experimental::string_view& key, std::string& value);
     ECode put(const std::experimental::string_view& key,
               const std::experimental::string_view& value);

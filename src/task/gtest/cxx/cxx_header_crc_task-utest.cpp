@@ -22,7 +22,9 @@ TEST(CxxHeaderCrcTaskTest, simple)
         doim::gManager->unique(std::make_shared<doim::CxxIncludeDirectorySet>());
     auto cxxHeaders = doim::gManager->unique(std::make_shared<doim::CxxHeaderSet>());
 
-    auto cxxHeader = std::make_shared<doim::CxxHeader>(file, cxxIncludeDirectories);
+    auto cxxHeader = std::make_shared<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
+                                                       file,
+                                                       cxxIncludeDirectories);
     auto task = std::make_shared<task::CxxHeaderCrcTask>(cxxHeader, cxxHeaders);
 
     ASSERT_OKAY((*task)());

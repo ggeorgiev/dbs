@@ -68,7 +68,6 @@ TEST(ManagerTest, obtainEmptyDirectory)
     ASSERT_EQ(dir, rootDir);
 
     ASSERT_ASSERT(doim::gManager->obtainDirectory(nullptr, "bar/"));
-    ASSERT_ASSERT(doim::gManager->obtainDirectory(rootDir, "/bar/"));
 }
 
 TEST(ManagerTest, obtainUniqueDirectory)
@@ -114,6 +113,7 @@ TEST(ManagerTest, obtainDirectory)
         Test{.root = "", .dir = "////", .absolute = "/", .relative = "/"},
         Test{.root = "", .dir = "/foo", .absolute = "/foo/", .relative = "/foo/"},
         Test{.root = "", .dir = "/foo/", .absolute = "/foo/", .relative = "/foo/"},
+        Test{.root = "/bar", .dir = "/foo", .absolute = "/foo/", .relative = "/foo/"},
         Test{.root = "", .dir = "///foo///", .absolute = "/foo/", .relative = "/foo/"},
         Test{.root = "/foo/", .dir = "bar", .absolute = "/foo/bar/", .relative = "bar/"},
         Test{.root = "/foo/", .dir = "..", .absolute = "/", .relative = "../"},

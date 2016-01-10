@@ -62,7 +62,8 @@ public:
                                  std::unordered_set<doim::FsFileSPtr>& files)
     {
         mPublicHeadersDirectory = directory;
-        (mCxxPublicHeaders = std::make_shared<doim::FsFileSet>())->swap(files);
+        mCxxPublicHeaders = std::make_shared<doim::FsFileSet>();
+        mCxxPublicHeaders->swap(files);
         EHEnd;
     }
 
@@ -104,24 +105,25 @@ public:
     {
         auto directories = std::make_shared<doim::CxxIncludeDirectorySet>();
 
-        doim::CxxIncludeDirectorySPtr directory;
-        switch (mType)
+        if (publicHeadersDirectory() != nullptr)
         {
-            case Type::kUser:
-                directory = std::make_shared<
-                    doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kUser,
-                                               publicHeadersDirectory(),
-                                               publicHeaders());
-                break;
-            case Type::kSystem:
-                directory = std::make_shared<
-                    doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kSystem,
-                                               publicHeadersDirectory(),
-                                               publicHeaders());
-                break;
-        }
+            doim::CxxIncludeDirectory::Type type;
+            switch (mType)
+            {
+                case Type::kUser:
+                    type = doim::CxxIncludeDirectory::Type::kUser;
+                    break;
+                case Type::kSystem:
+                    type = doim::CxxIncludeDirectory::Type::kSystem;
+                    break;
+            }
 
-        directories->insert(doim::gManager->unique(directory));
+            const auto& directory =
+                std::make_shared<doim::CxxIncludeDirectory>(type,
+                                                            publicHeadersDirectory(),
+                                                            publicHeaders());
+            directories->insert(doim::gManager->unique(directory));
+        }
 
         for (const auto& cxxLibrary : mCxxLibraries)
         {
@@ -135,6 +137,33 @@ public:
     doim::CxxHeaderSetSPtr cxxHeaders(const doim::FsDirectorySPtr& root) const
     {
         auto headers = std::make_shared<doim::CxxHeaderSet>();
+
+        doim::CxxHeader::Type type;
+        switch (mType)
+        {
+            case Type::kUser:
+                type = doim::CxxHeader::Type::kUser;
+                break;
+            case Type::kSystem:
+                type = doim::CxxHeader::Type::kSystem;
+                break;
+        }
+
+        if (mCxxPublicHeaders != nullptr)
+        {
+            const auto& directories = cxxIncludeDirectories(root);
+            for (const auto& header : *mCxxPublicHeaders)
+            {
+                const auto& cxxHeader =
+                    std::make_shared<doim::CxxHeader>(type, header, directories);
+                headers->insert(doim::gManager->unique(cxxHeader));
+            }
+        }
+        for (const auto& cxxLibrary : mCxxLibraries)
+        {
+            const auto& libHeaders = cxxLibrary->cxxHeaders(root);
+            headers->insert(libHeaders->begin(), libHeaders->end());
+        }
         return doim::gManager->unique(headers);
     }
 

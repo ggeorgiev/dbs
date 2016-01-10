@@ -31,6 +31,7 @@ public:
                       doim::CxxHeaderSPtr& cxxHeader)
     {
         doim::FsFileSPtr file;
+        doim::CxxIncludeDirectorySPtr includeDirectory;
         for (const auto& directory : *includeDirectories)
         {
             const auto& curr = doim::gManager->find(
@@ -45,6 +46,7 @@ public:
                 EHBan(kTooMany, include);
 
             file = curr;
+            includeDirectory = directory;
         }
 
         if (file == nullptr)

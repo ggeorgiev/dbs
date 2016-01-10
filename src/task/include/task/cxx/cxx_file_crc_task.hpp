@@ -35,6 +35,9 @@ public:
 
         for (const auto& header : includes)
         {
+            if (header->type() == doim::CxxHeader::Type::kSystem)
+                continue;
+
             auto task =
                 std::make_shared<CxxHeaderCrcTask>(header, mCxxFile->cxxHeaders());
             EHTest((*task)());

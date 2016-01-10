@@ -19,6 +19,7 @@ TimeMonitor::TimeMonitor()
 
 static const char kPerformance[] = "PERFORMANCE_";
 static const char kSlow[] = "SLOW_";
+static const char kVerySlow[] = "VERYSLOW_";
 
 size_t TimeMonitor::limit(const TestInfo& test_info)
 {
@@ -26,6 +27,8 @@ size_t TimeMonitor::limit(const TestInfo& test_info)
         return std::numeric_limits<size_t>::max();
     if (::strncmp(test_info.name(), kSlow, sizeof(kSlow) - 1) == 0)
         return 100U;
+    if (::strncmp(test_info.name(), kVerySlow, sizeof(kVerySlow) - 1) == 0)
+        return 1000U;
     return 15U;
 }
 

@@ -54,8 +54,6 @@ TEST(DatabaseTest, SLOW_get)
     db::Database database;
     ASSERT_OKAY(database.open(testDb));
 
-    ECode get(const std::string& key, std::string& value);
-
     std::string key("key");
 
     ASSERT_OKAY(database.erase(key));
@@ -76,8 +74,6 @@ TEST(DatabaseTest, SLOW_erase)
 
     db::Database database;
     ASSERT_OKAY(database.open(testDb));
-
-    ECode get(const std::string& key, std::string& value);
 
     std::string key("key");
 

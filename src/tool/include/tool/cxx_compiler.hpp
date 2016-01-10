@@ -5,6 +5,8 @@
 
 #include "dom/cxx/cxx_program.hpp"
 #include "doim/cxx/cxx_file.hpp"
+#include "task/cxx/cxx_file_crc_task.hpp"
+#include "db/database.h"
 #include <memory>
 #include <set>
 #include <sstream>
@@ -44,9 +46,23 @@ public:
         return stream.str();
     }
 
-    std::string command(const doim::FsDirectorySPtr& directory,
-                        const doim::CxxObjectFileSPtr& objectFile)
+    ECode command(const doim::FsDirectorySPtr& directory,
+                  const doim::CxxObjectFileSPtr& objectFile,
+                  std::string& cmd)
     {
+        cmd.clear();
+
+        auto task = std::make_shared<task::CxxFileCrcTask>(objectFile->cxxFile());
+        EHTest((*task)(), objectFile->file()->path());
+
+        uint64_t crc;
+        db::gDatabase->get(objectFile->cxxFile()->file(), crc);
+
+        // if (task->crc() == crc)
+        //    EHEnd;
+
+        db::gDatabase->put(objectFile->cxxFile()->file(), task->crc());
+
         std::stringstream stream;
         stream << "mkdir -p " << objectFile->file()->directory()->path(directory) << "\n";
 
@@ -57,11 +73,15 @@ public:
         stream << " -o " << objectFile->file()->path(directory);
 
         stream << commandArg(directory, objectFile->cxxFile()->cxxIncludeDirectories());
-        return stream.str();
+
+        stream << " || exit 1\n";
+        cmd = stream.str();
+        EHEnd;
     }
 
-    std::string command(const doim::FsDirectorySPtr& directory,
-                        const dom::CxxProgramSPtr& program)
+    ECode command(const doim::FsDirectorySPtr& directory,
+                  const dom::CxxProgramSPtr& program,
+                  std::string& cmd)
     {
         const auto& intermediate = doim::gManager->obtainDirectory(directory, "build");
 
@@ -93,7 +113,9 @@ public:
                 for (const auto& objectFile : objectFiles)
                 {
                     files.insert(objectFile->cxxFile()->file()->path(directory));
-                    stream << command(directory, objectFile) << " || exit 1\n";
+                    std::string cmd;
+                    EHTest(command(directory, objectFile, cmd));
+                    stream << cmd;
                 }
             }
         }
@@ -102,7 +124,9 @@ public:
         for (const auto& objectFile : objectFiles)
         {
             files.insert(objectFile->cxxFile()->file()->path(directory));
-            stream << command(directory, objectFile) << " || exit 1\n";
+            std::string cmd;
+            EHTest(command(directory, objectFile, cmd));
+            stream << cmd;
         }
 
         std::stringstream objFilesStream;
@@ -121,7 +145,8 @@ public:
                << "    $DEFINES $LIBRARIES || exit 1\n"
                << "echo done.\n";
 
-        return stream.str();
+        cmd = stream.str();
+        EHEnd;
     }
 
 private:

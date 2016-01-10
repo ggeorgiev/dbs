@@ -47,11 +47,11 @@ FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
     if (directory.empty())
         return base;
 
-    ASSERT(base != nullptr || directory.front() == slash());
-    ASSERT(base == nullptr || directory.front() != slash());
-
     FsDirectory::Builder builder;
-    auto parent = base;
+    auto parent = directory.front() == slash() ? nullptr : base;
+
+    ASSERT(parent != nullptr || directory.front() == slash());
+    ASSERT(parent == nullptr || directory.front() != slash());
 
     auto pos = directory.begin();
     while (pos < directory.end())

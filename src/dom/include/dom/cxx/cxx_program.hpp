@@ -60,7 +60,11 @@ public:
     doim::CxxHeaderSetSPtr cxxHeaders(const doim::FsDirectorySPtr& root) const
     {
         auto headers = std::make_shared<doim::CxxHeaderSet>();
-
+        for (const auto& cxxLibrary : mCxxLibraries)
+        {
+            const auto& libHeaders = cxxLibrary->cxxHeaders(root);
+            headers->insert(libHeaders->begin(), libHeaders->end());
+        }
         return doim::gManager->unique(headers);
     }
 

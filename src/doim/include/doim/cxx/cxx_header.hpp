@@ -22,11 +22,24 @@ typedef std::shared_ptr<CxxHeaderSet> CxxHeaderSetSPtr;
 class CxxHeader
 {
 public:
-    CxxHeader(const FsFileSPtr& file,
+    enum class Type
+    {
+        kUser,
+        kSystem,
+    };
+
+    CxxHeader(const Type type,
+              const FsFileSPtr& file,
               const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories)
-        : mFile(file)
+        : mType(type)
+        , mFile(file)
         , mCxxIncludeDirectories(cxxIncludeDirectories)
     {
+    }
+
+    Type type()
+    {
+        return mType;
     }
 
     const FsFileSPtr& file() const
@@ -41,22 +54,26 @@ public:
 
     struct Hasher
     {
-        std::size_t operator()(const CxxHeaderSPtr& cxxFile) const
+        std::size_t operator()(const CxxHeaderSPtr& headerFile) const
         {
-            return std::hash<FsFileSPtr>()(cxxFile->file()) ^
+            return std::hash<int>()(static_cast<int>(headerFile->type())) ^
+                   std::hash<FsFileSPtr>()(headerFile->file()) ^
                    std::hash<CxxIncludeDirectorySetSPtr>()(
-                       cxxFile->cxxIncludeDirectories());
+                       headerFile->cxxIncludeDirectories());
         }
 
-        bool operator()(const CxxHeaderSPtr& cxxFile1,
-                        const CxxHeaderSPtr& cxxFile2) const
+        bool operator()(const CxxHeaderSPtr& headerFile1,
+                        const CxxHeaderSPtr& headerFile2) const
         {
-            return cxxFile1->file() == cxxFile2->file() &&
-                   cxxFile1->cxxIncludeDirectories() == cxxFile2->cxxIncludeDirectories();
+            return headerFile1->type() == headerFile2->type() &&
+                   headerFile1->file() == headerFile2->file() &&
+                   headerFile1->cxxIncludeDirectories() ==
+                       headerFile2->cxxIncludeDirectories();
         }
     };
 
 private:
+    Type mType;
     FsFileSPtr mFile;
     CxxIncludeDirectorySetSPtr mCxxIncludeDirectories;
 };

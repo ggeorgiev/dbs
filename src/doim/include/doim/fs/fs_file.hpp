@@ -24,9 +24,17 @@ public:
     {
     }
 
-    std::string path(const FsDirectorySPtr& directory = nullptr)
+    std::string path(const FsDirectorySPtr& directory = nullptr) const
     {
         return mDirectory->path(directory) + mName;
+        ;
+    }
+
+    std::string key() const
+    {
+        if (mKey.empty())
+            mKey = "file:" + path();
+        return mKey;
     }
 
     const std::string& name() const
@@ -57,6 +65,8 @@ public:
 private:
     FsDirectorySPtr mDirectory;
     std::string mName;
+
+    mutable std::string mKey;
 };
 
 typedef std::unordered_set<FsFileSPtr> FsFileSet;

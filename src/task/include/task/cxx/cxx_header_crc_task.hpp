@@ -36,6 +36,9 @@ public:
 
         for (const auto& header : includes)
         {
+            if (header->type() == doim::CxxHeader::Type::kSystem)
+                continue;
+
             auto task = std::make_shared<CxxHeaderCrcTask>(header, mCxxHeaders);
             EHTest((*task)());
             mCrc64 = mCrc64 ^ task->crc();

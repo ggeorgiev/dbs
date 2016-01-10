@@ -1,22 +1,25 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "tool/cxx_compiler.hpp"
-#include "parser/parser.hpp"
-#include "parser/string_stream.hpp"
-#include "dom/cxx/cxx_program.hpp"
-#include "doim/fs/fs_file.hpp"
-#include "doim/manager.h"
-#include "err/err.h"
-#include "im/initialization_manager.hpp"
+#include <stdio.h>
+#include <sys/errno.h>
+#include <unistd.h>
 #include <fstream> // IWYU pragma: keep
 #include <iostream>
 #include <iterator>
 #include <memory>
 #include <vector>
-#include <stdio.h>
-#include <sys/errno.h>
-#include <unistd.h>
+
+#include "db/database.h"
+#include "doim/fs/fs_directory.hpp"
+#include "doim/fs/fs_file.hpp"
+#include "doim/manager.h"
+#include "dom/cxx/cxx_program.hpp"
+#include "err/err.h"
+#include "im/initialization_manager.hpp"
+#include "parser/parser.hpp"
+#include "parser/string_stream.hpp"
+#include "tool/cxx_compiler.hpp"
 
 // IWYU pragma: no_include <sstream>
 
@@ -60,9 +63,18 @@ int main(int argc, char* argv[])
     auto cwd = doim::gManager->obtainDirectory(nullptr, current);
     auto file = doim::gManager->obtainFile(cwd, arg[1]);
 
+    auto db = doim::gManager->obtainDirectory(cwd, "build/db");
+    ECode code = db::gDatabase->open(db->path());
+    if (code != err::kSuccess)
+    {
+        std::cout << err::gError->message() << "\n";
+        std::cout << err::gError->callstack() << "\n";
+        return 1;
+    }
+
     dom::CxxProgramSPtr program;
 
-    ECode code = run(file, program);
+    code = run(file, program);
     if (code != err::kSuccess)
     {
         std::cout << err::gError->message() << "\n";
@@ -72,7 +84,14 @@ int main(int argc, char* argv[])
 
     const auto& binary = doim::gManager->obtainFile(cwd, "clang/bin/clang++");
     const auto& compiler = std::make_shared<tool::CxxCompiler>(binary);
-    const auto& script = compiler->command(cwd, program);
+    std::string script;
+    code = compiler->command(cwd, program, script);
+    if (code != err::kSuccess)
+    {
+        std::cout << err::gError->message() << "\n";
+        std::cout << err::gError->callstack() << "\n";
+        return 1;
+    }
 
     std::cout << script;
     return 0;
