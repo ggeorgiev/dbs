@@ -3,12 +3,12 @@
 
 #pragma once
 
-#include <rocksdb/db.h>
-#include <iosfwd>
-#include <memory>
 #include "err/err.h"
 #include "im/initialization_manager.hpp"
+#include <rocksdb/db.h>
 #include <experimental/string_view>
+#include <iosfwd>
+#include <memory>
 
 namespace db
 {

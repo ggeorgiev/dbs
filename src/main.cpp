@@ -1,25 +1,24 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include <stdio.h>
-#include <sys/errno.h>
-#include <unistd.h>
+#include "tool/cxx_compiler.hpp"
+#include "parser/parser.hpp"
+#include "parser/string_stream.hpp"
+#include "dom/cxx/cxx_program.hpp"
+#include "doim/fs/fs_directory.hpp"
+#include "doim/fs/fs_file.hpp"
+#include "doim/manager.h"
+#include "db/database.h"
+#include "err/err.h"
+#include "im/initialization_manager.hpp"
 #include <fstream> // IWYU pragma: keep
 #include <iostream>
 #include <iterator>
 #include <memory>
 #include <vector>
-
-#include "db/database.h"
-#include "doim/fs/fs_directory.hpp"
-#include "doim/fs/fs_file.hpp"
-#include "doim/manager.h"
-#include "dom/cxx/cxx_program.hpp"
-#include "err/err.h"
-#include "im/initialization_manager.hpp"
-#include "parser/parser.hpp"
-#include "parser/string_stream.hpp"
-#include "tool/cxx_compiler.hpp"
+#include <stdio.h>
+#include <sys/errno.h>
+#include <unistd.h>
 
 // IWYU pragma: no_include <sstream>
 

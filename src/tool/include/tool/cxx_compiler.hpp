@@ -3,9 +3,9 @@
 
 #pragma once
 
+#include "task/cxx/cxx_file_crc_task.h"
 #include "dom/cxx/cxx_program.hpp"
 #include "doim/cxx/cxx_file.hpp"
-#include "task/cxx/cxx_file_crc_task.hpp"
 #include "db/database.h"
 #include <memory>
 #include <set>
@@ -58,8 +58,8 @@ public:
         uint64_t crc;
         db::gDatabase->get(objectFile->cxxFile()->file(), crc);
 
-        // if (task->crc() == crc)
-        //    EHEnd;
+        if (task->crc() == crc)
+            EHEnd;
 
         db::gDatabase->put(objectFile->cxxFile()->file(), task->crc());
 
@@ -142,7 +142,7 @@ public:
         stream << mBinary->path(directory) << " $OPTOMIZATION $CXXFLAGS \\\n"
                << "    " << objFilesStream.str() << "\\\n"
                << "    -o build/main \\\n"
-               << "    $DEFINES $LIBRARIES || exit 1\n"
+               << "    $DEFINES || exit 1\n"
                << "echo done.\n";
 
         cmd = stream.str();

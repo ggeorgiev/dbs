@@ -6,6 +6,7 @@
 #include "tpool/priority.hpp"
 #include "err/err.h"
 #include <boost/heap/fibonacci_heap.hpp>
+#include <atomic>
 #include <functional>
 #include <future>
 #include <thread>
@@ -27,18 +28,33 @@ public:
     };
     typedef boost::heap::fibonacci_heap<TaskSPtr, boost::heap::compare<Compare>> Heap;
 
-    typedef std::function<ECode()> Function;
     typedef std::future<ECode> Future;
 
-    Task(int priority, Function&& function)
+    Task(int priority)
         : mPriority(std::make_shared<Priority>(priority))
-        , mFunction(function)
+        , mFinished(false)
     {
     }
 
-    void run()
+    virtual ~Task(){};
+
+    virtual ECode operator()()
     {
-        mFunction();
+        EHEnd;
+    };
+
+    ECode run()
+    {
+        EHTest((*this)());
+        mFinished = true;
+        EHEnd;
+    }
+
+    ECode join()
+    {
+        if (!mFinished)
+            EHTest(run());
+        EHEnd;
     }
 
     // Returns the task priority.
@@ -70,7 +86,8 @@ private:
 
     Heap::handle_type mHandle;
     PrioritySPtr mPriority;
-    Function mFunction;
+
+    std::atomic<bool> mFinished;
 };
 
 typedef std::shared_ptr<Task> TaskSPtr;
