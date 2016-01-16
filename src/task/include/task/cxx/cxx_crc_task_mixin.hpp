@@ -21,7 +21,7 @@ public:
     typedef boost::crc_optimal<64, 0x04C11DB7, 0, 0, false, false> Crc;
 
     CxxCrcTaskMixin()
-        : tpool::Task(0, nullptr)
+        : tpool::Task(0)
     {
     }
 

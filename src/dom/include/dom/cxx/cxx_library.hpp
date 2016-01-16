@@ -99,6 +99,17 @@ public:
         return mCxxLibraries;
     }
 
+    std::unordered_set<CxxLibrarySPtr> allCxxLibraries()
+    {
+        std::unordered_set<CxxLibrarySPtr> libraries = mCxxLibraries;
+        for (const auto& cxxLibrary : mCxxLibraries)
+        {
+            const auto& libs = cxxLibrary->allCxxLibraries();
+            libraries.insert(libs.begin(), libs.end());
+        }
+        return libraries;
+    }
+
     // Computations
     doim::CxxIncludeDirectorySetSPtr cxxIncludeDirectories(
         const doim::FsDirectorySPtr& root) const

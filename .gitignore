@@ -6,3 +6,5 @@
 /iwyu/
 /rocksdb/
 /build/
+
+dbs

@@ -12,6 +12,19 @@ cxx_library cstd
     ;
 ;
 
+cxx_library zip
+    @type=system:
+
+    cxx_binary: libz.a;
+;
+
+cxx_library bzip2
+    @type=system:
+
+    cxx_binary: libbz2.a;
+;
+
+
 cxx_library stl
     @type=system:
 
@@ -20,6 +33,7 @@ cxx_library stl
 
         experimental/string_view
         algorithm
+        atomic
         bitset
         condition_variable
         fstream
@@ -117,6 +131,11 @@ cxx_library rocksdb
         rocksdb/options.h
         rocksdb/slice.h
         rocksdb/status.h
+    ;
+
+    cxx_library:
+        zip
+        bzip2
     ;
 
     cxx_binary: ../rocksdb/lib/librocksdb.a;
@@ -297,9 +316,10 @@ cxx_library task
     cxx_public_header
         @directory=task/include:
 
-        task/cxx/cxx_file_crc_task.hpp
+        task/manager.h
         task/cxx/cxx_crc_task_mixin.hpp
-        task/cxx/cxx_header_crc_task.hpp
+        task/cxx/cxx_file_crc_task.h
+        task/cxx/cxx_header_crc_task.h
     ;
 
     cxx_library:
@@ -309,6 +329,12 @@ cxx_library task
         err
         tpool
         parser
+    ;
+
+    cxx_file:
+        task/manager.cpp
+        task/cxx/cxx_file_crc_task.cpp
+        task/cxx/cxx_header_crc_task.cpp
     ;
 ;
 
@@ -330,14 +356,6 @@ cxx_library tool
 
 cxx_program dbs:
     cxx_library:
-        stdc
-        stl
-
-        boost_template
-        boost_filesystem
-        boost_chrono
-        cppformat
-
         db
         err
         const
