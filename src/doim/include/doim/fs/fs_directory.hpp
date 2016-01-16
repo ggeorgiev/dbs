@@ -11,6 +11,7 @@
 namespace doim
 {
 class FsDirectory;
+typedef FsDirectory* FsDirectoryRPtr;
 typedef std::shared_ptr<FsDirectory> FsDirectorySPtr;
 
 class FsDirectory
@@ -38,6 +39,7 @@ public:
         void set_parent(const FsDirectorySPtr& parent) const
         {
             mFsDirectory->mParent = parent;
+            mFsDirectory->mLevel = parent == nullptr ? 1 : parent->level() + 1;
         }
 
         void set_name(const std::string& name) const
@@ -50,34 +52,62 @@ public:
     };
 
     FsDirectory()
+        : mLevel(1)
     {
     }
 
     FsDirectory(const FsDirectorySPtr& parent, const std::string& name)
         : mParent(parent)
         , mName(name)
+        , mLevel(parent == nullptr ? 1 : parent->level() + 1)
     {
+    }
+
+    FsDirectorySPtr commonAncestor(const FsDirectorySPtr& directory)
+    {
+        if (directory == nullptr)
+            return nullptr;
+
+        FsDirectorySPtr line1 = directory;
+
+        while (line1->level() > level())
+            line1 = line1->parent();
+
+        if (line1.get() == this)
+            return line1;
+
+        FsDirectoryRPtr line2 = this;
+        while (line1->level() < line2->level())
+            line2 = line2->parent().get();
+
+        while (line1.get() != line2)
+        {
+            line1 = line1->parent();
+            line2 = line2->parent().get();
+        }
+
+        return line1;
     }
 
     std::string path(const FsDirectorySPtr& directory = nullptr)
     {
-        size_t dlevel = (directory == nullptr) ? 0 : directory->level();
-        size_t clevel = level();
+        FsDirectorySPtr base = commonAncestor(directory);
 
-        FsDirectorySPtr base = directory;
+        auto levels = (directory != nullptr ? directory->level() : 0) -
+                      (base != nullptr ? base->level() : 0);
 
         std::string path;
-        while (dlevel > clevel)
+
+        if (levels > 0)
         {
-            path += "../";
-            base = base->parent();
-            --dlevel;
+            path.reserve(levels * 3);
+            for (auto i = 0; i < levels; ++i)
+                path += "../";
         }
 
-        if (this == base.get())
-            return path;
+        if (base.get() != this)
+            calculate(base.get(), path.size(), path);
 
-        calculate(directory, path.size(), path);
         return path;
     }
 
@@ -93,14 +123,7 @@ public:
 
     size_t level()
     {
-        size_t level = 1;
-        auto current = parent();
-        while (current != nullptr)
-        {
-            ++level;
-            current = current->parent();
-        }
-        return level;
+        return mLevel;
     }
 
     struct Hasher
@@ -120,11 +143,11 @@ public:
     };
 
 private:
-    void calculate(const FsDirectorySPtr& directory, size_t length, std::string& path)
+    void calculate(FsDirectoryRPtr directory, size_t length, std::string& path)
     {
         length += name().size() + 1;
 
-        if (parent() == directory)
+        if (parent().get() == directory)
             path.reserve(length);
         else
             parent()->calculate(directory, length, path);
@@ -135,5 +158,6 @@ private:
 
     std::string mName;
     FsDirectorySPtr mParent;
+    size_t mLevel;
 };
 }

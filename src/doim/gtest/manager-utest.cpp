@@ -113,7 +113,7 @@ TEST(ManagerTest, obtainDirectory)
         Test{.root = "", .dir = "////", .absolute = "/", .relative = "/"},
         Test{.root = "", .dir = "/foo", .absolute = "/foo/", .relative = "/foo/"},
         Test{.root = "", .dir = "/foo/", .absolute = "/foo/", .relative = "/foo/"},
-        Test{.root = "/bar", .dir = "/foo", .absolute = "/foo/", .relative = "/foo/"},
+        Test{.root = "/bar", .dir = "/foo", .absolute = "/foo/", .relative = "../foo/"},
         Test{.root = "", .dir = "///foo///", .absolute = "/foo/", .relative = "/foo/"},
         Test{.root = "/foo/", .dir = "bar", .absolute = "/foo/bar/", .relative = "bar/"},
         Test{.root = "/foo/", .dir = "..", .absolute = "/", .relative = "../"},

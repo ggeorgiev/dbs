@@ -29,3 +29,16 @@ TEST(FsDirectoryTest, level)
     auto directory = std::make_shared<doim::FsDirectory>(root, "");
     ASSERT_EQ(2u, directory->level());
 }
+
+TEST(FsDirectoryTest, commonAncestor)
+{
+    auto root = std::make_shared<doim::FsDirectory>();
+    ASSERT_EQ(root, root->commonAncestor(root));
+
+    auto foo = std::make_shared<doim::FsDirectory>(root, "foo");
+    ASSERT_EQ(root, root->commonAncestor(foo));
+    ASSERT_EQ(root, foo->commonAncestor(root));
+
+    auto bar = std::make_shared<doim::FsDirectory>(root, "bar");
+    ASSERT_EQ(root, bar->commonAncestor(foo));
+}
