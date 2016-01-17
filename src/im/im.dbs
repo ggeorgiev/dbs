@@ -1,0 +1,13 @@
+cxx_library im
+    @type=user:
+
+    cxx_public_header
+        @directory=include:
+
+        im/initialization_manager.hpp
+    ;
+
+    cxx_library:
+        ../system/stl
+    ;
+;

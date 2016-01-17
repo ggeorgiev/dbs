@@ -1,0 +1,13 @@
+cxx_library cstd
+    @type=system:
+
+    cxx_public_header
+        @directory=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk:
+
+        sys/errno.h
+        stddef.h
+        stdio.h
+        unistd.h
+        cstddef
+    ;
+;

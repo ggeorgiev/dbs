@@ -1,0 +1,49 @@
+cxx_library boost_template
+    @type=system:
+
+    cxx_public_header
+        @directory=../../boost/include:
+
+        boost/crc.hpp
+        boost/heap/fibonacci_heap.hpp
+        boost/optional.hpp
+    ;
+;
+
+cxx_library boost_system
+    @type=system:
+    cxx_public_header
+        @directory=../../boost/include:
+
+        boost/system/error_code.hpp
+    ;
+
+    cxx_binary: ../../boost/lib/libboost_system.a;
+;
+
+cxx_library boost_filesystem
+    @type=system:
+    cxx_public_header
+        @directory=../../boost/include:
+
+        boost/filesystem/operations.hpp
+        boost/filesystem/path.hpp
+        boost/filesystem.hpp
+    ;
+
+    cxx_library:
+        boost_system
+    ;
+
+    cxx_binary: ../../boost/lib/libboost_filesystem.a;
+;
+
+cxx_library boost_chrono
+    @type=system:
+    cxx_public_header
+        @directory=../../boost/include:
+
+    ;
+
+    cxx_binary: ../../boost/lib/libboost_chrono.a;
+;

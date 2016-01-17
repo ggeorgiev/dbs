@@ -1,0 +1,26 @@
+cxx_library err
+    @type=user:
+
+    cxx_public_header
+        @directory=include:
+
+        err/err.h
+        err/err_assert.h
+        err/err_cppformat.h
+        err/err_variadic.h
+        err/macro.h
+    ;
+
+    cxx_library:
+        ../system/cstd
+        ../system/stl
+
+        ../3rdparty/cppformat
+
+        ../im/im
+    ;
+
+    cxx_file:
+        err.cpp
+    ;
+;

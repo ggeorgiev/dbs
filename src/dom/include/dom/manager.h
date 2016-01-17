@@ -4,6 +4,7 @@
 #pragma once
 
 #include "dom/cxx/cxx_library.hpp"
+#include "dom/cxx/cxx_program.hpp"
 #include "doim/generic/object.hpp"
 #include "im/initialization_manager.hpp"
 #include <memory>
@@ -11,11 +12,37 @@
 
 namespace dom
 {
-class Manager
+template <typename K, typename V>
+class ManagerMixin
 {
 public:
-    typedef std::unordered_map<doim::ObjectSPtr, CxxLibrarySPtr> LibraryMap;
+    typedef K Key;
+    typedef std::shared_ptr<Key> KeySPtr;
 
+    typedef V Value;
+    typedef std::shared_ptr<Value> ValueSPtr;
+
+    typedef std::unordered_map<KeySPtr, ValueSPtr> Map;
+
+    ValueSPtr obtain(const std::shared_ptr<Key>& key)
+    {
+        auto it = mMixinObjects.find(key);
+        if (it == mMixinObjects.end())
+        {
+            auto value = typename Map::value_type(key, std::make_shared<Value>());
+            it = mMixinObjects.insert(value).first;
+        }
+        return it->second;
+    }
+
+protected:
+    Map mMixinObjects;
+};
+
+class Manager : public ManagerMixin<doim::Object, dom::CxxLibrary>,
+                public ManagerMixin<doim::Object, dom::CxxProgram>
+{
+public:
     static inline int initialization_rank()
     {
         return im::InitializationManager::rank_base() +
@@ -24,27 +51,13 @@ public:
 
     CxxLibrarySPtr obtainCxxLibrary(const doim::ObjectSPtr& object)
     {
-        return obtain(object, mCxxLibraries);
+        return ManagerMixin<doim::Object, dom::CxxLibrary>::obtain(object);
     }
 
-private:
-    template <typename Key, typename Value>
-    std::shared_ptr<Value> obtain(
-        const std::shared_ptr<Key>& key,
-        std::unordered_map<std::shared_ptr<Key>, std::shared_ptr<Value>>& map)
+    CxxProgramSPtr obtainCxxProgram(const doim::ObjectSPtr& object)
     {
-        auto it = map.find(key);
-        if (it == map.end())
-        {
-            auto value = typename std::unordered_map<
-                std::shared_ptr<Key>,
-                std::shared_ptr<Value>>::value_type(key, std::make_shared<Value>());
-            it = map.insert(value).first;
-        }
-        return it->second;
+        return ManagerMixin<doim::Object, dom::CxxProgram>::obtain(object);
     }
-
-    LibraryMap mCxxLibraries;
 };
 
 typedef std::shared_ptr<Manager> ManagerSPtr;

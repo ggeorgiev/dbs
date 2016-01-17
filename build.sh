@@ -64,10 +64,10 @@ DEFINES=" -DDEBUG" && OPTOMIZATION="-O0 -g"
 
 
 mkdir -p build
-#PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
-#    $DEFINES $LIBRARIES -o build/main || exit 1
+PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
+    $DEFINES $LIBRARIES -o build/main || exit 1
 
-if [ 1 == 1 ]
+if [ 1 == 0 ]
 then
 
     CXXFLAGS="$CXXFLAGS -Isrc/gtest/include"
@@ -116,7 +116,7 @@ then
     done
     echo "]" >> $COMPILE_DATABASE
 
-    if [ 1 == 0 ]
+    if [ 1 == 1 ]
     then
         mkdir -p build/src/gtest
         mkdir -p build/src/err/gtest

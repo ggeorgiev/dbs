@@ -17,4 +17,4 @@ echo
 echo running ...
 build/self.sh || exit 1
 
-mv build/main dbs
+#mv build/main dbs

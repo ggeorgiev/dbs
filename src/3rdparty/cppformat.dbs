@@ -1,0 +1,11 @@
+cxx_library cppformat
+    @type=system:
+
+    cxx_public_header
+        @directory=../../cppformat/include:
+
+        cppformat/format.h
+    ;
+
+    cxx_binary: ../../cppformat/lib/libformat.a;
+;

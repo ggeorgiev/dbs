@@ -1,0 +1,23 @@
+cxx_library dom
+    @type=user:
+
+    cxx_public_header
+        @directory=include:
+
+        dom/cxx/cxx_files_mixin.hpp
+        dom/cxx/cxx_library.hpp
+        dom/cxx/cxx_private_headers_mixin.hpp
+        dom/cxx/cxx_program.hpp
+        dom/generic/attribute.hpp
+        dom/manager.h
+    ;
+
+    cxx_library:
+        ../im/im
+        ../doim/doim
+    ;
+
+    cxx_file:
+        manager.cpp
+    ;
+;

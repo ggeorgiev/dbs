@@ -42,8 +42,10 @@ ECode run(const doim::FsFileSPtr& dbsFile, dom::CxxProgramSPtr& program)
 
     EHTest(parser->parse());
 
-    program = parser->cxxProgram();
-
+    auto object = doim::gManager->obtainObject(dbsFile->directory(),
+                                               doim::Object::Type::kCxxProgram,
+                                               "dbs");
+    program = dom::gManager->obtainCxxProgram(object);
     EHEnd;
 }
 

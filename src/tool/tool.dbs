@@ -1,0 +1,14 @@
+cxx_library tool
+    @type=user:
+
+    cxx_public_header
+        @directory=include:
+
+        tool/cxx_compiler.hpp
+    ;
+
+    cxx_library:
+        ../db/db
+        ../task/task
+    ;
+;

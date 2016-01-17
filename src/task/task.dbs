@@ -1,0 +1,29 @@
+cxx_library task
+    @type=user:
+
+    cxx_public_header
+        @directory=include:
+
+        task/manager.h
+        task/cxx/cxx_crc_task_mixin.hpp
+        task/cxx/cxx_file_crc_task.h
+        task/cxx/cxx_header_crc_task.h
+    ;
+
+    cxx_library:
+        ../im/im
+
+        ../3rdparty/boost_template
+        ../3rdparty/boost_filesystem
+
+        ../err/err
+        ../tpool/tpool
+        ../parser/parser
+    ;
+
+    cxx_file:
+        manager.cpp
+        cxx/cxx_file_crc_task.cpp
+        cxx/cxx_header_crc_task.cpp
+    ;
+;

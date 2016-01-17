@@ -1,0 +1,32 @@
+cxx_library stl
+    @type=system:
+
+    cxx_public_header
+        @directory=../../clang/include/c++/v1:
+
+        experimental/string_view
+        algorithm
+        atomic
+        bitset
+        condition_variable
+        fstream
+        functional
+        future
+        iosfwd
+        iostream
+        iterator
+        map
+        memory
+        mutex
+        queue
+        regex
+        set
+        sstream
+        string
+        thread
+        unordered_map
+        unordered_set
+        utility
+        vector
+    ;
+;

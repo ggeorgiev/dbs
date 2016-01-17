@@ -1,0 +1,17 @@
+cxx_library const
+    @type=user:
+
+    cxx_public_header
+        @directory=include:
+
+        const/constants.h
+    ;
+
+    cxx_library:
+        ../system/stl
+    ;
+
+    cxx_file:
+        constants.cpp
+    ;
+;

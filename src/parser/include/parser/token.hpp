@@ -20,6 +20,7 @@ public:
     {
         kComment = 0,
         kIdentifier,
+        kKeywordAnnex,
         kKeywordCxxBinary,
         kKeywordCxxFile,
         kKeywordCxxLibrary,
@@ -37,6 +38,7 @@ public:
 
     BITMASK0(kComment);
     BITMASK0(kIdentifier);
+    BITMASK0(kKeywordAnnex);
     BITMASK0(kKeywordCxxBinary);
     BITMASK0(kKeywordCxxFile);
     BITMASK0(kKeywordCxxLibrary);
@@ -168,6 +170,9 @@ public:
                 type |= Type(kIdentifierMask | kPathMask);
                 switch (position)
                 {
+                    case 0:
+                        type |= Type(kKeywordAnnexMask);
+                        break;
                     case 7:
                         type |= Type(kKeywordCxxBinaryMask);
                         break;
@@ -224,6 +229,9 @@ public:
                 type |= Type(kIdentifierMask | kPathMask);
                 switch (position)
                 {
+                    case 3:
+                        type |= Type(kKeywordAnnexMask);
+                        break;
                     case 7:
                         type |= Type(kKeywordCxxFileMask);
                         break;
@@ -307,6 +315,10 @@ public:
                 type |= Type(kIdentifierMask | kPathMask);
                 switch (position)
                 {
+                    case 1:
+                    case 2:
+                        type |= Type(kKeywordAnnexMask);
+                        break;
                     case 6:
                         type |= Type(kKeywordCxxBinaryMask);
                         break;
@@ -376,6 +388,9 @@ public:
                                      kKeywordCxxLibraryMask | kKeywordCxxProgramMask |
                                      kKeywordCxxPublicHeaderMask);
                         break;
+                    case 4:
+                        type |= Type(kKeywordAnnexMask);
+                        break;
                 }
 
             case 'y':
@@ -420,6 +435,10 @@ public:
                 type.set(kOperatorAt, current[kOperatorAt]);
                 type.set(kOperatorColon, current[kOperatorColon]);
                 type.set(kOperatorSemicolon, current[kOperatorSemicolon]);
+                break;
+            case 5:
+                if (!isidentifier(code))
+                    type.set(kKeywordAnnex, current[kKeywordAnnex]);
                 break;
             case 8:
                 if (!isidentifier(code))

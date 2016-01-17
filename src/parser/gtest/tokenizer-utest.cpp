@@ -191,6 +191,7 @@ TYPED_TEST(TokenizerTest, type)
     Test tests[]{
         Test{.str = "#foo", .expected = Token::kComment},
         Test{.str = "foo", .expected = Token::kIdentifier},
+        Test{.str = "annex", .expected = Token::kKeywordAnnex},
         Test{.str = "cxx_binary", .expected = Token::kKeywordCxxBinary},
         Test{.str = "cxx_file", .expected = Token::kKeywordCxxFile},
         Test{.str = "cxx_library", .expected = Token::kKeywordCxxLibrary},

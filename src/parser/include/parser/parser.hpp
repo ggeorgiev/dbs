@@ -2,7 +2,6 @@
 //
 
 #include "parser/tokenizer.hpp"
-#include "dom/cxx/cxx_program.hpp"
 #include "dom/manager.h"
 #include "doim/fs/fs_file.hpp"
 #include "doim/generic/object.hpp"
@@ -36,11 +35,6 @@ public:
         EHEnd;
     }
 
-    dom::CxxProgramSPtr cxxProgram() const
-    {
-        return mCxxProgram;
-    }
-
     ECode parse()
     {
         for (;;)
@@ -49,6 +43,24 @@ public:
 
             if (type.none())
                 break;
+
+            if (type.test(Token::kKeywordAnnex))
+            {
+                auto type = nextMeaningfulToken();
+
+                if (!type.test(Token::kOperatorColon))
+                    EHBan(kUnable);
+
+                std::unordered_set<doim::FsFileSPtr> files;
+                EHTest(parseFiles(mLocation->directory(),
+                                  std::numeric_limits<size_t>::max(),
+                                  files));
+
+                for (const auto& annex : files)
+                    EHTest(parseAnnex(annex));
+
+                continue;
+            }
 
             if (type.test(Token::kKeywordCxxLibrary))
             {
@@ -63,6 +75,27 @@ public:
             }
         }
 
+        EHEnd;
+    }
+
+    ECode parseAnnex(const doim::FsFileSPtr& dbsFile)
+    {
+        auto path = dbsFile->path(nullptr);
+
+        std::ifstream fstream(path);
+        if (!fstream.is_open())
+            EHBan(kUnable, path);
+
+        std::string str((std::istreambuf_iterator<char>(fstream)),
+                        std::istreambuf_iterator<char>());
+
+        auto stream = std::make_shared<Stream>();
+        EHTest(stream->initialize(str));
+
+        auto parser = std::make_shared<Parser>();
+        EHTest(parser->initialize(stream, dbsFile));
+
+        EHTest(parser->parse());
         EHEnd;
     }
 
@@ -197,11 +230,15 @@ public:
         if (!type.test(Token::kIdentifier))
             EHBan(kUnable, type);
 
+        auto name = mTokenizer->token();
+        auto object = doim::gManager->obtainObject(mLocation->directory(),
+                                                   doim::Object::Type::kCxxProgram,
+                                                   name);
+        auto program = dom::gManager->obtainCxxProgram(object);
+
         type = nextMeaningfulToken();
         if (!type.test(Token::kOperatorColon))
             EHBan(kUnable);
-
-        mCxxProgram = std::make_shared<dom::CxxProgram>();
 
         for (;;)
         {
@@ -221,7 +258,7 @@ public:
                 EHTest(parseFiles(mLocation->directory(),
                                   std::numeric_limits<size_t>::max(),
                                   files));
-                EHTest(mCxxProgram->updateCxxFilesList(files));
+                EHTest(program->updateCxxFilesList(files));
 
                 continue;
             }
@@ -242,7 +279,7 @@ public:
                 for (const auto& object : objects)
                     libraries.insert(dom::gManager->obtainCxxLibrary(object));
 
-                EHTest(mCxxProgram->updateCxxLibraries(libraries));
+                EHTest(program->updateCxxLibraries(libraries));
 
                 continue;
             }
@@ -367,8 +404,6 @@ public:
 
 private:
     doim::FsFileSPtr mLocation;
-
-    dom::CxxProgramSPtr mCxxProgram;
     TokenizerSPtr mTokenizer;
 };
 }

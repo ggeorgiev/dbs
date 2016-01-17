@@ -1,0 +1,24 @@
+cxx_library db
+    @type=user:
+
+    cxx_public_header
+        @directory=include:
+
+        db/database.h
+    ;
+
+    cxx_library:
+        ../system/stl
+
+        ../3rdparty/boost_filesystem
+        ../3rdparty/rocksdb
+
+        ../im/im
+        ../err/err
+        ../doim/doim
+    ;
+
+    cxx_file:
+        database.cpp
+    ;
+;
