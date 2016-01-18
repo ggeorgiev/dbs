@@ -64,8 +64,8 @@ DEFINES=" -DDEBUG" && OPTOMIZATION="-O0 -g"
 
 
 mkdir -p build
-#PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
-#    $DEFINES $LIBRARIES -o build/main || exit 1
+PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
+    $DEFINES $LIBRARIES -o build/dbs || exit 1
 
 if [ 1 == 1 ]
 then
@@ -116,7 +116,7 @@ then
     done
     echo "]" >> $COMPILE_DATABASE
 
-    if [ 1 == 0 ]
+    if [ 1 == 1 ]
     then
         mkdir -p build/src/gtest
         mkdir -p build/src/err/gtest
@@ -149,9 +149,9 @@ then
         PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \
              $OBJFILES \
              $DEFINES $LIBRARIES \
-             -o build/gtest-main || exit 1
+             -o build/dbs-test || exit 1
 
-        build/gtest-main --gtest_filter=-*.PERFORMANCE_* || exit 1
+        build/dbs-test --gtest_filter=-*.PERFORMANCE_* || exit 1
 
     elif [ 1 == 1 ]
     then

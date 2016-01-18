@@ -15,9 +15,11 @@ cxx_library stl
         iosfwd
         iostream
         iterator
+        limits
         map
         memory
         mutex
+        ostream
         queue
         regex
         set

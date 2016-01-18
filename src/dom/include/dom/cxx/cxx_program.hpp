@@ -31,6 +31,17 @@ public:
         return result;
     }
 
+    std::string name()
+    {
+        return mName;
+    }
+
+    ECode updateName(const std::string& name)
+    {
+        mName = name;
+        EHEnd;
+    }
+
     ECode updateCxxLibraries(std::unordered_set<CxxLibrarySPtr>& libraries)
     {
         mCxxLibraries.swap(libraries);
@@ -80,6 +91,7 @@ public:
     }
 
 private:
+    std::string mName;
     std::unordered_set<CxxLibrarySPtr> mCxxLibraries;
 };
 }

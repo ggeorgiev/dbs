@@ -7,17 +7,20 @@ annex:
     3rdparty/boost.dbs
     3rdparty/cppformat.dbs
     3rdparty/rocksdb.dbs
+    3rdparty/gtest.dbs
 
     const/const.dbs
     im/im.dbs
-    db/db.dbs
     err/err.dbs
+    db/db.dbs
     tpool/tpool.dbs
     doim/doim.dbs
     dom/dom.dbs
     parser/parser.dbs
     task/task.dbs
     tool/tool.dbs
+
+    gtest/gtest.dbs
 ;
 
 cxx_program dbs:
@@ -29,5 +32,24 @@ cxx_program dbs:
 
     cxx_file:
         main.cpp
+    ;
+;
+
+cxx_program dbs-test:
+    cxx_library:
+        gtest/gtest
+
+        im/im-test
+        err/err-test
+        db/db-test
+        tpool/tpool-test
+        doim/doim-test
+        dom/dom-test
+        parser/parser-test
+        task/task-test
+    ;
+
+    cxx_file:
+        gtest/main.cpp
     ;
 ;

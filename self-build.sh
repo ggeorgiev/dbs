@@ -10,7 +10,7 @@ fi
 
 if [ ! -e dbs ]
 then
-    cp build/main dbs
+    cp build/dbs dbs
 fi
 
 mkdir -p build
@@ -21,4 +21,6 @@ echo
 echo running ...
 build/self.sh || exit 1
 
-mv build/main dbs
+build/dbs-test --gtest_filter=-*.PERFORMANCE_* || exit 1
+
+cp build/dbs dbs

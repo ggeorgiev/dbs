@@ -5,9 +5,9 @@ cxx_library boost_template
         @directory=../../boost/include:
 
         boost/crc.hpp
+        boost/functional/hash.hpp
         boost/heap/fibonacci_heap.hpp
         boost/optional.hpp
-        boost/functional/hash.hpp
     ;
 ;
 
@@ -27,9 +27,9 @@ cxx_library boost_filesystem
     cxx_public_header
         @directory=../../boost/include:
 
+        boost/filesystem.hpp
         boost/filesystem/operations.hpp
         boost/filesystem/path.hpp
-        boost/filesystem.hpp
     ;
 
     cxx_library:
@@ -44,6 +44,7 @@ cxx_library boost_chrono
     cxx_public_header
         @directory=../../boost/include:
 
+        boost/chrono/process_cpu_clocks.hpp
     ;
 
     cxx_binary: ../../boost/lib/libboost_chrono.a;

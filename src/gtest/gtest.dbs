@@ -1,0 +1,30 @@
+cxx_library gtest
+    @type=test:
+
+    cxx_public_header
+        @directory=include:
+
+        gtest/err.h
+        gtest/intermittent.h
+        gtest/test_resource.h
+
+        gtest/performance_arbiter.h
+        gtest/time_monitor.h
+    ;
+
+    cxx_library:
+        ../system/cstd
+        ../system/stl
+
+        ../3rdparty/boost_chrono
+        ../3rdparty/gtest
+
+        ../im/im
+        ../doim/doim
+    ;
+
+    cxx_file:
+        performance_arbiter.cpp
+        time_monitor.cpp
+    ;
+;

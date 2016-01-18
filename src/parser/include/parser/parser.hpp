@@ -236,6 +236,7 @@ public:
                                                    doim::Object::Type::kCxxProgram,
                                                    name);
         auto program = dom::gManager->obtainCxxProgram(object);
+        EHTest(program->updateName(name));
 
         type = nextMeaningfulToken();
         if (!type.test(Token::kOperatorColon))

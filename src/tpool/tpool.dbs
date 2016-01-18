@@ -4,13 +4,31 @@ cxx_library tpool
     cxx_public_header
         @directory=include:
 
-        tpool/task.hpp
         tpool/priority.hpp
+        tpool/task.hpp
     ;
 
     cxx_library:
         ../3rdparty/boost_template
 
         ../err/err
+    ;
+;
+
+cxx_library tpool-test
+    @type=test:
+
+    cxx_library:
+        ../3rdparty/gtest
+
+        ../gtest/gtest
+        ../err/err-test
+
+        tpool
+    ;
+
+    cxx_file:
+        gtest/priority-utest.cpp
+        gtest/tpool-utest.cpp
     ;
 ;

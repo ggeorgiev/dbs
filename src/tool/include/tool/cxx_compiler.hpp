@@ -141,8 +141,7 @@ public:
 
         stream << mBinary->path(directory) << " $OPTOMIZATION $CXXFLAGS \\\n"
                << "    " << objFilesStream.str() << "\\\n"
-               << "    -o build/main \\\n"
-               << "    $DEFINES || exit 1\n"
+               << "    -o build/" << program->name() << " || exit 1\n"
                << "echo done.\n";
 
         cmd = stream.str();

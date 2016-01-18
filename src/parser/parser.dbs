@@ -8,11 +8,32 @@ cxx_library parser
         parser/fixed_encoding_traits.hpp
         parser/parser.hpp
         parser/string_stream.hpp
-        parser/tokenizer.hpp
         parser/token.hpp
+        parser/tokenizer.hpp
     ;
 
     cxx_library:
         ../dom/dom
+    ;
+;
+
+cxx_library parser-test
+    @type=test:
+
+    cxx_library:
+        ../3rdparty/gtest
+
+        ../gtest/gtest
+        ../err/err-test
+
+        parser
+    ;
+
+    cxx_file:
+        gtest/cxx/cxx_parser-utest.cpp
+        gtest/parser-utest.cpp
+        gtest/stream-utest.cpp
+        gtest/token-utest.cpp
+        gtest/tokenizer-utest.cpp
     ;
 ;

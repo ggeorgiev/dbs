@@ -1,7 +1,7 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "time_monitor.h"
+#include "gtest/time_monitor.h"
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
 #include <limits>

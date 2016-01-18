@@ -4,10 +4,10 @@ cxx_library task
     cxx_public_header
         @directory=include:
 
-        task/manager.h
         task/cxx/cxx_crc_task_mixin.hpp
         task/cxx/cxx_file_crc_task.h
         task/cxx/cxx_header_crc_task.h
+        task/manager.h
     ;
 
     cxx_library:
@@ -22,8 +22,26 @@ cxx_library task
     ;
 
     cxx_file:
-        manager.cpp
         cxx/cxx_file_crc_task.cpp
         cxx/cxx_header_crc_task.cpp
+        manager.cpp
+    ;
+;
+
+cxx_library task-test
+    @type=test:
+
+    cxx_library:
+        ../3rdparty/gtest
+
+        ../gtest/gtest
+        ../err/err-test
+
+        task
+    ;
+
+    cxx_file:
+        gtest/cxx/cxx_file_crc_task-utest.cpp
+        gtest/cxx/cxx_header_crc_task-utest.cpp
     ;
 ;

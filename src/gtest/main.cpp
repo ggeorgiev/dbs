@@ -5,8 +5,8 @@
 #include "doim/manager.h"
 #include "im/initialization_manager.hpp"
 #include "gtest/gtest.h"
-#include "performance_arbiter.h"
-#include "time_monitor.h"
+#include "gtest/performance_arbiter.h"
+#include "gtest/time_monitor.h"
 #include <iosfwd>
 #include <memory>
 #include <stdio.h>

@@ -21,3 +21,20 @@ cxx_library dom
         manager.cpp
     ;
 ;
+
+cxx_library dom-test
+    @type=test:
+
+    cxx_library:
+        ../3rdparty/gtest
+
+        ../gtest/gtest
+        ../err/err-test
+
+        dom
+    ;
+
+    cxx_file:
+        gtest/cxx_program-utest.cpp
+    ;
+;

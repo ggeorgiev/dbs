@@ -30,7 +30,7 @@ typedef std::shared_ptr<Stream> StreamSPtr;
 typedef parser::Parser<Stream> Parser;
 typedef std::shared_ptr<Parser> ParserSPtr;
 
-ECode run(const doim::FsFileSPtr& dbsFile, dom::CxxProgramSPtr& program)
+ECode run(const doim::FsFileSPtr& dbsFile, std::vector<dom::CxxProgramSPtr>& programs)
 {
     std::ifstream fstream(dbsFile->path(nullptr));
     std::string str((std::istreambuf_iterator<char>(fstream)),
@@ -44,10 +44,14 @@ ECode run(const doim::FsFileSPtr& dbsFile, dom::CxxProgramSPtr& program)
 
     EHTest(parser->parse());
 
-    auto object = doim::gManager->obtainObject(dbsFile->directory(),
-                                               doim::Object::Type::kCxxProgram,
-                                               "dbs");
-    program = dom::gManager->obtainCxxProgram(object);
+    auto dbs = doim::gManager->obtainObject(dbsFile->directory(),
+                                            doim::Object::Type::kCxxProgram,
+                                            "dbs");
+    programs.push_back(dom::gManager->obtainCxxProgram(dbs));
+    auto dbs_test = doim::gManager->obtainObject(dbsFile->directory(),
+                                                 doim::Object::Type::kCxxProgram,
+                                                 "dbs-test");
+    programs.push_back(dom::gManager->obtainCxxProgram(dbs_test));
     EHEnd;
 }
 
@@ -75,9 +79,8 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    dom::CxxProgramSPtr program;
-
-    code = run(file, program);
+    std::vector<dom::CxxProgramSPtr> programs;
+    code = run(file, programs);
     if (code != err::kSuccess)
     {
         std::cout << err::gError->message() << "\n";
@@ -87,15 +90,19 @@ int main(int argc, char* argv[])
 
     const auto& binary = doim::gManager->obtainFile(cwd, "clang/bin/clang++");
     const auto& compiler = std::make_shared<tool::CxxCompiler>(binary);
-    std::string script;
-    code = compiler->command(cwd, program, script);
-    if (code != err::kSuccess)
-    {
-        std::cout << err::gError->message() << "\n";
-        std::cout << err::gError->callstack() << "\n";
-        return 1;
-    }
 
-    std::cout << script;
+    for (auto program : programs)
+    {
+        std::string script;
+        code = compiler->command(cwd, program, script);
+        if (code != err::kSuccess)
+        {
+            std::cout << err::gError->message() << "\n";
+            std::cout << err::gError->callstack() << "\n";
+            return 1;
+        }
+
+        std::cout << script;
+    }
     return 0;
 }

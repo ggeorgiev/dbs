@@ -1,7 +1,7 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "performance_arbiter.h"
+#include "gtest/performance_arbiter.h"
 #include "boost/chrono/process_cpu_clocks.hpp"
 
 namespace testing

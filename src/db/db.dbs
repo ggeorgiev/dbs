@@ -22,3 +22,20 @@ cxx_library db
         database.cpp
     ;
 ;
+
+cxx_library db-test
+    @type=test:
+
+    cxx_library:
+        ../3rdparty/gtest
+
+        ../gtest/gtest
+
+        db
+    ;
+
+    cxx_file:
+        gtest/database-utest.cpp
+    ;
+;
+

@@ -7,8 +7,10 @@ cxx_library err
         err/err.h
         err/err_assert.h
         err/err_cppformat.h
+        err/err_serialize.h
         err/err_variadic.h
         err/macro.h
+
     ;
 
     cxx_library:
@@ -22,5 +24,29 @@ cxx_library err
 
     cxx_file:
         err.cpp
+    ;
+;
+
+cxx_library err-test
+    @type=test:
+
+    cxx_public_header
+        @directory=include:
+
+       gtest/err_assert.h
+    ;
+
+    cxx_library:
+        ../3rdparty/gtest
+
+        ../gtest/gtest
+
+        err
+    ;
+
+    cxx_file:
+        gtest/err-ptest.cpp
+        gtest/err-utest.cpp
+        gtest/macro-utest.cpp
     ;
 ;

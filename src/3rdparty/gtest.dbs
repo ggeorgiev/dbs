@@ -1,0 +1,13 @@
+cxx_library gtest
+    @type=system:
+
+    cxx_public_header
+        @directory=../../gtest/include:
+
+        gtest/gtest-message.h
+        gtest/gtest-typed-test.h
+        gtest/gtest.h
+    ;
+
+    cxx_binary: ../../gtest/lib/libgtest.a;
+;

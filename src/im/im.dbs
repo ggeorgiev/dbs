@@ -11,3 +11,19 @@ cxx_library im
         ../system/stl
     ;
 ;
+
+cxx_library im-test
+    @type=test:
+
+    cxx_library:
+        ../3rdparty/gtest
+
+        ../gtest/gtest
+
+        im
+    ;
+
+    cxx_file:
+        gtest/initialization_manager-utest.cpp
+    ;
+;

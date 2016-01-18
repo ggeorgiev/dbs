@@ -5,8 +5,8 @@ cxx_library doim
         @directory=include:
 
         doim/cxx/cxx_file.hpp
-        doim/cxx/cxx_include_directory.hpp
         doim/cxx/cxx_header.hpp
+        doim/cxx/cxx_include_directory.hpp
         doim/cxx/cxx_object_file.hpp
         doim/fs/fs_directory.hpp
         doim/fs/fs_file.hpp
@@ -25,5 +25,24 @@ cxx_library doim
 
     cxx_file:
         manager.cpp
+    ;
+;
+
+cxx_library doim-test
+    @type=test:
+
+    cxx_library:
+        ../3rdparty/gtest
+
+        ../gtest/gtest
+        ../err/err-test
+
+        doim
+    ;
+
+    cxx_file:
+        gtest/fs/fs_directory-utest.cpp
+        gtest/fs/fs_file-ptest.cpp
+        gtest/manager-utest.cpp
     ;
 ;
