@@ -7,6 +7,7 @@
 #include "doim/generic/object.hpp"
 #include "doim/manager.h"
 #include "err/err.h"
+#include <fstream>
 #include <memory>
 #include <unordered_set>
 
@@ -82,7 +83,7 @@ public:
     {
         auto path = dbsFile->path(nullptr);
 
-        std::ifstream fstream(path);
+        std::ifstream fstream(path.c_str());
         if (!fstream.is_open())
             EHBan(kUnable, path);
 

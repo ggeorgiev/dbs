@@ -2,7 +2,7 @@
 //
 
 #include "doim/cxx/cxx_header.hpp"
-#include "task/cxx/cxx_header_crc_task.hpp"
+#include "task/cxx/cxx_header_crc_task.h"
 #include "doim/cxx/cxx_include_directory.hpp"
 #include "doim/manager.h"
 #include "err/err.h"

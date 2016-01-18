@@ -64,10 +64,10 @@ DEFINES=" -DDEBUG" && OPTOMIZATION="-O0 -g"
 
 
 mkdir -p build
-PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
-    $DEFINES $LIBRARIES -o build/main || exit 1
+#PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
+#    $DEFINES $LIBRARIES -o build/main || exit 1
 
-if [ 1 == 0 ]
+if [ 1 == 1 ]
 then
 
     CXXFLAGS="$CXXFLAGS -Isrc/gtest/include"
@@ -76,29 +76,29 @@ then
 
     FILES="$FILES src/im/gtest/initialization_manager-utest.cpp"
 
-    #FILES="$FILES src/err/gtest/err-utest.cpp"
-    #FILES="$FILES src/err/gtest/err-ptest.cpp"
-    #FILES="$FILES src/err/gtest/macro-utest.cpp"
+    FILES="$FILES src/err/gtest/err-utest.cpp"
+    FILES="$FILES src/err/gtest/err-ptest.cpp"
+    FILES="$FILES src/err/gtest/macro-utest.cpp"
 
-    #FILES="$FILES src/db/gtest/database-utest.cpp"
+    FILES="$FILES src/db/gtest/database-utest.cpp"
 
-    #FILES="$FILES src/dom/gtest/cxx_program-utest.cpp"
+    FILES="$FILES src/dom/gtest/cxx_program-utest.cpp"
 
-    #FILES="$FILES src/doim/gtest/manager-utest.cpp"
-    #FILES="$FILES src/doim/gtest/fs/fs_directory-utest.cpp"
-    #FILES="$FILES src/doim/gtest/fs/fs_file-ptest.cpp"
+    FILES="$FILES src/doim/gtest/manager-utest.cpp"
+    FILES="$FILES src/doim/gtest/fs/fs_directory-utest.cpp"
+    FILES="$FILES src/doim/gtest/fs/fs_file-ptest.cpp"
 
-    #FILES="$FILES src/parser/gtest/parser-utest.cpp"
-    #FILES="$FILES src/parser/gtest/stream-utest.cpp"
-    #FILES="$FILES src/parser/gtest/token-utest.cpp"
-    #FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
-    #FILES="$FILES src/parser/gtest/cxx/cxx_parser-utest.cpp"
+    FILES="$FILES src/parser/gtest/parser-utest.cpp"
+    FILES="$FILES src/parser/gtest/stream-utest.cpp"
+    FILES="$FILES src/parser/gtest/token-utest.cpp"
+    FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
+    FILES="$FILES src/parser/gtest/cxx/cxx_parser-utest.cpp"
 
-    #FILES="$FILES src/tpool/gtest/tpool-utest.cpp"
-    #FILES="$FILES src/tpool/gtest/priority-utest.cpp"
+    FILES="$FILES src/tpool/gtest/tpool-utest.cpp"
+    FILES="$FILES src/tpool/gtest/priority-utest.cpp"
 
-    #FILES="$FILES src/task/gtest/cxx/cxx_file_crc_task-utest.cpp"
-    #FILES="$FILES src/task/gtest/cxx/cxx_header_crc_task-utest.cpp"
+    FILES="$FILES src/task/gtest/cxx/cxx_file_crc_task-utest.cpp"
+    FILES="$FILES src/task/gtest/cxx/cxx_header_crc_task-utest.cpp"
 
 
     LIBRARIES="$LIBRARIES -lgtest"
@@ -116,7 +116,7 @@ then
     done
     echo "]" >> $COMPILE_DATABASE
 
-    if [ 1 == 1 ]
+    if [ 1 == 0 ]
     then
         mkdir -p build/src/gtest
         mkdir -p build/src/err/gtest
@@ -153,7 +153,7 @@ then
 
         build/gtest-main --gtest_filter=-*.PERFORMANCE_* || exit 1
 
-    elif [ 1 == 0 ]
+    elif [ 1 == 1 ]
     then
 
         echo > build/iwyu.log
@@ -164,16 +164,16 @@ then
                 tee -a build/iwyu.log || exit 1
         done
 
-        iwyu/bin/fix_includes.py --nosafe_headers < build/iwyu.log
+        iwyu/bin/fix_includes.py --noblank_lines --nosafe_headers < build/iwyu.log
     else
         for FILE in src/main.cpp src/gtest/main.cpp $FILES
         do
             echo clang tidy $FILE ...
             PATH=$CLANGBIN:$PATH clang-tidy -checks=*,-llvm-include-order,-google-readability-todo,-cppcoreguidelines-pro-type-vararg,-google-readability-braces-around-statements,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-readability-braces-around-statements -p build $FILE 2>&1 || exit 1
             echo
-            echo clang check $FILE ...
-            PATH=$CLANGBIN:$PATH clang-check -analyze -extra-arg -Xclang -extra-arg -analyzer-output=text -p build $FILE 2>&1 || exit 1
-            echo
+            #echo clang check $FILE ...
+            #PATH=$CLANGBIN:$PATH clang-check -analyze -extra-arg -Xclang -extra-arg -analyzer-output=text -p build $FILE 2>&1 || exit 1
+            #echo
         done
     fi
 fi

@@ -25,6 +25,12 @@ public:
     {
     }
 
+    uint64_t crc()
+    {
+        return mCrc64;
+    }
+
+protected:
     ECode findInclude(const std::experimental::string_view& include,
                       const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
                       const doim::CxxHeaderSetSPtr& headers,
@@ -65,28 +71,22 @@ public:
         EHEnd;
     }
 
-    uint64_t crc()
-    {
-        return mCrc64;
-    }
-
+    template <typename Task>
     ECode calculate(const doim::FsFileSPtr& file,
                     const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
-                    const doim::CxxHeaderSetSPtr& headers,
-                    doim::CxxHeaderSet& includes)
+                    const doim::CxxHeaderSetSPtr& headers)
     {
+        Crc crc;
+
         std::ifstream fstream(file->path(nullptr));
         std::string content((std::istreambuf_iterator<char>(fstream)),
                             std::istreambuf_iterator<char>());
 
-        Crc crc;
         crc.process_bytes(content.data(), content.size());
-
-        mCrc64 = crc.checksum();
 
         parser::CxxParser parser;
 
-        includes.clear();
+        std::vector<doim::CxxHeaderSPtr> includes;
         for (const auto& include : parser.includes(content))
         {
             doim::CxxHeaderSPtr header;
@@ -95,12 +95,29 @@ public:
                                includeDirectories,
                                headers,
                                header));
-            includes.insert(header);
+            includes.push_back(header);
         }
+
+        std::vector<uint64_t> crcs;
+        crcs.reserve(includes.size());
+
+        for (const auto& header : includes)
+        {
+            if (header->type() == doim::CxxHeader::Type::kSystem)
+                continue;
+
+            auto task = Task::valid(std::make_shared<Task>(header, headers));
+            EHTest(task->join());
+            crcs.push_back(task->crc());
+        }
+
+        std::sort(crcs.begin(), crcs.end());
+
+        crc.process_bytes(crcs.data(), sizeof(uint64_t) * crcs.size());
+        mCrc64 = crc.checksum();
         EHEnd;
     }
 
-protected:
     uint64_t mCrc64;
 };
 }

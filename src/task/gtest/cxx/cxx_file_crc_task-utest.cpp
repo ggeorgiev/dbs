@@ -1,7 +1,7 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "task/cxx/cxx_file_crc_task.hpp"
+#include "task/cxx/cxx_file_crc_task.h"
 #include "doim/cxx/cxx_file.hpp"
 #include "doim/cxx/cxx_header.hpp"
 #include "doim/cxx/cxx_include_directory.hpp"
@@ -97,5 +97,5 @@ TEST(CxxFileCrcTaskTest, include)
     auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
     ASSERT_OKAY((*task)());
 
-    EXPECT_EQ(0xebbcd5e8402b3d6a, task->crc()) << std::hex << task->crc();
+    EXPECT_EQ(0x5aad46785dc264df, task->crc()) << std::hex << task->crc();
 }

@@ -26,6 +26,7 @@ public:
     enum class Type
     {
         kSystem,
+        kThirdParty,
         kUser,
     };
 
@@ -41,6 +42,8 @@ public:
         {
             if (attribute.mValue == "system")
                 mType = Type::kSystem;
+            else if (attribute.mValue == "3rdparty")
+                mType = Type::kThirdParty;
             else if (attribute.mValue == "user")
                 mType = Type::kUser;
             else
@@ -124,6 +127,7 @@ public:
                 case Type::kUser:
                     type = doim::CxxIncludeDirectory::Type::kUser;
                     break;
+                case Type::kThirdParty:
                 case Type::kSystem:
                     type = doim::CxxIncludeDirectory::Type::kSystem;
                     break;
@@ -155,6 +159,7 @@ public:
             case Type::kUser:
                 type = doim::CxxHeader::Type::kUser;
                 break;
+            case Type::kThirdParty:
             case Type::kSystem:
                 type = doim::CxxHeader::Type::kSystem;
                 break;
