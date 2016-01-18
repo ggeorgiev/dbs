@@ -6,6 +6,7 @@
 #include "doim/cxx/cxx_header.hpp"
 #include "doim/cxx/cxx_include_directory.hpp"
 #include "doim/fs/fs_file.hpp"
+#include <boost/functional/hash.hpp>
 #include <memory>
 #include <string>
 #include <unordered_set>
@@ -48,10 +49,10 @@ public:
     {
         std::size_t operator()(const CxxFileSPtr& cxxFile) const
         {
-            return std::hash<FsFileSPtr>()(cxxFile->file()) ^
-                   std::hash<CxxIncludeDirectorySetSPtr>()(
-                       cxxFile->cxxIncludeDirectories()) ^
-                   std::hash<CxxHeaderSetSPtr>()(cxxFile->cxxHeaders());
+            auto seed = hashFF(cxxFile->file());
+            boost::hash_combine(seed, hashCIDS(cxxFile->cxxIncludeDirectories()));
+            boost::hash_combine(seed, hashCHS(cxxFile->cxxHeaders()));
+            return seed;
         }
 
         bool operator()(const CxxFileSPtr& cxxFile1, const CxxFileSPtr& cxxFile2) const
@@ -61,6 +62,10 @@ public:
                        cxxFile2->cxxIncludeDirectories() &&
                    cxxFile1->cxxHeaders() == cxxFile2->cxxHeaders();
         }
+
+        std::hash<FsFileSPtr> hashFF;
+        std::hash<CxxIncludeDirectorySetSPtr> hashCIDS;
+        std::hash<CxxHeaderSetSPtr> hashCHS;
     };
 
 private:

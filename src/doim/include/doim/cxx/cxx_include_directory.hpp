@@ -6,6 +6,7 @@
 #include "doim/fs/fs_directory.hpp"
 #include "doim/fs/fs_file.hpp"
 #include "err/err_assert.h"
+#include <boost/functional/hash.hpp>
 #include <memory>
 #include <string>
 #include <unordered_set>
@@ -55,9 +56,10 @@ public:
     {
         std::size_t operator()(const CxxIncludeDirectorySPtr& directory) const
         {
-            return std::hash<int>()(static_cast<int>(directory->type())) ^
-                   std::hash<FsDirectorySPtr>()(directory->directory()) ^
-                   std::hash<FsFileSetSPtr>()(directory->headerFiles());
+            auto seed = std::hash<int>()(static_cast<int>(directory->type()));
+            boost::hash_combine(seed, hashFD(directory->directory()));
+            boost::hash_combine(seed, hashFFS(directory->headerFiles()));
+            return seed;
         }
 
         bool operator()(const CxxIncludeDirectorySPtr& directory1,
@@ -67,6 +69,9 @@ public:
                    directory1->directory() == directory2->directory() &&
                    directory1->headerFiles() == directory2->headerFiles();
         }
+
+        std::hash<FsDirectorySPtr> hashFD;
+        std::hash<FsFileSetSPtr> hashFFS;
     };
 
 private:

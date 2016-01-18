@@ -38,7 +38,7 @@ public:
     {
         std::size_t operator()(const CxxObjectFileSPtr& file) const
         {
-            return std::hash<CxxFileSPtr>()(file->cxxFile());
+            return hashCF(file->cxxFile());
         }
 
         bool operator()(const CxxObjectFileSPtr& file1,
@@ -46,6 +46,8 @@ public:
         {
             return file1->cxxFile() == file2->cxxFile();
         }
+
+        std::hash<CxxFileSPtr> hashCF;
     };
 
 private:

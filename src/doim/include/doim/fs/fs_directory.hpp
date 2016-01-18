@@ -4,6 +4,7 @@
 #pragma once
 
 #include "const/constants.h"
+#include <boost/functional/hash.hpp>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -130,8 +131,9 @@ public:
     {
         std::size_t operator()(const FsDirectorySPtr& directory) const
         {
-            return std::hash<FsDirectorySPtr>()(directory->parent()) ^
-                   std::hash<std::string>()(directory->name());
+            auto seed = hashFD(directory->parent());
+            boost::hash_combine(seed, hashString(directory->name()));
+            return seed;
         }
 
         bool operator()(const FsDirectorySPtr& directory1,
@@ -140,6 +142,9 @@ public:
             return directory1->parent() == directory2->parent() &&
                    directory1->name() == directory2->name();
         }
+
+        std::hash<FsDirectorySPtr> hashFD;
+        std::hash<std::string> hashString;
     };
 
 private:

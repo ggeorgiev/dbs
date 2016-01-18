@@ -4,6 +4,7 @@
 #pragma once
 
 #include "doim/fs/fs_directory.hpp"
+#include <boost/functional/hash.hpp>
 #include <memory>
 #include <string>
 #include <unordered_set>
@@ -51,8 +52,9 @@ public:
     {
         std::size_t operator()(const FsFileSPtr& file) const
         {
-            return std::hash<FsDirectorySPtr>()(file->directory()) ^
-                   std::hash<std::string>()(file->name());
+            auto seed = hashFD(file->directory());
+            boost::hash_combine(seed, hashString(file->name()));
+            return seed;
         }
 
         bool operator()(const FsFileSPtr& file1, const FsFileSPtr& file2) const
@@ -60,6 +62,9 @@ public:
             return file1->directory() == file2->directory() &&
                    file1->name() == file2->name();
         }
+
+        std::hash<FsDirectorySPtr> hashFD;
+        std::hash<std::string> hashString;
     };
 
 private:

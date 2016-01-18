@@ -16,6 +16,8 @@ cxx_library doim
     ;
 
     cxx_library:
+        ../3rdparty/boost_template
+
         ../const/const
         ../im/im
         ../err/err
