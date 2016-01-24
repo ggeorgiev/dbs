@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "tool/cxx_compiler.hpp"
@@ -13,6 +13,7 @@
 #include "db/database.h"
 #include "err/err.h"
 #include "im/initialization_manager.hpp"
+#include "log/log.h"
 #include <fstream> // IWYU pragma: keep
 #include <iostream>
 #include <iterator>
@@ -30,7 +31,7 @@ typedef std::shared_ptr<Stream> StreamSPtr;
 typedef parser::Parser<Stream> Parser;
 typedef std::shared_ptr<Parser> ParserSPtr;
 
-ECode run(const doim::FsFileSPtr& dbsFile, std::vector<dom::CxxProgramSPtr>& programs)
+ECode run(const doim::FsFileSPtr& dbsFile)
 {
     std::ifstream fstream(dbsFile->path(nullptr));
     std::string str((std::istreambuf_iterator<char>(fstream)),
@@ -43,15 +44,6 @@ ECode run(const doim::FsFileSPtr& dbsFile, std::vector<dom::CxxProgramSPtr>& pro
     EHTest(parser->initialize(stream, dbsFile));
 
     EHTest(parser->parse());
-
-    auto dbs = doim::gManager->obtainObject(dbsFile->directory(),
-                                            doim::Object::Type::kCxxProgram,
-                                            "dbs");
-    programs.push_back(dom::gManager->obtainCxxProgram(dbs));
-    auto dbs_test = doim::gManager->obtainObject(dbsFile->directory(),
-                                                 doim::Object::Type::kCxxProgram,
-                                                 "dbs-test");
-    programs.push_back(dom::gManager->obtainCxxProgram(dbs_test));
     EHEnd;
 }
 
@@ -79,8 +71,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    std::vector<dom::CxxProgramSPtr> programs;
-    code = run(file, programs);
+    code = run(file);
     if (code != err::kSuccess)
     {
         std::cout << err::gError->message() << "\n";
@@ -91,18 +82,26 @@ int main(int argc, char* argv[])
     const auto& binary = doim::gManager->obtainFile(cwd, "clang/bin/clang++");
     const auto& compiler = std::make_shared<tool::CxxCompiler>(binary);
 
-    for (auto program : programs)
+    for (size_t i = 2; i < arg.size(); ++i)
     {
-        std::string script;
-        code = compiler->command(cwd, program, script);
-        if (code != err::kSuccess)
-        {
-            std::cout << err::gError->message() << "\n";
-            std::cout << err::gError->callstack() << "\n";
-            return 1;
-        }
+        auto object = doim::gManager->obtainObject(file->directory(),
+                                                   doim::Object::Type::kCxxProgram,
+                                                   arg[i]);
+        auto program = dom::gManager->obtainCxxProgram(object);
 
-        std::cout << script;
+        if (program != nullptr)
+        {
+            std::string script;
+            code = compiler->command(cwd, program, script);
+            if (code != err::kSuccess)
+            {
+                std::cout << err::gError->message() << "\n";
+                std::cout << err::gError->callstack() << "\n";
+                return 1;
+            }
+
+            std::cout << script;
+        }
     }
     return 0;
 }

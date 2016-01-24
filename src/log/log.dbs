@@ -1,0 +1,38 @@
+cxx_library log
+    @type=user:
+
+    cxx_public_header
+        @directory=include:
+
+        log/log.h
+    ;
+
+    cxx_library:
+       ../system/stl
+
+       ../3rdparty/spdlog
+       ../3rdparty/cppformat
+
+       ../im/im
+    ;
+
+    cxx_file:
+        log.cpp
+    ;
+;
+
+cxx_library log-test
+    @type=test:
+
+    cxx_library:
+        ../3rdparty/gtest
+
+        ../gtest/gtest
+
+        log
+    ;
+
+    cxx_file:
+        gtest/log-utest.cpp
+    ;
+;

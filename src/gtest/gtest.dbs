@@ -4,7 +4,6 @@ cxx_library gtest
     cxx_public_header
         @directory=include:
 
-        gtest/err.h
         gtest/intermittent.h
         gtest/test_resource.h
 

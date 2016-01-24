@@ -1,0 +1,9 @@
+cxx_library spdlog
+    @type=system:
+
+    cxx_public_header
+        @directory=../../spdlog/include:
+
+        spdlog/spdlog.h
+    ;
+;

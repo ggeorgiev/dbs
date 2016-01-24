@@ -267,6 +267,15 @@ then
     mv cppformat/cppformat cppformat/include || exit 1
 fi
 
+if [ ! -e spdlog ]
+then
+    echo Build spdlog ...
+
+    mkdir -p spdlog || exit 1
+
+    cp -r 3rdparty/spdlog/include spdlog || exit 1
+fi
+
 if [ ! -e rocksdb ]
 then
     cd 3rdparty/rocksdb || exit 1

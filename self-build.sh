@@ -13,8 +13,13 @@ then
     cp build/dbs dbs
 fi
 
+if [ -e build/dbs ]
+then
+    mv build/dbs build/dbs_1
+fi
+
 mkdir -p build
-./dbs src/main.dbs | tee build/self.sh
+./dbs src/main.dbs dbs dbs-test | tee build/self.sh
 chmod 755 build/self.sh
 
 echo
@@ -23,4 +28,8 @@ build/self.sh || exit 1
 
 build/dbs-test --gtest_filter=-*.PERFORMANCE_* || exit 1
 
-cp build/dbs dbs
+if [ -e build/dbs ]
+then
+    rm dbs
+    cp build/dbs dbs
+fi

@@ -31,8 +31,9 @@ cxx_library err-test
     @type=test:
 
     cxx_public_header
-        @directory=include:
+       @directory=include:
 
+       gtest/err.h
        gtest/err_assert.h
     ;
 

@@ -30,6 +30,7 @@ cxx_library db-test
         ../3rdparty/gtest
 
         ../gtest/gtest
+        ../err/err-test
 
         db
     ;

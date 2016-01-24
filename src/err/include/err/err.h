@@ -6,17 +6,16 @@
 
 #pragma once
 
+#include "err/err_assert.h"
+#include "err/err_cppformat.h"
+#include "err/macro.h"
+#include "im/initialization_manager.hpp"
 #include <cppformat/format.h>
 #include <memory>
 #include <sstream>
 #include <unordered_map>
 #include <vector>
 #include <stddef.h>
-
-#include "err/err_assert.h"
-#include "err/err_cppformat.h"
-#include "err/macro.h"
-#include "im/initialization_manager.hpp"
 
 namespace err
 {

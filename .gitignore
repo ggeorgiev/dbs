@@ -5,6 +5,7 @@
 /gtest/
 /iwyu/
 /rocksdb/
+/spdlog/
 /build/
 
 dbs
