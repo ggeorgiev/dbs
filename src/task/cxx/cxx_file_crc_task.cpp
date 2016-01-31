@@ -13,8 +13,8 @@ ECode CxxFileCrcTask::operator()()
 {
     doim::CxxHeaderSet includes;
     EHTest(calculate<CxxHeaderCrcTask>(mCxxFile->file(),
-                                       mCxxFile->cxxIncludeDirectories(),
-                                       mCxxFile->cxxHeaders()));
+                                       nullptr,
+                                       mCxxFile->cxxIncludeDirectories()));
 
     DLOG("Crc for {0} is {1:x}", mCxxFile->file()->name(), mCrc64);
     EHEnd;

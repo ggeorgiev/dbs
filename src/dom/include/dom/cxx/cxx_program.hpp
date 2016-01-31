@@ -53,26 +53,26 @@ public:
         return mCxxLibraries;
     }
 
-    std::unordered_set<CxxLibrarySPtr> allCxxLibraries()
+    // Computations
+    std::unordered_set<CxxLibrarySPtr> recursiveCxxLibraries()
     {
         std::unordered_set<CxxLibrarySPtr> libraries = mCxxLibraries;
         for (const auto& cxxLibrary : mCxxLibraries)
         {
-            const auto& libs = cxxLibrary->allCxxLibraries();
+            const auto& libs = cxxLibrary->recursiveCxxLibraries();
             libraries.insert(libs.begin(), libs.end());
         }
         return libraries;
     }
 
-    // Computations
-    doim::CxxIncludeDirectorySetSPtr cxxIncludeDirectories(
+    doim::CxxIncludeDirectorySetSPtr recursiveCxxIncludeDirectories(
         const doim::FsDirectorySPtr& root) const
     {
         auto directories = std::make_shared<doim::CxxIncludeDirectorySet>();
 
         for (const auto& cxxLibrary : mCxxLibraries)
         {
-            const auto& libDirectories = cxxLibrary->cxxIncludeDirectories(root);
+            const auto& libDirectories = cxxLibrary->recursiveCxxIncludeDirectories(root);
             directories->insert(libDirectories->begin(), libDirectories->end());
         }
 
@@ -84,7 +84,7 @@ public:
         auto headers = std::make_shared<doim::CxxHeaderSet>();
         for (const auto& cxxLibrary : mCxxLibraries)
         {
-            const auto& libHeaders = cxxLibrary->cxxHeaders(root);
+            const auto& libHeaders = cxxLibrary->recursiveCxxHeaders(root);
             headers->insert(libHeaders->begin(), libHeaders->end());
         }
         return doim::gManager->unique(headers);

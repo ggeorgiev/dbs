@@ -14,6 +14,7 @@ cxx_library dom
 
     cxx_library:
         ../im/im
+        ../log/log
         ../doim/doim
     ;
 
@@ -35,6 +36,7 @@ cxx_library dom-test
     ;
 
     cxx_file:
+        gtest/cxx_library-utest.cpp
         gtest/cxx_program-utest.cpp
     ;
 ;

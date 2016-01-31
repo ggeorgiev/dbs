@@ -7,6 +7,7 @@
 #include "parser/cxx/cxx_parser.hpp"
 #include "doim/cxx/cxx_file.hpp"
 #include "doim/manager.h"
+#include "log/log.h"
 #include <boost/crc.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/system/error_code.hpp>
@@ -31,50 +32,60 @@ public:
     }
 
 protected:
-    ECode findInclude(const std::experimental::string_view& include,
-                      const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
-                      const doim::CxxHeaderSetSPtr& headers,
-                      doim::CxxHeaderSPtr& cxxHeader)
+    typedef std::pair<doim::CxxHeaderSPtr, doim::CxxIncludeDirectorySPtr> HeaderDirectory;
+
+    doim::CxxHeaderSPtr findInclude(const std::experimental::string_view& include,
+                                    const doim::CxxIncludeDirectorySPtr& includeDirectory)
     {
-        doim::FsFileSPtr file;
-        doim::CxxIncludeDirectorySPtr includeDirectory;
+        if (includeDirectory == nullptr)
+            return nullptr;
+
+        const auto& file = doim::gManager->find(
+            doim::gManager->createFile(includeDirectory->directory(), include));
+        if (file == nullptr)
+            return nullptr;
+
+        const auto& header = doim::gManager->findCxxHeader(file);
+        if (header == nullptr)
+            return nullptr;
+
+        if (includeDirectory->headerFiles()->count(header) == 0)
+            return nullptr;
+
+        return header;
+    }
+
+    ECode findInclude(const std::experimental::string_view& include,
+                      const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
+                      const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
+                      HeaderDirectory& headerDirectory)
+    {
+        auto result = std::make_pair(findInclude(include, currentIncludeDirectory),
+                                     currentIncludeDirectory);
+
         for (const auto& directory : *includeDirectories)
         {
-            const auto& curr = doim::gManager->find(
-                doim::gManager->createFile(directory->directory(), include));
-            if (curr == nullptr)
+            const auto& header = findInclude(include, directory);
+            if (header == nullptr)
                 continue;
 
-            if (directory->headerFiles()->count(curr) == 0)
-                continue;
-
-            if (file != nullptr)
+            if (result.first != nullptr)
                 EHBan(kTooMany, include);
 
-            file = curr;
-            includeDirectory = directory;
+            result = std::make_pair(header, directory);
         }
 
-        if (file == nullptr)
+        if (result.first == nullptr)
             EHBan(kNotFound, include);
 
-        for (const auto& header : *headers)
-        {
-            if (file == header->file())
-            {
-                cxxHeader = header;
-                EHEnd;
-            }
-        }
-
-        EHBan(kNotFound, include);
+        headerDirectory = result;
         EHEnd;
     }
 
     template <typename Task>
     ECode calculate(const doim::FsFileSPtr& file,
-                    const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
-                    const doim::CxxHeaderSetSPtr& headers)
+                    const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
+                    const doim::CxxIncludeDirectorySetSPtr& includeDirectories)
     {
         Crc crc;
 
@@ -86,27 +97,29 @@ protected:
 
         parser::CxxParser parser;
 
-        std::vector<doim::CxxHeaderSPtr> includes;
+        std::vector<HeaderDirectory> headerDirectories;
         for (const auto& include : parser.includes(content))
         {
-            doim::CxxHeaderSPtr header;
+            HeaderDirectory headerDirectory;
             EHTest(findInclude(std::experimental::string_view(include.data() + 1,
                                                               include.size() - 2),
+                               currentIncludeDirectory,
                                includeDirectories,
-                               headers,
-                               header));
-            includes.push_back(header);
+                               headerDirectory),
+                   file->path());
+            headerDirectories.push_back(headerDirectory);
         }
 
         std::vector<uint64_t> crcs;
-        crcs.reserve(includes.size());
+        crcs.reserve(headerDirectories.size());
 
-        for (const auto& header : includes)
+        for (const auto& headerDirectory : headerDirectories)
         {
-            if (header->type() == doim::CxxHeader::Type::kSystem)
+            if (headerDirectory.first->type() == doim::CxxHeader::Type::kSystem)
                 continue;
 
-            auto task = Task::valid(std::make_shared<Task>(header, headers));
+            auto task = Task::valid(
+                std::make_shared<Task>(headerDirectory.first, headerDirectory.second));
             EHTest(task->join());
             crcs.push_back(task->crc());
         }

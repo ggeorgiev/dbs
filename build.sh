@@ -80,7 +80,7 @@ then
 
     FILES="$FILES src/im/gtest/initialization_manager-utest.cpp"
 
-    FILES="$FILES src/log/gtest/log-utest.cpp"
+    #FILES="$FILES src/log/gtest/log-utest.cpp"
 
     #FILES="$FILES src/err/gtest/err-utest.cpp"
     #FILES="$FILES src/err/gtest/err-ptest.cpp"
@@ -88,6 +88,7 @@ then
 
     #FILES="$FILES src/db/gtest/database-utest.cpp"
 
+    FILES="$FILES src/dom/gtest/cxx_library-utest.cpp"
     #FILES="$FILES src/dom/gtest/cxx_program-utest.cpp"
 
     #FILES="$FILES src/doim/gtest/manager-utest.cpp"

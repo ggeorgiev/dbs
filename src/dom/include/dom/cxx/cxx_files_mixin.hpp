@@ -8,6 +8,8 @@
 #include "doim/fs/fs_file.hpp"
 #include "doim/manager.h"
 #include "err/err.h"
+#include "log/log.h"
+#include "log/log_function.hpp"
 #include <memory>
 #include <set>
 #include <unordered_set>
@@ -34,16 +36,22 @@ public:
     std::unordered_set<doim::CxxFileSPtr> cxxFiles(
         const doim::FsDirectorySPtr& root) const
     {
+        TLOG_FUNCTION;
+
         std::unordered_set<doim::CxxFileSPtr> cxxFiles;
 
         const auto& directories =
-            static_cast<const Subject*>(this)->cxxIncludeDirectories(root);
-        const auto& headers = static_cast<const Subject*>(this)->cxxHeaders(root);
+            static_cast<const Subject*>(this)->recursiveCxxIncludeDirectories(root);
+
+        for (const auto& directory : *directories)
+            DLOG("include directory: {0}", directory->directory()->path(root));
 
         for (const auto& fsFile : mCxxFilesList)
         {
-            auto cxxFile = std::make_shared<doim::CxxFile>(fsFile, directories, headers);
+            auto cxxFile = std::make_shared<doim::CxxFile>(fsFile, directories);
             cxxFiles.insert(doim::gManager->unique(cxxFile));
+
+            DLOG("fsFile: {0}", fsFile->path());
         }
 
         return cxxFiles;

@@ -14,6 +14,7 @@
 #include "im/initialization_manager.hpp"
 #include <experimental/string_view>
 #include <memory>
+#include <unordered_map>
 #include <unordered_set>
 
 namespace doim
@@ -110,11 +111,28 @@ public:
 
     using ManagerMixin<CxxIncludeDirectorySet, CxxIncludeDirectorySetHasher>::unique;
 
-    using ManagerMixin<CxxHeader>::unique;
+    CxxHeaderSPtr unique(const CxxHeaderSPtr& header)
+    {
+        if (header == nullptr)
+            return header;
+        const auto& record = ManagerMixin<CxxHeader>::mMixinObjects.insert(header);
+        if (record.second)
+            mFile2CxxHeader[header->file()] = header;
+        return *record.first;
+    }
+
+    CxxHeaderSPtr findCxxHeader(const FsFileSPtr& file)
+    {
+        return mFile2CxxHeader[file];
+    }
+
     using ManagerMixin<CxxHeaderSet, CxxHeaderSetHasher>::unique;
 
     using ManagerMixin<CxxFile>::unique;
     using ManagerMixin<CxxObjectFile>::unique;
+
+private:
+    std::unordered_map<FsFileSPtr, CxxHeaderSPtr> mFile2CxxHeader;
 };
 
 typedef std::shared_ptr<Manager> ManagerSPtr;

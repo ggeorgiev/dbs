@@ -96,7 +96,7 @@ public:
 
         std::set<std::string> lib_directories;
         std::set<std::string> lib_binaries;
-        for (const auto& cxxLibrary : program->allCxxLibraries())
+        for (const auto& cxxLibrary : program->recursiveCxxLibraries())
         {
             if (cxxLibrary->binary() != nullptr)
             {

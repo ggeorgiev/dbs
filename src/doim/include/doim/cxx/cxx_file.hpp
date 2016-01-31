@@ -22,11 +22,9 @@ class CxxFile
 {
 public:
     CxxFile(const FsFileSPtr& file,
-            const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories,
-            const CxxHeaderSetSPtr& cxxHeaders)
+            const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories)
         : mFile(file)
         , mCxxIncludeDirectories(cxxIncludeDirectories)
-        , mCxxHeaders(cxxHeaders)
     {
     }
 
@@ -40,37 +38,27 @@ public:
         return mCxxIncludeDirectories;
     }
 
-    const CxxHeaderSetSPtr& cxxHeaders() const
-    {
-        return mCxxHeaders;
-    }
-
     struct Hasher
     {
         std::size_t operator()(const CxxFileSPtr& cxxFile) const
         {
             auto seed = hashFF(cxxFile->file());
             boost::hash_combine(seed, hashCIDS(cxxFile->cxxIncludeDirectories()));
-            boost::hash_combine(seed, hashCHS(cxxFile->cxxHeaders()));
             return seed;
         }
 
         bool operator()(const CxxFileSPtr& cxxFile1, const CxxFileSPtr& cxxFile2) const
         {
             return cxxFile1->file() == cxxFile2->file() &&
-                   cxxFile1->cxxIncludeDirectories() ==
-                       cxxFile2->cxxIncludeDirectories() &&
-                   cxxFile1->cxxHeaders() == cxxFile2->cxxHeaders();
+                   cxxFile1->cxxIncludeDirectories() == cxxFile2->cxxIncludeDirectories();
         }
 
         std::hash<FsFileSPtr> hashFF;
         std::hash<CxxIncludeDirectorySetSPtr> hashCIDS;
-        std::hash<CxxHeaderSetSPtr> hashCHS;
     };
 
 private:
     FsFileSPtr mFile;
     CxxIncludeDirectorySetSPtr mCxxIncludeDirectories;
-    CxxHeaderSetSPtr mCxxHeaders;
 };
 }

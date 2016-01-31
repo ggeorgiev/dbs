@@ -18,8 +18,8 @@ ECode CxxHeaderCrcTask::operator()()
 
     doim::CxxHeaderSet includes;
     EHTest(calculate<CxxHeaderCrcTask>(mCxxHeader->file(),
-                                       mCxxHeader->cxxIncludeDirectories(),
-                                       mCxxHeaders));
+                                       mCurrentIncludeDirectory,
+                                       mCxxHeader->cxxIncludeDirectories()));
     EHEnd;
 }
 } // namespace task

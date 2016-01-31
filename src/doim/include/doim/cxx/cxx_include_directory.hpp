@@ -18,6 +18,12 @@ namespace doim
 class CxxIncludeDirectory;
 typedef std::shared_ptr<CxxIncludeDirectory> CxxIncludeDirectorySPtr;
 
+class CxxHeader;
+typedef std::shared_ptr<CxxHeader> CxxHeaderSPtr;
+
+typedef std::unordered_set<CxxHeaderSPtr> CxxHeaderSet;
+typedef std::shared_ptr<CxxHeaderSet> CxxHeaderSetSPtr;
+
 class CxxIncludeDirectory
 {
 public:
@@ -29,7 +35,7 @@ public:
 
     CxxIncludeDirectory(const Type type,
                         const FsDirectorySPtr& directory,
-                        const FsFileSetSPtr& headerFiles)
+                        const CxxHeaderSetSPtr& headerFiles)
         : mType(type)
         , mDirectory(directory)
         , mHeaderFiles(headerFiles)
@@ -47,7 +53,7 @@ public:
         return mDirectory;
     }
 
-    const FsFileSetSPtr& headerFiles()
+    const CxxHeaderSetSPtr& headerFiles()
     {
         return mHeaderFiles;
     }
@@ -71,13 +77,13 @@ public:
         }
 
         std::hash<FsDirectorySPtr> hashFD;
-        std::hash<FsFileSetSPtr> hashFFS;
+        std::hash<CxxHeaderSetSPtr> hashFFS;
     };
 
 private:
     Type mType;
     FsDirectorySPtr mDirectory;
-    FsFileSetSPtr mHeaderFiles;
+    CxxHeaderSetSPtr mHeaderFiles;
 };
 
 typedef std::unordered_set<CxxIncludeDirectorySPtr> CxxIncludeDirectorySet;

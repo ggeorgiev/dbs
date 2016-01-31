@@ -17,16 +17,44 @@
 #include <string>
 #include <unordered_set>
 
-TEST(CxxFileCrcTaskTest, simple)
+class CxxFileCrcTaskTest : public ::testing::Test
 {
-    auto file =
-        doim::gManager->obtainFile(testing::gTestResourceDirectory, "cxx/simple.cxx");
-    auto cxxIncludeDirectories =
-        doim::gManager->unique(std::make_shared<doim::CxxIncludeDirectorySet>());
-    auto cxxHeaders = doim::gManager->unique(std::make_shared<doim::CxxHeaderSet>());
+public:
+    CxxFileCrcTaskTest()
+    {
+    }
 
+    void SetUp()
+    {
+        mCxxDirectory =
+            doim::gManager->obtainDirectory(testing::gTestResourceDirectory, "cxx");
+        mFsSimpleCxx = doim::gManager->obtainFile(mCxxDirectory, "simple.cxx");
+        mFsIncludesCxx = doim::gManager->obtainFile(mCxxDirectory, "includes.cxx");
+        mFsUserH = doim::gManager->obtainFile(mCxxDirectory, "user.h");
+
+        mEmptyCxxHeaderSet =
+            doim::gManager->unique(std::make_shared<doim::CxxHeaderSet>());
+        mEmptyCxxIncludeDirectorySet =
+            doim::gManager->unique(std::make_shared<doim::CxxIncludeDirectorySet>());
+    }
+
+    void TearDown()
+    {
+    }
+
+    doim::FsDirectorySPtr mCxxDirectory;
+    doim::FsFileSPtr mFsSimpleCxx;
+    doim::FsFileSPtr mFsIncludesCxx;
+    doim::FsFileSPtr mFsUserH;
+
+    doim::CxxHeaderSetSPtr mEmptyCxxHeaderSet;
+    doim::CxxIncludeDirectorySetSPtr mEmptyCxxIncludeDirectorySet;
+};
+
+TEST_F(CxxFileCrcTaskTest, simple)
+{
     auto cxxFile =
-        std::make_shared<doim::CxxFile>(file, cxxIncludeDirectories, cxxHeaders);
+        std::make_shared<doim::CxxFile>(mFsSimpleCxx, mEmptyCxxIncludeDirectorySet);
     auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
 
     ASSERT_OKAY((*task)());
@@ -34,66 +62,43 @@ TEST(CxxFileCrcTaskTest, simple)
     EXPECT_EQ(0x9f9163a56c247be9, task->crc()) << std::hex << task->crc();
 }
 
-TEST(CxxFileCrcTaskTest, notFoundInclude)
+TEST_F(CxxFileCrcTaskTest, notFoundInclude)
 {
-    auto directory =
-        doim::gManager->obtainDirectory(testing::gTestResourceDirectory, "cxx");
-
-    auto file = doim::gManager->obtainFile(directory, "includes.cxx");
-
-    auto headers = doim::gManager->unique(std::make_shared<doim::FsFileSet>());
-
     auto cxxIncludeDirectory = std::make_shared<
         doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kUser,
-                                   directory,
-                                   headers);
+                                   mCxxDirectory,
+                                   mEmptyCxxHeaderSet);
 
     auto cxxIncludeDirectories = std::make_shared<doim::CxxIncludeDirectorySet>();
     cxxIncludeDirectories->insert(doim::gManager->unique(cxxIncludeDirectory));
-
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
-    auto cxxHeaders = doim::gManager->unique(std::make_shared<doim::CxxHeaderSet>());
 
-    auto cxxFile =
-        std::make_shared<doim::CxxFile>(file, cxxIncludeDirectories, cxxHeaders);
+    auto cxxFile = std::make_shared<doim::CxxFile>(mFsIncludesCxx, cxxIncludeDirectories);
     auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
-    ASSERT_BANNED(kNotFound, (*task)());
-
-    auto user = doim::gManager->obtainFile(directory, "user.h");
-
     ASSERT_BANNED(kNotFound, (*task)());
 }
 
-TEST(CxxFileCrcTaskTest, include)
+TEST_F(CxxFileCrcTaskTest, include)
 {
-    auto directory =
-        doim::gManager->obtainDirectory(testing::gTestResourceDirectory, "cxx");
-    auto file = doim::gManager->obtainFile(directory, "includes.cxx");
-    auto user = doim::gManager->obtainFile(directory, "user.h");
-    auto headers = std::make_shared<doim::FsFileSet>();
-    headers->insert(user);
-    headers = doim::gManager->unique(headers);
-
-    auto cxxIncludeDirectory = std::make_shared<
-        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kUser,
-                                   directory,
-                                   headers);
-
-    auto cxxIncludeDirectories = std::make_shared<doim::CxxIncludeDirectorySet>();
-    cxxIncludeDirectories->insert(doim::gManager->unique(cxxIncludeDirectory));
-
-    cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
     auto cxxHeader = doim::gManager->unique(
         std::make_shared<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
-                                          user,
-                                          cxxIncludeDirectories));
+                                          mFsUserH,
+                                          mEmptyCxxIncludeDirectorySet));
 
     auto cxxHeaders = std::make_shared<doim::CxxHeaderSet>();
     cxxHeaders->insert(cxxHeader);
     cxxHeaders = doim::gManager->unique(cxxHeaders);
 
-    auto cxxFile =
-        std::make_shared<doim::CxxFile>(file, cxxIncludeDirectories, cxxHeaders);
+    auto cxxIncludeDirectory = std::make_shared<
+        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kUser,
+                                   mCxxDirectory,
+                                   cxxHeaders);
+
+    auto cxxIncludeDirectories = std::make_shared<doim::CxxIncludeDirectorySet>();
+    cxxIncludeDirectories->insert(doim::gManager->unique(cxxIncludeDirectory));
+    cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
+
+    auto cxxFile = std::make_shared<doim::CxxFile>(mFsIncludesCxx, cxxIncludeDirectories);
     auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
     ASSERT_OKAY((*task)());
 

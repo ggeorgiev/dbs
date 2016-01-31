@@ -55,6 +55,8 @@ int main(int argc, char* argv[])
 
     im::InitializationManager im;
 
+    dbslog::gLogger->set_level(spdlog::level::info);
+
     char current[FILENAME_MAX];
     if (getcwd(current, sizeof(current)) == nullptr)
         return errno;
