@@ -5,6 +5,7 @@ cxx_library log
         @directory=include:
 
         log/log.h
+        log/log_function.hpp
     ;
 
     cxx_library:
@@ -12,6 +13,7 @@ cxx_library log
 
        ../3rdparty/spdlog
        ../3rdparty/cppformat
+       ../3rdparty/boost_template
 
        ../im/im
     ;

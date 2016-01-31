@@ -115,6 +115,7 @@ protected:
 
         crc.process_bytes(crcs.data(), sizeof(uint64_t) * crcs.size());
         mCrc64 = crc.checksum();
+
         EHEnd;
     }
 

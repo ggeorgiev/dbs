@@ -22,4 +22,8 @@ typedef std::shared_ptr<DbsLogger> DbsLoggerSPtr;
 extern DbsLoggerSPtr gLogger;
 }
 
-#define DLOG dbslog::gLogger->debug()
+#define DLOG(...) \
+    dbslog::gLogger->debug(__VA_ARGS__) << " @ " << __FILE__ << ":" << __LINE__;
+
+#define TLOG(...) \
+    dbslog::gLogger->trace(__VA_ARGS__) << " @ " << __FILE__ << ":" << __LINE__;

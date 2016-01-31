@@ -8,7 +8,8 @@ namespace dbslog
 static bool init()
 {
     gLogger = spdlog::stdout_logger_mt("dbs");
-    gLogger->set_pattern("%H:%M:%S.%e [%t] %v");
+    gLogger->set_level(spdlog::level::trace);
+    gLogger->set_pattern("# %H:%M:%S.%e %L [%t] %v");
     return true;
 }
 

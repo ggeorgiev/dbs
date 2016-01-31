@@ -16,6 +16,7 @@ cxx_library task
         ../3rdparty/boost_template
         ../3rdparty/boost_filesystem
 
+        ../log/log
         ../err/err
         ../tpool/tpool
         ../parser/parser
