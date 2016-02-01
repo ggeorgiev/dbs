@@ -3,7 +3,7 @@ cxx_library im
 
     cxx_header
         @visibility=public
-        @directory=include:
+        @directory=..:
 
         im/initialization_manager.hpp
     ;

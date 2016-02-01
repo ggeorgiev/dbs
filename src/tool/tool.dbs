@@ -3,7 +3,7 @@ cxx_library tool
 
     cxx_header
         @visibility=public
-        @directory=include:
+        @directory=..:
 
         tool/cxx_compiler.hpp
     ;

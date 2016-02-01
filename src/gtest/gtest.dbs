@@ -3,7 +3,7 @@ cxx_library gtest
 
     cxx_header
         @visibility=public
-        @directory=include:
+        @directory=..:
 
         gtest/intermittent.h
         gtest/test_resource.h

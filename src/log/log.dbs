@@ -3,7 +3,7 @@ cxx_library log
 
     cxx_header
         @visibility=public
-        @directory=include:
+        @directory=..:
 
         log/log.h
         log/log_function.hpp

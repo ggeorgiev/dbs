@@ -28,21 +28,33 @@ public:
     std::string commandArg(const doim::FsDirectorySPtr& directory,
                            const doim::CxxIncludeDirectorySetSPtr& includeDirectories)
     {
-        std::stringstream stream;
+        std::vector<doim::FsDirectorySPtr> users;
+        std::vector<doim::FsDirectorySPtr> systems;
+
         for (const auto& includeDirectory : *includeDirectories)
         {
             switch (includeDirectory->type())
             {
                 case doim::CxxIncludeDirectory::Type::kUser:
-                    stream << " -I " << includeDirectory->directory()->path(directory);
+                    users.push_back(includeDirectory->directory());
                     break;
                 case doim::CxxIncludeDirectory::Type::kSystem:
-                    stream << " -isystem "
-                           << includeDirectory->directory()->path(directory);
+                    systems.push_back(includeDirectory->directory());
                     break;
             }
         }
 
+        std::sort(systems.begin(), systems.end());
+        systems.erase(std::unique(systems.begin(), systems.end()), systems.end());
+
+        std::sort(users.begin(), users.end());
+        users.erase(std::unique(users.begin(), users.end()), users.end());
+
+        std::stringstream stream;
+        for (const auto& dir : systems)
+            stream << " -isystem " << dir->path(directory);
+        for (const auto& dir : users)
+            stream << " -I " << dir->path(directory);
         return stream.str();
     }
 

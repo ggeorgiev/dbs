@@ -3,7 +3,7 @@ cxx_library err
 
     cxx_header
         @visibility=public
-        @directory=include:
+        @directory=..:
 
         err/err.h
         err/err_assert.h
@@ -32,8 +32,7 @@ cxx_library err-test
     @type=test:
 
     cxx_header
-        @visibility=public
-        @directory=include:
+        @visibility=public:
 
         gtest/err.h
         gtest/err_assert.h

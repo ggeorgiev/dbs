@@ -22,18 +22,7 @@ then
     PLUGINS="$PLUGINS -Xclang -plugin -Xclang check-parameter-names"
 fi
 
-CXXFLAGS="$CXXFLAGS -Isrc/const/include"
-CXXFLAGS="$CXXFLAGS -Isrc/im/include"
-CXXFLAGS="$CXXFLAGS -Isrc/log/include"
-CXXFLAGS="$CXXFLAGS -Isrc/err/include"
-CXXFLAGS="$CXXFLAGS -Isrc/db/include"
-CXXFLAGS="$CXXFLAGS -Isrc/dom/include"
-CXXFLAGS="$CXXFLAGS -Isrc/doim/include"
-CXXFLAGS="$CXXFLAGS -Isrc/parser/include"
-CXXFLAGS="$CXXFLAGS -Isrc/tpool/include"
-CXXFLAGS="$CXXFLAGS -Isrc/tool/include"
-CXXFLAGS="$CXXFLAGS -Isrc/task/include"
-
+CXXFLAGS="$CXXFLAGS -Isrc"
 
 FILES=""
 FILES="$FILES src/log/log.cpp"

@@ -3,7 +3,7 @@ cxx_library task
 
     cxx_header
         @visibility=public
-        @directory=include:
+        @directory=..:
 
         task/cxx/cxx_crc_task_mixin.hpp
         task/cxx/cxx_file_crc_task.h

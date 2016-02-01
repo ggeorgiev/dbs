@@ -3,7 +3,7 @@ cxx_library parser
 
     cxx_header
         @visibility=public
-        @directory=include:
+        @directory=..:
 
         parser/cxx/cxx_parser.hpp
         parser/fixed_encoding_traits.hpp

@@ -3,7 +3,7 @@ cxx_library dom
 
     cxx_header
         @visibility=public
-        @directory=include:
+        @directory=..:
 
         dom/cxx/cxx_files_mixin.hpp
         dom/cxx/cxx_library.hpp

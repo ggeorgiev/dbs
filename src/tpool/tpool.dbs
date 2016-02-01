@@ -3,7 +3,7 @@ cxx_library tpool
 
     cxx_header
         @visibility=public
-        @directory=include:
+        @directory=..:
 
         tpool/priority.hpp
         tpool/task.hpp
