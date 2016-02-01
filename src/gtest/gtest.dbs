@@ -1,11 +1,16 @@
 cxx_library gtest
     @type=test:
 
-    cxx_public_header
+    cxx_header
+        @visibility=public
         @directory=include:
 
         gtest/intermittent.h
         gtest/test_resource.h
+    ;
+
+    cxx_header
+        @directory=..:
 
         gtest/performance_arbiter.h
         gtest/time_monitor.h

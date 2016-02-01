@@ -37,6 +37,7 @@ enum ECode
     kNotFound = 10,
     kTooMany = 11,
     kUnable = 12,
+    kUnknown = 13,
 
     // Subsystems error codes
     kDatabase = 20,

@@ -1,7 +1,8 @@
 cxx_library rocksdb
     @type=system:
 
-    cxx_public_header
+    cxx_header
+        @visibility=public
         @directory=../../rocksdb/include:
 
         rocksdb/db.h

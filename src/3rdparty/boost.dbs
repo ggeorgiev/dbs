@@ -1,7 +1,8 @@
 cxx_library boost_template
     @type=system:
 
-    cxx_public_header
+    cxx_header
+        @visibility=public
         @directory=../../boost/include:
 
         boost/crc.hpp
@@ -14,7 +15,8 @@ cxx_library boost_template
 
 cxx_library boost_system
     @type=system:
-    cxx_public_header
+    cxx_header
+        @visibility=public
         @directory=../../boost/include:
 
         boost/system/error_code.hpp
@@ -25,7 +27,8 @@ cxx_library boost_system
 
 cxx_library boost_filesystem
     @type=system:
-    cxx_public_header
+    cxx_header
+        @visibility=public
         @directory=../../boost/include:
 
         boost/filesystem.hpp
@@ -42,7 +45,8 @@ cxx_library boost_filesystem
 
 cxx_library boost_chrono
     @type=system:
-    cxx_public_header
+    cxx_header
+        @visibility=public
         @directory=../../boost/include:
 
         boost/chrono/process_cpu_clocks.hpp

@@ -106,6 +106,32 @@ public:
     }
 
     // Computations
+    doim::CxxIncludeDirectory::Type cxxIncludeDirectoryType() const
+    {
+        switch (mType)
+        {
+            case Type::kUser:
+            case Type::kTest:
+                return doim::CxxIncludeDirectory::Type::kUser;
+            case Type::kThirdParty:
+            case Type::kSystem:
+                return doim::CxxIncludeDirectory::Type::kSystem;
+        }
+    }
+
+    doim::CxxHeader::Type cxxHeaderType() const
+    {
+        switch (mType)
+        {
+            case Type::kUser:
+            case Type::kTest:
+                return doim::CxxHeader::Type::kUser;
+            case Type::kThirdParty:
+            case Type::kSystem:
+                return doim::CxxHeader::Type::kSystem;
+        }
+    }
+
     std::unordered_set<CxxLibrarySPtr> recursiveCxxLibraries()
     {
         std::unordered_set<CxxLibrarySPtr> libraries = mCxxLibraries;
@@ -117,31 +143,28 @@ public:
         return libraries;
     }
 
-    doim::CxxIncludeDirectorySetSPtr cxxIncludeDirectories(
+    doim::CxxIncludeDirectorySPtr cxxPublicIncludeDirectory(
+        const doim::FsDirectorySPtr& root) const
+    {
+        if (publicHeadersDirectory() == nullptr)
+            return nullptr;
+
+        const auto& directory =
+            std::make_shared<doim::CxxIncludeDirectory>(cxxIncludeDirectoryType(),
+                                                        publicHeadersDirectory(),
+                                                        publicCxxHeaders(root));
+        return doim::gManager->unique(directory);
+    }
+
+    doim::CxxIncludeDirectorySetSPtr sublibraryCxxIncludeDirectories(
         const doim::FsDirectorySPtr& root) const
     {
         auto directories = std::make_shared<doim::CxxIncludeDirectorySet>();
 
-        if (publicHeadersDirectory() != nullptr)
+        for (const auto& cxxLibrary : mCxxLibraries)
         {
-            doim::CxxIncludeDirectory::Type type;
-            switch (mType)
-            {
-                case Type::kUser:
-                case Type::kTest:
-                    type = doim::CxxIncludeDirectory::Type::kUser;
-                    break;
-                case Type::kThirdParty:
-                case Type::kSystem:
-                    type = doim::CxxIncludeDirectory::Type::kSystem;
-                    break;
-            }
-
-            const auto& directory =
-                std::make_shared<doim::CxxIncludeDirectory>(type,
-                                                            publicHeadersDirectory(),
-                                                            cxxHeaders(root));
-            directories->insert(doim::gManager->unique(directory));
+            const auto& libDirectories = cxxLibrary->recursiveCxxIncludeDirectories(root);
+            directories->insert(libDirectories->begin(), libDirectories->end());
         }
 
         return doim::gManager->unique(directories);
@@ -151,6 +174,10 @@ public:
         const doim::FsDirectorySPtr& root) const
     {
         auto directories = std::make_shared<doim::CxxIncludeDirectorySet>();
+
+        const auto& publicDirectory = cxxPublicIncludeDirectory(root);
+        if (publicDirectory != nullptr)
+            directories->insert(publicDirectory);
 
         for (const auto& cxxLibrary : mCxxLibraries)
         {
@@ -166,8 +193,13 @@ public:
     {
         auto directories = std::make_shared<doim::CxxIncludeDirectorySet>();
 
-        const auto& libDirectories = cxxIncludeDirectories(root);
-        directories->insert(libDirectories->begin(), libDirectories->end());
+        const auto& privateDirectory = cxxPrivateIncludeDirectory(root);
+        if (privateDirectory != nullptr)
+            directories->insert(privateDirectory);
+
+        const auto& publicDirectory = cxxPublicIncludeDirectory(root);
+        if (publicDirectory != nullptr)
+            directories->insert(publicDirectory);
 
         for (const auto& cxxLibrary : mCxxLibraries)
         {
@@ -178,26 +210,14 @@ public:
         return doim::gManager->unique(directories);
     }
 
-    doim::CxxHeaderSetSPtr cxxHeaders(const doim::FsDirectorySPtr& root) const
+    doim::CxxHeaderSetSPtr publicCxxHeaders(const doim::FsDirectorySPtr& root) const
     {
         auto headers = std::make_shared<doim::CxxHeaderSet>();
 
         if (mCxxPublicHeaders != nullptr)
         {
-            doim::CxxHeader::Type type;
-            switch (mType)
-            {
-                case Type::kUser:
-                case Type::kTest:
-                    type = doim::CxxHeader::Type::kUser;
-                    break;
-                case Type::kThirdParty:
-                case Type::kSystem:
-                    type = doim::CxxHeader::Type::kSystem;
-                    break;
-            }
-
-            const auto& directories = indirectCxxIncludeDirectories(root);
+            auto type = cxxHeaderType();
+            const auto& directories = sublibraryCxxIncludeDirectories(root);
             for (const auto& header : *mCxxPublicHeaders)
             {
                 const auto& cxxHeader =
@@ -212,6 +232,10 @@ public:
     {
         auto headers = std::make_shared<doim::CxxHeaderSet>();
 
+        const auto& publicHeaders = publicCxxHeaders(root);
+        if (publicHeaders != nullptr)
+            headers->insert(publicHeaders->begin(), publicHeaders->end());
+
         for (const auto& cxxLibrary : mCxxLibraries)
         {
             const auto& libHeaders = cxxLibrary->recursiveCxxHeaders(root);
@@ -224,8 +248,13 @@ public:
     {
         auto headers = std::make_shared<doim::CxxHeaderSet>();
 
-        const auto& libHeaders = cxxHeaders(root);
-        headers->insert(libHeaders->begin(), libHeaders->end());
+        const auto& publicHeaders = publicCxxHeaders(root);
+        if (publicHeaders != nullptr)
+            headers->insert(publicHeaders->begin(), publicHeaders->end());
+
+        const auto& privateHeaders = privateCxxHeaders(root);
+        if (privateHeaders != nullptr)
+            headers->insert(privateHeaders->begin(), privateHeaders->end());
 
         for (const auto& cxxLibrary : mCxxLibraries)
         {
@@ -239,12 +268,6 @@ private:
     Type mType;
     doim::FsFileSPtr mBinary;
 
-    // TODO: So far we assume that all headers are coming from a single public
-    // directory
-    //       Obviously this is not going to be true for all components.
-    //       We should have this computed based on the header files, that will give us
-    //       the ability to have optionally move all public headers in a intermediate
-    //       directory.
     doim::FsDirectorySPtr mPublicHeadersDirectory;
     doim::FsFileSetSPtr mCxxPublicHeaders;
 

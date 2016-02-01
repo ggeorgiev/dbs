@@ -1,7 +1,8 @@
 cxx_library tool
     @type=user:
 
-    cxx_public_header
+    cxx_header
+        @visibility=public
         @directory=include:
 
         tool/cxx_compiler.hpp

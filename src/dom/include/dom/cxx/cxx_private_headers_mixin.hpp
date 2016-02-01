@@ -20,35 +20,61 @@ class CxxPrivateHeadersMixin
 public:
     typedef T Subject;
 
-    ECode updateCxxPrivateHeadersList(std::unordered_set<doim::FsFileSPtr>& files)
+    ECode updateCxxPrivateHeaders(const doim::FsDirectorySPtr& directory,
+                                  std::unordered_set<doim::FsFileSPtr>& files)
     {
-        mCxxPrivateHeadersList.swap(files);
+        mPrivateHeadersDirectory = directory;
+        mCxxPrivateHeaders = std::make_shared<doim::FsFileSet>();
+        mCxxPrivateHeaders->swap(files);
         EHEnd;
     }
 
-    const std::unordered_set<doim::FsFileSPtr>& cxxPrivateHeadersList() const
+    doim::FsDirectorySPtr privateHeadersDirectory() const
     {
-        return mCxxPrivateHeadersList;
+        return mPrivateHeadersDirectory;
     }
 
-    std::unordered_set<doim::CxxHeaderSPtr> cxxPrivateHeaders(
+    const doim::FsFileSetSPtr privateHeaders() const
+    {
+        return mCxxPrivateHeaders;
+    }
+
+    // Computations
+    doim::CxxIncludeDirectorySPtr cxxPrivateIncludeDirectory(
         const doim::FsDirectorySPtr& root) const
     {
-        std::unordered_set<doim::CxxHeaderSPtr> cxxHeaders;
+        if (privateHeadersDirectory() == nullptr)
+            return nullptr;
 
-        const auto& directories =
-            static_cast<const Subject*>(this)->cxxIncludeDirectories(root);
+        const auto& directory =
+            std::make_shared<doim::CxxIncludeDirectory>(static_cast<const Subject*>(this)
+                                                            ->cxxIncludeDirectoryType(),
+                                                        privateHeadersDirectory(),
+                                                        privateCxxHeaders(root));
+        return doim::gManager->unique(directory);
+    }
 
-        for (const auto& fsFile : mCxxPrivateHeadersList)
+    doim::CxxHeaderSetSPtr privateCxxHeaders(const doim::FsDirectorySPtr& root) const
+    {
+        auto headers = std::make_shared<doim::CxxHeaderSet>();
+
+        if (mCxxPrivateHeaders != nullptr)
         {
-            auto cxxHeader = std::make_shared<doim::CxxHeader>(fsFile, directories);
-            cxxHeaders.insert(doim::gManager->unique(cxxHeader));
+            auto type = static_cast<const Subject*>(this)->cxxHeaderType();
+            const auto& directories =
+                static_cast<const Subject*>(this)->indirectCxxIncludeDirectories(root);
+            for (const auto& header : *mCxxPrivateHeaders)
+            {
+                const auto& cxxHeader =
+                    std::make_shared<doim::CxxHeader>(type, header, directories);
+                headers->insert(doim::gManager->unique(cxxHeader));
+            }
         }
-
-        return cxxHeaders;
+        return doim::gManager->unique(headers);
     }
 
 private:
-    std::unordered_set<doim::FsFileSPtr> mCxxPrivateHeadersList;
+    doim::FsDirectorySPtr mPrivateHeadersDirectory;
+    doim::FsFileSetSPtr mCxxPrivateHeaders;
 };
 }

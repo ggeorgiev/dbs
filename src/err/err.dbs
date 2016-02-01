@@ -1,7 +1,8 @@
 cxx_library err
     @type=user:
 
-    cxx_public_header
+    cxx_header
+        @visibility=public
         @directory=include:
 
         err/err.h
@@ -30,11 +31,12 @@ cxx_library err
 cxx_library err-test
     @type=test:
 
-    cxx_public_header
-       @directory=include:
+    cxx_header
+        @visibility=public
+        @directory=include:
 
-       gtest/err.h
-       gtest/err_assert.h
+        gtest/err.h
+        gtest/err_assert.h
     ;
 
     cxx_library:

@@ -1,7 +1,8 @@
 cxx_library const
     @type=user:
 
-    cxx_public_header
+    cxx_header
+        @visibility=public
         @directory=include:
 
         const/constants.h

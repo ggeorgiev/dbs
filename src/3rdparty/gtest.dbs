@@ -1,7 +1,8 @@
 cxx_library gtest
     @type=system:
 
-    cxx_public_header
+    cxx_header
+        @visibility=public
         @directory=../../gtest/include:
 
         gtest/gtest-message.h

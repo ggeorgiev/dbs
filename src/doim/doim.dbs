@@ -1,7 +1,8 @@
 cxx_library doim
     @type=user:
 
-    cxx_public_header
+    cxx_header
+        @visibility=public
         @directory=include:
 
         doim/cxx/cxx_file.hpp

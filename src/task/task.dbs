@@ -1,7 +1,8 @@
 cxx_library task
     @type=user:
 
-    cxx_public_header
+    cxx_header
+        @visibility=public
         @directory=include:
 
         task/cxx/cxx_crc_task_mixin.hpp

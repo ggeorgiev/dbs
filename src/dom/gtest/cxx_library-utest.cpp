@@ -23,13 +23,13 @@ TEST(CxxLibraryTest, recursiveCxxLibraries)
     ASSERT_EQ(0U, libraries.size());
 }
 
-TEST(CxxLibraryTest, cxxHeaders)
+TEST(CxxLibraryTest, publicCxxHeaders)
 {
     dom::CxxLibrary library;
 
     const auto& directory = doim::gManager->obtainDirectory(nullptr, "/foo/include");
 
-    const auto& cxxHeaders1 = library.cxxHeaders(directory);
+    const auto& cxxHeaders1 = library.publicCxxHeaders(directory);
     ASSERT_EQ(0U, cxxHeaders1->size());
 
     std::unordered_set<doim::FsFileSPtr> files;
@@ -39,11 +39,11 @@ TEST(CxxLibraryTest, cxxHeaders)
 
     ASSERT_OKAY(library.updateCxxPublicHeaders(directory, files));
 
-    const auto& cxxHeaders2 = library.cxxHeaders(directory);
+    const auto& cxxHeaders2 = library.publicCxxHeaders(directory);
     ASSERT_EQ(1U, cxxHeaders2->size());
 
-    const auto& cxxIncludeDirectories = library.cxxIncludeDirectories(directory);
-    ASSERT_EQ(1U, cxxIncludeDirectories->size());
+    const auto& cxxIncludeDirectory = library.cxxPublicIncludeDirectory(directory);
+    ASSERT_NE(nullptr, cxxIncludeDirectory);
 }
 
 TEST(CxxLibraryTest, recursiveCxxHeaders)

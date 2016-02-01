@@ -1,7 +1,8 @@
 cxx_library cstd
     @type=system:
 
-    cxx_public_header
+    cxx_header
+        @visibility=public
         @directory=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk:
 
         sys/errno.h

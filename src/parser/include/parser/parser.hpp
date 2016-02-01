@@ -138,12 +138,13 @@ public:
             if (type.test(Token::kOperatorSemicolon))
                 break;
 
-            if (type.test(Token::kKeywordCxxPublicHeader))
+            if (type.test(Token::kKeywordCxxHeader))
             {
                 auto type = nextMeaningfulToken();
 
                 auto directory = mLocation->directory();
-                if (type.test(Token::kOperatorAt))
+                std::string visibility;
+                while (type.test(Token::kOperatorAt))
                 {
                     dom::Attribute attribute;
                     EHTest(parseAttribute(attribute));
@@ -151,6 +152,10 @@ public:
                     {
                         directory =
                             doim::gManager->obtainDirectory(directory, attribute.mValue);
+                    }
+                    else if (attribute.mName == "visibility")
+                    {
+                        visibility = attribute.mValue;
                     }
 
                     type = nextMeaningfulToken();
@@ -161,7 +166,12 @@ public:
 
                 std::unordered_set<doim::FsFileSPtr> files;
                 EHTest(parseFiles(directory, std::numeric_limits<size_t>::max(), files));
-                EHTest(library->updateCxxPublicHeaders(directory, files));
+                if (visibility == "public")
+                    EHTest(library->updateCxxPublicHeaders(directory, files));
+                else if (visibility.empty() || visibility == "private")
+                    EHTest(library->updateCxxPrivateHeaders(directory, files));
+                else
+                    EHBan(kUnknown, visibility);
 
                 continue;
             }
