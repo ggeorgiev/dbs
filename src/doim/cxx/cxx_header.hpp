@@ -38,7 +38,7 @@ public:
     {
     }
 
-    Type type()
+    Type type() const
     {
         return mType;
     }
@@ -90,11 +90,11 @@ struct CxxHeaderSetHasher
         vector.insert(vector.begin(), headers->begin(), headers->end());
         std::sort(vector.begin(), vector.end());
 
-        std::size_t hash = 0;
+        std::size_t seed = 0;
         for (const auto& header : vector)
-            hash ^ std::hash<CxxHeaderSPtr>()(header);
+            boost::hash_combine(seed, hashCH(header));
 
-        return hash;
+        return seed;
     }
 
     bool operator()(const CxxHeaderSetSPtr& headers1,
@@ -102,5 +102,7 @@ struct CxxHeaderSetHasher
     {
         return *headers1 == *headers2;
     }
+
+    std::hash<CxxHeaderSPtr> hashCH;
 };
 }

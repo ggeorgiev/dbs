@@ -8,6 +8,9 @@ cxx_library task
         task/cxx/cxx_crc_task_mixin.hpp
         task/cxx/cxx_file_crc_task.h
         task/cxx/cxx_header_crc_task.h
+        task/db/db_put_task.h
+        task/sys/ensure_directory_task.h
+        task/sys/execute_command_task.h
         task/manager.h
     ;
 
@@ -21,11 +24,16 @@ cxx_library task
         ../err/err
         ../tpool/tpool
         ../parser/parser
+        ../doim/doim
+        ../db/db
     ;
 
     cxx_file:
         cxx/cxx_file_crc_task.cpp
         cxx/cxx_header_crc_task.cpp
+        db/db_put_task.cpp
+        sys/ensure_directory_task.cpp
+        sys/execute_command_task.cpp
         manager.cpp
     ;
 ;
@@ -45,5 +53,6 @@ cxx_library task-test
     cxx_file:
         gtest/cxx/cxx_file_crc_task-utest.cpp
         gtest/cxx/cxx_header_crc_task-utest.cpp
+        gtest/db/db_put_task-utest.cpp
     ;
 ;

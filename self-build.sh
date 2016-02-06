@@ -19,7 +19,7 @@ then
 fi
 
 mkdir -p build
-./dbs src/main.dbs dbs dbs-test | tee build/self.sh
+(./dbs src/main.dbs dbs dbs-test | tee build/self.sh) || exit 1
 chmod 755 build/self.sh
 
 echo

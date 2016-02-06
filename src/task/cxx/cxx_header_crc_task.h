@@ -29,6 +29,11 @@ public:
 
     ECode operator()() override;
 
+    std::string description() const override
+    {
+        return "Crc of " + mCxxHeader->file()->path();
+    }
+
     struct Hasher
     {
         std::size_t operator()(const CxxHeaderCrcTaskSPtr& task) const

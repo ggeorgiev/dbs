@@ -31,13 +31,6 @@ public:
         ;
     }
 
-    std::string key() const
-    {
-        if (mKey.empty())
-            mKey = "file:" + path();
-        return mKey;
-    }
-
     const std::string& name() const
     {
         return mName;
@@ -70,8 +63,6 @@ public:
 private:
     FsDirectorySPtr mDirectory;
     std::string mName;
-
-    mutable std::string mKey;
 };
 
 typedef std::unordered_set<FsFileSPtr> FsFileSet;
@@ -85,16 +76,18 @@ struct FsFileSetHasher
         vector.insert(vector.begin(), files->begin(), files->end());
         std::sort(vector.begin(), vector.end());
 
-        std::size_t hash = 0;
+        std::size_t seed = 0;
         for (const auto& file : vector)
-            hash ^ std::hash<FsFileSPtr>()(file);
+            boost::hash_combine(seed, hashFF(file));
 
-        return hash;
+        return seed;
     }
 
     bool operator()(const FsFileSetSPtr& files1, const FsFileSetSPtr& files2) const
     {
         return *files1 == *files2;
     }
+
+    std::hash<FsFileSPtr> hashFF;
 };
 }

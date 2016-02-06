@@ -24,10 +24,9 @@ public:
     ECode open(const std::string& file);
     void close();
 
-    template <typename K, typename V>
-    ECode get(const std::shared_ptr<K>& object, V& value)
+    template <typename V>
+    ECode get(const std::experimental::string_view& key, V& value)
     {
-        const auto& key = object->key();
         V dflt = V();
 
         std::string buffer;
@@ -39,10 +38,9 @@ public:
         EHEnd;
     }
 
-    template <typename K, typename V>
-    ECode put(const std::shared_ptr<K>& object, const V& value)
+    template <typename V>
+    ECode put(const std::experimental::string_view& key, const V& value)
     {
-        const auto& key = object->key();
         EHTest(put(key,
                    std::experimental::string_view(reinterpret_cast<const char*>(&value),
                                                   sizeof(value))));
@@ -60,6 +58,14 @@ public:
 private:
     std::unique_ptr<rocksdb::DB> mRocksDb;
 };
+
+template <>
+inline ECode Database::put(const std::experimental::string_view& key,
+                           const std::string& value)
+{
+    EHTest(put(key, std::experimental::string_view(value)));
+    EHEnd;
+}
 
 typedef std::shared_ptr<Database> DatabaseSPtr;
 

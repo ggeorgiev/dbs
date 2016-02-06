@@ -4,8 +4,15 @@
 #pragma once
 
 #include "task/cxx/cxx_file_crc_task.h"
+#include "task/db/db_put_task.h"
+#include "task/sys/ensure_directory_task.h"
+#include "task/sys/execute_command_task.h"
 #include "dom/cxx/cxx_program.hpp"
 #include "doim/cxx/cxx_file.hpp"
+#include "doim/db/db_key.hpp"
+#include "doim/db/db_value.hpp"
+#include "doim/sys/argument.hpp"
+#include "doim/sys/command.hpp"
 #include "db/database.h"
 #include <memory>
 #include <set>
@@ -20,89 +27,97 @@ typedef std::shared_ptr<CxxCompiler> CxxCompilerSPtr;
 class CxxCompiler
 {
 public:
-    CxxCompiler(const doim::FsFileSPtr& binary)
-        : mBinary(binary)
+    CxxCompiler(const doim::SysExecutableSPtr& compiler)
+        : mCompiler(compiler)
     {
     }
 
-    std::string commandArg(const doim::FsDirectorySPtr& directory,
-                           const doim::CxxIncludeDirectorySetSPtr& includeDirectories)
+    doim::SysArgumentSetSPtr includeArguments(
+        const doim::FsDirectorySPtr& directory,
+        const doim::CxxIncludeDirectorySetSPtr& includeDirectories)
     {
-        std::vector<doim::FsDirectorySPtr> users;
-        std::vector<doim::FsDirectorySPtr> systems;
+        auto arguments = std::make_shared<doim::SysArgumentSet>();
 
         for (const auto& includeDirectory : *includeDirectories)
         {
+            std::string value;
             switch (includeDirectory->type())
             {
                 case doim::CxxIncludeDirectory::Type::kUser:
-                    users.push_back(includeDirectory->directory());
+                    value = "-I ";
                     break;
                 case doim::CxxIncludeDirectory::Type::kSystem:
-                    systems.push_back(includeDirectory->directory());
+                    value = "-isystem ";
                     break;
             }
+
+            value += includeDirectory->directory()->path(directory);
+
+            arguments->insert(doim::gManager->obtainArgument(value));
         }
 
-        std::sort(systems.begin(), systems.end());
-        systems.erase(std::unique(systems.begin(), systems.end()), systems.end());
-
-        std::sort(users.begin(), users.end());
-        users.erase(std::unique(users.begin(), users.end()), users.end());
-
-        std::stringstream stream;
-        for (const auto& dir : systems)
-            stream << " -isystem " << dir->path(directory);
-        for (const auto& dir : users)
-            stream << " -I " << dir->path(directory);
-        return stream.str();
+        return arguments;
     }
 
-    ECode command(const doim::FsDirectorySPtr& directory,
-                  const doim::CxxObjectFileSPtr& objectFile,
-                  std::string& cmd)
+    ECode tasks(const doim::FsDirectorySPtr& directory,
+                const doim::CxxObjectFileSPtr& objectFile,
+                std::vector<tpool::TaskSPtr>& tasks)
     {
-        cmd.clear();
-
         auto task = std::make_shared<task::CxxFileCrcTask>(objectFile->cxxFile());
         EHTest((*task)(), objectFile->file()->path());
 
+        auto key = std::make_shared<doim::DbKey>("file:" +
+                                                 objectFile->cxxFile()->file()->path());
+        key = doim::gManager->unique(key);
+
         uint64_t crc;
-        db::gDatabase->get(objectFile->cxxFile()->file(), crc);
+        db::gDatabase->get(key->bytes(), crc);
 
         if (task->crc() == crc)
             EHEnd;
 
-        db::gDatabase->put(objectFile->cxxFile()->file(), task->crc());
+        std::cout << "set crc:" << crc << " expected: " << task->crc() << std::endl;
 
-        std::stringstream stream;
-        stream << "mkdir -p " << objectFile->file()->directory()->path(directory) << "\n";
+        auto mkdirTask =
+            std::make_shared<task::EnsureDirectoryTask>(objectFile->file()->directory());
+        tasks.push_back(mkdirTask);
 
-        stream << mBinary->path(directory);
-        stream << " $CXXFLAGS";
+        auto compileArguments =
+            includeArguments(directory, objectFile->cxxFile()->cxxIncludeDirectories());
 
-        stream << " -c " << objectFile->cxxFile()->file()->path(directory);
-        stream << " -o " << objectFile->file()->path(directory);
+        auto argument_cxxflags = doim::gManager->obtainArgument(
+            "-std=c++11 -stdlib=libc++ "
+            "-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/"
+            "MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk");
+        compileArguments->insert(argument_cxxflags);
 
-        stream << commandArg(directory, objectFile->cxxFile()->cxxIncludeDirectories());
+        auto argument_c = doim::gManager->obtainArgument(
+            "-c " + objectFile->cxxFile()->file()->path(directory));
+        compileArguments->insert(argument_c);
 
-        stream << " || exit 1\n";
-        cmd = stream.str();
+        auto argument_o =
+            doim::gManager->obtainArgument("-o " + objectFile->file()->path(directory));
+        compileArguments->insert(argument_o);
+
+        auto compileCommand =
+            std::make_shared<doim::SysCommand>(mCompiler, compileArguments);
+        auto compileTask = std::make_shared<task::ExecuteCommandTask>(compileCommand);
+        tasks.push_back(compileTask);
+
+        auto value = std::make_shared<doim::DbValue>(task->crc());
+        auto updateTask = std::make_shared<task::DbPutTask>(key, value);
+        tasks.push_back(updateTask);
+
         EHEnd;
     }
 
-    ECode command(const doim::FsDirectorySPtr& directory,
-                  const dom::CxxProgramSPtr& program,
-                  std::string& cmd)
+    ECode commands(const doim::FsDirectorySPtr& directory,
+                   const dom::CxxProgramSPtr& program,
+                   std::string& cmd)
     {
         const auto& intermediate = doim::gManager->obtainDirectory(directory, "build");
 
         std::stringstream stream;
-
-        stream << "CXXFLAGS=\"-std=c++11 -stdlib=libc++\"\n"
-               << "CXXFLAGS=\"$CXXFLAGS -isysroot "
-                  "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/"
-                  "Developer/SDKs/MacOSX10.11.sdk\"\n";
 
         std::set<std::string> files;
 
@@ -125,9 +140,14 @@ public:
                 for (const auto& objectFile : objectFiles)
                 {
                     files.insert(objectFile->cxxFile()->file()->path(directory));
-                    std::string cmd;
-                    EHTest(command(directory, objectFile, cmd));
-                    stream << cmd;
+                    std::vector<tpool::TaskSPtr> tsks;
+                    EHTest(tasks(directory, objectFile, tsks));
+                    for (auto task : tsks)
+                    {
+                        ILOG("RUN: " + task->description());
+                        EHTest((*task)());
+                        ILOG("DONE: " + task->description());
+                    }
                 }
             }
         }
@@ -136,9 +156,15 @@ public:
         for (const auto& objectFile : objectFiles)
         {
             files.insert(objectFile->cxxFile()->file()->path(directory));
-            std::string cmd;
-            EHTest(command(directory, objectFile, cmd));
-            stream << cmd;
+
+            std::vector<tpool::TaskSPtr> tsks;
+            EHTest(tasks(directory, objectFile, tsks));
+            for (auto task : tsks)
+            {
+                ILOG("RUN: " + task->description());
+                EHTest((*task)());
+                ILOG("DONE: " + task->description());
+            }
         }
 
         std::stringstream objFilesStream;
@@ -151,7 +177,7 @@ public:
         for (const auto& lib_binary : lib_binaries)
             objFilesStream << " -l" << lib_binary;
 
-        stream << mBinary->path(directory) << " $OPTOMIZATION $CXXFLAGS \\\n"
+        stream << mCompiler->path(directory) << "\\\n"
                << "    " << objFilesStream.str() << "\\\n"
                << "    -o build/" << program->name() << " || exit 1\n"
                << "echo done.\n";
@@ -161,6 +187,6 @@ public:
     }
 
 private:
-    doim::FsFileSPtr mBinary;
+    doim::SysExecutableSPtr mCompiler;
 };
 }

@@ -43,6 +43,8 @@ public:
         EHEnd;
     };
 
+    virtual std::string description() const = 0;
+
     ECode run()
     {
         EHTest((*this)());

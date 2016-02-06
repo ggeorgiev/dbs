@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "doim/manager.h"
@@ -127,6 +127,47 @@ FsFileSPtr Manager::createFile(const FsDirectorySPtr& base,
 
     return std::make_shared<FsFile>(directory,
                                     std::string(file.begin() + pos, file.end()));
+}
+
+std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectory& directory)
+{
+    out << "type:";
+    switch (directory.type())
+    {
+        case CxxIncludeDirectory::Type::kUser:
+            out << "user";
+            break;
+        case CxxIncludeDirectory::Type::kSystem:
+            out << "system";
+            break;
+    }
+    out << std::endl << "directory: " << directory.directory()->path() << std::endl;
+    for (const auto& header : *directory.headerFiles())
+        out << *header << std::endl;
+    return out;
+}
+
+std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectorySet& directories)
+{
+    for (const auto& directory : directories)
+        out << *directory << std::endl;
+    return out;
+}
+
+std::ostream& operator<<(std::ostream& out, const CxxHeader& header)
+{
+    out << "type:";
+    switch (header.type())
+    {
+        case CxxHeader::Type::kUser:
+            out << "user";
+            break;
+        case CxxHeader::Type::kSystem:
+            out << "system";
+            break;
+    }
+    out << std::endl << "file: " << header.file()->path() << std::endl;
+    return out;
 }
 
 } // namespace doim

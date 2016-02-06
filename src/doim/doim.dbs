@@ -9,8 +9,13 @@ cxx_library doim
         doim/cxx/cxx_header.hpp
         doim/cxx/cxx_include_directory.hpp
         doim/cxx/cxx_object_file.hpp
+        doim/db/db_key.hpp
+        doim/db/db_value.hpp
         doim/fs/fs_directory.hpp
         doim/fs/fs_file.hpp
+        doim/sys/argument.hpp
+        doim/sys/command.hpp
+        doim/sys/executable.hpp
         doim/generic/location.hpp
         doim/generic/object.hpp
         doim/manager.h

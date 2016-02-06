@@ -43,17 +43,17 @@ public:
         ASSERT(mDirectory != nullptr);
     }
 
-    Type type()
+    Type type() const
     {
         return mType;
     }
 
-    const FsDirectorySPtr& directory()
+    const FsDirectorySPtr& directory() const
     {
         return mDirectory;
     }
 
-    const CxxHeaderSetSPtr& headerFiles()
+    const CxxHeaderSetSPtr& headerFiles() const
     {
         return mHeaderFiles;
     }
@@ -97,11 +97,11 @@ struct CxxIncludeDirectorySetHasher
         vector.insert(vector.begin(), directories->begin(), directories->end());
         std::sort(vector.begin(), vector.end());
 
-        std::size_t hash = 0;
+        std::size_t seed = 0;
         for (const auto& directory : vector)
-            hash ^ std::hash<CxxIncludeDirectorySPtr>()(directory);
+            boost::hash_combine(seed, hashCID(directory));
 
-        return hash;
+        return seed;
     }
 
     bool operator()(const CxxIncludeDirectorySetSPtr& directories1,
@@ -109,5 +109,7 @@ struct CxxIncludeDirectorySetHasher
     {
         return *directories1 == *directories2;
     }
+
+    std::hash<CxxIncludeDirectorySPtr> hashCID;
 };
 }

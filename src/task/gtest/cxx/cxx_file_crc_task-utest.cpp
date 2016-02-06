@@ -80,7 +80,7 @@ TEST_F(CxxFileCrcTaskTest, notFoundInclude)
     ASSERT_BANNED(kNotFound, (*task)());
 }
 
-TEST_F(CxxFileCrcTaskTest, includeFromOneDirectory)
+TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
 {
     auto cxxHeader1 = doim::gManager->unique(
         std::make_shared<doim::CxxHeader>(doim::CxxHeader::Type::kUser,

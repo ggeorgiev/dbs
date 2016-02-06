@@ -76,7 +76,10 @@ protected:
         }
 
         if (result.first == nullptr)
-            EHBan(kNotFound, include);
+            EHBan(kNotFound,
+                  include,
+                  EHPtr(currentIncludeDirectory),
+                  EHPtr(includeDirectories));
 
         headerDirectory = result;
         EHEnd;

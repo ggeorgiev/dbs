@@ -125,6 +125,34 @@ private:
     std::vector<Location> mCallstack;
 };
 
+template <typename T>
+class Ptr
+{
+public:
+    Ptr(const T& p)
+        : mP(p)
+    {
+    }
+
+    const T& mP;
+};
+
+template <typename T>
+Ptr<T> ptr(const T& p)
+{
+    return Ptr<T>(p);
+}
+
+template <typename T>
+std::ostream& operator<<(std::ostream& out, const Ptr<T>& p)
+{
+    if (p.mP == nullptr)
+        out << "null";
+    else
+        out << *p.mP;
+    return out;
+}
+
 typedef Error* ErrorRPtr;
 typedef std::unique_ptr<Error> ErrorUPtr;
 
@@ -132,6 +160,8 @@ extern thread_local ErrorUPtr gError;
 }
 
 using err::ECode;
+
+#define EHPtr(x) err::ptr(x)
 
 #define EH_CODE(code, ...) err::code
 

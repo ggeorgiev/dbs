@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
         if (program != nullptr)
         {
             std::string script;
-            code = compiler->command(cwd, program, script);
+            code = compiler->commands(cwd, program, script);
             if (code != err::kSuccess)
             {
                 std::cout << err::gError->message() << "\n";

@@ -23,7 +23,12 @@ public:
     {
     }
 
-    ECode operator()();
+    ECode operator()() override;
+
+    std::string description() const override
+    {
+        return "Crc of " + mCxxFile->file()->path();
+    }
 
     struct Hasher
     {

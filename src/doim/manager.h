@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-1016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -9,6 +9,9 @@
 #include "doim/cxx/cxx_object_file.hpp" // IWYU pragma: keep
 #include "doim/fs/fs_directory.hpp"
 #include "doim/fs/fs_file.hpp"
+#include "doim/sys/command.hpp"
+#include "doim/db/db_key.hpp"
+#include "doim/db/db_value.hpp"
 #include "doim/generic/location.hpp"
 #include "doim/generic/object.hpp"
 #include "im/initialization_manager.hpp"
@@ -49,16 +52,20 @@ protected:
     std::unordered_set<MixinObjectSPtr, Hasher, Hasher> mMixinObjects;
 };
 
-class Manager : public ManagerMixin<Object>,
+class Manager : public ManagerMixin<CxxFile>,
+                public ManagerMixin<CxxHeader>,
+                public ManagerMixin<CxxHeaderSet, CxxHeaderSetHasher>,
+                public ManagerMixin<CxxIncludeDirectory>,
+                public ManagerMixin<CxxIncludeDirectorySet, CxxIncludeDirectorySetHasher>,
+                public ManagerMixin<CxxObjectFile>,
+                public ManagerMixin<DbKey>,
                 public ManagerMixin<FsDirectory>,
                 public ManagerMixin<FsFile>,
                 public ManagerMixin<FsFileSet, FsFileSetHasher>,
-                public ManagerMixin<CxxIncludeDirectory>,
-                public ManagerMixin<CxxIncludeDirectorySet, CxxIncludeDirectorySetHasher>,
-                public ManagerMixin<CxxHeader>,
-                public ManagerMixin<CxxHeaderSet, CxxHeaderSetHasher>,
-                public ManagerMixin<CxxFile>,
-                public ManagerMixin<CxxObjectFile>
+                public ManagerMixin<Object>,
+                public ManagerMixin<SysArgument>,
+                public ManagerMixin<SysArgumentSet, SysArgumentSetHasher>,
+                public ManagerMixin<SysCommand>
 {
 public:
     static inline int initialization_rank()
@@ -131,9 +138,38 @@ public:
     using ManagerMixin<CxxFile>::unique;
     using ManagerMixin<CxxObjectFile>::unique;
 
+    using ManagerMixin<DbKey>::unique;
+
+    using ManagerMixin<SysArgument>::unique;
+    using ManagerMixin<SysArgumentSet, SysArgumentSetHasher>::unique;
+
+    SysExecutableSPtr obtainExecutable(const FsDirectorySPtr& base,
+                                       const std::experimental::string_view& file)
+    {
+        return obtainFile(base, file);
+    }
+
+    SysArgumentSPtr obtainArgument(const std::string& value)
+    {
+        return unique(std::make_shared<doim::SysArgument>(value));
+    }
+
+    SysArgumentSetSPtr obtainArguments(const SysArgumentSPtr argument)
+    {
+        auto arguments = std::make_shared<SysArgumentSet>();
+        arguments->insert(argument);
+        return unique(arguments);
+    }
+
+    using ManagerMixin<SysCommand>::unique;
+
 private:
     std::unordered_map<FsFileSPtr, CxxHeaderSPtr> mFile2CxxHeader;
 };
+
+std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectory& directory);
+std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectorySet& directories);
+std::ostream& operator<<(std::ostream& out, const CxxHeader& header);
 
 typedef std::shared_ptr<Manager> ManagerSPtr;
 
