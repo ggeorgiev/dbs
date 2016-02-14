@@ -117,20 +117,19 @@ public:
     {
         const auto& intermediate = doim::gManager->obtainDirectory(directory, "build");
 
-        std::stringstream stream;
-
-        std::set<std::string> files;
-
-        std::set<std::string> lib_directories;
-        std::set<std::string> lib_binaries;
+        auto arguments = std::make_shared<doim::SysArgumentSet>();
         for (const auto& cxxLibrary : program->recursiveCxxLibraries())
         {
             if (cxxLibrary->binary() != nullptr)
             {
-                lib_directories.insert(
-                    cxxLibrary->binary()->directory()->path(directory));
+                auto argument_L = doim::gManager->obtainArgument(
+                    "-L " + cxxLibrary->binary()->directory()->path(directory));
+                arguments->insert(argument_L);
+
                 std::string name = cxxLibrary->binary()->name();
-                lib_binaries.insert(name.substr(3, name.size() - 5));
+                auto argument_l = doim::gManager->obtainArgument(
+                    "-l" + name.substr(3, name.size() - 5));
+                arguments->insert(argument_l);
             }
             else
             {
@@ -139,7 +138,10 @@ public:
 
                 for (const auto& objectFile : objectFiles)
                 {
-                    files.insert(objectFile->cxxFile()->file()->path(directory));
+                    auto argument_obj = doim::gManager->obtainArgument(
+                        objectFile->file()->path(directory));
+                    arguments->insert(argument_obj);
+
                     std::vector<tpool::TaskSPtr> tsks;
                     EHTest(tasks(directory, objectFile, tsks));
                     for (auto task : tsks)
@@ -155,7 +157,9 @@ public:
         const auto& objectFiles = program->cxxObjectFiles(directory, intermediate);
         for (const auto& objectFile : objectFiles)
         {
-            files.insert(objectFile->cxxFile()->file()->path(directory));
+            auto argument_obj =
+                doim::gManager->obtainArgument(objectFile->file()->path(directory));
+            arguments->insert(argument_obj);
 
             std::vector<tpool::TaskSPtr> tsks;
             EHTest(tasks(directory, objectFile, tsks));
@@ -167,22 +171,16 @@ public:
             }
         }
 
-        std::stringstream objFilesStream;
-        for (const auto& file : files)
-            objFilesStream << " build/" << file << ".o";
+        auto argument_o = doim::gManager->obtainArgument("-o build/" + program->name());
+        arguments->insert(argument_o);
 
-        for (const auto& lib_directory : lib_directories)
-            objFilesStream << " -L" << lib_directory;
+        auto linkCommand = std::make_shared<doim::SysCommand>(mCompiler, arguments);
 
-        for (const auto& lib_binary : lib_binaries)
-            objFilesStream << " -l" << lib_binary;
+        auto linkTask = std::make_shared<task::ExecuteCommandTask>(linkCommand);
 
-        stream << mCompiler->path(directory) << "\\\n"
-               << "    " << objFilesStream.str() << "\\\n"
-               << "    -o build/" << program->name() << " || exit 1\n"
-               << "echo done.\n";
-
-        cmd = stream.str();
+        ILOG("RUN: " + linkTask->description());
+        EHTest((*linkTask)());
+        ILOG("DONE: " + linkTask->description());
         EHEnd;
     }
 
