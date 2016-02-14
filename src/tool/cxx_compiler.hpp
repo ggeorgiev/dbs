@@ -91,8 +91,9 @@ public:
             "MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk");
         compileArguments->insert(argument_cxxflags);
 
-        auto argument_c = doim::gManager->obtainArgument(
-            "-c " + objectFile->cxxFile()->file()->path(directory));
+        const std::string& file = objectFile->cxxFile()->file()->path(directory);
+
+        auto argument_c = doim::gManager->obtainArgument("-c " + file);
         compileArguments->insert(argument_c);
 
         auto argument_o =
@@ -101,7 +102,8 @@ public:
 
         auto compileCommand =
             std::make_shared<doim::SysCommand>(mCompiler, compileArguments);
-        auto compileTask = std::make_shared<task::ExecuteCommandTask>(compileCommand);
+        auto compileTask = std::make_shared<task::ExecuteCommandTask>(compileCommand,
+                                                                      "compile: " + file);
         tasks.push_back(compileTask);
 
         auto value = std::make_shared<doim::DbValue>(task->crc());
@@ -176,7 +178,9 @@ public:
 
         auto linkCommand = std::make_shared<doim::SysCommand>(mCompiler, arguments);
 
-        auto linkTask = std::make_shared<task::ExecuteCommandTask>(linkCommand);
+        auto linkTask =
+            std::make_shared<task::ExecuteCommandTask>(linkCommand,
+                                                       "link: " + program->name());
 
         ILOG("RUN: " + linkTask->description());
         EHTest((*linkTask)());

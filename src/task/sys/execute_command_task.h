@@ -17,8 +17,9 @@ typedef std::shared_ptr<ExecuteCommandTask> ExecuteCommandTaskSPtr;
 class ExecuteCommandTask : public tpool::Task
 {
 public:
-    ExecuteCommandTask(const doim::SysCommandSPtr& command)
+    ExecuteCommandTask(const doim::SysCommandSPtr& command, const std::string description)
         : tpool::Task(0)
+        , mDescription(description)
         , mCommand(command)
     {
     }
@@ -27,6 +28,8 @@ public:
 
     std::string description() const override
     {
+        if (!mDescription.empty())
+            return mDescription;
         return "Execute command " + mCommand->string();
     }
 
@@ -47,6 +50,7 @@ public:
     };
 
 private:
+    std::string mDescription;
     doim::SysCommandSPtr mCommand;
 };
 }
