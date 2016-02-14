@@ -86,7 +86,7 @@ public:
             includeArguments(directory, objectFile->cxxFile()->cxxIncludeDirectories());
 
         auto argument_cxxflags = doim::gManager->obtainArgument(
-            "-std=c++11 -stdlib=libc++ "
+            "-std=c++11 -stdlib=libc++ -O0 -g "
             "-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/"
             "MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk");
         compileArguments->insert(argument_cxxflags);

@@ -65,6 +65,7 @@ int main(int argc, char* argv[])
     auto file = doim::gManager->obtainFile(cwd, arg[1]);
 
     auto db = doim::gManager->obtainDirectory(cwd, "build/db");
+
     ECode code = db::gDatabase->open(db->path());
     if (code != err::kSuccess)
     {

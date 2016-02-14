@@ -3,6 +3,7 @@
 
 #include "doim/fs/fs_directory.hpp"
 #include "doim/manager.h"
+#include "db/database.h"
 #include "im/initialization_manager.hpp"
 #include "gtest/gtest.h"
 #include "gtest/performance_arbiter.h"
@@ -33,6 +34,16 @@ int main(int argc, char* argv[])
     testing::gIntermittentFsDirectory =
         doim::gManager->obtainDirectory(cwd, "build/test");
     testing::gIntermittentDirectory = testing::gIntermittentFsDirectory->path();
+
+    auto db =
+        doim::gManager->obtainDirectory(testing::gIntermittentFsDirectory, "build/db");
+    ECode code = db::gDatabase->open(db->path());
+    if (code != err::kSuccess)
+    {
+        std::cout << err::gError->message() << "\n";
+        std::cout << err::gError->callstack() << "\n";
+        return 1;
+    }
 
     testing::gTestResourceDirectory =
         doim::gManager->obtainDirectory(cwd, "test_resource");

@@ -10,9 +10,10 @@
 #define ASSERT_BANNED(expected, expression)                                              \
     do                                                                                   \
     {                                                                                    \
-        EXPECT_NE(err::expected, err::kSuccess);                                         \
+        ASSERT_NE(err::expected, err::kSuccess);                                         \
                                                                                          \
         ECode code = (expression);                                                       \
+        ASSERT_NE(code, err::kSuccess);                                                  \
         EXPECT_EQ(err::expected, code) << "The error is different: <" << err::name(code) \
                                        << " | " << code << ">" << std::endl              \
                                        << err::gError->message() << std::endl            \

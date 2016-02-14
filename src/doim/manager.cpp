@@ -141,7 +141,7 @@ std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectory& directory
             out << "system";
             break;
     }
-    out << std::endl << "directory: " << directory.directory()->path() << std::endl;
+    out << ", directory: " << directory.directory()->path() << std::endl;
     for (const auto& header : *directory.headerFiles())
         out << *header << std::endl;
     return out;
@@ -156,7 +156,7 @@ std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectorySet& direct
 
 std::ostream& operator<<(std::ostream& out, const CxxHeader& header)
 {
-    out << "type:";
+    out << "header { type: ";
     switch (header.type())
     {
         case CxxHeader::Type::kUser:
@@ -166,7 +166,7 @@ std::ostream& operator<<(std::ostream& out, const CxxHeader& header)
             out << "system";
             break;
     }
-    out << std::endl << "file: " << header.file()->path() << std::endl;
+    out << ", file: " << header.file()->path() << "}" << std::endl;
     return out;
 }
 
