@@ -5,6 +5,7 @@
 
 #include "dom/cxx/cxx_files_mixin.hpp"
 #include "dom/cxx/cxx_library.hpp"
+#include "doim/cxx/cxx_program.hpp"
 #include "doim/fs/fs_file.hpp"
 #include "err/err.h"
 #include <memory>
@@ -31,15 +32,15 @@ public:
         return result;
     }
 
-    std::string name()
-    {
-        return mName;
-    }
-
     ECode updateName(const std::string& name)
     {
         mName = name;
         EHEnd;
+    }
+
+    std::string name() const
+    {
+        return mName;
     }
 
     ECode updateCxxLibraries(std::unordered_set<CxxLibrarySPtr>& libraries)
@@ -48,13 +49,34 @@ public:
         EHEnd;
     }
 
-    const std::unordered_set<CxxLibrarySPtr>& cxxLibraries()
+    const std::unordered_set<CxxLibrarySPtr>& cxxLibraries() const
     {
         return mCxxLibraries;
     }
 
     // Computations
-    std::unordered_set<CxxLibrarySPtr> recursiveCxxLibraries()
+    doim::CxxProgramSPtr cxxProgram(const doim::FsDirectorySPtr& root,
+                                    const doim::FsDirectorySPtr& intermediate) const
+    {
+        auto objectFiles = std::make_shared<doim::CxxObjectFileSet>();
+        *objectFiles = cxxObjectFiles(root, intermediate);
+
+        for (const auto& cxxLibrary : recursiveCxxLibraries())
+        {
+            if (cxxLibrary->binary() != nullptr)
+                continue;
+
+            const auto& libObjectFiles = cxxLibrary->cxxObjectFiles(root, intermediate);
+            objectFiles->insert(libObjectFiles.begin(), libObjectFiles.end());
+        }
+
+        const auto& outputFile = doim::gManager->obtainFile(intermediate, name());
+
+        auto program = std::make_shared<doim::CxxProgram>(outputFile, objectFiles);
+        return doim::gManager->unique(program);
+    }
+
+    std::unordered_set<CxxLibrarySPtr> recursiveCxxLibraries() const
     {
         std::unordered_set<CxxLibrarySPtr> libraries = mCxxLibraries;
         for (const auto& cxxLibrary : mCxxLibraries)

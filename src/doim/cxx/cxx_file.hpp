@@ -61,4 +61,30 @@ private:
     FsFileSPtr mFile;
     CxxIncludeDirectorySetSPtr mCxxIncludeDirectories;
 };
+
+typedef std::unordered_set<CxxFileSPtr> CxxFileSet;
+typedef std::shared_ptr<CxxFileSet> CxxFileSetSPtr;
+
+struct CxxFileSetHasher
+{
+    std::size_t operator()(const CxxFileSetSPtr& files) const
+    {
+        std::vector<CxxFileSPtr> vector(files->size());
+        vector.insert(vector.begin(), files->begin(), files->end());
+        std::sort(vector.begin(), vector.end());
+
+        std::size_t seed = 0;
+        for (const auto& file : vector)
+            boost::hash_combine(seed, hashCF(file));
+
+        return seed;
+    }
+
+    bool operator()(const CxxFileSetSPtr& files1, const CxxFileSetSPtr& files2) const
+    {
+        return *files1 == *files2;
+    }
+
+    std::hash<CxxFileSPtr> hashCF;
+};
 }

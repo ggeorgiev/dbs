@@ -1,0 +1,19 @@
+cxx_library math
+    @type=user:
+
+    cxx_header
+        @visibility=public
+        @directory=..:
+
+        math/crc.hpp
+    ;
+
+    cxx_library:
+        ../system/stl
+
+        ../3rdparty/boost_template
+    ;
+
+    cxx_file:
+    ;
+;

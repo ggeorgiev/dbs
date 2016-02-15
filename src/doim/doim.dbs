@@ -9,6 +9,7 @@ cxx_library doim
         doim/cxx/cxx_header.hpp
         doim/cxx/cxx_include_directory.hpp
         doim/cxx/cxx_object_file.hpp
+        doim/cxx/cxx_program.hpp
         doim/db/db_key.hpp
         doim/db/db_value.hpp
         doim/fs/fs_directory.hpp

@@ -5,6 +5,7 @@
 
 #include "task/cxx/cxx_file_crc_task.h"   // IWYU pragma: keep
 #include "task/cxx/cxx_header_crc_task.h" // IWYU pragma: keep
+#include "task/cxx/cxx_program_crc_task.h"
 #include "im/initialization_manager.hpp"
 #include <memory>
 #include <unordered_set>
@@ -31,7 +32,9 @@ protected:
     std::unordered_set<TaskSPtr, Hasher, Hasher> mTasks;
 };
 
-class Manager : public ManagerMixin<CxxFileCrcTask>, public ManagerMixin<CxxHeaderCrcTask>
+class Manager : public ManagerMixin<CxxFileCrcTask>,
+                public ManagerMixin<CxxHeaderCrcTask>,
+                public ManagerMixin<CxxProgramCrcTask>
 {
 public:
     static inline int initialization_rank()
@@ -42,6 +45,7 @@ public:
 
     using ManagerMixin<CxxFileCrcTask>::valid;
     using ManagerMixin<CxxHeaderCrcTask>::valid;
+    using ManagerMixin<CxxProgramCrcTask>::valid;
 };
 
 typedef std::shared_ptr<Manager> ManagerSPtr;

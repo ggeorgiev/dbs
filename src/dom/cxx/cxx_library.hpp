@@ -132,7 +132,7 @@ public:
         }
     }
 
-    std::unordered_set<CxxLibrarySPtr> recursiveCxxLibraries()
+    std::unordered_set<CxxLibrarySPtr> recursiveCxxLibraries() const
     {
         std::unordered_set<CxxLibrarySPtr> libraries = mCxxLibraries;
         for (const auto& cxxLibrary : mCxxLibraries)

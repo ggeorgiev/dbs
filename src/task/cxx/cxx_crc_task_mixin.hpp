@@ -8,7 +8,7 @@
 #include "doim/cxx/cxx_file.hpp"
 #include "doim/manager.h"
 #include "log/log.h"
-#include <boost/crc.hpp>
+#include "math/crc.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/system/error_code.hpp>
 #include <fstream>
@@ -19,16 +19,14 @@ namespace task
 class CxxCrcTaskMixin : public tpool::Task
 {
 public:
-    typedef boost::crc_optimal<64, 0x04C11DB7, 0, 0, false, false> Crc;
-
     CxxCrcTaskMixin()
         : tpool::Task(0)
     {
     }
 
-    uint64_t crc()
+    math::Crcsum crc()
     {
-        return mCrc64;
+        return mCrcsum;
     }
 
 protected:
@@ -90,13 +88,13 @@ protected:
                     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
                     const doim::CxxIncludeDirectorySetSPtr& includeDirectories)
     {
-        Crc crc;
+        math::CrcProcessor crcProcessor;
 
         std::ifstream fstream(file->path(nullptr));
         std::string content((std::istreambuf_iterator<char>(fstream)),
                             std::istreambuf_iterator<char>());
 
-        crc.process_bytes(content.data(), content.size());
+        crcProcessor.process_bytes(content.data(), content.size());
 
         parser::CxxParser parser;
 
@@ -129,12 +127,12 @@ protected:
 
         std::sort(crcs.begin(), crcs.end());
 
-        crc.process_bytes(crcs.data(), sizeof(uint64_t) * crcs.size());
-        mCrc64 = crc.checksum();
+        crcProcessor.process_bytes(crcs.data(), sizeof(uint64_t) * crcs.size());
+        mCrcsum = crcProcessor.checksum();
 
         EHEnd;
     }
 
-    uint64_t mCrc64;
+    math::Crcsum mCrcsum;
 };
 }

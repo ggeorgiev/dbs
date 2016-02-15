@@ -14,8 +14,6 @@ CxxHeaderCrcTaskSPtr CxxHeaderCrcTask::valid(const CxxHeaderCrcTaskSPtr& task)
 
 ECode CxxHeaderCrcTask::operator()()
 {
-    Crc crc;
-
     doim::CxxHeaderSet includes;
     EHTest(calculate<CxxHeaderCrcTask>(mCxxHeader->file(),
                                        mCurrentIncludeDirectory,

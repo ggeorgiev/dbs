@@ -9,6 +9,11 @@
 
 namespace task
 {
+CxxFileCrcTask::CxxFileCrcTask(const doim::CxxFileSPtr& cxxFile)
+    : mCxxFile(cxxFile)
+{
+}
+
 ECode CxxFileCrcTask::operator()()
 {
     doim::CxxHeaderSet includes;
@@ -16,7 +21,13 @@ ECode CxxFileCrcTask::operator()()
                                        nullptr,
                                        mCxxFile->cxxIncludeDirectories()));
 
-    DLOG("Crc for {0} is {1:x}", mCxxFile->file()->name(), mCrc64);
+    DLOG("Crc for {0} is {1:x}", mCxxFile->file()->name(), mCrcsum);
     EHEnd;
 }
+
+std::string CxxFileCrcTask::description() const
+{
+    return "Crc of " + mCxxFile->file()->path();
+}
+
 } // namespace task

@@ -30,7 +30,7 @@ ECode ExecuteCommandTask::operator()()
             result += buffer;
     }
     std::cout << result;
-    if (pclose(pipe) == -1)
+    if (pclose(pipe) != 0)
         EHBan(kUnable, cmd);
 
     EHEnd;

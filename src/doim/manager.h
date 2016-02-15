@@ -7,6 +7,7 @@
 #include "doim/cxx/cxx_header.hpp"
 #include "doim/cxx/cxx_include_directory.hpp"
 #include "doim/cxx/cxx_object_file.hpp" // IWYU pragma: keep
+#include "doim/cxx/cxx_program.hpp"
 #include "doim/fs/fs_directory.hpp"
 #include "doim/fs/fs_file.hpp"
 #include "doim/sys/command.hpp"
@@ -58,6 +59,7 @@ class Manager : public ManagerMixin<CxxFile>,
                 public ManagerMixin<CxxIncludeDirectory>,
                 public ManagerMixin<CxxIncludeDirectorySet, CxxIncludeDirectorySetHasher>,
                 public ManagerMixin<CxxObjectFile>,
+                public ManagerMixin<CxxProgram>,
                 public ManagerMixin<DbKey>,
                 public ManagerMixin<FsDirectory>,
                 public ManagerMixin<FsFile>,
@@ -137,6 +139,7 @@ public:
 
     using ManagerMixin<CxxFile>::unique;
     using ManagerMixin<CxxObjectFile>::unique;
+    using ManagerMixin<CxxProgram>::unique;
 
     using ManagerMixin<DbKey>::unique;
 

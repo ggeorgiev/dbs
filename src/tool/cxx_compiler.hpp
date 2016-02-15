@@ -4,6 +4,7 @@
 #pragma once
 
 #include "task/cxx/cxx_file_crc_task.h"
+#include "task/cxx/cxx_program_crc_task.h"
 #include "task/db/db_put_task.h"
 #include "task/sys/ensure_directory_task.h"
 #include "task/sys/execute_command_task.h"
@@ -70,7 +71,7 @@ public:
                                                  objectFile->cxxFile()->file()->path());
         key = doim::gManager->unique(key);
 
-        uint64_t crc;
+        math::Crcsum crc;
         db::gDatabase->get(key->bytes(), crc);
 
         if (task->crc() == crc)
@@ -118,6 +119,24 @@ public:
                    std::string& cmd)
     {
         const auto& intermediate = doim::gManager->obtainDirectory(directory, "build");
+        const auto& cxxProgram = program->cxxProgram(directory, intermediate);
+
+        auto task = std::make_shared<task::CxxProgramCrcTask>(cxxProgram);
+        EHTest((*task)(), program->name());
+
+        auto key = std::make_shared<doim::DbKey>("program:" + program->name());
+        key = doim::gManager->unique(key);
+
+        math::Crcsum crc;
+        db::gDatabase->get(key->bytes(), crc);
+
+        if (task->crc() == crc)
+        {
+            cmd = "";
+            EHEnd;
+        }
+
+        std::cout << "set crc:" << crc << " expected: " << task->crc() << std::endl;
 
         auto arguments = std::make_shared<doim::SysArgumentSet>();
         for (const auto& cxxLibrary : program->recursiveCxxLibraries())
@@ -133,31 +152,10 @@ public:
                     "-l" + name.substr(3, name.size() - 5));
                 arguments->insert(argument_l);
             }
-            else
-            {
-                const auto& objectFiles =
-                    cxxLibrary->cxxObjectFiles(directory, intermediate);
-
-                for (const auto& objectFile : objectFiles)
-                {
-                    auto argument_obj = doim::gManager->obtainArgument(
-                        objectFile->file()->path(directory));
-                    arguments->insert(argument_obj);
-
-                    std::vector<tpool::TaskSPtr> tsks;
-                    EHTest(tasks(directory, objectFile, tsks));
-                    for (auto task : tsks)
-                    {
-                        ILOG("RUN: " + task->description());
-                        EHTest((*task)());
-                        ILOG("DONE: " + task->description());
-                    }
-                }
-            }
         }
 
-        const auto& objectFiles = program->cxxObjectFiles(directory, intermediate);
-        for (const auto& objectFile : objectFiles)
+        const auto& objectFiles = cxxProgram->cxxObjectFiles();
+        for (const auto& objectFile : *objectFiles)
         {
             auto argument_obj =
                 doim::gManager->obtainArgument(objectFile->file()->path(directory));
@@ -185,6 +183,14 @@ public:
         ILOG("RUN: " + linkTask->description());
         EHTest((*linkTask)());
         ILOG("DONE: " + linkTask->description());
+
+        auto value = std::make_shared<doim::DbValue>(task->crc());
+        auto updateTask = std::make_shared<task::DbPutTask>(key, value);
+
+        ILOG("RUN: " + updateTask->description());
+        EHTest((*updateTask)());
+        ILOG("DONE: " + updateTask->description());
+
         EHEnd;
     }
 

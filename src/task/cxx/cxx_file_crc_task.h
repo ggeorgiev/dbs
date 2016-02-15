@@ -18,33 +18,31 @@ typedef std::shared_ptr<CxxFileCrcTask> CxxFileCrcTaskSPtr;
 class CxxFileCrcTask : public CxxCrcTaskMixin
 {
 public:
-    CxxFileCrcTask(const doim::CxxFileSPtr& cxxFile)
-        : mCxxFile(cxxFile)
-    {
-    }
+    CxxFileCrcTask(const doim::CxxFileSPtr& cxxFile);
 
     ECode operator()() override;
-
-    std::string description() const override
-    {
-        return "Crc of " + mCxxFile->file()->path();
-    }
+    std::string description() const override;
 
     struct Hasher
     {
-        std::size_t operator()(const CxxFileCrcTaskSPtr& task) const
-        {
-            return std::hash<doim::CxxFileSPtr>()(task->mCxxFile);
-        }
-
+        std::size_t operator()(const CxxFileCrcTaskSPtr& task) const;
         bool operator()(const CxxFileCrcTaskSPtr& task1,
-                        const CxxFileCrcTaskSPtr& task2) const
-        {
-            return task1->mCxxFile == task2->mCxxFile;
-        }
+                        const CxxFileCrcTaskSPtr& task2) const;
     };
 
 private:
     doim::CxxFileSPtr mCxxFile;
 };
+
+inline std::size_t CxxFileCrcTask::Hasher::operator()(
+    const CxxFileCrcTaskSPtr& task) const
+{
+    return std::hash<doim::CxxFileSPtr>()(task->mCxxFile);
+}
+
+inline bool CxxFileCrcTask::Hasher::operator()(const CxxFileCrcTaskSPtr& task1,
+                                               const CxxFileCrcTaskSPtr& task2) const
+{
+    return task1->mCxxFile == task2->mCxxFile;
+}
 }
