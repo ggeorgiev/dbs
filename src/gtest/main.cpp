@@ -1,7 +1,7 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "doim/fs/fs_directory.hpp"
+#include "doim/fs/fs_directory.h"
 #include "doim/manager.h"
 #include "db/database.h"
 #include "err/err.h"

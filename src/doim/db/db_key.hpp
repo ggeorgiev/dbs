@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "doim/base.hpp"
 #include <boost/functional/hash.hpp>
 #include <memory>
 #include <string>
@@ -15,35 +16,17 @@ namespace doim
 class DbKey;
 typedef std::shared_ptr<DbKey> DbKeySPtr;
 
-class DbKey
+class DbKey : public Base<DbKey, std::string>
 {
 public:
     DbKey(const std::string& bytes)
-        : mBytes(bytes)
+        : Base(bytes)
     {
     }
 
     const std::string& bytes() const
     {
-        return mBytes;
+        return std::get<0>(mArgs);
     }
-
-    struct Hasher
-    {
-        std::size_t operator()(const DbKeySPtr& key) const
-        {
-            return hashString(key->bytes());
-        }
-
-        bool operator()(const DbKeySPtr& key1, const DbKeySPtr& key2) const
-        {
-            return key1->bytes() == key2->bytes();
-        }
-
-        std::hash<std::string> hashString;
-    };
-
-private:
-    std::string mBytes;
 };
 }

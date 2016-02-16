@@ -13,7 +13,7 @@
 #include "doim/db/db_key.hpp"
 #include "doim/db/db_value.hpp"
 #include "doim/sys/argument.hpp"
-#include "doim/sys/command.hpp"
+#include "doim/sys/command.h"
 #include "db/database.h"
 #include <memory>
 #include <set>

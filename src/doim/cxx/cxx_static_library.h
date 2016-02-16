@@ -4,7 +4,7 @@
 #pragma once
 
 #include "doim/base.hpp"
-#include "doim/fs/fs_file.hpp"
+#include "doim/fs/fs_file.h"
 #include <memory>
 #include <string>
 #include <unordered_set>

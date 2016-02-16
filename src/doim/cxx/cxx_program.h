@@ -5,7 +5,7 @@
 
 #include "doim/base.hpp"
 #include "doim/cxx/cxx_object_file.h"
-#include "doim/fs/fs_file.hpp"
+#include "doim/fs/fs_file.h"
 #include <memory>
 #include <tuple>
 #include <unordered_set>

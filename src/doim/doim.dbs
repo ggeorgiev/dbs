@@ -13,13 +13,13 @@ cxx_library doim
         doim/cxx/cxx_static_library.h
         doim/db/db_key.hpp
         doim/db/db_value.hpp
-        doim/fs/fs_directory.hpp
-        doim/fs/fs_file.hpp
+        doim/fs/fs_directory.h
+        doim/fs/fs_file.h
         doim/sys/argument.hpp
-        doim/sys/command.hpp
+        doim/sys/command.h
         doim/sys/executable.hpp
         doim/generic/location.hpp
-        doim/generic/object.hpp
+        doim/generic/object.h
         doim/base.hpp
         doim/manager.h
     ;
@@ -39,6 +39,10 @@ cxx_library doim
         cxx/cxx_object_file.cpp
         cxx/cxx_program.cpp
         cxx/cxx_static_library.cpp
+        fs/fs_directory.cpp
+        fs/fs_file.cpp
+        generic/object.cpp
+        sys/command.cpp
         manager.cpp
     ;
 ;

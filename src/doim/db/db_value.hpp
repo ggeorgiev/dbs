@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "doim/base.hpp"
 #include <boost/functional/hash.hpp>
 #include <memory>
 #include <string>
@@ -15,42 +16,24 @@ namespace doim
 class DbValue;
 typedef std::shared_ptr<DbValue> DbValueSPtr;
 
-class DbValue
+class DbValue : public Base<DbKey, std::string>
 {
 public:
     template <typename T>
     DbValue(const T& obj)
-        : mBytes(reinterpret_cast<const char*>(&obj), sizeof(obj))
+        : Base(std::string(reinterpret_cast<const char*>(&obj), sizeof(obj)))
     {
     }
 
     const std::string& bytes() const
     {
-        return mBytes;
+        return std::get<0>(mArgs);
     }
-
-    struct Hasher
-    {
-        std::size_t operator()(const DbValueSPtr& value) const
-        {
-            return hashString(value->bytes());
-        }
-
-        bool operator()(const DbValueSPtr& value1, const DbValueSPtr& value2) const
-        {
-            return value1->bytes() == value2->bytes();
-        }
-
-        std::hash<std::string> hashString;
-    };
-
-private:
-    std::string mBytes;
 };
 
 template <>
 inline DbValue::DbValue(const std::string& bytes)
-    : mBytes(bytes)
+    : Base(bytes)
 {
 }
 }

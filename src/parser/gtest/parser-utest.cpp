@@ -3,7 +3,7 @@
 
 #include "parser/parser.hpp"        // IWYU pragma: keep
 #include "parser/string_stream.hpp" // IWYU pragma: keep
-#include "doim/fs/fs_file.hpp"
+#include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "err/err.h"
 #include "err/gtest/err.h"

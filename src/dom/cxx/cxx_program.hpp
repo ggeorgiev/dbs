@@ -6,7 +6,7 @@
 #include "dom/cxx/cxx_files_mixin.hpp"
 #include "dom/cxx/cxx_library.hpp"
 #include "doim/cxx/cxx_program.h"
-#include "doim/fs/fs_file.hpp"
+#include "doim/fs/fs_file.h"
 #include "err/err.h"
 #include <memory>
 #include <set>
@@ -71,6 +71,7 @@ public:
         }
 
         const auto& outputFile = doim::gManager->obtainFile(intermediate, name());
+        objectFiles = doim::gManager->unique(objectFiles);
 
         auto program = std::make_shared<doim::CxxProgram>(outputFile, objectFiles);
         return doim::gManager->unique(program);

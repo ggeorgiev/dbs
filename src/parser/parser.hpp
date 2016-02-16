@@ -3,8 +3,8 @@
 
 #include "parser/tokenizer.hpp"
 #include "dom/manager.h"
-#include "doim/fs/fs_file.hpp"
-#include "doim/generic/object.hpp"
+#include "doim/fs/fs_file.h"
+#include "doim/generic/object.h"
 #include "doim/manager.h"
 #include "err/err.h"
 #include <fstream>

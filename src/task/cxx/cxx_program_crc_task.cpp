@@ -5,7 +5,7 @@
 #include "task/cxx/cxx_file_crc_task.h"
 #include "task/manager.h"
 #include "doim/cxx/cxx_object_file.h"
-#include "doim/fs/fs_file.hpp"
+#include "doim/fs/fs_file.h"
 #include <algorithm>
 #include <sstream>
 #include <string>

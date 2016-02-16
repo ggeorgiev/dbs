@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "doim/fs/fs_file.hpp"
+#include "doim/fs/fs_file.h"
 
 namespace doim
 {

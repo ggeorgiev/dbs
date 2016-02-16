@@ -35,6 +35,7 @@ FILES="$FILES src/doim/cxx/cxx_include_directory.cpp"
 FILES="$FILES src/doim/cxx/cxx_object_file.cpp"
 FILES="$FILES src/doim/cxx/cxx_program.cpp"
 FILES="$FILES src/doim/cxx/cxx_static_library.cpp"
+FILES="$FILES src/doim/fs/fs_file.cpp"
 FILES="$FILES src/doim/manager.cpp"
 FILES="$FILES src/dom/manager.cpp"
 FILES="$FILES src/task/cxx/cxx_file_crc_task.cpp"
@@ -66,11 +67,11 @@ LIBRARIES="$LIBRARIES -lrocksdb -lz -lbz2"
 DEFINES=" -DDEBUG" && OPTOMIZATION="-O0 -g"
 
 
-#mkdir -p build
-#PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
-#    $DEFINES $LIBRARIES -o build/dbs && cp build/dbs dbs || exit 1
+mkdir -p build
+PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
+    $DEFINES $LIBRARIES -o build/dbs && cp build/dbs dbs || exit 1
 
-if [ 1 == 1 ]
+if [ 1 == 0 ]
 then
 
     CXXFLAGS="$CXXFLAGS -Isrc/gtest/include"

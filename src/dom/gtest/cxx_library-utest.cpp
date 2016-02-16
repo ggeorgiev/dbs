@@ -2,7 +2,7 @@
 //
 
 #include "dom/cxx/cxx_library.hpp"
-#include "doim/fs/fs_file.hpp"
+#include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "err/err.h"
 #include "err/gtest/err.h"

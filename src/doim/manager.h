@@ -9,12 +9,12 @@
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/cxx/cxx_program.h" // IWYU pragma: keep
 #include "doim/db/db_key.hpp"     // IWYU pragma: keep
-#include "doim/fs/fs_directory.hpp"
-#include "doim/fs/fs_file.hpp"
+#include "doim/fs/fs_directory.h"
+#include "doim/fs/fs_file.h"
 #include "doim/generic/location.hpp"
-#include "doim/generic/object.hpp"
+#include "doim/generic/object.h"
 #include "doim/sys/argument.hpp"
-#include "doim/sys/command.hpp" // IWYU pragma: keep
+#include "doim/sys/command.h" // IWYU pragma: keep
 #include "doim/sys/executable.hpp"
 #include "im/initialization_manager.hpp"
 #include <boost/functional/hash/hash.hpp>
@@ -97,6 +97,8 @@ struct SetHasher
 typedef SetHasher<CxxHeader> CxxHeaderSetHasher;
 typedef SetHasher<CxxIncludeDirectory> CxxIncludeDirectorySetHasher;
 typedef SetHasher<CxxObjectFile> CxxObjectFileSetHasher;
+typedef SetHasher<FsFile> FsFileSetHasher;
+typedef SetHasher<SysArgument> SysArgumentSetHasher;
 
 class Manager : public ManagerMixin<CxxFile>,
                 public ManagerMixin<CxxHeader>,
@@ -203,6 +205,7 @@ public:
 
     using ManagerMixin<SysArgument>::unique;
     using ManagerMixin<SysArgumentSet, SysArgumentSetHasher>::unique;
+    using ManagerMixin<SysArgumentSet, SysArgumentSetHasher>::isUnique;
 
     SysExecutableSPtr obtainExecutable(const FsDirectorySPtr& base,
                                        const std::experimental::string_view& file)

@@ -4,8 +4,8 @@
 #include "task/cxx/cxx_header_crc_task.h" // IWYU pragma: keep
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
-#include "doim/fs/fs_directory.hpp"
-#include "doim/fs/fs_file.hpp"
+#include "doim/fs/fs_directory.h"
+#include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "err/err.h"
 #include "err/gtest/err.h"

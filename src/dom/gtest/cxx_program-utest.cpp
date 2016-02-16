@@ -2,7 +2,7 @@
 //
 
 #include "dom/cxx/cxx_program.hpp"
-#include "doim/fs/fs_file.hpp"
+#include "doim/fs/fs_file.h"
 #include <gtest/gtest.h>
 #include <unordered_set>
 

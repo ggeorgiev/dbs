@@ -1,9 +1,9 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "doim/fs/fs_directory.hpp"
-#include "doim/fs/fs_file.hpp"
-#include "doim/generic/object.hpp"
+#include "doim/fs/fs_directory.h"
+#include "doim/fs/fs_file.h"
+#include "doim/generic/object.h"
 #include "doim/manager.h"
 #include "err/gtest/err_assert.h"
 #include <gtest/gtest-message.h>
@@ -23,22 +23,26 @@ TEST(ManagerTest, obtainObject)
 TEST(ManagerTest, obtainEmptyObject)
 {
     ASSERT_EQ(nullptr,
-              doim::gManager->obtainObject(nullptr, doim::Object::Type::kInvalid, ""));
+              doim::gManager->obtainObject(nullptr, doim::Object::Type::kCxxLibrary, ""));
     ASSERT_EQ(nullptr,
-              doim::gManager->obtainObject(nullptr, doim::Object::Type::kInvalid, "obj"));
+              doim::gManager->obtainObject(nullptr,
+                                           doim::Object::Type::kCxxLibrary,
+                                           "obj"));
 
     const auto& root = doim::gManager->obtainLocation(nullptr, "/");
     ASSERT_EQ(nullptr,
-              doim::gManager->obtainObject(root, doim::Object::Type::kInvalid, "/"));
+              doim::gManager->obtainObject(root, doim::Object::Type::kCxxLibrary, "/"));
     ASSERT_EQ(nullptr,
-              doim::gManager->obtainObject(root, doim::Object::Type::kInvalid, "foo/"));
+              doim::gManager->obtainObject(root,
+                                           doim::Object::Type::kCxxLibrary,
+                                           "foo/"));
 
     const auto& rootFoo1 =
-        doim::gManager->obtainObject(nullptr, doim::Object::Type::kInvalid, "/obj");
+        doim::gManager->obtainObject(nullptr, doim::Object::Type::kCxxLibrary, "/obj");
     ASSERT_NE(nullptr, rootFoo1);
 
     const auto& rootFoo2 = doim::gManager->obtainObject(rootFoo1->location(),
-                                                        doim::Object::Type::kInvalid,
+                                                        doim::Object::Type::kCxxLibrary,
                                                         "obj");
     ASSERT_NE(nullptr, rootFoo2);
 }
@@ -48,9 +52,9 @@ TEST(ManagerTest, obtainUniqueObject)
     const auto& root = doim::gManager->obtainLocation(nullptr, "/");
 
     const auto& rootFoo1 =
-        doim::gManager->obtainObject(root, doim::Object::Type::kInvalid, "obj");
+        doim::gManager->obtainObject(root, doim::Object::Type::kCxxLibrary, "obj");
     const auto& rootFoo2 =
-        doim::gManager->obtainObject(nullptr, doim::Object::Type::kInvalid, "/obj");
+        doim::gManager->obtainObject(nullptr, doim::Object::Type::kCxxLibrary, "/obj");
     ASSERT_EQ(rootFoo1, rootFoo2);
 }
 

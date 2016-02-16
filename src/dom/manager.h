@@ -5,7 +5,7 @@
 
 #include "dom/cxx/cxx_library.hpp"
 #include "dom/cxx/cxx_program.hpp"
-#include "doim/generic/object.hpp"
+#include "doim/generic/object.h"
 #include "im/initialization_manager.hpp"
 #include <memory>
 #include <unordered_map>

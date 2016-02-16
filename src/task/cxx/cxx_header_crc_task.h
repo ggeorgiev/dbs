@@ -6,7 +6,7 @@
 #include "task/cxx/cxx_crc_task_mixin.hpp"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
-#include "doim/fs/fs_file.hpp"
+#include "doim/fs/fs_file.h"
 #include "err/err.h"
 #include <boost/functional/hash/hash.hpp>
 #include <iosfwd>

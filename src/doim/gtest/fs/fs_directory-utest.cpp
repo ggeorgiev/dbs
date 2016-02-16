@@ -1,16 +1,16 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "doim/fs/fs_directory.hpp"
-
+#include "doim/fs/fs_directory.h"
+#include "doim/manager.h"
 #include <gtest/gtest.h>
-
 #include <iosfwd>
 #include <memory>
 
 TEST(FsDirectoryTest, path)
 {
     auto root = std::make_shared<doim::FsDirectory>();
+    root = doim::gManager->unique(root);
     ASSERT_STREQ("/", root->path(nullptr).c_str());
 
     auto directory = std::make_shared<doim::FsDirectory>(nullptr, "foo");
@@ -24,6 +24,7 @@ TEST(FsDirectoryTest, path)
 TEST(FsDirectoryTest, level)
 {
     auto root = std::make_shared<doim::FsDirectory>();
+    root = doim::gManager->unique(root);
     ASSERT_EQ(1u, root->level());
 
     auto directory = std::make_shared<doim::FsDirectory>(root, "");
@@ -33,6 +34,7 @@ TEST(FsDirectoryTest, level)
 TEST(FsDirectoryTest, commonAncestor)
 {
     auto root = std::make_shared<doim::FsDirectory>();
+    root = doim::gManager->unique(root);
     ASSERT_EQ(root, root->commonAncestor(root));
 
     auto foo = std::make_shared<doim::FsDirectory>(root, "foo");

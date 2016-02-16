@@ -2,7 +2,6 @@
 //
 
 #include "err/err.h"
-
 #include <functional>
 
 namespace err

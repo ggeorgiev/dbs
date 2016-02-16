@@ -4,7 +4,7 @@
 #pragma once
 
 #include "tpool/task.hpp"
-#include "doim/fs/fs_directory.hpp"
+#include "doim/fs/fs_directory.h"
 #include "err/err.h"
 #include <iosfwd>
 #include <memory>

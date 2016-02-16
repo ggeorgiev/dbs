@@ -4,7 +4,7 @@
 #pragma once
 
 #include "tpool/task.hpp"
-#include "doim/sys/command.hpp"
+#include "doim/sys/command.h"
 #include "err/err.h"
 #include <iosfwd>
 #include <memory>
