@@ -5,7 +5,7 @@
 
 #include "dom/cxx/cxx_files_mixin.hpp"
 #include "dom/cxx/cxx_library.hpp"
-#include "doim/cxx/cxx_program.hpp"
+#include "doim/cxx/cxx_program.h"
 #include "doim/fs/fs_file.hpp"
 #include "err/err.h"
 #include <memory>

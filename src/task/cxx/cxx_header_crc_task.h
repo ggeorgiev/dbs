@@ -4,9 +4,14 @@
 #pragma once
 
 #include "task/cxx/cxx_crc_task_mixin.hpp"
-#include "doim/cxx/cxx_header.hpp"
+#include "doim/cxx/cxx_header.h"
+#include "doim/cxx/cxx_include_directory.h"
+#include "doim/fs/fs_file.hpp"
 #include "err/err.h"
+#include <boost/functional/hash/hash.hpp>
+#include <iosfwd>
 #include <memory>
+#include <string>
 #include <stddef.h>
 
 namespace task

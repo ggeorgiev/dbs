@@ -3,8 +3,14 @@
 
 #include "dom/cxx/cxx_library.hpp"
 #include "doim/fs/fs_file.hpp"
-#include "gtest/err.h"
+#include "doim/manager.h"
+#include "err/err.h"
+#include "err/gtest/err.h"
+#include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
+#include <memory>
+#include <ostream>
+#include <string>
 #include <unordered_set>
 
 TEST(CxxLibraryTest, cxxLibraries)

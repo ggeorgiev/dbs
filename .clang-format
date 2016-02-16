@@ -77,6 +77,8 @@ IncludeCategories:
 #      we need this to be able to override the internal version of spdlog
   - Regex:           '^<cppformat/*.'
     Priority:        120
+  - Regex:           '^<spdlog/details/*.'
+    Priority:        131
   - Regex:           '^<spdlog/*.'
     Priority:        130
   - Regex:           '^<boost/*.'

@@ -3,9 +3,11 @@
 
 #include "task/cxx/cxx_file_crc_task.h"
 #include "task/cxx/cxx_header_crc_task.h"
-#include "doim/cxx/cxx_header.hpp"
+#include "doim/cxx/cxx_header.h"
+#include "doim/fs/fs_file.hpp"
 #include "log/log.h"
 #include <sstream>
+#include <string>
 
 namespace task
 {

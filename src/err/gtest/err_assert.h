@@ -4,7 +4,7 @@
 #pragma once
 
 #include "err/err.h"
-#include "gtest/err.h"
+#include "err/gtest/err.h"
 
 #if defined(NDEBUG)
 #define ASSERT_ASSERT(expression) ((void)0)

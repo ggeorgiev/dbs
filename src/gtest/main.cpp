@@ -4,11 +4,12 @@
 #include "doim/fs/fs_directory.hpp"
 #include "doim/manager.h"
 #include "db/database.h"
+#include "err/err.h"
 #include "im/initialization_manager.hpp"
 #include "gtest/gtest.h"
 #include "gtest/performance_arbiter.h"
 #include "gtest/time_monitor.h"
-#include <iosfwd>
+#include <iostream>
 #include <memory>
 #include <stdio.h>
 #include <sys/errno.h>

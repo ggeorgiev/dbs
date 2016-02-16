@@ -5,6 +5,9 @@ cxx_library spdlog
         @visibility=public
         @directory=../../spdlog/include:
 
+        spdlog/common.h
+        spdlog/logger.h
         spdlog/spdlog.h
+        spdlog/details/line_logger.h
     ;
 ;

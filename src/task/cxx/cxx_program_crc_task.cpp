@@ -4,8 +4,13 @@
 #include "task/cxx/cxx_program_crc_task.h"
 #include "task/cxx/cxx_file_crc_task.h"
 #include "task/manager.h"
-#include "log/log.h"
+#include "doim/cxx/cxx_object_file.h"
+#include "doim/fs/fs_file.hpp"
+#include <algorithm>
 #include <sstream>
+#include <string>
+#include <unordered_set>
+#include <vector>
 
 namespace task
 {
@@ -19,7 +24,7 @@ ECode CxxProgramCrcTask::operator()()
 {
     const auto& objectFiles = mCxxProgram->cxxObjectFiles();
 
-    std::vector<uint64_t> crcs;
+    std::vector<math::Crcsum> crcs;
     crcs.reserve(objectFiles->size());
 
     for (const auto& objectFile : *objectFiles)
@@ -33,7 +38,7 @@ ECode CxxProgramCrcTask::operator()()
     std::sort(crcs.begin(), crcs.end());
 
     math::CrcProcessor crcProcessor;
-    crcProcessor.process_bytes(crcs.data(), sizeof(uint64_t) * crcs.size());
+    crcProcessor.process_bytes(crcs.data(), sizeof(math::Crcsum) * crcs.size());
     mCrcsum = crcProcessor.checksum();
 
     EHEnd;

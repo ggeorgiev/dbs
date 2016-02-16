@@ -2,14 +2,11 @@
 //
 
 #include "task/sys/execute_command_task.h"
-#include "task/manager.h"
-#include "db/database.h"
-#include <sstream>
-#include <stdlib.h>
-#include <string>
+#include "err/err_cppformat.h"
 #include <iostream>
-#include <cstdio>
 #include <memory>
+#include <sstream>
+#include <string>
 #include <stdio.h>
 
 namespace task

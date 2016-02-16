@@ -1,13 +1,13 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "parser/parser.hpp" // IWYU pragma: keep
-#include "parser/string_stream.hpp"
+#include "parser/parser.hpp"        // IWYU pragma: keep
+#include "parser/string_stream.hpp" // IWYU pragma: keep
 #include "doim/fs/fs_file.hpp"
 #include "doim/manager.h"
 #include "err/err.h"
-#include "gtest/err.h"
-#include "gtest/err_assert.h"
+#include "err/gtest/err.h"
+#include "err/gtest/err_assert.h"
 #include <gtest/gtest-message.h>
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>

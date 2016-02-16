@@ -4,15 +4,17 @@
 #pragma once
 
 #include "tpool/task.hpp"
-#include "doim/cxx/cxx_program.hpp"
+#include "doim/cxx/cxx_program.h"
 #include "err/err.h"
 #include "math/crc.hpp"
+#include <iosfwd>
 #include <memory>
 #include <stddef.h>
 
 namespace task
 {
 class CxxProgramCrcTask;
+
 typedef std::shared_ptr<CxxProgramCrcTask> CxxProgramCrcTaskSPtr;
 
 class CxxProgramCrcTask : public tpool::Task

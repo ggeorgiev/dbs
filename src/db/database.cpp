@@ -2,7 +2,8 @@
 //
 
 #include "db/database.h"
-
+#include "err/err.h"
+#include "err/err_cppformat.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
 #include <rocksdb/options.h>
@@ -10,9 +11,6 @@
 #include <rocksdb/status.h>
 #include <functional>
 #include <sstream>
-
-#include "err/err.h"
-#include "err/err_cppformat.h"
 
 namespace db
 {

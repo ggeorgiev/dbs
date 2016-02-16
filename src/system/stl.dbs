@@ -27,6 +27,8 @@ cxx_library stl
         sstream
         string
         thread
+        tuple
+        typeindex
         unordered_map
         unordered_set
         utility

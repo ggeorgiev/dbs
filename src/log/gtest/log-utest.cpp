@@ -4,6 +4,7 @@
 #include "log/log.h"
 #include "log/log_function.hpp"
 #include <gtest/gtest.h>
+#include <memory>
 
 TEST(Log, basic)
 {

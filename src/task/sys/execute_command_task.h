@@ -6,12 +6,15 @@
 #include "tpool/task.hpp"
 #include "doim/sys/command.hpp"
 #include "err/err.h"
+#include <iosfwd>
 #include <memory>
+#include <string>
 #include <stddef.h>
 
 namespace task
 {
 class ExecuteCommandTask;
+
 typedef std::shared_ptr<ExecuteCommandTask> ExecuteCommandTaskSPtr;
 
 class ExecuteCommandTask : public tpool::Task

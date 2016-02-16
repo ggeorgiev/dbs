@@ -4,8 +4,9 @@
 #pragma once
 
 #include "task/cxx/cxx_crc_task_mixin.hpp"
-#include "doim/cxx/cxx_file.hpp"
+#include "doim/cxx/cxx_file.h"
 #include "err/err.h"
+#include <iosfwd>
 #include <memory>
 #include <stddef.h>
 

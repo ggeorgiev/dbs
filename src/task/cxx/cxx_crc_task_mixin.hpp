@@ -5,12 +5,12 @@
 
 #include "tpool/task.hpp"
 #include "parser/cxx/cxx_parser.hpp"
-#include "doim/cxx/cxx_file.hpp"
+#include "doim/cxx/cxx_file.h"
 #include "doim/manager.h"
 #include "log/log.h"
-#include "math/crc.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/system/error_code.hpp>
+#include "math/crc.hpp"
 #include <fstream>
 #include <regex>
 

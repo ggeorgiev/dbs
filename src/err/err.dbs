@@ -32,10 +32,11 @@ cxx_library err-test
     @type=test:
 
     cxx_header
-        @visibility=public:
+        @visibility=public
+        @directory=..:
 
-        gtest/err.h
-        gtest/err_assert.h
+        err/gtest/err.h
+        err/gtest/err_assert.h
     ;
 
     cxx_library:

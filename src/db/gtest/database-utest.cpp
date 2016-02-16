@@ -1,16 +1,15 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
+#include "db/database.h"
+#include "err/err.h"
+#include "err/gtest/err.h"
+#include "gtest/intermittent.h" // IWYU pragma: keep
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
 #include <memory>
 #include <ostream>
 #include <string>
-
-#include "db/database.h"
-#include "err/err.h"
-#include "gtest/err.h"
-#include "gtest/intermittent.h"
 
 TEST(DatabaseTest, SLOW_open)
 {

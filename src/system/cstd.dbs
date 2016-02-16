@@ -8,6 +8,7 @@ cxx_library cstd
         sys/errno.h
         cstddef
         cstdio
+        cstdint
         stddef.h
         stdio.h
         stdlib.h

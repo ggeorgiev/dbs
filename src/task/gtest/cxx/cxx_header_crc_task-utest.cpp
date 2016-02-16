@@ -1,18 +1,21 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "doim/cxx/cxx_header.hpp"
-#include "task/cxx/cxx_header_crc_task.h"
-#include "doim/cxx/cxx_include_directory.hpp"
+#include "task/cxx/cxx_header_crc_task.h" // IWYU pragma: keep
+#include "doim/cxx/cxx_header.h"
+#include "doim/cxx/cxx_include_directory.h"
+#include "doim/fs/fs_directory.hpp"
+#include "doim/fs/fs_file.hpp"
 #include "doim/manager.h"
 #include "err/err.h"
-#include "gtest/err.h"
+#include "err/gtest/err.h"
 #include "gtest/test_resource.h"
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
 #include <memory>
 #include <ostream>
 #include <string>
+#include <unordered_set>
 
 class CxxHeaderCrcTaskTest : public ::testing::Test
 {

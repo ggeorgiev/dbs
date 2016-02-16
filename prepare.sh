@@ -185,6 +185,7 @@ then
     git submodule update --init libs/detail          || exit 1
     git submodule update --init libs/filesystem      || exit 1
     git submodule update --init libs/functional      || exit 1
+    git submodule update --init libs/fusion          || exit 1
     git submodule update --init libs/heap            || exit 1
     git submodule update --init libs/integer         || exit 1
     git submodule update --init libs/intrusive       || exit 1

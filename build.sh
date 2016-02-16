@@ -29,10 +29,17 @@ FILES="$FILES src/log/log.cpp"
 FILES="$FILES src/err/err.cpp"
 FILES="$FILES src/const/constants.cpp"
 FILES="$FILES src/db/database.cpp"
+FILES="$FILES src/doim/cxx/cxx_file.cpp"
+FILES="$FILES src/doim/cxx/cxx_header.cpp"
+FILES="$FILES src/doim/cxx/cxx_include_directory.cpp"
+FILES="$FILES src/doim/cxx/cxx_object_file.cpp"
+FILES="$FILES src/doim/cxx/cxx_program.cpp"
+FILES="$FILES src/doim/cxx/cxx_static_library.cpp"
 FILES="$FILES src/doim/manager.cpp"
 FILES="$FILES src/dom/manager.cpp"
 FILES="$FILES src/task/cxx/cxx_file_crc_task.cpp"
 FILES="$FILES src/task/cxx/cxx_header_crc_task.cpp"
+FILES="$FILES src/task/cxx/cxx_program_crc_task.cpp"
 FILES="$FILES src/task/db/db_put_task.cpp"
 FILES="$FILES src/task/sys/ensure_directory_task.cpp"
 FILES="$FILES src/task/sys/execute_command_task.cpp"
@@ -59,11 +66,11 @@ LIBRARIES="$LIBRARIES -lrocksdb -lz -lbz2"
 DEFINES=" -DDEBUG" && OPTOMIZATION="-O0 -g"
 
 
-mkdir -p build
-PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
-    $DEFINES $LIBRARIES -o build/dbs && cp build/dbs dbs || exit 1
+#mkdir -p build
+#PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
+#    $DEFINES $LIBRARIES -o build/dbs && cp build/dbs dbs || exit 1
 
-if [ 1 == 0 ]
+if [ 1 == 1 ]
 then
 
     CXXFLAGS="$CXXFLAGS -Isrc/gtest/include"
@@ -72,32 +79,32 @@ then
 
     FILES="$FILES src/im/gtest/initialization_manager-utest.cpp"
 
-    #FILES="$FILES src/log/gtest/log-utest.cpp"
+    FILES="$FILES src/log/gtest/log-utest.cpp"
 
-    #FILES="$FILES src/err/gtest/err-utest.cpp"
-    #FILES="$FILES src/err/gtest/err-ptest.cpp"
-    #FILES="$FILES src/err/gtest/macro-utest.cpp"
+    FILES="$FILES src/err/gtest/err-utest.cpp"
+    FILES="$FILES src/err/gtest/err-ptest.cpp"
+    FILES="$FILES src/err/gtest/macro-utest.cpp"
 
-    #FILES="$FILES src/db/gtest/database-utest.cpp"
+    FILES="$FILES src/db/gtest/database-utest.cpp"
 
     FILES="$FILES src/dom/gtest/cxx_library-utest.cpp"
-    #FILES="$FILES src/dom/gtest/cxx_program-utest.cpp"
+    FILES="$FILES src/dom/gtest/cxx_program-utest.cpp"
 
-    #FILES="$FILES src/doim/gtest/manager-utest.cpp"
-    #FILES="$FILES src/doim/gtest/fs/fs_directory-utest.cpp"
-    #FILES="$FILES src/doim/gtest/fs/fs_file-ptest.cpp"
+    FILES="$FILES src/doim/gtest/manager-utest.cpp"
+    FILES="$FILES src/doim/gtest/fs/fs_directory-utest.cpp"
+    FILES="$FILES src/doim/gtest/fs/fs_file-ptest.cpp"
 
-    #FILES="$FILES src/parser/gtest/parser-utest.cpp"
-    #FILES="$FILES src/parser/gtest/stream-utest.cpp"
-    #FILES="$FILES src/parser/gtest/token-utest.cpp"
-    #FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
-    #FILES="$FILES src/parser/gtest/cxx/cxx_parser-utest.cpp"
+    FILES="$FILES src/parser/gtest/parser-utest.cpp"
+    FILES="$FILES src/parser/gtest/stream-utest.cpp"
+    FILES="$FILES src/parser/gtest/token-utest.cpp"
+    FILES="$FILES src/parser/gtest/tokenizer-utest.cpp"
+    FILES="$FILES src/parser/gtest/cxx/cxx_parser-utest.cpp"
 
-    #FILES="$FILES src/tpool/gtest/tpool-utest.cpp"
-    #FILES="$FILES src/tpool/gtest/priority-utest.cpp"
+    FILES="$FILES src/tpool/gtest/tpool-utest.cpp"
+    FILES="$FILES src/tpool/gtest/priority-utest.cpp"
 
-    #FILES="$FILES src/task/gtest/cxx/cxx_file_crc_task-utest.cpp"
-    #FILES="$FILES src/task/gtest/cxx/cxx_header_crc_task-utest.cpp"
+    FILES="$FILES src/task/gtest/cxx/cxx_file_crc_task-utest.cpp"
+    FILES="$FILES src/task/gtest/cxx/cxx_header_crc_task-utest.cpp"
 
 
     LIBRARIES="$LIBRARIES -lgtest"
@@ -115,7 +122,7 @@ then
     done
     echo "]" >> $COMPILE_DATABASE
 
-    if [ 1 == 1 ]
+    if [ 1 == 0 ]
     then
         mkdir -p build/src/gtest
         mkdir -p build/src/log/gtest

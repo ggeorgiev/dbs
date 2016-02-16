@@ -2,9 +2,6 @@
 //
 
 #include "task/sys/ensure_directory_task.h"
-#include "task/manager.h"
-#include "db/database.h"
-#include <sstream>
 #include <stdlib.h>
 
 namespace task

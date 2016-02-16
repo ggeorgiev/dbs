@@ -6,12 +6,15 @@
 #include "tpool/task.hpp"
 #include "doim/fs/fs_directory.hpp"
 #include "err/err.h"
+#include <iosfwd>
 #include <memory>
+#include <string>
 #include <stddef.h>
 
 namespace task
 {
 class EnsureDirectoryTask;
+
 typedef std::shared_ptr<EnsureDirectoryTask> EnsureDirectoryTaskSPtr;
 
 class EnsureDirectoryTask : public tpool::Task

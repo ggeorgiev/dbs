@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <functional>
 #include <iosfwd>
+#include <ostream>
 #include <string>
 #include <utility>
 

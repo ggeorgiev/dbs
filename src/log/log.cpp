@@ -2,6 +2,7 @@
 //
 
 #include "log/log.h"
+#include <functional>
 
 namespace dbslog
 {

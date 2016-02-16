@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "doim/cxx/cxx_file.hpp"
-#include "doim/cxx/cxx_object_file.hpp"
+#include "doim/cxx/cxx_file.h"
+#include "doim/cxx/cxx_object_file.h"
 #include "doim/fs/fs_file.hpp"
 #include "doim/manager.h"
 #include "err/err.h"

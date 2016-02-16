@@ -5,7 +5,7 @@
 #include "doim/fs/fs_file.hpp"
 #include "doim/generic/object.hpp"
 #include "doim/manager.h"
-#include "gtest/err_assert.h"
+#include "err/gtest/err_assert.h"
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
 #include <memory>

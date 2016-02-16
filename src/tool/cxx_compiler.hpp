@@ -9,7 +9,7 @@
 #include "task/sys/ensure_directory_task.h"
 #include "task/sys/execute_command_task.h"
 #include "dom/cxx/cxx_program.hpp"
-#include "doim/cxx/cxx_file.hpp"
+#include "doim/cxx/cxx_file.h"
 #include "doim/db/db_key.hpp"
 #include "doim/db/db_value.hpp"
 #include "doim/sys/argument.hpp"
