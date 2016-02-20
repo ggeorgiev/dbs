@@ -21,6 +21,8 @@ cxx_library doim
         doim/generic/location.hpp
         doim/generic/object.h
         doim/base.hpp
+        doim/manager_object_mixin.hpp
+        doim/manager_object_set_mixin.hpp
         doim/manager.h
     ;
 

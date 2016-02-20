@@ -56,6 +56,8 @@ TEST_F(CxxHeaderCrcTaskTest, simple)
     auto cxxHeader = std::make_shared<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
                                                        mFsSimpleCxx,
                                                        mEmptyCxxIncludeDirectorySet);
+    cxxHeader = doim::gManager->unique(cxxHeader);
+
     auto task = std::make_shared<task::CxxHeaderCrcTask>(cxxHeader, nullptr);
 
     ASSERT_OKAY((*task)());
@@ -69,6 +71,7 @@ TEST_F(CxxHeaderCrcTaskTest, notFoundInclude)
         doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kUser,
                                    mCxxDirectory,
                                    mEmptyCxxHeaderSet);
+    cxxIncludeDirectory = doim::gManager->unique(cxxIncludeDirectory);
 
     auto cxxIncludeDirectories = std::make_shared<doim::CxxIncludeDirectorySet>();
     cxxIncludeDirectories->insert(doim::gManager->unique(cxxIncludeDirectory));
@@ -77,6 +80,7 @@ TEST_F(CxxHeaderCrcTaskTest, notFoundInclude)
     auto cxxHeader = std::make_shared<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
                                                        mFsIncludesCxx,
                                                        cxxIncludeDirectories);
+    cxxHeader = doim::gManager->unique(cxxHeader);
     auto task = std::make_shared<task::CxxHeaderCrcTask>(cxxHeader, nullptr);
     ASSERT_BANNED(kNotFound, (*task)());
 }

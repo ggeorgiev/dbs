@@ -1,4 +1,4 @@
-//  Copyright © 2015-1016 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -13,6 +13,8 @@
 #include "doim/fs/fs_file.h"
 #include "doim/generic/location.hpp"
 #include "doim/generic/object.h"
+#include "doim/manager_object_mixin.hpp"
+#include "doim/manager_object_set_mixin.hpp"
 #include "doim/sys/argument.hpp"
 #include "doim/sys/command.h" // IWYU pragma: keep
 #include "doim/sys/executable.hpp"
@@ -31,91 +33,17 @@
 
 namespace doim
 {
-template <typename T, typename H = typename T::Hasher>
-class ManagerMixin
-{
-public:
-    typedef T MixinObject;
-    typedef std::shared_ptr<MixinObject> MixinObjectSPtr;
-
-    typedef H Hasher;
-
-    MixinObjectSPtr unique(const MixinObjectSPtr& object)
-    {
-        if (object == nullptr)
-            return object;
-        return *mMixinObjects.insert(object).first;
-    }
-
-    bool isUnique(const MixinObjectSPtr& object) const
-    {
-        return object == find(object);
-    }
-
-    MixinObjectSPtr find(const MixinObjectSPtr& object) const
-    {
-        if (object == nullptr)
-            return object;
-        const auto& it = mMixinObjects.find(object);
-        if (it == mMixinObjects.end())
-            return nullptr;
-        return *it;
-    }
-
-protected:
-    std::unordered_set<MixinObjectSPtr, Hasher, Hasher> mMixinObjects;
-};
-
-template <typename T>
-struct SetHasher
-{
-    typedef std::shared_ptr<T> ObjectSPtr;
-    typedef std::unordered_set<ObjectSPtr> ObjectSet;
-    typedef std::shared_ptr<ObjectSet> ObjectSetSPtr;
-
-    std::size_t operator()(const ObjectSetSPtr& objects) const
-    {
-        std::vector<ObjectSPtr> vector(objects->size());
-        vector.insert(vector.begin(), objects->begin(), objects->end());
-        std::sort(vector.begin(), vector.end());
-
-        std::hash<ObjectSPtr> hash;
-
-        std::size_t seed = 0;
-        for (const auto& object : vector)
-            boost::hash_combine(seed, hash(object));
-
-        return seed;
-    }
-
-    bool operator()(const ObjectSetSPtr& objects1, const ObjectSetSPtr& objects2) const
-    {
-        return *objects1 == *objects2;
-    }
-};
-
-typedef SetHasher<CxxHeader> CxxHeaderSetHasher;
-typedef SetHasher<CxxIncludeDirectory> CxxIncludeDirectorySetHasher;
-typedef SetHasher<CxxObjectFile> CxxObjectFileSetHasher;
-typedef SetHasher<FsFile> FsFileSetHasher;
-typedef SetHasher<SysArgument> SysArgumentSetHasher;
-
-class Manager : public ManagerMixin<CxxFile>,
-                public ManagerMixin<CxxHeader>,
-                public ManagerMixin<CxxHeaderSet, CxxHeaderSetHasher>,
-                public ManagerMixin<CxxIncludeDirectory>,
-                public ManagerMixin<CxxIncludeDirectorySet, CxxIncludeDirectorySetHasher>,
-                public ManagerMixin<CxxObjectFile>,
-                public ManagerMixin<CxxObjectFileSet, CxxObjectFileSetHasher>,
-                public ManagerMixin<CxxProgram>,
-                public ManagerMixin<DbKey>,
-                public ManagerMixin<FsDirectory>,
-                public ManagerMixin<FsFile>,
-                public ManagerMixin<FsFileSet, FsFileSetHasher>,
-                public ManagerMixin<Object>,
-                public ManagerMixin<SysArgument>,
-                public ManagerMixin<SysArgumentSet, SysArgumentSetHasher>,
-                public ManagerMixin<SysCommand>
+class Manager : public ManagerObjectMixin<CxxFile>,
+                public ManagerObjectSetMixin<CxxHeader>,
+                public ManagerObjectSetMixin<CxxIncludeDirectory>,
+                public ManagerObjectSetMixin<CxxObjectFile>,
+                public ManagerObjectMixin<CxxProgram>,
+                public ManagerObjectMixin<DbKey>,
+                public ManagerObjectMixin<FsDirectory>,
+                public ManagerObjectSetMixin<FsFile>,
+                public ManagerObjectMixin<Object>,
+                public ManagerObjectSetMixin<SysArgument>,
+                public ManagerObjectMixin<SysCommand>
 {
 public:
     static inline int initialization_rank()
@@ -131,15 +59,15 @@ public:
         return obtainDirectory(base, location);
     }
 
-    using ManagerMixin<Object>::unique;
+    using ManagerObjectMixin<Object>::unique;
 
     // Obtain an unique object.
     ObjectSPtr obtainObject(const LocationSPtr& base,
                             const Object::Type type,
                             const std::experimental::string_view& object);
 
-    using ManagerMixin<FsDirectory>::unique;
-    using ManagerMixin<FsDirectory>::isUnique;
+    using ManagerObjectMixin<FsDirectory>::unique;
+    using ManagerObjectMixin<FsDirectory>::isUnique;
 
     // Obtain an unique directory.
     FsDirectorySPtr obtainDirectory(const FsDirectorySPtr& base,
@@ -151,9 +79,9 @@ public:
                                                  const FsDirectorySPtr& fromDirectory,
                                                  const FsDirectorySPtr& toDirectory);
 
-    using ManagerMixin<FsFile>::unique;
-    using ManagerMixin<FsFile>::isUnique;
-    using ManagerMixin<FsFile>::find;
+    using ManagerObjectMixin<FsFile>::unique;
+    using ManagerObjectMixin<FsFile>::isUnique;
+    using ManagerObjectMixin<FsFile>::find;
 
     FsFileSPtr createFile(const FsDirectorySPtr& base,
                           const std::experimental::string_view& file);
@@ -164,21 +92,21 @@ public:
         return unique(createFile(base, file));
     }
 
-    using ManagerMixin<FsFileSet, FsFileSetHasher>::unique;
+    using ManagerObjectSetMixin<FsFile>::unique;
 
-    using ManagerMixin<CxxIncludeDirectory>::unique;
-    using ManagerMixin<CxxIncludeDirectory>::isUnique;
+    using ManagerObjectMixin<CxxIncludeDirectory>::unique;
+    using ManagerObjectMixin<CxxIncludeDirectory>::isUnique;
 
-    using ManagerMixin<CxxIncludeDirectorySet, CxxIncludeDirectorySetHasher>::unique;
-    using ManagerMixin<CxxIncludeDirectorySet, CxxIncludeDirectorySetHasher>::isUnique;
+    using ManagerObjectSetMixin<CxxIncludeDirectory>::unique;
+    using ManagerObjectSetMixin<CxxIncludeDirectory>::isUnique;
 
-    using ManagerMixin<CxxHeader>::isUnique;
+    using ManagerObjectMixin<CxxHeader>::isUnique;
 
     CxxHeaderSPtr unique(const CxxHeaderSPtr& header)
     {
         if (header == nullptr)
             return header;
-        const auto& record = ManagerMixin<CxxHeader>::mMixinObjects.insert(header);
+        const auto& record = ManagerObjectMixin<CxxHeader>::mMixinObjects.insert(header);
         if (record.second)
             mFile2CxxHeader[header->file()] = header;
         return *record.first;
@@ -189,27 +117,27 @@ public:
         return mFile2CxxHeader[file];
     }
 
-    using ManagerMixin<CxxHeaderSet, CxxHeaderSetHasher>::unique;
-    using ManagerMixin<CxxHeaderSet, CxxHeaderSetHasher>::isUnique;
+    using ManagerObjectSetMixin<CxxHeader>::unique;
+    using ManagerObjectSetMixin<CxxHeader>::isUnique;
 
-    using ManagerMixin<CxxFile>::unique;
-    using ManagerMixin<CxxFile>::isUnique;
+    using ManagerObjectMixin<CxxFile>::unique;
+    using ManagerObjectMixin<CxxFile>::isUnique;
 
-    using ManagerMixin<CxxObjectFile>::unique;
-    using ManagerMixin<CxxObjectFile>::isUnique;
+    using ManagerObjectMixin<CxxObjectFile>::unique;
+    using ManagerObjectMixin<CxxObjectFile>::isUnique;
 
-    using ManagerMixin<CxxObjectFileSet, CxxObjectFileSetHasher>::unique;
-    using ManagerMixin<CxxObjectFileSet, CxxObjectFileSetHasher>::isUnique;
+    using ManagerObjectSetMixin<CxxObjectFile>::unique;
+    using ManagerObjectSetMixin<CxxObjectFile>::isUnique;
 
-    using ManagerMixin<CxxProgram>::unique;
-    using ManagerMixin<CxxProgram>::isUnique;
+    using ManagerObjectMixin<CxxProgram>::unique;
+    using ManagerObjectMixin<CxxProgram>::isUnique;
 
-    using ManagerMixin<DbKey>::unique;
-    using ManagerMixin<DbKey>::isUnique;
+    using ManagerObjectMixin<DbKey>::unique;
+    using ManagerObjectMixin<DbKey>::isUnique;
 
-    using ManagerMixin<SysArgument>::unique;
-    using ManagerMixin<SysArgumentSet, SysArgumentSetHasher>::unique;
-    using ManagerMixin<SysArgumentSet, SysArgumentSetHasher>::isUnique;
+    using ManagerObjectMixin<SysArgument>::unique;
+    using ManagerObjectSetMixin<SysArgument>::unique;
+    using ManagerObjectSetMixin<SysArgument>::isUnique;
 
     SysExecutableSPtr obtainExecutable(const FsDirectorySPtr& base,
                                        const std::experimental::string_view& file)
@@ -229,8 +157,8 @@ public:
         return unique(arguments);
     }
 
-    using ManagerMixin<SysCommand>::unique;
-    using ManagerMixin<SysCommand>::isUnique;
+    using ManagerObjectMixin<SysCommand>::unique;
+    using ManagerObjectMixin<SysCommand>::isUnique;
 
 private:
     std::unordered_map<FsFileSPtr, CxxHeaderSPtr> mFile2CxxHeader;

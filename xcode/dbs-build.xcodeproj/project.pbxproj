@@ -100,6 +100,8 @@
 		5E4205391C78EB620090FA05 /* base.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E4205381C78EB620090FA05 /* base.hpp */; settings = {ASSET_TAGS = (); }; };
 		5E42053C1C78FA8F0090FA05 /* cxx_crc_task_mixin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E42053A1C78FA8F0090FA05 /* cxx_crc_task_mixin.cpp */; settings = {ASSET_TAGS = (); }; };
 		5E42053D1C78FA8F0090FA05 /* cxx_crc_task_mixin.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E42053B1C78FA8F0090FA05 /* cxx_crc_task_mixin.h */; settings = {ASSET_TAGS = (); }; };
+		5E42053F1C79097C0090FA05 /* manager_object_mixin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E42053E1C79097C0090FA05 /* manager_object_mixin.hpp */; settings = {ASSET_TAGS = (); }; };
+		5E4205411C790C590090FA05 /* manager_object_set_mixin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E4205401C790C590090FA05 /* manager_object_set_mixin.hpp */; settings = {ASSET_TAGS = (); }; };
 		5E5692641C724929000A233C /* crc.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E5692621C724929000A233C /* crc.hpp */; settings = {ASSET_TAGS = (); }; };
 		5E56926E1C726458000A233C /* cxx_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E56926C1C726458000A233C /* cxx_file.cpp */; settings = {ASSET_TAGS = (); }; };
 		5E56926F1C726458000A233C /* cxx_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E56926D1C726458000A233C /* cxx_file.h */; settings = {ASSET_TAGS = (); }; };
@@ -235,6 +237,8 @@
 		5E4205381C78EB620090FA05 /* base.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = base.hpp; sourceTree = "<group>"; };
 		5E42053A1C78FA8F0090FA05 /* cxx_crc_task_mixin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_crc_task_mixin.cpp; sourceTree = "<group>"; };
 		5E42053B1C78FA8F0090FA05 /* cxx_crc_task_mixin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_crc_task_mixin.h; sourceTree = "<group>"; };
+		5E42053E1C79097C0090FA05 /* manager_object_mixin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = manager_object_mixin.hpp; sourceTree = "<group>"; };
+		5E4205401C790C590090FA05 /* manager_object_set_mixin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = manager_object_set_mixin.hpp; sourceTree = "<group>"; };
 		5E5692621C724929000A233C /* crc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = crc.hpp; sourceTree = "<group>"; };
 		5E5692631C724929000A233C /* math.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = math.dbs; sourceTree = "<group>"; };
 		5E5692651C725443000A233C /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = build.sh; path = ../build.sh; sourceTree = "<group>"; };
@@ -355,6 +359,8 @@
 				5E10B33E1C70F272009C73E4 /* sys */,
 				5E5692701C727076000A233C /* base.hpp */,
 				5E10B3301C70F272009C73E4 /* doim.dbs */,
+				5E42053E1C79097C0090FA05 /* manager_object_mixin.hpp */,
+				5E4205401C790C590090FA05 /* manager_object_set_mixin.hpp */,
 				5E10B33C1C70F272009C73E4 /* manager.cpp */,
 				5E10B33D1C70F272009C73E4 /* manager.h */,
 			);
@@ -766,6 +772,7 @@
 				5EAE67751C7299B9005B3F8D /* cxx_header.h in Headers */,
 				5E10B3C11C70F272009C73E4 /* manager.h in Headers */,
 				5E10B3DA1C70F272009C73E4 /* intermittent.h in Headers */,
+				5E4205411C790C590090FA05 /* manager_object_set_mixin.hpp in Headers */,
 				5E10B3D91C70F272009C73E4 /* macro.h in Headers */,
 				5E10B3D31C70F272009C73E4 /* err_variadic.h in Headers */,
 				5E10B3C61C70F272009C73E4 /* cxx_library.hpp in Headers */,
@@ -777,6 +784,7 @@
 				5E10B3E21C70F272009C73E4 /* initialization_manager.hpp in Headers */,
 				5EAE677F1C72BE59005B3F8D /* cxx_program.h in Headers */,
 				5E10B4031C70F272009C73E4 /* cxx_compiler.hpp in Headers */,
+				5E42053F1C79097C0090FA05 /* manager_object_mixin.hpp in Headers */,
 				5E10B3E51C70F272009C73E4 /* log.h in Headers */,
 				5E10B3F21C70F272009C73E4 /* tokenizer.hpp in Headers */,
 				5E10B3F71C70F272009C73E4 /* cxx_header_crc_task.h in Headers */,

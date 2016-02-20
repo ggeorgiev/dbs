@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -77,8 +77,6 @@ public:
         if (task->crc() == crc)
             EHEnd;
 
-        std::cout << "set crc:" << crc << " expected: " << task->crc() << std::endl;
-
         auto mkdirTask =
             std::make_shared<task::EnsureDirectoryTask>(objectFile->file()->directory());
         tasks.push_back(mkdirTask);
@@ -100,9 +98,11 @@ public:
         auto argument_o =
             doim::gManager->obtainArgument("-o " + objectFile->file()->path(directory));
         compileArguments->insert(argument_o);
+        compileArguments = doim::gManager->unique(compileArguments);
 
         auto compileCommand =
             std::make_shared<doim::SysCommand>(mCompiler, compileArguments);
+        compileCommand = doim::gManager->unique(compileCommand);
         auto compileTask = std::make_shared<task::ExecuteCommandTask>(compileCommand,
                                                                       "compile: " + file);
         tasks.push_back(compileTask);
@@ -135,8 +135,6 @@ public:
             cmd = "";
             EHEnd;
         }
-
-        std::cout << "set crc:" << crc << " expected: " << task->crc() << std::endl;
 
         auto arguments = std::make_shared<doim::SysArgumentSet>();
         for (const auto& cxxLibrary : program->recursiveCxxLibraries())
@@ -173,8 +171,10 @@ public:
 
         auto argument_o = doim::gManager->obtainArgument("-o build/" + program->name());
         arguments->insert(argument_o);
+        arguments = doim::gManager->unique(arguments);
 
         auto linkCommand = std::make_shared<doim::SysCommand>(mCompiler, arguments);
+        linkCommand = doim::gManager->unique(linkCommand);
 
         auto linkTask =
             std::make_shared<task::ExecuteCommandTask>(linkCommand,
