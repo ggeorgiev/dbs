@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "task/base.hpp"
 #include "tpool/task.hpp"
 #include "doim/db/db_key.hpp"
 #include "doim/db/db_value.hpp"
@@ -15,41 +16,27 @@
 namespace task
 {
 class DbPutTask;
-
 typedef std::shared_ptr<DbPutTask> DbPutTaskSPtr;
 
-class DbPutTask : public tpool::Task
+class DbPutTask : public tpool::Task, public Base<DbPutTask, doim::DbKeySPtr>
 {
 public:
     DbPutTask(const doim::DbKeySPtr& key, const doim::DbValueSPtr& value);
 
+    doim::DbKeySPtr key() const
+    {
+        return std::get<0>(mArgs);
+    }
+
+    doim::DbValueSPtr value() const
+    {
+        return mValue;
+    }
+
     ECode operator()() override;
     std::string description() const override;
 
-    struct Hasher
-    {
-        std::size_t operator()(const DbPutTaskSPtr& task) const;
-        bool operator()(const DbPutTaskSPtr& task1, const DbPutTaskSPtr& task2) const;
-
-        std::hash<doim::DbKeySPtr> hashDK;
-        std::hash<doim::DbValueSPtr> hashDV;
-    };
-
 private:
-    doim::DbKeySPtr mKey;
     doim::DbValueSPtr mValue;
 };
-
-inline std::size_t DbPutTask::Hasher::operator()(const DbPutTaskSPtr& task) const
-{
-    auto seed = hashDK(task->mKey);
-    boost::hash_combine(seed, hashDV(task->mValue));
-    return seed;
-}
-
-inline bool DbPutTask::Hasher::operator()(const DbPutTaskSPtr& task1,
-                                          const DbPutTaskSPtr& task2) const
-{
-    return task1->mKey == task2->mKey && task1->mValue == task2->mValue;
-}
 }

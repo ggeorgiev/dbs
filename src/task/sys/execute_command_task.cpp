@@ -2,6 +2,8 @@
 //
 
 #include "task/sys/execute_command_task.h"
+#include "doim/manager.h"
+#include "err/err_assert.h"
 #include "err/err_cppformat.h"
 #include <iostream>
 #include <memory>
@@ -11,9 +13,18 @@
 
 namespace task
 {
+ExecuteCommandTask::ExecuteCommandTask(const doim::SysCommandSPtr& command,
+                                       const std::string description)
+    : tpool::Task(0)
+    , Base(command)
+    , mDescription(description)
+{
+    ASSERT(doim::gManager->isUnique(command));
+}
+
 ECode ExecuteCommandTask::operator()()
 {
-    const auto& cmd = mCommand->string();
+    const auto& cmd = command()->string();
 
     auto pipe = popen(cmd.c_str(), "r");
     if (!pipe)
@@ -32,4 +43,12 @@ ECode ExecuteCommandTask::operator()()
 
     EHEnd;
 }
+
+std::string ExecuteCommandTask::description() const
+{
+    if (!mDescription.empty())
+        return mDescription;
+    return "Execute command " + command()->string();
+}
+
 } // namespace task

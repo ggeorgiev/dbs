@@ -2,7 +2,9 @@
 //
 
 #include "task/db/db_put_task.h"
+#include "doim/manager.h"
 #include "db/database.h"
+#include "err/err_assert.h"
 #include <sstream>
 #include <string>
 
@@ -10,20 +12,21 @@ namespace task
 {
 DbPutTask::DbPutTask(const doim::DbKeySPtr& key, const doim::DbValueSPtr& value)
     : tpool::Task(0)
-    , mKey(key)
+    , Base(key)
     , mValue(value)
 {
+    ASSERT(doim::gManager->isUnique(key));
 }
 
 ECode DbPutTask::operator()()
 {
-    EHTest(db::gDatabase->put(mKey->bytes(), mValue->bytes()));
+    EHTest(db::gDatabase->put(key()->bytes(), value()->bytes()));
     EHEnd;
 }
 
 std::string DbPutTask::description() const
 {
-    return "Update key " + mKey->bytes();
+    return "Update key " + key()->bytes();
 }
 
 } // namespace task

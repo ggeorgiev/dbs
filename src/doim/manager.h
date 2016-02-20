@@ -172,6 +172,8 @@ public:
     using ManagerMixin<CxxIncludeDirectorySet, CxxIncludeDirectorySetHasher>::unique;
     using ManagerMixin<CxxIncludeDirectorySet, CxxIncludeDirectorySetHasher>::isUnique;
 
+    using ManagerMixin<CxxHeader>::isUnique;
+
     CxxHeaderSPtr unique(const CxxHeaderSPtr& header)
     {
         if (header == nullptr)
@@ -200,8 +202,10 @@ public:
     using ManagerMixin<CxxObjectFileSet, CxxObjectFileSetHasher>::isUnique;
 
     using ManagerMixin<CxxProgram>::unique;
+    using ManagerMixin<CxxProgram>::isUnique;
 
     using ManagerMixin<DbKey>::unique;
+    using ManagerMixin<DbKey>::isUnique;
 
     using ManagerMixin<SysArgument>::unique;
     using ManagerMixin<SysArgumentSet, SysArgumentSetHasher>::unique;
@@ -226,6 +230,7 @@ public:
     }
 
     using ManagerMixin<SysCommand>::unique;
+    using ManagerMixin<SysCommand>::isUnique;
 
 private:
     std::unordered_map<FsFileSPtr, CxxHeaderSPtr> mFile2CxxHeader;

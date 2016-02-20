@@ -3,7 +3,8 @@
 
 #pragma once
 
-#include "task/cxx/cxx_crc_task_mixin.hpp"
+#include "task/base.hpp"
+#include "task/cxx/cxx_crc_task_mixin.h"
 #include "doim/cxx/cxx_file.h"
 #include "err/err.h"
 #include <iosfwd>
@@ -16,34 +17,18 @@ class CxxFileCrcTask;
 
 typedef std::shared_ptr<CxxFileCrcTask> CxxFileCrcTaskSPtr;
 
-class CxxFileCrcTask : public CxxCrcTaskMixin
+class CxxFileCrcTask : public CxxCrcTaskMixin,
+                       public Base<CxxFileCrcTask, doim::CxxFileSPtr>
 {
 public:
     CxxFileCrcTask(const doim::CxxFileSPtr& cxxFile);
 
+    doim::CxxFileSPtr cxxFile() const
+    {
+        return std::get<0>(mArgs);
+    }
+
     ECode operator()() override;
     std::string description() const override;
-
-    struct Hasher
-    {
-        std::size_t operator()(const CxxFileCrcTaskSPtr& task) const;
-        bool operator()(const CxxFileCrcTaskSPtr& task1,
-                        const CxxFileCrcTaskSPtr& task2) const;
-    };
-
-private:
-    doim::CxxFileSPtr mCxxFile;
 };
-
-inline std::size_t CxxFileCrcTask::Hasher::operator()(
-    const CxxFileCrcTaskSPtr& task) const
-{
-    return std::hash<doim::CxxFileSPtr>()(task->mCxxFile);
-}
-
-inline bool CxxFileCrcTask::Hasher::operator()(const CxxFileCrcTaskSPtr& task1,
-                                               const CxxFileCrcTaskSPtr& task2) const
-{
-    return task1->mCxxFile == task2->mCxxFile;
-}
 }

@@ -6,6 +6,7 @@
 #include "task/manager.h"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/fs/fs_file.h"
+#include "err/err_assert.h"
 #include <algorithm>
 #include <sstream>
 #include <string>
@@ -16,13 +17,14 @@ namespace task
 {
 CxxProgramCrcTask::CxxProgramCrcTask(const doim::CxxProgramSPtr& cxxProgram)
     : tpool::Task(0)
-    , mCxxProgram(cxxProgram)
+    , Base(cxxProgram)
 {
+    ASSERT(doim::gManager->isUnique(cxxProgram));
 }
 
 ECode CxxProgramCrcTask::operator()()
 {
-    const auto& objectFiles = mCxxProgram->cxxObjectFiles();
+    const auto& objectFiles = cxxProgram()->cxxObjectFiles();
 
     std::vector<math::Crcsum> crcs;
     crcs.reserve(objectFiles->size());
@@ -46,7 +48,7 @@ ECode CxxProgramCrcTask::operator()()
 
 std::string CxxProgramCrcTask::description() const
 {
-    return "Crc of " + mCxxProgram->file()->path();
+    return "Crc of " + cxxProgram()->file()->path();
 }
 
 } // namespace task

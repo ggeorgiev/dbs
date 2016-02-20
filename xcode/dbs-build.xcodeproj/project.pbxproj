@@ -68,7 +68,6 @@
 		5E10B3F01C70F272009C73E4 /* string_stream.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E10B3831C70F272009C73E4 /* string_stream.hpp */; settings = {ASSET_TAGS = (); }; };
 		5E10B3F11C70F272009C73E4 /* token.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E10B3841C70F272009C73E4 /* token.hpp */; settings = {ASSET_TAGS = (); }; };
 		5E10B3F21C70F272009C73E4 /* tokenizer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E10B3851C70F272009C73E4 /* tokenizer.hpp */; settings = {ASSET_TAGS = (); }; };
-		5E10B3F31C70F272009C73E4 /* cxx_crc_task_mixin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E10B38D1C70F272009C73E4 /* cxx_crc_task_mixin.hpp */; settings = {ASSET_TAGS = (); }; };
 		5E10B3F41C70F272009C73E4 /* cxx_file_crc_task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E10B38E1C70F272009C73E4 /* cxx_file_crc_task.cpp */; settings = {ASSET_TAGS = (); }; };
 		5E10B3F51C70F272009C73E4 /* cxx_file_crc_task.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E10B38F1C70F272009C73E4 /* cxx_file_crc_task.h */; settings = {ASSET_TAGS = (); }; };
 		5E10B3F61C70F272009C73E4 /* cxx_header_crc_task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E10B3901C70F272009C73E4 /* cxx_header_crc_task.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -98,6 +97,9 @@
 		5E4205331C78D94F0090FA05 /* object.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E4205311C78D94F0090FA05 /* object.h */; settings = {ASSET_TAGS = (); }; };
 		5E4205361C78DF5A0090FA05 /* command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4205341C78DF5A0090FA05 /* command.cpp */; settings = {ASSET_TAGS = (); }; };
 		5E4205371C78DF5A0090FA05 /* command.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E4205351C78DF5A0090FA05 /* command.h */; settings = {ASSET_TAGS = (); }; };
+		5E4205391C78EB620090FA05 /* base.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E4205381C78EB620090FA05 /* base.hpp */; settings = {ASSET_TAGS = (); }; };
+		5E42053C1C78FA8F0090FA05 /* cxx_crc_task_mixin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E42053A1C78FA8F0090FA05 /* cxx_crc_task_mixin.cpp */; settings = {ASSET_TAGS = (); }; };
+		5E42053D1C78FA8F0090FA05 /* cxx_crc_task_mixin.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E42053B1C78FA8F0090FA05 /* cxx_crc_task_mixin.h */; settings = {ASSET_TAGS = (); }; };
 		5E5692641C724929000A233C /* crc.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E5692621C724929000A233C /* crc.hpp */; settings = {ASSET_TAGS = (); }; };
 		5E56926E1C726458000A233C /* cxx_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E56926C1C726458000A233C /* cxx_file.cpp */; settings = {ASSET_TAGS = (); }; };
 		5E56926F1C726458000A233C /* cxx_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E56926D1C726458000A233C /* cxx_file.h */; settings = {ASSET_TAGS = (); }; };
@@ -197,7 +199,6 @@
 		5E10B3881C70F272009C73E4 /* cstd.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cstd.dbs; sourceTree = "<group>"; };
 		5E10B3891C70F272009C73E4 /* stl.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = stl.dbs; sourceTree = "<group>"; };
 		5E10B38A1C70F272009C73E4 /* zip.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = zip.dbs; sourceTree = "<group>"; };
-		5E10B38D1C70F272009C73E4 /* cxx_crc_task_mixin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cxx_crc_task_mixin.hpp; sourceTree = "<group>"; };
 		5E10B38E1C70F272009C73E4 /* cxx_file_crc_task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_file_crc_task.cpp; sourceTree = "<group>"; };
 		5E10B38F1C70F272009C73E4 /* cxx_file_crc_task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_file_crc_task.h; sourceTree = "<group>"; };
 		5E10B3901C70F272009C73E4 /* cxx_header_crc_task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_header_crc_task.cpp; sourceTree = "<group>"; };
@@ -231,6 +232,9 @@
 		5E4205311C78D94F0090FA05 /* object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = object.h; sourceTree = "<group>"; };
 		5E4205341C78DF5A0090FA05 /* command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = command.cpp; sourceTree = "<group>"; };
 		5E4205351C78DF5A0090FA05 /* command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = command.h; sourceTree = "<group>"; };
+		5E4205381C78EB620090FA05 /* base.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = base.hpp; sourceTree = "<group>"; };
+		5E42053A1C78FA8F0090FA05 /* cxx_crc_task_mixin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_crc_task_mixin.cpp; sourceTree = "<group>"; };
+		5E42053B1C78FA8F0090FA05 /* cxx_crc_task_mixin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_crc_task_mixin.h; sourceTree = "<group>"; };
 		5E5692621C724929000A233C /* crc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = crc.hpp; sourceTree = "<group>"; };
 		5E5692631C724929000A233C /* math.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = math.dbs; sourceTree = "<group>"; };
 		5E5692651C725443000A233C /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = build.sh; path = ../build.sh; sourceTree = "<group>"; };
@@ -614,6 +618,7 @@
 		5E10B38B1C70F272009C73E4 /* task */ = {
 			isa = PBXGroup;
 			children = (
+				5E4205381C78EB620090FA05 /* base.hpp */,
 				5E10B38C1C70F272009C73E4 /* cxx */,
 				5E10B3921C70F272009C73E4 /* db */,
 				5E10B3951C70F272009C73E4 /* gtest */,
@@ -628,7 +633,8 @@
 		5E10B38C1C70F272009C73E4 /* cxx */ = {
 			isa = PBXGroup;
 			children = (
-				5E10B38D1C70F272009C73E4 /* cxx_crc_task_mixin.hpp */,
+				5E42053A1C78FA8F0090FA05 /* cxx_crc_task_mixin.cpp */,
+				5E42053B1C78FA8F0090FA05 /* cxx_crc_task_mixin.h */,
 				5E10B38E1C70F272009C73E4 /* cxx_file_crc_task.cpp */,
 				5E10B38F1C70F272009C73E4 /* cxx_file_crc_task.h */,
 				5E10B3901C70F272009C73E4 /* cxx_header_crc_task.cpp */,
@@ -756,6 +762,7 @@
 				5E10B3D11C70F272009C73E4 /* err_cppformat.h in Headers */,
 				5E10B3C41C70F272009C73E4 /* executable.hpp in Headers */,
 				5E10B3DE1C70F272009C73E4 /* test_resource.h in Headers */,
+				5E42053D1C78FA8F0090FA05 /* cxx_crc_task_mixin.h in Headers */,
 				5EAE67751C7299B9005B3F8D /* cxx_header.h in Headers */,
 				5E10B3C11C70F272009C73E4 /* manager.h in Headers */,
 				5E10B3DA1C70F272009C73E4 /* intermittent.h in Headers */,
@@ -775,12 +782,12 @@
 				5E10B3F71C70F272009C73E4 /* cxx_header_crc_task.h in Headers */,
 				5E10B4071C70F272009C73E4 /* task.hpp in Headers */,
 				5EAE67811C72BE59005B3F8D /* cxx_static_library.h in Headers */,
+				5E4205391C78EB620090FA05 /* base.hpp in Headers */,
 				5E10B3C21C70F272009C73E4 /* argument.hpp in Headers */,
 				5EAE67851C72E2B4005B3F8D /* fs_file.h in Headers */,
 				5E10B3F11C70F272009C73E4 /* token.hpp in Headers */,
 				5E10B4061C70F272009C73E4 /* priority.hpp in Headers */,
 				5E4205331C78D94F0090FA05 /* object.h in Headers */,
-				5E10B3F31C70F272009C73E4 /* cxx_crc_task_mixin.hpp in Headers */,
 				5EAE67711C7295B2005B3F8D /* cxx_object_file.h in Headers */,
 				5E10B4081C70F272009C73E4 /* tpool.hpp in Headers */,
 				5E10B3F91C70F272009C73E4 /* db_put_task.h in Headers */,
@@ -932,6 +939,7 @@
 				5E10B3E71C70F272009C73E4 /* main.cpp in Sources */,
 				5EAE67741C7299B9005B3F8D /* cxx_header.cpp in Sources */,
 				5E10B3EA1C70F272009C73E4 /* cxx_parser-utest.cpp in Sources */,
+				5E42053C1C78FA8F0090FA05 /* cxx_crc_task_mixin.cpp in Sources */,
 				5E10B3E11C70F272009C73E4 /* initialization_manager-utest.cpp in Sources */,
 				5E10B3ED1C70F272009C73E4 /* token-utest.cpp in Sources */,
 				5EAE67701C7295B2005B3F8D /* cxx_object_file.cpp in Sources */,
