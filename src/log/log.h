@@ -4,11 +4,8 @@
 #pragma once
 
 #include "im/initialization_manager.hpp"
-#include <cppformat/format.h>           // IWYU pragma: keep
-#include <spdlog/common.h>              // IWYU pragma: export
-#include <spdlog/logger.h>              // IWYU pragma: export
-#include <spdlog/spdlog.h>              // IWYU pragma: export
-#include <spdlog/details/line_logger.h> // IWYU pragma: export
+#include <cppformat/format.h> // IWYU pragma: keep
+#include <spdlog/spdlog.h>    // IWYU pragma: export
 #include <memory>
 
 namespace dbslog
