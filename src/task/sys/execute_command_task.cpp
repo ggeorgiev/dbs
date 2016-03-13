@@ -9,6 +9,7 @@
 #include <memory>
 #include <sstream>
 #include <string>
+#include <stddef.h>
 #include <stdio.h>
 
 namespace task

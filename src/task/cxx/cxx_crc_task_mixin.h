@@ -5,14 +5,21 @@
 
 #include "tpool/task.hpp"
 #include "parser/cxx/cxx_parser.hpp"
-#include "doim/cxx/cxx_file.h"
-#include "doim/manager.h"
-#include "log/log.h"
-#include <boost/filesystem.hpp>
-#include <boost/system/error_code.hpp>
+#include "doim/cxx/cxx_header.h"
+#include "doim/cxx/cxx_include_directory.h"
+#include "doim/fs/fs_file.h"
+#include "err/err.h"
+#include "err/err_cppformat.h"
 #include "math/crc.hpp"
-#include <fstream>
-#include <regex>
+#include <algorithm>
+#include <experimental/string_view>
+#include <fstream> // IWYU pragma: keep
+#include <iterator>
+#include <memory>
+#include <sstream>
+#include <string>
+#include <utility>
+#include <vector>
 
 namespace task
 {
@@ -48,7 +55,7 @@ protected:
     {
         math::CrcProcessor crcProcessor;
 
-        std::ifstream fstream(file->path(nullptr));
+        std::ifstream fstream(file->path(nullptr).c_str());
         std::string content((std::istreambuf_iterator<char>(fstream)),
                             std::istreambuf_iterator<char>());
 
@@ -69,7 +76,7 @@ protected:
             headerDirectories.push_back(headerDirectory);
         }
 
-        std::vector<uint64_t> crcs;
+        std::vector<math::Crcsum> crcs;
         crcs.reserve(headerDirectories.size());
 
         for (const auto& headerDirectory : headerDirectories)
@@ -85,7 +92,7 @@ protected:
 
         std::sort(crcs.begin(), crcs.end());
 
-        crcProcessor.process_bytes(crcs.data(), sizeof(uint64_t) * crcs.size());
+        crcProcessor.process_bytes(crcs.data(), sizeof(math::Crcsum) * crcs.size());
         mCrcsum = crcProcessor.checksum();
 
         EHEnd;

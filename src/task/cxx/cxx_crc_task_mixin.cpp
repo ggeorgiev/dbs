@@ -2,6 +2,9 @@
 //
 
 #include "task/cxx/cxx_crc_task_mixin.h"
+#include "doim/manager.h"
+#include <unordered_set>
+
 namespace task
 {
 doim::CxxHeaderSPtr CxxCrcTaskMixin::findInclude(

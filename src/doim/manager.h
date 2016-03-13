@@ -6,9 +6,9 @@
 #include "doim/cxx/cxx_file.h" // IWYU pragma: keep
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
-#include "doim/cxx/cxx_object_file.h"
-#include "doim/cxx/cxx_program.h" // IWYU pragma: keep
-#include "doim/db/db_key.hpp"     // IWYU pragma: keep
+#include "doim/cxx/cxx_object_file.h" // IWYU pragma: keep
+#include "doim/cxx/cxx_program.h"     // IWYU pragma: keep
+#include "doim/db/db_key.hpp"         // IWYU pragma: keep
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/location.hpp"
@@ -19,17 +19,12 @@
 #include "doim/sys/command.h" // IWYU pragma: keep
 #include "doim/sys/executable.hpp"
 #include "im/initialization_manager.hpp"
-#include <boost/functional/hash/hash.hpp>
-#include <algorithm>
 #include <experimental/string_view>
 #include <iosfwd>
 #include <memory>
-#include <typeindex>
 #include <unordered_map>
 #include <unordered_set>
 #include <utility>
-#include <vector>
-#include <stddef.h>
 
 namespace doim
 {

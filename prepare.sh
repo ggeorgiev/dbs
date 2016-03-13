@@ -119,7 +119,7 @@ then
 
     $CMAKE \
         -G "Unix Makefiles" \
-        -DLLVM_PATH=$CLANGDIR \
+        -DIWYU_LLVM_ROOT_PATH=$CLANGDIR \
         -DCMAKE_INSTALL_PREFIX:PATH=../../../iwyu \
         .. || exit 1
 

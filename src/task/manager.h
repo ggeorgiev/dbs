@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "task/base.hpp"
 #include "task/cxx/cxx_file_crc_task.h"    // IWYU pragma: keep
 #include "task/cxx/cxx_header_crc_task.h"  // IWYU pragma: keep
 #include "task/cxx/cxx_program_crc_task.h" // IWYU pragma: keep

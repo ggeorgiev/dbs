@@ -4,6 +4,7 @@
 #include "task/sys/ensure_directory_task.h"
 #include "doim/manager.h"
 #include "err/err_assert.h"
+#include <string>
 #include <stdlib.h>
 
 namespace task

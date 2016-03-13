@@ -5,9 +5,9 @@
 
 #include "doim/base.hpp"
 #include "doim/generic/location.hpp"
-#include <boost/functional/hash.hpp>
+#include <iosfwd>
 #include <memory>
-#include <string>
+#include <tuple>
 
 namespace doim
 {
@@ -21,6 +21,7 @@ namespace doim
  */
 
 class Object;
+
 typedef std::shared_ptr<Object> ObjectSPtr;
 
 class Object : public Base<Object, int, std::string, LocationSPtr>

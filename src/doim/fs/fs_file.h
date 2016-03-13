@@ -5,16 +5,16 @@
 
 #include "doim/base.hpp"
 #include "doim/fs/fs_directory.h"
-#include <boost/functional/hash.hpp>
+#include <iosfwd>
 #include <memory>
 #include <string>
+#include <tuple>
 #include <unordered_set>
-#include <utility>
-#include <vector>
 
 namespace doim
 {
 class FsFile;
+
 typedef std::shared_ptr<FsFile> FsFileSPtr;
 typedef std::unordered_set<FsFileSPtr> FsFileSet;
 typedef std::shared_ptr<FsFileSet> FsFileSetSPtr;

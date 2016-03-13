@@ -6,14 +6,13 @@
 #include "doim/base.hpp"
 #include "doim/fs/fs_file.h"
 #include <memory>
-#include <string>
+#include <tuple>
 #include <unordered_set>
-#include <utility>
-#include <vector>
 
 namespace doim
 {
 class CxxStaticLibrary;
+
 typedef std::shared_ptr<CxxStaticLibrary> CxxStaticLibrarySPtr;
 typedef std::unordered_set<CxxStaticLibrarySPtr> CxxStaticLibrarySet;
 typedef std::shared_ptr<CxxStaticLibrarySet> CxxStaticLibrarySetSPtr;

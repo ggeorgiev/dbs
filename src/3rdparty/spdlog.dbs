@@ -9,5 +9,6 @@ cxx_library spdlog
         spdlog/logger.h
         spdlog/spdlog.h
         spdlog/details/line_logger.h
+        spdlog/details/logger_impl.h
     ;
 ;

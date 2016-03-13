@@ -2,6 +2,8 @@
 //
 
 #include "log/log.h"
+#include <spdlog/common.h>
+#include <spdlog/details/spdlog_impl.h>
 #include <functional>
 
 namespace dbslog

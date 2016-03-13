@@ -4,15 +4,16 @@
 #pragma once
 
 #include "doim/base.hpp"
-#include "const/constants.h"
-#include <boost/functional/hash.hpp>
 #include <iostream>
 #include <memory>
 #include <string>
+#include <tuple>
+#include <stddef.h>
 
 namespace doim
 {
 class FsDirectory;
+
 typedef FsDirectory* FsDirectoryRPtr;
 typedef FsDirectory const* FsDirectoryRCPtr;
 typedef std::shared_ptr<FsDirectory> FsDirectorySPtr;

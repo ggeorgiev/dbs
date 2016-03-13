@@ -4,6 +4,10 @@
 #include "log/log.h"
 #include "log/log_function.hpp"
 #include <gtest/gtest.h>
+#include <spdlog/logger.h>
+#include <spdlog/details/line_logger_fwd.h>
+#include <spdlog/details/line_logger_impl.h>
+#include <spdlog/details/logger_impl.h>
 #include <memory>
 
 TEST(Log, basic)

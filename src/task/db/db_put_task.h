@@ -8,14 +8,14 @@
 #include "doim/db/db_key.hpp"
 #include "doim/db/db_value.hpp"
 #include "err/err.h"
-#include <boost/functional/hash/hash.hpp>
 #include <iosfwd>
 #include <memory>
-#include <stddef.h>
+#include <tuple>
 
 namespace task
 {
 class DbPutTask;
+
 typedef std::shared_ptr<DbPutTask> DbPutTaskSPtr;
 
 class DbPutTask : public tpool::Task, public Base<DbPutTask, doim::DbKeySPtr>
