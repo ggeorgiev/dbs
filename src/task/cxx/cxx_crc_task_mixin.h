@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "tpool/task.hpp"
+#include "tpool/task.h"
 #include "parser/cxx/cxx_parser.hpp"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"

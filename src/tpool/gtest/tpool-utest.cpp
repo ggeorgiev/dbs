@@ -1,7 +1,7 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "tpool/task.hpp" // IWYU pragma: keep
+#include "tpool/task.h" // IWYU pragma: keep
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
 #include <memory>

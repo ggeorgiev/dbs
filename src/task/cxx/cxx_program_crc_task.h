@@ -4,7 +4,7 @@
 #pragma once
 
 #include "task/base.hpp"
-#include "tpool/task.hpp"
+#include "tpool/task.h"
 #include "doim/cxx/cxx_program.h"
 #include "err/err.h"
 #include "math/crc.hpp"

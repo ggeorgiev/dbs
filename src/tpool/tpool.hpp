@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "tpool/task.hpp"
+#include "tpool/task.h"
 #include <condition_variable>
 #include <memory>
 #include <mutex>

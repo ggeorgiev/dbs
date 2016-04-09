@@ -6,7 +6,7 @@ cxx_library tpool
         @directory=..:
 
         tpool/priority.hpp
-        tpool/task.hpp
+        tpool/task.h
     ;
 
     cxx_library:
@@ -14,6 +14,10 @@ cxx_library tpool
 
         ../log/log
         ../err/err
+    ;
+
+    cxx_file:
+        task.cpp
     ;
 ;
 
