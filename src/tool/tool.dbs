@@ -9,6 +9,7 @@ cxx_library tool
     ;
 
     cxx_library:
+        ../log/log
         ../db/db
         ../task/task
     ;

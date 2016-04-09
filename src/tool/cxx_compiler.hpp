@@ -6,6 +6,7 @@
 #include "task/cxx/cxx_file_crc_task.h"
 #include "task/cxx/cxx_program_crc_task.h"
 #include "task/db/db_put_task.h"
+#include "task/manager.h"
 #include "task/sys/ensure_directory_task.h"
 #include "task/sys/execute_command_task.h"
 #include "dom/cxx/cxx_program.hpp"
@@ -64,8 +65,9 @@ public:
                 const doim::CxxObjectFileSPtr& objectFile,
                 std::vector<tpool::TaskSPtr>& tasks)
     {
-        auto task = std::make_shared<task::CxxFileCrcTask>(objectFile->cxxFile());
-        EHTest((*task)(), objectFile->file()->path());
+        auto task = task::gManager->valid(
+            std::make_shared<task::CxxFileCrcTask>(objectFile->cxxFile()));
+        EHTest(task->run(), objectFile->file()->path());
 
         auto key = std::make_shared<doim::DbKey>("file:" +
                                                  objectFile->cxxFile()->file()->path());
@@ -77,8 +79,8 @@ public:
         if (task->crc() == crc)
             EHEnd;
 
-        auto mkdirTask =
-            std::make_shared<task::EnsureDirectoryTask>(objectFile->file()->directory());
+        auto mkdirTask = task::gManager->valid(
+            std::make_shared<task::EnsureDirectoryTask>(objectFile->file()->directory()));
         tasks.push_back(mkdirTask);
 
         auto compileArguments =
@@ -103,12 +105,14 @@ public:
         auto compileCommand =
             std::make_shared<doim::SysCommand>(mCompiler, compileArguments);
         compileCommand = doim::gManager->unique(compileCommand);
-        auto compileTask = std::make_shared<task::ExecuteCommandTask>(compileCommand,
-                                                                      "compile: " + file);
+        auto compileTask = task::gManager->valid(
+            std::make_shared<task::ExecuteCommandTask>(compileCommand,
+                                                       "compile: " + file));
         tasks.push_back(compileTask);
 
         auto value = std::make_shared<doim::DbValue>(task->crc());
-        auto updateTask = std::make_shared<task::DbPutTask>(key, value);
+        auto updateTask =
+            task::gManager->valid(std::make_shared<task::DbPutTask>(key, value));
         tasks.push_back(updateTask);
 
         EHEnd;
@@ -162,11 +166,7 @@ public:
             std::vector<tpool::TaskSPtr> tsks;
             EHTest(tasks(directory, objectFile, tsks));
             for (auto task : tsks)
-            {
-                ILOG("RUN: " + task->description());
-                EHTest((*task)());
-                ILOG("DONE: " + task->description());
-            }
+                EHTest(task->run());
         }
 
         auto argument_o = doim::gManager->obtainArgument("-o build/" + program->name());
@@ -176,21 +176,17 @@ public:
         auto linkCommand = std::make_shared<doim::SysCommand>(mCompiler, arguments);
         linkCommand = doim::gManager->unique(linkCommand);
 
-        auto linkTask =
+        auto linkTask = task::gManager->valid(
             std::make_shared<task::ExecuteCommandTask>(linkCommand,
-                                                       "link: " + program->name());
+                                                       "link: " + program->name()));
 
-        ILOG("RUN: " + linkTask->description());
-        EHTest((*linkTask)());
-        ILOG("DONE: " + linkTask->description());
+        EHTest(linkTask->run());
 
         auto value = std::make_shared<doim::DbValue>(task->crc());
-        auto updateTask = std::make_shared<task::DbPutTask>(key, value);
+        auto updateTask =
+            task::gManager->valid(std::make_shared<task::DbPutTask>(key, value));
 
-        ILOG("RUN: " + updateTask->description());
-        EHTest((*updateTask)());
-        ILOG("DONE: " + updateTask->description());
-
+        EHTest(updateTask->run());
         EHEnd;
     }
 

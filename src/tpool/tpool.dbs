@@ -12,6 +12,7 @@ cxx_library tpool
     cxx_library:
         ../3rdparty/boost_template
 
+        ../log/log
         ../err/err
     ;
 ;

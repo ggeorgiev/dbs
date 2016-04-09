@@ -5,6 +5,7 @@
 
 #include "tpool/priority.hpp"
 #include "err/err.h"
+#include "log/log.h"
 #include <boost/heap/fibonacci_heap.hpp>
 #include <atomic>
 #include <functional>
@@ -47,8 +48,11 @@ public:
 
     ECode run()
     {
-        EHTest((*this)());
+        ILOG("[RUN   ] " + description());
+        ECode code = (*this)();
+        ILOG("[  DONE] " + description());
         mFinished = true;
+        EHTest(code);
         EHEnd;
     }
 
