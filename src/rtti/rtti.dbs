@@ -1,0 +1,33 @@
+cxx_library rtti
+    @type=user:
+
+    cxx_header
+        @visibility=public
+        @directory=..:
+
+        rtti/class_rtti.hpp
+    ;
+
+    cxx_library:
+    ;
+
+    cxx_file:
+    ;
+;
+
+cxx_library rtti-test
+    @type=test:
+
+    cxx_library:
+        ../3rdparty/gtest
+
+        ../gtest/gtest
+
+        rtti
+    ;
+
+    cxx_file:
+        gtest/class_rtti-utest.cpp
+    ;
+;
+

@@ -3,10 +3,12 @@
 
 #pragma once
 
+#include "rtti/class_rtti.hpp"
 #include <boost/functional/hash.hpp>
 #include <boost/fusion/adapted/std_tuple.hpp>
 #include <boost/fusion/algorithm.hpp>
 #include <experimental/string_view>
+#include <functional>
 #include <memory>
 #include <tuple>
 #include <unordered_map>
@@ -16,7 +18,7 @@
 namespace task
 {
 template <typename T, typename... Args>
-class Base
+class Base : public rtti::RttiInfo<T>
 {
 public:
     typedef std::tuple<Args...> Tuple;
@@ -30,8 +32,8 @@ public:
     {
         struct HashItem
         {
-            HashItem()
-                : mSeed(0)
+            HashItem(std::size_t seed)
+                : mSeed(seed)
             {
             }
 
@@ -47,7 +49,7 @@ public:
 
         std::size_t operator()(const std::shared_ptr<T>& object) const
         {
-            HashItem hashItem;
+            HashItem hashItem(mClassIdHasher(T::classId()));
             boost::fusion::for_each(object->mArgs, hashItem);
             return hashItem.mSeed;
         }
@@ -57,6 +59,9 @@ public:
         {
             return object1->mArgs == object2->mArgs;
         }
+
+    private:
+        std::hash<rtti::ClassId> mClassIdHasher;
     };
 
 protected:

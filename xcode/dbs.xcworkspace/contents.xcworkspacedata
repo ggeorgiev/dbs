@@ -4,20 +4,4 @@
    <FileRef
       location = "group:dbs-build.xcodeproj">
    </FileRef>
-   <Group
-      location = "container:"
-      name = "scripts">
-      <FileRef
-         location = "group:../build.sh">
-      </FileRef>
-      <FileRef
-         location = "group:../prepare.sh">
-      </FileRef>
-      <FileRef
-         location = "group:../reformat.sh">
-      </FileRef>
-      <FileRef
-         location = "group:../self-build.sh">
-      </FileRef>
-   </Group>
 </Workspace>

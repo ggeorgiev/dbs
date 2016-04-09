@@ -11,6 +11,7 @@ annex:
     3rdparty/spdlog.dbs
 
     const/const.dbs
+    rtti/rtti.dbs
     im/im.dbs
     log/log.dbs
     err/err.dbs
@@ -43,6 +44,7 @@ cxx_program dbs-test:
     cxx_library:
         gtest/gtest
 
+        rtti/rtti-test
         im/im-test
         log/log-test
         err/err-test

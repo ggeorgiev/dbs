@@ -22,6 +22,7 @@ cxx_library task
         ../3rdparty/boost_template
         ../3rdparty/boost_filesystem
 
+        ../rtti/rtti
         ../log/log
         ../err/err
         ../tpool/tpool
