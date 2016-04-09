@@ -8,7 +8,11 @@ cxx_library spdlog
         spdlog/common.h
         spdlog/logger.h
         spdlog/spdlog.h
+        spdlog/details/format.h
         spdlog/details/line_logger.h
+        spdlog/details/line_logger_fwd.h
+        spdlog/details/line_logger_impl.h
         spdlog/details/logger_impl.h
+        spdlog/details/spdlog_impl.h
     ;
 ;
