@@ -18,8 +18,7 @@ class CxxProgramCrcTask;
 
 typedef std::shared_ptr<CxxProgramCrcTask> CxxProgramCrcTaskSPtr;
 
-class CxxProgramCrcTask : public tpool::Task,
-                          public Base<CxxProgramCrcTask, doim::CxxProgramSPtr>
+class CxxProgramCrcTask : public Base<CxxProgramCrcTask, doim::CxxProgramSPtr>
 {
 public:
     CxxProgramCrcTask(const doim::CxxProgramSPtr& cxxProgram);
@@ -32,6 +31,11 @@ public:
     math::Crcsum crc() const
     {
         return mCrcsum;
+    }
+
+    doim::TagSet tags() override
+    {
+        return doim::TagSet{doim::gTaskTag, doim::gCrcTag};
     }
 
     ECode operator()() override;

@@ -18,7 +18,7 @@ class DbPutTask;
 
 typedef std::shared_ptr<DbPutTask> DbPutTaskSPtr;
 
-class DbPutTask : public tpool::Task, public Base<DbPutTask, doim::DbKeySPtr>
+class DbPutTask : public Base<DbPutTask, doim::DbKeySPtr>
 {
 public:
     DbPutTask(const doim::DbKeySPtr& key, const doim::DbValueSPtr& value);

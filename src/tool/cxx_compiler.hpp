@@ -67,7 +67,7 @@ public:
     {
         auto task = task::gManager->valid(
             std::make_shared<task::CxxFileCrcTask>(objectFile->cxxFile()));
-        EHTest(task->run(), objectFile->file()->path());
+        EHTest(task->join(), objectFile->file()->path());
 
         auto key = std::make_shared<doim::DbKey>("file:" +
                                                  objectFile->cxxFile()->file()->path());
@@ -87,7 +87,7 @@ public:
             includeArguments(directory, objectFile->cxxFile()->cxxIncludeDirectories());
 
         auto argument_cxxflags = doim::gManager->obtainArgument(
-            "-std=c++11 -stdlib=libc++ -O0 -g "
+            "-std=c++11 -stdlib=libc++ -O3 "
             "-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/"
             "MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk");
         compileArguments->insert(argument_cxxflags);
@@ -107,7 +107,7 @@ public:
         compileCommand = doim::gManager->unique(compileCommand);
         auto compileTask = task::gManager->valid(
             std::make_shared<task::ExecuteCommandTask>(compileCommand,
-                                                       "compile: " + file));
+                                                       "Compile " + file));
         tasks.push_back(compileTask);
 
         auto value = std::make_shared<doim::DbValue>(task->crc());
@@ -166,7 +166,7 @@ public:
             std::vector<tpool::TaskSPtr> tsks;
             EHTest(tasks(directory, objectFile, tsks));
             for (auto task : tsks)
-                EHTest(task->run());
+                EHTest(task->join());
         }
 
         auto argument_o = doim::gManager->obtainArgument("-o build/" + program->name());
@@ -180,13 +180,13 @@ public:
             std::make_shared<task::ExecuteCommandTask>(linkCommand,
                                                        "link: " + program->name()));
 
-        EHTest(linkTask->run());
+        EHTest(linkTask->join());
 
         auto value = std::make_shared<doim::DbValue>(task->crc());
         auto updateTask =
             task::gManager->valid(std::make_shared<task::DbPutTask>(key, value));
 
-        EHTest(updateTask->run());
+        EHTest(updateTask->join());
         EHEnd;
     }
 

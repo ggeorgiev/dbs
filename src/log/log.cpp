@@ -12,7 +12,7 @@ static bool init()
 {
     gLogger = spdlog::stdout_logger_mt("dbs");
     gLogger->set_level(spdlog::level::trace);
-    gLogger->set_pattern("# %H:%M:%S.%e %L [%t] %v");
+    gLogger->set_pattern("# %H:%M:%S.%e %L %v");
     return true;
 }
 

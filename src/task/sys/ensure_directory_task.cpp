@@ -1,25 +1,39 @@
 //  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
+#include "task/manager.h"
 #include "task/sys/ensure_directory_task.h"
 #include "doim/manager.h"
 #include "err/err_assert.h"
+#include <boost/filesystem.hpp>
 #include <string>
 #include <stdlib.h>
 
 namespace task
 {
 EnsureDirectoryTask::EnsureDirectoryTask(const doim::FsDirectorySPtr& directory)
-    : tpool::Task(0)
-    , Base(directory)
+    : Base(directory)
 {
     ASSERT(doim::gManager->isUnique(directory));
 }
 
 ECode EnsureDirectoryTask::operator()()
 {
-    std::string cmd = "mkdir -p " + directory()->path();
-    system(cmd.c_str());
+    boost::filesystem::path path(directory()->path());
+
+    if (boost::filesystem::is_directory(path))
+        EHEnd;
+
+    if (directory()->parent() != nullptr)
+    {
+        auto mkdirTask = task::gManager->valid(
+            std::make_shared<task::EnsureDirectoryTask>(directory()->parent()));
+        EHTest(mkdirTask->join());
+    }
+
+    if (!boost::filesystem::create_directory(path))
+        if (!boost::filesystem::is_directory(path))
+            EHBan(kFileSystem);
     EHEnd;
 }
 

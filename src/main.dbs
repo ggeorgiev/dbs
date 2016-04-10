@@ -19,6 +19,7 @@ annex:
     db/db.dbs
     tpool/tpool.dbs
     doim/doim.dbs
+    option/option.dbs
     dom/dom.dbs
     parser/parser.dbs
     task/task.dbs
@@ -51,6 +52,7 @@ cxx_program dbs-test:
         db/db-test
         tpool/tpool-test
         doim/doim-test
+        option/option-test
         dom/dom-test
         parser/parser-test
         task/task-test

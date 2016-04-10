@@ -22,10 +22,8 @@ Task::~Task()
 
 ECode Task::run()
 {
-    ILOG("[RUN   ] " + description());
     ECode code = (*this)();
 
-    ILOG("[  DONE] " + description());
     mFinished = true;
 
     EHTest(code);

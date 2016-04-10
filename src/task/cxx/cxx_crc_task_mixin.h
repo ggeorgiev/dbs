@@ -23,14 +23,9 @@
 
 namespace task
 {
-class CxxCrcTaskMixin : public tpool::Task
+class CxxCrcTaskMixin
 {
 public:
-    CxxCrcTaskMixin()
-        : tpool::Task(0)
-    {
-    }
-
     math::Crcsum crc()
     {
         return mCrcsum;

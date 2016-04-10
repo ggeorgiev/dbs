@@ -3,6 +3,9 @@
 
 #pragma once
 
+#include "tpool/task.h"
+#include "option/verbose.h"
+#include "doim/tag/tag.h"
 #include "rtti/class_rtti.hpp"
 #include <boost/functional/hash.hpp>
 #include <boost/fusion/adapted/std_tuple.hpp>
@@ -18,14 +21,39 @@
 namespace task
 {
 template <typename T, typename... Args>
-class Base : public rtti::RttiInfo<T>
+class Base : public tpool::Task, public rtti::RttiInfo<T>
+
 {
 public:
     typedef std::tuple<Args...> Tuple;
 
     Base(const Args&... args)
-        : mArgs(args...)
+        : tpool::Task(0)
+        , mArgs(args...)
     {
+    }
+
+    virtual doim::TagSet tags()
+    {
+        return doim::TagSet{doim::gTaskTag};
+    }
+
+    ECode run() override
+    {
+        doim::TagSet runTags = tags();
+        runTags.insert(doim::gRunTag);
+        if (opt::gVerbose->isVisible(runTags))
+            ILOG("[ RUN    ] {}", description());
+
+        ECode code = tpool::Task::run();
+
+        doim::TagSet doneTags = tags();
+        doneTags.insert(doim::gDoneTag);
+        if (opt::gVerbose->isVisible(doneTags))
+            ILOG("[   DONE ] {}", description());
+
+        EHTest(code);
+        EHEnd;
     }
 
     struct Hasher

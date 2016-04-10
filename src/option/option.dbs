@@ -1,0 +1,40 @@
+cxx_library option
+    @type=user:
+
+    cxx_header
+        @visibility=public
+        @directory=..:
+
+        option/verbose.h
+    ;
+
+    cxx_library:
+        ../system/stl
+
+        ../im/im
+        ../err/err
+        ../doim/doim
+    ;
+
+    cxx_file:
+        verbose.cpp
+    ;
+;
+
+cxx_library option-test
+    @type=test:
+
+    cxx_library:
+        ../3rdparty/gtest
+
+        ../gtest/gtest
+        ../err/err-test
+
+        option
+    ;
+
+    cxx_file:
+        gtest/verbose-utest.cpp
+    ;
+;
+

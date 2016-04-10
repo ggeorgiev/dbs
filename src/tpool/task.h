@@ -34,7 +34,7 @@ public:
     virtual ECode operator()() = 0;
     virtual std::string description() const = 0;
 
-    ECode run();
+    virtual ECode run();
     ECode join();
 
     // Returns the task priority.

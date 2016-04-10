@@ -16,8 +16,7 @@ namespace task
 {
 ExecuteCommandTask::ExecuteCommandTask(const doim::SysCommandSPtr& command,
                                        const std::string description)
-    : tpool::Task(0)
-    , Base(command)
+    : Base(command)
     , mDescription(description)
 {
     ASSERT(doim::gManager->isUnique(command));

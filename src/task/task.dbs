@@ -28,6 +28,7 @@ cxx_library task
         ../tpool/tpool
         ../parser/parser
         ../doim/doim
+        ../option/option
         ../db/db
         ../math/math
     ;

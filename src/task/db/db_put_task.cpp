@@ -11,8 +11,7 @@
 namespace task
 {
 DbPutTask::DbPutTask(const doim::DbKeySPtr& key, const doim::DbValueSPtr& value)
-    : tpool::Task(0)
-    , Base(key)
+    : Base(key)
     , mValue(value)
 {
     ASSERT(doim::gManager->isUnique(key));

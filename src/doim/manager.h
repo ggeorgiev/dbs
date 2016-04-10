@@ -18,6 +18,7 @@
 #include "doim/sys/argument.hpp"
 #include "doim/sys/command.h" // IWYU pragma: keep
 #include "doim/sys/executable.hpp"
+#include "doim/tag/tag.h"
 #include "im/initialization_manager.hpp"
 #include <experimental/string_view>
 #include <iosfwd>
@@ -38,7 +39,8 @@ class Manager : public ManagerObjectMixin<CxxFile>,
                 public ManagerObjectSetMixin<FsFile>,
                 public ManagerObjectMixin<Object>,
                 public ManagerObjectSetMixin<SysArgument>,
-                public ManagerObjectMixin<SysCommand>
+                public ManagerObjectMixin<SysCommand>,
+                public ManagerObjectSetMixin<Tag>
 {
 public:
     static inline int initialization_rank()
@@ -154,6 +156,9 @@ public:
 
     using ManagerObjectMixin<SysCommand>::unique;
     using ManagerObjectMixin<SysCommand>::isUnique;
+
+    using ManagerObjectMixin<Tag>::unique;
+    using ManagerObjectSetMixin<Tag>::unique;
 
 private:
     std::unordered_map<FsFileSPtr, CxxHeaderSPtr> mFile2CxxHeader;

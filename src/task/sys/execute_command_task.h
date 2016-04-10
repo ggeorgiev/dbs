@@ -17,8 +17,7 @@ class ExecuteCommandTask;
 
 typedef std::shared_ptr<ExecuteCommandTask> ExecuteCommandTaskSPtr;
 
-class ExecuteCommandTask : public tpool::Task,
-                           public Base<ExecuteCommandTask, doim::SysCommandSPtr>
+class ExecuteCommandTask : public Base<ExecuteCommandTask, doim::SysCommandSPtr>
 {
 public:
     ExecuteCommandTask(const doim::SysCommandSPtr& command,
