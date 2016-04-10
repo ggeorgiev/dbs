@@ -18,7 +18,7 @@
 #include "doim/sys/argument.hpp"
 #include "doim/sys/command.h" // IWYU pragma: keep
 #include "doim/sys/executable.hpp"
-#include "doim/tag/tag.h"
+#include "doim/tag/tag.h" // IWYU pragma: keep
 #include "im/initialization_manager.hpp"
 #include <experimental/string_view>
 #include <iosfwd>

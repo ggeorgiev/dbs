@@ -2,12 +2,11 @@
 //
 
 #include "tpool/tpool.h"
-#include <condition_variable>
+#include <chrono>
+#include <cstring>
 #include <memory>
-#include <mutex>
-#include <queue>
+#include <ratio>
 #include <thread>
-#include <vector>
 
 namespace tpool
 {

@@ -4,6 +4,7 @@
 #include "doim/manager.h"
 #include "doim/tag/tag.h"
 #include "im/initialization_manager.hpp"
+#include <functional>
 
 namespace doim
 {

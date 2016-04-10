@@ -1,0 +1,21 @@
+cxx_library engine
+    @type=user:
+
+    cxx_header
+        @visibility=public
+        @directory=..:
+
+        engine/cxx_engine.h
+    ;
+
+    cxx_library:
+        ../log/log
+        ../db/db
+        ../task/task
+        ../tool/tool
+    ;
+
+    cxx_file:
+        cxx_engine.cpp
+    ;
+;

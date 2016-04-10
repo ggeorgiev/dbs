@@ -2,6 +2,7 @@
 //
 
 #include "tpool/task.h"
+#include <sstream>
 
 namespace tpool
 {

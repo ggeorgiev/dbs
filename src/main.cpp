@@ -15,9 +15,7 @@
 #include "log/log.h"
 #include <spdlog/common.h>
 #include <spdlog/logger.h>
-#include <spdlog/details/format.h>
 #include <spdlog/details/logger_impl.h>
-#include <bitset>
 #include <fstream> // IWYU pragma: keep
 #include <iostream>
 #include <iterator>

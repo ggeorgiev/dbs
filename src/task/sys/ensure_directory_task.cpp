@@ -5,9 +5,11 @@
 #include "task/sys/ensure_directory_task.h"
 #include "doim/manager.h"
 #include "err/err_assert.h"
-#include <boost/filesystem.hpp>
+#include "err/err_cppformat.h"
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
+#include <sstream>
 #include <string>
-#include <stdlib.h>
 
 namespace task
 {

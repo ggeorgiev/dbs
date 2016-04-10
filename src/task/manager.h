@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include "task/base.hpp"
 #include "task/cxx/cxx_file_crc_task.h"        // IWYU pragma: keep
 #include "task/cxx/cxx_header_crc_task.h"      // IWYU pragma: keep
 #include "task/cxx/cxx_object_file_crc_task.h" // IWYU pragma: keep
@@ -11,7 +10,6 @@
 #include "task/db/db_put_task.h"               // IWYU pragma: keep
 #include "task/sys/ensure_directory_task.h"    // IWYU pragma: keep
 #include "task/sys/execute_command_task.h"     // IWYU pragma: keep
-
 #include "im/initialization_manager.hpp"
 #include <memory>
 #include <unordered_set>

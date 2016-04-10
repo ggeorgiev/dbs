@@ -5,16 +5,25 @@
 
 #include "tpool/priority.hpp"
 #include "err/err.h"
-#include "log/log.h"
 #include <boost/heap/fibonacci_heap.hpp>
 #include <atomic>
-#include <functional>
 #include <future>
-#include <thread>
+#include <iosfwd>
+#include <memory>
+
+namespace boost
+{
+namespace heap
+{
+template <class T>
+struct compare;
+} // namespace heap
+} // namespace boost
 
 namespace tpool
 {
 class Task;
+
 typedef std::shared_ptr<Task> TaskSPtr;
 
 class Task

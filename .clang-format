@@ -47,6 +47,8 @@ DisableFormat:   false
 ExperimentalAutoDetectBinPacking: false
 ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH ]
 IncludeCategories:
+  - Regex:           '^"engine/*.'
+    Priority:        0
   - Regex:           '^"task/*.'
     Priority:        10
   - Regex:           '^"tpool/*.'

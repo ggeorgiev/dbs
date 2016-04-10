@@ -2,6 +2,7 @@
 //
 
 #include "option/verbose.h"
+#include <functional>
 
 namespace opt
 {

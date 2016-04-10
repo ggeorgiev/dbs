@@ -42,17 +42,20 @@ FILES="$FILES src/doim/sys/command.cpp"
 FILES="$FILES src/doim/tag/tag.cpp"
 FILES="$FILES src/doim/manager.cpp"
 FILES="$FILES src/dom/manager.cpp"
+FILES="$FILES src/engine/cxx_engine.cpp"
 FILES="$FILES src/option/verbose.cpp"
 FILES="$FILES src/task/cxx/cxx_crc_task_mixin.cpp"
 FILES="$FILES src/task/cxx/cxx_file_crc_task.cpp"
 FILES="$FILES src/task/cxx/cxx_header_crc_task.cpp"
+FILES="$FILES src/task/cxx/cxx_object_file_crc_task.cpp"
 FILES="$FILES src/task/cxx/cxx_program_crc_task.cpp"
 FILES="$FILES src/task/db/db_put_task.cpp"
 FILES="$FILES src/task/sys/ensure_directory_task.cpp"
 FILES="$FILES src/task/sys/execute_command_task.cpp"
 FILES="$FILES src/task/manager.cpp"
-FILES="$FILES src/task/task.cpp"
+FILES="$FILES src/tool/cxx_compiler.cpp"
 FILES="$FILES src/tpool/task.cpp"
+FILES="$FILES src/tpool/tpool.cpp"
 
 CXXFLAGS="$CXXFLAGS -isystemspdlog/include"
 
@@ -75,11 +78,14 @@ LIBRARIES="$LIBRARIES -lrocksdb -lz -lbz2"
 DEFINES=" -DDEBUG" && OPTOMIZATION="-O0 -g"
 
 
-mkdir -p build
-PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
-    $DEFINES $LIBRARIES -o build/dbs && cp build/dbs dbs || exit 1
-
 if [ 1 == 0 ]
+then
+    mkdir -p build
+    PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
+        $DEFINES $LIBRARIES -o build/dbs && cp build/dbs dbs || exit 1
+fi
+
+if [ 1 == 1 ]
 then
 
     CXXFLAGS="$CXXFLAGS -Isrc/gtest/include"

@@ -4,16 +4,16 @@
 #pragma once
 
 #include "doim/base.hpp"
-#include <boost/functional/hash.hpp>
+#include <iosfwd>
 #include <memory>
 #include <string>
+#include <tuple>
 #include <unordered_set>
-#include <utility>
-#include <vector>
 
 namespace doim
 {
 class Tag;
+
 typedef std::shared_ptr<Tag> TagSPtr;
 typedef std::unordered_set<TagSPtr> TagSet;
 typedef std::shared_ptr<TagSet> TagSetSPtr;

@@ -1,24 +1,30 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "task/cxx/cxx_object_file_crc_task.h"
+#include "task/cxx/cxx_file_crc_task.h"
 #include "task/cxx/cxx_program_crc_task.h"
 #include "task/db/db_put_task.h"
 #include "task/manager.h"
 #include "task/sys/ensure_directory_task.h"
 #include "task/sys/execute_command_task.h"
 #include "tool/cxx_compiler.h"
+#include "dom/cxx/cxx_library.hpp"
 #include "dom/cxx/cxx_program.hpp"
 #include "doim/cxx/cxx_file.h"
+#include "doim/cxx/cxx_program.h"
 #include "doim/db/db_key.hpp"
 #include "doim/db/db_value.hpp"
+#include "doim/fs/fs_file.h"
+#include "doim/manager.h"
 #include "doim/sys/argument.hpp"
 #include "doim/sys/command.h"
 #include "db/database.h"
+#include "err/err_cppformat.h"
+#include "math/crc.hpp"
 #include <memory>
-#include <set>
 #include <sstream>
 #include <string>
+#include <unordered_set>
 
 namespace tool
 {

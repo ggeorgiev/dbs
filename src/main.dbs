@@ -24,6 +24,7 @@ annex:
     parser/parser.dbs
     task/task.dbs
     tool/tool.dbs
+    engine/engine.dbs
 
     gtest/gtest.dbs
 ;
@@ -33,7 +34,7 @@ cxx_program dbs:
         im/im
         log/log
         err/err
-        tool/tool
+        engine/engine
     ;
 
     cxx_file:

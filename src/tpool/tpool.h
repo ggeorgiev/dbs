@@ -4,12 +4,13 @@
 #pragma once
 
 #include "tpool/task.h"
-#include <condition_variable>
+#include "err/err.h"
+#include <mutex> // IWYU pragma: keep
+#include <atomic>
+#include <future>
 #include <memory>
-#include <mutex>
-#include <queue>
 #include <thread>
-#include <vector>
+#include <stddef.h>
 
 namespace tpool
 {

@@ -6,7 +6,10 @@
 #include "task/base.hpp"
 #include "task/cxx/cxx_crc_task_mixin.h"
 #include "doim/cxx/cxx_file.h"
+#include "doim/tag/tag.h"
 #include "err/err.h"
+#include <cppformat/format.h>
+#include <spdlog/details/line_logger_impl.h>
 #include <iosfwd>
 #include <memory>
 #include <tuple>

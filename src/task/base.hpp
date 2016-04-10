@@ -6,6 +6,7 @@
 #include "tpool/task.h"
 #include "option/verbose.h"
 #include "doim/tag/tag.h"
+#include "log/log.h" // IWYU pragma: keep
 #include "rtti/class_rtti.hpp"
 #include <boost/functional/hash.hpp>
 #include <boost/fusion/adapted/std_tuple.hpp>
