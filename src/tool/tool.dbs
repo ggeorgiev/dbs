@@ -5,12 +5,16 @@ cxx_library tool
         @visibility=public
         @directory=..:
 
-        tool/cxx_compiler.hpp
+        tool/cxx_compiler.h
     ;
 
     cxx_library:
         ../log/log
         ../db/db
         ../task/task
+    ;
+
+    cxx_file:
+        cxx_compiler.cpp
     ;
 ;

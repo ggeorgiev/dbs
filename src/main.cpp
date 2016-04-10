@@ -1,7 +1,7 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "tool/cxx_compiler.hpp"
+#include "tool/cxx_compiler.h"
 #include "parser/parser.hpp"
 #include "parser/string_stream.hpp"
 #include "dom/manager.h"
