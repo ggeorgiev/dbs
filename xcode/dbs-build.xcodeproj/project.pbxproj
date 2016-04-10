@@ -258,6 +258,9 @@
 		5E290B3A1CBAC1B000F10210 /* cxx_object_file_crc_task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_object_file_crc_task.cpp; sourceTree = "<group>"; };
 		5E290B3B1CBAC1B000F10210 /* cxx_object_file_crc_task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_object_file_crc_task.h; sourceTree = "<group>"; };
 		5E290B3E1CBACD0600F10210 /* cxx_compiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_compiler.cpp; sourceTree = "<group>"; };
+		5E290B401CBAD15200F10210 /* .clang-format */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ".clang-format"; path = "../.clang-format"; sourceTree = "<group>"; };
+		5E290B411CBAD15200F10210 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
+		5E290B421CBAD15200F10210 /* .travis.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .travis.yml; path = ../.travis.yml; sourceTree = "<group>"; };
 		5E42052C1C78CB200090FA05 /* fs_directory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fs_directory.cpp; sourceTree = "<group>"; };
 		5E42052D1C78CB200090FA05 /* fs_directory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs_directory.h; sourceTree = "<group>"; };
 		5E4205301C78D94F0090FA05 /* object.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = object.cpp; sourceTree = "<group>"; };
@@ -364,9 +367,9 @@
 		5E10B3211C70F272009C73E4 /* db */ = {
 			isa = PBXGroup;
 			children = (
+				5E10B3241C70F272009C73E4 /* db.dbs */,
 				5E10B3221C70F272009C73E4 /* database.cpp */,
 				5E10B3231C70F272009C73E4 /* database.h */,
-				5E10B3241C70F272009C73E4 /* db.dbs */,
 				5E10B3251C70F272009C73E4 /* gtest */,
 			);
 			path = db;
@@ -387,15 +390,15 @@
 				5E10B32D1C70F272009C73E4 /* db */,
 				5E10B3311C70F272009C73E4 /* fs */,
 				5E10B3341C70F272009C73E4 /* generic */,
-				5E10B3371C70F272009C73E4 /* gtest */,
 				5E10B33E1C70F272009C73E4 /* sys */,
 				5E290B261CB9EC3900F10210 /* tag */,
-				5E5692701C727076000A233C /* base.hpp */,
 				5E10B3301C70F272009C73E4 /* doim.dbs */,
+				5E5692701C727076000A233C /* base.hpp */,
 				5E42053E1C79097C0090FA05 /* manager_object_mixin.hpp */,
 				5E4205401C790C590090FA05 /* manager_object_set_mixin.hpp */,
 				5E10B33C1C70F272009C73E4 /* manager.cpp */,
 				5E10B33D1C70F272009C73E4 /* manager.h */,
+				5E10B3371C70F272009C73E4 /* gtest */,
 			);
 			path = doim;
 			sourceTree = "<group>";
@@ -482,11 +485,11 @@
 			isa = PBXGroup;
 			children = (
 				5E10B3431C70F272009C73E4 /* cxx */,
-				5E10B3481C70F272009C73E4 /* dom.dbs */,
 				5E10B3491C70F272009C73E4 /* generic */,
-				5E10B34B1C70F272009C73E4 /* gtest */,
+				5E10B3481C70F272009C73E4 /* dom.dbs */,
 				5E10B34E1C70F272009C73E4 /* manager.cpp */,
 				5E10B34F1C70F272009C73E4 /* manager.h */,
+				5E10B34B1C70F272009C73E4 /* gtest */,
 			);
 			path = dom;
 			sourceTree = "<group>";
@@ -522,15 +525,15 @@
 		5E10B3501C70F272009C73E4 /* err */ = {
 			isa = PBXGroup;
 			children = (
-				5E10B3511C70F272009C73E4 /* err.cpp */,
 				5E10B3521C70F272009C73E4 /* err.dbs */,
+				5E10B3511C70F272009C73E4 /* err.cpp */,
 				5E10B3531C70F272009C73E4 /* err.h */,
 				5E10B3541C70F272009C73E4 /* err_assert.h */,
 				5E10B3551C70F272009C73E4 /* err_cppformat.h */,
 				5E10B3561C70F272009C73E4 /* err_serialize.h */,
 				5E10B3571C70F272009C73E4 /* err_variadic.h */,
-				5E10B3581C70F272009C73E4 /* gtest */,
 				5E10B35E1C70F272009C73E4 /* macro.h */,
+				5E10B3581C70F272009C73E4 /* gtest */,
 			);
 			path = err;
 			sourceTree = "<group>";
@@ -565,9 +568,9 @@
 		5E10B3681C70F272009C73E4 /* im */ = {
 			isa = PBXGroup;
 			children = (
-				5E10B3691C70F272009C73E4 /* gtest */,
 				5E10B36B1C70F272009C73E4 /* im.dbs */,
 				5E10B36C1C70F272009C73E4 /* initialization_manager.hpp */,
+				5E10B3691C70F272009C73E4 /* gtest */,
 			);
 			path = im;
 			sourceTree = "<group>";
@@ -583,11 +586,11 @@
 		5E10B36D1C70F272009C73E4 /* log */ = {
 			isa = PBXGroup;
 			children = (
-				5E10B36E1C70F272009C73E4 /* gtest */,
-				5E10B3701C70F272009C73E4 /* log.cpp */,
 				5E10B3711C70F272009C73E4 /* log.dbs */,
+				5E10B3701C70F272009C73E4 /* log.cpp */,
 				5E10B3721C70F272009C73E4 /* log.h */,
 				5E10B3731C70F272009C73E4 /* log_function.hpp */,
+				5E10B36E1C70F272009C73E4 /* gtest */,
 			);
 			path = log;
 			sourceTree = "<group>";
@@ -604,13 +607,13 @@
 			isa = PBXGroup;
 			children = (
 				5E10B3771C70F272009C73E4 /* cxx */,
-				5E10B3791C70F272009C73E4 /* fixed_encoding_traits.hpp */,
-				5E10B37A1C70F272009C73E4 /* gtest */,
 				5E10B3811C70F272009C73E4 /* parser.dbs */,
+				5E10B3791C70F272009C73E4 /* fixed_encoding_traits.hpp */,
 				5E10B3821C70F272009C73E4 /* parser.hpp */,
 				5E10B3831C70F272009C73E4 /* string_stream.hpp */,
 				5E10B3841C70F272009C73E4 /* token.hpp */,
 				5E10B3851C70F272009C73E4 /* tokenizer.hpp */,
+				5E10B37A1C70F272009C73E4 /* gtest */,
 			);
 			path = parser;
 			sourceTree = "<group>";
@@ -657,16 +660,16 @@
 		5E10B38B1C70F272009C73E4 /* task */ = {
 			isa = PBXGroup;
 			children = (
-				5E4205381C78EB620090FA05 /* base.hpp */,
 				5E10B38C1C70F272009C73E4 /* cxx */,
 				5E10B3921C70F272009C73E4 /* db */,
-				5E10B3951C70F272009C73E4 /* gtest */,
-				5E10B39B1C70F272009C73E4 /* manager.cpp */,
-				5E10B39C1C70F272009C73E4 /* manager.h */,
 				5E10B39D1C70F272009C73E4 /* sys */,
 				5E10B3A21C70F272009C73E4 /* task.dbs */,
+				5E4205381C78EB620090FA05 /* base.hpp */,
+				5E10B39B1C70F272009C73E4 /* manager.cpp */,
+				5E10B39C1C70F272009C73E4 /* manager.h */,
 				5E290B361CBAB92500F10210 /* tpool.cpp */,
 				5E290B371CBAB92500F10210 /* tpool.h */,
+				5E10B3951C70F272009C73E4 /* gtest */,
 			);
 			path = task;
 			sourceTree = "<group>";
@@ -737,9 +740,9 @@
 		5E10B3A31C70F272009C73E4 /* tool */ = {
 			isa = PBXGroup;
 			children = (
+				5E10B3A51C70F272009C73E4 /* tool.dbs */,
 				5E290B3E1CBACD0600F10210 /* cxx_compiler.cpp */,
 				5E10B3A41C70F272009C73E4 /* cxx_compiler.h */,
-				5E10B3A51C70F272009C73E4 /* tool.dbs */,
 			);
 			path = tool;
 			sourceTree = "<group>";
@@ -747,13 +750,13 @@
 		5E10B3A61C70F272009C73E4 /* tpool */ = {
 			isa = PBXGroup;
 			children = (
-				5E10B3A71C70F272009C73E4 /* gtest */,
+				5E10B3AC1C70F272009C73E4 /* tpool.dbs */,
 				5E10B3AA1C70F272009C73E4 /* priority.hpp */,
 				5E290B241CB9B87700F10210 /* task.cpp */,
 				5E290B221CB9B86D00F10210 /* task.h */,
 				5E290B341CBAAE2E00F10210 /* tpool.cpp */,
 				5E10B3AD1C70F272009C73E4 /* tpool.h */,
-				5E10B3AC1C70F272009C73E4 /* tpool.dbs */,
+				5E10B3A71C70F272009C73E4 /* gtest */,
 			);
 			path = tpool;
 			sourceTree = "<group>";
@@ -770,8 +773,8 @@
 		5E290B161CB9843100F10210 /* rtti */ = {
 			isa = PBXGroup;
 			children = (
-				5E290B1F1CB985DF00F10210 /* class_rtti.hpp */,
 				5E290B211CB985F200F10210 /* rtti.dbs */,
+				5E290B1F1CB985DF00F10210 /* class_rtti.hpp */,
 				5E290B1A1CB9843100F10210 /* gtest */,
 			);
 			path = rtti;
@@ -797,10 +800,10 @@
 		5E290B291CB9F4FC00F10210 /* option */ = {
 			isa = PBXGroup;
 			children = (
-				5E290B2A1CB9F4FC00F10210 /* gtest */,
 				5E290B2C1CB9F4FC00F10210 /* option.dbs */,
 				5E290B2D1CB9F4FC00F10210 /* verbose.cpp */,
 				5E290B2E1CB9F4FC00F10210 /* verbose.h */,
+				5E290B2A1CB9F4FC00F10210 /* gtest */,
 			);
 			path = option;
 			sourceTree = "<group>";
@@ -816,8 +819,8 @@
 		5E5692611C724929000A233C /* math */ = {
 			isa = PBXGroup;
 			children = (
-				5E5692621C724929000A233C /* crc.hpp */,
 				5E5692631C724929000A233C /* math.dbs */,
+				5E5692621C724929000A233C /* crc.hpp */,
 			);
 			path = math;
 			sourceTree = "<group>";
@@ -825,6 +828,9 @@
 		5E5692691C725443000A233C /* scripts */ = {
 			isa = PBXGroup;
 			children = (
+				5E290B401CBAD15200F10210 /* .clang-format */,
+				5E290B411CBAD15200F10210 /* .gitignore */,
+				5E290B421CBAD15200F10210 /* .travis.yml */,
 				5E5692651C725443000A233C /* build.sh */,
 				5E5692661C725443000A233C /* prepare.sh */,
 				5E5692671C725443000A233C /* reformat.sh */,
