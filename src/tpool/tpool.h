@@ -1,0 +1,48 @@
+//  Copyright © 2015 George Georgiev. All rights reserved.
+//
+
+#pragma once
+
+#include "tpool/task.h"
+#include <condition_variable>
+#include <memory>
+#include <mutex>
+#include <queue>
+#include <thread>
+#include <vector>
+
+namespace tpool
+{
+class TPool : public std::enable_shared_from_this<TPool>
+{
+public:
+    typedef std::thread Thread;
+    typedef std::shared_ptr<Thread> ThreadSPtr;
+
+    typedef std::future<ECode> Future;
+
+    TPool(size_t maxThreads);
+
+    void schedule(const TaskSPtr& task);
+    void updatePriority(const TaskSPtr& task);
+    void run();
+
+    // Joins the pool. Waits until all the tasks current and new during the wait are
+    // processed.
+    void join();
+
+private:
+    size_t mMaxThreads;
+
+    std::mutex mThreadsMutex;
+    std::condition_variable mThreadsCondition;
+    std::atomic<size_t> mFreeThreads;
+    std::atomic<size_t> mThreads;
+
+    std::mutex mTasksMutex;
+    std::condition_variable mTasksCondition;
+    Task::Heap mTasks;
+    std::atomic<bool> mJoined;
+};
+
+} // namespace tpool

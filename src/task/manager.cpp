@@ -9,4 +9,4 @@ namespace task
 {
 ManagerSPtr gManager = im::InitializationManager::subscribe(gManager);
 
-} // namespace task
+} // namespace task!

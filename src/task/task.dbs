@@ -14,6 +14,7 @@ cxx_library task
         task/sys/ensure_directory_task.h
         task/sys/execute_command_task.h
         task/manager.h
+        task/tpool.h
     ;
 
     cxx_library:
@@ -42,6 +43,7 @@ cxx_library task
         sys/ensure_directory_task.cpp
         sys/execute_command_task.cpp
         manager.cpp
+        tpool.cpp
     ;
 ;
 

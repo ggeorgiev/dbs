@@ -51,6 +51,7 @@ FILES="$FILES src/task/db/db_put_task.cpp"
 FILES="$FILES src/task/sys/ensure_directory_task.cpp"
 FILES="$FILES src/task/sys/execute_command_task.cpp"
 FILES="$FILES src/task/manager.cpp"
+FILES="$FILES src/task/task.cpp"
 FILES="$FILES src/tpool/task.cpp"
 
 CXXFLAGS="$CXXFLAGS -isystemspdlog/include"
