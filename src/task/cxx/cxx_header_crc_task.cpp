@@ -36,7 +36,7 @@ ECode CxxHeaderCrcTask::operator()()
 
 std::string CxxHeaderCrcTask::description() const
 {
-    return "crc " + cxxHeader()->file()->path();
+    return "Cxx header file crc " + cxxHeader()->file()->path();
 }
 
 } // namespace task

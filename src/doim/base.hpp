@@ -26,6 +26,10 @@ public:
     {
     }
 
+    void finally()
+    {
+    }
+
     struct Hasher
     {
         struct HashItem

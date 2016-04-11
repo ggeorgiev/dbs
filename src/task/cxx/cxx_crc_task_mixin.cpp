@@ -3,6 +3,7 @@
 
 #include "task/cxx/cxx_crc_task_mixin.h"
 #include "doim/manager.h"
+#include "log/log.h"
 #include <sstream>
 #include <unordered_set>
 
@@ -20,14 +21,7 @@ doim::CxxHeaderSPtr CxxCrcTaskMixin::findInclude(
     if (file == nullptr)
         return nullptr;
 
-    const auto& header = doim::gManager->findCxxHeader(file);
-    if (header == nullptr)
-        return nullptr;
-
-    if (includeDirectory->headerFiles()->count(header) == 0)
-        return nullptr;
-
-    return header;
+    return includeDirectory->header(file);
 }
 
 ECode CxxCrcTaskMixin::findInclude(
@@ -48,14 +42,20 @@ ECode CxxCrcTaskMixin::findInclude(
         if (result.first != nullptr)
             EHBan(kTooMany, include);
 
+        DLOG("Found header {} in directory {}",
+             header->file()->path(),
+             directory->directory()->path());
+
         result = std::make_pair(header, directory);
     }
 
     if (result.first == nullptr)
+    {
         EHBan(kNotFound,
               include,
               EHPtr(currentIncludeDirectory),
               EHPtr(includeDirectories));
+    }
 
     headerDirectory = result;
     EHEnd;

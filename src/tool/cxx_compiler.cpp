@@ -115,26 +115,10 @@ ECode CxxCompiler::tasks(const doim::FsDirectorySPtr& directory,
 }
 
 ECode CxxCompiler::commands(const doim::FsDirectorySPtr& directory,
-                            const dom::CxxProgramSPtr& program,
-                            std::string& cmd)
+                            const dom::CxxProgramSPtr& program)
 {
     const auto& intermediate = doim::gManager->obtainDirectory(directory, "build");
     const auto& cxxProgram = program->cxxProgram(directory, intermediate);
-
-    auto task = std::make_shared<task::CxxProgramCrcTask>(cxxProgram);
-    EHTest((*task)(), program->name());
-
-    auto key = std::make_shared<doim::DbKey>("program:" + program->name());
-    key = doim::gManager->unique(key);
-
-    math::Crcsum crc;
-    db::gDatabase->get(key->bytes(), crc);
-
-    if (task->crc() == crc)
-    {
-        cmd = "";
-        EHEnd;
-    }
 
     auto arguments = std::make_shared<doim::SysArgumentSet>();
     for (const auto& cxxLibrary : program->recursiveCxxLibraries())
@@ -177,12 +161,6 @@ ECode CxxCompiler::commands(const doim::FsDirectorySPtr& directory,
                                                    "Link " + program->name()));
 
     EHTest(linkTask->join());
-
-    auto value = std::make_shared<doim::DbValue>(task->crc());
-    auto updateTask =
-        task::gManager->valid(std::make_shared<task::DbPutTask>(key, value));
-
-    EHTest(updateTask->join());
     EHEnd;
 }
 }

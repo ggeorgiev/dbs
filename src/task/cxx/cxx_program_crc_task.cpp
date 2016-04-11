@@ -48,7 +48,7 @@ ECode CxxProgramCrcTask::operator()()
 
 std::string CxxProgramCrcTask::description() const
 {
-    return "Crc of " + cxxProgram()->file()->path();
+    return "Cxx program crc " + cxxProgram()->file()->path();
 }
 
 } // namespace task

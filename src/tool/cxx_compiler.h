@@ -35,8 +35,7 @@ public:
                 std::vector<tpool::TaskSPtr>& tasks);
 
     ECode commands(const doim::FsDirectorySPtr& directory,
-                   const dom::CxxProgramSPtr& program,
-                   std::string& cmd);
+                   const dom::CxxProgramSPtr& program);
 
 private:
     doim::SysExecutableSPtr mCompiler;

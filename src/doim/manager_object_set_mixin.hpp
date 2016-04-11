@@ -33,7 +33,8 @@ public:
     {
         std::size_t operator()(const MixinObjectSetSPtr& objects) const
         {
-            std::vector<MixinObjectSPtr> vector(objects->size());
+            std::vector<MixinObjectSPtr> vector;
+            vector.reserve(objects->size());
             vector.insert(vector.begin(), objects->begin(), objects->end());
             std::sort(vector.begin(), vector.end());
 
@@ -41,7 +42,10 @@ public:
 
             std::size_t seed = 0;
             for (const auto& object : vector)
+            {
+                ASSERT(object != nullptr);
                 boost::hash_combine(seed, hash(object));
+            }
 
             return seed;
         }

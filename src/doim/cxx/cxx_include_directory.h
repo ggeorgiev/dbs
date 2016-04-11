@@ -5,6 +5,7 @@
 
 #include "doim/base.hpp"
 #include "doim/fs/fs_directory.h"
+#include "doim/fs/fs_file.h"
 #include <memory>
 #include <tuple>
 #include <unordered_set>
@@ -51,5 +52,12 @@ public:
     {
         return std::get<2>(mArgs);
     }
+
+    void finally();
+
+    CxxHeaderSPtr header(const FsFileSPtr& file) const;
+
+private:
+    std::unordered_map<FsFileSPtr, CxxHeaderSPtr> mFiles;
 };
 }

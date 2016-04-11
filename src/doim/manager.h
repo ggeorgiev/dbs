@@ -97,22 +97,8 @@ public:
     using ManagerObjectSetMixin<CxxIncludeDirectory>::unique;
     using ManagerObjectSetMixin<CxxIncludeDirectory>::isUnique;
 
+    using ManagerObjectMixin<CxxHeader>::unique;
     using ManagerObjectMixin<CxxHeader>::isUnique;
-
-    CxxHeaderSPtr unique(const CxxHeaderSPtr& header)
-    {
-        if (header == nullptr)
-            return header;
-        const auto& record = ManagerObjectMixin<CxxHeader>::mMixinObjects.insert(header);
-        if (record.second)
-            mFile2CxxHeader[header->file()] = header;
-        return *record.first;
-    }
-
-    CxxHeaderSPtr findCxxHeader(const FsFileSPtr& file)
-    {
-        return mFile2CxxHeader[file];
-    }
 
     using ManagerObjectSetMixin<CxxHeader>::unique;
     using ManagerObjectSetMixin<CxxHeader>::isUnique;

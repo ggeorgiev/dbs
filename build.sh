@@ -78,14 +78,14 @@ LIBRARIES="$LIBRARIES -lrocksdb -lz -lbz2"
 DEFINES=" -DDEBUG" && OPTOMIZATION="-O0 -g"
 
 
-if [ 1 == 0 ]
+if [ 1 == 1 ]
 then
     mkdir -p build
     PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
         $DEFINES $LIBRARIES -o build/dbs && cp build/dbs dbs || exit 1
 fi
 
-if [ 1 == 1 ]
+if [ 1 == 0 ]
 then
 
     CXXFLAGS="$CXXFLAGS -Isrc/gtest/include"

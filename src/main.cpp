@@ -1,6 +1,7 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
+#include "engine/cxx_engine.h"
 #include "tool/cxx_compiler.h"
 #include "parser/parser.hpp"
 #include "parser/string_stream.hpp"
@@ -86,6 +87,7 @@ int main(int argc, char* argv[])
 
     const auto& binary = doim::gManager->obtainFile(cwd, "clang/bin/clang++");
     const auto& compiler = std::make_shared<tool::CxxCompiler>(binary);
+    const auto& engine = std::make_shared<engine::CxxEngine>(compiler);
 
     for (size_t i = 2; i < arg.size(); ++i)
     {
@@ -96,16 +98,13 @@ int main(int argc, char* argv[])
 
         if (program != nullptr)
         {
-            std::string script;
-            code = compiler->commands(cwd, program, script);
+            code = engine->build(cwd, program);
             if (code != err::kSuccess)
             {
                 std::cout << err::gError->message() << "\n";
                 std::cout << err::gError->callstack() << "\n";
                 return 1;
             }
-
-            std::cout << script;
         }
     }
     return 0;

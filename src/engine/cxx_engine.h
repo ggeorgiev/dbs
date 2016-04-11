@@ -17,6 +17,9 @@ class CxxEngine
 public:
     CxxEngine(const tool::CxxCompilerSPtr& compiler);
 
+    ECode build(const doim::FsDirectorySPtr& directory,
+                const dom::CxxProgramSPtr& program);
+
 private:
     tool::CxxCompilerSPtr mCompiler;
 };

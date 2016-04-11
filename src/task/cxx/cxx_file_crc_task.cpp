@@ -34,7 +34,7 @@ ECode CxxFileCrcTask::operator()()
 
 std::string CxxFileCrcTask::description() const
 {
-    return "Crc of " + cxxFile()->file()->path();
+    return "Cxx file crc " + cxxFile()->file()->path();
 }
 
 } // namespace task

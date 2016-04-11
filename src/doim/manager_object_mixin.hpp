@@ -30,7 +30,12 @@ public:
     {
         if (object == nullptr)
             return object;
-        return *mMixinObjects.insert(object).first;
+        const auto& result = mMixinObjects.insert(object);
+
+        if (result.second)
+            (*result.first)->finally();
+
+        return *result.first;
     }
 
     bool isUnique(const MixinObjectSPtr& object) const
