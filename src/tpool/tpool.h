@@ -1,19 +1,23 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
 
 #include "tpool/task.h"
 #include "err/err.h"
-#include <mutex> // IWYU pragma: keep
 #include <atomic>
 #include <future>
 #include <memory>
+#include <mutex> // IWYU pragma: keep
 #include <thread>
 #include <stddef.h>
 
 namespace tpool
 {
+class TPool;
+typedef std::shared_ptr<TPool> TPoolSPtr;
+typedef std::weak_ptr<TPool> TPoolWPtr;
+
 class TPool : public std::enable_shared_from_this<TPool>
 {
 public:
@@ -22,9 +26,19 @@ public:
 
     typedef std::future<ECode> Future;
 
+    TPool() = delete;
+    TPool(const TPool&) = delete;
+    TPool& operator=(const TPool&) = delete;
+    TPool(TPool&&) = delete;
+    TPool& operator=(TPool&&) = delete;
+
+protected:
     TPool(size_t maxThreads);
 
-    void schedule(const TaskSPtr& task);
+public:
+    static TPoolSPtr create(size_t maxThreads);
+
+    void ensureScheduled(const TaskSPtr& task);
     void updatePriority(const TaskSPtr& task);
     void run();
 

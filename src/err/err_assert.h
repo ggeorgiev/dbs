@@ -10,8 +10,7 @@ inline void err_assert(bool condition, const char* msg)
     if (condition)
         return;
 
-    std::cout << msg << std::endl << std::flush;
-    throw nullptr;
+    throw std::runtime_error(msg);
 }
 }
 

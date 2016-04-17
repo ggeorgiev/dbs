@@ -10,7 +10,7 @@
 #define ASSERT_ASSERT(expression) ((void)0)
 #define ASSERT_EHASSERT(expression) ((void)0)
 #else
-#define ASSERT_ASSERT(expression) ASSERT_THROW(expression, void*)
+#define ASSERT_ASSERT(expression) ASSERT_THROW(expression, std::runtime_error)
 #define ASSERT_EHASSERT(expression)    \
     do                                 \
     {                                  \

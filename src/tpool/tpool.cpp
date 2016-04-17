@@ -1,7 +1,9 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
+#include "tpool/reverse_lock.hpp"
 #include "tpool/tpool.h"
+#include "log/log.h"
 #include <chrono>
 #include <cstring>
 #include <memory>
@@ -18,15 +20,25 @@ TPool::TPool(size_t maxThreads)
 {
 }
 
-void TPool::schedule(const TaskSPtr& task)
+TPoolSPtr TPool::create(size_t maxThreads)
+{
+    // Thread pools are created rarely. No need of any tricks to allow make_shared
+    // for a protected method.
+    return TPoolSPtr(new TPool(maxThreads));
+}
+
+void TPool::ensureScheduled(const TaskSPtr& task)
 {
     {
         std::unique_lock<std::mutex> lock(mTasksMutex);
+        if (task->escalateState(Task::State::kScheduled) != Task::State::kConstructed)
+            return;
         task->setHandle(mTasks.push(task));
     }
 
     if (mFreeThreads == 0)
     {
+        std::unique_lock<std::mutex> lock(mThreadsMutex);
         if (mThreads < mMaxThreads)
         {
             ++mThreads;
@@ -45,26 +57,6 @@ void TPool::updatePriority(const TaskSPtr& task)
     mTasks.update(task->handle());
 }
 
-template <class T>
-class reverse_lock
-{
-public:
-    reverse_lock(T& lock)
-        : mLock(lock)
-    {
-        mLock.unlock();
-    }
-    ~reverse_lock()
-    {
-        mLock.lock();
-    }
-    reverse_lock(const reverse_lock&) = delete;
-    reverse_lock& operator=(const reverse_lock&) = delete;
-
-private:
-    T& mLock;
-};
-
 void TPool::run()
 {
     bool bNeeded = true;
@@ -80,17 +72,18 @@ void TPool::run()
             task->run();
         }
 
+        if (mJoined)
+            break;
+
         ++mFreeThreads;
 
-        bNeeded = mTasksCondition.wait_for(lock, std::chrono::milliseconds(2000), [this] {
-            return !this->mTasks.empty() || this->mJoined;
-        });
+        bNeeded = mTasksCondition.wait_for(lock, std::chrono::seconds(2)) ==
+                  std::cv_status::no_timeout;
 
         --mFreeThreads;
-
-        bNeeded = bNeeded && !this->mTasks.empty();
     }
 
+    std::unique_lock<std::mutex> lock(mThreadsMutex);
     --mThreads;
     mThreadsCondition.notify_all();
 }
@@ -99,7 +92,11 @@ void TPool::run()
 // processed.
 void TPool::join()
 {
-    mJoined = true;
+    {
+        std::unique_lock<std::mutex> lock(mTasksMutex);
+        mJoined = true;
+        mTasksCondition.notify_all();
+    }
 
     std::unique_lock<std::mutex> lock(mThreadsMutex);
     mThreadsCondition.wait(lock, [this] { return this->mThreads == 0; });

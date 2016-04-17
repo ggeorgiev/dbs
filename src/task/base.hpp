@@ -1,4 +1,4 @@
-//  Copyright © 2015-1016 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -23,7 +23,6 @@ namespace task
 {
 template <typename T, typename... Args>
 class Base : public tpool::Task, public rtti::RttiInfo<T>
-
 {
 public:
     typedef std::tuple<Args...> Tuple;
@@ -34,27 +33,26 @@ public:
     {
     }
 
+    virtual std::string description() const = 0;
+
     virtual doim::TagSet tags()
     {
         return doim::TagSet{doim::gTaskTag};
     }
 
-    ECode run() override
+    void run(std::unique_lock<std::mutex>& lock) override
     {
         doim::TagSet runTags = tags();
         runTags.insert(doim::gRunTag);
         if (opt::gVerbose->isVisible(runTags))
-            ILOG("[ RUN    ] {}", description());
+            ILOG("[ RUN      ] {}", description());
 
-        ECode code = tpool::Task::run();
+        tpool::Task::run(lock);
 
         doim::TagSet doneTags = tags();
         doneTags.insert(doim::gDoneTag);
         if (opt::gVerbose->isVisible(doneTags))
-            ILOG("[   DONE ] {}", description());
-
-        EHTest(code);
-        EHEnd;
+            ILOG("[       OK ] {}", description());
     }
 
     struct Hasher

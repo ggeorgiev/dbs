@@ -27,6 +27,7 @@ cxx_library stl
         ratio
         regex
         set
+        shared_mutex
         sstream
         string
         thread

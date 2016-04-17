@@ -29,6 +29,7 @@ cxx_library doim
 
     cxx_library:
         ../3rdparty/boost_template
+        ../3rdparty/boost_thread
 
         ../const/const
         ../im/im
@@ -66,6 +67,7 @@ cxx_library doim-test
     cxx_file:
         gtest/fs/fs_directory-utest.cpp
         gtest/fs/fs_file-ptest.cpp
+        gtest/manager-mttest.cpp
         gtest/manager-utest.cpp
     ;
 ;

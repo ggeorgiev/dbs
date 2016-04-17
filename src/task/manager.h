@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -12,6 +12,7 @@
 #include "task/sys/execute_command_task.h"     // IWYU pragma: keep
 #include "im/initialization_manager.hpp"
 #include <memory>
+#include <mutex>
 #include <unordered_set>
 
 namespace task
@@ -29,10 +30,13 @@ public:
     {
         if (task == nullptr)
             return task;
+
+        std::unique_lock<std::mutex> lock(mTaskMutex);
         return *mTasks.insert(task).first;
     }
 
 protected:
+    std::mutex mTaskMutex;
     std::unordered_set<TaskSPtr, Hasher, Hasher> mTasks;
 };
 

@@ -1,9 +1,11 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "task/cxx/cxx_file_crc_task.h"
 #include "task/cxx/cxx_program_crc_task.h"
 #include "task/manager.h"
+#include "tpool/task_group.h"
+#include "tpool/task_sequence.h"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
@@ -26,16 +28,25 @@ ECode CxxProgramCrcTask::operator()()
 {
     const auto& objectFiles = cxxProgram()->cxxObjectFiles();
 
-    std::vector<math::Crcsum> crcs;
-    crcs.reserve(objectFiles->size());
+    std::vector<tpool::TaskSPtr> tasks;
+    tasks.reserve(objectFiles->size());
 
     for (const auto& objectFile : *objectFiles)
     {
         auto task =
             gManager->valid(std::make_shared<CxxFileCrcTask>(objectFile->cxxFile()));
-        EHTest(task->join());
-        crcs.push_back(task->crc());
+        tasks.push_back(task);
     }
+
+    auto group = std::make_shared<tpool::TaskGroup>(gTPool, 0, tasks);
+    gTPool->ensureScheduled(group);
+    EHTest(group->join());
+
+    std::vector<math::Crcsum> crcs;
+    crcs.reserve(objectFiles->size());
+
+    for (const auto& task : group->tasks())
+        crcs.push_back(std::static_pointer_cast<CxxFileCrcTask>(task)->crc());
 
     std::sort(crcs.begin(), crcs.end());
 

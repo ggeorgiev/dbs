@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "task/cxx/cxx_object_file_crc_task.h"
@@ -30,6 +30,7 @@ ECode CxxObjectFileCrcTask::operator()()
     crcProcessor.process_bytes(content.data(), content.size());
 
     auto task = gManager->valid(std::make_shared<CxxObjectFileCrcTask>(cxxObjectFile()));
+    task::gTPool->ensureScheduled(task);
     EHTest(task->join());
 
     auto crc = task->crc();

@@ -21,7 +21,9 @@ ECode CxxEngine::build(const doim::FsDirectorySPtr& directory,
     const auto& intermediate = doim::gManager->obtainDirectory(directory, "build");
     const auto& cxxProgram = program->cxxProgram(directory, intermediate);
 
-    auto task = std::make_shared<task::CxxProgramCrcTask>(cxxProgram);
+    auto task =
+        task::gManager->valid(std::make_shared<task::CxxProgramCrcTask>(cxxProgram));
+    task::gTPool->ensureScheduled(task);
     EHTest(task->join(), program->name());
 
     auto key = std::make_shared<doim::DbKey>("cxx_program:" + program->name());
@@ -41,7 +43,7 @@ ECode CxxEngine::build(const doim::FsDirectorySPtr& directory,
     auto value = std::make_shared<doim::DbValue>(task->crc());
     auto updateTask =
         task::gManager->valid(std::make_shared<task::DbPutTask>(key, value));
-
+    task::gTPool->ensureScheduled(updateTask);
     EHTest(updateTask->join());
     EHEnd;
 }

@@ -30,6 +30,7 @@ ECode EnsureDirectoryTask::operator()()
     {
         auto mkdirTask = task::gManager->valid(
             std::make_shared<task::EnsureDirectoryTask>(directory()->parent()));
+        task::gTPool->ensureScheduled(mkdirTask);
         EHTest(mkdirTask->join());
     }
 

@@ -2,6 +2,7 @@
 //
 
 #include "task/cxx/cxx_file_crc_task.h" // IWYU pragma: keep
+#include "task/tpool.h"                 // IWYU pragma: keep
 #include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
@@ -60,7 +61,7 @@ TEST_F(CxxFileCrcTaskTest, simple)
         std::make_shared<doim::CxxFile>(mFsSimpleCxx, mEmptyCxxIncludeDirectorySet);
     cxxFile = doim::gManager->unique(cxxFile);
     auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
-
+    task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
 
     EXPECT_EQ(0x9f9163a56c247be9, task->crc()) << std::hex << task->crc();
@@ -82,6 +83,7 @@ TEST_F(CxxFileCrcTaskTest, notFoundInclude)
     cxxFile = doim::gManager->unique(cxxFile);
 
     auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
+    task::gTPool->ensureScheduled(task);
     ASSERT_BANNED(kNotFound, task->join());
 }
 
@@ -115,6 +117,7 @@ TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
     cxxFile = doim::gManager->unique(cxxFile);
 
     auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
+    task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
 
     EXPECT_EQ(0xb7e440100a03d2c5, task->crc()) << std::hex << task->crc();
@@ -168,6 +171,7 @@ TEST_F(CxxFileCrcTaskTest, includeFromTwoDirectories)
     cxxFile = doim::gManager->unique(cxxFile);
 
     auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
+    task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
 
     EXPECT_EQ(0xb7e440100a03d2c5, task->crc()) << std::hex << task->crc();

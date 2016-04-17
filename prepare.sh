@@ -174,16 +174,22 @@ then
 
     git submodule update --init tools/build          || exit 1
     git submodule update --init tools/inspect        || exit 1
+    git submodule update --init libs/algorithm       || exit 1
     git submodule update --init libs/array           || exit 1
     git submodule update --init libs/assert          || exit 1
+    git submodule update --init libs/atomic          || exit 1
+    git submodule update --init libs/bind            || exit 1
     git submodule update --init libs/chrono          || exit 1
     git submodule update --init libs/concept_check   || exit 1
     git submodule update --init libs/config          || exit 1
     git submodule update --init libs/container       || exit 1
     git submodule update --init libs/core            || exit 1
     git submodule update --init libs/crc             || exit 1
+    git submodule update --init libs/date_time       || exit 1
     git submodule update --init libs/detail          || exit 1
+    git submodule update --init libs/exception       || exit 1
     git submodule update --init libs/filesystem      || exit 1
+    git submodule update --init libs/function        || exit 1
     git submodule update --init libs/functional      || exit 1
     git submodule update --init libs/fusion          || exit 1
     git submodule update --init libs/heap            || exit 1
@@ -203,6 +209,8 @@ then
     git submodule update --init libs/range           || exit 1
     git submodule update --init libs/ratio           || exit 1
     git submodule update --init libs/throw_exception || exit 1
+    git submodule update --init libs/thread          || exit 1
+    git submodule update --init libs/tuple           || exit 1
     git submodule update --init libs/type_traits     || exit 1
     git submodule update --init libs/smart_ptr       || exit 1
     git submodule update --init libs/static_assert   || exit 1
@@ -226,7 +234,7 @@ then
             linkflags="-stdlib=libc++" \
             --layout=system \
             --prefix=../../boost \
-            --with-chrono --with-filesystem --with-system \
+            --with-chrono --with-filesystem --with-system --with-thread \
             threading=multi link=static $1
     }
 

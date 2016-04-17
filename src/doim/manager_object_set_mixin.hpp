@@ -67,6 +67,7 @@ public:
         for (const auto& object : *objects)
             ASSERT(isUnique(object));
 
+        boost::unique_lock<boost::shared_mutex> lock(mMixinObjectSetsMutex);
         return *mMixinObjectSets.insert(objects).first;
     }
 
@@ -79,6 +80,8 @@ public:
     {
         if (object == nullptr)
             return object;
+
+        boost::shared_lock<boost::shared_mutex> lock(mMixinObjectSetsMutex);
         const auto& it = mMixinObjectSets.find(object);
         if (it == mMixinObjectSets.end())
             return nullptr;
@@ -86,6 +89,7 @@ public:
     }
 
 protected:
+    mutable boost::shared_mutex mMixinObjectSetsMutex;
     std::unordered_set<MixinObjectSetSPtr, Hasher, Hasher> mMixinObjectSets;
 };
 }

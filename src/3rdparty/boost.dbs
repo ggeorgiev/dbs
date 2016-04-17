@@ -57,3 +57,18 @@ cxx_library boost_chrono
 
     cxx_binary: ../../boost/lib/libboost_chrono.a;
 ;
+
+cxx_library boost_thread
+    @type=system:
+    cxx_header
+        @visibility=public
+        @directory=../../boost/include:
+
+        boost/thread/barrier.hpp
+        boost/thread/locks.hpp
+        boost/thread/reverse_lock.hpp
+        boost/thread/shared_mutex.hpp
+    ;
+
+    cxx_binary: ../../boost/lib/libboost_thread.a;
+;

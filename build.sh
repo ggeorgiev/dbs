@@ -53,8 +53,11 @@ FILES="$FILES src/task/db/db_put_task.cpp"
 FILES="$FILES src/task/sys/ensure_directory_task.cpp"
 FILES="$FILES src/task/sys/execute_command_task.cpp"
 FILES="$FILES src/task/manager.cpp"
+FILES="$FILES src/task/tpool.cpp"
 FILES="$FILES src/tool/cxx_compiler.cpp"
 FILES="$FILES src/tpool/task.cpp"
+FILES="$FILES src/tpool/task_group.cpp"
+FILES="$FILES src/tpool/task_sequence.cpp"
 FILES="$FILES src/tpool/tpool.cpp"
 
 CXXFLAGS="$CXXFLAGS -isystemspdlog/include"
@@ -71,21 +74,22 @@ LIBRARIES="$LIBRARIES -Lcppformat/lib"
 CXXFLAGS="$CXXFLAGS -isystemrocksdb/include"
 LIBRARIES="$LIBRARIES -Lrocksdb/lib"
 
-LIBRARIES="$LIBRARIES -lboost_filesystem -lboost_chrono -lboost_system -lformat"
+LIBRARIES="$LIBRARIES -lboost_filesystem -lboost_chrono -lboost_system -lboost_thread"
+LIBRARIES="$LIBRARIES -lformat"
 LIBRARIES="$LIBRARIES -lrocksdb -lz -lbz2"
 
 #DEFINES=" -DNDEBUG" && OPTOMIZATION="-O3"
 DEFINES=" -DDEBUG" && OPTOMIZATION="-O0 -g"
 
 
-if [ 1 == 1 ]
+if [ 1 == 0 ]
 then
     mkdir -p build
     PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
         $DEFINES $LIBRARIES -o build/dbs && cp build/dbs dbs || exit 1
 fi
 
-if [ 1 == 0 ]
+if [ 1 == 1 ]
 then
 
     CXXFLAGS="$CXXFLAGS -Isrc/gtest/include"
@@ -137,7 +141,7 @@ then
     done
     echo "]" >> $COMPILE_DATABASE
 
-    if [ 1 == 0 ]
+    if [ 1 == 1 ]
     then
         mkdir -p build/src/gtest
         mkdir -p build/src/log/gtest

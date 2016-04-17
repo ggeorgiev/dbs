@@ -2,6 +2,7 @@
 //
 
 #include "engine/cxx_engine.h"
+#include "task/tpool.h"
 #include "tool/cxx_compiler.h"
 #include "parser/parser.hpp"
 #include "parser/string_stream.hpp"
@@ -107,5 +108,8 @@ int main(int argc, char* argv[])
             }
         }
     }
+
+    task::gTPool->join();
+
     return 0;
 }

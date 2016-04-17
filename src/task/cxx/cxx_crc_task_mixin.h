@@ -1,8 +1,10 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
 
+#include "task/tpool.h"
+#include "tpool/task_group.h"
 #include "parser/cxx/cxx_parser.hpp"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
@@ -69,8 +71,8 @@ protected:
             headerDirectories.push_back(headerDirectory);
         }
 
-        std::vector<math::Crcsum> crcs;
-        crcs.reserve(headerDirectories.size());
+        std::vector<tpool::TaskSPtr> tasks;
+        tasks.reserve(headerDirectories.size());
 
         for (const auto& headerDirectory : headerDirectories)
         {
@@ -79,9 +81,18 @@ protected:
 
             auto task = Task::valid(
                 std::make_shared<Task>(headerDirectory.first, headerDirectory.second));
-            EHTest(task->join());
-            crcs.push_back(task->crc());
+            task::gTPool->ensureScheduled(task);
+            tasks.push_back(task);
         }
+
+        auto group = std::make_shared<tpool::TaskGroup>(task::gTPool, 0, tasks);
+        task::gTPool->ensureScheduled(group);
+        EHTest(group->join());
+
+        std::vector<math::Crcsum> crcs;
+        crcs.reserve(headerDirectories.size());
+        for (const auto& task : tasks)
+            crcs.push_back(std::static_pointer_cast<Task>(task)->crc());
 
         std::sort(crcs.begin(), crcs.end());
 

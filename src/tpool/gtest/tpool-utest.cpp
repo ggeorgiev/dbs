@@ -1,16 +1,15 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "tpool/task.h" // IWYU pragma: keep
+#include "tpool/task.h"  // IWYU pragma: keep
+#include "tpool/tpool.h" // IWYU pragma: keep
+#include "err/gtest/err.h"
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
 #include <memory>
 
 namespace tpool
 {
-class TPool;
-} // namespace tpool
-
 template <typename T>
 class TPoolTest : public ::testing::Test
 {
@@ -22,3 +21,36 @@ public:
 typedef ::testing::Types<tpool::TPool> TPoolType;
 
 TYPED_TEST_CASE(TPoolTest, TPoolType);
+
+TYPED_TEST(TPoolTest, JoinEmpty)
+{
+    auto pool = TestFixture::TPool::create(10);
+    pool->join();
+}
+
+class TPoolTestTask : public Task
+{
+public:
+    TPoolTestTask()
+        : Task(0)
+    {
+    }
+
+    ECode operator()() override
+    {
+        EHEnd;
+    }
+};
+
+TYPED_TEST(TPoolTest, ensureScheduled)
+{
+    auto pool = TestFixture::TPool::create(10);
+
+    auto task = std::make_shared<TPoolTestTask>();
+    pool->ensureScheduled(task);
+
+    ASSERT_OKAY(task->join());
+    pool->join();
+}
+
+} // namespace tpool

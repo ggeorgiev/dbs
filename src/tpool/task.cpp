@@ -1,6 +1,7 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
+#include "tpool/reverse_lock.hpp"
 #include "tpool/task.h"
 #include <sstream>
 
@@ -13,7 +14,7 @@ bool Task::Compare::operator()(const TaskSPtr& task1, const TaskSPtr& task2) con
 
 Task::Task(int priority)
     : mPriority(std::make_shared<Priority>(priority))
-    , mFinished(false)
+    , mState(State::kConstructed)
 {
 }
 
@@ -21,20 +22,58 @@ Task::~Task()
 {
 }
 
-ECode Task::run()
+Task::State Task::escalateState(State newState)
 {
-    ECode code = (*this)();
+    std::unique_lock<std::mutex> lock(mStateMutex);
+    State oldState = mState;
+    if (newState > oldState)
+        mState = newState;
+    return oldState;
+}
 
-    mFinished = true;
+void Task::run()
+{
+    std::unique_lock<std::mutex> lock(mStateMutex);
+    run(lock);
+}
 
-    EHTest(code);
-    EHEnd;
+void Task::run(std::unique_lock<std::mutex>& lock)
+{
+    ASSERT(mState != State::kConstructed);
+    if (mState != State::kScheduled)
+        return;
+
+    mState = State::kStarted;
+    mStateCondition.notify_all();
+    {
+        reverse_lock<std::unique_lock<std::mutex>> un(lock);
+        ECode code = (*this)();
+        if (code != err::kSuccess)
+            mExecutionError.reset(err::gError.release());
+    }
+    mState = State::kFinished;
+    mStateCondition.notify_all();
 }
 
 ECode Task::join()
 {
-    if (!mFinished)
-        EHTest(run());
+    {
+        std::unique_lock<std::mutex> lock(mStateMutex);
+        ASSERT(this->mState == State::kScheduled || this->mState == State::kStarted ||
+               this->mState == State::kFinished);
+
+        if (mState == State::kScheduled)
+            run(lock);
+
+        mStateCondition.wait(lock, [this] { return this->mState == State::kFinished; });
+    }
+    if (mExecutionError != nullptr)
+    {
+        err::ErrorRPtr error = new err::Error(*mExecutionError);
+        err::gError.reset(error);
+        return mExecutionError->code();
+    }
+
     EHEnd;
 }
 

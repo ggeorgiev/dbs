@@ -30,9 +30,9 @@ public:
         const doim::FsDirectorySPtr& directory,
         const doim::CxxIncludeDirectorySetSPtr& includeDirectories);
 
-    ECode tasks(const doim::FsDirectorySPtr& directory,
-                const doim::CxxObjectFileSPtr& objectFile,
-                std::vector<tpool::TaskSPtr>& tasks);
+    ECode compileTask(const doim::FsDirectorySPtr& directory,
+                      const doim::CxxObjectFileSPtr& objectFile,
+                      tpool::TaskSPtr& task);
 
     ECode commands(const doim::FsDirectorySPtr& directory,
                    const dom::CxxProgramSPtr& program);

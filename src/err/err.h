@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 //
 // Err is an error handling system that allows call stack tracking.
@@ -37,7 +37,8 @@ enum ECode
     kNotFound = 10,
     kTooMany = 11,
     kUnable = 12,
-    kUnknown = 13,
+    kUnexpected = 13,
+    kUnknown = 14,
 
     // Subsystems error codes
     kDatabase = 20,
@@ -86,12 +87,19 @@ public:
         mCallstack.push_back(location);
     }
 
-    ECode code()
+    Error(const Error& error)
+        : mCode(error.code())
+        , mMessage(error.message())
+        , mCallstack(error.mCallstack)
+    {
+    }
+
+    ECode code() const
     {
         return mCode;
     }
 
-    std::string message()
+    std::string message() const
     {
         return mMessage.str();
     }

@@ -73,11 +73,10 @@ FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
                 builder.ensure();
                 builder.set_parent(parent);
                 builder.set_name(name);
-                const auto& insert =
-                    ManagerObjectMixin<FsDirectory>::mMixinObjects.insert(
-                        builder.reference());
-                parent = *insert.first;
-                if (insert.second)
+
+                const auto& current = builder.reference();
+                parent = unique(current);
+                if (parent == current)
                     builder.reset();
             }
             if (next == directory.end())
