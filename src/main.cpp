@@ -3,6 +3,7 @@
 
 #include "engine/cxx_engine.h"
 #include "task/tpool.h"
+#include "tpool/task_group.h"
 #include "tool/cxx_compiler.h"
 #include "parser/parser.hpp"
 #include "parser/string_stream.hpp"
@@ -90,6 +91,8 @@ int main(int argc, char* argv[])
     const auto& compiler = std::make_shared<tool::CxxCompiler>(binary);
     const auto& engine = std::make_shared<engine::CxxEngine>(compiler);
 
+    std::vector<tpool::TaskSPtr> tasks;
+
     for (size_t i = 2; i < arg.size(); ++i)
     {
         auto object = doim::gManager->obtainObject(file->directory(),
@@ -98,18 +101,21 @@ int main(int argc, char* argv[])
         auto program = dom::gManager->obtainCxxProgram(object);
 
         if (program != nullptr)
-        {
-            code = engine->build(cwd, program);
-            if (code != err::kSuccess)
-            {
-                std::cout << err::gError->message() << "\n";
-                std::cout << err::gError->callstack() << "\n";
-                return 1;
-            }
-        }
+            tasks.push_back(engine->build(cwd, program));
     }
 
+    auto group = std::make_shared<tpool::TaskGroup>(task::gTPool, 0, tasks);
+    task::gTPool->ensureScheduled(group);
+
+    code = group->join();
     task::gTPool->join();
+
+    if (code != err::kSuccess)
+    {
+        std::cout << err::gError->message() << "\n";
+        std::cout << err::gError->callstack() << "\n";
+        return 1;
+    }
 
     return 0;
 }

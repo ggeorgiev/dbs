@@ -12,13 +12,13 @@ class CxxEngine;
 
 typedef std::shared_ptr<CxxEngine> CxxEngineSPtr;
 
-class CxxEngine
+class CxxEngine : public std::enable_shared_from_this<CxxEngine>
 {
 public:
     CxxEngine(const tool::CxxCompilerSPtr& compiler);
 
-    ECode build(const doim::FsDirectorySPtr& directory,
-                const dom::CxxProgramSPtr& program);
+    tpool::TaskSPtr build(const doim::FsDirectorySPtr& directory,
+                          const dom::CxxProgramSPtr& program);
 
 private:
     tool::CxxCompilerSPtr mCompiler;
