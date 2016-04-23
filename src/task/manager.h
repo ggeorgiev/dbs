@@ -10,6 +10,7 @@
 #include "task/db/db_put_task.h"               // IWYU pragma: keep
 #include "task/sys/ensure_directory_task.h"    // IWYU pragma: keep
 #include "task/sys/execute_command_task.h"     // IWYU pragma: keep
+#include "tpool/task_sequence.h"               // IWYU pragma: keep
 #include "im/initialization_manager.hpp"
 #include <memory>
 #include <mutex>
@@ -35,12 +36,22 @@ public:
         return *mTasks.insert(task).first;
     }
 
+    TaskSPtr unique(const TaskSPtr& task)
+    {
+        if (task == nullptr)
+            return task;
+
+        std::unique_lock<std::mutex> lock(mTaskMutex);
+        return *mTasks.insert(task).first;
+    }
+
 protected:
     std::mutex mTaskMutex;
     std::unordered_set<TaskSPtr, Hasher, Hasher> mTasks;
 };
 
-class Manager : public ManagerMixin<DbPutTask>,
+class Manager : public ManagerMixin<tpool::TaskSequence>,
+                public ManagerMixin<DbPutTask>,
                 public ManagerMixin<CxxFileCrcTask>,
                 public ManagerMixin<CxxHeaderCrcTask>,
                 public ManagerMixin<CxxObjectFileCrcTask>,
@@ -55,6 +66,8 @@ public:
         return im::InitializationManager::rank_base() +
                im::InitializationManager::rank_step();
     }
+
+    using ManagerMixin<tpool::TaskSequence>::unique;
 
     using ManagerMixin<DbPutTask>::valid;
     using ManagerMixin<CxxFileCrcTask>::valid;

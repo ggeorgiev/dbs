@@ -1,6 +1,7 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
+#include "task/cxx/cxx_file_crc_task.h"
 #include "task/cxx/cxx_object_file_crc_task.h"
 #include "task/manager.h"
 #include "doim/fs/fs_file.h"
@@ -21,16 +22,17 @@ CxxObjectFileCrcTask::CxxObjectFileCrcTask(const doim::CxxObjectFileSPtr& cxxObj
 
 ECode CxxObjectFileCrcTask::operator()()
 {
-    math::CrcProcessor crcProcessor;
+    auto task =
+        gManager->valid(std::make_shared<CxxFileCrcTask>(cxxObjectFile()->cxxFile()));
+    task::gTPool->ensureScheduled(task);
 
     std::ifstream fstream(cxxObjectFile()->file()->path(nullptr).c_str());
     std::string content((std::istreambuf_iterator<char>(fstream)),
                         std::istreambuf_iterator<char>());
 
+    math::CrcProcessor crcProcessor;
     crcProcessor.process_bytes(content.data(), content.size());
 
-    auto task = gManager->valid(std::make_shared<CxxObjectFileCrcTask>(cxxObjectFile()));
-    task::gTPool->ensureScheduled(task);
     EHTest(task->join());
 
     auto crc = task->crc();

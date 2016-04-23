@@ -116,7 +116,7 @@ ECode CxxCompiler::compileTask(const doim::FsDirectorySPtr& directory,
         task::gManager->valid(std::make_shared<task::DbPutTask>(key, value));
 
     auto tasks = std::vector<tpool::TaskSPtr>{mkdirTask, compileTask, updateTask};
-    task = std::make_shared<tpool::TaskSequence>(0, tasks);
+    task = task::gManager->unique(std::make_shared<tpool::TaskSequence>(0, tasks));
 
     EHEnd;
 }
@@ -125,7 +125,6 @@ ECode CxxCompiler::commands(const doim::FsDirectorySPtr& directory,
                             const dom::CxxProgramSPtr& program)
 {
     const auto& intermediate = doim::gManager->obtainDirectory(directory, "build");
-
     const auto& cxxProgram = program->cxxProgram(directory, intermediate);
 
     auto arguments = std::make_shared<doim::SysArgumentSet>();

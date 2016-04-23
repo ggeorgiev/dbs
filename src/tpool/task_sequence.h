@@ -24,6 +24,26 @@ public:
 
     ECode operator()() override;
 
+    struct Hasher
+    {
+        std::size_t operator()(const TaskSequenceSPtr& sequence) const
+        {
+            std::size_t seed = 0;
+            for (const auto& task : sequence->mTasks)
+                boost::hash_combine(seed, mTaskHasher(task));
+            return seed;
+        }
+
+        bool operator()(const TaskSequenceSPtr& sequence1,
+                        const TaskSequenceSPtr& sequence2) const
+        {
+            return sequence1->mTasks == sequence2->mTasks;
+        }
+
+    private:
+        std::hash<TaskSPtr> mTaskHasher;
+    };
+
 private:
     std::vector<TaskSPtr> mTasks;
 };
