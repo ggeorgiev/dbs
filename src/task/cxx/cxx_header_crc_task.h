@@ -41,7 +41,7 @@ public:
         return std::get<1>(mArgs);
     }
 
-    doim::TagSet tags() override
+    doim::TagSet tags() const override
     {
         return doim::TagSet{doim::gTaskTag, doim::gCrcTag};
     }

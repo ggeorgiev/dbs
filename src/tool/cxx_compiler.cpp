@@ -125,6 +125,7 @@ ECode CxxCompiler::commands(const doim::FsDirectorySPtr& directory,
                             const dom::CxxProgramSPtr& program)
 {
     const auto& intermediate = doim::gManager->obtainDirectory(directory, "build");
+
     const auto& cxxProgram = program->cxxProgram(directory, intermediate);
 
     auto arguments = std::make_shared<doim::SysArgumentSet>();

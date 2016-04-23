@@ -35,24 +35,29 @@ public:
 
     virtual std::string description() const = 0;
 
-    virtual doim::TagSet tags()
+    virtual doim::TagSet tags() const
     {
         return doim::TagSet{doim::gTaskTag};
     }
 
-    void run(std::unique_lock<std::mutex>& lock) override
+    void onStart() const override
     {
         doim::TagSet runTags = tags();
         runTags.insert(doim::gRunTag);
         if (opt::gVerbose->isVisible(runTags))
             ILOG("[ RUN      ] {}", description());
+    }
 
-        tpool::Task::run(lock);
-
+    void onFinish(ECode code) const override
+    {
         doim::TagSet doneTags = tags();
         doneTags.insert(doim::gDoneTag);
         if (opt::gVerbose->isVisible(doneTags))
-            ILOG("[       OK ] {}", description());
+        {
+            ILOG("{} {}",
+                 (code == err::kSuccess) ? "[       OK ]" : "[   FAILED ]",
+                 description());
+        }
     }
 
     struct Hasher

@@ -60,7 +60,10 @@ public:
 
 protected:
     void run();
-    virtual void run(std::unique_lock<std::mutex>& lock);
+    void run(std::unique_lock<std::mutex>& lock);
+
+    virtual void onStart() const;
+    virtual void onFinish(ECode code) const;
 
     enum class State
     {

@@ -40,6 +40,14 @@ bool Task::finished() const
     return mState == State::kFinished;
 }
 
+void Task::onStart() const
+{
+}
+
+void Task::onFinish(ECode code) const
+{
+}
+
 void Task::run()
 {
     std::unique_lock<std::mutex> lock(mStateMutex);
@@ -56,7 +64,12 @@ void Task::run(std::unique_lock<std::mutex>& lock)
     mStateCondition.notify_all();
     {
         reverse_lock<std::unique_lock<std::mutex>> un(lock);
+        onStart();
+
         ECode code = (*this)();
+
+        onFinish(code);
+
         if (code != err::kSuccess)
             mExecutionError.reset(err::gError.release());
     }

@@ -28,8 +28,8 @@ public:
 TEST(TaskCallbackTest, scheduled)
 {
     auto pool = TPool::create(10);
-
     auto baseTask = std::make_shared<TaskCallbackTestTask>();
+
     pool->ensureScheduled(baseTask);
 
     TaskCallback::Function onFinish = [](const TaskSPtr&) -> ECode { EHEnd; };

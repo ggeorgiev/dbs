@@ -52,7 +52,7 @@ tpool::TaskSPtr CxxEngine::build(const doim::FsDirectorySPtr& directory,
     };
 
     auto task = std::make_shared<tpool::TaskCallback>(0, crcTask, onFinish);
-    task::gTPool->ensureScheduled(crcTask);
+    task::gTPool->ensureScheduled(task);
     return task;
 }
 }
