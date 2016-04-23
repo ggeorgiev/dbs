@@ -18,14 +18,16 @@ TaskSequence::~TaskSequence()
 
 ECode TaskSequence::operator()()
 {
-    for (const auto& task : mTasks)
-    {
-        if (task->escalateState(Task::State::kScheduled) != Task::State::kConstructed)
-            if (task != *mTasks.begin())
-                EHBan(kUnexpected);
+    // To enforce a sequencial order we need to keep all the tasks out of the pool, except
+    // the first one - the first one is OK to be already running.
 
-        EHTest(task->join());
-    }
+    auto first = mTasks.front();
+    (void)first->markAsScheduled();
+    EHTest(first->join());
+
+    for (size_t i = 1; i < mTasks.size(); ++i)
+        EHTest(mTasks[i]->execute());
+
     EHEnd;
 }
 

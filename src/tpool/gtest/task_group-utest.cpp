@@ -4,6 +4,7 @@
 #include "tpool/task_group.h" // IWYU pragma: keep
 #include "tpool/tpool.h"      // IWYU pragma: keep
 #include "err/gtest/err.h"
+#include "err/gtest/err_assert.h"
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
 #include <memory>
@@ -59,6 +60,12 @@ TEST(TaskGroupTest, notScheduled)
 
     ASSERT_OKAY(task->join());
     pool->join();
+}
+
+TEST(TaskGroupTest, assertNullSubtask)
+{
+    auto pool = TPool::create(10);
+    ASSERT_ASSERT(std::make_shared<TaskGroup>(pool, 0, std::vector<TaskSPtr>{nullptr}));
 }
 
 } // namespace tpool

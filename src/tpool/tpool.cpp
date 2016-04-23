@@ -31,7 +31,7 @@ void TPool::ensureScheduled(const TaskSPtr& task)
 {
     {
         std::unique_lock<std::mutex> lock(mTasksMutex);
-        if (task->escalateState(Task::State::kScheduled) != Task::State::kConstructed)
+        if (task->markAsScheduled())
             return;
         task->setHandle(mTasks.push(task));
     }

@@ -22,13 +22,22 @@ Task::~Task()
 {
 }
 
-Task::State Task::escalateState(State newState)
+bool Task::markAsScheduled()
 {
     std::unique_lock<std::mutex> lock(mStateMutex);
-    State oldState = mState;
-    if (newState > oldState)
-        mState = newState;
-    return oldState;
+    if (mState != State::kConstructed)
+        return false;
+
+    mState = State::kScheduled;
+    mStateCondition.notify_all();
+
+    return true;
+}
+
+bool Task::finished() const
+{
+    std::unique_lock<std::mutex> lock(mStateMutex);
+    return mState == State::kFinished;
 }
 
 void Task::run()
@@ -67,13 +76,20 @@ ECode Task::join()
 
         mStateCondition.wait(lock, [this] { return this->mState == State::kFinished; });
     }
-    if (mExecutionError != nullptr)
-    {
-        err::ErrorRPtr error = new err::Error(*mExecutionError);
-        err::gError.reset(error);
-        return mExecutionError->code();
-    }
+    EHTest(reportError());
+    EHEnd;
+}
 
+ECode Task::execute()
+{
+    {
+        std::unique_lock<std::mutex> lock(mStateMutex);
+        ASSERT(this->mState == State::kConstructed);
+
+        mState = State::kScheduled;
+        run(lock);
+    }
+    EHTest(reportError());
     EHEnd;
 }
 
@@ -90,6 +106,18 @@ bool Task::updatePriority(int priority)
 Task::Heap::handle_type& Task::handle()
 {
     return mHandle;
+}
+
+ECode Task::reportError() const
+{
+    ASSERT(finished());
+
+    if (mExecutionError == nullptr)
+        EHEnd;
+
+    err::ErrorRPtr error = new err::Error(*mExecutionError);
+    err::gError.reset(error);
+    return mExecutionError->code();
 }
 
 } // namespace tpool

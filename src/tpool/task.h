@@ -39,7 +39,13 @@ public:
 
     virtual ECode operator()() = 0;
 
+    // Joins the current thread with the task until it is finished. It expects the task to
+    // be already sheduled.
     ECode join();
+
+    // Executed the task in the current thread. It expects the task to not be scheduled in
+    // the thread pool.
+    ECode execute();
 
     // Returns the task priority.
     int priority();
@@ -66,11 +72,15 @@ protected:
 
     friend class TaskGroup;
     friend class TaskSequence;
-    State escalateState(State newState);
+
+    bool markAsScheduled();
+    bool finished() const;
 
     err::ErrorUPtr mExecutionError;
 
 private:
+    ECode reportError() const;
+
     friend class TPool;
     void setHandle(Heap::handle_type&& handle)
     {
@@ -80,7 +90,7 @@ private:
     Heap::handle_type mHandle;
     PrioritySPtr mPriority;
 
-    std::mutex mStateMutex;
+    mutable std::mutex mStateMutex;
     std::condition_variable mStateCondition;
     std::atomic<State> mState;
 };

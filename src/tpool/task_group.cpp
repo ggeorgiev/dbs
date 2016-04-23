@@ -32,8 +32,26 @@ ECode TaskGroup::operator()()
             pool->ensureScheduled(task);
     }
 
-    for (const auto& task : mTasks)
-        EHTest(task->join());
+    auto tasks = mTasks;
+    while (true)
+    {
+        size_t i = 0;
+        while (i < tasks.size())
+        {
+            if (!tasks[i]->finished())
+            {
+                ++i;
+                continue;
+            }
+
+            tasks[i] = tasks.back();
+            tasks.pop_back();
+        }
+        if (tasks.empty())
+            break;
+
+        tasks.front()->join();
+    }
 
     EHEnd;
 }
