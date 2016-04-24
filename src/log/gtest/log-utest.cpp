@@ -33,7 +33,7 @@ void baz()
     bar();
 }
 
-TEST(Log, LOG_FUNCTION)
+TEST(Log, SLOW_LOG_FUNCTION)
 {
     TLOG_FUNCTION;
     baz();

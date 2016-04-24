@@ -47,6 +47,9 @@ public:
     // the thread pool.
     ECode execute();
 
+    // Returns the same result that was recieved from the execution of the task.
+    ECode reportError() const;
+
     // Returns the task priority.
     int priority();
 
@@ -82,8 +85,6 @@ protected:
     err::ErrorUPtr mExecutionError;
 
 private:
-    ECode reportError() const;
-
     friend class TPool;
     void setHandle(Heap::handle_type&& handle)
     {

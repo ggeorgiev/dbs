@@ -25,6 +25,20 @@ public:
     }
 };
 
+class TaskGroupTestFailTask : public Task
+{
+public:
+    TaskGroupTestFailTask()
+        : Task(0)
+    {
+    }
+
+    ECode operator()() override
+    {
+        EHBan(kExpected);
+    }
+};
+
 TEST(TaskGroupTest, scheduled)
 {
     auto pool = TPool::create(10);
@@ -66,6 +80,23 @@ TEST(TaskGroupTest, assertNullSubtask)
 {
     auto pool = TPool::create(10);
     ASSERT_ASSERT(std::make_shared<TaskGroup>(pool, 0, std::vector<TaskSPtr>{nullptr}));
+}
+
+TEST(TaskGroupTest, subtaskReturnsError)
+{
+    auto pool = TPool::create(10);
+
+    auto task1 = std::make_shared<TaskGroupTestTask>();
+    auto task2 = std::make_shared<TaskGroupTestFailTask>();
+    auto task3 = std::make_shared<TaskGroupTestTask>();
+
+    auto task =
+        std::make_shared<TaskGroup>(pool, 0, std::vector<TaskSPtr>{task1, task2, task3});
+
+    pool->ensureScheduled(task);
+
+    ASSERT_BANNED(kExpected, task->join());
+    pool->join();
 }
 
 } // namespace tpool

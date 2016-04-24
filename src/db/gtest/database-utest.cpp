@@ -11,7 +11,7 @@
 #include <ostream>
 #include <string>
 
-TEST(DatabaseTest, SLOW_open)
+TEST(DatabaseTest, VERYSLOW_open)
 {
     const std::string& testDb = testing::gIntermittentDirectory + "rocksdb.tst";
 
@@ -20,7 +20,7 @@ TEST(DatabaseTest, SLOW_open)
     ASSERT_BANNED(kDatabase, database.open(testDb));
 }
 
-TEST(DatabaseTest, SLOW_put)
+TEST(DatabaseTest, VERYSLOW_put)
 {
     const std::string& testDb = testing::gIntermittentDirectory + "rocksdb.tst";
 
@@ -46,7 +46,7 @@ TEST(DatabaseTest, SLOW_put)
     ASSERT_EQ(value2, dbvalue);
 }
 
-TEST(DatabaseTest, SLOW_get)
+TEST(DatabaseTest, VERYSLOW_get)
 {
     const std::string& testDb = testing::gIntermittentDirectory + "rocksdb.tst";
 
@@ -67,7 +67,7 @@ TEST(DatabaseTest, SLOW_get)
     ASSERT_EQ(value, dbvalue);
 }
 
-TEST(DatabaseTest, SLOW_erase)
+TEST(DatabaseTest, VERYSLOW_erase)
 {
     const std::string& testDb = testing::gIntermittentDirectory + "rocksdb.tst";
 

@@ -1,7 +1,7 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
-#include "dom/cxx/cxx_library.hpp"
+#include "dom/cxx/cxx_library.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "err/err.h"

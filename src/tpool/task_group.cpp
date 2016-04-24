@@ -44,6 +44,7 @@ ECode TaskGroup::operator()()
                 continue;
             }
 
+            EHTest(tasks[i]->reportError());
             tasks[i] = tasks.back();
             tasks.pop_back();
         }

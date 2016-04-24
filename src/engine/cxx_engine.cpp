@@ -48,7 +48,11 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::FsDirectorySPtr& directory,
 
         auto crcTask = std::static_pointer_cast<task::CxxFileCrcTask>(task);
         if (crcTask->crc() == crc)
+        {
+            DLOG("Cxx object '{}' is already built.",
+                 objectFile->file()->path(directory));
             EHEnd;
+        }
 
         auto mkdirTask = task::gManager->valid(
             std::make_shared<task::EnsureDirectoryTask>(objectFile->file()->directory()));

@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "dom/cxx/cxx_library.hpp"
-#include "dom/cxx/cxx_program.hpp"
+#include "dom/cxx/cxx_library.h"
+#include "dom/cxx/cxx_program.h"
 #include "doim/generic/object.h"
 #include "im/initialization_manager.hpp"
 #include <memory>
