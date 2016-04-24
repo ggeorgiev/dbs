@@ -8,6 +8,7 @@
 #include "task/sys/ensure_directory_task.h"
 #include "task/sys/execute_command_task.h"
 #include "task/tpool.h"
+#include "tpool/task_callback.h"
 #include "tpool/task_group.h"
 #include "tpool/task_sequence.h"
 #include "tool/cxx_compiler.h"
@@ -38,7 +39,7 @@ CxxCompiler::CxxCompiler(const doim::SysExecutableSPtr& compiler)
 
 doim::SysArgumentSetSPtr CxxCompiler::includeArguments(
     const doim::FsDirectorySPtr& directory,
-    const doim::CxxIncludeDirectorySetSPtr& includeDirectories)
+    const doim::CxxIncludeDirectorySetSPtr& includeDirectories) const
 {
     auto arguments = std::make_shared<doim::SysArgumentSet>();
 
@@ -63,30 +64,10 @@ doim::SysArgumentSetSPtr CxxCompiler::includeArguments(
     return arguments;
 }
 
-ECode CxxCompiler::compileTask(const doim::FsDirectorySPtr& directory,
-                               const doim::CxxObjectFileSPtr& objectFile,
-                               tpool::TaskSPtr& task)
+tpool::TaskSPtr CxxCompiler::compileCommand(
+    const doim::FsDirectorySPtr& directory,
+    const doim::CxxObjectFileSPtr& objectFile) const
 {
-    auto crcTask = task::gManager->valid(
-        std::make_shared<task::CxxFileCrcTask>(objectFile->cxxFile()));
-    task::gTPool->ensureScheduled(crcTask);
-    EHTest(crcTask->join(), objectFile->file()->path());
-
-    auto key = std::make_shared<doim::DbKey>("file:" + objectFile->file()->path());
-    key = doim::gManager->unique(key);
-
-    math::Crcsum crc;
-    db::gDatabase->get(key->bytes(), crc);
-
-    if (crcTask->crc() == crc)
-    {
-        task.reset();
-        EHEnd;
-    }
-
-    auto mkdirTask = task::gManager->valid(
-        std::make_shared<task::EnsureDirectoryTask>(objectFile->file()->directory()));
-
     auto compileArguments =
         includeArguments(directory, objectFile->cxxFile()->cxxIncludeDirectories());
 
@@ -111,22 +92,14 @@ ECode CxxCompiler::compileTask(const doim::FsDirectorySPtr& directory,
     auto compileTask = task::gManager->valid(
         std::make_shared<task::ExecuteCommandTask>(compileCommand, "Compile " + file));
 
-    auto value = std::make_shared<doim::DbValue>(crcTask->crc());
-    auto updateTask =
-        task::gManager->valid(std::make_shared<task::DbPutTask>(key, value));
-
-    auto tasks = std::vector<tpool::TaskSPtr>{mkdirTask, compileTask, updateTask};
-    task = task::gManager->unique(std::make_shared<tpool::TaskSequence>(0, tasks));
-
-    EHEnd;
+    return compileTask;
 }
 
-ECode CxxCompiler::commands(const doim::FsDirectorySPtr& directory,
-                            const dom::CxxProgramSPtr& program)
+tpool::TaskSPtr CxxCompiler::linkCommand(
+    const doim::FsDirectorySPtr& directory,
+    const dom::CxxProgramSPtr& program,
+    const doim::CxxObjectFileSetSPtr& objectFiles) const
 {
-    const auto& intermediate = doim::gManager->obtainDirectory(directory, "build");
-    const auto& cxxProgram = program->cxxProgram(directory, intermediate);
-
     auto arguments = std::make_shared<doim::SysArgumentSet>();
     for (const auto& cxxLibrary : program->recursiveCxxLibraries())
     {
@@ -143,25 +116,12 @@ ECode CxxCompiler::commands(const doim::FsDirectorySPtr& directory,
         }
     }
 
-    const auto& objectFiles = cxxProgram->cxxObjectFiles();
-
-    std::vector<tpool::TaskSPtr> allTasks;
     for (const auto& objectFile : *objectFiles)
     {
         auto argument_obj =
             doim::gManager->obtainArgument(objectFile->file()->path(directory));
         arguments->insert(argument_obj);
-
-        tpool::TaskSPtr task;
-        EHTest(compileTask(directory, objectFile, task));
-
-        if (task != nullptr)
-            allTasks.push_back(task);
     }
-
-    auto group = std::make_shared<tpool::TaskGroup>(task::gTPool, 0, allTasks);
-    task::gTPool->ensureScheduled(group);
-    EHTest(group->join());
 
     auto argument_o = doim::gManager->obtainArgument("-o build/" + program->name());
     arguments->insert(argument_o);
@@ -173,9 +133,6 @@ ECode CxxCompiler::commands(const doim::FsDirectorySPtr& directory,
     auto linkTask = task::gManager->valid(
         std::make_shared<task::ExecuteCommandTask>(linkCommand,
                                                    "Link " + program->name()));
-    task::gTPool->ensureScheduled(linkTask);
-
-    EHTest(linkTask->join());
-    EHEnd;
+    return linkTask;
 }
 }

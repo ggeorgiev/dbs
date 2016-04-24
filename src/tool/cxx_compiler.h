@@ -21,21 +21,21 @@ class CxxCompiler;
 
 typedef std::shared_ptr<CxxCompiler> CxxCompilerSPtr;
 
-class CxxCompiler
+class CxxCompiler : public std::enable_shared_from_this<CxxCompiler>
 {
 public:
     CxxCompiler(const doim::SysExecutableSPtr& compiler);
 
     doim::SysArgumentSetSPtr includeArguments(
         const doim::FsDirectorySPtr& directory,
-        const doim::CxxIncludeDirectorySetSPtr& includeDirectories);
+        const doim::CxxIncludeDirectorySetSPtr& includeDirectories) const;
 
-    ECode compileTask(const doim::FsDirectorySPtr& directory,
-                      const doim::CxxObjectFileSPtr& objectFile,
-                      tpool::TaskSPtr& task);
+    tpool::TaskSPtr compileCommand(const doim::FsDirectorySPtr& directory,
+                                   const doim::CxxObjectFileSPtr& objectFile) const;
 
-    ECode commands(const doim::FsDirectorySPtr& directory,
-                   const dom::CxxProgramSPtr& program);
+    tpool::TaskSPtr linkCommand(const doim::FsDirectorySPtr& directory,
+                                const dom::CxxProgramSPtr& program,
+                                const doim::CxxObjectFileSetSPtr& objectFiles) const;
 
 private:
     doim::SysExecutableSPtr mCompiler;
