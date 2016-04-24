@@ -56,6 +56,7 @@ FILES="$FILES src/task/manager.cpp"
 FILES="$FILES src/task/tpool.cpp"
 FILES="$FILES src/tool/cxx_compiler.cpp"
 FILES="$FILES src/tpool/task.cpp"
+FILES="$FILES src/tpool/task_callback.cpp"
 FILES="$FILES src/tpool/task_group.cpp"
 FILES="$FILES src/tpool/task_sequence.cpp"
 FILES="$FILES src/tpool/tpool.cpp"
@@ -78,18 +79,18 @@ LIBRARIES="$LIBRARIES -lboost_filesystem -lboost_chrono -lboost_system -lboost_t
 LIBRARIES="$LIBRARIES -lformat"
 LIBRARIES="$LIBRARIES -lrocksdb -lz -lbz2"
 
-#DEFINES=" -DNDEBUG" && OPTOMIZATION="-O3"
-DEFINES=" -DDEBUG" && OPTOMIZATION="-O0 -g"
+DEFINES=" -DNDEBUG" && OPTOMIZATION="-O3"
+#DEFINES=" -DDEBUG" && OPTOMIZATION="-O0 -g"
 
 
-if [ 1 == 0 ]
+if [ 1 == 1 ]
 then
     mkdir -p build
     PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
         $DEFINES $LIBRARIES -o build/dbs && cp build/dbs dbs || exit 1
 fi
 
-if [ 1 == 1 ]
+if [ 1 == 0 ]
 then
 
     CXXFLAGS="$CXXFLAGS -Isrc/gtest/include"

@@ -34,6 +34,11 @@ public:
         return mValue;
     }
 
+    doim::TagSet tags() const override
+    {
+        return doim::TagSet{doim::gDbTag};
+    }
+
     ECode operator()() override;
     std::string description() const override;
 

@@ -35,6 +35,7 @@ public:
 };
 
 extern TagSPtr gCrcTag;
+extern TagSPtr gDbTag;
 extern TagSPtr gTaskTag;
 extern TagSPtr gRunTag;
 extern TagSPtr gDoneTag;

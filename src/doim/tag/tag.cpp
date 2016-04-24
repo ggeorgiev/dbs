@@ -21,6 +21,7 @@ TagSPtr Tag::global(const std::string& name, TagSPtr& tag)
 }
 
 TagSPtr gCrcTag = Tag::global("crc", gCrcTag);
+TagSPtr gDbTag = Tag::global("db", gDbTag);
 TagSPtr gTaskTag = Tag::global("task", gTaskTag);
 TagSPtr gRunTag = Tag::global("run", gRunTag);
 TagSPtr gDoneTag = Tag::global("done", gDoneTag);
