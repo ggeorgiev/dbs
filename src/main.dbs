@@ -15,6 +15,7 @@ annex:
     im/im.dbs
     log/log.dbs
     err/err.dbs
+    dp/dp.dbs
     math/math.dbs
     db/db.dbs
     tpool/tpool.dbs
@@ -50,6 +51,7 @@ cxx_program dbs-test:
         im/im-test
         log/log-test
         err/err-test
+        dp/dp-test
         db/db-test
         tpool/tpool-test
         doim/doim-test

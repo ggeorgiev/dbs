@@ -148,6 +148,9 @@
 		5EAE67811C72BE59005B3F8D /* cxx_static_library.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EAE677D1C72BE59005B3F8D /* cxx_static_library.h */; settings = {ASSET_TAGS = (); }; };
 		5EAE67841C72E2B4005B3F8D /* fs_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAE67821C72E2B4005B3F8D /* fs_file.cpp */; settings = {ASSET_TAGS = (); }; };
 		5EAE67851C72E2B4005B3F8D /* fs_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EAE67831C72E2B4005B3F8D /* fs_file.h */; settings = {ASSET_TAGS = (); }; };
+		5EC659B21CCD9EB600E99E04 /* memoization-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EC659B01CCD9EB600E99E04 /* memoization-utest.cpp */; settings = {ASSET_TAGS = (); }; };
+		5EC659B31CCD9EB600E99E04 /* memoization.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EC659B11CCD9EB600E99E04 /* memoization.hpp */; settings = {ASSET_TAGS = (); }; };
+		5EC659B51CCDA12900E99E04 /* handle.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EC659B41CCDA12900E99E04 /* handle.hpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -326,6 +329,10 @@
 		5EAE677D1C72BE59005B3F8D /* cxx_static_library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_static_library.h; sourceTree = "<group>"; };
 		5EAE67821C72E2B4005B3F8D /* fs_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fs_file.cpp; sourceTree = "<group>"; };
 		5EAE67831C72E2B4005B3F8D /* fs_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs_file.h; sourceTree = "<group>"; };
+		5EC659AE1CCD9EB600E99E04 /* dp.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dp.dbs; sourceTree = "<group>"; };
+		5EC659B01CCD9EB600E99E04 /* memoization-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "memoization-utest.cpp"; sourceTree = "<group>"; };
+		5EC659B11CCD9EB600E99E04 /* memoization.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = memoization.hpp; sourceTree = "<group>"; };
+		5EC659B41CCDA12900E99E04 /* handle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = handle.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -356,6 +363,7 @@
 				5E10B3211C70F272009C73E4 /* db */,
 				5E10B3271C70F272009C73E4 /* doim */,
 				5E10B3421C70F272009C73E4 /* dom */,
+				5EC659AD1CCD9EB600E99E04 /* dp */,
 				5E290B431CBAD26100F10210 /* engine */,
 				5E10B3501C70F272009C73E4 /* err */,
 				5E10B35F1C70F272009C73E4 /* gtest */,
@@ -897,6 +905,25 @@
 			name = scripts;
 			sourceTree = "<group>";
 		};
+		5EC659AD1CCD9EB600E99E04 /* dp */ = {
+			isa = PBXGroup;
+			children = (
+				5EC659AE1CCD9EB600E99E04 /* dp.dbs */,
+				5EC659B41CCDA12900E99E04 /* handle.hpp */,
+				5EC659B11CCD9EB600E99E04 /* memoization.hpp */,
+				5EC659AF1CCD9EB600E99E04 /* gtest */,
+			);
+			path = dp;
+			sourceTree = "<group>";
+		};
+		5EC659AF1CCD9EB600E99E04 /* gtest */ = {
+			isa = PBXGroup;
+			children = (
+				5EC659B01CCD9EB600E99E04 /* memoization-utest.cpp */,
+			);
+			path = gtest;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -922,6 +949,8 @@
 				5E42053D1C78FA8F0090FA05 /* cxx_crc_task_mixin.h in Headers */,
 				5E290B231CB9B86D00F10210 /* task.h in Headers */,
 				5EAE67751C7299B9005B3F8D /* cxx_header.h in Headers */,
+				5EC659B51CCDA12900E99E04 /* handle.hpp in Headers */,
+				5EC659B31CCD9EB600E99E04 /* memoization.hpp in Headers */,
 				5E10B3C11C70F272009C73E4 /* manager.h in Headers */,
 				5E10B3DA1C70F272009C73E4 /* intermittent.h in Headers */,
 				5E4113C41CCBF95B00489DA7 /* task_callback.h in Headers */,
@@ -1074,6 +1103,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EC659B21CCD9EB600E99E04 /* memoization-utest.cpp in Sources */,
 				5E42052E1C78CB200090FA05 /* fs_directory.cpp in Sources */,
 				5E10B3CE1C70F272009C73E4 /* err.cpp in Sources */,
 				5E290B251CB9B87700F10210 /* task.cpp in Sources */,

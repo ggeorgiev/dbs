@@ -63,34 +63,36 @@ IncludeCategories:
     Priority:        60
   - Regex:           '^"doim/*.'
     Priority:        70
+  - Regex:           '^"dp/*.'
+    Priority:        80
   - Regex:           '^"db/*.'
-    Priority:        80
+    Priority:        90
   - Regex:           '^"err/*.'
-    Priority:        80
+    Priority:        90
   - Regex:           '^"log/*.'
-    Priority:        90
+    Priority:        100
   - Regex:           '^"im/*.'
-    Priority:        90
+    Priority:        100
   - Regex:           '^"const/*.'
-    Priority:        100
-  - Regex:           '^"rtti/*.'
-    Priority:        100
-  - Regex:           '^"gtest/*.'
     Priority:        110
-  - Regex:           '^<gtest/*.'
+  - Regex:           '^"rtti/*.'
+    Priority:        110
+  - Regex:           '^"gtest/*.'
     Priority:        120
+  - Regex:           '^<gtest/*.'
+    Priority:        130
 #Note: that cppformat has to be on top of spdlog, even the real dependency is the opposite
 #      we need this to be able to override the internal version of spdlog
   - Regex:           '^<cppformat/*.'
-    Priority:        130
+    Priority:        140
   - Regex:           '^<spdlog/details/*.'
-    Priority:        141
+    Priority:        151
   - Regex:           '^<spdlog/*.'
-    Priority:        140
+    Priority:        150
   - Regex:           '^<boost/*.'
-    Priority:        140
+    Priority:        150
   - Regex:           '^<rocksdb/*.'
-    Priority:        140
+    Priority:        150
   - Regex:           '^".*"$'
     Priority:        1000
   - Regex:           '<.*[.]h>'

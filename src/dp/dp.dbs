@@ -1,0 +1,41 @@
+cxx_library dp
+    @type=user:
+
+    cxx_header
+        @visibility=public
+        @directory=..:
+
+        dp/handle.hpp
+        dp/memoization.hpp
+    ;
+
+    cxx_library:
+        ../system/stl
+
+        ../3rdparty/boost_template
+        ../3rdparty/boost_thread
+
+        ../err/err
+    ;
+
+    cxx_file:
+    ;
+;
+
+cxx_library dp-test
+    @type=test:
+
+    cxx_library:
+        ../3rdparty/gtest
+
+        ../gtest/gtest
+        ../err/err-test
+        
+        dp
+    ;
+
+    cxx_file:
+        gtest/memoization-utest.cpp
+    ;
+;
+
