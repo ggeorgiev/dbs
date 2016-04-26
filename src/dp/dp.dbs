@@ -6,7 +6,11 @@ cxx_library dp
         @directory=..:
 
         dp/handle.hpp
+        dp/map_container.hpp
         dp/memoization.hpp
+        dp/no_dependency.hpp
+        dp/solitary_container.hpp
+        dp/vector_dependency.hpp
     ;
 
     cxx_library:

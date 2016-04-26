@@ -1,7 +1,9 @@
 //  Copyright © 2015 George Georgiev. All rights reserved.
 //
 
+#include "dp/map_container.hpp"
 #include "dp/memoization.hpp"
+#include "dp/solitary_container.hpp"
 #include "gtest/intermittent.h" // IWYU pragma: keep
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
@@ -9,45 +11,96 @@
 #include <ostream>
 #include <string>
 
-TEST(MemoizationTest, noAdditinalArgs)
+template <typename T>
+class MemoizationTest : public ::testing::Test
 {
-    auto memoization = std::make_shared<dp::Memoization<int>>();
-    auto handle = dp::Memoization<int>::Handle::create(memoization);
+public:
+    typedef T Memoization;
+};
 
-    auto value = memoization->get(handle->controller());
-    ASSERT_EQ(0, value);
+typedef ::testing::Types<dp::Memoization<dp::SolitaryContainer, int>,
+                         dp::Memoization<dp::MapContainer, int>> MemoizationType;
 
-    memoization->put(handle->controller(), 10);
+TYPED_TEST_CASE(MemoizationTest, MemoizationType);
 
-    value = memoization->get(handle->controller());
+static auto gFn5 = [](std::vector<dp::Handle::ControllerSPtr>&) { return 5; };
+static auto gFn10 = [](std::vector<dp::Handle::ControllerSPtr>&) { return 10; };
+
+TYPED_TEST(MemoizationTest, sanity)
+{
+    auto memoization = std::make_shared<typename TestFixture::Memoization>();
+    auto handle = dp::Handle::create([memoization] { memoization->clear(); });
+
+    auto value = memoization->get(handle, gFn10);
     ASSERT_EQ(10, value);
+
+    // Calling second time should return the cached value. To be sure we using "wrong"
+    // funtion
+    value = memoization->get(handle, gFn5);
+    ASSERT_EQ(10, value);
+
+    handle = dp::Handle::create([memoization] { memoization->clear(); });
+
+    // When the handle was reset the function should recompute the value.
+    value = memoization->get(handle, gFn5);
+    ASSERT_EQ(5, value);
 }
 
-TEST(MemoizationTest, additinalArgs)
+TYPED_TEST(MemoizationTest, dependencies)
 {
-    auto memoization = std::make_shared<dp::Memoization<int, int>>();
-    auto handle = dp::Memoization<int, int>::Handle::create(memoization);
+    auto memoization = std::make_shared<typename TestFixture::Memoization>();
+    auto handle = dp::Handle::create([memoization] { memoization->clear(); });
 
-    auto value = memoization->get({handle->controller(), 5});
-    ASSERT_EQ(0, value);
+    auto depender = dp::Handle::create(nullptr);
 
-    memoization->put({handle->controller(), 5}, 10);
+    {
+        auto fn10 = [depender](std::vector<dp::Handle::ControllerSPtr>& dependencies) {
+            dependencies.push_back(depender->controller());
+            return 10;
+        };
 
-    value = memoization->get({handle->controller(), 5});
+        auto value = memoization->get(handle, fn10);
+        ASSERT_EQ(10, value);
+    }
+
+    auto value = memoization->get(handle, gFn5);
     ASSERT_EQ(10, value);
+
+    depender.reset();
+
+    value = memoization->get(handle, gFn5);
+    ASSERT_EQ(5, value);
 }
 
-TEST(MemoizationTest, size)
+TYPED_TEST(MemoizationTest, size)
 {
-    auto memoization = std::make_shared<dp::Memoization<int>>();
+    auto memoization = std::make_shared<typename TestFixture::Memoization>();
 
     ASSERT_EQ(0, memoization->size());
 
     {
-        auto handle = dp::Memoization<int>::Handle::create(memoization);
-        memoization->put(handle->controller(), 10);
+        auto handle = dp::Handle::create([memoization] { memoization->clear(); });
+        auto fn = [](std::vector<dp::Handle::ControllerSPtr>&) { return 10; };
+        auto value = memoization->get(handle, fn);
         ASSERT_EQ(1, memoization->size());
     }
 
     ASSERT_EQ(0, memoization->size());
+}
+
+TEST(MapMemoizationTest, AdditinalArgs)
+{
+    auto memoization = std::make_shared<dp::Memoization<dp::MapContainer, int, int>>();
+    auto handle = dp::Handle::create([memoization] { memoization->clear(); });
+
+    auto fn = [](int a, std::vector<dp::Handle::ControllerSPtr>&) { return a; };
+
+    auto value = memoization->get(handle, 10, fn);
+    ASSERT_EQ(10, value);
+
+    value = memoization->get(handle, 10, fn);
+    ASSERT_EQ(10, value);
+
+    value = memoization->get(handle, 5, fn);
+    ASSERT_EQ(5, value);
 }

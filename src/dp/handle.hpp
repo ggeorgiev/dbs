@@ -9,13 +9,13 @@
 
 namespace dp
 {
-template <typename T>
+class Handle;
+typedef std::shared_ptr<Handle> HandleSPtr;
+typedef std::weak_ptr<Handle> HandleWPtr;
+
 class Handle
 {
 public:
-    typedef std::shared_ptr<Handle<T>> HandleSPtr;
-    typedef std::weak_ptr<Handle<T>> HandleWPtr;
-
     class Controller
     {
     public:
@@ -34,16 +34,17 @@ public:
     };
 
     typedef std::shared_ptr<Controller> ControllerSPtr;
+    typedef std::function<void()> ClearFunction;
 
-    static HandleSPtr create(const std::shared_ptr<T>& object)
+    static HandleSPtr create(const ClearFunction& function)
     {
-        struct make_shared_enabler : public Handle<T>
+        struct make_shared_enabler : public Handle
         {
         };
 
         auto handle = std::make_shared<make_shared_enabler>();
         handle->mController = std::make_shared<Controller>(handle);
-        handle->mObject = object;
+        handle->mClearFunction = function;
         return handle;
     }
 
@@ -52,7 +53,8 @@ public:
 
     ~Handle()
     {
-        mObject->clear();
+        if (mClearFunction != nullptr)
+            mClearFunction();
     }
 
     ControllerSPtr controller()
@@ -66,6 +68,6 @@ private:
     }
 
     ControllerSPtr mController;
-    std::shared_ptr<T> mObject;
+    ClearFunction mClearFunction;
 };
 } // namespace dp
