@@ -9,6 +9,8 @@
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
+#include "dp/map_container.hpp"
+#include "dp/memoization.hpp"
 #include "err/err.h"
 #include <memory>
 #include <unordered_set>
@@ -102,5 +104,18 @@ private:
     doim::FsFileSetSPtr mCxxPublicHeaders;
 
     std::unordered_set<CxxLibrarySPtr> mCxxLibraries;
+
+    void resetRecursiveCxxIncludeDirectoriesMemoization();
+
+    typedef dp::Memoization<dp::MapContainer,
+                            doim::CxxIncludeDirectorySetSPtr,
+                            doim::FsDirectorySPtr>
+        RecursiveCxxIncludeDirectoriesMemoization;
+    typedef std::shared_ptr<RecursiveCxxIncludeDirectoriesMemoization>
+        RecursiveCxxIncludeDirectoriesMemoizationSPtr;
+
+    dp::HandleSPtr mMemoizationHandle;
+    RecursiveCxxIncludeDirectoriesMemoizationSPtr
+        mRecursiveCxxIncludeDirectoriesMemoization;
 };
 }

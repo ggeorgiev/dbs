@@ -16,6 +16,7 @@ cxx_library dom
     cxx_library:
         ../im/im
         ../log/log
+        ../dp/dp
         ../doim/doim
     ;
 

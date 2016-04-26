@@ -68,9 +68,8 @@ public:
         if (it == mMap.end())
             return false;
 
-        for (const auto& depender : it->second.second)
-            if (depender->expired())
-                return false;
+        if (expired(it))
+            return false;
 
         return true;
     }
@@ -97,7 +96,7 @@ public:
         typename Map::iterator it = mMap.begin();
         while (it != mMap.end())
         {
-            if (std::get<0>(it->first)->expired())
+            if (std::get<0>(it->first)->expired() || expired(it))
                 it = mMap.erase(it);
             else
                 ++it;
@@ -105,6 +104,14 @@ public:
     }
 
 private:
+    bool expired(const typename Map::const_iterator& it)
+    {
+        for (const auto& depender : it->second.second)
+            if (depender->expired())
+                return true;
+        return false;
+    }
+
     Map mMap;
 };
 

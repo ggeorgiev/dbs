@@ -7,7 +7,10 @@ namespace dom
 {
 CxxLibrary::CxxLibrary()
     : mType(Type::kUser)
+    , mRecursiveCxxIncludeDirectoriesMemoization(
+          std::make_shared<RecursiveCxxIncludeDirectoriesMemoization>())
 {
+    resetRecursiveCxxIncludeDirectoriesMemoization();
 }
 
 ECode CxxLibrary::updateAttribute(const Attribute& attribute)
@@ -41,6 +44,8 @@ ECode CxxLibrary::updateBinary(const doim::FsFileSPtr& binary)
 ECode CxxLibrary::updateCxxPublicHeaders(const doim::FsDirectorySPtr& directory,
                                          std::unordered_set<doim::FsFileSPtr>& files)
 {
+    resetRecursiveCxxIncludeDirectoriesMemoization();
+
     mPublicHeadersDirectory = directory;
     mCxxPublicHeaders = std::make_shared<doim::FsFileSet>();
     mCxxPublicHeaders->swap(files);
@@ -49,6 +54,8 @@ ECode CxxLibrary::updateCxxPublicHeaders(const doim::FsDirectorySPtr& directory,
 
 ECode CxxLibrary::updateCxxLibraries(std::unordered_set<CxxLibrarySPtr>& libraries)
 {
+    resetRecursiveCxxIncludeDirectoriesMemoization();
+
     mCxxLibraries.swap(libraries);
     EHEnd;
 }
@@ -138,23 +145,28 @@ doim::CxxIncludeDirectorySetSPtr CxxLibrary::indirectCxxIncludeDirectories(
 doim::CxxIncludeDirectorySetSPtr CxxLibrary::recursiveCxxIncludeDirectories(
     const doim::FsDirectorySPtr& root) const
 {
-    auto directories = std::make_shared<doim::CxxIncludeDirectorySet>();
+    auto fn = [this](doim::FsDirectorySPtr root,
+                     std::vector<dp::Handle::ControllerSPtr>& dependencies) {
+        auto directories = std::make_shared<doim::CxxIncludeDirectorySet>();
 
-    const auto& privateDirectory = cxxPrivateIncludeDirectory(root);
-    if (privateDirectory != nullptr)
-        directories->insert(privateDirectory);
+        const auto& privateDirectory = cxxPrivateIncludeDirectory(root);
+        if (privateDirectory != nullptr)
+            directories->insert(privateDirectory);
 
-    const auto& publicDirectory = cxxPublicIncludeDirectory(root);
-    if (publicDirectory != nullptr)
-        directories->insert(publicDirectory);
+        const auto& publicDirectory = cxxPublicIncludeDirectory(root);
+        if (publicDirectory != nullptr)
+            directories->insert(publicDirectory);
 
-    for (const auto& cxxLibrary : mCxxLibraries)
-    {
-        const auto& libDirectories = cxxLibrary->recursiveCxxIncludeDirectories(root);
-        directories->insert(libDirectories->begin(), libDirectories->end());
-    }
+        for (const auto& cxxLibrary : mCxxLibraries)
+        {
+            const auto& libDirectories = cxxLibrary->recursiveCxxIncludeDirectories(root);
+            directories->insert(libDirectories->begin(), libDirectories->end());
+        }
 
-    return doim::gManager->unique(directories);
+        return doim::gManager->unique(directories);
+    };
+
+    return mRecursiveCxxIncludeDirectoriesMemoization->get(mMemoizationHandle, root, fn);
 }
 
 doim::CxxHeaderSetSPtr CxxLibrary::publicCxxHeaders(
@@ -212,5 +224,11 @@ doim::CxxHeaderSetSPtr CxxLibrary::recursiveCxxHeaders(
         headers->insert(libHeaders->begin(), libHeaders->end());
     }
     return doim::gManager->unique(headers);
+}
+
+void CxxLibrary::resetRecursiveCxxIncludeDirectoriesMemoization()
+{
+    auto memorization = mRecursiveCxxIncludeDirectoriesMemoization;
+    mMemoizationHandle = dp::Handle::create([memorization] { memorization->clear(); });
 }
 }
