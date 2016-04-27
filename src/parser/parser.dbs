@@ -5,7 +5,7 @@ cxx_library parser
         @visibility=public
         @directory=..:
 
-        parser/cxx/cxx_parser.hpp
+        parser/cxx/cxx_parser.h
         parser/fixed_encoding_traits.hpp
         parser/parser.hpp
         parser/string_stream.hpp
@@ -15,6 +15,10 @@ cxx_library parser
 
     cxx_library:
         ../dom/dom
+    ;
+
+    cxx_file:
+        cxx/cxx_parser.cpp
     ;
 ;
 

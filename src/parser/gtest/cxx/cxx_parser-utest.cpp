@@ -1,7 +1,7 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "parser/cxx/cxx_parser.hpp" // IWYU pragma: keep
+#include "parser/cxx/cxx_parser.h" // IWYU pragma: keep
 #include <gtest/gtest-message.h>
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>

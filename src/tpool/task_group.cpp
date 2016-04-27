@@ -38,7 +38,7 @@ ECode TaskGroup::operator()()
         size_t i = 0;
         while (i < tasks.size())
         {
-            if (!tasks[i]->finished())
+            if (!tasks[i]->conjoin() && !tasks[i]->finished())
             {
                 ++i;
                 continue;

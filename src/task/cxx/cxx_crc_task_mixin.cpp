@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "task/cxx/cxx_crc_task_mixin.h"
@@ -16,8 +16,7 @@ doim::CxxHeaderSPtr CxxCrcTaskMixin::findInclude(
     if (includeDirectory == nullptr)
         return nullptr;
 
-    const auto& file = doim::gManager->find(
-        doim::gManager->createFile(includeDirectory->directory(), include));
+    const auto& file = doim::gManager->findFile(includeDirectory->directory(), include);
     if (file == nullptr)
         return nullptr;
 

@@ -1,12 +1,7 @@
 #!/bin/sh
+# Copyright © 2016 George Georgiev. All rights reserved.
 
 BASEDIR=$(pwd)/$(dirname $0)/../..
 cd $BASEDIR
 
 $BASEDIR/git-hooks/copyright.sh
-
-PATH=$BASEDIR/clang/bin:$PATH
-
-git-clang-format --diff
-
-git-clang-format

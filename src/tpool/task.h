@@ -81,6 +81,7 @@ protected:
 
     bool markAsScheduled();
     bool finished() const;
+    bool conjoin();
 
     err::ErrorUPtr mExecutionError;
 

@@ -65,7 +65,10 @@ public:
 
     using ManagerObjectMixin<FsDirectory>::unique;
     using ManagerObjectMixin<FsDirectory>::isUnique;
+    using ManagerObjectMixin<FsDirectory>::find;
 
+    FsDirectorySPtr findDirectory(const FsDirectorySPtr& base,
+                                  const std::experimental::string_view& directory);
     // Obtain an unique directory.
     FsDirectorySPtr obtainDirectory(const FsDirectorySPtr& base,
                                     const std::experimental::string_view& directory);
@@ -80,14 +83,11 @@ public:
     using ManagerObjectMixin<FsFile>::isUnique;
     using ManagerObjectMixin<FsFile>::find;
 
-    FsFileSPtr createFile(const FsDirectorySPtr& base,
-                          const std::experimental::string_view& file);
+    FsFileSPtr findFile(const FsDirectorySPtr& base,
+                        const std::experimental::string_view& file);
 
     FsFileSPtr obtainFile(const FsDirectorySPtr& base,
-                          const std::experimental::string_view& file)
-    {
-        return unique(createFile(base, file));
-    }
+                          const std::experimental::string_view& file);
 
     using ManagerObjectSetMixin<FsFile>::unique;
 

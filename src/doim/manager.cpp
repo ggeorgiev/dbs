@@ -42,8 +42,10 @@ ObjectSPtr Manager::obtainObject(const LocationSPtr& base,
     return unique(working);
 }
 
-FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
-                                         const std::experimental::string_view& directory)
+template <typename Trace>
+FsDirectorySPtr traceDirectory(Trace&& trace,
+                               const FsDirectorySPtr& base,
+                               const std::experimental::string_view& directory)
 {
     if (directory.empty())
         return base;
@@ -75,7 +77,11 @@ FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
                 builder.set_name(name);
 
                 const auto& current = builder.reference();
-                parent = unique(current);
+                parent = trace(current);
+
+                if (parent == nullptr)
+                    return parent;
+
                 if (parent == current)
                     builder.reset();
             }
@@ -89,7 +95,27 @@ FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
     if (parent == nullptr)
         parent = std::make_shared<FsDirectory>();
 
-    return unique(parent);
+    return trace(parent);
+}
+
+FsDirectorySPtr Manager::findDirectory(const FsDirectorySPtr& base,
+                                       const std::experimental::string_view& directory)
+{
+    auto trace = [this](const FsDirectorySPtr& directory) -> FsDirectorySPtr {
+        return find(directory);
+    };
+
+    return traceDirectory(trace, base, directory);
+}
+
+FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
+                                         const std::experimental::string_view& directory)
+{
+    auto trace = [this](const FsDirectorySPtr& directory) -> FsDirectorySPtr {
+        return unique(directory);
+    };
+
+    return traceDirectory(trace, base, directory);
 }
 
 FsDirectorySPtr Manager::obtainCorrespondingDirectory(
@@ -107,8 +133,10 @@ FsDirectorySPtr Manager::obtainCorrespondingDirectory(
     return obtainDirectory(parent, directory->name());
 }
 
-FsFileSPtr Manager::createFile(const FsDirectorySPtr& base,
-                               const std::experimental::string_view& file)
+template <typename TraceDirectory>
+FsFileSPtr traceFile(TraceDirectory&& traceDirectory,
+                     const FsDirectorySPtr& base,
+                     const std::experimental::string_view& file)
 {
     auto pos = file.size();
     while (pos-- > 0)
@@ -122,12 +150,36 @@ FsFileSPtr Manager::createFile(const FsDirectorySPtr& base,
         return FsFileSPtr();
 
     const auto& directory =
-        obtainDirectory(base, std::experimental::string_view(file.begin(), pos));
+        traceDirectory(base, std::experimental::string_view(file.begin(), pos));
     if (directory == nullptr)
         return FsFileSPtr();
 
     return std::make_shared<FsFile>(directory,
                                     std::string(file.begin() + pos, file.end()));
+}
+
+FsFileSPtr Manager::findFile(const FsDirectorySPtr& base,
+                             const std::experimental::string_view& file)
+{
+    auto traceDirectory =
+        [this](const FsDirectorySPtr& base,
+               const std::experimental::string_view& directory) -> FsDirectorySPtr {
+        return findDirectory(base, directory);
+    };
+
+    return find(traceFile(traceDirectory, base, file));
+}
+
+FsFileSPtr Manager::obtainFile(const FsDirectorySPtr& base,
+                               const std::experimental::string_view& file)
+{
+    auto traceDirectory =
+        [this](const FsDirectorySPtr& base,
+               const std::experimental::string_view& directory) -> FsDirectorySPtr {
+        return obtainDirectory(base, directory);
+    };
+
+    return unique(traceFile(traceDirectory, base, file));
 }
 
 std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectory& directory)

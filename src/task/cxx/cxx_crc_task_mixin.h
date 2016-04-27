@@ -5,7 +5,7 @@
 
 #include "task/tpool.h"
 #include "tpool/task_group.h"
-#include "parser/cxx/cxx_parser.hpp"
+#include "parser/cxx/cxx_parser.h"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_file.h"

@@ -1,4 +1,4 @@
-//  Copyright © 2015-1016 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -33,16 +33,18 @@ public:
         if (object == nullptr)
             return object;
 
-        std::pair<typename Set::iterator, bool> result;
         {
-            boost::unique_lock<boost::shared_mutex> lock(mMixinObjectsMutex);
-            result = mMixinObjects.insert(object);
+            boost::upgrade_lock<boost::shared_mutex> shared_lock(mMixinObjectsMutex);
+            const auto& it = mMixinObjects.find(object);
+            if (it != mMixinObjects.end())
+                return *it;
+
+            boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(shared_lock);
+            mMixinObjects.insert(object);
         }
 
-        if (result.second)
-            (*result.first)->finally();
-
-        return *result.first;
+        object->finally();
+        return object;
     }
 
     bool isUnique(const MixinObjectSPtr& object) const

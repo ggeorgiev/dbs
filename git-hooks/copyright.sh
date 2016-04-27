@@ -1,4 +1,5 @@
 #!/bin/sh
+# Copyright © 2016 George Georgiev. All rights reserved.
 
 #
 # Check if copyright statements include the current year

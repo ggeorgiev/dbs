@@ -40,6 +40,17 @@ bool Task::finished() const
     return mState == State::kFinished;
 }
 
+bool Task::conjoin()
+{
+    std::unique_lock<std::mutex> lock(mStateMutex);
+    if (mState == State::kScheduled)
+    {
+        run(lock);
+        return true;
+    }
+    return false;
+}
+
 void Task::onStart() const
 {
 }
