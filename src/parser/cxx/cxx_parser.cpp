@@ -7,9 +7,9 @@ namespace parser
 {
 static std::string gInclude = "include";
 
-std::vector<std::string> CxxParser::includes(const std::string content)
+std::vector<CxxParser::Include> CxxParser::includes(const std::string content)
 {
-    std::vector<std::string> result;
+    std::vector<Include> result;
     size_t pos = 0;
     while (pos < content.size())
     {
@@ -36,12 +36,16 @@ std::vector<std::string> CxxParser::includes(const std::string content)
             else
                 break;
 
-            size_t start = pos++;
+            size_t start = ++pos;
             while (content[pos] != closing)
                 ++pos;
-            ++pos;
 
-            result.push_back(content.substr(start, pos - start));
+            Include include({closing == '"' ? EIncludeType::kProgrammerDefined
+                                            : EIncludeType::kStandard,
+                             content.substr(start, pos - start)});
+
+            result.push_back(include);
+            ++pos;
         } while (false);
 
         while (content[pos] != '\n' && content[pos] != '\0')

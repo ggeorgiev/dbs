@@ -11,6 +11,18 @@ namespace parser
 class CxxParser
 {
 public:
-    std::vector<std::string> includes(const std::string content);
+    enum class EIncludeType
+    {
+        kProgrammerDefined,
+        kStandard
+    };
+
+    struct Include
+    {
+        EIncludeType mType;
+        std::string mPath;
+    };
+
+    std::vector<Include> includes(const std::string content);
 };
 }

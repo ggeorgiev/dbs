@@ -24,17 +24,29 @@ TYPED_TEST(CxxParserTest, includes)
     struct Test
     {
         std::string file;
+        parser::CxxParser::EIncludeType type;
         std::string includes[10];
     };
 
     Test tests[]{
-        Test{.file = "#include \"foo\"", .includes = {"\"foo\""}},
+        Test{.file = "#include \"foo\"",
+             .type = parser::CxxParser::EIncludeType::kProgrammerDefined,
+             .includes = {"foo"}},
         Test{.file = "#include \"foo\"\n#include \"bar\"",
-             .includes = {"\"foo\"", "\"bar\""}},
-        Test{.file = "  #  include   \"foo\"  ", .includes = {"\"foo\""}},
-        Test{.file = "  \t#  \tinclude   \t\"foo\"  \t", .includes = {"\"foo\""}},
-        Test{.file = "#include <foo>", .includes = {"<foo>"}},
-        Test{.file = "#include <foo/bar>", .includes = {"<foo/bar>"}},
+             .type = parser::CxxParser::EIncludeType::kProgrammerDefined,
+             .includes = {"foo", "bar"}},
+        Test{.file = "  #  include   \"foo\"  ",
+             .type = parser::CxxParser::EIncludeType::kProgrammerDefined,
+             .includes = {"foo"}},
+        Test{.file = "  \t#  \tinclude   \t\"foo\"  \t",
+             .type = parser::CxxParser::EIncludeType::kProgrammerDefined,
+             .includes = {"foo"}},
+        Test{.file = "#include <foo>",
+             .type = parser::CxxParser::EIncludeType::kStandard,
+             .includes = {"foo"}},
+        Test{.file = "#include <foo/bar>",
+             .type = parser::CxxParser::EIncludeType::kStandard,
+             .includes = {"foo/bar"}},
     };
 
     typename TestFixture::CxxParser parser;
@@ -46,7 +58,10 @@ TYPED_TEST(CxxParserTest, includes)
         auto includes = parser.includes(test.file);
 
         for (size_t i = 0; i < includes.size(); ++i)
-            EXPECT_EQ(test.includes[i], includes[i]);
+        {
+            EXPECT_EQ(test.type, includes[i].mType);
+            EXPECT_EQ(test.includes[i], includes[i].mPath);
+        }
         EXPECT_EQ("", test.includes[includes.size()]);
     }
 }
