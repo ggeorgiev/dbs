@@ -62,9 +62,11 @@ protected:
         for (const auto& include : parser.includes(content))
         {
             HeaderDirectory headerDirectory;
-            EHTest(findInclude(std::experimental::string_view(include.data() + 1,
-                                                              include.size() - 2),
-                               currentIncludeDirectory,
+            EHTest(findInclude(std::experimental::string_view(include.mPath),
+                               include.mType ==
+                                       parser::CxxParser::EIncludeType::kProgrammerDefined
+                                   ? currentIncludeDirectory
+                                   : nullptr,
                                includeDirectories,
                                headerDirectory),
                    file->path());
