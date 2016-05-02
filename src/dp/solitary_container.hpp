@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -50,6 +50,13 @@ public:
     {
         ASSERT(has(controller));
         return mValue;
+    }
+
+    void put(const Handle::ControllerSPtr& controller, const Value& value)
+    {
+        mController = controller;
+        mDependencies.clear();
+        mValue = value;
     }
 
     void put(const Handle::ControllerSPtr& controller,

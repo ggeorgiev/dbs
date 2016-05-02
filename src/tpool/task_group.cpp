@@ -3,7 +3,9 @@
 
 #include "tpool/task_group.h"
 #include "tpool/tpool.h"
+#include "err/err_assert.h"
 #include <sstream>
+#include <stddef.h>
 
 namespace tpool
 {

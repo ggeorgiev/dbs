@@ -1,17 +1,16 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
 
 #include "tpool/tpool.h"
-
 #include "im/initialization_manager.hpp"
 #include <memory>
-#include <unordered_set>
 
 namespace task
 {
 class TPool;
+
 typedef std::shared_ptr<TPool> TPoolSPtr;
 
 class TPool : public tpool::TPool

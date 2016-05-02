@@ -9,7 +9,6 @@
 #include <iosfwd>
 #include <ostream>
 #include <string>
-#include <utility>
 
 namespace doim
 {

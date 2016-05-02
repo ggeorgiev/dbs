@@ -26,6 +26,7 @@ extern DbsLoggerSPtr gLogger;
 
 #define LOG(x) x // << " @ " << __FILE__ << ":" << __LINE__
 
+#define ELOG(...) LOG(dbslog::gLogger->error(__VA_ARGS__))
 #define ILOG(...) LOG(dbslog::gLogger->info(__VA_ARGS__))
 #define DLOG(...) LOG(dbslog::gLogger->debug(__VA_ARGS__))
 #define TLOG(...) LOG(dbslog::gLogger->trace(__VA_ARGS__))

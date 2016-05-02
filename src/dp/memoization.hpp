@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -22,14 +22,52 @@ public:
     typedef C<V, Args...> Container;
     typedef typename Container::Value Value;
 
+    typedef std::function<Value(Args...)> CalculateFunction;
     typedef std::function<Value(Args..., std::vector<Handle::ControllerSPtr>&)>
-        CalculateFunction;
+        CalculateDependenciesFunction;
 
     Memoization()
     {
     }
 
+    Value get(Args... args, const CalculateFunction& calculate)
+    {
+        boost::upgrade_lock<boost::shared_mutex> shared_lock(mContainerMutex);
+        if (mContainer.has())
+            return mContainer.get();
+
+        // This is controversial but we prefer to block any other access while
+        // calculating. This will prevent double calculation.
+        boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(shared_lock);
+
+        const Value& value = calculate(args...);
+        mContainer.put(value);
+
+        return value;
+    }
+
     Value get(const HandleSPtr& handle, Args... args, const CalculateFunction& calculate)
+    {
+        const auto& key = mContainer.key(handle, args...);
+
+        boost::upgrade_lock<boost::shared_mutex> shared_lock(mContainerMutex);
+        const auto& holder = mContainer.holder(key);
+        if (mContainer.has(holder))
+            return mContainer.get(holder);
+
+        // This is controversial but we prefer to block any other access while
+        // calculating. This will prevent double calculation.
+        boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(shared_lock);
+
+        const Value& value = calculate(args...);
+        mContainer.put(key, value);
+
+        return value;
+    }
+
+    Value get(const HandleSPtr& handle,
+              Args... args,
+              const CalculateDependenciesFunction& calculate)
     {
         const auto& key = mContainer.key(handle, args...);
 

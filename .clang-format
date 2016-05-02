@@ -49,11 +49,11 @@ ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH ]
 IncludeCategories:
   - Regex:           '^"engine/*.'
     Priority:        0
-  - Regex:           '^"task/*.'
-    Priority:        10
-  - Regex:           '^"tpool/*.'
-    Priority:        20
   - Regex:           '^"tool/*.'
+    Priority:        10
+  - Regex:           '^"task/*.'
+    Priority:        20
+  - Regex:           '^"tpool/*.'
     Priority:        30
   - Regex:           '^"parser/*.'
     Priority:        40

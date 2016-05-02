@@ -34,9 +34,14 @@ public:
     }
 };
 
+extern TagSPtr gBuildTag;
+extern TagSPtr gIwyuTag;
+
+extern TagSPtr gTaskTag;
+
 extern TagSPtr gCrcTag;
 extern TagSPtr gDbTag;
-extern TagSPtr gTaskTag;
+
 extern TagSPtr gRunTag;
 extern TagSPtr gDoneTag;
 }

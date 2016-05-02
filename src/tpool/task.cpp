@@ -3,6 +3,7 @@
 
 #include "tpool/reverse_lock.hpp"
 #include "tpool/task.h"
+#include "err/err_assert.h"
 #include <sstream>
 
 namespace tpool

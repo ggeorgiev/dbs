@@ -2,6 +2,7 @@
 //
 
 #include "parser/cxx/cxx_parser.h"
+#include <stddef.h>
 
 namespace parser
 {

@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -27,12 +27,13 @@ public:
     template <typename V>
     ECode get(const std::experimental::string_view& key, V& value)
     {
-        V dflt = V();
+        V defaultValue = V();
 
         std::string buffer;
         EHTest(get(key,
-                   std::experimental::string_view(reinterpret_cast<const char*>(&dflt),
-                                                  sizeof(dflt)),
+                   std::experimental::string_view(reinterpret_cast<const char*>(
+                                                      &defaultValue),
+                                                  sizeof(defaultValue)),
                    buffer));
         value = *reinterpret_cast<const V*>(buffer.data());
         EHEnd;
@@ -48,7 +49,7 @@ public:
     }
 
     ECode get(const std::experimental::string_view& key,
-              const std::experimental::string_view& dflt,
+              const std::experimental::string_view& defaultValue,
               std::string& value);
     ECode get(const std::experimental::string_view& key, std::string& value);
     ECode put(const std::experimental::string_view& key,

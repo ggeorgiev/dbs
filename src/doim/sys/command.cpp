@@ -1,10 +1,10 @@
 //  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
-#include "doim/sys/command.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "doim/sys/argument.hpp"
+#include "doim/sys/command.h"
 #include "err/err_assert.h"
 #include <string>
 
@@ -18,16 +18,22 @@ SysCommand::SysCommand(const SysExecutableSPtr& executable,
     ASSERT(gManager->isUnique(arguments));
 }
 
-const std::string& SysCommand::string() const
+std::string SysCommand::string() const
 {
-    if (mString.empty())
-    {
-        mString = executable()->path();
-
+    auto fn = [this]() -> std::string {
+        std::vector<std::string> strings;
         for (const auto& argument : *arguments())
-            mString += " " + argument->value();
-    }
+            strings.push_back(argument->value());
 
-    return mString;
+        std::sort(strings.begin(), strings.end());
+
+        std::string result = executable()->path();
+        for (const auto& string : strings)
+            result += " " + string;
+
+        return result;
+    };
+
+    return mCommandMemoization.get(fn);
 }
 }

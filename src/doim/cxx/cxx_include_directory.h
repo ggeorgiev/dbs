@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -8,6 +8,7 @@
 #include "doim/fs/fs_file.h"
 #include <memory>
 #include <tuple>
+#include <unordered_map>
 #include <unordered_set>
 
 namespace doim

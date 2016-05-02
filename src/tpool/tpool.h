@@ -8,13 +8,14 @@
 #include <atomic>
 #include <future>
 #include <memory>
-#include <mutex> // IWYU pragma: keep
+#include <mutex>
 #include <thread>
 #include <stddef.h>
 
 namespace tpool
 {
 class TPool;
+
 typedef std::shared_ptr<TPool> TPoolSPtr;
 typedef std::weak_ptr<TPool> TPoolWPtr;
 

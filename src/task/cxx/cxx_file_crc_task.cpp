@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "task/cxx/cxx_file_crc_task.h"
@@ -8,7 +8,6 @@
 #include "doim/manager.h"
 #include "err/err_assert.h"
 #include "log/log.h"
-#include <spdlog/details/line_logger_fwd.h>
 #include <spdlog/details/line_logger_impl.h>
 #include <sstream>
 #include <string>

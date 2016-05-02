@@ -4,8 +4,13 @@
 #pragma once
 
 #include "tool/cxx_compiler.h"
+#include "tool/cxx_iwyu.h"
+#include "tpool/task.h"
+#include "dom/cxx/cxx_program.h"
+#include "doim/cxx/cxx_object_file.h"
 #include "doim/db/db_key.hpp"
 #include "doim/db/db_value.hpp"
+#include "doim/fs/fs_directory.h"
 #include <memory>
 
 namespace engine
@@ -17,7 +22,7 @@ typedef std::shared_ptr<CxxEngine> CxxEngineSPtr;
 class CxxEngine : public std::enable_shared_from_this<CxxEngine>
 {
 public:
-    CxxEngine(const tool::CxxCompilerSPtr& compiler);
+    CxxEngine(const tool::CxxCompilerSPtr& compiler, const tool::CxxIwyuSPtr& iwyu);
 
     tpool::TaskSPtr updateDbTask(const tpool::TaskSPtr& task,
                                  const doim::DbKeySPtr& key,
@@ -32,7 +37,14 @@ public:
     tpool::TaskSPtr build(const doim::FsDirectorySPtr& directory,
                           const dom::CxxProgramSPtr& program);
 
+    tpool::TaskSPtr iwyuTask(const doim::FsDirectorySPtr& directory,
+                             const doim::CxxFileSPtr& cxxFile);
+
+    tpool::TaskSPtr iwyu(const doim::FsDirectorySPtr& directory,
+                         const dom::CxxProgramSPtr& program);
+
 private:
     tool::CxxCompilerSPtr mCompiler;
+    tool::CxxIwyuSPtr mIwyu;
 };
 }

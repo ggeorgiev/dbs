@@ -5,15 +5,13 @@
 
 #include "tpool/task.h"
 #include "err/err.h"
-#include <boost/heap/fibonacci_heap.hpp>
-#include <atomic>
-#include <future>
-#include <iosfwd>
+#include <functional>
 #include <memory>
 
 namespace tpool
 {
 class TaskCallback;
+
 typedef std::shared_ptr<TaskCallback> TaskCallbackSPtr;
 
 class TaskCallback : public Task
@@ -21,7 +19,10 @@ class TaskCallback : public Task
 public:
     typedef std::function<ECode(const TaskSPtr&)> Function;
 
-    TaskCallback(int priority, const TaskSPtr& task, const Function& onFinish);
+    TaskCallback(int priority,
+                 const TaskSPtr& task,
+                 const Function& onFinish,
+                 const Function& onError);
     virtual ~TaskCallback();
 
     ECode operator()() override;
@@ -29,6 +30,7 @@ public:
 private:
     TaskSPtr mTask;
     Function mOnFinish;
+    Function mOnError;
 };
 
 } // namespace tpool

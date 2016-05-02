@@ -34,6 +34,7 @@ cxx_library doim
         ../const/const
         ../im/im
         ../err/err
+        ../dp/dp
     ;
 
     cxx_file:

@@ -4,10 +4,10 @@
 #include "task/cxx/cxx_file_crc_task.h"
 #include "task/cxx/cxx_object_file_crc_task.h"
 #include "task/manager.h"
+#include "task/tpool.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "err/err_assert.h"
-#include <spdlog/details/line_logger_impl.h>
 #include <iterator>
 #include <sstream>
 #include <string>

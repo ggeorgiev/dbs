@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -13,7 +13,6 @@
 namespace doim
 {
 class CxxObjectFile;
-
 typedef std::shared_ptr<CxxObjectFile> CxxObjectFileSPtr;
 typedef std::unordered_set<CxxObjectFileSPtr> CxxObjectFileSet;
 typedef std::shared_ptr<CxxObjectFileSet> CxxObjectFileSetSPtr;

@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -12,7 +12,6 @@
 namespace doim
 {
 class CxxStaticLibrary;
-
 typedef std::shared_ptr<CxxStaticLibrary> CxxStaticLibrarySPtr;
 typedef std::unordered_set<CxxStaticLibrarySPtr> CxxStaticLibrarySet;
 typedef std::shared_ptr<CxxStaticLibrarySet> CxxStaticLibrarySetSPtr;

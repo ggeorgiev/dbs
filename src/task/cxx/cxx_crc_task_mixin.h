@@ -4,6 +4,7 @@
 #pragma once
 
 #include "task/tpool.h"
+#include "tpool/task.h"
 #include "tpool/task_group.h"
 #include "parser/cxx/cxx_parser.h"
 #include "doim/cxx/cxx_header.h"
@@ -17,7 +18,6 @@
 #include <fstream> // IWYU pragma: keep
 #include <iterator>
 #include <memory>
-#include <string>
 #include <utility>
 #include <vector>
 

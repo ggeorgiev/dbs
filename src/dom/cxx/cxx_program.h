@@ -1,20 +1,26 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
 
 #include "dom/cxx/cxx_files_mixin.hpp"
 #include "dom/cxx/cxx_library.h"
+#include "dom/cxx/cxx_private_headers_mixin.hpp"
+#include "doim/cxx/cxx_header.h"
+#include "doim/cxx/cxx_include_directory.h"
 #include "doim/cxx/cxx_program.h"
-#include "doim/fs/fs_file.h"
+#include "doim/fs/fs_directory.h"
 #include "err/err.h"
+#include <algorithm>
+#include <iosfwd>
 #include <memory>
-#include <set>
 #include <unordered_set>
+#include <vector>
 
 namespace dom
 {
 class CxxProgram;
+
 typedef std::shared_ptr<CxxProgram> CxxProgramSPtr;
 
 class CxxProgram : public CxxFilesMixin<CxxProgram>,

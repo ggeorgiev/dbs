@@ -58,6 +58,7 @@ FILES="$FILES src/task/sys/execute_command_task.cpp"
 FILES="$FILES src/task/manager.cpp"
 FILES="$FILES src/task/tpool.cpp"
 FILES="$FILES src/tool/cxx_compiler.cpp"
+FILES="$FILES src/tool/cxx_iwyu.cpp"
 FILES="$FILES src/tpool/task.cpp"
 FILES="$FILES src/tpool/task_callback.cpp"
 FILES="$FILES src/tpool/task_group.cpp"
@@ -91,9 +92,7 @@ then
     mkdir -p build
     PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS src/main.cpp $FILES \
         $DEFINES $LIBRARIES -o build/dbs && cp build/dbs dbs || exit 1
-fi
-
-if [ 1 == 0 ]
+elif [ 1 == 0 ]
 then
 
     CXXFLAGS="$CXXFLAGS -Isrc/gtest/include"
@@ -132,65 +131,14 @@ then
 
     LIBRARIES="$LIBRARIES -lgtest"
 
-    COMPILE_DATABASE=build/compile_commands.json
-
-    echo "[" > $COMPILE_DATABASE
-    for FILE in $FILES src/main.cpp src/gtest/main.cpp
-    do
-        echo '  { "directory": "'$BASEDIR'", ' >> $COMPILE_DATABASE
-        echo '    "command": "'$PATH/$CLANG' -c '$OPTOMIZATION' '$CXXFLAGS' ' \
-             $FILE' '$DEFINES' -o build/'$FILE'.o", ' >> $COMPILE_DATABASE
-        echo '    "file": "'$FILE'" }, ' >> $COMPILE_DATABASE
-        echo >> $COMPILE_DATABASE
-    done
-    echo "]" >> $COMPILE_DATABASE
-
     if [ 1 == 1 ]
-    then
-        mkdir -p build/src/gtest
-        mkdir -p build/src/log/gtest
-        mkdir -p build/src/err/gtest
-        mkdir -p build/src/const/gtest
-        mkdir -p build/src/db/gtest
-        mkdir -p build/src/dom/gtest
-        mkdir -p build/src/dom/cxx/gtest
-        mkdir -p build/src/dom/generic/gtest
-        mkdir -p build/src/doim/gtest/fs
-        mkdir -p build/src/doim/generic/gtest
-        mkdir -p build/src/doim/fs/gtest
-        mkdir -p build/src/im/gtest
-        mkdir -p build/src/parser/gtest/cxx
-        mkdir -p build/src/tpool/gtest
-        mkdir -p build/src/task/cxx
-        mkdir -p build/src/task/gtest/cxx
-
-        OBJFILES=
-        for FILE in src/gtest/main.cpp $FILES
-        do
-            echo clang compile $FILE ...
-
-            PATH=$CLANGBIN:$PATH $CLANG $PLUGINS -c $OPTOMIZATION $CXXFLAGS \
-                $DEFINES \
-                $FILE \
-                -o build/$FILE.o || exit 1
-            OBJFILES="$OBJFILES build/$FILE.o"
-        done
-
-        PATH=$CLANGBIN:$PATH $CLANG $OPTOMIZATION $CXXFLAGS \
-             $OBJFILES \
-             $DEFINES $LIBRARIES \
-             -o build/dbs-test || exit 1
-
-        build/dbs-test --gtest_filter=-*.PERFORMANCE_* || exit 1
-
-    elif [ 1 == 1 ]
     then
 
         echo > build/iwyu.log
         for FILE in src/main.cpp src/gtest/main.cpp $FILES
         do
             echo include what you using $FILE ...
-            PATH=$CLANGBIN:$PATH $IWYU $CXXFLAGS $FILE $DEFINES 2>&1 | \
+            PATH=$CLANGBIN:$PATH $IWYU $CXXFLAGS $FILE 2>&1 | \
                 tee -a build/iwyu.log || exit 1
         done
 

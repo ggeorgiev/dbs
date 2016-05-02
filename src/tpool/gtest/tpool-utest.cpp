@@ -3,10 +3,14 @@
 
 #include "tpool/task.h"  // IWYU pragma: keep
 #include "tpool/tpool.h" // IWYU pragma: keep
+#include "err/err.h"
 #include "err/gtest/err.h"
+#include <gtest/gtest-message.h>
 #include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
 #include <memory>
+#include <ostream>
+#include <string>
 
 namespace tpool
 {

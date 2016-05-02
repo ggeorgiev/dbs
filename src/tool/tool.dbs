@@ -6,6 +6,7 @@ cxx_library tool
         @directory=..:
 
         tool/cxx_compiler.h
+        tool/cxx_iwyu.h
     ;
 
     cxx_library:
@@ -16,5 +17,6 @@ cxx_library tool
 
     cxx_file:
         cxx_compiler.cpp
+        cxx_iwyu.cpp
     ;
 ;

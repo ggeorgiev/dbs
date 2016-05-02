@@ -2,9 +2,10 @@
 //
 
 #include "engine/cxx_engine.h"
-#include "task/tpool.h"
-#include "tpool/task_group.h"
 #include "tool/cxx_compiler.h"
+#include "task/tpool.h"
+#include "tpool/task.h"
+#include "tpool/task_group.h"
 #include "parser/parser.hpp"
 #include "parser/string_stream.hpp"
 #include "dom/manager.h"
@@ -69,6 +70,8 @@ int main(int argc, char* argv[])
     auto cwd = doim::gManager->obtainDirectory(nullptr, current);
     auto file = doim::gManager->obtainFile(cwd, arg[1]);
 
+    ILOG("Load dbs file: {}", file->path(cwd));
+
     auto db = doim::gManager->obtainDirectory(cwd, "build/db");
 
     ECode code = db::gDatabase->open(db->path());
@@ -87,21 +90,38 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    const auto& binary = doim::gManager->obtainFile(cwd, "clang/bin/clang++");
-    const auto& compiler = std::make_shared<tool::CxxCompiler>(binary);
-    const auto& engine = std::make_shared<engine::CxxEngine>(compiler);
+    const auto& clang = doim::gManager->obtainFile(cwd, "clang/bin/clang++");
+    const auto& compiler = std::make_shared<tool::CxxCompiler>(clang);
+
+    const auto& iwyu = doim::gManager->obtainFile(cwd, "clang/bin/include-what-you-use");
+    const auto& iwyuTool = std::make_shared<tool::CxxIwyu>(iwyu);
+
+    const auto& engine = std::make_shared<engine::CxxEngine>(compiler, iwyuTool);
+
+    const auto& verb = doim::gManager->find(std::make_shared<doim::Tag>(arg[2]));
+
+    if (verb == nullptr)
+    {
+        ILOG("Action \"{}\" is not recognized", arg[2]);
+        return 1;
+    }
+
+    ILOG("Evaluating targets for {}", verb->name());
 
     std::vector<tpool::TaskSPtr> tasks;
-
-    for (size_t i = 2; i < arg.size(); ++i)
+    for (size_t i = 3; i < arg.size(); ++i)
     {
         auto object = doim::gManager->obtainObject(file->directory(),
                                                    doim::Object::Type::kCxxProgram,
                                                    arg[i]);
         auto program = dom::gManager->obtainCxxProgram(object);
+        if (program == nullptr)
+            continue;
 
-        if (program != nullptr)
+        if (verb == doim::gBuildTag)
             tasks.push_back(engine->build(cwd, program));
+        if (verb == doim::gIwyuTag)
+            tasks.push_back(engine->iwyu(cwd, program));
     }
 
     auto group = std::make_shared<tpool::TaskGroup>(task::gTPool, 0, tasks);

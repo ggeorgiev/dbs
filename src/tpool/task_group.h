@@ -5,19 +5,18 @@
 
 #include "tpool/task.h"
 #include "err/err.h"
-#include <boost/heap/fibonacci_heap.hpp>
-#include <atomic>
-#include <future>
-#include <iosfwd>
 #include <memory>
+#include <vector>
 
 namespace tpool
 {
 class TPool;
+
 typedef std::shared_ptr<TPool> TPoolSPtr;
 typedef std::weak_ptr<TPool> TPoolWPtr;
 
 class TaskGroup;
+
 typedef std::shared_ptr<TaskGroup> TaskGroupSPtr;
 
 class TaskGroup : public Task

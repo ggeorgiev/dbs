@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -51,7 +51,8 @@ public:
 
     typedef std::unordered_map<Tuple,
                                std::pair<Value, std::vector<Handle::ControllerSPtr>>,
-                               Hasher> Map;
+                               Hasher>
+        Map;
 
     Tuple key(const HandleSPtr& handle, Args... args)
     {
@@ -77,6 +78,11 @@ public:
     Value get(const typename Map::const_iterator& it)
     {
         return it->second.first;
+    }
+
+    void put(const Tuple& tuple, const Value& value)
+    {
+        mMap[tuple] = std::make_pair(value, std::vector<Handle::ControllerSPtr>());
     }
 
     void put(const Tuple& tuple,

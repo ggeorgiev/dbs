@@ -5,6 +5,7 @@
 
 #include "doim/base.hpp"
 #include "doim/sys/executable.hpp"
+#include "dp/simple_memoization.hpp"
 #include <iosfwd>
 #include <memory>
 #include <tuple>
@@ -13,13 +14,11 @@
 namespace doim
 {
 class SysArgument;
-
 typedef std::shared_ptr<SysArgument> SysArgumentSPtr;
 typedef std::unordered_set<SysArgumentSPtr> SysArgumentSet;
 typedef std::shared_ptr<SysArgumentSet> SysArgumentSetSPtr;
 
 class SysCommand;
-
 typedef std::shared_ptr<SysCommand> SysCommandSPtr;
 
 class SysCommand : public Base<SysCommand, SysExecutableSPtr, SysArgumentSetSPtr>
@@ -37,9 +36,10 @@ public:
         return std::get<1>(mArgs);
     }
 
-    const std::string& string() const;
+    std::string string() const;
 
 private:
-    mutable std::string mString;
+    typedef dp::SimpleMemoization<std::string> CommandMemoization;
+    mutable CommandMemoization mCommandMemoization;
 };
 }

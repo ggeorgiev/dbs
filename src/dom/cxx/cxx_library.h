@@ -1,24 +1,30 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
 
 #include "dom/cxx/cxx_files_mixin.hpp"
 #include "dom/cxx/cxx_private_headers_mixin.hpp"
-#include "dom/generic/attribute.hpp"
-#include "doim/cxx/cxx_file.h"
+#include "doim/cxx/cxx_header.h"
+#include "doim/cxx/cxx_include_directory.h"
+#include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
-#include "doim/manager.h"
+#include "dp/handle.hpp"
 #include "dp/map_container.hpp"
 #include "dp/memoization.hpp"
 #include "err/err.h"
 #include <memory>
 #include <unordered_set>
-#include <vector>
+
+namespace dom
+{
+struct Attribute;
+} // namespace dom
 
 namespace dom
 {
 class CxxLibrary;
+
 typedef std::shared_ptr<CxxLibrary> CxxLibrarySPtr;
 
 class CxxLibrary : public CxxFilesMixin<CxxLibrary>,

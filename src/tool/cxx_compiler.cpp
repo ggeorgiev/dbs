@@ -1,30 +1,16 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "task/cxx/cxx_file_crc_task.h"
-#include "task/cxx/cxx_program_crc_task.h"
-#include "task/db/db_put_task.h"
-#include "task/manager.h"
-#include "task/sys/ensure_directory_task.h"
-#include "task/sys/execute_command_task.h"
-#include "task/tpool.h"
-#include "tpool/task_callback.h"
-#include "tpool/task_group.h"
-#include "tpool/task_sequence.h"
 #include "tool/cxx_compiler.h"
+#include "task/manager.h"
+#include "task/sys/execute_command_task.h"
 #include "dom/cxx/cxx_library.h"
 #include "dom/cxx/cxx_program.h"
 #include "doim/cxx/cxx_file.h"
-#include "doim/cxx/cxx_program.h"
-#include "doim/db/db_key.hpp"
-#include "doim/db/db_value.hpp"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "doim/sys/argument.hpp"
 #include "doim/sys/command.h"
-#include "db/database.h"
-#include "err/err_cppformat.h"
-#include "math/crc.hpp"
 #include <memory>
 #include <sstream>
 #include <string>
@@ -32,14 +18,9 @@
 
 namespace tool
 {
-CxxCompiler::CxxCompiler(const doim::SysExecutableSPtr& compiler)
-    : mCompiler(compiler)
-{
-}
-
 doim::SysArgumentSetSPtr CxxCompiler::includeArguments(
     const doim::FsDirectorySPtr& directory,
-    const doim::CxxIncludeDirectorySetSPtr& includeDirectories) const
+    const doim::CxxIncludeDirectorySetSPtr& includeDirectories)
 {
     auto arguments = std::make_shared<doim::SysArgumentSet>();
 
@@ -62,6 +43,11 @@ doim::SysArgumentSetSPtr CxxCompiler::includeArguments(
     }
 
     return arguments;
+}
+
+CxxCompiler::CxxCompiler(const doim::SysExecutableSPtr& compiler)
+    : mCompiler(compiler)
+{
 }
 
 tpool::TaskSPtr CxxCompiler::compileCommand(
@@ -89,10 +75,8 @@ tpool::TaskSPtr CxxCompiler::compileCommand(
 
     auto compileCommand = std::make_shared<doim::SysCommand>(mCompiler, compileArguments);
     compileCommand = doim::gManager->unique(compileCommand);
-    auto compileTask = task::gManager->valid(
-        std::make_shared<task::ExecuteCommandTask>(compileCommand, "Compile " + file));
 
-    return compileTask;
+    return task::ExecuteCommandTask::createLogOnError(compileCommand, "Compile " + file);
 }
 
 tpool::TaskSPtr CxxCompiler::linkCommand(
@@ -130,9 +114,7 @@ tpool::TaskSPtr CxxCompiler::linkCommand(
     auto linkCommand = std::make_shared<doim::SysCommand>(mCompiler, arguments);
     linkCommand = doim::gManager->unique(linkCommand);
 
-    auto linkTask = task::gManager->valid(
-        std::make_shared<task::ExecuteCommandTask>(linkCommand,
-                                                   "Link " + program->name()));
-    return linkTask;
+    return task::ExecuteCommandTask::createLogOnError(linkCommand,
+                                                      "Link " + program->name());
 }
 }

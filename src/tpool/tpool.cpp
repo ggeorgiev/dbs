@@ -3,7 +3,6 @@
 
 #include "tpool/reverse_lock.hpp"
 #include "tpool/tpool.h"
-#include "log/log.h"
 #include <chrono>
 #include <cstring>
 #include <memory>

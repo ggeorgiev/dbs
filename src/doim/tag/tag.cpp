@@ -20,9 +20,14 @@ TagSPtr Tag::global(const std::string& name, TagSPtr& tag)
     return std::make_shared<Tag>(name);
 }
 
+TagSPtr gBuildTag = Tag::global("build", gBuildTag);
+TagSPtr gIwyuTag = Tag::global("iwyu", gIwyuTag);
+
+TagSPtr gTaskTag = Tag::global("task", gTaskTag);
+
 TagSPtr gCrcTag = Tag::global("crc", gCrcTag);
 TagSPtr gDbTag = Tag::global("db", gDbTag);
-TagSPtr gTaskTag = Tag::global("task", gTaskTag);
+
 TagSPtr gRunTag = Tag::global("run", gRunTag);
 TagSPtr gDoneTag = Tag::global("done", gDoneTag);
 }

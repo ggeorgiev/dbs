@@ -25,7 +25,6 @@
 #include <memory>
 #include <unordered_map>
 #include <unordered_set>
-#include <utility>
 
 namespace doim
 {
@@ -144,6 +143,7 @@ public:
     using ManagerObjectMixin<SysCommand>::isUnique;
 
     using ManagerObjectMixin<Tag>::unique;
+    using ManagerObjectMixin<Tag>::find;
     using ManagerObjectSetMixin<Tag>::unique;
 
 private:

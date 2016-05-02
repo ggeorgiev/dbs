@@ -5,15 +5,15 @@
 
 #include "tpool/task.h"
 #include "err/err.h"
-#include <boost/heap/fibonacci_heap.hpp>
-#include <atomic>
-#include <future>
-#include <iosfwd>
+#include <boost/functional/hash/hash_fwd.hpp>
 #include <memory>
+#include <vector>
+#include <stddef.h>
 
 namespace tpool
 {
 class TaskSequence;
+
 typedef std::shared_ptr<TaskSequence> TaskSequenceSPtr;
 
 class TaskSequence : public Task

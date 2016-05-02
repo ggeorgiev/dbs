@@ -1,7 +1,8 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "parser/tokenizer.hpp"
+#include "dom/generic/attribute.hpp"
 #include "dom/manager.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/object.h"

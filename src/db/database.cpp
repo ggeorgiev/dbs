@@ -1,9 +1,10 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "db/database.h"
 #include "err/err.h"
 #include "err/err_cppformat.h"
+#include "log/log.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
 #include <rocksdb/options.h>
@@ -47,7 +48,7 @@ void Database::close()
 }
 
 ECode Database::get(const std::experimental::string_view& key,
-                    const std::experimental::string_view& dflt,
+                    const std::experimental::string_view& defaultValue,
                     std::string& value)
 {
     const auto& status = mRocksDb->Get(rocksdb::ReadOptions(),
@@ -57,13 +58,14 @@ ECode Database::get(const std::experimental::string_view& key,
     {
         if (status.code() == rocksdb::Status::kNotFound)
         {
-            value = dflt.to_string();
+            value = defaultValue.to_string();
             EHEnd;
         }
 
         const auto& msg = status.ToString();
         EHBan(kDatabase, msg);
     }
+    DLOG("Read key: \"{}\", value: \"{}\"", key, value);
     EHEnd;
 }
 
@@ -80,6 +82,8 @@ ECode Database::get(const std::experimental::string_view& key, std::string& valu
         const auto& msg = status.ToString();
         EHBan(kDatabase, msg);
     }
+
+    DLOG("Read key: \"{}\", value: \"{}\"", key, value);
     EHEnd;
 }
 

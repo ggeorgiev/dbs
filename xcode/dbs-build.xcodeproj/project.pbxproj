@@ -117,6 +117,8 @@
 		5E3CA9AE1CCEC90600F6D7ED /* solitary_container.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E3CA9AD1CCEC90600F6D7ED /* solitary_container.hpp */; settings = {ASSET_TAGS = (); }; };
 		5E3CA9B81CCF290600F6D7ED /* cxx_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E3CA9B61CCF290600F6D7ED /* cxx_parser.cpp */; settings = {ASSET_TAGS = (); }; };
 		5E3CA9B91CCF290600F6D7ED /* cxx_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E3CA9B71CCF290600F6D7ED /* cxx_parser.h */; settings = {ASSET_TAGS = (); }; };
+		5E4034841CD565CD00407CA3 /* cxx_iwyu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4034821CD565CD00407CA3 /* cxx_iwyu.cpp */; settings = {ASSET_TAGS = (); }; };
+		5E4034851CD565CD00407CA3 /* cxx_iwyu.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E4034831CD565CD00407CA3 /* cxx_iwyu.h */; settings = {ASSET_TAGS = (); }; };
 		5E4113C31CCBF95B00489DA7 /* task_callback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4113C11CCBF95B00489DA7 /* task_callback.cpp */; settings = {ASSET_TAGS = (); }; };
 		5E4113C41CCBF95B00489DA7 /* task_callback.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E4113C21CCBF95B00489DA7 /* task_callback.h */; settings = {ASSET_TAGS = (); }; };
 		5E4113C61CCBF99500489DA7 /* task_callback-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4113C51CCBF99500489DA7 /* task_callback-utest.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -154,6 +156,8 @@
 		5EC659B21CCD9EB600E99E04 /* memoization-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EC659B01CCD9EB600E99E04 /* memoization-utest.cpp */; settings = {ASSET_TAGS = (); }; };
 		5EC659B31CCD9EB600E99E04 /* memoization.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EC659B11CCD9EB600E99E04 /* memoization.hpp */; settings = {ASSET_TAGS = (); }; };
 		5EC659B51CCDA12900E99E04 /* handle.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EC659B41CCDA12900E99E04 /* handle.hpp */; settings = {ASSET_TAGS = (); }; };
+		5EE328621CD845610042B6FF /* simple_memoization.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EE328611CD845610042B6FF /* simple_memoization.hpp */; settings = {ASSET_TAGS = (); }; };
+		5EE328641CD846880042B6FF /* simple_memoization-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE328631CD846880042B6FF /* simple_memoization-utest.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -298,6 +302,8 @@
 		5E3CA9B51CCF221400F6D7ED /* pre-commit */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "pre-commit"; sourceTree = "<group>"; };
 		5E3CA9B61CCF290600F6D7ED /* cxx_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_parser.cpp; sourceTree = "<group>"; };
 		5E3CA9B71CCF290600F6D7ED /* cxx_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_parser.h; sourceTree = "<group>"; };
+		5E4034821CD565CD00407CA3 /* cxx_iwyu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_iwyu.cpp; sourceTree = "<group>"; };
+		5E4034831CD565CD00407CA3 /* cxx_iwyu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_iwyu.h; sourceTree = "<group>"; };
 		5E4113C11CCBF95B00489DA7 /* task_callback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = task_callback.cpp; sourceTree = "<group>"; };
 		5E4113C21CCBF95B00489DA7 /* task_callback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = task_callback.h; sourceTree = "<group>"; };
 		5E4113C51CCBF99500489DA7 /* task_callback-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "task_callback-utest.cpp"; sourceTree = "<group>"; };
@@ -341,6 +347,8 @@
 		5EC659B01CCD9EB600E99E04 /* memoization-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "memoization-utest.cpp"; sourceTree = "<group>"; };
 		5EC659B11CCD9EB600E99E04 /* memoization.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = memoization.hpp; sourceTree = "<group>"; };
 		5EC659B41CCDA12900E99E04 /* handle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = handle.hpp; sourceTree = "<group>"; };
+		5EE328611CD845610042B6FF /* simple_memoization.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = simple_memoization.hpp; sourceTree = "<group>"; };
+		5EE328631CD846880042B6FF /* simple_memoization-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "simple_memoization-utest.cpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -798,6 +806,8 @@
 				5E10B3A51C70F272009C73E4 /* tool.dbs */,
 				5E290B3E1CBACD0600F10210 /* cxx_compiler.cpp */,
 				5E10B3A41C70F272009C73E4 /* cxx_compiler.h */,
+				5E4034821CD565CD00407CA3 /* cxx_iwyu.cpp */,
+				5E4034831CD565CD00407CA3 /* cxx_iwyu.h */,
 			);
 			path = tool;
 			sourceTree = "<group>";
@@ -932,6 +942,7 @@
 				5EC659B41CCDA12900E99E04 /* handle.hpp */,
 				5E3CA9AB1CCEBF0500F6D7ED /* map_container.hpp */,
 				5EC659B11CCD9EB600E99E04 /* memoization.hpp */,
+				5EE328611CD845610042B6FF /* simple_memoization.hpp */,
 				5E3CA9AD1CCEC90600F6D7ED /* solitary_container.hpp */,
 				5EC659AF1CCD9EB600E99E04 /* gtest */,
 			);
@@ -942,6 +953,7 @@
 			isa = PBXGroup;
 			children = (
 				5EC659B01CCD9EB600E99E04 /* memoization-utest.cpp */,
+				5EE328631CD846880042B6FF /* simple_memoization-utest.cpp */,
 			);
 			path = gtest;
 			sourceTree = "<group>";
@@ -979,6 +991,7 @@
 				5E4113CA1CCD56AB00489DA7 /* cxx_library.h in Headers */,
 				5E4205411C790C590090FA05 /* manager_object_set_mixin.hpp in Headers */,
 				5E10B3D91C70F272009C73E4 /* macro.h in Headers */,
+				5E4034851CD565CD00407CA3 /* cxx_iwyu.h in Headers */,
 				5E10B3D31C70F272009C73E4 /* err_variadic.h in Headers */,
 				5EAE67791C72AFE4005B3F8D /* cxx_include_directory.h in Headers */,
 				5E217B691C713CDC00F082A1 /* cxx_program_crc_task.h in Headers */,
@@ -1009,6 +1022,7 @@
 				5E10B3F91C70F272009C73E4 /* db_put_task.h in Headers */,
 				5E3CA9AC1CCEBF0500F6D7ED /* map_container.hpp in Headers */,
 				5E4205371C78DF5A0090FA05 /* command.h in Headers */,
+				5EE328621CD845610042B6FF /* simple_memoization.hpp in Headers */,
 				5E10B4001C70F272009C73E4 /* ensure_directory_task.h in Headers */,
 				5E4113CE1CCD56B300489DA7 /* cxx_program.h in Headers */,
 				5E10B3D71C70F272009C73E4 /* err_assert.h in Headers */,
@@ -1037,7 +1051,7 @@
 /* Begin PBXLegacyTarget section */
 		5E10B2F91C70E875009C73E4 /* dbs-build */ = {
 			isa = PBXLegacyTarget;
-			buildArgumentsString = "src/main.dbs dbs dbs-test";
+			buildArgumentsString = "src/main.dbs build dbs dbs-test";
 			buildConfigurationList = 5E10B2FC1C70E875009C73E4 /* Build configuration list for PBXLegacyTarget "dbs-build" */;
 			buildPhases = (
 			);
@@ -1127,11 +1141,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5EE328641CD846880042B6FF /* simple_memoization-utest.cpp in Sources */,
 				5EC659B21CCD9EB600E99E04 /* memoization-utest.cpp in Sources */,
 				5E42052E1C78CB200090FA05 /* fs_directory.cpp in Sources */,
 				5E10B3CE1C70F272009C73E4 /* err.cpp in Sources */,
 				5E290B251CB9B87700F10210 /* task.cpp in Sources */,
 				5E4205321C78D94F0090FA05 /* object.cpp in Sources */,
+				5E4034841CD565CD00407CA3 /* cxx_iwyu.cpp in Sources */,
 				5E342BEC1CC467AB00ABC49C /* manager-mttest.cpp in Sources */,
 				5E10B3CB1C70F272009C73E4 /* cxx_program-utest.cpp in Sources */,
 				5E10B3DC1C70F272009C73E4 /* performance_arbiter.cpp in Sources */,

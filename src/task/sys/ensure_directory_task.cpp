@@ -3,6 +3,7 @@
 
 #include "task/manager.h"
 #include "task/sys/ensure_directory_task.h"
+#include "task/tpool.h"
 #include "doim/manager.h"
 #include "err/err_assert.h"
 #include "err/err_cppformat.h"

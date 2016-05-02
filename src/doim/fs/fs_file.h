@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -14,7 +14,6 @@
 namespace doim
 {
 class FsFile;
-
 typedef std::shared_ptr<FsFile> FsFileSPtr;
 typedef std::unordered_set<FsFileSPtr> FsFileSet;
 typedef std::shared_ptr<FsFileSet> FsFileSetSPtr;

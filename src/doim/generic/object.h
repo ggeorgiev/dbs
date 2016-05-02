@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -21,7 +21,6 @@ namespace doim
  */
 
 class Object;
-
 typedef std::shared_ptr<Object> ObjectSPtr;
 
 class Object : public Base<Object, int, std::string, LocationSPtr>

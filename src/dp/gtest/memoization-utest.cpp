@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
 #include "dp/map_container.hpp"
@@ -19,7 +19,8 @@ public:
 };
 
 typedef ::testing::Types<dp::Memoization<dp::SolitaryContainer, int>,
-                         dp::Memoization<dp::MapContainer, int>> MemoizationType;
+                         dp::Memoization<dp::MapContainer, int>>
+    MemoizationType;
 
 TYPED_TEST_CASE(MemoizationTest, MemoizationType);
 
@@ -44,6 +45,15 @@ TYPED_TEST(MemoizationTest, sanity)
     // When the handle was reset the function should recompute the value.
     value = memoization->get(handle, gFn5);
     ASSERT_EQ(5, value);
+}
+
+TYPED_TEST(MemoizationTest, noDependencies)
+{
+    auto memoization = std::make_shared<typename TestFixture::Memoization>();
+    auto handle = dp::Handle::create([memoization] { memoization->clear(); });
+
+    auto value = memoization->get(handle, gFn10);
+    ASSERT_EQ(10, value);
 }
 
 TYPED_TEST(MemoizationTest, dependencies)

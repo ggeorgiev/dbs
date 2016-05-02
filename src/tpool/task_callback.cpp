@@ -2,17 +2,22 @@
 //
 
 #include "tpool/task_callback.h"
+#include "err/err_assert.h"
 #include <sstream>
 
 namespace tpool
 {
-TaskCallback::TaskCallback(int priority, const TaskSPtr& task, const Function& onFinish)
+TaskCallback::TaskCallback(int priority,
+                           const TaskSPtr& task,
+                           const Function& onFinish,
+                           const Function& onError)
     : Task(priority)
     , mTask(task)
     , mOnFinish(onFinish)
+    , mOnError(onError)
 {
     ASSERT(mTask != nullptr);
-    ASSERT(mOnFinish != nullptr);
+    ASSERT(mOnFinish != nullptr || mOnError != nullptr);
 }
 
 TaskCallback::~TaskCallback()
@@ -21,8 +26,20 @@ TaskCallback::~TaskCallback()
 
 ECode TaskCallback::operator()()
 {
-    EHTest(mTask->join());
-    EHTest(mOnFinish(mTask));
+    (void)mTask->markAsScheduled();
+    ECode code = mTask->join();
+
+    if (code == err::kSuccess)
+    {
+        if (mOnFinish != nullptr)
+            EHTest(mOnFinish(mTask));
+    }
+    else
+    {
+        if (mOnError == nullptr)
+            EHTest(code);
+        EHTest(mOnError(mTask));
+    }
     EHEnd;
 }
 

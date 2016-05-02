@@ -9,6 +9,7 @@ cxx_library dp
         dp/map_container.hpp
         dp/memoization.hpp
         dp/no_dependency.hpp
+        dp/simple_memoization.hpp
         dp/solitary_container.hpp
         dp/vector_dependency.hpp
     ;
@@ -40,6 +41,7 @@ cxx_library dp-test
 
     cxx_file:
         gtest/memoization-utest.cpp
+        gtest/simple_memoization-utest.cpp
     ;
 ;
 

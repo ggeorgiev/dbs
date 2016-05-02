@@ -7,9 +7,9 @@
 #include "err/err.h"
 #include <boost/heap/fibonacci_heap.hpp>
 #include <atomic>
-#include <future>
-#include <iosfwd>
+#include <condition_variable>
 #include <memory>
+#include <mutex>
 
 namespace boost
 {
@@ -23,6 +23,7 @@ struct compare;
 namespace tpool
 {
 class Task;
+
 typedef std::shared_ptr<Task> TaskSPtr;
 
 class Task
@@ -76,6 +77,7 @@ protected:
         kFinished,
     };
 
+    friend class TaskCallback;
     friend class TaskGroup;
     friend class TaskSequence;
 
