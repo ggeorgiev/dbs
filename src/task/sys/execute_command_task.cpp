@@ -81,7 +81,7 @@ ECode ExecuteCommandTask::operator()()
 ECode ExecuteCommandTask::stdout(std::string& stdout) const
 {
     ASSERT(finished());
-    EHTest(db::gDatabase->put(stdoutDbKey(), stdout));
+    EHTest(db::gDatabase->get(stdoutDbKey(), stdout));
     EHEnd;
 }
 
