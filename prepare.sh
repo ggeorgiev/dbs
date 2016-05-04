@@ -20,7 +20,7 @@ then
     cd ../.. || exit 1
 fi
 
-CMAKE=$BASEDIR/cmake/bin/cmake
+CMAKE=cmake
 
 if [ ! -e clang ]
 then
@@ -55,6 +55,7 @@ then
     echo Prepare make files ...
     $CMAKE \
         -G "Unix Makefiles" \
+        -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CC_COMPILER=clang \
         -DCMAKE_INSTALL_PREFIX:PATH=../../clang \
         -DCMAKE_BUILD_TYPE=Release \
         ../llvm || exit 1
@@ -95,7 +96,7 @@ then
 
     cd param_check || exit 1
 
-    LLVM_DIR=$CLANGDIR make || exit 1
+    LLVM_DIR=$CLANGDIR CC=$CLANG CXX=$CLANG make  || exit 1
 
     cp *.so ../../../clang/plugin
 
@@ -119,6 +120,7 @@ then
 
     $CMAKE \
         -G "Unix Makefiles" \
+        -DCMAKE_CXX_COMPILER=$CLANG \
         -DIWYU_LLVM_ROOT_PATH=$CLANGDIR \
         -DCMAKE_INSTALL_PREFIX:PATH=../../../iwyu \
         .. || exit 1
@@ -260,8 +262,8 @@ then
     mkdir build
     cd build
 
-    $CMAKE -DCMAKE_INSTALL_PREFIX:PATH=../../../cppformat .. || exit 1
-    make || exit 1
+    $CMAKE -DCMAKE_CC_COMPILER=$CLANG -DCMAKE_CXX_COMPILER=$CLANG -DCMAKE_INSTALL_PREFIX:PATH=../../../cppformat .. || exit 1
+    CC=$CLANG CXX=$CLANG make || exit 1
     make test || exit 1
     make install || exit 1
 
@@ -291,7 +293,7 @@ then
 
     echo Build RocksDB ...
 
-    make static_lib || exit 1
+    CC=$CLANG CXX=$CLANG make static_lib || exit 1
 
     mkdir -p ../../rocksdb/lib
     cp -r include ../../rocksdb || exit 1
