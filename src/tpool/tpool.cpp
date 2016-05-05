@@ -1,8 +1,8 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "tpool/reverse_lock.hpp"
 #include "tpool/tpool.h"
+#include "tpool/reverse_lock.hpp"
 #include <chrono>
 #include <cstring>
 #include <memory>

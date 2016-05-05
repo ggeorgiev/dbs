@@ -21,7 +21,6 @@
 #include <spdlog/details/line_logger_impl.h>
 #include "math/crc.hpp"
 #include <functional>
-#include <sstream>
 #include <string>
 #include <vector>
 
@@ -54,8 +53,8 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::FsDirectorySPtr& directory,
     task::gTPool->ensureScheduled(crcTask);
 
     auto self = shared_from_this();
-    tpool::TaskCallback::Function onFinish = [this, self, directory, objectFile](
-        const tpool::TaskSPtr& task) -> ECode {
+    tpool::TaskCallback::Function onFinish =
+        [this, self, directory, objectFile](const tpool::TaskSPtr& task) -> ECode {
 
         auto key =
             std::make_shared<doim::DbKey>("cxx file:" + objectFile->file()->path());
@@ -77,8 +76,8 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::FsDirectorySPtr& directory,
 
         auto value = std::make_shared<doim::DbValue>(crcTask->crc());
 
-        tpool::TaskCallback::Function onFinish = [key, value](
-            const tpool::TaskSPtr&) -> ECode {
+        tpool::TaskCallback::Function onFinish =
+            [key, value](const tpool::TaskSPtr&) -> ECode {
             auto updateTask = std::make_shared<task::DbPutTask>(key, value);
             EHTest(updateTask->execute());
             EHEnd;
@@ -149,8 +148,8 @@ tpool::TaskSPtr CxxEngine::build(const doim::FsDirectorySPtr& directory,
     task::gTPool->ensureScheduled(crcTask);
 
     auto self = shared_from_this();
-    tpool::TaskCallback::Function onFinish = [this, self, directory, program](
-        const tpool::TaskSPtr& task) -> ECode {
+    tpool::TaskCallback::Function onFinish =
+        [this, self, directory, program](const tpool::TaskSPtr& task) -> ECode {
         auto key = std::make_shared<doim::DbKey>("cxx_program:" + program->name());
         key = doim::gManager->unique(key);
 
@@ -184,8 +183,8 @@ tpool::TaskSPtr CxxEngine::iwyuTask(const doim::FsDirectorySPtr& directory,
     task::gTPool->ensureScheduled(crcTask);
 
     auto self = shared_from_this();
-    tpool::TaskCallback::Function onFinish = [this, self, directory, cxxFile](
-        const tpool::TaskSPtr& task) -> ECode {
+    tpool::TaskCallback::Function onFinish =
+        [this, self, directory, cxxFile](const tpool::TaskSPtr& task) -> ECode {
 
         auto key = std::make_shared<doim::DbKey>("iwyu:" + cxxFile->file()->path());
         key = doim::gManager->unique(key);
@@ -202,8 +201,8 @@ tpool::TaskSPtr CxxEngine::iwyuTask(const doim::FsDirectorySPtr& directory,
 
         auto value = std::make_shared<doim::DbValue>(crcTask->crc());
 
-        tpool::TaskCallback::Function onFinish = [key, value](
-            const tpool::TaskSPtr&) -> ECode {
+        tpool::TaskCallback::Function onFinish =
+            [key, value](const tpool::TaskSPtr&) -> ECode {
             auto updateTask = std::make_shared<task::DbPutTask>(key, value);
             EHTest(updateTask->execute());
             EHEnd;

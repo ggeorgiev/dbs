@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "task/cxx/cxx_header_crc_task.h" // IWYU pragma: keep
@@ -14,7 +14,6 @@
 #include <gtest/gtest.h>
 #include <memory>
 #include <ostream>
-#include <string>
 #include <unordered_set>
 
 class CxxHeaderCrcTaskTest : public ::testing::Test

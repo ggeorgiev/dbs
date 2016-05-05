@@ -6,8 +6,6 @@
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
 #include <memory>
-#include <ostream>
-#include <string>
 
 static auto gFn5 = []() { return 5; };
 static auto gFn10 = []() { return 10; };

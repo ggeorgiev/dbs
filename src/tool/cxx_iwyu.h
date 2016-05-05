@@ -3,13 +3,9 @@
 
 #pragma once
 
-#include "tool/cxx_compiler.h"
 #include "tpool/task.h"
-#include "dom/cxx/cxx_program.h"
-#include "doim/cxx/cxx_include_directory.h"
-#include "doim/cxx/cxx_object_file.h"
+#include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_directory.h"
-#include "doim/sys/argument.hpp"
 #include "doim/sys/executable.hpp"
 #include <memory>
 

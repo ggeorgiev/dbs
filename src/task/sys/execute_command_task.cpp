@@ -1,19 +1,16 @@
 //  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
-#include "task/manager.h"
 #include "task/sys/execute_command_task.h"
+#include "task/manager.h"
 #include "tpool/task_callback.h"
 #include "doim/manager.h"
 #include "db/database.h"
 #include "err/err_assert.h"
 #include "err/err_cppformat.h"
 #include "log/log.h"
-#include <iostream>
 #include <memory>
-#include <sstream>
 #include <string>
-#include <stddef.h>
 #include <stdio.h>
 
 namespace task

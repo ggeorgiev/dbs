@@ -1,8 +1,8 @@
 //  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
-#include "task/manager.h"
 #include "task/sys/ensure_directory_task.h"
+#include "task/manager.h"
 #include "task/tpool.h"
 #include "doim/manager.h"
 #include "err/err_assert.h"

@@ -5,7 +5,6 @@
 #include "tpool/tpool.h"      // IWYU pragma: keep
 #include "err/gtest/err.h"
 #include "err/gtest/err_assert.h"
-#include <gtest/gtest-typed-test.h>
 #include <gtest/gtest.h>
 #include <memory>
 

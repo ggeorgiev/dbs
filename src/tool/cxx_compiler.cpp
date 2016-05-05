@@ -2,14 +2,12 @@
 //
 
 #include "tool/cxx_compiler.h"
-#include "task/manager.h"
 #include "task/sys/execute_command_task.h"
 #include "dom/cxx/cxx_library.h"
 #include "dom/cxx/cxx_program.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
-#include "doim/sys/argument.hpp"
 #include "doim/sys/command.h"
 #include <memory>
 #include <sstream>

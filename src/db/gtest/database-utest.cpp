@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "db/database.h"
@@ -7,7 +7,6 @@
 #include "gtest/intermittent.h" // IWYU pragma: keep
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
-#include <memory>
 #include <ostream>
 #include <string>
 

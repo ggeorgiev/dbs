@@ -1,8 +1,8 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "tpool/reverse_lock.hpp"
 #include "tpool/task.h"
+#include "tpool/reverse_lock.hpp"
 #include "err/err_assert.h"
 #include <sstream>
 

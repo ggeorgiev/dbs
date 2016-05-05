@@ -1,10 +1,10 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
+#include "doim/manager.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/object.h"
-#include "doim/manager.h"
 #include "err/gtest/err_assert.h"
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>

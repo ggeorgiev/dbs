@@ -1,8 +1,8 @@
 //  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
-#include "doim/manager.h"
 #include "doim/tag/tag.h"
+#include "doim/manager.h"
 #include "im/initialization_manager.hpp"
 #include <functional>
 

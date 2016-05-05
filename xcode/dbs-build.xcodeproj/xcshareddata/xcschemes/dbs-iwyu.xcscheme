@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5E10B2F91C70E875009C73E4"
-               BuildableName = "dbs-build"
-               BlueprintName = "dbs-build"
+               BlueprintIdentifier = "5E66E5D01CDAEFA300DFB2C0"
+               BuildableName = "dbs-iwyu"
+               BlueprintName = "dbs-iwyu"
                ReferencedContainer = "container:dbs-build.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,6 +29,15 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "5E10B2F91C70E875009C73E4"
+            BuildableName = "dbs-build"
+            BlueprintName = "dbs-build"
+            ReferencedContainer = "container:dbs-build.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -42,15 +51,6 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5E10B2F91C70E875009C73E4"
-            BuildableName = "dbs-build"
-            BlueprintName = "dbs-build"
-            ReferencedContainer = "container:dbs-build.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -60,15 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5E10B2F91C70E875009C73E4"
-            BuildableName = "dbs-build"
-            BlueprintName = "dbs-build"
-            ReferencedContainer = "container:dbs-build.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

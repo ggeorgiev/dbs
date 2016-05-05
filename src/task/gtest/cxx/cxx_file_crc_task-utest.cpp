@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "task/cxx/cxx_file_crc_task.h" // IWYU pragma: keep
@@ -16,7 +16,6 @@
 #include <gtest/gtest.h>
 #include <memory>
 #include <ostream>
-#include <string>
 #include <unordered_set>
 
 class CxxFileCrcTaskTest : public ::testing::Test

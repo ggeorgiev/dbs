@@ -1,21 +1,13 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "task/db/db_put_task.h"
-#include "doim/cxx/cxx_file.h"
-#include "doim/cxx/cxx_header.h"
-#include "doim/cxx/cxx_include_directory.h"
-#include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "err/err.h"
 #include "err/gtest/err.h"
-#include "gtest/test_resource.h"
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
 #include <memory>
-#include <ostream>
-#include <string>
-#include <unordered_set>
 
 class DbPutTaskTest : public ::testing::Test
 {

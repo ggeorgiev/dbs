@@ -1,7 +1,6 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "option/verbose.h"
 #include <gtest/gtest.h>
 
 TEST(VerboseTest, sanity)

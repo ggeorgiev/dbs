@@ -1,15 +1,13 @@
 //  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
-#include "dp/map_container.hpp"
 #include "dp/memoization.hpp"
+#include "dp/map_container.hpp"
 #include "dp/solitary_container.hpp"
 #include "gtest/intermittent.h" // IWYU pragma: keep
 #include <gtest/gtest-message.h>
 #include <gtest/gtest.h>
 #include <memory>
-#include <ostream>
-#include <string>
 
 template <typename T>
 class MemoizationTest : public ::testing::Test

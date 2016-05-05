@@ -5,7 +5,6 @@
 #include <gtest/gtest.h>
 #include <cstdio>
 #include <sstream>
-#include <string>
 
 struct SerialiazeBase
 {
@@ -75,7 +74,8 @@ public:
 typedef ::testing::Types<SerialiazeStringStream,
                          // SerialiazeConcatenate,
                          SerialiazeFormat,
-                         SerialiazePrintf> SerialiazePerformanceType;
+                         SerialiazePrintf>
+    SerialiazePerformanceType;
 
 TYPED_TEST_CASE(SerialiazePerformanceTest, SerialiazePerformanceType);
 

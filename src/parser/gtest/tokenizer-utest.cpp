@@ -1,8 +1,8 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "parser/string_stream.hpp"
 #include "parser/tokenizer.hpp" // IWYU pragma: keep
+#include "parser/string_stream.hpp"
 #include "err/err.h"
 #include "err/gtest/err_assert.h"
 #include <gtest/gtest-message.h>
@@ -11,7 +11,6 @@
 #include <bitset>
 #include <memory>
 #include <sstream>
-#include <string>
 
 template <typename T>
 class TokenizerTest : public ::testing::Test

@@ -31,18 +31,19 @@ enum ECode
 
     // Error handling system codes
     kExpected = 1,
-    kAssert = 2,
+    kAssert,
 
     // Action error codes
-    kNotFound = 10,
-    kTooMany = 11,
-    kUnable = 12,
-    kUnexpected = 13,
-    kUnknown = 14,
+    kFailed = 10,
+    kNotFound,
+    kTooMany,
+    kUnable,
+    kUnexpected,
+    kUnknown,
 
     // Subsystems error codes
     kDatabase = 20,
-    kFileSystem = 21,
+    kFileSystem,
 };
 
 struct EnumHasher
