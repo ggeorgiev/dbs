@@ -12,6 +12,7 @@
 #include "doim/fs/fs_file.h"
 #include "err/err.h"
 #include "err/err_cppformat.h"
+#include <boost/filesystem/operations.hpp>
 #include "math/crc.hpp"
 #include <algorithm>
 #include <experimental/string_view>
@@ -48,13 +49,16 @@ protected:
                     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
                     const doim::CxxIncludeDirectorySetSPtr& includeDirectories)
     {
-        math::CrcProcessor crcProcessor;
+        const auto& path = file->path(nullptr);
+        if (!boost::filesystem::exists(path))
+        {
+            mCrcsum = 0;
+            EHEnd;
+        }
 
         std::ifstream fstream(file->path(nullptr).c_str());
         std::string content((std::istreambuf_iterator<char>(fstream)),
                             std::istreambuf_iterator<char>());
-
-        crcProcessor.process_bytes(content.data(), content.size());
 
         parser::CxxParser parser;
 
@@ -89,6 +93,10 @@ protected:
 
         auto group = std::make_shared<tpool::TaskGroup>(task::gTPool, 0, tasks);
         task::gTPool->ensureScheduled(group);
+
+        math::CrcProcessor crcProcessor;
+        crcProcessor.process_bytes(content.data(), content.size());
+
         EHTest(group->join());
 
         std::vector<math::Crcsum> crcs;
@@ -97,6 +105,12 @@ protected:
             crcs.push_back(std::static_pointer_cast<Task>(task)->crc());
 
         std::sort(crcs.begin(), crcs.end());
+
+        if (crcs.size() > 0 && crcs[0] == 0)
+        {
+            mCrcsum = 0;
+            EHEnd;
+        }
 
         crcProcessor.process_bytes(crcs.data(), sizeof(math::Crcsum) * crcs.size());
         mCrcsum = crcProcessor.checksum();

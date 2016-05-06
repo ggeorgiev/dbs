@@ -3,6 +3,8 @@
 
 #include "task/sys/parse_stdout_task.h"
 #include "task/manager.h"
+#include "task/sys/execute_command_task.h"
+#include "task/tpool.h"
 #include "doim/manager.h"
 #include "err/err_assert.h"
 #include <memory>
@@ -11,9 +13,10 @@
 namespace task
 {
 ParseStdoutTask::ParseStdoutTask(const doim::SysCommandSPtr& command,
+                                 rtti::ClassId parseId,
                                  std::function<ECode(int, const std::string&)> parse,
                                  const std::string& description)
-    : Base(command)
+    : Base(command, parseId)
     , mParse(parse)
     , mDescription(description)
 {

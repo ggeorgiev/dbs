@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -7,7 +7,7 @@ namespace rtti
 {
 typedef const void* ClassId;
 
-template <typename T>
+template <typename T, int N = 0>
 class RttiInfo
 {
 public:
@@ -20,6 +20,6 @@ private:
     static char ID;
 };
 
-template <typename T>
-char RttiInfo<T>::ID = 0;
+template <typename T, int N>
+char RttiInfo<T, N>::ID = 0;
 }

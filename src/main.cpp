@@ -19,7 +19,6 @@
 #include "err/err.h"
 #include "im/initialization_manager.hpp"
 #include "log/log.h"
-#include <cppformat/format.h>
 #include <fstream> // IWYU pragma: keep
 #include <iostream>
 #include <iterator>

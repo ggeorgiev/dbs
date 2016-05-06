@@ -5,8 +5,6 @@
 #include "doim/fs/fs_directory.h"
 #include "doim/manager.h"
 #include "log/log.h"
-#include <spdlog/details/line_logger_impl.h>
-#include <sstream>
 
 namespace task
 {

@@ -88,7 +88,11 @@ tpool::TaskSPtr CxxCompiler::compileCommand(
         EHEnd;
     };
 
-    return std::make_shared<task::ParseStdoutTask>(compileCommand, fn, "Compile " + file);
+    auto id = rtti::RttiInfo<CxxCompiler, 0>::classId();
+    return std::make_shared<task::ParseStdoutTask>(compileCommand,
+                                                   id,
+                                                   fn,
+                                                   "Compile " + file);
 }
 
 tpool::TaskSPtr CxxCompiler::linkCommand(
@@ -134,7 +138,10 @@ tpool::TaskSPtr CxxCompiler::linkCommand(
         }
         EHEnd;
     };
+
+    auto id = rtti::RttiInfo<CxxCompiler, 1>::classId();
     return std::make_shared<task::ParseStdoutTask>(linkCommand,
+                                                   id,
                                                    fn,
                                                    "Link " + program->name());
 }

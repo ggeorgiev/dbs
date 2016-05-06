@@ -19,7 +19,6 @@
 #include "err/err.h"
 #include "log/log.h"
 #include <cppformat/format.h>
-#include <spdlog/details/line_logger_impl.h>
 #include "math/crc.hpp"
 #include <functional>
 #include <string>
@@ -49,23 +48,23 @@ tpool::TaskSPtr CxxEngine::updateDbTask(const tpool::TaskSPtr& task,
 tpool::TaskSPtr CxxEngine::compileTask(const doim::FsDirectorySPtr& directory,
                                        const doim::CxxObjectFileSPtr& objectFile)
 {
-    auto crcTask = task::gManager->valid(
-        std::make_shared<task::CxxFileCrcTask>(objectFile->cxxFile()));
+    auto crcTask =
+        task::gManager->valid(std::make_shared<task::CxxObjectFileCrcTask>(objectFile));
     task::gTPool->ensureScheduled(crcTask);
 
     auto self = shared_from_this();
     tpool::TaskCallback::Function onFinish =
         [this, self, directory, objectFile](const tpool::TaskSPtr& task) -> ECode {
 
-        auto key =
-            std::make_shared<doim::DbKey>("cxx file:" + objectFile->file()->path());
+        auto key = std::make_shared<doim::DbKey>("cxx object file:" +
+                                                 objectFile->file()->path());
         key = doim::gManager->unique(key);
 
         math::Crcsum crc;
         db::gDatabase->get(key->bytes(), crc);
 
-        auto crcTask = std::static_pointer_cast<task::CxxFileCrcTask>(task);
-        if (crcTask->crc() == crc)
+        auto crcTask = std::static_pointer_cast<task::CxxObjectFileCrcTask>(task);
+        if (crcTask->crc() != 0 && crcTask->crc() == crc)
         {
             DLOG("Cxx object '{}' is already built.",
                  objectFile->file()->path(directory));
@@ -75,15 +74,6 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::FsDirectorySPtr& directory,
         auto mkdirTask = task::gManager->valid(
             std::make_shared<task::EnsureDirectoryTask>(objectFile->file()->directory()));
 
-        auto value = std::make_shared<doim::DbValue>(crcTask->crc());
-
-        tpool::TaskCallback::Function onFinish =
-            [key, value](const tpool::TaskSPtr&) -> ECode {
-            auto updateTask = std::make_shared<task::DbPutTask>(key, value);
-            EHTest(updateTask->execute());
-            EHEnd;
-        };
-
         auto compileTask = mCompiler->compileCommand(directory, objectFile);
 
         auto tasks = std::vector<tpool::TaskSPtr>{mkdirTask, compileTask};
@@ -91,8 +81,8 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::FsDirectorySPtr& directory,
             task::gManager->unique(std::make_shared<tpool::TaskSequence>(0, tasks));
         task::gTPool->ensureScheduled(seqTask);
 
-        auto seqCbTask =
-            std::make_shared<tpool::TaskCallback>(0, seqTask, onFinish, nullptr);
+        auto value = std::make_shared<doim::DbValue>(crcTask->crc());
+        auto seqCbTask = updateDbTask(seqTask, key, value);
         task::gTPool->ensureScheduled(seqCbTask);
         EHTest(seqCbTask->join());
 

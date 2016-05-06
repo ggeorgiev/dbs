@@ -10,6 +10,7 @@
 #include "task/cxx/cxx_program_crc_task.h"     // IWYU pragma: keep
 #include "task/sys/ensure_directory_task.h"    // IWYU pragma: keep
 #include "task/sys/execute_command_task.h"     // IWYU pragma: keep
+#include "task/sys/parse_stdout_task.h"        // IWYU pragma: keep
 #include "tpool/task_sequence.h"               // IWYU pragma: keep
 #include "im/initialization_manager.hpp"
 #include <memory>
@@ -56,7 +57,8 @@ class Manager : public ManagerMixin<tpool::TaskSequence>,
                 public ManagerMixin<CxxObjectFileCrcTask>,
                 public ManagerMixin<CxxProgramCrcTask>,
                 public ManagerMixin<EnsureDirectoryTask>,
-                public ManagerMixin<ExecuteCommandTask>
+                public ManagerMixin<ExecuteCommandTask>,
+                public ManagerMixin<ParseStdoutTask>
 
 {
 public:
@@ -74,6 +76,7 @@ public:
     using ManagerMixin<CxxProgramCrcTask>::valid;
     using ManagerMixin<EnsureDirectoryTask>::valid;
     using ManagerMixin<ExecuteCommandTask>::valid;
+    using ManagerMixin<ParseStdoutTask>::valid;
 };
 
 typedef std::shared_ptr<Manager> ManagerSPtr;

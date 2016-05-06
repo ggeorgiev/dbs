@@ -99,6 +99,9 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
         EHBan(kFailed);
     };
 
-    return std::make_shared<task::ParseStdoutTask>(command, fn, "Iwyu " + file);
+    return std::make_shared<task::ParseStdoutTask>(command,
+                                                   rtti::RttiInfo<CxxIwyu>::classId(),
+                                                   fn,
+                                                   "Iwyu " + file);
 }
 }
