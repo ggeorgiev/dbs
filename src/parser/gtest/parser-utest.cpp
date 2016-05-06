@@ -8,9 +8,7 @@
 #include "err/err.h"
 #include "err/gtest/err.h"
 #include "err/gtest/err_assert.h"
-#include <gtest/gtest-message.h>
-#include <gtest/gtest-typed-test.h>
-#include <gtest/gtest.h>
+#include "gtest/framework.h"
 #include <limits>
 #include <memory>
 #include <sstream>

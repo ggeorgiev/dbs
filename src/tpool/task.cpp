@@ -4,7 +4,6 @@
 #include "tpool/task.h"
 #include "tpool/reverse_lock.hpp"
 #include "err/err_assert.h"
-#include <sstream>
 
 namespace tpool
 {

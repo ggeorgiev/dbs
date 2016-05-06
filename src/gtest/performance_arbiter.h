@@ -1,9 +1,9 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
 
-#include <gtest/gtest.h>
+#include "gtest/framework.h"
 #include <boost/chrono/process_cpu_clocks.hpp>
 #include <iosfwd>
 #include <string>
@@ -11,8 +11,6 @@
 
 namespace testing
 {
-class TestPartResult;
-
 class PerformanceArbiter : public TestEventListener
 {
 public:

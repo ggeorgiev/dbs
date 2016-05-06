@@ -41,6 +41,7 @@ extern TagSPtr gTaskTag;
 
 extern TagSPtr gCrcTag;
 extern TagSPtr gDbTag;
+extern TagSPtr gSysTag;
 
 extern TagSPtr gRunTag;
 extern TagSPtr gDoneTag;

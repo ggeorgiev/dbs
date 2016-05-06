@@ -4,9 +4,8 @@
 #include "db/database.h"
 #include "err/err.h"
 #include "err/gtest/err.h"
+#include "gtest/framework.h"
 #include "gtest/intermittent.h" // IWYU pragma: keep
-#include <gtest/gtest-message.h>
-#include <gtest/gtest.h>
 #include <ostream>
 #include <string>
 

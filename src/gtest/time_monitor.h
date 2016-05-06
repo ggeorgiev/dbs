@@ -1,16 +1,14 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
 
-#include <gtest/gtest.h>
+#include "gtest/framework.h"
 #include <iosfwd>
 #include <stddef.h>
 
 namespace testing
 {
-class TestPartResult;
-
 class TimeMonitor : public TestEventListener
 {
 public:

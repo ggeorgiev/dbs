@@ -29,6 +29,7 @@ cxx_library stl
         set
         shared_mutex
         sstream
+        stdexcept
         string
         thread
         tuple

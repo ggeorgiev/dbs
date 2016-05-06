@@ -4,11 +4,13 @@
 #include "doim/manager.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/tag/tag.h"
-#include <gtest/gtest-message.h>
-#include <gtest/gtest.h>
+#include "gtest/framework.h"
 #include <boost/thread/barrier.hpp>
 #include <memory>
 #include <thread>
+#include <unordered_set>
+#include <vector>
+#include <stddef.h>
 
 TEST(ManagerTest, mt_unique)
 {

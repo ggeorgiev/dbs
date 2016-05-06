@@ -1,9 +1,8 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "parser/string_stream.hpp"
-#include <gtest/gtest-typed-test.h>
-#include <gtest/gtest.h>
+#include "gtest/framework.h"
 
 template <typename T>
 class StreamTest : public ::testing::Test

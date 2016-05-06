@@ -6,6 +6,7 @@ cxx_library cstd
         @directory=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk:
 
         sys/errno.h
+        sys/wait.h
         cstddef
         cstdio
         cstdint

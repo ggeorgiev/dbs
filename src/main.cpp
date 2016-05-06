@@ -3,6 +3,7 @@
 
 #include "engine/cxx_engine.h"
 #include "tool/cxx_compiler.h"
+#include "tool/cxx_iwyu.h"
 #include "task/tpool.h"
 #include "tpool/task.h"
 #include "tpool/task_group.h"
@@ -13,13 +14,12 @@
 #include "doim/fs/fs_file.h"
 #include "doim/generic/object.h"
 #include "doim/manager.h"
+#include "doim/tag/tag.h"
 #include "db/database.h"
 #include "err/err.h"
 #include "im/initialization_manager.hpp"
 #include "log/log.h"
-#include <spdlog/common.h>
-#include <spdlog/logger.h>
-#include <spdlog/details/logger_impl.h>
+#include <cppformat/format.h>
 #include <fstream> // IWYU pragma: keep
 #include <iostream>
 #include <iterator>

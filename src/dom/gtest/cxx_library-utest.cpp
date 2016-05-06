@@ -6,8 +6,7 @@
 #include "doim/manager.h"
 #include "err/err.h"
 #include "err/gtest/err.h"
-#include <gtest/gtest-message.h>
-#include <gtest/gtest.h>
+#include "gtest/framework.h"
 #include <memory>
 #include <unordered_set>
 

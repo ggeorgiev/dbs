@@ -9,7 +9,6 @@
 #include "doim/tag/tag.h"
 #include "err/err.h"
 #include <cppformat/format.h>
-#include <spdlog/details/line_logger_impl.h>
 #include <iosfwd>
 #include <memory>
 #include <tuple>
@@ -37,7 +36,7 @@ public:
 
     doim::TagSet tags() const override
     {
-        return doim::TagSet{doim::gDbTag};
+        return doim::TagSet{doim::gTaskTag, doim::gDbTag};
     }
 
     ECode operator()() override;

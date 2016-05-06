@@ -8,8 +8,6 @@
 #include "doim/manager.h"
 #include "err/err_assert.h"
 #include "log/log.h"
-#include <spdlog/details/line_logger_impl.h>
-#include <sstream>
 #include <string>
 
 namespace task

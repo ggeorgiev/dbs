@@ -2,9 +2,7 @@
 //
 
 #include "rtti/class_rtti.hpp"
-#include <gtest/gtest-message.h>
-#include <gtest/gtest-test-part.h>
-#include <gtest/gtest.h> // IWYU pragma: export
+#include "gtest/framework.h"
 
 namespace rtti
 {

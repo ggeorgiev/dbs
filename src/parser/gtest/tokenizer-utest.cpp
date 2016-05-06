@@ -5,9 +5,7 @@
 #include "parser/string_stream.hpp"
 #include "err/err.h"
 #include "err/gtest/err_assert.h"
-#include <gtest/gtest-message.h>
-#include <gtest/gtest-typed-test.h>
-#include <gtest/gtest.h>
+#include "gtest/framework.h"
 #include <bitset>
 #include <memory>
 #include <sstream>

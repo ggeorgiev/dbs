@@ -18,6 +18,7 @@
 #include "db/database.h"
 #include "err/err.h"
 #include "log/log.h"
+#include <cppformat/format.h>
 #include <spdlog/details/line_logger_impl.h>
 #include "math/crc.hpp"
 #include <functional>

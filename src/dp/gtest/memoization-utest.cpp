@@ -2,12 +2,14 @@
 //
 
 #include "dp/memoization.hpp"
+#include "dp/handle.hpp"
 #include "dp/map_container.hpp"
 #include "dp/solitary_container.hpp"
+#include "gtest/framework.h"
 #include "gtest/intermittent.h" // IWYU pragma: keep
-#include <gtest/gtest-message.h>
-#include <gtest/gtest.h>
+#include <functional>
 #include <memory>
+#include <vector>
 
 template <typename T>
 class MemoizationTest : public ::testing::Test

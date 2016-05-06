@@ -2,9 +2,13 @@
 //
 
 #include "tpool/task_callback.h" // IWYU pragma: keep
-#include "tpool/tpool.h"         // IWYU pragma: keep
+#include "tpool/task.h"
+#include "tpool/tpool.h" // IWYU pragma: keep
+#include "err/err.h"
+#include "err/err_cppformat.h"
 #include "err/gtest/err.h"
-#include <gtest/gtest.h>
+#include "gtest/framework.h"
+#include <functional>
 #include <memory>
 
 namespace tpool

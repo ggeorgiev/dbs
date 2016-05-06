@@ -1,8 +1,9 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "tpool/priority.hpp"
-#include <gtest/gtest.h>
+#include "gtest/framework.h"
+#include <iosfwd>
 #include <limits>
 #include <memory>
 

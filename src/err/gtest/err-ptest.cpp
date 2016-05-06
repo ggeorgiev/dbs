@@ -1,8 +1,7 @@
 #include "err/err.h"
 #include "err/err_cppformat.h"
 #include "err/err_serialize.h"
-#include <gtest/gtest-typed-test.h>
-#include <gtest/gtest.h>
+#include "gtest/framework.h"
 #include <cstdio>
 #include <sstream>
 

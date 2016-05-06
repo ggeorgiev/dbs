@@ -6,10 +6,11 @@
 #include "doim/fs/fs_file.h"
 #include "doim/generic/object.h"
 #include "err/gtest/err_assert.h"
-#include <gtest/gtest-message.h>
-#include <gtest/gtest.h>
+#include "gtest/framework.h"
 #include <memory>
 #include <ostream>
+#include <stdexcept>
+#include <string>
 
 TEST(ManagerTest, obtainObject)
 {

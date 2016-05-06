@@ -7,6 +7,7 @@
 #include "tool/cxx_iwyu.h"
 #include "tpool/task.h"
 #include "dom/cxx/cxx_program.h"
+#include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/db/db_key.hpp"
 #include "doim/db/db_value.hpp"

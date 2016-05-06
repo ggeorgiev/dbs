@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "option/verbose.h"
@@ -13,6 +13,8 @@ bool Verbose::isVisible(const doim::TagSet& tags)
     if (tags.count(doim::gCrcTag) > 0)
         return false;
     if (tags.count(doim::gDbTag) > 0)
+        return false;
+    if (tags.count(doim::gSysTag) > 0)
         return false;
     return true;
 }

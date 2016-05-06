@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -10,7 +10,6 @@
 #include "doim/tag/tag.h"
 #include "err/err.h"
 #include <cppformat/format.h>
-#include <spdlog/details/line_logger_impl.h>
 #include <iosfwd>
 #include <memory>
 #include <tuple>

@@ -2,17 +2,22 @@
 //
 
 #include "tool/cxx_compiler.h"
-#include "task/sys/execute_command_task.h"
+#include "task/sys/parse_stdout_task.h"
 #include "dom/cxx/cxx_library.h"
 #include "dom/cxx/cxx_program.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "doim/sys/command.h"
+#include "err/err.h"
+#include "err/err_cppformat.h"
+#include "log/log.h"
+#include <functional>
 #include <memory>
 #include <sstream>
 #include <string>
 #include <unordered_set>
+#include <stdio.h>
 
 namespace tool
 {
@@ -74,7 +79,16 @@ tpool::TaskSPtr CxxCompiler::compileCommand(
     auto compileCommand = std::make_shared<doim::SysCommand>(mCompiler, compileArguments);
     compileCommand = doim::gManager->unique(compileCommand);
 
-    return task::ExecuteCommandTask::createLogOnError(compileCommand, "Compile " + file);
+    auto fn = [](int exit, const std::string& stdout) -> ECode {
+        if (exit != 0)
+        {
+            ELOG("\n{}", stdout);
+            EHBan(kUnable);
+        }
+        EHEnd;
+    };
+
+    return std::make_shared<task::ParseStdoutTask>(compileCommand, fn, "Compile " + file);
 }
 
 tpool::TaskSPtr CxxCompiler::linkCommand(
@@ -112,7 +126,16 @@ tpool::TaskSPtr CxxCompiler::linkCommand(
     auto linkCommand = std::make_shared<doim::SysCommand>(mCompiler, arguments);
     linkCommand = doim::gManager->unique(linkCommand);
 
-    return task::ExecuteCommandTask::createLogOnError(linkCommand,
-                                                      "Link " + program->name());
+    auto fn = [](int exit, const std::string& stdout) -> ECode {
+        if (exit != 0)
+        {
+            ELOG("\n{}", stdout);
+            EHBan(kUnable);
+        }
+        EHEnd;
+    };
+    return std::make_shared<task::ParseStdoutTask>(linkCommand,
+                                                   fn,
+                                                   "Link " + program->name());
 }
 }

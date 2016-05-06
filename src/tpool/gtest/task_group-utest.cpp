@@ -2,11 +2,16 @@
 //
 
 #include "tpool/task_group.h" // IWYU pragma: keep
-#include "tpool/tpool.h"      // IWYU pragma: keep
+#include "tpool/task.h"
+#include "tpool/tpool.h" // IWYU pragma: keep
+#include "err/err.h"
+#include "err/err_cppformat.h"
 #include "err/gtest/err.h"
 #include "err/gtest/err_assert.h"
-#include <gtest/gtest.h>
+#include "gtest/framework.h"
 #include <memory>
+#include <stdexcept>
+#include <vector>
 
 namespace tpool
 {

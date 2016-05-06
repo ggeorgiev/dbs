@@ -2,48 +2,19 @@
 //
 
 #include "task/sys/execute_command_task.h"
-#include "task/manager.h"
-#include "tpool/task_callback.h"
 #include "doim/manager.h"
 #include "db/database.h"
 #include "err/err_assert.h"
 #include "err/err_cppformat.h"
-#include "log/log.h"
 #include <memory>
 #include <string>
 #include <stdio.h>
+#include <sys/wait.h>
 
 namespace task
 {
-tpool::TaskSPtr ExecuteCommandTask::createLogOnError(const doim::SysCommandSPtr& command,
-                                                     const std::string& description)
-{
-    auto task =
-        std::make_shared<task::ExecuteCommandTask>(command,
-                                                   task::EExitExpectation::kNonZero,
-                                                   description);
-
-    task = task::gManager->valid(task);
-
-    tpool::TaskCallback::Function onError = [](const tpool::TaskSPtr& task) -> ECode {
-        const auto& executeTask = std::static_pointer_cast<ExecuteCommandTask>(task);
-
-        std::string stdout;
-        EHTest(executeTask->stdout(stdout));
-
-        ELOG("{}", stdout);
-        EHEnd;
-    };
-    return std::make_shared<tpool::TaskCallback>(0, task, nullptr, onError);
-}
-
-ExecuteCommandTask::ExecuteCommandTask(const doim::SysCommandSPtr& command,
-                                       EExitExpectation exitExpectation,
-                                       const std::string& description)
-    : Base(command,
-           static_cast<typename std::underlying_type<EExitExpectation>::type>(
-               exitExpectation))
-    , mDescription(description)
+ExecuteCommandTask::ExecuteCommandTask(const doim::SysCommandSPtr& command)
+    : Base(command)
 {
     ASSERT(doim::gManager->isUnique(command));
 }
@@ -64,15 +35,17 @@ ECode ExecuteCommandTask::operator()()
         if (fgets(buffer, sizeof(buffer), pipe) != NULL)
             stdout += buffer;
     }
-
-    auto exit = pclose(pipe);
+    int exit = pclose(pipe);
+    mExit = WEXITSTATUS(exit);
 
     EHTest(db::gDatabase->put(stdoutDbKey(), stdout));
-
-    if (exitExpectation() == EExitExpectation::kNonZero && exit != 0)
-        EHBan(kUnable, cmd);
-
     EHEnd;
+}
+
+int ExecuteCommandTask::exit() const
+{
+    ASSERT(finished());
+    return mExit;
 }
 
 ECode ExecuteCommandTask::stdout(std::string& stdout) const
@@ -89,9 +62,7 @@ std::string ExecuteCommandTask::stdoutDbKey() const
 
 std::string ExecuteCommandTask::description() const
 {
-    if (!mDescription.empty())
-        return mDescription;
-    return "Execute command " + command()->string();
+    return "System execute " + command()->string();
 }
 
 } // namespace task

@@ -4,7 +4,7 @@
 #include "tool/cxx_iwyu.h"
 #include "tool/cxx_compiler.h"
 #include "task/manager.h"
-#include "task/sys/execute_command_task.h"
+#include "task/sys/parse_stdout_task.h"
 #include "tpool/task_callback.h"
 #include "dom/cxx/cxx_library.h"
 #include "dom/cxx/cxx_program.h"
@@ -46,43 +46,59 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
 
     auto command = std::make_shared<doim::SysCommand>(mTool, arguments);
     command = doim::gManager->unique(command);
-    auto task = task::gManager->valid(
-        std::make_shared<task::ExecuteCommandTask>(command,
-                                                   task::EExitExpectation::kAny,
-                                                   "Iwyu " + file));
 
-    tpool::TaskCallback::Function onFinish = [](const tpool::TaskSPtr& task) -> ECode {
-        const auto& executeTask =
-            std::static_pointer_cast<task::ExecuteCommandTask>(task);
-
-        std::string stdout;
-        EHTest(executeTask->stdout(stdout));
+    auto fn = [](int exit, const std::string& stdout) -> ECode {
+        if (exit == 0)
+        {
+            ELOG("Unexpected exit code from iwyu tool: {}", exit);
+            EHBan(kUnexpected);
+        }
 
         if (stdout.find("has correct #includes/fwd-decls") != std::string::npos)
             EHEnd;
 
         static std::regex removeItemsRegex(
-            "\n(.*?) should remove these lines:"
+            "(?:^|\n)(.*?) should remove these lines:"
             "(?:[\\s\\r\\n]+- #include.*?\\/\\/ lines \\d+-\\d+)+");
         static std::regex removeItemRegex("- #include.*?\\/\\/ lines (\\d+)-\\d+");
 
-        std::smatch matchItems;
-        if (std::regex_search(stdout, matchItems, removeItemsRegex))
+        auto its = std::sregex_iterator(stdout.begin(), stdout.end(), removeItemsRegex);
+        for (std::sregex_iterator items = its; items != std::sregex_iterator(); ++items)
         {
-            const auto& removes = matchItems[0].str();
+            std::smatch smatchs = *items;
+            const auto& removes = smatchs.str();
             auto it =
                 std::sregex_iterator(removes.begin(), removes.end(), removeItemRegex);
 
             for (std::sregex_iterator item = it; item != std::sregex_iterator(); ++item)
             {
                 std::smatch smatch = *item;
-                ELOG("\n{}:{}:1: error: {} ", matchItems[1], smatch[1], smatch[0]);
+                ELOG("\n{}:{}:1: error: {} ", smatchs[1], smatch[1], smatch[0]);
             }
         }
 
+        static std::regex addItemsRegex("(?:^|\n)(.*?) should add these lines:"
+                                        "(?:[\\s\\r\\n]+#include.*?\\/\\/[^\\n]*)+");
+        static std::regex addItemRegex("(#include[^\\n]+)");
+
+        its = std::sregex_iterator(stdout.begin(), stdout.end(), addItemsRegex);
+        for (std::sregex_iterator items = its; items != std::sregex_iterator(); ++items)
+        {
+            std::smatch smatchs = *items;
+            const auto& adds = smatchs.str();
+            auto it = std::sregex_iterator(adds.begin(), adds.end(), addItemRegex);
+
+            for (std::sregex_iterator item = it; item != std::sregex_iterator(); ++item)
+            {
+                std::smatch smatch = *item;
+                ELOG("\n{}:1:1: error: {} ", smatchs[1], smatch[1]);
+            }
+        }
+
+        ELOG("\n{}", stdout);
         EHBan(kFailed);
     };
 
-    return std::make_shared<tpool::TaskCallback>(0, task, onFinish, nullptr);
+    return std::make_shared<task::ParseStdoutTask>(command, fn, "Iwyu " + file);
 }
 }

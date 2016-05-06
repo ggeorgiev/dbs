@@ -9,9 +9,8 @@
 #include "doim/manager.h"
 #include "err/err.h"
 #include "err/gtest/err.h"
+#include "gtest/framework.h"
 #include "gtest/test_resource.h"
-#include <gtest/gtest-message.h>
-#include <gtest/gtest.h>
 #include <memory>
 #include <ostream>
 #include <unordered_set>

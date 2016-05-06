@@ -2,9 +2,9 @@
 //
 
 #include "dp/simple_memoization.hpp"
+#include "gtest/framework.h"
 #include "gtest/intermittent.h" // IWYU pragma: keep
-#include <gtest/gtest-message.h>
-#include <gtest/gtest.h>
+#include <functional>
 #include <memory>
 
 static auto gFn5 = []() { return 5; };

@@ -10,5 +10,6 @@
 
 xcuserdata/
 
+.DS_Store
 dbs
 dbs.*
