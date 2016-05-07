@@ -7,19 +7,6 @@ cd $BASEDIR
 # Download all submodules
 git submodule update --init || exit 1
 
-#Build cmake
-if [ ! -e cmake ]
-then
-    cd 3rdparty/cmake || exit 1
-
-    ./bootstrap --prefix=$BASEDIR/cmake
-    make
-    make install
-    git clean -fdx
-
-    cd ../.. || exit 1
-fi
-
 CMAKE=cmake
 
 if [ ! -e clang ]
