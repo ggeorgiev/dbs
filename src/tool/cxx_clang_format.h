@@ -6,6 +6,7 @@
 #include "tpool/task.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_directory.h"
+#include "doim/sys/argument.h"
 #include "doim/sys/executable.hpp"
 #include <memory>
 
@@ -23,6 +24,7 @@ public:
                                   const doim::CxxFileSPtr& cxxFile) const;
 
 private:
+    static doim::SysArgumentSPtr gSortIncludesArgument;
     doim::SysExecutableSPtr mFormatter;
 };
 }

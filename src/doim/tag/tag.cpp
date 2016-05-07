@@ -10,14 +10,7 @@ namespace doim
 {
 TagSPtr Tag::global(const std::string& name, TagSPtr& tag)
 {
-    im::InitializationManager::subscribe<
-        TagSPtr>(Manager::initialization_rank() + im::InitializationManager::rank_step(),
-                 [&tag]() -> bool {
-                     tag = gManager->unique(tag);
-                     return true;
-                 },
-                 nullptr);
-    return std::make_shared<Tag>(name);
+    return Manager::global<Tag, std::string>(name, tag);
 }
 
 TagSPtr gBuildTag = Tag::global("build", gBuildTag);
@@ -28,7 +21,6 @@ TagSPtr gTaskTag = Tag::global("task", gTaskTag);
 TagSPtr gCrcTag = Tag::global("crc", gCrcTag);
 TagSPtr gDbTag = Tag::global("db", gDbTag);
 TagSPtr gSysTag = Tag::global("sys", gSysTag);
-;
 
 TagSPtr gRunTag = Tag::global("run", gRunTag);
 TagSPtr gDoneTag = Tag::global("done", gDoneTag);

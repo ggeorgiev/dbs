@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -32,12 +32,12 @@ public:
         uninitialize_objects();
     }
 
-    static inline int rank_base()
+    static constexpr int rank_base()
     {
         return 1;
     }
 
-    static inline int rank_step()
+    static constexpr int rank_step()
     {
         return 2;
     }

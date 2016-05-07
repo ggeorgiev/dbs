@@ -11,7 +11,7 @@
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
-#include "doim/sys/argument.hpp"
+#include "doim/sys/argument.h"
 #include "doim/sys/command.h"
 #include <memory>
 #include <regex>

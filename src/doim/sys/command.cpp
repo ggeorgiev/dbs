@@ -4,7 +4,7 @@
 #include "doim/sys/command.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
-#include "doim/sys/argument.hpp"
+#include "doim/sys/argument.h"
 #include "err/err_assert.h"
 #include <string>
 

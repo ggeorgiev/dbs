@@ -19,7 +19,7 @@
 
 namespace err
 {
-inline int initialization_rank()
+constexpr int initialization_rank()
 {
     return im::InitializationManager::rank_base() +
            im::InitializationManager::rank_step();

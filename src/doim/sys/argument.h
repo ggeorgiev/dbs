@@ -4,12 +4,11 @@
 #pragma once
 
 #include "doim/base.hpp"
-#include <boost/functional/hash.hpp>
+#include <iosfwd>
 #include <memory>
 #include <string>
+#include <tuple>
 #include <unordered_set>
-#include <utility>
-#include <vector>
 
 namespace doim
 {
@@ -21,6 +20,8 @@ typedef std::shared_ptr<SysArgumentSet> SysArgumentSetSPtr;
 class SysArgument : public Base<SysArgument, std::string>
 {
 public:
+    static SysArgumentSPtr global(const std::string& value, SysArgumentSPtr& argument);
+
     SysArgument(const std::string& value)
         : Base(value)
     {

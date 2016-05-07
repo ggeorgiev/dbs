@@ -17,6 +17,9 @@
 
 namespace tool
 {
+doim::SysArgumentSPtr CxxClangFormat::gSortIncludesArgument =
+    doim::SysArgument::global("-sort-includes", CxxClangFormat::gSortIncludesArgument);
+
 CxxClangFormat::CxxClangFormat(const doim::SysExecutableSPtr& formatter)
     : mFormatter(formatter)
 {
@@ -26,9 +29,7 @@ tpool::TaskSPtr CxxClangFormat::formatCommand(const doim::FsDirectorySPtr& direc
                                               const doim::CxxFileSPtr& cxxFile) const
 {
     auto arguments = std::make_shared<doim::SysArgumentSet>();
-
-    auto argument_sort_includes = doim::gManager->obtainArgument("-sort-includes");
-    arguments->insert(argument_sort_includes);
+    arguments->insert(gSortIncludesArgument);
 
     const std::string& file = cxxFile->file()->path(directory);
     auto argument_i = doim::gManager->obtainArgument("-i " + file);
@@ -43,6 +44,6 @@ tpool::TaskSPtr CxxClangFormat::formatCommand(const doim::FsDirectorySPtr& direc
                                                 cxxFile->file()->directory(),
                                                 id,
                                                 task::ParseStdoutTask::logOnError(),
-                                                "Compile " + file));
+                                                "Format " + file));
 }
 }

@@ -15,7 +15,7 @@ namespace db
 class Database
 {
 public:
-    static inline int initialization_rank()
+    static constexpr int initialization_rank()
     {
         return im::InitializationManager::rank_base() +
                im::InitializationManager::rank_step();

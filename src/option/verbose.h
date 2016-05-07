@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -12,7 +12,7 @@ namespace opt
 class Verbose
 {
 public:
-    static inline int initialization_rank()
+    static constexpr int initialization_rank()
     {
         return im::InitializationManager::rank_base() +
                im::InitializationManager::rank_step();

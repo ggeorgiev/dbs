@@ -15,7 +15,7 @@
 #include "doim/generic/object.h"
 #include "doim/manager_object_mixin.hpp"
 #include "doim/manager_object_set_mixin.hpp"
-#include "doim/sys/argument.hpp"
+#include "doim/sys/argument.h"
 #include "doim/sys/command.h"
 #include "doim/sys/executable.hpp"
 #include "doim/tag/tag.h"
@@ -28,6 +28,11 @@
 
 namespace doim
 {
+class Manager;
+typedef std::shared_ptr<Manager> ManagerSPtr;
+
+extern ManagerSPtr gManager;
+
 class Manager : public ManagerObjectMixin<CxxFile>,
                 public ManagerObjectSetMixin<CxxHeader>,
                 public ManagerObjectSetMixin<CxxIncludeDirectory>,
@@ -42,10 +47,28 @@ class Manager : public ManagerObjectMixin<CxxFile>,
                 public ManagerObjectSetMixin<Tag>
 {
 public:
-    static inline int initialization_rank()
+    static constexpr int initialization_rank()
     {
         return im::InitializationManager::rank_base() +
                im::InitializationManager::rank_step();
+    }
+
+    static constexpr int object_initialization_rank()
+    {
+        return initialization_rank() + im::InitializationManager::rank_step();
+    }
+
+    template <typename T, typename... Args>
+    static std::shared_ptr<T> global(const Args&... args, std::shared_ptr<T>& object)
+    {
+        im::InitializationManager::subscribe<
+            std::shared_ptr<T>>(object_initialization_rank(),
+                                [&object]() -> bool {
+                                    object = gManager->unique(object);
+                                    return true;
+                                },
+                                nullptr);
+        return std::make_shared<T>(args...);
     }
 
     // Obtain an unique location.
@@ -153,8 +176,4 @@ private:
 std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectory& directory);
 std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectorySet& directories);
 std::ostream& operator<<(std::ostream& out, const CxxHeader& header);
-
-typedef std::shared_ptr<Manager> ManagerSPtr;
-
-extern ManagerSPtr gManager;
 }
