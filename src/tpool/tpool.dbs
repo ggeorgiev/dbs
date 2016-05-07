@@ -9,7 +9,6 @@ cxx_library tpool
         tpool/reverse_lock.hpp
         tpool/task_callback.h
         tpool/task_group.h
-        tpool/task_sequence.h
         tpool/task.h
         tpool/tpool.h
     ;
@@ -25,7 +24,6 @@ cxx_library tpool
     cxx_file:
         task_callback.cpp
         task_group.cpp
-        task_sequence.cpp
         task.cpp
         tpool.cpp
     ;
@@ -47,7 +45,6 @@ cxx_library tpool-test
         gtest/priority-utest.cpp
         gtest/task_callback-utest.cpp
         gtest/task_group-utest.cpp
-        gtest/task_sequence-utest.cpp
         gtest/task-utest.cpp
         gtest/tpool-utest.cpp
     ;

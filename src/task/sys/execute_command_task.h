@@ -16,14 +16,21 @@ namespace task
 class ExecuteCommandTask;
 typedef std::shared_ptr<ExecuteCommandTask> ExecuteCommandTaskSPtr;
 
-class ExecuteCommandTask : public Base<ExecuteCommandTask, doim::SysCommandSPtr>
+class ExecuteCommandTask
+    : public Base<ExecuteCommandTask, doim::SysCommandSPtr, doim::FsDirectorySPtr>
 {
 public:
-    ExecuteCommandTask(const doim::SysCommandSPtr& command);
+    ExecuteCommandTask(const doim::SysCommandSPtr& command,
+                       const doim::FsDirectorySPtr& targetDirectory);
 
     doim::SysCommandSPtr command() const
     {
         return std::get<0>(mArgs);
+    }
+
+    doim::FsDirectorySPtr targetDirectory() const
+    {
+        return std::get<1>(mArgs);
     }
 
     doim::TagSet tags() const override
@@ -32,13 +39,13 @@ public:
     }
 
     int exit() const;
-    ECode stdout(std::string& stdout) const;
+    ECode stdoutput(std::string& stdoutput) const;
 
     ECode operator()() override;
     std::string description() const override;
 
 private:
     int mExit;
-    std::string stdoutDbKey() const;
+    std::string stdoutputDbKey() const;
 };
 }

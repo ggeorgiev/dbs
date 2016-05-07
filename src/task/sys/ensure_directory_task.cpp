@@ -21,19 +21,19 @@ EnsureDirectoryTask::EnsureDirectoryTask(const doim::FsDirectorySPtr& directory)
 
 ECode EnsureDirectoryTask::operator()()
 {
-    boost::filesystem::path path(directory()->path());
-
-    if (boost::filesystem::is_directory(path))
-        EHEnd;
-
     if (directory()->parent() != nullptr)
     {
-        auto mkdirTask = task::gManager->valid(
-            std::make_shared<task::EnsureDirectoryTask>(directory()->parent()));
-        task::gTPool->ensureScheduled(mkdirTask);
-        EHTest(mkdirTask->join());
+        boost::filesystem::path path(directory()->parent()->path());
+        if (!boost::filesystem::is_directory(path))
+        {
+            auto mkdirTask = task::gManager->valid(
+                std::make_shared<task::EnsureDirectoryTask>(directory()->parent()));
+            task::gTPool->ensureScheduled(mkdirTask);
+            EHTest(mkdirTask->join());
+        }
     }
 
+    boost::filesystem::path path(directory()->path());
     if (!boost::filesystem::create_directory(path))
         if (!boost::filesystem::is_directory(path))
             EHBan(kFileSystem);

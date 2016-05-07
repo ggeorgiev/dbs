@@ -8,15 +8,15 @@
 #include "doim/manager.h"
 #include "err/err_assert.h"
 #include <memory>
-#include <stdio.h>
 
 namespace task
 {
 ParseStdoutTask::ParseStdoutTask(const doim::SysCommandSPtr& command,
+                                 const doim::FsDirectorySPtr& targetDirectory,
                                  rtti::ClassId parseId,
                                  std::function<ECode(int, const std::string&)> parse,
                                  const std::string& description)
-    : Base(command, parseId)
+    : Base(command, targetDirectory, parseId)
     , mParse(parse)
     , mDescription(description)
 {
@@ -25,15 +25,15 @@ ParseStdoutTask::ParseStdoutTask(const doim::SysCommandSPtr& command,
 
 ECode ParseStdoutTask::operator()()
 {
-    auto executeTask =
-        gManager->valid(std::make_shared<task::ExecuteCommandTask>(command()));
+    auto executeTask = gManager->valid(
+        std::make_shared<task::ExecuteCommandTask>(command(), targetDirectory()));
     gTPool->ensureScheduled(executeTask);
     EHTest(executeTask->join());
 
-    std::string stdout;
-    EHTest(executeTask->stdout(stdout));
+    std::string stdoutput;
+    EHTest(executeTask->stdoutput(stdoutput));
 
-    EHTest(mParse(executeTask->exit(), stdout));
+    EHTest(mParse(executeTask->exit(), stdoutput));
     EHEnd;
 }
 

@@ -11,7 +11,6 @@
 #include "task/tpool.h"
 #include "tpool/task_callback.h"
 #include "tpool/task_group.h"
-#include "tpool/task_sequence.h"
 #include "doim/cxx/cxx_program.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
@@ -71,20 +70,13 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::FsDirectorySPtr& directory,
             EHEnd;
         }
 
-        auto mkdirTask = task::gManager->valid(
-            std::make_shared<task::EnsureDirectoryTask>(objectFile->file()->directory()));
-
         auto compileTask = mCompiler->compileCommand(directory, objectFile);
-
-        auto tasks = std::vector<tpool::TaskSPtr>{mkdirTask, compileTask};
-        auto seqTask =
-            task::gManager->unique(std::make_shared<tpool::TaskSequence>(0, tasks));
-        task::gTPool->ensureScheduled(seqTask);
+        task::gTPool->ensureScheduled(compileTask);
 
         auto value = std::make_shared<doim::DbValue>(crcTask->crc());
-        auto seqCbTask = updateDbTask(seqTask, key, value);
-        task::gTPool->ensureScheduled(seqCbTask);
-        EHTest(seqCbTask->join());
+        auto compileCbTask = updateDbTask(compileTask, key, value);
+        task::gTPool->ensureScheduled(compileCbTask);
+        EHTest(compileCbTask->join());
 
         EHEnd;
     };
@@ -114,10 +106,11 @@ tpool::TaskSPtr CxxEngine::buildObjects(const doim::FsDirectorySPtr& directory,
 
     auto self = shared_from_this();
     tpool::TaskCallback::Function onFinish =
-        [this, self, directory, program, objectFiles](
+        [this, self, directory, intermediate, program, objectFiles](
             const tpool::TaskSPtr& task) -> ECode {
 
-        auto linkTask = mCompiler->linkCommand(directory, program, objectFiles);
+        auto linkTask =
+            mCompiler->linkCommand(directory, intermediate, program, objectFiles);
         task::gTPool->ensureScheduled(linkTask);
         EHTest(linkTask->join());
         EHEnd;

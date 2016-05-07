@@ -2,6 +2,7 @@
 //
 
 #include "tool/cxx_compiler.h"
+#include "task/manager.h"
 #include "task/sys/parse_stdout_task.h"
 #include "dom/cxx/cxx_library.h"
 #include "dom/cxx/cxx_program.h"
@@ -89,14 +90,17 @@ tpool::TaskSPtr CxxCompiler::compileCommand(
     };
 
     auto id = rtti::RttiInfo<CxxCompiler, 0>::classId();
-    return std::make_shared<task::ParseStdoutTask>(compileCommand,
-                                                   id,
-                                                   fn,
-                                                   "Compile " + file);
+    return task::gManager->valid(
+        std::make_shared<task::ParseStdoutTask>(compileCommand,
+                                                objectFile->file()->directory(),
+                                                id,
+                                                fn,
+                                                "Compile " + file));
 }
 
 tpool::TaskSPtr CxxCompiler::linkCommand(
     const doim::FsDirectorySPtr& directory,
+    const doim::FsDirectorySPtr& intermediate,
     const dom::CxxProgramSPtr& program,
     const doim::CxxObjectFileSetSPtr& objectFiles) const
 {
@@ -140,9 +144,11 @@ tpool::TaskSPtr CxxCompiler::linkCommand(
     };
 
     auto id = rtti::RttiInfo<CxxCompiler, 1>::classId();
-    return std::make_shared<task::ParseStdoutTask>(linkCommand,
-                                                   id,
-                                                   fn,
-                                                   "Link " + program->name());
+    return task::gManager->valid(
+        std::make_shared<task::ParseStdoutTask>(linkCommand,
+                                                intermediate,
+                                                id,
+                                                fn,
+                                                "Link " + program->name()));
 }
 }

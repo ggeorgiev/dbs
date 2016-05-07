@@ -30,6 +30,7 @@ public:
                                    const doim::CxxObjectFileSPtr& objectFile) const;
 
     tpool::TaskSPtr linkCommand(const doim::FsDirectorySPtr& directory,
+                                const doim::FsDirectorySPtr& intermediate,
                                 const dom::CxxProgramSPtr& program,
                                 const doim::CxxObjectFileSetSPtr& objectFiles) const;
 

@@ -11,7 +11,6 @@
 #include "task/sys/ensure_directory_task.h"
 #include "task/sys/execute_command_task.h"
 #include "task/sys/parse_stdout_task.h"
-#include "tpool/task_sequence.h"
 #include "im/initialization_manager.hpp"
 #include <memory>
 #include <mutex>
@@ -51,8 +50,7 @@ protected:
     std::unordered_set<TaskSPtr, Hasher, Hasher> mTasks;
 };
 
-class Manager : public ManagerMixin<tpool::TaskSequence>,
-                public ManagerMixin<CxxFileCrcTask>,
+class Manager : public ManagerMixin<CxxFileCrcTask>,
                 public ManagerMixin<CxxHeaderCrcTask>,
                 public ManagerMixin<CxxObjectFileCrcTask>,
                 public ManagerMixin<CxxProgramCrcTask>,
@@ -67,8 +65,6 @@ public:
         return im::InitializationManager::rank_base() +
                im::InitializationManager::rank_step();
     }
-
-    using ManagerMixin<tpool::TaskSequence>::unique;
 
     using ManagerMixin<CxxFileCrcTask>::valid;
     using ManagerMixin<CxxHeaderCrcTask>::valid;
