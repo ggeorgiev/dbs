@@ -3,7 +3,6 @@
 
 #include "dp/simple_memoization.hpp"
 #include "gtest/framework.h"
-#include "gtest/intermittent.h" // IWYU pragma: keep
 #include <functional>
 #include <memory>
 

@@ -6,7 +6,6 @@
 #include "dp/map_container.hpp"
 #include "dp/solitary_container.hpp"
 #include "gtest/framework.h"
-#include "gtest/intermittent.h" // IWYU pragma: keep
 #include <functional>
 #include <memory>
 #include <vector>

@@ -1,9 +1,9 @@
 //  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
-#include "tpool/task_sequence.h" // IWYU pragma: keep
+#include "tpool/task_sequence.h"
 #include "tpool/task.h"
-#include "tpool/tpool.h" // IWYU pragma: keep
+#include "tpool/tpool.h"
 #include "err/err.h"
 #include "err/gtest/err.h"
 #include "gtest/framework.h"

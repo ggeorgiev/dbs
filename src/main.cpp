@@ -19,16 +19,14 @@
 #include "err/err.h"
 #include "im/initialization_manager.hpp"
 #include "log/log.h"
-#include <fstream> // IWYU pragma: keep
 #include <iostream>
 #include <iterator>
 #include <memory>
+#include <sstream>
 #include <vector>
 #include <stdio.h>
 #include <sys/errno.h>
 #include <unistd.h>
-
-// IWYU pragma: no_include <sstream>
 
 typedef parser::StringStream<char> Stream;
 typedef std::shared_ptr<Stream> StreamSPtr;

@@ -1,7 +1,7 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "task/cxx/cxx_header_crc_task.h" // IWYU pragma: keep
+#include "task/cxx/cxx_header_crc_task.h"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_directory.h"

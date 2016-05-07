@@ -4,14 +4,14 @@
 #pragma once
 
 #include "task/base.hpp"
-#include "task/cxx/cxx_file_crc_task.h"        // IWYU pragma: keep
-#include "task/cxx/cxx_header_crc_task.h"      // IWYU pragma: keep
-#include "task/cxx/cxx_object_file_crc_task.h" // IWYU pragma: keep
-#include "task/cxx/cxx_program_crc_task.h"     // IWYU pragma: keep
-#include "task/sys/ensure_directory_task.h"    // IWYU pragma: keep
-#include "task/sys/execute_command_task.h"     // IWYU pragma: keep
-#include "task/sys/parse_stdout_task.h"        // IWYU pragma: keep
-#include "tpool/task_sequence.h"               // IWYU pragma: keep
+#include "task/cxx/cxx_file_crc_task.h"
+#include "task/cxx/cxx_header_crc_task.h"
+#include "task/cxx/cxx_object_file_crc_task.h"
+#include "task/cxx/cxx_program_crc_task.h"
+#include "task/sys/ensure_directory_task.h"
+#include "task/sys/execute_command_task.h"
+#include "task/sys/parse_stdout_task.h"
+#include "tpool/task_sequence.h"
 #include "im/initialization_manager.hpp"
 #include <memory>
 #include <mutex>

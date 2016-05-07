@@ -3,12 +3,12 @@
 
 #pragma once
 
-#include "doim/cxx/cxx_file.h" // IWYU pragma: keep
+#include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
-#include "doim/cxx/cxx_object_file.h" // IWYU pragma: keep
-#include "doim/cxx/cxx_program.h"     // IWYU pragma: keep
-#include "doim/db/db_key.hpp"         // IWYU pragma: keep
+#include "doim/cxx/cxx_object_file.h"
+#include "doim/cxx/cxx_program.h"
+#include "doim/db/db_key.hpp"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/location.hpp"
@@ -16,9 +16,9 @@
 #include "doim/manager_object_mixin.hpp"
 #include "doim/manager_object_set_mixin.hpp"
 #include "doim/sys/argument.hpp"
-#include "doim/sys/command.h" // IWYU pragma: keep
+#include "doim/sys/command.h"
 #include "doim/sys/executable.hpp"
-#include "doim/tag/tag.h" // IWYU pragma: keep
+#include "doim/tag/tag.h"
 #include "im/initialization_manager.hpp"
 #include <experimental/string_view>
 #include <iosfwd>

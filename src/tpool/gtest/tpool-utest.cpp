@@ -2,7 +2,7 @@
 //
 
 #include "tpool/tpool.h" // IWYU pragma: keep
-#include "tpool/task.h"  // IWYU pragma: keep
+#include "tpool/task.h"
 #include "err/err.h"
 #include "err/gtest/err.h"
 #include "gtest/framework.h"

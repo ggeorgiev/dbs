@@ -1,8 +1,8 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "task/cxx/cxx_file_crc_task.h" // IWYU pragma: keep
-#include "task/tpool.h"                 // IWYU pragma: keep
+#include "task/cxx/cxx_file_crc_task.h"
+#include "task/tpool.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"

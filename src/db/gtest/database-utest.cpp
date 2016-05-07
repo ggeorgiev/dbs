@@ -5,7 +5,7 @@
 #include "err/err.h"
 #include "err/gtest/err.h"
 #include "gtest/framework.h"
-#include "gtest/intermittent.h" // IWYU pragma: keep
+#include "gtest/intermittent.h"
 #include <ostream>
 #include <string>
 

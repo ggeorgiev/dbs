@@ -1,8 +1,8 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "parser/parser.hpp"        // IWYU pragma: keep
-#include "parser/string_stream.hpp" // IWYU pragma: keep
+#include "parser/parser.hpp" // IWYU pragma: keep
+#include "parser/string_stream.hpp"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "err/err.h"

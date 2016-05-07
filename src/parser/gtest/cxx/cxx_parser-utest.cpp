@@ -1,7 +1,7 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "parser/cxx/cxx_parser.h" // IWYU pragma: keep
+#include "parser/cxx/cxx_parser.h"
 #include "gtest/framework.h"
 #include <ostream>
 #include <stddef.h>
