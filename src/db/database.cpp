@@ -65,7 +65,7 @@ ECode Database::get(const std::experimental::string_view& key,
         const auto& msg = status.ToString();
         EHBan(kDatabase, msg);
     }
-    DLOG("Read key: \"{}\", value: \"{}\"", key, value);
+    DLOG("Read key: \"{}\", value: \"{}\"", key.to_string(), value);
     EHEnd;
 }
 
@@ -77,13 +77,13 @@ ECode Database::get(const std::experimental::string_view& key, std::string& valu
     if (!status.ok())
     {
         if (status.code() == rocksdb::Status::kNotFound)
-            EHBan(kNotFound, key);
+            EHBan(kNotFound, key.to_string());
 
         const auto& msg = status.ToString();
         EHBan(kDatabase, msg);
     }
 
-    DLOG("Read key: \"{}\", value: \"{}\"", key, value);
+    DLOG("Read key: \"{}\", value: \"{}\"", key.to_string(), value);
     EHEnd;
 }
 

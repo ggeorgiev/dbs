@@ -1,0 +1,12 @@
+cxx_library cppformat
+    @type=system:
+
+    cxx_header
+        @visibility=public
+        @directory=../../fmt/include:
+
+        fmt/format.h
+    ;
+
+    cxx_binary: ../../fmt/lib/libfmt.a;
+;

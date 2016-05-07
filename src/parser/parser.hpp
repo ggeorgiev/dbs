@@ -106,7 +106,7 @@ public:
         auto type = nextMeaningfulToken();
 
         if (!type.test(Token::kIdentifier))
-            EHBan(kUnable, type);
+            EHBan(kUnable);
 
         auto name = mTokenizer->token();
         auto object = doim::gManager->obtainObject(mLocation->directory(),
@@ -229,7 +229,7 @@ public:
                 continue;
             }
 
-            EHBan(kUnable, type, mTokenizer->token());
+            EHBan(kUnable, mTokenizer->token());
         }
 
         EHEnd;
@@ -240,7 +240,7 @@ public:
         auto type = nextMeaningfulToken();
 
         if (!type.test(Token::kIdentifier))
-            EHBan(kUnable, type);
+            EHBan(kUnable);
 
         auto name = mTokenizer->token();
         auto object = doim::gManager->obtainObject(mLocation->directory(),
@@ -388,17 +388,17 @@ public:
         auto type = nextMeaningfulToken();
 
         if (!type.test(Token::kIdentifier))
-            EHBan(kUnable, type, mTokenizer->token());
+            EHBan(kUnable, mTokenizer->token());
 
         attribute.mName = mTokenizer->token();
 
         type = nextMeaningfulToken();
         if (!type.test(Token::kOperatorAssignment))
-            EHBan(kUnable, type, mTokenizer->token());
+            EHBan(kUnable, mTokenizer->token());
 
         type = nextMeaningfulToken();
         if (!type.test(Token::kIdentifier))
-            EHBan(kUnable, type, mTokenizer->token());
+            EHBan(kUnable, mTokenizer->token());
 
         attribute.mValue = mTokenizer->token();
 

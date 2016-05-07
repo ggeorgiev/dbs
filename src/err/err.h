@@ -10,7 +10,7 @@
 #include "err/err_cppformat.h"
 #include "err/macro.h"
 #include "im/initialization_manager.hpp"
-#include <cppformat/format.h>
+#include <fmt/format.h>
 #include <memory>
 #include <sstream>
 #include <unordered_map>

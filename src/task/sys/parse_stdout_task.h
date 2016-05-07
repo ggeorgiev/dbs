@@ -8,7 +8,7 @@
 #include "doim/sys/command.h"
 #include "err/err.h"
 #include "rtti/class_rtti.hpp"
-#include <cppformat/format.h>
+#include <fmt/format.h>
 #include <functional>
 #include <iosfwd>
 #include <memory>

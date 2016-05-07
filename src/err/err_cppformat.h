@@ -1,10 +1,10 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
 
 #include "err/err_variadic.h"
-#include "cppformat/format.h"
+#include <fmt/format.h>
 
 #define EH_HELPER_CPPFORMAT(X) PP_STRINGIZE(X) "({})"
 #define EH_HELPER_CPPFORMAT_(X) ": " PP_STRINGIZE(X) " = {}"

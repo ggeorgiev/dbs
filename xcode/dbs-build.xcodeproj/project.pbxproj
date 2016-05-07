@@ -162,7 +162,7 @@
 
 /* Begin PBXFileReference section */
 		5E10B3181C70F272009C73E4 /* boost.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = boost.dbs; sourceTree = "<group>"; };
-		5E10B3191C70F272009C73E4 /* cppformat.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cppformat.dbs; sourceTree = "<group>"; };
+		5E10B3191C70F272009C73E4 /* fmt.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fmt.dbs; sourceTree = "<group>"; };
 		5E10B31A1C70F272009C73E4 /* gtest.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gtest.dbs; sourceTree = "<group>"; };
 		5E10B31B1C70F272009C73E4 /* rocksdb.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rocksdb.dbs; sourceTree = "<group>"; };
 		5E10B31C1C70F272009C73E4 /* spdlog.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = spdlog.dbs; sourceTree = "<group>"; };
@@ -405,7 +405,7 @@
 			isa = PBXGroup;
 			children = (
 				5E10B3181C70F272009C73E4 /* boost.dbs */,
-				5E10B3191C70F272009C73E4 /* cppformat.dbs */,
+				5E10B3191C70F272009C73E4 /* fmt.dbs */,
 				5E10B31A1C70F272009C73E4 /* gtest.dbs */,
 				5E10B31B1C70F272009C73E4 /* rocksdb.dbs */,
 				5E10B31C1C70F272009C73E4 /* spdlog.dbs */,

@@ -4,7 +4,4 @@
    <FileRef
       location = "group:dbs-build.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:../../include-what-you-use">
-   </FileRef>
 </Workspace>

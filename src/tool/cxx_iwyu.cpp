@@ -73,7 +73,10 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
             for (std::sregex_iterator item = it; item != std::sregex_iterator(); ++item)
             {
                 std::smatch smatch = *item;
-                ELOG("\n{}:{}:1: error: {} ", smatchs[1], smatch[1], smatch[0]);
+                ELOG("\n{}:{}:1: error: {} ",
+                     smatchs[1].str(),
+                     smatch[1].str(),
+                     smatch[0].str());
             }
         }
 
@@ -91,7 +94,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
             for (std::sregex_iterator item = it; item != std::sregex_iterator(); ++item)
             {
                 std::smatch smatch = *item;
-                ELOG("\n{}:1:1: error: {} ", smatchs[1], smatch[1]);
+                ELOG("\n{}:1:1: error: {} ", smatchs[1].str(), smatch[1].str());
             }
         }
 

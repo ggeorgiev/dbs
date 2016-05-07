@@ -84,7 +84,7 @@ IncludeCategories:
     Priority:        130
 #Note: that cppformat has to be on top of spdlog, even the real dependency is the opposite
 #      we need this to be able to override the internal version of spdlog
-  - Regex:           '^<cppformat/*.'
+  - Regex:           '^<fmt/*.'
     Priority:        140
   - Regex:           '^<spdlog/details/*.'
     Priority:        151

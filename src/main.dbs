@@ -5,7 +5,7 @@ annex:
     system/stl.dbs
 
     3rdparty/boost.dbs
-    3rdparty/cppformat.dbs
+    3rdparty/fmt.dbs
     3rdparty/rocksdb.dbs
     3rdparty/gtest.dbs
     3rdparty/spdlog.dbs

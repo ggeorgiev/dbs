@@ -240,16 +240,16 @@ then
     cd ../..
 fi
 
-if [ ! -e cppformat ]
+if [ ! -e fmt ]
 then
-    cd 3rdparty/cppformat || exit 1
+    cd 3rdparty/fmt || exit 1
 
-    echo Build cppformat ...
+    echo Build fmt ...
 
     mkdir build
     cd build
 
-    $CMAKE -DCMAKE_CC_COMPILER=$CLANG -DCMAKE_CXX_COMPILER=$CLANG -DCMAKE_INSTALL_PREFIX:PATH=../../../cppformat .. || exit 1
+    $CMAKE -DCMAKE_CC_COMPILER=$CLANG -DCMAKE_CXX_COMPILER=$CLANG -DCMAKE_INSTALL_PREFIX:PATH=$BASEDIR/fmt .. || exit 1
     CC=$CLANG CXX=$CLANG make || exit 1
     make test || exit 1
     make install || exit 1
@@ -259,10 +259,6 @@ then
     git clean -fdx
 
     cd ../.. || exit 1
-
-    mv cppformat/include/ cppformat/cppformat || exit 1
-    mkdir -p cppformat/include || exit 1
-    mv cppformat/cppformat cppformat/include || exit 1
 fi
 
 if [ ! -e spdlog ]

@@ -38,7 +38,7 @@ ECode CxxCrcTaskMixin::findInclude(
             continue;
 
         if (result.first != nullptr)
-            EHBan(kTooMany, include);
+            EHBan(kTooMany, include.to_string());
 
         DLOG("Found header {} in directory {}",
              header->file()->path(),
@@ -49,10 +49,9 @@ ECode CxxCrcTaskMixin::findInclude(
 
     if (result.first == nullptr)
     {
-        EHBan(kNotFound,
-              include,
+        EHBan(kNotFound, include.to_string() /*,
               EHPtr(currentIncludeDirectory),
-              EHPtr(includeDirectories));
+              EHPtr(includeDirectories)*/);
     }
 
     headerDirectory = result;

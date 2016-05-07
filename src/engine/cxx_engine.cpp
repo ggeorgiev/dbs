@@ -17,7 +17,7 @@
 #include "db/database.h"
 #include "err/err.h"
 #include "log/log.h"
-#include <cppformat/format.h>
+#include <fmt/format.h>
 #include "math/crc.hpp"
 #include <functional>
 #include <string>

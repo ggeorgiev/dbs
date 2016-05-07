@@ -7,7 +7,7 @@
 #include "doim/cxx/cxx_program.h"
 #include "doim/tag/tag.h"
 #include "err/err.h"
-#include <cppformat/format.h>
+#include <fmt/format.h>
 #include "math/crc.hpp"
 #include <iosfwd>
 #include <memory>

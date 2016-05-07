@@ -23,10 +23,6 @@
 	path = 3rdparty/boost
 	url = https://github.com/boostorg/boost.git
 
-[submodule "cppformat"]
-	path = 3rdparty/cppformat
-	url = https://github.com/cppformat/cppformat
-
 [submodule "clang-tools-extra"]
 	path = 3rdparty/clang-tools-extra
 	url = https://github.com/llvm-mirror/clang-tools-extra.git
@@ -41,3 +37,6 @@
 [submodule "spdlog"]
 	path = 3rdparty/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "3rdparty/fmt"]
+	path = 3rdparty/fmt
+	url = https://github.com/fmtlib/fmt.git
