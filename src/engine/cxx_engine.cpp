@@ -25,8 +25,11 @@
 
 namespace engine
 {
-CxxEngine::CxxEngine(const tool::CxxCompilerSPtr& compiler, const tool::CxxIwyuSPtr& iwyu)
-    : mCompiler(compiler)
+CxxEngine::CxxEngine(const tool::CxxClangFormatSPtr& formatter,
+                     const tool::CxxCompilerSPtr& compiler,
+                     const tool::CxxIwyuSPtr& iwyu)
+    : mFormatter(formatter)
+    , mCompiler(compiler)
     , mIwyu(iwyu)
 {
 }

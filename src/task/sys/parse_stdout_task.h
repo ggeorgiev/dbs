@@ -25,6 +25,8 @@ class ParseStdoutTask : public Base<ParseStdoutTask,
                                     rtti::ClassId>
 {
 public:
+    static std::function<ECode(int, const std::string&)> logOnError();
+
     ParseStdoutTask(const doim::SysCommandSPtr& command,
                     const doim::FsDirectorySPtr& targetDirectory,
                     rtti::ClassId parseId,

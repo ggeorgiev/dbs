@@ -80,21 +80,12 @@ tpool::TaskSPtr CxxCompiler::compileCommand(
     auto compileCommand = std::make_shared<doim::SysCommand>(mCompiler, compileArguments);
     compileCommand = doim::gManager->unique(compileCommand);
 
-    auto fn = [](int exit, const std::string& stdout) -> ECode {
-        if (exit != 0)
-        {
-            ELOG("\n{}", stdout);
-            EHBan(kUnable);
-        }
-        EHEnd;
-    };
-
     auto id = rtti::RttiInfo<CxxCompiler, 0>::classId();
     return task::gManager->valid(
         std::make_shared<task::ParseStdoutTask>(compileCommand,
                                                 objectFile->file()->directory(),
                                                 id,
-                                                fn,
+                                                task::ParseStdoutTask::logOnError(),
                                                 "Compile " + file));
 }
 
@@ -134,21 +125,12 @@ tpool::TaskSPtr CxxCompiler::linkCommand(
     auto linkCommand = std::make_shared<doim::SysCommand>(mCompiler, arguments);
     linkCommand = doim::gManager->unique(linkCommand);
 
-    auto fn = [](int exit, const std::string& stdout) -> ECode {
-        if (exit != 0)
-        {
-            ELOG("\n{}", stdout);
-            EHBan(kUnable);
-        }
-        EHEnd;
-    };
-
     auto id = rtti::RttiInfo<CxxCompiler, 1>::classId();
     return task::gManager->valid(
         std::make_shared<task::ParseStdoutTask>(linkCommand,
                                                 intermediate,
                                                 id,
-                                                fn,
+                                                task::ParseStdoutTask::logOnError(),
                                                 "Link " + program->name()));
 }
 }

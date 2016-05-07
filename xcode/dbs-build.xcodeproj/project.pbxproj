@@ -154,6 +154,8 @@
 		5EC659B21CCD9EB600E99E04 /* memoization-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EC659B01CCD9EB600E99E04 /* memoization-utest.cpp */; };
 		5EC659B31CCD9EB600E99E04 /* memoization.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EC659B11CCD9EB600E99E04 /* memoization.hpp */; };
 		5EC659B51CCDA12900E99E04 /* handle.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EC659B41CCDA12900E99E04 /* handle.hpp */; };
+		5EC91C891CDE3FF800613226 /* cxx_clang_format.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EC91C871CDE3FF800613226 /* cxx_clang_format.cpp */; };
+		5EC91C8A1CDE3FF800613226 /* cxx_clang_format.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EC91C881CDE3FF800613226 /* cxx_clang_format.h */; };
 		5EE328621CD845610042B6FF /* simple_memoization.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EE328611CD845610042B6FF /* simple_memoization.hpp */; };
 		5EE328641CD846880042B6FF /* simple_memoization-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE328631CD846880042B6FF /* simple_memoization-utest.cpp */; };
 		5EFDAF5D1CDB89B70092AAD2 /* parse_stdout_task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDAF5B1CDB89B70092AAD2 /* parse_stdout_task.cpp */; };
@@ -345,6 +347,8 @@
 		5EC659B01CCD9EB600E99E04 /* memoization-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "memoization-utest.cpp"; sourceTree = "<group>"; };
 		5EC659B11CCD9EB600E99E04 /* memoization.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = memoization.hpp; sourceTree = "<group>"; };
 		5EC659B41CCDA12900E99E04 /* handle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = handle.hpp; sourceTree = "<group>"; };
+		5EC91C871CDE3FF800613226 /* cxx_clang_format.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_clang_format.cpp; sourceTree = "<group>"; };
+		5EC91C881CDE3FF800613226 /* cxx_clang_format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_clang_format.h; sourceTree = "<group>"; };
 		5EE328611CD845610042B6FF /* simple_memoization.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = simple_memoization.hpp; sourceTree = "<group>"; };
 		5EE328631CD846880042B6FF /* simple_memoization-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "simple_memoization-utest.cpp"; sourceTree = "<group>"; };
 		5EFDAF5B1CDB89B70092AAD2 /* parse_stdout_task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = parse_stdout_task.cpp; sourceTree = "<group>"; };
@@ -807,6 +811,8 @@
 			isa = PBXGroup;
 			children = (
 				5E10B3A51C70F272009C73E4 /* tool.dbs */,
+				5EC91C871CDE3FF800613226 /* cxx_clang_format.cpp */,
+				5EC91C881CDE3FF800613226 /* cxx_clang_format.h */,
 				5E290B3E1CBACD0600F10210 /* cxx_compiler.cpp */,
 				5E10B3A41C70F272009C73E4 /* cxx_compiler.h */,
 				5E4034821CD565CD00407CA3 /* cxx_iwyu.cpp */,
@@ -988,6 +994,7 @@
 				5EC659B31CCD9EB600E99E04 /* memoization.hpp in Headers */,
 				5E10B3C11C70F272009C73E4 /* manager.h in Headers */,
 				5E10B3DA1C70F272009C73E4 /* intermittent.h in Headers */,
+				5EC91C8A1CDE3FF800613226 /* cxx_clang_format.h in Headers */,
 				5E4113C41CCBF95B00489DA7 /* task_callback.h in Headers */,
 				5E4113CA1CCD56AB00489DA7 /* cxx_library.h in Headers */,
 				5E4205411C790C590090FA05 /* manager_object_set_mixin.hpp in Headers */,
@@ -1193,6 +1200,7 @@
 				5E42053C1C78FA8F0090FA05 /* cxx_crc_task_mixin.cpp in Sources */,
 				5E10B3E11C70F272009C73E4 /* initialization_manager-utest.cpp in Sources */,
 				5E290B1E1CB9843100F10210 /* class_rtti-utest.cpp in Sources */,
+				5EC91C891CDE3FF800613226 /* cxx_clang_format.cpp in Sources */,
 				5E10B3ED1C70F272009C73E4 /* token-utest.cpp in Sources */,
 				5E290B381CBAB92500F10210 /* tpool.cpp in Sources */,
 				5EAE67701C7295B2005B3F8D /* cxx_object_file.cpp in Sources */,

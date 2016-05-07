@@ -5,6 +5,7 @@ cxx_library tool
         @visibility=public
         @directory=..:
 
+        tool/cxx_clang_format.h
         tool/cxx_compiler.h
         tool/cxx_iwyu.h
     ;
@@ -16,6 +17,7 @@ cxx_library tool
     ;
 
     cxx_file:
+        cxx_clang_format.cpp
         cxx_compiler.cpp
         cxx_iwyu.cpp
     ;

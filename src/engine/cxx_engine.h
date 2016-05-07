@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "tool/cxx_clang_format.h"
 #include "tool/cxx_compiler.h"
 #include "tool/cxx_iwyu.h"
 #include "tpool/task.h"
@@ -17,13 +18,14 @@
 namespace engine
 {
 class CxxEngine;
-
 typedef std::shared_ptr<CxxEngine> CxxEngineSPtr;
 
 class CxxEngine : public std::enable_shared_from_this<CxxEngine>
 {
 public:
-    CxxEngine(const tool::CxxCompilerSPtr& compiler, const tool::CxxIwyuSPtr& iwyu);
+    CxxEngine(const tool::CxxClangFormatSPtr& formatter,
+              const tool::CxxCompilerSPtr& compiler,
+              const tool::CxxIwyuSPtr& iwyu);
 
     tpool::TaskSPtr updateDbTask(const tpool::TaskSPtr& task,
                                  const doim::DbKeySPtr& key,
@@ -45,6 +47,7 @@ public:
                          const dom::CxxProgramSPtr& program);
 
 private:
+    tool::CxxClangFormatSPtr mFormatter;
     tool::CxxCompilerSPtr mCompiler;
     tool::CxxIwyuSPtr mIwyu;
 };

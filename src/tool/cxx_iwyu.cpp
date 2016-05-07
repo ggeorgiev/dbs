@@ -60,7 +60,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
         static std::regex removeItemsRegex(
             "(?:^|\n)(.*?) should remove these lines:"
             "(?:[\\s\\r\\n]+- #include.*?\\/\\/ lines \\d+-\\d+)+");
-        static std::regex removeItemRegex("- #include.*?\\/\\/ lines (\\d+)-\\d+");
+        static std::regex removeItemRegex("- (#include.*?)\\s*\\/\\/ lines (\\d+)-\\d+");
 
         auto its = std::sregex_iterator(stdout.begin(), stdout.end(), removeItemsRegex);
         for (std::sregex_iterator items = its; items != std::sregex_iterator(); ++items)
@@ -73,10 +73,10 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
             for (std::sregex_iterator item = it; item != std::sregex_iterator(); ++item)
             {
                 std::smatch smatch = *item;
-                ELOG("\n{}:{}:1: error: {} ",
+                ELOG("\n{}:{}:1: error: extra {} ",
                      smatchs[1].str(),
-                     smatch[1].str(),
-                     smatch[0].str());
+                     smatch[2].str(),
+                     smatch[1].str());
             }
         }
 
@@ -94,7 +94,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
             for (std::sregex_iterator item = it; item != std::sregex_iterator(); ++item)
             {
                 std::smatch smatch = *item;
-                ELOG("\n{}:1:1: error: {} ", smatchs[1].str(), smatch[1].str());
+                ELOG("\n{}:1:1: warning: missing {} ", smatchs[1].str(), smatch[1].str());
             }
         }
 

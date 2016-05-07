@@ -11,6 +11,18 @@
 
 namespace task
 {
+std::function<ECode(int, const std::string&)> ParseStdoutTask::logOnError()
+{
+    return [](int exit, const std::string& stdout) -> ECode {
+        if (exit != 0)
+        {
+            ELOG("\n{}", stdout);
+            EHBan(kUnable);
+        }
+        EHEnd;
+    };
+}
+
 ParseStdoutTask::ParseStdoutTask(const doim::SysCommandSPtr& command,
                                  const doim::FsDirectorySPtr& targetDirectory,
                                  rtti::ClassId parseId,

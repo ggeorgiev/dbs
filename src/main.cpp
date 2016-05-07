@@ -2,6 +2,7 @@
 //
 
 #include "engine/cxx_engine.h"
+#include "tool/cxx_clang_format.h"
 #include "tool/cxx_compiler.h"
 #include "tool/cxx_iwyu.h"
 #include "task/tpool.h"
@@ -86,13 +87,17 @@ int main(int argc, char* argv[])
         return 1;
     }
 
+    const auto& clangFormat = doim::gManager->obtainFile(cwd, "clang/bin/clang-format");
+    const auto& clangFormatTool = std::make_shared<tool::CxxClangFormat>(clangFormat);
+
     const auto& clang = doim::gManager->obtainFile(cwd, "clang/bin/clang++");
     const auto& compiler = std::make_shared<tool::CxxCompiler>(clang);
 
     const auto& iwyu = doim::gManager->obtainFile(cwd, "clang/bin/include-what-you-use");
     const auto& iwyuTool = std::make_shared<tool::CxxIwyu>(iwyu);
 
-    const auto& engine = std::make_shared<engine::CxxEngine>(compiler, iwyuTool);
+    const auto& engine =
+        std::make_shared<engine::CxxEngine>(clangFormatTool, compiler, iwyuTool);
 
     const auto& verb = doim::gManager->find(std::make_shared<doim::Tag>(arg[2]));
 

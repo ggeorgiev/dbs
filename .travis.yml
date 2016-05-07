@@ -3,7 +3,7 @@ language: cpp
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -q
-  - sudo apt-get install cmake
+  - sudo apt-get --only-upgrade install cmake
 
 install: ./prepare.sh
 script: ./build.sh
