@@ -4,13 +4,12 @@ BASEDIR=$(pwd)/$(dirname $0)
 
 cd $BASEDIR
 
-# Download all submodules
-git submodule update --init || exit 1
-
 CMAKE=cmake
 
 if [ ! -e clang -o ! "$(ls -A clang)" ]
 then
+    git submodule update --init 3rdparty/clang || exit 1
+
     cd 3rdparty || exit 1
 
     echo Build clang ...
@@ -80,6 +79,8 @@ CLANG=$CLANGBIN/clang++
 
 if [ ! -e clang/plugin -o ! "$(ls -A clang/plugin)" ]
 then
+    git submodule update --init 3rdparty/clang-plugin || exit 1
+
     mkdir -p clang/plugin || exit 1
 
     cd 3rdparty/clang-plugin || exit 1
@@ -107,6 +108,8 @@ fi
 
 if [ ! -e iwyu -o ! "$(ls -A iwyu)" ]
 then
+    git submodule update --init 3rdparty/iwyu || exit 1
+
     cd 3rdparty/iwyu || exit 1
 
     echo Build Include what you use ...
@@ -141,6 +144,8 @@ fi
 
 if [ ! -e gtest -o ! "$(ls -A gtest)" ]
 then
+    git submodule update --init 3rdparty/gtest || exit 1
+
     cd 3rdparty/gtest || exit 1
 
     echo Build gtest ...
@@ -179,6 +184,8 @@ fi
 
 if [ ! -e boost -o ! "$(ls -A boost)" ]
 then
+    git submodule update --init 3rdparty/boost || exit 1
+
     cd 3rdparty/boost || exit 1
 
     git submodule update --init tools/build          || exit 1
@@ -267,6 +274,8 @@ fi
 
 if [ ! -e fmt -o ! "$(ls -A fmt)" ]
 then
+    git submodule update --init 3rdparty/fmt || exit 1
+
     cd 3rdparty/fmt || exit 1
 
     echo Build fmt ...
@@ -293,6 +302,8 @@ fi
 
 if [ ! -e spdlog -o ! "$(ls -A spdlog)" ]
 then
+    git submodule update --init 3rdparty/spdlog || exit 1
+
     echo Build spdlog ...
 
     mkdir -p spdlog || exit 1
@@ -307,6 +318,8 @@ fi
 
 if [ ! -e rocksdb -o ! "$(ls -A rocksdb)" ]
 then
+    git submodule update --init 3rdparty/rocksdb || exit 1
+
     cd 3rdparty/rocksdb || exit 1
 
     echo Build RocksDB ...
