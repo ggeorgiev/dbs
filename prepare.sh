@@ -67,6 +67,11 @@ then
     then
         cp iwyu/bin/* $CLANGBIN
     fi
+
+    if [ "$1" == "travis" ]
+    then
+        exit 0
+    fi
 fi
 
 CLANGDIR=$BASEDIR/clang
@@ -92,6 +97,11 @@ then
     cd .. || exit 1
 
     cd ../..  || exit 1
+
+    if [ "$1" == "travis" ]
+    then
+        exit 0
+    fi
 fi
 
 
@@ -122,6 +132,11 @@ then
     cd ../.. || exit 1
 
     cp iwyu/bin/* $CLANGBIN
+
+    if [ "$1" == "travis" ]
+    then
+        exit 0
+    fi
 fi
 
 if [ ! -e gtest ]
@@ -155,6 +170,11 @@ then
     git clean -fdx
 
     cd ../..
+
+    if [ "$1" == "travis" ]
+    then
+        exit 0
+    fi
 fi
 
 if [ ! -e boost ]
@@ -238,6 +258,11 @@ then
     cd ../..
 
     cd ../..
+
+    if [ "$1" == "travis" ]
+    then
+        exit 0
+    fi
 fi
 
 if [ ! -e fmt ]
@@ -259,6 +284,11 @@ then
     git clean -fdx
 
     cd ../.. || exit 1
+
+    if [ "$1" == "travis" ]
+    then
+        exit 0
+    fi
 fi
 
 if [ ! -e spdlog ]
@@ -268,6 +298,11 @@ then
     mkdir -p spdlog || exit 1
 
     cp -r 3rdparty/spdlog/include spdlog || exit 1
+
+    if [ "$1" == "travis" ]
+    then
+        exit 0
+    fi
 fi
 
 if [ ! -e rocksdb ]
@@ -285,6 +320,11 @@ then
     git clean -fdx
 
     cd ../.. || exit 1
+
+    if [ "$1" == "travis" ]
+    then
+        exit 0
+    fi
 fi
 
 
