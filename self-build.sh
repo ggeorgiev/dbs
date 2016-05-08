@@ -10,7 +10,7 @@ fi
 
 ./dbs src/main.dbs build dbs dbs-test || exit 1
 
-#build/dbs-test --gtest_filter=-*.PERFORMANCE_* || exit 1
+build/dbs-test --gtest_filter=-*.PERFORMANCE_* || exit 1
 
 if [ -e build/dbs ]
 then
