@@ -1,17 +1,22 @@
 language: cpp
 
-before_install:
-  - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 828AB726
-  - sudo apt-get install software-properties-common
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo add-apt-repository ppa:george-edison55/cmake-3.x -y
-  - sudo apt-get update -q
-  - sudo apt-get install cmake
+addons:
+    apt:
+        sources:
+          - george-edison55-precise-backports # cmake 3.2.3 / doxygen 1.8.3
+        packages:
+          - cmake
+          - cmake-data
 
-install: ./prepare.sh travis
-script: ./build.sh
+before_install:
+
+install:
+    ./prepare.sh travis
+
+script:
+    ./build.sh
 
 cache:
-directories:
-  - clang
-  - boost
+    directories:
+      - clang
+      - boost
