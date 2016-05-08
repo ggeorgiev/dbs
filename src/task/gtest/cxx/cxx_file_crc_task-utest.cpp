@@ -121,7 +121,7 @@ TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
     EXPECT_EQ(0xb7e440100a03d2c5, task->crc()) << std::hex << task->crc();
 }
 
-TEST_F(CxxFileCrcTaskTest, includeFromTwoDirectories)
+TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
 {
     // This test makes sure that including from having more than one include directory
     // with the same fs directory is working.
