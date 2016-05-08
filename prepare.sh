@@ -9,6 +9,10 @@ CMAKE=cmake
 if [ ! -e clang -o ! "$(ls -A clang)" ]
 then
     git submodule update --init 3rdparty/clang || exit 1
+    git submodule update --init 3rdparty/clang-tools-extra || exit 1
+    git submodule update --init 3rdparty/llvm || exit 1
+    git submodule update --init 3rdparty/libcxx || exit 1
+    git submodule update --init 3rdparty/libcxxabi || exit 1
 
     cd 3rdparty || exit 1
 
