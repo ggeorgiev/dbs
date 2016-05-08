@@ -58,7 +58,7 @@ addons:
             name: "ggeorgiev/dbs"
             description: "Build submitted via Travis CI"
             notification_email: george.georgiev.sf@gmail.com
-            build_command_prepend: "echo nothing"
+            build_command_prepend: cov-configure --comptype clangcxx --compiler clang++ --template
             build_command: "./self-build.sh"
             branch_pattern: coverity
 
