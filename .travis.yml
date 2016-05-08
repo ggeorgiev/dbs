@@ -31,7 +31,7 @@ before_install:
 install:
 
 script:
-    ./build.sh
+    ./build.sh && ./self-build.sh
 
 cache:
     directories:
