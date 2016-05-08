@@ -22,6 +22,14 @@
 
 namespace tool
 {
+doim::SysArgumentSPtr CxxCompiler::gFProfileArcArgument =
+    doim::SysArgument::global("-fprofile-arcs", CxxCompiler::gFProfileArcArgument);
+doim::SysArgumentSPtr CxxCompiler::gFTestCoverageArgument =
+    doim::SysArgument::global("-ftest-coverage", CxxCompiler::gFTestCoverageArgument);
+
+doim::SysArgumentSPtr CxxCompiler::gCoverageArgument =
+    doim::SysArgument::global("--coverage", CxxCompiler::gCoverageArgument);
+
 doim::SysArgumentSetSPtr CxxCompiler::includeArguments(
     const doim::FsDirectorySPtr& directory,
     const doim::CxxIncludeDirectorySetSPtr& includeDirectories)
@@ -61,6 +69,9 @@ tpool::TaskSPtr CxxCompiler::compileCommand(
     auto compileArguments =
         includeArguments(directory, objectFile->cxxFile()->cxxIncludeDirectories());
 
+    compileArguments->insert(gFProfileArcArgument);
+    compileArguments->insert(gFTestCoverageArgument);
+
     auto argument_cxxflags = doim::gManager->obtainArgument(
         "-std=c++11 -stdlib=libc++ -O0 -g "
         "-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/"
@@ -96,6 +107,8 @@ tpool::TaskSPtr CxxCompiler::linkCommand(
     const doim::CxxObjectFileSetSPtr& objectFiles) const
 {
     auto arguments = std::make_shared<doim::SysArgumentSet>();
+    arguments->insert(gCoverageArgument);
+
     for (const auto& cxxLibrary : program->recursiveCxxLibraries())
     {
         if (cxxLibrary->binary() != nullptr)

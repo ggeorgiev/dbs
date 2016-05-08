@@ -69,6 +69,7 @@ cxx_library boost_thread
         boost/thread/locks.hpp
         boost/thread/reverse_lock.hpp
         boost/thread/shared_mutex.hpp
+        boost/thread/tss.hpp
     ;
 
     cxx_binary: ../../boost/lib/libboost_thread.a;

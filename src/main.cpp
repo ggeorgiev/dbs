@@ -90,7 +90,9 @@ int main(int argc, char* argv[])
     const auto& clangFormat = doim::gManager->obtainFile(cwd, "clang/bin/clang-format");
     const auto& clangFormatTool = std::make_shared<tool::CxxClangFormat>(clangFormat);
 
-    const auto& clang = doim::gManager->obtainFile(cwd, "clang/bin/clang++");
+    const auto& clang = doim::gManager->obtainFile(nullptr,
+        "/Applications/Xcode.app/Contents/Developer/"
+        "Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++");
     const auto& compiler = std::make_shared<tool::CxxCompiler>(clang);
 
     const auto& iwyu = doim::gManager->obtainFile(cwd, "clang/bin/include-what-you-use");

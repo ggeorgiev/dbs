@@ -4,84 +4,12 @@ BASEDIR=$(pwd)/$(dirname $0)
 
 cd $BASEDIR
 
-CMAKE=cmake
+CLANG=`xcodebuild -find clang++`
+CLANGBIN=$(dirname $CLANG)
+CLANGDIR=$(dirname $CLANGBIN)
 
-if [ ! -e clang -o ! "$(ls -A clang)" ]
-then
-    git submodule update --init 3rdparty/clang || exit 1
-    git submodule update --init 3rdparty/clang-tools-extra || exit 1
-    git submodule update --init 3rdparty/llvm || exit 1
-    git submodule update --init 3rdparty/libcxx || exit 1
-    git submodule update --init 3rdparty/libcxxabi || exit 1
-
-    cd 3rdparty || exit 1
-
-    echo Build clang ...
-
-    echo Copy clang to llvm ...
-    rm -rf llvm/tools/clang
-    mkdir -p llvm/tools/clang || exit 1
-    cp -r clang llvm/tools || exit 1
-
-    echo Copy clang extra tools to llvm ...
-    rm -rf llvm/tools/clang/tools/extra
-    mkdir -p llvm/tools/clang/tools/extra || exit 1
-    cp -r clang-tools-extra/ llvm/tools/clang/tools/extra/ || exit 1
-
-    echo Copy libcxx to llvm ...
-    rm -rf llvm/projects/libcxx
-    mkdir -p llvm/projects/libcxx || exit 1
-    cp -r libcxx llvm/projects || exit 1
-
-    echo Copy libcxxabi to llvm ...
-    rm -rf llvm/projects/libcxxabi
-    mkdir -p llvm/projects/libcxxabi || exit 1
-    cp -r libcxxabi llvm/projects || exit 1
-
-    rm -rf clang-build || exit 1
-    mkdir clang-build || exit 1
-    cd clang-build || exit 1
-
-    echo Prepare make files ...
-    $CMAKE \
-        -G "Unix Makefiles" \
-        -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CC_COMPILER=clang \
-        -DCMAKE_INSTALL_PREFIX:PATH=../../clang \
-        -DCMAKE_BUILD_TYPE=Release \
-        ../llvm || exit 1
-
-    echo Make ...
-    make -j 8 || exit 1
-
-    echo Install ...
-    make install || exit 1
-
-    cd .. || exit 1
-
-    rm -rf clang-build
-
-    rm -rf llvm/tools/clang
-    rm -rf llvm/projects/libcxx
-    rm -rf llvm/projects/libcxxabi
-
-    cd .. || exit 1
-
-    if [ -e iwyu/bin ]
-    then
-        cp iwyu/bin/* $CLANGBIN
-    fi
-
-    if [ "$1" == "travis" ]
-    then
-        exit 0
-    fi
-fi
-
-CLANGDIR=$BASEDIR/clang
-CLANGBIN=$CLANGDIR/bin
-CLANG=$CLANGBIN/clang++
-
-if [ ! -e clang/plugin -o ! "$(ls -A clang/plugin)" ]
+#if [ ! -e clang/plugin -o ! "$(ls -A clang/plugin)" ]
+if [ 0 == 1 ]
 then
     git submodule update --init 3rdparty/clang-plugin || exit 1
 
@@ -102,15 +30,11 @@ then
     cd .. || exit 1
 
     cd ../..  || exit 1
-
-    if [ "$1" == "travis" ]
-    then
-        exit 0
-    fi
 fi
 
 
-if [ ! -e iwyu -o ! "$(ls -A iwyu)" ]
+#if [ ! -e iwyu -o ! "$(ls -A iwyu)" ]
+if [ 0 == 1 ]
 then
     git submodule update --init 3rdparty/iwyu || exit 1
 
@@ -122,7 +46,7 @@ then
     mkdir build || exit 1
     cd build || exit 1
 
-    $CMAKE \
+    cmake \
         -G "Unix Makefiles" \
         -DCMAKE_CXX_COMPILER=$CLANG \
         -DIWYU_LLVM_ROOT_PATH=$CLANGDIR \
@@ -139,11 +63,6 @@ then
     cd ../.. || exit 1
 
     cp iwyu/bin/* $CLANGBIN
-
-    if [ "$1" == "travis" ]
-    then
-        exit 0
-    fi
 fi
 
 if [ ! -e gtest -o ! "$(ls -A gtest)" ]
@@ -158,7 +77,7 @@ then
     mkdir build || exit 1
     cd build || exit 1
 
-    $CMAKE \
+    cmake \
         -G "Unix Makefiles" \
         -DCMAKE_CXX_COMPILER=$CLANG \
         -DBUILD_SHARED_LIBS=OFF \
@@ -179,11 +98,6 @@ then
     git clean -fdx
 
     cd ../..
-
-    if [ "$1" == "travis" ]
-    then
-        exit 0
-    fi
 fi
 
 if [ ! -e boost -o ! "$(ls -A boost)" ]
@@ -269,11 +183,6 @@ then
     cd ../..
 
     cd ../..
-
-    if [ "$1" == "travis" ]
-    then
-        exit 0
-    fi
 fi
 
 if [ ! -e fmt -o ! "$(ls -A fmt)" ]
@@ -287,7 +196,7 @@ then
     mkdir build
     cd build
 
-    $CMAKE -DCMAKE_CC_COMPILER=$CLANG -DCMAKE_CXX_COMPILER=$CLANG -DCMAKE_INSTALL_PREFIX:PATH=$BASEDIR/fmt .. || exit 1
+    cmake -DCMAKE_CC_COMPILER=$CLANG -DCMAKE_CXX_COMPILER=$CLANG -DCMAKE_INSTALL_PREFIX:PATH=$BASEDIR/fmt .. || exit 1
     CC=$CLANG CXX=$CLANG make || exit 1
     make test || exit 1
     make install || exit 1
@@ -297,11 +206,6 @@ then
     git clean -fdx
 
     cd ../.. || exit 1
-
-    if [ "$1" == "travis" ]
-    then
-        exit 0
-    fi
 fi
 
 if [ ! -e spdlog -o ! "$(ls -A spdlog)" ]
@@ -313,11 +217,6 @@ then
     mkdir -p spdlog || exit 1
 
     cp -r 3rdparty/spdlog/include spdlog || exit 1
-
-    if [ "$1" == "travis" ]
-    then
-        exit 0
-    fi
 fi
 
 if [ ! -e rocksdb -o ! "$(ls -A rocksdb)" ]
@@ -337,11 +236,6 @@ then
     git clean -fdx
 
     cd ../.. || exit 1
-
-    if [ "$1" == "travis" ]
-    then
-        exit 0
-    fi
 fi
 
 

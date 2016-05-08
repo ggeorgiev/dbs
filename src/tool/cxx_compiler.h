@@ -35,6 +35,11 @@ public:
                                 const doim::CxxObjectFileSetSPtr& objectFiles) const;
 
 private:
+    static doim::SysArgumentSPtr gFProfileArcArgument;
+    static doim::SysArgumentSPtr gFTestCoverageArgument;
+
+    static doim::SysArgumentSPtr gCoverageArgument;
+
     doim::SysExecutableSPtr mCompiler;
 };
 }

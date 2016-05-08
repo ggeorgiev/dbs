@@ -11,6 +11,7 @@
 #include "err/macro.h"
 #include "im/initialization_manager.hpp"
 #include <fmt/format.h>
+#include <boost/thread/tss.hpp>
 #include <memory>
 #include <sstream>
 #include <unordered_map>
@@ -165,7 +166,7 @@ std::ostream& operator<<(std::ostream& out, const Ptr<T>& p)
 typedef Error* ErrorRPtr;
 typedef std::unique_ptr<Error> ErrorUPtr;
 
-extern thread_local ErrorUPtr gError;
+extern boost::thread_specific_ptr<Error> gError;
 }
 
 using err::ECode;
@@ -181,7 +182,7 @@ using err::ECode;
 
 #define EHBan(...)                        \
     {                                     \
-        EHAssert(err::gError == nullptr); \
+        EHAssert(err::gError.get() == nullptr); \
         EHBan_(__VA_ARGS__);              \
     }
 

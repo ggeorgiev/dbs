@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "err/err.h"
@@ -6,7 +6,7 @@
 
 namespace err
 {
-thread_local ErrorUPtr gError;
+boost::thread_specific_ptr<Error> gError;
 
 static bool init()
 {
