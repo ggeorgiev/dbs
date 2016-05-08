@@ -20,3 +20,5 @@ cache:
     directories:
       - clang
       - boost
+      - gtest
+      - rocksdb

@@ -9,7 +9,7 @@ git submodule update --init || exit 1
 
 CMAKE=cmake
 
-if [ ! -e clang ]
+if [ ! -e clang -o ! "$(ls -A clang)" ]
 then
     cd 3rdparty || exit 1
 
@@ -78,7 +78,7 @@ CLANGDIR=$BASEDIR/clang
 CLANGBIN=$CLANGDIR/bin
 CLANG=$CLANGBIN/clang++
 
-if [ ! -e clang/plugin ]
+if [ ! -e clang/plugin -o ! "$(ls -A clang/plugin)" ]
 then
     mkdir -p clang/plugin || exit 1
 
@@ -105,7 +105,7 @@ then
 fi
 
 
-if [ ! -e iwyu ]
+if [ ! -e iwyu -o ! "$(ls -A iwyu)" ]
 then
     cd 3rdparty/iwyu || exit 1
 
@@ -139,7 +139,7 @@ then
     fi
 fi
 
-if [ ! -e gtest ]
+if [ ! -e gtest -o ! "$(ls -A gtest)" ]
 then
     cd 3rdparty/gtest || exit 1
 
@@ -177,7 +177,7 @@ then
     fi
 fi
 
-if [ ! -e boost ]
+if [ ! -e boost -o ! "$(ls -A boost)" ]
 then
     cd 3rdparty/boost || exit 1
 
@@ -265,7 +265,7 @@ then
     fi
 fi
 
-if [ ! -e fmt ]
+if [ ! -e fmt -o ! "$(ls -A fmt)" ]
 then
     cd 3rdparty/fmt || exit 1
 
@@ -291,7 +291,7 @@ then
     fi
 fi
 
-if [ ! -e spdlog ]
+if [ ! -e spdlog -o ! "$(ls -A spdlog)" ]
 then
     echo Build spdlog ...
 
@@ -305,7 +305,7 @@ then
     fi
 fi
 
-if [ ! -e rocksdb ]
+if [ ! -e rocksdb -o ! "$(ls -A rocksdb)" ]
 then
     cd 3rdparty/rocksdb || exit 1
 
