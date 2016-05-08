@@ -36,6 +36,9 @@ script:
 cache:
     directories:
       - clang
+      - iwyu
       - boost
+      - fmt
       - gtest
       - rocksdb
+      - spdlog
