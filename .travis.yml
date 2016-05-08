@@ -22,6 +22,10 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update -q ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install gcc-4.8 g++-4.8 -y ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.8 ; fi
+
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then curl -L  https://github.com/ggeorgiev/dbs/releases/download/clang/clang.zip > clang.zip ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then unzip clang.zip ; fi
+
   - ./prepare.sh travis
 
 install:

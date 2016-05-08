@@ -66,7 +66,7 @@ then
 
     cd .. || exit 1
 
-    if [ -e iwyu ]
+    if [ -e iwyu/bin ]
     then
         cp iwyu/bin/* $CLANGBIN
     fi
