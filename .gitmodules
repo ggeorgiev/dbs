@@ -1,16 +1,3 @@
-[submodule "llvm"]
-	path = 3rdparty/llvm
-	url = https://github.com/llvm-mirror/llvm.git
-[submodule "clang"]
-	path = 3rdparty/clang
-	url = https://github.com/llvm-mirror/clang.git
-[submodule "libcxx"]
-	path = 3rdparty/libcxx
-	url = https://github.com/llvm-mirror/libcxx.git
-[submodule "libcxxabi"]
-	path = 3rdparty/libcxxabi
-	url = https://github.com/llvm-mirror/libcxxabi.git
-
 [submodule "iwyu"]
     path = 3rdparty/iwyu
     url = https://github.com/include-what-you-use/include-what-you-use.git
@@ -22,10 +9,6 @@
 [submodule "3rdparty/boost"]
 	path = 3rdparty/boost
 	url = https://github.com/boostorg/boost.git
-
-[submodule "clang-tools-extra"]
-	path = 3rdparty/clang-tools-extra
-	url = https://github.com/llvm-mirror/clang-tools-extra.git
 
 [submodule "clang-plugin"]
 	path = 3rdparty/clang-plugin
