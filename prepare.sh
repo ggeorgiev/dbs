@@ -4,65 +4,11 @@ BASEDIR=$(pwd)/$(dirname $0)
 
 cd $BASEDIR
 
-CLANG=`xcodebuild -find clang++`
-CLANGBIN=$(dirname $CLANG)
-CLANGDIR=$(dirname $CLANGBIN)
-
-#if [ ! -e clang/plugin -o ! "$(ls -A clang/plugin)" ]
-if [ 0 == 1 ]
+if [ ! -e clang -o ! "$(ls -A clang)" ]
 then
-    git submodule update --init 3rdparty/clang-plugin || exit 1
-
-    mkdir -p clang/plugin || exit 1
-
-    cd 3rdparty/clang-plugin || exit 1
-
-    echo Build clang plugins ...
-
-    cd param_check || exit 1
-
-    LLVM_DIR=$CLANGDIR CC=$CLANG CXX=$CLANG make  || exit 1
-
-    cp *.so ../../../clang/plugin
-
-    make clean
-
-    cd .. || exit 1
-
-    cd ../..  || exit 1
-fi
-
-
-#if [ ! -e iwyu -o ! "$(ls -A iwyu)" ]
-if [ 0 == 1 ]
-then
-    git submodule update --init 3rdparty/iwyu || exit 1
-
-    cd 3rdparty/iwyu || exit 1
-
-    echo Build Include what you use ...
-
-    rm -rf build || exit 1
-    mkdir build || exit 1
-    cd build || exit 1
-
-    cmake \
-        -G "Unix Makefiles" \
-        -DCMAKE_CXX_COMPILER=$CLANG \
-        -DIWYU_LLVM_ROOT_PATH=$CLANGDIR \
-        -DCMAKE_INSTALL_PREFIX:PATH=../../../iwyu \
-        .. || exit 1
-
-    make || exit 1
-    make install || exit 1
-
-    cd ..
-
-    git clean -fdx
-
-    cd ../.. || exit 1
-
-    cp iwyu/bin/* $CLANGBIN
+    curl -L https://github.com/ggeorgiev/dbs/releases/download/clang/clang-osx.zip > clang.zip
+    unzip clang.zip
+    rm  clang.zip
 fi
 
 if [ ! -e gtest -o ! "$(ls -A gtest)" ]
@@ -79,7 +25,7 @@ then
 
     cmake \
         -G "Unix Makefiles" \
-        -DCMAKE_CXX_COMPILER=$CLANG \
+        -DCMAKE_CXX_COMPILER=clang++ \
         -DBUILD_SHARED_LIBS=OFF \
         -Wno-dev \
         -Dgtest_build_samples=ON \
@@ -161,7 +107,7 @@ then
     SYSROOT="$SYSROOT/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk"
 
     build_boost() {
-        BOOSTBUILD=PATH=$CLANGBIN:$PATH \
+        BOOSTBUILD=\
             ./b2 \
             toolset=clang \
             cxxflags="-std=c++11 -stdlib=libc++ -isystem=$SYSROOT" \
@@ -196,8 +142,8 @@ then
     mkdir build
     cd build
 
-    cmake -DCMAKE_CC_COMPILER=$CLANG -DCMAKE_CXX_COMPILER=$CLANG -DCMAKE_INSTALL_PREFIX:PATH=$BASEDIR/fmt .. || exit 1
-    CC=$CLANG CXX=$CLANG make || exit 1
+    cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_INSTALL_PREFIX:PATH=$BASEDIR/fmt .. || exit 1
+    CXX=clang++ make || exit 1
     make test || exit 1
     make install || exit 1
 
@@ -227,7 +173,7 @@ then
 
     echo Build RocksDB ...
 
-    CC=$CLANG CXX=$CLANG make static_lib || exit 1
+    CXX=clang++ make static_lib || exit 1
 
     mkdir -p ../../rocksdb/lib
     cp -r include ../../rocksdb || exit 1
