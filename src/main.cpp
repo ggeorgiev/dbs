@@ -11,10 +11,12 @@
 #include "parser/parser.hpp"
 #include "parser/string_stream.hpp"
 #include "dom/manager.h"
+#include "doim/fs/fs_binary.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/object.h"
 #include "doim/manager.h"
+#include "doim/sys/executable.h"
 #include "doim/tag/tag.h"
 #include "db/database.h"
 #include "err/err.h"
@@ -87,15 +89,22 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    const auto& clangFormat = doim::gManager->obtainFile(cwd, "clang/bin/clang-format");
+    const auto& clangFormatFile =
+        doim::gManager->obtainFile(cwd, "clang/bin/clang-format");
+    const auto& clangFormat =
+        doim::gManager->unique(std::make_shared<doim::SysExecutable>(clangFormatFile));
     const auto& clangFormatTool = std::make_shared<tool::CxxClangFormat>(clangFormat);
 
-    const auto& clang = doim::gManager->obtainFile(nullptr,
-        "/Applications/Xcode.app/Contents/Developer/"
-        "Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++");
+    const auto& clangBinary =
+        doim::gManager->unique(std::make_shared<doim::FsBinary>("clang++"));
+    const auto& clang =
+        doim::gManager->unique(std::make_shared<doim::SysExecutable>(clangBinary));
     const auto& compiler = std::make_shared<tool::CxxCompiler>(clang);
 
-    const auto& iwyu = doim::gManager->obtainFile(cwd, "clang/bin/include-what-you-use");
+    const auto& iwyuFile =
+        doim::gManager->obtainFile(cwd, "clang/bin/include-what-you-use");
+    const auto& iwyu =
+        doim::gManager->unique(std::make_shared<doim::SysExecutable>(iwyuFile));
     const auto& iwyuTool = std::make_shared<tool::CxxIwyu>(iwyu);
 
     const auto& engine =

@@ -134,6 +134,11 @@ TEST(ManagerTest, obtainDirectory)
 
     for (const auto& test : tests)
     {
+        SCOPED_TRACE("root:" + test.root);
+        SCOPED_TRACE("dir:" + test.dir);
+        SCOPED_TRACE("absolute:" + test.absolute);
+        SCOPED_TRACE("relative:" + test.relative);
+
         const auto& root = doim::gManager->obtainDirectory(nullptr, test.root);
         const auto& directory = doim::gManager->obtainDirectory(root, test.dir);
         ASSERT_NE(nullptr, directory);
@@ -144,6 +149,35 @@ TEST(ManagerTest, obtainDirectory)
             << "root: \"" << test.root << "\", dir: \"" << test.dir << "\"";
     }
 }
+
+/*
+TEST(ManagerTest, obtainRelativeDirectory)
+{
+    struct Test
+    {
+        std::string dir;
+        std::string relative;
+    };
+
+    Test tests[]{
+        Test{.dir = "/", .relative = "/"},
+        Test{.dir = "", .relative = ""},
+        Test{.dir = "foo", .relative = "foo"},
+    };
+
+    for (const auto& test : tests)
+    {
+        SCOPED_TRACE("dir:" + test.dir);
+        SCOPED_TRACE("relative:" + test.relative);
+
+        const auto& directory =
+        doim::gManager->obtainDirectory(doim::gRelativeDirectory, test.dir);
+        ASSERT_NE(nullptr, directory);
+
+        ASSERT_EQ(test.relative, directory->path(nullptr));
+    }
+}
+*/
 
 TEST(ManagerTest, obtainCorrespondingDirectory)
 {

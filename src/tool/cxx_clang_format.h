@@ -7,7 +7,7 @@
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/sys/argument.h"
-#include "doim/sys/executable.hpp"
+#include "doim/sys/executable.h"
 #include <memory>
 
 namespace tool

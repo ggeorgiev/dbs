@@ -9,6 +9,7 @@
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/cxx/cxx_program.h"
 #include "doim/db/db_key.hpp"
+#include "doim/fs/fs_binary.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/location.hpp"
@@ -17,7 +18,7 @@
 #include "doim/manager_object_set_mixin.hpp"
 #include "doim/sys/argument.h"
 #include "doim/sys/command.h"
-#include "doim/sys/executable.hpp"
+#include "doim/sys/executable.h"
 #include "doim/tag/tag.h"
 #include "im/initialization_manager.hpp"
 #include <experimental/string_view>
@@ -39,11 +40,13 @@ class Manager : public ManagerObjectMixin<CxxFile>,
                 public ManagerObjectSetMixin<CxxObjectFile>,
                 public ManagerObjectMixin<CxxProgram>,
                 public ManagerObjectMixin<DbKey>,
+                public ManagerObjectMixin<FsBinary>,
                 public ManagerObjectMixin<FsDirectory>,
                 public ManagerObjectSetMixin<FsFile>,
                 public ManagerObjectMixin<Object>,
                 public ManagerObjectSetMixin<SysArgument>,
                 public ManagerObjectMixin<SysCommand>,
+                public ManagerObjectMixin<SysExecutable>,
                 public ManagerObjectSetMixin<Tag>
 {
 public:
@@ -84,6 +87,10 @@ public:
     ObjectSPtr obtainObject(const LocationSPtr& base,
                             const Object::Type type,
                             const std::experimental::string_view& object);
+
+    using ManagerObjectMixin<FsBinary>::unique;
+    using ManagerObjectMixin<FsBinary>::isUnique;
+    using ManagerObjectMixin<FsBinary>::find;
 
     using ManagerObjectMixin<FsDirectory>::unique;
     using ManagerObjectMixin<FsDirectory>::isUnique;
@@ -144,12 +151,6 @@ public:
     using ManagerObjectSetMixin<SysArgument>::unique;
     using ManagerObjectSetMixin<SysArgument>::isUnique;
 
-    SysExecutableSPtr obtainExecutable(const FsDirectorySPtr& base,
-                                       const std::experimental::string_view& file)
-    {
-        return obtainFile(base, file);
-    }
-
     SysArgumentSPtr obtainArgument(const std::string& value)
     {
         return unique(std::make_shared<doim::SysArgument>(value));
@@ -164,6 +165,9 @@ public:
 
     using ManagerObjectMixin<SysCommand>::unique;
     using ManagerObjectMixin<SysCommand>::isUnique;
+
+    using ManagerObjectMixin<SysExecutable>::unique;
+    using ManagerObjectMixin<SysExecutable>::isUnique;
 
     using ManagerObjectMixin<Tag>::unique;
     using ManagerObjectMixin<Tag>::find;

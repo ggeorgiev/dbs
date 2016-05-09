@@ -142,8 +142,9 @@ then
     mkdir build
     cd build
 
-    cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_INSTALL_PREFIX:PATH=$BASEDIR/fmt .. || exit 1
-    CXX=clang++ make || exit 1
+    cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CC_COMPILER=clang \
+        -DCMAKE_INSTALL_PREFIX:PATH=$BASEDIR/fmt .. || exit 1
+    CC=clang CXX=clang++ make || exit 1
     make test || exit 1
     make install || exit 1
 
@@ -173,7 +174,7 @@ then
 
     echo Build RocksDB ...
 
-    CXX=clang++ make static_lib || exit 1
+    CC=clang CXX=clang++ make static_lib || exit 1
 
     mkdir -p ../../rocksdb/lib
     cp -r include ../../rocksdb || exit 1
