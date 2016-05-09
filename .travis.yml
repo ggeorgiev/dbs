@@ -5,6 +5,10 @@ os:
 
 osx_image: xcode7.3
 
+env:
+    global:
+      - secure: "J7u1rzOwK01iL/JUticsZPlPiGEi2D+bbbmKgC329sDUNqkev8eA5D+nP549zk90IhfPSxc9XzAwPJJ1dBSIJ8toi0rL5NXvpkE+vW2x3Vwb042GIFGifv5Te9q9lNhYIpEIvOrxyFQK8JEEJKdYjTvnJ/oTxWUY4jo5rvS+O4NdOzlFyCCwTv+A2Dv0vOIduwquNznNsUPBRminHxNaW23DRdS2RirPJxPAVJW2iibchPt+dusfheF1KcIK6/ax4dEi3NAyxXd+HNqlyQCOZG3yxkfiARAOD/PJp9VySMc5AvnjBdUQQgGw75qrQ+zq8puiQMUxEMN2EtK5Fq0VB3bdfvTp/nYUr5auvI9G4F+ZaRipsHdXgVh1LbgGUTFXtL9rShYukFvwHqQiCWV0kFC8FWOX3W+Cqay8XzfjxQTba70uxkZRMIGFG6Jt7NgscaGyVqjmh+2JH6mMtQwp2dJfaemFcrN1WaFgGZ1wwlLsKwZxaRl7QF24bnOZQ3Gfx+eC9GuFZ/TIjenziLNrQAJm10tlP0bYQRHGy5NKamiLDaEQ88mle874DbjLA1BJZNReDjPyDGTZXlVdYnSGYsFJrDnoKcaQa2U9/M7AGB4E8TNR1uPm7wjxsOeNTT0PyVXp3kbRagQMg4WWVSRZvNPYlddx3SQ0u4+Nsr6uw1M="
+
 git:
     submodules: false
     depth: 3
@@ -16,6 +20,15 @@ addons:
         packages:
           - cmake
           - cmake-data
+
+    coverity_scan:
+        project:
+            name: "ggeorgiev/dbs"
+            description: "Build submitted via Travis CI"
+            notification_email: george.georgiev.sf@gmail.com
+            build_command_prepend: cov-configure --comptype clangcxx --compiler clang++ --template
+            build_command: "./self-build.sh"
+            branch_pattern: coverity_scan
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y ; fi
@@ -36,6 +49,9 @@ after_success:
   - lcov --list coverage.info # debug before upload
   - coveralls-lcov coverage.info # uploads to coveralls
 
+script:
+    ./self-build.sh
+
 cache:
     directories:
       - iwyu
@@ -44,24 +60,4 @@ cache:
       - gtest
       - rocksdb
       - spdlog
-
-
-env:
-    global:
-# The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-#   via the "travis encrypt" command using the project repo's public key
-      - secure: "J7u1rzOwK01iL/JUticsZPlPiGEi2D+bbbmKgC329sDUNqkev8eA5D+nP549zk90IhfPSxc9XzAwPJJ1dBSIJ8toi0rL5NXvpkE+vW2x3Vwb042GIFGifv5Te9q9lNhYIpEIvOrxyFQK8JEEJKdYjTvnJ/oTxWUY4jo5rvS+O4NdOzlFyCCwTv+A2Dv0vOIduwquNznNsUPBRminHxNaW23DRdS2RirPJxPAVJW2iibchPt+dusfheF1KcIK6/ax4dEi3NAyxXd+HNqlyQCOZG3yxkfiARAOD/PJp9VySMc5AvnjBdUQQgGw75qrQ+zq8puiQMUxEMN2EtK5Fq0VB3bdfvTp/nYUr5auvI9G4F+ZaRipsHdXgVh1LbgGUTFXtL9rShYukFvwHqQiCWV0kFC8FWOX3W+Cqay8XzfjxQTba70uxkZRMIGFG6Jt7NgscaGyVqjmh+2JH6mMtQwp2dJfaemFcrN1WaFgGZ1wwlLsKwZxaRl7QF24bnOZQ3Gfx+eC9GuFZ/TIjenziLNrQAJm10tlP0bYQRHGy5NKamiLDaEQ88mle874DbjLA1BJZNReDjPyDGTZXlVdYnSGYsFJrDnoKcaQa2U9/M7AGB4E8TNR1uPm7wjxsOeNTT0PyVXp3kbRagQMg4WWVSRZvNPYlddx3SQ0u4+Nsr6uw1M="
-
-addons:
-    coverity_scan:
-        project:
-            name: "ggeorgiev/dbs"
-            description: "Build submitted via Travis CI"
-            notification_email: george.georgiev.sf@gmail.com
-            build_command_prepend: cov-configure --comptype clangcxx --compiler clang++ --template
-            build_command: "./self-build.sh"
-            branch_pattern: coverity_scan
-
-script:
-    ./self-build.sh
 
