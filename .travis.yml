@@ -34,7 +34,7 @@ script:
     ./build.sh && ./self-build.sh
 
 after_success:
-  - lcov --directory build --base-directory src --capture --no-external --output-file coverage.info # capture coverage info
+  - lcov --directory build --base-directory src --capture --no-external --output-file coverage.info | grep Processing # capture coverage info
   - lcov --list coverage.info # debug before upload
   - coveralls-lcov coverage.info # uploads to coveralls
 
