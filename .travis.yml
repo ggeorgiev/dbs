@@ -60,7 +60,7 @@ addons:
             notification_email: george.georgiev.sf@gmail.com
             build_command_prepend: cov-configure --comptype clangcxx --compiler clang++ --template
             build_command: "./self-build.sh"
-            branch_pattern: coverity
+            branch_pattern: coverity_scan
 
 script:
     ./self-build.sh
