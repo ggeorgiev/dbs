@@ -9,7 +9,7 @@
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/sys/command.h"
-#include "doim/sys/executable.hpp"
+#include "doim/sys/executable.h"
 #include <memory>
 
 namespace tool

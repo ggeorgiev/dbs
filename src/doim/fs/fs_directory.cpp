@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "doim/fs/fs_directory.h"
@@ -8,6 +8,15 @@
 
 namespace doim
 {
+FsDirectorySPtr FsDirectory::global(const FsDirectorySPtr& parent,
+                                    const std::string& name,
+                                    FsDirectorySPtr& directory)
+{
+    return Manager::global<FsDirectory, FsDirectorySPtr, std::string>(parent,
+                                                                      name,
+                                                                      directory);
+}
+
 FsDirectory::FsDirectory()
     : Base(FsDirectorySPtr(), std::string())
     , mLevel(1)

@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -54,6 +54,10 @@ public:
     private:
         FsDirectorySPtr mFsDirectory;
     };
+
+    static FsDirectorySPtr global(const FsDirectorySPtr& parent,
+                                  const std::string& name,
+                                  FsDirectorySPtr& directory);
 
     FsDirectory();
     FsDirectory(const FsDirectorySPtr& parent, const std::string& name);

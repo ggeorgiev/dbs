@@ -11,7 +11,7 @@
 #include "err/macro.h"
 #include "im/initialization_manager.hpp"
 #include <fmt/format.h>
-#include <boost/thread/tss.hpp>
+#include <boost/thread/tss.hpp> // IWYU pragma: export
 #include <memory>
 #include <sstream>
 #include <unordered_map>
@@ -180,10 +180,10 @@ using err::ECode;
 
 #define EHEnd return err::kSuccess
 
-#define EHBan(...)                        \
-    {                                     \
+#define EHBan(...)                              \
+    {                                           \
         EHAssert(err::gError.get() == nullptr); \
-        EHBan_(__VA_ARGS__);              \
+        EHBan_(__VA_ARGS__);                    \
     }
 
 #define EHBan_(...)                                               \

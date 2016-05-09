@@ -69,8 +69,8 @@ tpool::TaskSPtr CxxCompiler::compileCommand(
     auto compileArguments =
         includeArguments(directory, objectFile->cxxFile()->cxxIncludeDirectories());
 
-    compileArguments->insert(gFProfileArcArgument);
-    compileArguments->insert(gFTestCoverageArgument);
+    // compileArguments->insert(gFProfileArcArgument);
+    // compileArguments->insert(gFTestCoverageArgument);
 
     auto argument_cxxflags = doim::gManager->obtainArgument(
         "-std=c++11 -stdlib=libc++ -O0 -g "
@@ -107,7 +107,10 @@ tpool::TaskSPtr CxxCompiler::linkCommand(
     const doim::CxxObjectFileSetSPtr& objectFiles) const
 {
     auto arguments = std::make_shared<doim::SysArgumentSet>();
-    arguments->insert(gCoverageArgument);
+    // arguments->insert(gCoverageArgument);
+
+    auto argument_cxxflags = doim::gManager->obtainArgument("-std=c++11 -stdlib=libc++");
+    arguments->insert(argument_cxxflags);
 
     for (const auto& cxxLibrary : program->recursiveCxxLibraries())
     {
