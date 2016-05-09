@@ -53,7 +53,7 @@ public:
     doim::CxxIncludeDirectorySetSPtr mEmptyCxxIncludeDirectorySet;
 };
 
-TEST_F(CxxFileCrcTaskTest, simple)
+TEST_F(CxxFileCrcTaskTest, SLOW_simple)
 {
     auto cxxFile =
         std::make_shared<doim::CxxFile>(mFsSimpleCxx, mEmptyCxxIncludeDirectorySet);
