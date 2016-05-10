@@ -5,7 +5,6 @@
 #include "tpool/task.h"
 #include "tpool/tpool.h"
 #include "err/err.h"
-#include "err/err_cppformat.h"
 #include "err/gtest/err.h"
 #include "err/gtest/err_assert.h"
 #include "gtest/framework.h"

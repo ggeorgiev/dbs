@@ -9,16 +9,13 @@
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
+#include "doim/sys/argument.h"
 #include "doim/sys/command.h"
-#include "err/err.h"
-#include "err/err_cppformat.h"
-#include "log/log.h"
-#include <functional>
+#include "rtti/class_rtti.hpp"
 #include <memory>
 #include <sstream>
 #include <string>
 #include <unordered_set>
-#include <stdio.h>
 
 namespace tool
 {

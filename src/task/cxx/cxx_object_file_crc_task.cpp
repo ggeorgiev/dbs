@@ -8,8 +8,8 @@
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "err/err_assert.h"
+#include "log/log.h"
 #include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/path.hpp>
 #include <iterator>
 #include <string>
 

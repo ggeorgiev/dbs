@@ -4,7 +4,7 @@
 #include "dom/cxx/cxx_library.h"
 #include "dom/generic/attribute.hpp"
 #include "doim/manager.h"
-#include "err/err_cppformat.h"
+#include "err/err.h"
 #include <functional>
 #include <sstream>
 #include <string>

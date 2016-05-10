@@ -7,8 +7,8 @@
 #pragma once
 
 #include "err/err_assert.h"
-#include "err/err_cppformat.h"
-#include "err/macro.h"
+#include "err/err_cppformat.h" // IWYU pragma: export
+#include "err/macro.h"         // IWYU pragma: export
 #include "im/initialization_manager.hpp"
 #include <fmt/format.h>
 #include <boost/thread/tss.hpp> // IWYU pragma: export

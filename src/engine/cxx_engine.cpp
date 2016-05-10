@@ -4,10 +4,10 @@
 #include "engine/cxx_engine.h"
 #include "tool/cxx_compiler.h"
 #include "task/cxx/cxx_file_crc_task.h"
+#include "task/cxx/cxx_object_file_crc_task.h"
 #include "task/cxx/cxx_program_crc_task.h"
 #include "task/db/db_put_task.h"
 #include "task/manager.h"
-#include "task/sys/ensure_directory_task.h"
 #include "task/tpool.h"
 #include "tpool/task_callback.h"
 #include "tpool/task_group.h"
@@ -17,7 +17,6 @@
 #include "db/database.h"
 #include "err/err.h"
 #include "log/log.h"
-#include <fmt/format.h>
 #include "math/crc.hpp"
 #include <functional>
 #include <string>

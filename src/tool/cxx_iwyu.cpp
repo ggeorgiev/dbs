@@ -5,14 +5,14 @@
 #include "tool/cxx_compiler.h"
 #include "task/manager.h"
 #include "task/sys/parse_stdout_task.h"
-#include "tpool/task_callback.h"
-#include "dom/cxx/cxx_library.h"
-#include "dom/cxx/cxx_program.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
-#include "doim/sys/argument.h"
 #include "doim/sys/command.h"
+#include "err/err.h"
+#include "log/log.h"
+#include "rtti/class_rtti.hpp"
+#include <functional>
 #include <memory>
 #include <regex>
 #include <sstream>
@@ -47,22 +47,20 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
     auto command = std::make_shared<doim::SysCommand>(mTool, arguments);
     command = doim::gManager->unique(command);
 
-    auto fn = [](int exit, const std::string& stdout) -> ECode {
+    auto fn = [](int exit, const std::string& output) -> ECode {
         if (exit == 0)
         {
             ELOG("Unexpected exit code from iwyu tool: {}", exit);
             EHBan(kUnexpected);
         }
 
-        if (stdout.find("has correct #includes/fwd-decls") != std::string::npos)
-            EHEnd;
-
+        bool success = true;
         static std::regex removeItemsRegex(
             "(?:^|\n)(.*?) should remove these lines:"
             "(?:[\\s\\r\\n]+- #include.*?\\/\\/ lines \\d+-\\d+)+");
         static std::regex removeItemRegex("- (#include.*?)\\s*\\/\\/ lines (\\d+)-\\d+");
 
-        auto its = std::sregex_iterator(stdout.begin(), stdout.end(), removeItemsRegex);
+        auto its = std::sregex_iterator(output.begin(), output.end(), removeItemsRegex);
         for (std::sregex_iterator items = its; items != std::sregex_iterator(); ++items)
         {
             std::smatch smatchs = *items;
@@ -72,6 +70,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
 
             for (std::sregex_iterator item = it; item != std::sregex_iterator(); ++item)
             {
+                success = false;
                 std::smatch smatch = *item;
                 ELOG("\n{}:{}:1: error: extra {} ",
                      smatchs[1].str(),
@@ -84,7 +83,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
                                         "(?:[\\s\\r\\n]+#include.*?\\/\\/[^\\n]*)+");
         static std::regex addItemRegex("(#include[^\\n]+)");
 
-        its = std::sregex_iterator(stdout.begin(), stdout.end(), addItemsRegex);
+        its = std::sregex_iterator(output.begin(), output.end(), addItemsRegex);
         for (std::sregex_iterator items = its; items != std::sregex_iterator(); ++items)
         {
             std::smatch smatchs = *items;
@@ -93,13 +92,19 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
 
             for (std::sregex_iterator item = it; item != std::sregex_iterator(); ++item)
             {
+                success = false;
                 std::smatch smatch = *item;
                 ELOG("\n{}:1:1: warning: missing {} ", smatchs[1].str(), smatch[1].str());
             }
         }
 
-        ELOG("\n{}", stdout);
-        EHBan(kFailed);
+        if (!success)
+        {
+            ELOG("\n{}", output);
+            EHBan(kFailed);
+        }
+
+        EHEnd;
     };
 
     return task::gManager->valid(

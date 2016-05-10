@@ -4,7 +4,9 @@
 #pragma once
 
 #include "task/base.hpp"
+#include "doim/fs/fs_directory.h"
 #include "doim/sys/command.h"
+#include "doim/tag/tag.h"
 #include "err/err.h"
 #include <fmt/format.h>
 #include <iosfwd>

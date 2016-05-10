@@ -7,16 +7,17 @@
 #include "task/tpool.h"
 #include "doim/manager.h"
 #include "err/err_assert.h"
+#include "log/log.h"
 #include <memory>
 
 namespace task
 {
 std::function<ECode(int, const std::string&)> ParseStdoutTask::logOnError()
 {
-    return [](int exit, const std::string& stdout) -> ECode {
+    return [](int exit, const std::string& stdoutput) -> ECode {
         if (exit != 0)
         {
-            ELOG("\n{}", stdout);
+            ELOG("\n{}", stdoutput);
             EHBan(kUnable);
         }
         EHEnd;

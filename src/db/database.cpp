@@ -3,7 +3,6 @@
 
 #include "db/database.h"
 #include "err/err.h"
-#include "err/err_cppformat.h"
 #include "log/log.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>

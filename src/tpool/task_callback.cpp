@@ -3,7 +3,6 @@
 
 #include "tpool/task_callback.h"
 #include "err/err_assert.h"
-#include <sstream>
 
 namespace tpool
 {

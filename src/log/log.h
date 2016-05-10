@@ -11,6 +11,8 @@
 #include <spdlog/details/line_logger_fwd.h>  // IWYU pragma: export
 #include <spdlog/details/line_logger_impl.h> // IWYU pragma: export
 #include <spdlog/details/logger_impl.h>      // IWYU pragma: export
+#include <spdlog/details/spdlog_impl.h>      // IWYU pragma: export
+
 #include <memory>
 
 namespace dbslog

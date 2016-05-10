@@ -8,7 +8,6 @@
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "doim/sys/command.h"
-#include "err/err.h"
 #include "rtti/class_rtti.hpp"
 #include <memory>
 #include <sstream>

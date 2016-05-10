@@ -5,6 +5,7 @@
 #include "doim/manager.h"
 #include "err/err_assert.h"
 #include "const/constants.h"
+#include "functional"
 
 namespace doim
 {

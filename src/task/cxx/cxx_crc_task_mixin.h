@@ -11,7 +11,6 @@
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_file.h"
 #include "err/err.h"
-#include "err/err_cppformat.h"
 #include <boost/filesystem/operations.hpp>
 #include "math/crc.hpp"
 #include <algorithm>
