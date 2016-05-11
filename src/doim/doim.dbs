@@ -11,7 +11,7 @@ cxx_library doim
         doim/cxx/cxx_object_file.h
         doim/cxx/cxx_program.h
         doim/cxx/cxx_static_library.h
-        doim/db/db_key.hpp
+        doim/db/db_key.h
         doim/db/db_value.hpp
         doim/fs/fs_binary.h
         doim/fs/fs_directory.h
@@ -45,6 +45,7 @@ cxx_library doim
         cxx/cxx_object_file.cpp
         cxx/cxx_program.cpp
         cxx/cxx_static_library.cpp
+        db/db_key.cpp
         fs/fs_binary.cpp
         fs/fs_directory.cpp
         fs/fs_file.cpp

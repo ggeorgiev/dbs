@@ -54,20 +54,30 @@ doim::SysArgumentSetSPtr CxxCompiler::includeArguments(
     return arguments;
 }
 
+doim::SysArgumentSet CxxCompiler::compileProfileArguments()
+{
+    return {gFProfileArcArgument, gFTestCoverageArgument};
+}
+
+doim::SysArgumentSet CxxCompiler::linkProfileArguments()
+{
+    return {gCoverageArgument};
+}
+
 CxxCompiler::CxxCompiler(const doim::SysExecutableSPtr& compiler)
     : mCompiler(compiler)
 {
 }
 
 tpool::TaskSPtr CxxCompiler::compileCommand(
+    const doim::SysArgumentSet& arguments,
     const doim::FsDirectorySPtr& directory,
     const doim::CxxObjectFileSPtr& objectFile) const
 {
     auto compileArguments =
         includeArguments(directory, objectFile->cxxFile()->cxxIncludeDirectories());
 
-    // compileArguments->insert(gFProfileArcArgument);
-    // compileArguments->insert(gFTestCoverageArgument);
+    compileArguments->insert(arguments.begin(), arguments.end());
 
     auto argument_cxxflags = doim::gManager->obtainArgument(
         "-std=c++11 -stdlib=libc++ -O0 -g "
@@ -98,16 +108,17 @@ tpool::TaskSPtr CxxCompiler::compileCommand(
 }
 
 tpool::TaskSPtr CxxCompiler::linkCommand(
+    const doim::SysArgumentSet& arguments,
     const doim::FsDirectorySPtr& directory,
     const doim::FsDirectorySPtr& intermediate,
     const dom::CxxProgramSPtr& program,
     const doim::CxxObjectFileSetSPtr& objectFiles) const
 {
-    auto arguments = std::make_shared<doim::SysArgumentSet>();
+    auto linkArguments = std::make_shared<doim::SysArgumentSet>(arguments);
     // arguments->insert(gCoverageArgument);
 
     auto argument_cxxflags = doim::gManager->obtainArgument("-std=c++11 -stdlib=libc++");
-    arguments->insert(argument_cxxflags);
+    linkArguments->insert(argument_cxxflags);
 
     for (const auto& cxxLibrary : program->recursiveCxxLibraries())
     {
@@ -115,12 +126,12 @@ tpool::TaskSPtr CxxCompiler::linkCommand(
         {
             auto argument_L = doim::gManager->obtainArgument(
                 "-L " + cxxLibrary->binary()->directory()->path(directory));
-            arguments->insert(argument_L);
+            linkArguments->insert(argument_L);
 
             std::string name = cxxLibrary->binary()->name();
             auto argument_l =
                 doim::gManager->obtainArgument("-l" + name.substr(3, name.size() - 5));
-            arguments->insert(argument_l);
+            linkArguments->insert(argument_l);
         }
     }
 
@@ -128,14 +139,14 @@ tpool::TaskSPtr CxxCompiler::linkCommand(
     {
         auto argument_obj =
             doim::gManager->obtainArgument(objectFile->file()->path(directory));
-        arguments->insert(argument_obj);
+        linkArguments->insert(argument_obj);
     }
 
     auto argument_o = doim::gManager->obtainArgument("-o build/" + program->name());
-    arguments->insert(argument_o);
-    arguments = doim::gManager->unique(arguments);
+    linkArguments->insert(argument_o);
+    linkArguments = doim::gManager->unique(linkArguments);
 
-    auto linkCommand = std::make_shared<doim::SysCommand>(mCompiler, arguments);
+    auto linkCommand = std::make_shared<doim::SysCommand>(mCompiler, linkArguments);
     linkCommand = doim::gManager->unique(linkCommand);
 
     auto id = rtti::RttiInfo<CxxCompiler, 1>::classId();

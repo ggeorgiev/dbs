@@ -4,7 +4,7 @@
 #pragma once
 
 #include "task/base.hpp"
-#include "doim/db/db_key.hpp"
+#include "doim/db/db_key.h"
 #include "doim/db/db_value.hpp"
 #include "doim/tag/tag.h"
 #include "err/err.h"

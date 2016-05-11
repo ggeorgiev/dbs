@@ -19,11 +19,21 @@
 #include "log/log.h"
 #include "math/crc.hpp"
 #include <functional>
+#include <iosfwd>
 #include <string>
 #include <vector>
 
 namespace engine
 {
+doim::DbKeySPtr CxxEngine::gBuildDbKey =
+    doim::DbKey::global(nullptr, "build", CxxEngine::gBuildDbKey);
+doim::DbKeySPtr CxxEngine::gDebugDbKey =
+    doim::DbKey::global(gBuildDbKey, "debug", CxxEngine::gDebugDbKey);
+doim::DbKeySPtr CxxEngine::gReleaseDbKey =
+    doim::DbKey::global(gBuildDbKey, "release", CxxEngine::gReleaseDbKey);
+doim::DbKeySPtr CxxEngine::gProfileDbKey =
+    doim::DbKey::global(gBuildDbKey, "profile", CxxEngine::gProfileDbKey);
+
 CxxEngine::CxxEngine(const tool::CxxClangFormatSPtr& formatter,
                      const tool::CxxCompilerSPtr& compiler,
                      const tool::CxxIwyuSPtr& iwyu)
@@ -46,7 +56,9 @@ tpool::TaskSPtr CxxEngine::updateDbTask(const tpool::TaskSPtr& task,
     return std::make_shared<tpool::TaskCallback>(0, task, onFinish, nullptr);
 }
 
-tpool::TaskSPtr CxxEngine::compileTask(const doim::FsDirectorySPtr& directory,
+tpool::TaskSPtr CxxEngine::compileTask(const doim::SysArgumentSet& arguments,
+                                       const doim::DbKeySPtr& ancenstor,
+                                       const doim::FsDirectorySPtr& directory,
                                        const doim::CxxObjectFileSPtr& objectFile)
 {
     auto crcTask =
@@ -55,14 +67,14 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::FsDirectorySPtr& directory,
 
     auto self = shared_from_this();
     tpool::TaskCallback::Function onFinish =
-        [this, self, directory, objectFile](const tpool::TaskSPtr& task) -> ECode {
+        [this, self, arguments, ancenstor, directory, objectFile](
+            const tpool::TaskSPtr& task) -> ECode {
 
-        auto key = std::make_shared<doim::DbKey>("cxx object file:" +
-                                                 objectFile->file()->path());
+        auto key = std::make_shared<doim::DbKey>(ancenstor, objectFile->file()->path());
         key = doim::gManager->unique(key);
 
         math::Crcsum crc;
-        db::gDatabase->get(key->bytes(), crc);
+        db::gDatabase->get(key->string(), crc);
 
         auto crcTask = std::static_pointer_cast<task::CxxObjectFileCrcTask>(task);
         if (crcTask->crc() != 0 && crcTask->crc() == crc)
@@ -72,7 +84,7 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::FsDirectorySPtr& directory,
             EHEnd;
         }
 
-        auto compileTask = mCompiler->compileCommand(directory, objectFile);
+        auto compileTask = mCompiler->compileCommand(arguments, directory, objectFile);
         task::gTPool->ensureScheduled(compileTask);
 
         auto value = std::make_shared<doim::DbValue>(crcTask->crc());
@@ -88,18 +100,24 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::FsDirectorySPtr& directory,
     return task;
 }
 
-tpool::TaskSPtr CxxEngine::buildObjects(const doim::FsDirectorySPtr& directory,
+tpool::TaskSPtr CxxEngine::buildObjects(CxxEngine::EBuildFor buildFor,
+                                        const doim::DbKeySPtr& ancenstor,
+                                        const doim::FsDirectorySPtr& directory,
+                                        const doim::FsDirectorySPtr& intermediate,
                                         const dom::CxxProgramSPtr& program)
 {
-    const auto& intermediate = doim::gManager->obtainDirectory(directory, "build");
     const auto& cxxProgram = program->cxxProgram(directory, intermediate);
 
     const auto& objectFiles = cxxProgram->cxxObjectFiles();
 
+    auto objectFileKey = std::make_shared<doim::DbKey>(ancenstor, "object-file");
+    objectFileKey = doim::gManager->unique(objectFileKey);
+
     std::vector<tpool::TaskSPtr> allTasks;
     for (const auto& objectFile : *objectFiles)
     {
-        tpool::TaskSPtr task = compileTask(directory, objectFile);
+        tpool::TaskSPtr task =
+            compileTask(compileArguments(buildFor), objectFileKey, directory, objectFile);
         allTasks.push_back(task);
     }
 
@@ -108,11 +126,14 @@ tpool::TaskSPtr CxxEngine::buildObjects(const doim::FsDirectorySPtr& directory,
 
     auto self = shared_from_this();
     tpool::TaskCallback::Function onFinish =
-        [this, self, directory, intermediate, program, objectFiles](
+        [this, self, buildFor, directory, intermediate, program, objectFiles](
             const tpool::TaskSPtr& task) -> ECode {
 
-        auto linkTask =
-            mCompiler->linkCommand(directory, intermediate, program, objectFiles);
+        auto linkTask = mCompiler->linkCommand(linkArguments(buildFor),
+                                               directory,
+                                               intermediate,
+                                               program,
+                                               objectFiles);
         task::gTPool->ensureScheduled(linkTask);
         EHTest(linkTask->join());
         EHEnd;
@@ -123,24 +144,106 @@ tpool::TaskSPtr CxxEngine::buildObjects(const doim::FsDirectorySPtr& directory,
     return groupCb;
 }
 
-tpool::TaskSPtr CxxEngine::build(const doim::FsDirectorySPtr& directory,
+std::string CxxEngine::subdirectory(CxxEngine::EBuildFor buildFor)
+{
+    switch (buildFor)
+    {
+        case EBuildFor::kDebug:
+            return "debug";
+            break;
+        case EBuildFor::kRelease:
+            return "release";
+            break;
+        case EBuildFor::kProfile:
+            return "profile";
+            break;
+    }
+
+    return "";
+}
+
+doim::DbKeySPtr CxxEngine::dbKey(CxxEngine::EBuildFor buildFor)
+{
+    switch (buildFor)
+    {
+        case EBuildFor::kDebug:
+            return gDebugDbKey;
+            break;
+        case EBuildFor::kRelease:
+            return gReleaseDbKey;
+            break;
+        case EBuildFor::kProfile:
+            return gProfileDbKey;
+            break;
+    }
+
+    return nullptr;
+}
+
+doim::SysArgumentSet CxxEngine::compileArguments(CxxEngine::EBuildFor buildFor) const
+{
+    switch (buildFor)
+    {
+        case EBuildFor::kDebug:
+            return {};
+            break;
+        case EBuildFor::kRelease:
+            return {};
+            break;
+        case EBuildFor::kProfile:
+            return mCompiler->compileProfileArguments();
+            break;
+    }
+
+    return {};
+}
+
+doim::SysArgumentSet CxxEngine::linkArguments(CxxEngine::EBuildFor buildFor) const
+{
+    switch (buildFor)
+    {
+        case EBuildFor::kDebug:
+            return {};
+            break;
+        case EBuildFor::kRelease:
+            return {};
+            break;
+        case EBuildFor::kProfile:
+            return mCompiler->linkProfileArguments();
+            break;
+    }
+
+    return {};
+}
+
+tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
+                                 const doim::FsDirectorySPtr& directory,
                                  const dom::CxxProgramSPtr& program)
 {
-    const auto& intermediate = doim::gManager->obtainDirectory(directory, "build");
+    const auto& build = doim::gManager->obtainDirectory(directory, "build");
+    const auto& intermediate =
+        doim::gManager->obtainDirectory(build, subdirectory(buildFor));
+
     const auto& cxxProgram = program->cxxProgram(directory, intermediate);
 
     auto crcTask =
         task::gManager->valid(std::make_shared<task::CxxProgramCrcTask>(cxxProgram));
     task::gTPool->ensureScheduled(crcTask);
 
+    auto ancestor = dbKey(buildFor);
+
     auto self = shared_from_this();
     tpool::TaskCallback::Function onFinish =
-        [this, self, directory, program](const tpool::TaskSPtr& task) -> ECode {
-        auto key = std::make_shared<doim::DbKey>("cxx_program:" + program->name());
-        key = doim::gManager->unique(key);
+        [this, self, buildFor, ancestor, directory, intermediate, program](
+            const tpool::TaskSPtr& task) -> ECode {
+
+        auto cxxProgramKey = doim::gManager->unique(
+            std::make_shared<doim::DbKey>(ancestor, "cxx_program"));
+        auto key = doim::gManager->unique(
+            std::make_shared<doim::DbKey>(cxxProgramKey, program->name()));
 
         math::Crcsum crc;
-        db::gDatabase->get(key->bytes(), crc);
+        db::gDatabase->get(key->string(), crc);
 
         auto crcTask = std::static_pointer_cast<task::CxxProgramCrcTask>(task);
         if (crcTask->crc() == crc)
@@ -150,7 +253,7 @@ tpool::TaskSPtr CxxEngine::build(const doim::FsDirectorySPtr& directory,
         }
 
         auto value = std::make_shared<doim::DbValue>(crcTask->crc());
-        auto comTask = buildObjects(directory, program);
+        auto comTask = buildObjects(buildFor, ancestor, directory, intermediate, program);
         auto updateTask = updateDbTask(comTask, key, value);
         task::gTPool->ensureScheduled(updateTask);
         EHTest(updateTask->join());
@@ -176,7 +279,7 @@ tpool::TaskSPtr CxxEngine::iwyuTask(const doim::FsDirectorySPtr& directory,
         key = doim::gManager->unique(key);
 
         math::Crcsum crc;
-        db::gDatabase->get(key->bytes(), crc);
+        db::gDatabase->get(key->string(), crc);
 
         auto crcTask = std::static_pointer_cast<task::CxxFileCrcTask>(task);
         if (crcTask->crc() == crc)

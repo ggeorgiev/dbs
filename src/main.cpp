@@ -131,9 +131,19 @@ int main(int argc, char* argv[])
             continue;
 
         if (verb == doim::gBuildTag)
-            tasks.push_back(engine->build(cwd, program));
-        if (verb == doim::gIwyuTag)
+        {
+            tasks.push_back(
+                engine->build(engine::CxxEngine::EBuildFor::kDebug, cwd, program));
+        }
+        else if (verb == doim::gCoverageTag)
+        {
+            tasks.push_back(
+                engine->build(engine::CxxEngine::EBuildFor::kProfile, cwd, program));
+        }
+        else if (verb == doim::gIwyuTag)
             tasks.push_back(engine->iwyu(cwd, program));
+        else
+            ASSERT(false);
     }
 
     auto group = std::make_shared<tpool::TaskGroup>(task::gTPool, 0, tasks);

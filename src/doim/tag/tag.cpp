@@ -13,6 +13,7 @@ TagSPtr Tag::global(const std::string& name, TagSPtr& tag)
 }
 
 TagSPtr gBuildTag = Tag::global("build", gBuildTag);
+TagSPtr gCoverageTag = Tag::global("coverage", gCoverageTag);
 TagSPtr gIwyuTag = Tag::global("iwyu", gIwyuTag);
 
 TagSPtr gTaskTag = Tag::global("task", gTaskTag);

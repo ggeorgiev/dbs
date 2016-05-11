@@ -35,6 +35,7 @@ public:
 };
 
 extern TagSPtr gBuildTag;
+extern TagSPtr gCoverageTag;
 extern TagSPtr gIwyuTag;
 
 extern TagSPtr gTaskTag;

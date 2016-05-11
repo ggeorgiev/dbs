@@ -18,13 +18,13 @@ DbPutTask::DbPutTask(const doim::DbKeySPtr& key, const doim::DbValueSPtr& value)
 
 ECode DbPutTask::operator()()
 {
-    EHTest(db::gDatabase->put(key()->bytes(), value()->bytes()));
+    EHTest(db::gDatabase->put(key()->string(), value()->bytes()));
     EHEnd;
 }
 
 std::string DbPutTask::description() const
 {
-    return "Update key " + key()->bytes();
+    return "Update key " + key()->string();
 }
 
 } // namespace task

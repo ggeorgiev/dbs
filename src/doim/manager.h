@@ -8,7 +8,7 @@
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/cxx/cxx_program.h"
-#include "doim/db/db_key.hpp"
+#include "doim/db/db_key.h"
 #include "doim/fs/fs_binary.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"

@@ -39,7 +39,6 @@ public:
     std::string string() const;
 
 private:
-    typedef dp::SimpleMemoization<std::string> CommandMemoization;
-    mutable CommandMemoization mCommandMemoization;
+    mutable dp::SimpleMemoization<std::string> mCommandMemoization;
 };
 }
