@@ -36,10 +36,10 @@ doim::SysArgumentSetSPtr CxxCompiler::includeArguments(
         std::string value;
         switch (includeDirectory->type())
         {
-            case doim::CxxIncludeDirectory::Type::kUser:
+            case doim::CxxIncludeDirectory::EType::kUser:
                 value = "-I ";
                 break;
-            case doim::CxxIncludeDirectory::Type::kSystem:
+            case doim::CxxIncludeDirectory::EType::kSystem:
                 value = "-isystem ";
                 break;
         }
@@ -55,11 +55,6 @@ doim::SysArgumentSetSPtr CxxCompiler::includeArguments(
 doim::SysArgumentSet CxxCompiler::compileProfileArguments()
 {
     return {gFProfileArcArgument, gFTestCoverageArgument};
-}
-
-doim::SysArgumentSet CxxCompiler::linkProfileArguments()
-{
-    return {gCoverageArgument};
 }
 
 CxxCompiler::CxxCompiler(const doim::SysExecutableSPtr& compiler)
@@ -105,11 +100,21 @@ tpool::TaskSPtr CxxCompiler::compileCommand(
                                                 "Compile " + file));
 }
 
-tpool::TaskSPtr CxxCompiler::linkCommand(const doim::SysArgumentSet& arguments,
-                                         const doim::FsDirectorySPtr& directory,
+tpool::TaskSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& directory,
                                          const doim::CxxProgramSPtr& program) const
 {
-    auto linkArguments = std::make_shared<doim::SysArgumentSet>(arguments);
+    auto linkArguments = std::make_shared<doim::SysArgumentSet>();
+
+    switch (program->purpose())
+    {
+        case doim::CxxProgram::EPurpose::kDebug:
+            break;
+        case doim::CxxProgram::EPurpose::kRelease:
+            break;
+        case doim::CxxProgram::EPurpose::kProfile:
+            linkArguments->insert(gCoverageArgument);
+            break;
+    }
 
     auto argument_cxxflags = doim::gManager->obtainArgument("-std=c++11  -stdlib=libc++");
     linkArguments->insert(argument_cxxflags);

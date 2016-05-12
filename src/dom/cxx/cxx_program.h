@@ -53,7 +53,8 @@ public:
     ECode updateName(const std::string& name);
 
     // Computations
-    doim::CxxProgramSPtr cxxProgram(const doim::FsDirectorySPtr& root,
+    doim::CxxProgramSPtr cxxProgram(doim::CxxProgram::EPurpose purpose,
+                                    const doim::FsDirectorySPtr& root,
                                     const doim::FsDirectorySPtr& intermediate) const;
 
     std::unordered_set<CxxLibrarySPtr> recursiveCxxLibraries() const;

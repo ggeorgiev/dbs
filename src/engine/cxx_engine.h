@@ -49,10 +49,11 @@ private:
     static doim::DbKeySPtr gReleaseDbKey;
     static doim::DbKeySPtr gProfileDbKey;
 
-    static std::string subdirectory(CxxEngine::EBuildFor buildFor);
-    static doim::DbKeySPtr dbKey(CxxEngine::EBuildFor buildFor);
-    doim::SysArgumentSet compileArguments(CxxEngine::EBuildFor buildFor) const;
-    doim::SysArgumentSet linkArguments(CxxEngine::EBuildFor buildFor) const;
+    static std::string subdirectory(EBuildFor buildFor);
+    static doim::DbKeySPtr dbKey(EBuildFor buildFor);
+    doim::SysArgumentSet compileArguments(EBuildFor buildFor) const;
+
+    doim::CxxProgram::EPurpose programPurpose(EBuildFor buildFor) const;
 
     tpool::TaskSPtr updateDbTask(const tpool::TaskSPtr& task,
                                  const doim::DbKeySPtr& key,

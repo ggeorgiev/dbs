@@ -66,7 +66,7 @@ TEST_F(CxxHeaderCrcTaskTest, simple)
 TEST_F(CxxHeaderCrcTaskTest, notFoundInclude)
 {
     auto cxxIncludeDirectory = std::make_shared<
-        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kUser,
+        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
                                    mCxxDirectory,
                                    mEmptyCxxHeaderSet);
     cxxIncludeDirectory = doim::gManager->unique(cxxIncludeDirectory);

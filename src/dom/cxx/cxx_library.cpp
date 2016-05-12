@@ -68,16 +68,16 @@ ECode CxxLibrary::updateCxxLibraries(std::unordered_set<CxxLibrarySPtr>& librari
     EHEnd;
 }
 
-doim::CxxIncludeDirectory::Type CxxLibrary::cxxIncludeDirectoryType() const
+doim::CxxIncludeDirectory::EType CxxLibrary::cxxIncludeDirectoryType() const
 {
     switch (mType)
     {
         case Type::kUser:
         case Type::kTest:
-            return doim::CxxIncludeDirectory::Type::kUser;
+            return doim::CxxIncludeDirectory::EType::kUser;
         case Type::kThirdParty:
         case Type::kSystem:
-            return doim::CxxIncludeDirectory::Type::kSystem;
+            return doim::CxxIncludeDirectory::EType::kSystem;
     }
 }
 

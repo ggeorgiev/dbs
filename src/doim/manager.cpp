@@ -186,10 +186,10 @@ std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectory& directory
     out << "type:";
     switch (directory.type())
     {
-        case CxxIncludeDirectory::Type::kUser:
+        case CxxIncludeDirectory::EType::kUser:
             out << "user";
             break;
-        case CxxIncludeDirectory::Type::kSystem:
+        case CxxIncludeDirectory::EType::kSystem:
             out << "system";
             break;
     }

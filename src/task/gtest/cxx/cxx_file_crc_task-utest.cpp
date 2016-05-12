@@ -68,7 +68,7 @@ TEST_F(CxxFileCrcTaskTest, SLOW_simple)
 TEST_F(CxxFileCrcTaskTest, notFoundInclude)
 {
     auto cxxIncludeDirectory = std::make_shared<
-        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kUser,
+        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
                                    mCxxDirectory,
                                    mEmptyCxxHeaderSet);
     cxxIncludeDirectory = doim::gManager->unique(cxxIncludeDirectory);
@@ -102,7 +102,7 @@ TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
     cxxHeaders = doim::gManager->unique(cxxHeaders);
 
     auto cxxIncludeDirectory = std::make_shared<
-        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kUser,
+        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
                                    mCxxDirectory,
                                    cxxHeaders);
     cxxIncludeDirectory = doim::gManager->unique(cxxIncludeDirectory);
@@ -136,7 +136,7 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     cxxHeaders2 = doim::gManager->unique(cxxHeaders2);
 
     auto cxxIncludeDirectory2 = std::make_shared<
-        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kUser,
+        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
                                    mCxxDirectory,
                                    cxxHeaders2);
     cxxIncludeDirectory2 = doim::gManager->unique(cxxIncludeDirectory2);
@@ -155,7 +155,7 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     cxxHeaders1 = doim::gManager->unique(cxxHeaders1);
 
     auto cxxIncludeDirectory1 = std::make_shared<
-        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::Type::kUser,
+        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
                                    mCxxDirectory,
                                    cxxHeaders1);
     cxxIncludeDirectory1 = doim::gManager->unique(cxxIncludeDirectory1);

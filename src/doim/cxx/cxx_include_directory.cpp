@@ -9,7 +9,7 @@
 
 namespace doim
 {
-CxxIncludeDirectory::CxxIncludeDirectory(const Type type,
+CxxIncludeDirectory::CxxIncludeDirectory(const EType type,
                                          const FsDirectorySPtr& directory,
                                          const CxxHeaderSetSPtr& headerFiles)
     : Base(static_cast<int>(type), directory, headerFiles)

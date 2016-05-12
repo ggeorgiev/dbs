@@ -22,7 +22,9 @@ ECode CxxProgram::updateName(const std::string& name)
 }
 
 doim::CxxProgramSPtr CxxProgram::cxxProgram(
-    const doim::FsDirectorySPtr& root, const doim::FsDirectorySPtr& intermediate) const
+    doim::CxxProgram::EPurpose purpose,
+    const doim::FsDirectorySPtr& root,
+    const doim::FsDirectorySPtr& intermediate) const
 {
     auto objectFiles = std::make_shared<doim::CxxObjectFileSet>();
     *objectFiles = cxxObjectFiles(root, intermediate);
@@ -49,8 +51,10 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
     staticLibraries = doim::gManager->unique(staticLibraries);
 
     const auto& programFile = doim::gManager->obtainFile(intermediate, name());
-    auto program =
-        std::make_shared<doim::CxxProgram>(programFile, staticLibraries, objectFiles);
+    auto program = std::make_shared<doim::CxxProgram>(purpose,
+                                                      programFile,
+                                                      staticLibraries,
+                                                      objectFiles);
     return doim::gManager->unique(program);
 }
 

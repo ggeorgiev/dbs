@@ -121,10 +121,9 @@ tpool::TaskSPtr CxxEngine::buildObjects(CxxEngine::EBuildFor buildFor,
 
     auto self = shared_from_this();
     tpool::TaskCallback::Function onFinish =
-        [this, self, buildFor, directory, program](const tpool::TaskSPtr& task) -> ECode {
+        [this, self, directory, program](const tpool::TaskSPtr& task) -> ECode {
 
-        auto linkTask =
-            mCompiler->linkCommand(linkArguments(buildFor), directory, program);
+        auto linkTask = mCompiler->linkCommand(directory, program);
         task::gTPool->ensureScheduled(linkTask);
         EHTest(linkTask->join());
         EHEnd;
@@ -189,22 +188,17 @@ doim::SysArgumentSet CxxEngine::compileArguments(CxxEngine::EBuildFor buildFor) 
     return {};
 }
 
-doim::SysArgumentSet CxxEngine::linkArguments(CxxEngine::EBuildFor buildFor) const
+doim::CxxProgram::EPurpose CxxEngine::programPurpose(EBuildFor buildFor) const
 {
     switch (buildFor)
     {
         case EBuildFor::kDebug:
-            return {};
-            break;
+            return doim::CxxProgram::EPurpose::kDebug;
         case EBuildFor::kRelease:
-            return {};
-            break;
+            return doim::CxxProgram::EPurpose::kRelease;
         case EBuildFor::kProfile:
-            return mCompiler->linkProfileArguments();
-            break;
+            return doim::CxxProgram::EPurpose::kProfile;
     }
-
-    return {};
 }
 
 tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
@@ -215,7 +209,8 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
     const auto& intermediate =
         doim::gManager->obtainDirectory(build, subdirectory(buildFor));
 
-    const auto& cxxProgram = program->cxxProgram(directory, intermediate);
+    const auto& cxxProgram =
+        program->cxxProgram(programPurpose(buildFor), directory, intermediate);
 
     auto crcTask =
         task::gManager->valid(std::make_shared<task::CxxProgramCrcTask>(cxxProgram));
@@ -310,7 +305,8 @@ tpool::TaskSPtr CxxEngine::iwyu(const doim::FsDirectorySPtr& directory,
                                 const dom::CxxProgramSPtr& program)
 {
     const auto& intermediate = doim::gManager->obtainDirectory(directory, "build");
-    const auto& cxxProgram = program->cxxProgram(directory, intermediate);
+    const auto& cxxProgram =
+        program->cxxProgram(doim::CxxProgram::EPurpose::kDebug, directory, intermediate);
 
     const auto& objectFiles = cxxProgram->cxxObjectFiles();
 

@@ -78,7 +78,7 @@ public:
     ECode updateCxxLibraries(std::unordered_set<CxxLibrarySPtr>& libraries);
 
     // Computations
-    doim::CxxIncludeDirectory::Type cxxIncludeDirectoryType() const;
+    doim::CxxIncludeDirectory::EType cxxIncludeDirectoryType() const;
 
     doim::CxxHeader::Type cxxHeaderType() const;
 

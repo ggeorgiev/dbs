@@ -18,27 +18,47 @@ typedef std::shared_ptr<CxxProgram> CxxProgramSPtr;
 typedef std::unordered_set<CxxProgramSPtr> CxxProgramSet;
 typedef std::shared_ptr<CxxProgramSet> CxxProgramSetSPtr;
 
-class CxxProgram
-    : public Base<CxxProgram, FsFileSPtr, CxxStaticLibrarySetSPtr, CxxObjectFileSetSPtr>
+namespace details
+{
+enum class EPurpose
+{
+    kDebug,
+    kRelease,
+    kProfile,
+};
+}
+
+class CxxProgram : public Base<CxxProgram,
+                               std::underlying_type<details::EPurpose>::type,
+                               FsFileSPtr,
+                               CxxStaticLibrarySetSPtr,
+                               CxxObjectFileSetSPtr>
 {
 public:
-    CxxProgram(const FsFileSPtr& file,
+    typedef details::EPurpose EPurpose;
+    CxxProgram(EPurpose purpose,
+               const FsFileSPtr& file,
                const CxxStaticLibrarySetSPtr& staticLibraries,
                const CxxObjectFileSetSPtr& cxxObjectFiles);
 
-    const FsFileSPtr& file() const
+    EPurpose purpose() const
     {
-        return std::get<0>(mArgs);
+        return static_cast<EPurpose>(std::get<0>(mArgs));
     }
 
-    const CxxStaticLibrarySetSPtr& staticLibraries()
+    const FsFileSPtr& file() const
     {
         return std::get<1>(mArgs);
     }
 
-    const CxxObjectFileSetSPtr& cxxObjectFiles()
+    const CxxStaticLibrarySetSPtr& staticLibraries()
     {
         return std::get<2>(mArgs);
+    }
+
+    const CxxObjectFileSetSPtr& cxxObjectFiles()
+    {
+        return std::get<3>(mArgs);
     }
 };
 }
