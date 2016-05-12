@@ -4,12 +4,11 @@
 #include "doim/db/db_key.h"
 #include "doim/base.hpp"
 #include "doim/manager.h"
-#include <boost/functional/hash.hpp>
+#include "err/err_assert.h"
+#include "im/initialization_manager.hpp"
+#include <functional>
 #include <memory>
 #include <string>
-#include <unordered_set>
-#include <utility>
-#include <vector>
 
 namespace doim
 {

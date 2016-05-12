@@ -20,6 +20,7 @@
 #include "doim/tag/tag.h"
 #include "db/database.h"
 #include "err/err.h"
+#include "err/err_assert.h"
 #include "im/initialization_manager.hpp"
 #include "log/log.h"
 #include <iostream>

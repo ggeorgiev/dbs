@@ -4,12 +4,10 @@
 #pragma once
 
 #include "doim/base.hpp"
-#include <boost/functional/hash.hpp>
+#include <iosfwd>
 #include <memory>
 #include <string>
-#include <unordered_set>
-#include <utility>
-#include <vector>
+#include <tuple>
 
 namespace doim
 {

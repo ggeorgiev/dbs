@@ -4,8 +4,6 @@
 #include "tool/cxx_compiler.h"
 #include "task/manager.h"
 #include "task/sys/parse_stdout_task.h"
-#include "dom/cxx/cxx_library.h"
-#include "dom/cxx/cxx_program.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
@@ -109,7 +107,6 @@ tpool::TaskSPtr CxxCompiler::compileCommand(
 
 tpool::TaskSPtr CxxCompiler::linkCommand(const doim::SysArgumentSet& arguments,
                                          const doim::FsDirectorySPtr& directory,
-                                         const doim::FsDirectorySPtr& intermediate,
                                          const doim::CxxProgramSPtr& program) const
 {
     auto linkArguments = std::make_shared<doim::SysArgumentSet>(arguments);
@@ -147,7 +144,7 @@ tpool::TaskSPtr CxxCompiler::linkCommand(const doim::SysArgumentSet& arguments,
     auto id = rtti::RttiInfo<CxxCompiler, 1>::classId();
     return task::gManager->valid(
         std::make_shared<task::ParseStdoutTask>(linkCommand,
-                                                intermediate,
+                                                program->file()->directory(),
                                                 id,
                                                 task::ParseStdoutTask::logOnError(),
                                                 path));

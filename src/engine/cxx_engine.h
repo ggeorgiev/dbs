@@ -10,9 +10,11 @@
 #include "dom/cxx/cxx_program.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_object_file.h"
+#include "doim/cxx/cxx_program.h"
 #include "doim/db/db_key.h"
 #include "doim/db/db_value.hpp"
 #include "doim/fs/fs_directory.h"
+#include <iosfwd>
 #include <memory>
 
 namespace engine
@@ -37,9 +39,6 @@ public:
     tpool::TaskSPtr build(EBuildFor buildFor,
                           const doim::FsDirectorySPtr& directory,
                           const dom::CxxProgramSPtr& program);
-
-    tpool::TaskSPtr iwyuTask(const doim::FsDirectorySPtr& directory,
-                             const doim::CxxFileSPtr& cxxFile);
 
     tpool::TaskSPtr iwyu(const doim::FsDirectorySPtr& directory,
                          const dom::CxxProgramSPtr& program);
@@ -67,8 +66,10 @@ private:
     tpool::TaskSPtr buildObjects(CxxEngine::EBuildFor buildFor,
                                  const doim::DbKeySPtr& ancenstor,
                                  const doim::FsDirectorySPtr& directory,
-                                 const doim::FsDirectorySPtr& intermediate,
-                                 const dom::CxxProgramSPtr& program);
+                                 const doim::CxxProgramSPtr& program);
+
+    tpool::TaskSPtr iwyuTask(const doim::FsDirectorySPtr& directory,
+                             const doim::CxxFileSPtr& cxxFile);
 
     tool::CxxClangFormatSPtr mFormatter;
     tool::CxxCompilerSPtr mCompiler;
