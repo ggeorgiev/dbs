@@ -5,6 +5,7 @@
 
 #include "doim/base.hpp"
 #include "doim/cxx/cxx_object_file.h"
+#include "doim/cxx/cxx_static_library.h"
 #include "doim/fs/fs_file.h"
 #include <memory>
 #include <tuple>
@@ -17,19 +18,27 @@ typedef std::shared_ptr<CxxProgram> CxxProgramSPtr;
 typedef std::unordered_set<CxxProgramSPtr> CxxProgramSet;
 typedef std::shared_ptr<CxxProgramSet> CxxProgramSetSPtr;
 
-class CxxProgram : public Base<CxxProgram, FsFileSPtr, CxxObjectFileSetSPtr>
+class CxxProgram
+    : public Base<CxxProgram, FsFileSPtr, CxxStaticLibrarySetSPtr, CxxObjectFileSetSPtr>
 {
 public:
-    CxxProgram(const FsFileSPtr& file, const CxxObjectFileSetSPtr& cxxObjectFiles);
+    CxxProgram(const FsFileSPtr& file,
+               const CxxStaticLibrarySetSPtr& staticLibraries,
+               const CxxObjectFileSetSPtr& cxxObjectFiles);
 
     const FsFileSPtr& file() const
     {
         return std::get<0>(mArgs);
     }
 
-    const CxxObjectFileSetSPtr& cxxObjectFiles()
+    const CxxStaticLibrarySetSPtr& staticLibraries()
     {
         return std::get<1>(mArgs);
+    }
+
+    const CxxObjectFileSetSPtr& cxxObjectFiles()
+    {
+        return std::get<2>(mArgs);
     }
 };
 }

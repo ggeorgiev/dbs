@@ -108,13 +108,11 @@ tpool::TaskSPtr CxxEngine::buildObjects(CxxEngine::EBuildFor buildFor,
 {
     const auto& cxxProgram = program->cxxProgram(directory, intermediate);
 
-    const auto& objectFiles = cxxProgram->cxxObjectFiles();
-
     auto objectFileKey = std::make_shared<doim::DbKey>(ancenstor, "object-file");
     objectFileKey = doim::gManager->unique(objectFileKey);
 
     std::vector<tpool::TaskSPtr> allTasks;
-    for (const auto& objectFile : *objectFiles)
+    for (const auto& objectFile : *cxxProgram->cxxObjectFiles())
     {
         tpool::TaskSPtr task =
             compileTask(compileArguments(buildFor), objectFileKey, directory, objectFile);
@@ -126,14 +124,13 @@ tpool::TaskSPtr CxxEngine::buildObjects(CxxEngine::EBuildFor buildFor,
 
     auto self = shared_from_this();
     tpool::TaskCallback::Function onFinish =
-        [this, self, buildFor, directory, intermediate, program, objectFiles](
+        [this, self, buildFor, directory, intermediate, cxxProgram](
             const tpool::TaskSPtr& task) -> ECode {
 
         auto linkTask = mCompiler->linkCommand(linkArguments(buildFor),
                                                directory,
                                                intermediate,
-                                               program,
-                                               objectFiles);
+                                               cxxProgram);
         task::gTPool->ensureScheduled(linkTask);
         EHTest(linkTask->join());
         EHEnd;

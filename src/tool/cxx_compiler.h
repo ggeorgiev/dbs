@@ -36,8 +36,7 @@ public:
     tpool::TaskSPtr linkCommand(const doim::SysArgumentSet& arguments,
                                 const doim::FsDirectorySPtr& directory,
                                 const doim::FsDirectorySPtr& intermediate,
-                                const dom::CxxProgramSPtr& program,
-                                const doim::CxxObjectFileSetSPtr& objectFiles) const;
+                                const doim::CxxProgramSPtr& program) const;
 
 private:
     static doim::SysArgumentSPtr gFProfileArcArgument;

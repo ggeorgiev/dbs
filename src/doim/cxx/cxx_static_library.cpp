@@ -7,9 +7,9 @@
 
 namespace doim
 {
-CxxStaticLibrary::CxxStaticLibrary(const FsFileSPtr& file)
-    : Base(file)
+CxxStaticLibrary::CxxStaticLibrary(const FsFileSPtr& binary)
+    : Base(binary)
 {
-    ASSERT(gManager->isUnique(file));
+    ASSERT(gManager->isUnique(binary));
 }
 }

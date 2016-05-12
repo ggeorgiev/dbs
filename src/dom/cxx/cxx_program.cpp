@@ -3,6 +3,7 @@
 
 #include "dom/cxx/cxx_program.h"
 #include "doim/cxx/cxx_object_file.h"
+#include "doim/cxx/cxx_static_library.h"
 #include "doim/manager.h"
 #include <unordered_set>
 
@@ -26,19 +27,30 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
     auto objectFiles = std::make_shared<doim::CxxObjectFileSet>();
     *objectFiles = cxxObjectFiles(root, intermediate);
 
-    for (const auto& cxxLibrary : recursiveCxxLibraries())
+    auto staticLibraries = std::make_shared<doim::CxxStaticLibrarySet>();
+
+    auto libraries = recursiveCxxLibraries();
+
+    for (const auto& cxxLibrary : libraries)
     {
         if (cxxLibrary->binary() != nullptr)
-            continue;
-
-        const auto& libObjectFiles = cxxLibrary->cxxObjectFiles(root, intermediate);
-        objectFiles->insert(libObjectFiles.begin(), libObjectFiles.end());
+        {
+            auto staticLibrary = doim::gManager->unique(
+                std::make_shared<doim::CxxStaticLibrary>(cxxLibrary->binary()));
+            staticLibraries->insert(staticLibrary);
+        }
+        else
+        {
+            const auto& libObjectFiles = cxxLibrary->cxxObjectFiles(root, intermediate);
+            objectFiles->insert(libObjectFiles.begin(), libObjectFiles.end());
+        }
     }
-
-    const auto& outputFile = doim::gManager->obtainFile(intermediate, name());
     objectFiles = doim::gManager->unique(objectFiles);
+    staticLibraries = doim::gManager->unique(staticLibraries);
 
-    auto program = std::make_shared<doim::CxxProgram>(outputFile, objectFiles);
+    const auto& programFile = doim::gManager->obtainFile(intermediate, name());
+    auto program =
+        std::make_shared<doim::CxxProgram>(programFile, staticLibraries, objectFiles);
     return doim::gManager->unique(program);
 }
 

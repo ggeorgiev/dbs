@@ -7,10 +7,13 @@
 
 namespace doim
 {
-CxxProgram::CxxProgram(const FsFileSPtr& file, const CxxObjectFileSetSPtr& cxxObjectFiles)
-    : Base(file, cxxObjectFiles)
+CxxProgram::CxxProgram(const FsFileSPtr& file,
+                       const CxxStaticLibrarySetSPtr& staticLibraries,
+                       const CxxObjectFileSetSPtr& cxxObjectFiles)
+    : Base(file, staticLibraries, cxxObjectFiles)
 {
     ASSERT(gManager->isUnique(file));
+    ASSERT(gManager->isUnique(staticLibraries));
     ASSERT(gManager->isUnique(cxxObjectFiles));
 }
 }

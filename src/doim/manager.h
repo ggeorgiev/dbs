@@ -8,6 +8,7 @@
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/cxx/cxx_program.h"
+#include "doim/cxx/cxx_static_library.h"
 #include "doim/db/db_key.h"
 #include "doim/fs/fs_binary.h"
 #include "doim/fs/fs_directory.h"
@@ -38,6 +39,7 @@ class Manager : public ManagerObjectMixin<CxxFile>,
                 public ManagerObjectSetMixin<CxxHeader>,
                 public ManagerObjectSetMixin<CxxIncludeDirectory>,
                 public ManagerObjectSetMixin<CxxObjectFile>,
+                public ManagerObjectSetMixin<CxxStaticLibrary>,
                 public ManagerObjectMixin<CxxProgram>,
                 public ManagerObjectMixin<DbKey>,
                 public ManagerObjectMixin<FsBinary>,
@@ -140,6 +142,12 @@ public:
 
     using ManagerObjectSetMixin<CxxObjectFile>::unique;
     using ManagerObjectSetMixin<CxxObjectFile>::isUnique;
+
+    using ManagerObjectMixin<CxxStaticLibrary>::unique;
+    using ManagerObjectMixin<CxxStaticLibrary>::isUnique;
+
+    using ManagerObjectSetMixin<CxxStaticLibrary>::unique;
+    using ManagerObjectSetMixin<CxxStaticLibrary>::isUnique;
 
     using ManagerObjectMixin<CxxProgram>::unique;
     using ManagerObjectMixin<CxxProgram>::isUnique;

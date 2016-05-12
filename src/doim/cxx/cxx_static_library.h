@@ -19,9 +19,9 @@ typedef std::shared_ptr<CxxStaticLibrarySet> CxxStaticLibrarySetSPtr;
 class CxxStaticLibrary : public Base<CxxStaticLibrary, FsFileSPtr>
 {
 public:
-    CxxStaticLibrary(const FsFileSPtr& file);
+    CxxStaticLibrary(const FsFileSPtr& binary);
 
-    const FsFileSPtr& file() const
+    const FsFileSPtr& binary() const
     {
         return std::get<0>(mArgs);
     }

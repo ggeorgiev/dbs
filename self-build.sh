@@ -5,15 +5,14 @@ cd $BASEDIR
 
 if [ ! -e dbs ]
 then
-    cp build/dbs dbs
+    ./build.sh
 fi
 
 ./dbs src/main.dbs build dbs dbs-test || exit 1
 
-build/dbs-test --gtest_filter=-*.PERFORMANCE_* || exit 1
+build/debug/dbs-test --gtest_filter=-*.PERFORMANCE_* || exit 1
 
-if [ -e build/dbs ]
-then
-    rm dbs
-    cp build/dbs dbs
-fi
+cmp --silent dbs build/debug/dbs || cp dbs dbs_`date +%Y-%m-%d:%H:%M:%S`
+cp build/debug/dbs dbs
+
+
