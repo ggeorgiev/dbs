@@ -56,8 +56,7 @@ tpool::TaskSPtr CxxEngine::updateDbTask(const tpool::TaskSPtr& task,
     return std::make_shared<tpool::TaskCallback>(0, task, onFinish, nullptr);
 }
 
-tpool::TaskSPtr CxxEngine::compileTask(const doim::SysArgumentSet& arguments,
-                                       const doim::DbKeySPtr& ancenstor,
+tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
                                        const doim::FsDirectorySPtr& directory,
                                        const doim::CxxObjectFileSPtr& objectFile)
 {
@@ -67,7 +66,7 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::SysArgumentSet& arguments,
 
     auto self = shared_from_this();
     tpool::TaskCallback::Function onFinish =
-        [this, self, arguments, ancenstor, directory, objectFile](
+        [this, self, ancenstor, directory, objectFile](
             const tpool::TaskSPtr& task) -> ECode {
 
         auto key = std::make_shared<doim::DbKey>(ancenstor, objectFile->file()->path());
@@ -84,7 +83,7 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::SysArgumentSet& arguments,
             EHEnd;
         }
 
-        auto compileTask = mCompiler->compileCommand(arguments, directory, objectFile);
+        auto compileTask = mCompiler->compileCommand(directory, objectFile);
         task::gTPool->ensureScheduled(compileTask);
 
         auto value = std::make_shared<doim::DbValue>(crcTask->crc());
@@ -100,8 +99,7 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::SysArgumentSet& arguments,
     return task;
 }
 
-tpool::TaskSPtr CxxEngine::buildObjects(CxxEngine::EBuildFor buildFor,
-                                        const doim::DbKeySPtr& ancenstor,
+tpool::TaskSPtr CxxEngine::buildObjects(const doim::DbKeySPtr& ancenstor,
                                         const doim::FsDirectorySPtr& directory,
                                         const doim::CxxProgramSPtr& program)
 {
@@ -111,8 +109,7 @@ tpool::TaskSPtr CxxEngine::buildObjects(CxxEngine::EBuildFor buildFor,
     std::vector<tpool::TaskSPtr> allTasks;
     for (const auto& objectFile : *program->cxxObjectFiles())
     {
-        tpool::TaskSPtr task =
-            compileTask(compileArguments(buildFor), objectFileKey, directory, objectFile);
+        tpool::TaskSPtr task = compileTask(objectFileKey, directory, objectFile);
         allTasks.push_back(task);
     }
 
@@ -170,24 +167,6 @@ doim::DbKeySPtr CxxEngine::dbKey(CxxEngine::EBuildFor buildFor)
     return nullptr;
 }
 
-doim::SysArgumentSet CxxEngine::compileArguments(CxxEngine::EBuildFor buildFor) const
-{
-    switch (buildFor)
-    {
-        case EBuildFor::kDebug:
-            return {};
-            break;
-        case EBuildFor::kRelease:
-            return {};
-            break;
-        case EBuildFor::kProfile:
-            return mCompiler->compileProfileArguments();
-            break;
-    }
-
-    return {};
-}
-
 doim::CxxProgram::EPurpose CxxEngine::programPurpose(EBuildFor buildFor) const
 {
     switch (buildFor)
@@ -220,7 +199,7 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
 
     auto self = shared_from_this();
     tpool::TaskCallback::Function onFinish =
-        [this, self, buildFor, ancestor, directory, cxxProgram](
+        [this, self, ancestor, directory, cxxProgram](
             const tpool::TaskSPtr& task) -> ECode {
 
         auto cxxProgramKey = doim::gManager->unique(
@@ -241,7 +220,7 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
         }
 
         auto value = std::make_shared<doim::DbValue>(crcTask->crc());
-        auto comTask = buildObjects(buildFor, ancestor, directory, cxxProgram);
+        auto comTask = buildObjects(ancestor, directory, cxxProgram);
         auto updateTask = updateDbTask(comTask, key, value);
         task::gTPool->ensureScheduled(updateTask);
         EHTest(updateTask->join());

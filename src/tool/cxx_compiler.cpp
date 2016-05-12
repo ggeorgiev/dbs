@@ -52,25 +52,29 @@ doim::SysArgumentSetSPtr CxxCompiler::includeArguments(
     return arguments;
 }
 
-doim::SysArgumentSet CxxCompiler::compileProfileArguments()
-{
-    return {gFProfileArcArgument, gFTestCoverageArgument};
-}
-
 CxxCompiler::CxxCompiler(const doim::SysExecutableSPtr& compiler)
     : mCompiler(compiler)
 {
 }
 
 tpool::TaskSPtr CxxCompiler::compileCommand(
-    const doim::SysArgumentSet& arguments,
     const doim::FsDirectorySPtr& directory,
     const doim::CxxObjectFileSPtr& objectFile) const
 {
     auto compileArguments =
         includeArguments(directory, objectFile->cxxFile()->cxxIncludeDirectories());
 
-    compileArguments->insert(arguments.begin(), arguments.end());
+    switch (objectFile->purpose())
+    {
+        case doim::CxxObjectFile::EPurpose::kDebug:
+            break;
+        case doim::CxxObjectFile::EPurpose::kRelease:
+            break;
+        case doim::CxxObjectFile::EPurpose::kProfile:
+            compileArguments->insert(gFProfileArcArgument);
+            compileArguments->insert(gFTestCoverageArgument);
+            break;
+    }
 
     auto argument_cxxflags = doim::gManager->obtainArgument(
         "-std=c++11 -stdlib=libc++ -O0 -g "

@@ -51,7 +51,6 @@ private:
 
     static std::string subdirectory(EBuildFor buildFor);
     static doim::DbKeySPtr dbKey(EBuildFor buildFor);
-    doim::SysArgumentSet compileArguments(EBuildFor buildFor) const;
 
     doim::CxxProgram::EPurpose programPurpose(EBuildFor buildFor) const;
 
@@ -59,13 +58,11 @@ private:
                                  const doim::DbKeySPtr& key,
                                  const doim::DbValueSPtr& value) const;
 
-    tpool::TaskSPtr compileTask(const doim::SysArgumentSet& arguments,
-                                const doim::DbKeySPtr& ancenstor,
+    tpool::TaskSPtr compileTask(const doim::DbKeySPtr& ancenstor,
                                 const doim::FsDirectorySPtr& directory,
                                 const doim::CxxObjectFileSPtr& objectFile);
 
-    tpool::TaskSPtr buildObjects(CxxEngine::EBuildFor buildFor,
-                                 const doim::DbKeySPtr& ancenstor,
+    tpool::TaskSPtr buildObjects(const doim::DbKeySPtr& ancenstor,
                                  const doim::FsDirectorySPtr& directory,
                                  const doim::CxxProgramSPtr& program);
 

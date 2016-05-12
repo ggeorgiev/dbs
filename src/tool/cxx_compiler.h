@@ -24,12 +24,9 @@ public:
         const doim::FsDirectorySPtr& directory,
         const doim::CxxIncludeDirectorySetSPtr& includeDirectories);
 
-    static doim::SysArgumentSet compileProfileArguments();
-
     CxxCompiler(const doim::SysExecutableSPtr& compiler);
 
-    tpool::TaskSPtr compileCommand(const doim::SysArgumentSet& arguments,
-                                   const doim::FsDirectorySPtr& directory,
+    tpool::TaskSPtr compileCommand(const doim::FsDirectorySPtr& directory,
                                    const doim::CxxObjectFileSPtr& objectFile) const;
 
     tpool::TaskSPtr linkCommand(const doim::FsDirectorySPtr& directory,

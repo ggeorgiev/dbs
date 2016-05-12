@@ -7,8 +7,12 @@
 
 namespace doim
 {
-CxxObjectFile::CxxObjectFile(const CxxFileSPtr& cxxFile, const FsFileSPtr& file)
-    : Base(cxxFile, file)
+CxxObjectFile::CxxObjectFile(EPurpose purpose,
+                             const CxxFileSPtr& cxxFile,
+                             const FsFileSPtr& file)
+    : Base(static_cast<typename std::underlying_type<EPurpose>::type>(purpose),
+           cxxFile,
+           file)
 {
     ASSERT(gManager->isUnique(cxxFile));
     ASSERT(gManager->isUnique(file));

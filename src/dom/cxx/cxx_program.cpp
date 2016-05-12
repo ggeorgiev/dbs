@@ -21,13 +21,26 @@ ECode CxxProgram::updateName(const std::string& name)
     EHEnd;
 }
 
+static doim::CxxObjectFile::EPurpose objectPurpose(doim::CxxProgram::EPurpose purpose)
+{
+    switch (purpose)
+    {
+        case doim::CxxProgram::EPurpose::kDebug:
+            return doim::CxxObjectFile::EPurpose::kDebug;
+        case doim::CxxProgram::EPurpose::kRelease:
+            return doim::CxxObjectFile::EPurpose::kRelease;
+        case doim::CxxProgram::EPurpose::kProfile:
+            return doim::CxxObjectFile::EPurpose::kProfile;
+    }
+}
+
 doim::CxxProgramSPtr CxxProgram::cxxProgram(
     doim::CxxProgram::EPurpose purpose,
     const doim::FsDirectorySPtr& root,
     const doim::FsDirectorySPtr& intermediate) const
 {
     auto objectFiles = std::make_shared<doim::CxxObjectFileSet>();
-    *objectFiles = cxxObjectFiles(root, intermediate);
+    *objectFiles = cxxObjectFiles(objectPurpose(purpose), root, intermediate);
 
     auto staticLibraries = std::make_shared<doim::CxxStaticLibrarySet>();
 
@@ -43,7 +56,8 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
         }
         else
         {
-            const auto& libObjectFiles = cxxLibrary->cxxObjectFiles(root, intermediate);
+            const auto& libObjectFiles =
+                cxxLibrary->cxxObjectFiles(objectPurpose(purpose), root, intermediate);
             objectFiles->insert(libObjectFiles.begin(), libObjectFiles.end());
         }
     }

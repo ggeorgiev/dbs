@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -58,6 +58,7 @@ public:
     }
 
     std::unordered_set<doim::CxxObjectFileSPtr> cxxObjectFiles(
+        doim::CxxObjectFile::EPurpose purpose,
         const doim::FsDirectorySPtr& root,
         const doim::FsDirectorySPtr& intermediate) const
     {
@@ -74,7 +75,8 @@ public:
             const auto& outputFile =
                 doim::gManager->obtainFile(directory, cxxFile->file()->name() + ".o");
 
-            auto objectFile = std::make_shared<doim::CxxObjectFile>(cxxFile, outputFile);
+            auto objectFile =
+                std::make_shared<doim::CxxObjectFile>(purpose, cxxFile, outputFile);
             objectFile = doim::gManager->unique(objectFile);
 
             cxxObjectFiles.insert(objectFile);

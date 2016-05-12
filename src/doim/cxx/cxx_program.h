@@ -18,7 +18,7 @@ typedef std::shared_ptr<CxxProgram> CxxProgramSPtr;
 typedef std::unordered_set<CxxProgramSPtr> CxxProgramSet;
 typedef std::shared_ptr<CxxProgramSet> CxxProgramSetSPtr;
 
-namespace details
+namespace cp_details
 {
 enum class EPurpose
 {
@@ -29,13 +29,14 @@ enum class EPurpose
 }
 
 class CxxProgram : public Base<CxxProgram,
-                               std::underlying_type<details::EPurpose>::type,
+                               std::underlying_type<cp_details::EPurpose>::type,
                                FsFileSPtr,
                                CxxStaticLibrarySetSPtr,
                                CxxObjectFileSetSPtr>
 {
 public:
-    typedef details::EPurpose EPurpose;
+    typedef cp_details::EPurpose EPurpose;
+
     CxxProgram(EPurpose purpose,
                const FsFileSPtr& file,
                const CxxStaticLibrarySetSPtr& staticLibraries,
