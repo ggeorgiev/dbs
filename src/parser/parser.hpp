@@ -110,7 +110,7 @@ public:
 
         auto name = mTokenizer->token();
         auto object = doim::gManager->obtainObject(mLocation->directory(),
-                                                   doim::Object::Type::kCxxLibrary,
+                                                   doim::Object::EType::kCxxLibrary,
                                                    name);
         auto library = dom::gManager->obtainCxxLibrary(object);
 
@@ -201,7 +201,7 @@ public:
 
                 std::unordered_set<doim::ObjectSPtr> objects;
                 EHTest(parseObjects(mLocation->directory(),
-                                    doim::Object::Type::kCxxLibrary,
+                                    doim::Object::EType::kCxxLibrary,
                                     objects));
 
                 std::unordered_set<dom::CxxLibrarySPtr> libraries;
@@ -244,7 +244,7 @@ public:
 
         auto name = mTokenizer->token();
         auto object = doim::gManager->obtainObject(mLocation->directory(),
-                                                   doim::Object::Type::kCxxProgram,
+                                                   doim::Object::EType::kCxxProgram,
                                                    name);
         auto program = dom::gManager->obtainCxxProgram(object);
         EHTest(program->updateName(name));
@@ -285,7 +285,7 @@ public:
 
                 std::unordered_set<doim::ObjectSPtr> objects;
                 EHTest(parseObjects(mLocation->directory(),
-                                    doim::Object::Type::kCxxLibrary,
+                                    doim::Object::EType::kCxxLibrary,
                                     objects));
 
                 std::unordered_set<dom::CxxLibrarySPtr> libraries;
@@ -304,7 +304,7 @@ public:
     }
 
     ECode parseObjects(const doim::LocationSPtr& location,
-                       const doim::Object::Type objectType,
+                       const doim::Object::EType objectType,
                        std::unordered_set<doim::ObjectSPtr>& objects)
     {
         for (;;)

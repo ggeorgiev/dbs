@@ -15,7 +15,7 @@ namespace doim
 ManagerSPtr gManager = im::InitializationManager::subscribe(gManager);
 
 ObjectSPtr Manager::obtainObject(const LocationSPtr& base,
-                                 const Object::Type type,
+                                 const Object::EType type,
                                  const std::experimental::string_view& object)
 {
     auto pos = object.size();

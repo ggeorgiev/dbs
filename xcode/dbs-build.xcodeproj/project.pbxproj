@@ -163,6 +163,8 @@
 		5EC91C8E1CDEAE2400613226 /* argument.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EC91C8C1CDEAE2400613226 /* argument.h */; };
 		5EE328621CD845610042B6FF /* simple_memoization.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EE328611CD845610042B6FF /* simple_memoization.hpp */; };
 		5EE328641CD846880042B6FF /* simple_memoization-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE328631CD846880042B6FF /* simple_memoization-utest.cpp */; };
+		5EE351941CE45FA6003305CC /* manager_object_mixin-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE351921CE45FA6003305CC /* manager_object_mixin-utest.cpp */; };
+		5EE351951CE45FA6003305CC /* manager_object_set_mixin-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE351931CE45FA6003305CC /* manager_object_set_mixin-utest.cpp */; };
 		5EFDAF5D1CDB89B70092AAD2 /* parse_stdout_task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDAF5B1CDB89B70092AAD2 /* parse_stdout_task.cpp */; };
 		5EFDAF5E1CDB89B70092AAD2 /* parse_stdout_task.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDAF5C1CDB89B70092AAD2 /* parse_stdout_task.h */; };
 /* End PBXBuildFile section */
@@ -361,6 +363,8 @@
 		5EC91C8C1CDEAE2400613226 /* argument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = argument.h; sourceTree = "<group>"; };
 		5EE328611CD845610042B6FF /* simple_memoization.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = simple_memoization.hpp; sourceTree = "<group>"; };
 		5EE328631CD846880042B6FF /* simple_memoization-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "simple_memoization-utest.cpp"; sourceTree = "<group>"; };
+		5EE351921CE45FA6003305CC /* manager_object_mixin-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "manager_object_mixin-utest.cpp"; sourceTree = "<group>"; };
+		5EE351931CE45FA6003305CC /* manager_object_set_mixin-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "manager_object_set_mixin-utest.cpp"; sourceTree = "<group>"; };
 		5EFDAF5B1CDB89B70092AAD2 /* parse_stdout_task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = parse_stdout_task.cpp; sourceTree = "<group>"; };
 		5EFDAF5C1CDB89B70092AAD2 /* parse_stdout_task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parse_stdout_task.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -532,6 +536,8 @@
 			isa = PBXGroup;
 			children = (
 				5E10B3381C70F272009C73E4 /* fs */,
+				5EE351921CE45FA6003305CC /* manager_object_mixin-utest.cpp */,
+				5EE351931CE45FA6003305CC /* manager_object_set_mixin-utest.cpp */,
 				5E342BEB1CC467AB00ABC49C /* manager-mttest.cpp */,
 				5E10B33B1C70F272009C73E4 /* manager-utest.cpp */,
 			);
@@ -1182,6 +1188,7 @@
 				5E10B3FF1C70F272009C73E4 /* ensure_directory_task.cpp in Sources */,
 				5E10B3FB1C70F272009C73E4 /* cxx_header_crc_task-utest.cpp in Sources */,
 				5E10B3FD1C70F272009C73E4 /* manager.cpp in Sources */,
+				5EE351951CE45FA6003305CC /* manager_object_set_mixin-utest.cpp in Sources */,
 				5E290B471CBAD26100F10210 /* cxx_engine.cpp in Sources */,
 				5E290B331CB9F93E00F10210 /* tag.cpp in Sources */,
 				5E10B3DF1C70F272009C73E4 /* time_monitor.cpp in Sources */,
@@ -1215,6 +1222,7 @@
 				5EAE67741C7299B9005B3F8D /* cxx_header.cpp in Sources */,
 				5E290B3F1CBACD0600F10210 /* cxx_compiler.cpp in Sources */,
 				5E10B3EA1C70F272009C73E4 /* cxx_parser-utest.cpp in Sources */,
+				5EE351941CE45FA6003305CC /* manager_object_mixin-utest.cpp in Sources */,
 				5E42053C1C78FA8F0090FA05 /* cxx_crc_task_mixin.cpp in Sources */,
 				5E10B3E11C70F272009C73E4 /* initialization_manager-utest.cpp in Sources */,
 				5E290B1E1CB9843100F10210 /* class_rtti-utest.cpp in Sources */,

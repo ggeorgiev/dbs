@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "doim/generic/object.h"
@@ -7,7 +7,7 @@
 
 namespace doim
 {
-Object::Object(const Type type, const std::string& name, const LocationSPtr& location)
+Object::Object(const EType type, const std::string& name, const LocationSPtr& location)
     : Base(static_cast<int>(type), name, location)
 {
     ASSERT(gManager->isUnique(location));

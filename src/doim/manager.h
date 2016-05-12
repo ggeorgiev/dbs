@@ -43,7 +43,7 @@ class Manager : public ManagerObjectMixin<CxxFile>,
                 public ManagerObjectMixin<CxxProgram>,
                 public ManagerObjectMixin<DbKey>,
                 public ManagerObjectMixin<FsBinary>,
-                public ManagerObjectMixin<FsDirectory>,
+                public ManagerObjectSetMixin<FsDirectory>,
                 public ManagerObjectSetMixin<FsFile>,
                 public ManagerObjectMixin<Object>,
                 public ManagerObjectSetMixin<SysArgument>,
@@ -84,10 +84,12 @@ public:
     }
 
     using ManagerObjectMixin<Object>::unique;
+    using ManagerObjectMixin<Object>::isUnique;
+    using ManagerObjectMixin<Object>::find;
 
     // Obtain an unique object.
     ObjectSPtr obtainObject(const LocationSPtr& base,
-                            const Object::Type type,
+                            const Object::EType type,
                             const std::experimental::string_view& object);
 
     using ManagerObjectMixin<FsBinary>::unique;
@@ -97,6 +99,10 @@ public:
     using ManagerObjectMixin<FsDirectory>::unique;
     using ManagerObjectMixin<FsDirectory>::isUnique;
     using ManagerObjectMixin<FsDirectory>::find;
+
+    using ManagerObjectSetMixin<FsDirectory>::unique;
+    using ManagerObjectSetMixin<FsDirectory>::isUnique;
+    using ManagerObjectSetMixin<FsDirectory>::find;
 
     FsDirectorySPtr findDirectory(const FsDirectorySPtr& base,
                                   const std::experimental::string_view& directory);

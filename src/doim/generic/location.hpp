@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -17,4 +17,6 @@ namespace doim
 
 typedef FsDirectory Location;
 typedef FsDirectorySPtr LocationSPtr;
+typedef FsDirectorySet LocationSet;
+typedef FsDirectorySetSPtr LocationSetSPtr;
 }

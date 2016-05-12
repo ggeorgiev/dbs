@@ -20,23 +20,31 @@ namespace doim
  *
  */
 
+namespace o_details
+{
+enum class EType
+{
+    kCxxLibrary,
+    kCxxProgram,
+};
+}
+
 class Object;
 typedef std::shared_ptr<Object> ObjectSPtr;
 
-class Object : public Base<Object, int, std::string, LocationSPtr>
+class Object : public Base<Object,
+                           std::underlying_type<o_details::EType>::type,
+                           std::string,
+                           LocationSPtr>
 {
 public:
-    enum class Type
-    {
-        kCxxLibrary,
-        kCxxProgram,
-    };
+    typedef o_details::EType EType;
 
-    Object(const Type type, const std::string& name, const LocationSPtr& location);
+    Object(const EType type, const std::string& name, const LocationSPtr& location);
 
-    Type type() const
+    EType type() const
     {
-        return static_cast<Type>(std::get<0>(mArgs));
+        return static_cast<EType>(std::get<0>(mArgs));
     }
 
     const std::string& name() const
