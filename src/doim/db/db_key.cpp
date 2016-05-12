@@ -13,11 +13,25 @@
 
 namespace doim
 {
+DbKeySPtr DbKey::global(const std::string& name, DbKeySPtr& key)
+{
+    return Manager::global<DbKey, DbKeySPtr, std::string>(nullptr, name, key);
+}
+
 DbKeySPtr DbKey::global(const DbKeySPtr& ancestor,
+                        int level,
                         const std::string& name,
                         DbKeySPtr& key)
 {
-    return Manager::global<DbKey, DbKeySPtr, std::string>(ancestor, name, key);
+    auto fn = [&ancestor, name, &key]() -> bool {
+        key = gManager->unique(std::make_shared<DbKey>(ancestor, name));
+        return true;
+    };
+
+    int rank = Manager::object_initialization_rank() +
+               level * im::InitializationManager::rank_step();
+    im::InitializationManager::subscribe<DbKeySPtr>(rank, fn, nullptr);
+    return nullptr;
 }
 
 DbKey::DbKey(const std::string& name)
@@ -27,8 +41,7 @@ DbKey::DbKey(const std::string& name)
 DbKey::DbKey(const DbKeySPtr& ancestor, const std::string& name)
     : Base(ancestor, name)
 {
-    // TODO: enablee this assert when global initialization is fixed
-    // ASSERT(gManager->isUnique(ancestor);
+    ASSERT(gManager->isUnique(ancestor));
 }
 
 std::string DbKey::string() const

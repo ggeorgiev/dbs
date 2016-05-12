@@ -26,13 +26,13 @@
 namespace engine
 {
 doim::DbKeySPtr CxxEngine::gBuildDbKey =
-    doim::DbKey::global(nullptr, "build", CxxEngine::gBuildDbKey);
+    doim::DbKey::global("build", CxxEngine::gBuildDbKey);
 doim::DbKeySPtr CxxEngine::gDebugDbKey =
-    doim::DbKey::global(gBuildDbKey, "debug", CxxEngine::gDebugDbKey);
+    doim::DbKey::global(gBuildDbKey, 1, "debug", CxxEngine::gDebugDbKey);
 doim::DbKeySPtr CxxEngine::gReleaseDbKey =
-    doim::DbKey::global(gBuildDbKey, "release", CxxEngine::gReleaseDbKey);
+    doim::DbKey::global(gBuildDbKey, 1, "release", CxxEngine::gReleaseDbKey);
 doim::DbKeySPtr CxxEngine::gProfileDbKey =
-    doim::DbKey::global(gBuildDbKey, "profile", CxxEngine::gProfileDbKey);
+    doim::DbKey::global(gBuildDbKey, 1, "profile", CxxEngine::gProfileDbKey);
 
 CxxEngine::CxxEngine(const tool::CxxClangFormatSPtr& formatter,
                      const tool::CxxCompilerSPtr& compiler,

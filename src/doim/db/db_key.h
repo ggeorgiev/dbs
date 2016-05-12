@@ -19,7 +19,10 @@ typedef std::shared_ptr<DbKey> DbKeySPtr;
 class DbKey : public Base<DbKey, DbKeySPtr, std::string>
 {
 public:
+    static DbKeySPtr global(const std::string& name, DbKeySPtr& key);
+
     static DbKeySPtr global(const DbKeySPtr& ancestor,
+                            int level,
                             const std::string& name,
                             DbKeySPtr& key);
 
