@@ -112,7 +112,18 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
             EHEnd;
         }
 
-        auto compileTask = mCompiler->compileCommand(directory, objectFile);
+        auto compileCommand = mCompiler->compileCommand(directory, objectFile);
+
+        auto id = rtti::RttiInfo<CxxEngine, 0>::classId();
+        const std::string& description =
+            "Compile " + objectFile->cxxFile()->file()->path(directory);
+        auto compileTask = task::gManager->valid(
+            std::make_shared<task::ParseStdoutTask>(compileCommand,
+                                                    objectFile->file()->directory(),
+                                                    id,
+                                                    task::ParseStdoutTask::logOnError(),
+                                                    description));
+
         task::gTPool->ensureScheduled(compileTask);
 
         auto value = std::make_shared<doim::DbValue>(crcTask->crc());
@@ -153,13 +164,12 @@ tpool::TaskSPtr CxxEngine::buildObjects(const doim::DbKeySPtr& ancenstor,
 
         auto id = rtti::RttiInfo<CxxEngine, 1>::classId();
         const std::string& description = "Link " + program->file()->path(directory);
-        auto linkTask =
+        auto linkTask = task::gManager->valid(
             std::make_shared<task::ParseStdoutTask>(linkCommand,
                                                     program->file()->directory(),
                                                     id,
                                                     task::ParseStdoutTask::logOnError(),
-                                                    description);
-        linkTask = task::gManager->valid(linkTask);
+                                                    description));
 
         task::gTPool->ensureScheduled(linkTask);
         EHTest(linkTask->join());

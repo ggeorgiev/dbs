@@ -66,7 +66,7 @@ CxxCompiler::CxxCompiler(const doim::SysExecutableSPtr& compiler)
 {
 }
 
-tpool::TaskSPtr CxxCompiler::compileCommand(
+doim::SysCommandSPtr CxxCompiler::compileCommand(
     const doim::FsDirectorySPtr& directory,
     const doim::CxxObjectFileSPtr& objectFile) const
 {
@@ -104,15 +104,7 @@ tpool::TaskSPtr CxxCompiler::compileCommand(
     compileArguments = doim::gManager->unique(compileArguments);
 
     auto compileCommand = std::make_shared<doim::SysCommand>(mCompiler, compileArguments);
-    compileCommand = doim::gManager->unique(compileCommand);
-
-    auto id = rtti::RttiInfo<CxxCompiler, 0>::classId();
-    return task::gManager->valid(
-        std::make_shared<task::ParseStdoutTask>(compileCommand,
-                                                objectFile->file()->directory(),
-                                                id,
-                                                task::ParseStdoutTask::logOnError(),
-                                                "Compile " + file));
+    return doim::gManager->unique(compileCommand);
 }
 
 doim::SysCommandSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& directory,

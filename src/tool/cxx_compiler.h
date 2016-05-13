@@ -26,8 +26,8 @@ public:
 
     CxxCompiler(const doim::SysExecutableSPtr& compiler);
 
-    tpool::TaskSPtr compileCommand(const doim::FsDirectorySPtr& directory,
-                                   const doim::CxxObjectFileSPtr& objectFile) const;
+    doim::SysCommandSPtr compileCommand(const doim::FsDirectorySPtr& directory,
+                                        const doim::CxxObjectFileSPtr& objectFile) const;
 
     doim::SysCommandSPtr linkCommand(const doim::FsDirectorySPtr& directory,
                                      const doim::CxxProgramSPtr& program) const;
