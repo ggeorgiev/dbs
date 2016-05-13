@@ -17,6 +17,12 @@
 
 namespace tool
 {
+doim::SysArgumentSPtr CxxCompiler::gOptimizationLevel0Argument =
+    doim::SysArgument::global("-O0", CxxCompiler::gOptimizationLevel0Argument);
+doim::SysArgumentSPtr CxxCompiler::gDebuggingInformationArgument =
+    doim::SysArgument::global("-g", CxxCompiler::gDebuggingInformationArgument);
+doim::SysArgumentSPtr CxxCompiler::gStdCpp11Argument =
+    doim::SysArgument::global("-std=c++11", CxxCompiler::gStdCpp11Argument);
 doim::SysArgumentSPtr CxxCompiler::gFProfileArcArgument =
     doim::SysArgument::global("-fprofile-arcs", CxxCompiler::gFProfileArcArgument);
 doim::SysArgumentSPtr CxxCompiler::gFTestCoverageArgument =
@@ -24,6 +30,8 @@ doim::SysArgumentSPtr CxxCompiler::gFTestCoverageArgument =
 
 doim::SysArgumentSPtr CxxCompiler::gCoverageArgument =
     doim::SysArgument::global("--coverage", CxxCompiler::gCoverageArgument);
+doim::SysArgumentSPtr CxxCompiler::gStdLibc11Argument =
+    doim::SysArgument::global("-stdlib=libc++", CxxCompiler::gStdLibc11Argument);
 
 doim::SysArgumentSetSPtr CxxCompiler::includeArguments(
     const doim::FsDirectorySPtr& directory,
@@ -63,10 +71,13 @@ tpool::TaskSPtr CxxCompiler::compileCommand(
 {
     auto compileArguments =
         includeArguments(directory, objectFile->cxxFile()->cxxIncludeDirectories());
+    compileArguments->insert(gStdCpp11Argument);
 
     switch (objectFile->purpose())
     {
         case doim::CxxObjectFile::EPurpose::kDebug:
+            compileArguments->insert(gOptimizationLevel0Argument);
+            compileArguments->insert(gDebuggingInformationArgument);
             break;
         case doim::CxxObjectFile::EPurpose::kRelease:
             break;
@@ -77,7 +88,6 @@ tpool::TaskSPtr CxxCompiler::compileCommand(
     }
 
     auto argument_cxxflags = doim::gManager->obtainArgument(
-        "-std=c++11 -stdlib=libc++ -O0 -g "
         "-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/"
         "MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk");
     compileArguments->insert(argument_cxxflags);
@@ -108,6 +118,7 @@ tpool::TaskSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& directory,
                                          const doim::CxxProgramSPtr& program) const
 {
     auto linkArguments = std::make_shared<doim::SysArgumentSet>();
+    linkArguments->insert(gStdLibc11Argument);
 
     switch (program->purpose())
     {
@@ -119,9 +130,6 @@ tpool::TaskSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& directory,
             linkArguments->insert(gCoverageArgument);
             break;
     }
-
-    auto argument_cxxflags = doim::gManager->obtainArgument("-std=c++11  -stdlib=libc++");
-    linkArguments->insert(argument_cxxflags);
 
     for (const auto& cxxLibrary : *program->staticLibraries())
     {
