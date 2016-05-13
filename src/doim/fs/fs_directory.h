@@ -35,7 +35,7 @@ public:
         void ensure()
         {
             if (mFsDirectory == nullptr)
-                mFsDirectory = std::make_shared<FsDirectory>();
+                mFsDirectory = FsDirectory::make();
         }
 
         void reset()

@@ -12,5 +12,5 @@ TEST(FsFileTest, VERYSLOW_construct)
     doim::FsDirectorySPtr directory;
 
     for (int i = 0; i < 10000; ++i)
-        std::make_shared<doim::FsFile>(directory, "this is a file name");
+        doim::FsFile::make(directory, "this is a file name");
 }

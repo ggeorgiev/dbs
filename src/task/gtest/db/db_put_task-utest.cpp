@@ -28,12 +28,12 @@ public:
 
 TEST_F(DbPutTaskTest, simple)
 {
-    auto key = std::make_shared<doim::DbKey>("key");
+    auto key = doim::DbKey::make("key");
     key = doim::gManager->unique(key);
 
     int crc = 5;
-    auto value = std::make_shared<doim::DbValue>(crc);
-    auto task = std::make_shared<task::DbPutTask>(key, value);
+    auto value = doim::DbValue::make(crc);
+    auto task = task::DbPutTask::make(key, value);
 
     ASSERT_OKAY((*task)());
 }

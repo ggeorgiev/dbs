@@ -8,6 +8,7 @@
 #include "task/cxx/cxx_program_crc_task.h"
 #include "task/db/db_put_task.h"
 #include "task/manager.h"
+#include "task/sys/parse_stdout_task.h"
 #include "task/tpool.h"
 #include "tpool/task_callback.h"
 #include "tpool/task_group.h"
@@ -16,7 +17,9 @@
 #include "doim/manager.h"
 #include "db/database.h"
 #include "err/err.h"
+#include "im/initialization_manager.hpp"
 #include "log/log.h"
+#include "rtti/class_rtti.hpp"
 #include "math/crc.hpp"
 #include <functional>
 #include <iosfwd>
@@ -77,20 +80,19 @@ tpool::TaskSPtr CxxEngine::updateDbTask(const tpool::TaskSPtr& task,
                                         const doim::DbValueSPtr& value) const
 {
     auto onFinish = [key, value](const tpool::TaskSPtr&) -> ECode {
-        auto updateTask = std::make_shared<task::DbPutTask>(key, value);
+        auto updateTask = task::DbPutTask::make(key, value);
         EHTest(updateTask->execute());
         EHEnd;
     };
 
-    return std::make_shared<tpool::TaskCallback>(0, task, onFinish, nullptr);
+    return tpool::TaskCallback::make(0, task, onFinish, nullptr);
 }
 
 tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
                                        const doim::FsDirectorySPtr& directory,
                                        const doim::CxxObjectFileSPtr& objectFile)
 {
-    auto crcTask =
-        task::gManager->valid(std::make_shared<task::CxxObjectFileCrcTask>(objectFile));
+    auto crcTask = task::gManager->valid(task::CxxObjectFileCrcTask::make(objectFile));
     task::gTPool->ensureScheduled(crcTask);
 
     auto self = shared_from_this();
@@ -98,7 +100,7 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
         [this, self, ancenstor, directory, objectFile](
             const tpool::TaskSPtr& task) -> ECode {
 
-        auto key = std::make_shared<doim::DbKey>(ancenstor, objectFile->file()->path());
+        auto key = doim::DbKey::make(ancenstor, objectFile->file()->path());
         key = doim::gManager->unique(key);
 
         math::Crcsum crc;
@@ -118,15 +120,15 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
         const std::string& description =
             "Compile " + objectFile->cxxFile()->file()->path(directory);
         auto compileTask = task::gManager->valid(
-            std::make_shared<task::ParseStdoutTask>(compileCommand,
-                                                    objectFile->file()->directory(),
-                                                    id,
-                                                    task::ParseStdoutTask::logOnError(),
-                                                    description));
+            task::ParseStdoutTask::make(compileCommand,
+                                        objectFile->file()->directory(),
+                                        id,
+                                        task::ParseStdoutTask::logOnError(),
+                                        description));
 
         task::gTPool->ensureScheduled(compileTask);
 
-        auto value = std::make_shared<doim::DbValue>(crcTask->crc());
+        auto value = doim::DbValue::make(crcTask->crc());
         auto compileCbTask = updateDbTask(compileTask, key, value);
         task::gTPool->ensureScheduled(compileCbTask);
         EHTest(compileCbTask->join());
@@ -134,7 +136,7 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
         EHEnd;
     };
 
-    auto task = std::make_shared<tpool::TaskCallback>(0, crcTask, onFinish, nullptr);
+    auto task = tpool::TaskCallback::make(0, crcTask, onFinish, nullptr);
     task::gTPool->ensureScheduled(task);
     return task;
 }
@@ -143,7 +145,7 @@ tpool::TaskSPtr CxxEngine::buildObjects(const doim::DbKeySPtr& ancenstor,
                                         const doim::FsDirectorySPtr& directory,
                                         const doim::CxxProgramSPtr& program)
 {
-    auto objectFileKey = std::make_shared<doim::DbKey>(ancenstor, "object-file");
+    auto objectFileKey = doim::DbKey::make(ancenstor, "object-file");
     objectFileKey = doim::gManager->unique(objectFileKey);
 
     std::vector<tpool::TaskSPtr> allTasks;
@@ -153,7 +155,7 @@ tpool::TaskSPtr CxxEngine::buildObjects(const doim::DbKeySPtr& ancenstor,
         allTasks.push_back(task);
     }
 
-    auto group = std::make_shared<tpool::TaskGroup>(task::gTPool, 0, allTasks);
+    auto group = tpool::TaskGroup::make(task::gTPool, 0, allTasks);
     task::gTPool->ensureScheduled(group);
 
     auto self = shared_from_this();
@@ -165,18 +167,18 @@ tpool::TaskSPtr CxxEngine::buildObjects(const doim::DbKeySPtr& ancenstor,
         auto id = rtti::RttiInfo<CxxEngine, 1>::classId();
         const std::string& description = "Link " + program->file()->path(directory);
         auto linkTask = task::gManager->valid(
-            std::make_shared<task::ParseStdoutTask>(linkCommand,
-                                                    program->file()->directory(),
-                                                    id,
-                                                    task::ParseStdoutTask::logOnError(),
-                                                    description));
+            task::ParseStdoutTask::make(linkCommand,
+                                        program->file()->directory(),
+                                        id,
+                                        task::ParseStdoutTask::logOnError(),
+                                        description));
 
         task::gTPool->ensureScheduled(linkTask);
         EHTest(linkTask->join());
         EHEnd;
     };
 
-    auto groupCb = std::make_shared<tpool::TaskCallback>(0, group, onFinish, nullptr);
+    auto groupCb = tpool::TaskCallback::make(0, group, onFinish, nullptr);
     task::gTPool->ensureScheduled(groupCb);
     return groupCb;
 }
@@ -192,8 +194,7 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
     const auto& cxxProgram =
         program->cxxProgram(gProgramPurpose[buildFor], directory, intermediate);
 
-    auto crcTask =
-        task::gManager->valid(std::make_shared<task::CxxProgramCrcTask>(cxxProgram));
+    auto crcTask = task::gManager->valid(task::CxxProgramCrcTask::make(cxxProgram));
     task::gTPool->ensureScheduled(crcTask);
 
     auto ancestor = gDbKeyPurpose[buildFor];
@@ -203,12 +204,11 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
         [this, self, ancestor, directory, cxxProgram](
             const tpool::TaskSPtr& task) -> ECode {
 
-        auto cxxProgramKey = doim::gManager->unique(
-            std::make_shared<doim::DbKey>(ancestor, "cxx_program"));
+        auto cxxProgramKey =
+            doim::gManager->unique(doim::DbKey::make(ancestor, "cxx_program"));
 
         const auto& path = cxxProgram->file()->path(directory);
-        auto key =
-            doim::gManager->unique(std::make_shared<doim::DbKey>(cxxProgramKey, path));
+        auto key = doim::gManager->unique(doim::DbKey::make(cxxProgramKey, path));
 
         math::Crcsum crc;
         db::gDatabase->get(key->string(), crc);
@@ -220,7 +220,7 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
             EHEnd;
         }
 
-        auto value = std::make_shared<doim::DbValue>(crcTask->crc());
+        auto value = doim::DbValue::make(crcTask->crc());
         auto comTask = buildObjects(ancestor, directory, cxxProgram);
         auto updateTask = updateDbTask(comTask, key, value);
         task::gTPool->ensureScheduled(updateTask);
@@ -228,7 +228,7 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
         EHEnd;
     };
 
-    auto task = std::make_shared<tpool::TaskCallback>(0, crcTask, onFinish, nullptr);
+    auto task = tpool::TaskCallback::make(0, crcTask, onFinish, nullptr);
     task::gTPool->ensureScheduled(task);
     return task;
 }
@@ -236,14 +236,14 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
 tpool::TaskSPtr CxxEngine::iwyuTask(const doim::FsDirectorySPtr& directory,
                                     const doim::CxxFileSPtr& cxxFile)
 {
-    auto crcTask = task::gManager->valid(std::make_shared<task::CxxFileCrcTask>(cxxFile));
+    auto crcTask = task::gManager->valid(task::CxxFileCrcTask::make(cxxFile));
     task::gTPool->ensureScheduled(crcTask);
 
     auto self = shared_from_this();
     tpool::TaskCallback::Function onFinish =
         [this, self, directory, cxxFile](const tpool::TaskSPtr& task) -> ECode {
 
-        auto key = std::make_shared<doim::DbKey>("iwyu:" + cxxFile->file()->path());
+        auto key = doim::DbKey::make("iwyu:" + cxxFile->file()->path());
         key = doim::gManager->unique(key);
 
         math::Crcsum crc;
@@ -256,11 +256,11 @@ tpool::TaskSPtr CxxEngine::iwyuTask(const doim::FsDirectorySPtr& directory,
             EHEnd;
         }
 
-        auto value = std::make_shared<doim::DbValue>(crcTask->crc());
+        auto value = doim::DbValue::make(crcTask->crc());
 
         tpool::TaskCallback::Function onFinish =
             [key, value](const tpool::TaskSPtr&) -> ECode {
-            auto updateTask = std::make_shared<task::DbPutTask>(key, value);
+            auto updateTask = task::DbPutTask::make(key, value);
             EHTest(updateTask->execute());
             EHEnd;
         };
@@ -268,15 +268,14 @@ tpool::TaskSPtr CxxEngine::iwyuTask(const doim::FsDirectorySPtr& directory,
         auto iwyuTask = mIwyu->iwyuCommand(directory, cxxFile);
         task::gTPool->ensureScheduled(iwyuTask);
 
-        auto iwyuCbTask =
-            std::make_shared<tpool::TaskCallback>(0, iwyuTask, onFinish, nullptr);
+        auto iwyuCbTask = tpool::TaskCallback::make(0, iwyuTask, onFinish, nullptr);
         task::gTPool->ensureScheduled(iwyuCbTask);
         EHTest(iwyuCbTask->join());
 
         EHEnd;
     };
 
-    auto task = std::make_shared<tpool::TaskCallback>(0, crcTask, onFinish, nullptr);
+    auto task = tpool::TaskCallback::make(0, crcTask, onFinish, nullptr);
     task::gTPool->ensureScheduled(task);
     return task;
 }
@@ -297,7 +296,7 @@ tpool::TaskSPtr CxxEngine::iwyu(const doim::FsDirectorySPtr& directory,
         allTasks.push_back(task);
     }
 
-    auto group = std::make_shared<tpool::TaskGroup>(task::gTPool, 0, allTasks);
+    auto group = tpool::TaskGroup::make(task::gTPool, 0, allTasks);
     task::gTPool->ensureScheduled(group);
     return group;
 }

@@ -25,7 +25,7 @@ TEST(ManagerObjectMixinTest, isUnique)
     location = doim::gManager->obtainLocation(nullptr, "/isUnique");
     ASSERT_TRUE(doim::gManager->isUnique(location));
 
-    location = std::make_shared<doim::Location>(nullptr, "isUnique");
+    location = doim::Location::make(nullptr, "isUnique");
     ASSERT_FALSE(doim::gManager->isUnique(location));
 }
 
@@ -37,7 +37,6 @@ TEST(ManagerObjectMixinTest, find)
     location = doim::gManager->obtainLocation(nullptr, "/isUnique");
     ASSERT_EQ(location, doim::gManager->find(location));
 
-    doim::LocationSPtr location1 =
-        std::make_shared<doim::Location>(location->parent(), "isUnique");
+    doim::LocationSPtr location1 = doim::Location::make(location->parent(), "isUnique");
     ASSERT_EQ(location, doim::gManager->find(location1));
 }

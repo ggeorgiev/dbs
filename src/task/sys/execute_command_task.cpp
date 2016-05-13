@@ -33,8 +33,8 @@ ECode ExecuteCommandTask::operator()()
 
         if (!boost::filesystem::is_directory(path))
         {
-            auto mkdirTask = task::gManager->valid(
-                std::make_shared<task::EnsureDirectoryTask>(targetDirectory()));
+            auto mkdirTask =
+                task::gManager->valid(task::EnsureDirectoryTask::make(targetDirectory()));
             gTPool->ensureScheduled(mkdirTask);
             EHTest(mkdirTask->join());
         }

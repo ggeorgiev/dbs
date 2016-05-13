@@ -48,7 +48,7 @@ TEST(TaskCallbackTest, success)
     pool->ensureScheduled(baseTask);
 
     TaskCallback::Function onFinish = [](const TaskSPtr&) -> ECode { EHEnd; };
-    auto task = std::make_shared<TaskCallback>(0, baseTask, onFinish, nullptr);
+    auto task = TaskCallback::make(0, baseTask, onFinish, nullptr);
 
     pool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
@@ -66,7 +66,7 @@ TEST(TaskCallbackTest, fail)
         EHTest(task->reportError());
         EHEnd;
     };
-    auto task = std::make_shared<TaskCallback>(0, baseTask, nullptr, onError);
+    auto task = TaskCallback::make(0, baseTask, nullptr, onError);
 
     pool->ensureScheduled(task);
     ASSERT_BANNED(kExpected, task->join());
@@ -81,7 +81,7 @@ TEST(TaskCallbackTest, failAbsorbed)
     pool->ensureScheduled(baseTask);
 
     TaskCallback::Function onError = [](const TaskSPtr&) -> ECode { EHEnd; };
-    auto task = std::make_shared<TaskCallback>(0, baseTask, nullptr, onError);
+    auto task = TaskCallback::make(0, baseTask, nullptr, onError);
 
     pool->ensureScheduled(task);
     ASSERT_OKAY(task->join());

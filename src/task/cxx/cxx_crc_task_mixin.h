@@ -84,13 +84,13 @@ protected:
             if (headerDirectory.first->type() == doim::CxxHeader::Type::kSystem)
                 continue;
 
-            auto task = Task::valid(
-                std::make_shared<Task>(headerDirectory.first, headerDirectory.second));
+            auto task =
+                Task::valid(Task::make(headerDirectory.first, headerDirectory.second));
             task::gTPool->ensureScheduled(task);
             tasks.push_back(task);
         }
 
-        auto group = std::make_shared<tpool::TaskGroup>(task::gTPool, 0, tasks);
+        auto group = tpool::TaskGroup::make(task::gTPool, 0, tasks);
         task::gTPool->ensureScheduled(group);
 
         math::CrcProcessor crcProcessor;

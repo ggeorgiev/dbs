@@ -164,7 +164,7 @@ public:
 
     SysArgumentSPtr obtainArgument(const std::string& value)
     {
-        return unique(std::make_shared<doim::SysArgument>(value));
+        return unique(doim::SysArgument::make(value));
     }
 
     SysArgumentSetSPtr obtainArguments(const SysArgumentSPtr argument)

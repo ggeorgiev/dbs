@@ -51,7 +51,7 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
         if (cxxLibrary->binary() != nullptr)
         {
             auto staticLibrary = doim::gManager->unique(
-                std::make_shared<doim::CxxStaticLibrary>(cxxLibrary->binary()));
+                doim::CxxStaticLibrary::make(cxxLibrary->binary()));
             staticLibraries->insert(staticLibrary);
         }
         else
@@ -65,10 +65,8 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
     staticLibraries = doim::gManager->unique(staticLibraries);
 
     const auto& programFile = doim::gManager->obtainFile(intermediate, name());
-    auto program = std::make_shared<doim::CxxProgram>(purpose,
-                                                      programFile,
-                                                      staticLibraries,
-                                                      objectFiles);
+    auto program =
+        doim::CxxProgram::make(purpose, programFile, staticLibraries, objectFiles);
     return doim::gManager->unique(program);
 }
 

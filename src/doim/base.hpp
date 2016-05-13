@@ -21,6 +21,12 @@ class Base
 public:
     typedef std::tuple<Args...> Tuple;
 
+    template <typename... MakeArgs>
+    static std::shared_ptr<T> make(const MakeArgs&... args)
+    {
+        return std::make_shared<T>(args...);
+    }
+
     Base(const Args&... args)
         : mArgs(args...)
     {

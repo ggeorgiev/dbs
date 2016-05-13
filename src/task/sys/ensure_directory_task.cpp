@@ -26,7 +26,7 @@ ECode EnsureDirectoryTask::operator()()
         if (!boost::filesystem::is_directory(path))
         {
             auto mkdirTask = task::gManager->valid(
-                std::make_shared<task::EnsureDirectoryTask>(directory()->parent()));
+                task::EnsureDirectoryTask::make(directory()->parent()));
             task::gTPool->ensureScheduled(mkdirTask);
             EHTest(mkdirTask->join());
         }

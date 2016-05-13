@@ -55,10 +55,9 @@ public:
 
 TEST_F(CxxFileCrcTaskTest, SLOW_simple)
 {
-    auto cxxFile =
-        std::make_shared<doim::CxxFile>(mFsSimpleCxx, mEmptyCxxIncludeDirectorySet);
+    auto cxxFile = doim::CxxFile::make(mFsSimpleCxx, mEmptyCxxIncludeDirectorySet);
     cxxFile = doim::gManager->unique(cxxFile);
-    auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
+    auto task = task::CxxFileCrcTask::make(cxxFile);
     task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
 
@@ -67,54 +66,54 @@ TEST_F(CxxFileCrcTaskTest, SLOW_simple)
 
 TEST_F(CxxFileCrcTaskTest, notFoundInclude)
 {
-    auto cxxIncludeDirectory = std::make_shared<
-        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
-                                   mCxxDirectory,
-                                   mEmptyCxxHeaderSet);
+    auto cxxIncludeDirectory =
+        doim::CxxIncludeDirectory::make(doim::CxxIncludeDirectory::EType::kUser,
+                                        mCxxDirectory,
+                                        mEmptyCxxHeaderSet);
     cxxIncludeDirectory = doim::gManager->unique(cxxIncludeDirectory);
 
     auto cxxIncludeDirectories = std::make_shared<doim::CxxIncludeDirectorySet>();
     cxxIncludeDirectories->insert(cxxIncludeDirectory);
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
 
-    auto cxxFile = std::make_shared<doim::CxxFile>(mFsIncludesCxx, cxxIncludeDirectories);
+    auto cxxFile = doim::CxxFile::make(mFsIncludesCxx, cxxIncludeDirectories);
     cxxFile = doim::gManager->unique(cxxFile);
 
-    auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
+    auto task = task::CxxFileCrcTask::make(cxxFile);
     task::gTPool->ensureScheduled(task);
     ASSERT_BANNED(kNotFound, task->join());
 }
 
 TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
 {
-    auto cxxHeader1 = doim::gManager->unique(
-        std::make_shared<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
-                                          mFsUser1H,
-                                          mEmptyCxxIncludeDirectorySet));
-    auto cxxHeader2 = doim::gManager->unique(
-        std::make_shared<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
-                                          mFsUser2H,
-                                          mEmptyCxxIncludeDirectorySet));
+    auto cxxHeader1 =
+        doim::gManager->unique(doim::CxxHeader::make(doim::CxxHeader::Type::kUser,
+                                                     mFsUser1H,
+                                                     mEmptyCxxIncludeDirectorySet));
+    auto cxxHeader2 =
+        doim::gManager->unique(doim::CxxHeader::make(doim::CxxHeader::Type::kUser,
+                                                     mFsUser2H,
+                                                     mEmptyCxxIncludeDirectorySet));
 
     auto cxxHeaders = std::make_shared<doim::CxxHeaderSet>();
     cxxHeaders->insert(cxxHeader1);
     cxxHeaders->insert(cxxHeader2);
     cxxHeaders = doim::gManager->unique(cxxHeaders);
 
-    auto cxxIncludeDirectory = std::make_shared<
-        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
-                                   mCxxDirectory,
-                                   cxxHeaders);
+    auto cxxIncludeDirectory =
+        doim::CxxIncludeDirectory::make(doim::CxxIncludeDirectory::EType::kUser,
+                                        mCxxDirectory,
+                                        cxxHeaders);
     cxxIncludeDirectory = doim::gManager->unique(cxxIncludeDirectory);
 
     auto cxxIncludeDirectories = std::make_shared<doim::CxxIncludeDirectorySet>();
     cxxIncludeDirectories->insert(cxxIncludeDirectory);
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
 
-    auto cxxFile = std::make_shared<doim::CxxFile>(mFsIncludesCxx, cxxIncludeDirectories);
+    auto cxxFile = doim::CxxFile::make(mFsIncludesCxx, cxxIncludeDirectories);
     cxxFile = doim::gManager->unique(cxxFile);
 
-    auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
+    auto task = task::CxxFileCrcTask::make(cxxFile);
     task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
 
@@ -126,49 +125,48 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     // This test makes sure that including from having more than one include directory
     // with the same fs directory is working.
 
-    auto cxxHeader2 = doim::gManager->unique(
-        std::make_shared<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
-                                          mFsUser2H,
-                                          mEmptyCxxIncludeDirectorySet));
+    auto cxxHeader2 =
+        doim::gManager->unique(doim::CxxHeader::make(doim::CxxHeader::Type::kUser,
+                                                     mFsUser2H,
+                                                     mEmptyCxxIncludeDirectorySet));
 
     auto cxxHeaders2 = std::make_shared<doim::CxxHeaderSet>();
     cxxHeaders2->insert(cxxHeader2);
     cxxHeaders2 = doim::gManager->unique(cxxHeaders2);
 
-    auto cxxIncludeDirectory2 = std::make_shared<
-        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
-                                   mCxxDirectory,
-                                   cxxHeaders2);
+    auto cxxIncludeDirectory2 =
+        doim::CxxIncludeDirectory::make(doim::CxxIncludeDirectory::EType::kUser,
+                                        mCxxDirectory,
+                                        cxxHeaders2);
     cxxIncludeDirectory2 = doim::gManager->unique(cxxIncludeDirectory2);
 
     auto cxxIncludeDirectories2 = std::make_shared<doim::CxxIncludeDirectorySet>();
     cxxIncludeDirectories2->insert(cxxIncludeDirectory2);
     cxxIncludeDirectories2 = doim::gManager->unique(cxxIncludeDirectories2);
 
-    auto cxxHeader1 = doim::gManager->unique(
-        std::make_shared<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
-                                          mFsUser1H,
-                                          cxxIncludeDirectories2));
+    auto cxxHeader1 =
+        doim::gManager->unique(doim::CxxHeader::make(doim::CxxHeader::Type::kUser,
+                                                     mFsUser1H,
+                                                     cxxIncludeDirectories2));
 
     auto cxxHeaders1 = std::make_shared<doim::CxxHeaderSet>();
     cxxHeaders1->insert(cxxHeader1);
     cxxHeaders1 = doim::gManager->unique(cxxHeaders1);
 
-    auto cxxIncludeDirectory1 = std::make_shared<
-        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
-                                   mCxxDirectory,
-                                   cxxHeaders1);
+    auto cxxIncludeDirectory1 =
+        doim::CxxIncludeDirectory::make(doim::CxxIncludeDirectory::EType::kUser,
+                                        mCxxDirectory,
+                                        cxxHeaders1);
     cxxIncludeDirectory1 = doim::gManager->unique(cxxIncludeDirectory1);
 
     auto cxxIncludeDirectories1 = std::make_shared<doim::CxxIncludeDirectorySet>();
     cxxIncludeDirectories1->insert(cxxIncludeDirectory1);
     cxxIncludeDirectories1 = doim::gManager->unique(cxxIncludeDirectories1);
 
-    auto cxxFile =
-        std::make_shared<doim::CxxFile>(mFsIncludesCxx, cxxIncludeDirectories1);
+    auto cxxFile = doim::CxxFile::make(mFsIncludesCxx, cxxIncludeDirectories1);
     cxxFile = doim::gManager->unique(cxxFile);
 
-    auto task = std::make_shared<task::CxxFileCrcTask>(cxxFile);
+    auto task = task::CxxFileCrcTask::make(cxxFile);
     task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
 

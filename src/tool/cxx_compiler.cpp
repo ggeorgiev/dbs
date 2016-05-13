@@ -2,15 +2,12 @@
 //
 
 #include "tool/cxx_compiler.h"
-#include "task/manager.h"
-#include "task/sys/parse_stdout_task.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_static_library.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "doim/sys/argument.h"
 #include "doim/sys/command.h"
-#include "rtti/class_rtti.hpp"
 #include <memory>
 #include <sstream>
 #include <string>
@@ -103,7 +100,7 @@ doim::SysCommandSPtr CxxCompiler::compileCommand(
     compileArguments->insert(argument_o);
     compileArguments = doim::gManager->unique(compileArguments);
 
-    auto compileCommand = std::make_shared<doim::SysCommand>(mCompiler, compileArguments);
+    auto compileCommand = doim::SysCommand::make(mCompiler, compileArguments);
     return doim::gManager->unique(compileCommand);
 }
 
@@ -148,7 +145,7 @@ doim::SysCommandSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& direc
     linkArguments->insert(argument_o);
     linkArguments = doim::gManager->unique(linkArguments);
 
-    auto linkCommand = std::make_shared<doim::SysCommand>(mCompiler, linkArguments);
+    auto linkCommand = doim::SysCommand::make(mCompiler, linkArguments);
     return doim::gManager->unique(linkCommand);
 }
 }

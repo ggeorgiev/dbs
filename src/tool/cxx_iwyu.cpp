@@ -44,7 +44,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
     arguments->insert(argument_file);
     arguments = doim::gManager->unique(arguments);
 
-    auto command = std::make_shared<doim::SysCommand>(mTool, arguments);
+    auto command = doim::SysCommand::make(mTool, arguments);
     command = doim::gManager->unique(command);
 
     auto fn = [](int exit, const std::string& output) -> ECode {
@@ -108,10 +108,10 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
     };
 
     return task::gManager->valid(
-        std::make_shared<task::ParseStdoutTask>(command,
-                                                nullptr,
-                                                rtti::RttiInfo<CxxIwyu>::classId(),
-                                                fn,
-                                                "Iwyu " + file));
+        task::ParseStdoutTask::make(command,
+                                    nullptr,
+                                    rtti::RttiInfo<CxxIwyu>::classId(),
+                                    fn,
+                                    "Iwyu " + file));
 }
 }

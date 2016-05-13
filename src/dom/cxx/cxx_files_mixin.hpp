@@ -48,7 +48,7 @@ public:
 
         for (const auto& fsFile : mCxxFilesList)
         {
-            auto cxxFile = std::make_shared<doim::CxxFile>(fsFile, directories);
+            auto cxxFile = doim::CxxFile::make(fsFile, directories);
             cxxFiles.insert(doim::gManager->unique(cxxFile));
 
             DLOG("fsFile: {0}", fsFile->path());
@@ -75,8 +75,7 @@ public:
             const auto& outputFile =
                 doim::gManager->obtainFile(directory, cxxFile->file()->name() + ".o");
 
-            auto objectFile =
-                std::make_shared<doim::CxxObjectFile>(purpose, cxxFile, outputFile);
+            auto objectFile = doim::CxxObjectFile::make(purpose, cxxFile, outputFile);
             objectFile = doim::gManager->unique(objectFile);
 
             cxxObjectFiles.insert(objectFile);

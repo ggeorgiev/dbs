@@ -30,8 +30,7 @@ ECode CxxObjectFileCrcTask::operator()()
         EHEnd;
     }
 
-    auto task =
-        gManager->valid(std::make_shared<CxxFileCrcTask>(cxxObjectFile()->cxxFile()));
+    auto task = gManager->valid(CxxFileCrcTask::make(cxxObjectFile()->cxxFile()));
     task::gTPool->ensureScheduled(task);
 
     std::ifstream fstream(path.c_str());

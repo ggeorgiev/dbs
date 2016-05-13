@@ -53,8 +53,7 @@ TEST(TaskGroupTest, scheduled)
     auto task3 = std::make_shared<TaskGroupTestTask>();
     pool->ensureScheduled(task3);
 
-    auto task =
-        std::make_shared<TaskGroup>(pool, 0, std::vector<TaskSPtr>{task1, task2, task3});
+    auto task = TaskGroup::make(pool, 0, std::vector<TaskSPtr>{task1, task2, task3});
 
     pool->ensureScheduled(task);
 
@@ -70,8 +69,7 @@ TEST(TaskGroupTest, notScheduled)
     auto task2 = std::make_shared<TaskGroupTestTask>();
     auto task3 = std::make_shared<TaskGroupTestTask>();
 
-    auto task =
-        std::make_shared<TaskGroup>(pool, 0, std::vector<TaskSPtr>{task1, task2, task3});
+    auto task = TaskGroup::make(pool, 0, std::vector<TaskSPtr>{task1, task2, task3});
 
     pool->ensureScheduled(task);
 
@@ -82,7 +80,7 @@ TEST(TaskGroupTest, notScheduled)
 TEST(TaskGroupTest, assertNullSubtask)
 {
     auto pool = TPool::create(10);
-    ASSERT_ASSERT(std::make_shared<TaskGroup>(pool, 0, std::vector<TaskSPtr>{nullptr}));
+    ASSERT_ASSERT(TaskGroup::make(pool, 0, std::vector<TaskSPtr>{nullptr}));
 }
 
 TEST(TaskGroupTest, subtaskReturnsError)
@@ -93,8 +91,7 @@ TEST(TaskGroupTest, subtaskReturnsError)
     auto task2 = std::make_shared<TaskGroupTestFailTask>();
     auto task3 = std::make_shared<TaskGroupTestTask>();
 
-    auto task =
-        std::make_shared<TaskGroup>(pool, 0, std::vector<TaskSPtr>{task1, task2, task3});
+    auto task = TaskGroup::make(pool, 0, std::vector<TaskSPtr>{task1, task2, task3});
 
     pool->ensureScheduled(task);
 

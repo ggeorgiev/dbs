@@ -33,12 +33,11 @@ ECode CxxProgramCrcTask::operator()()
 
     for (const auto& objectFile : *objectFiles)
     {
-        auto task =
-            gManager->valid(std::make_shared<CxxFileCrcTask>(objectFile->cxxFile()));
+        auto task = gManager->valid(CxxFileCrcTask::make(objectFile->cxxFile()));
         tasks.push_back(task);
     }
 
-    auto group = std::make_shared<tpool::TaskGroup>(gTPool, 0, tasks);
+    auto group = tpool::TaskGroup::make(gTPool, 0, tasks);
     gTPool->ensureScheduled(group);
     EHTest(group->join());
 

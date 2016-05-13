@@ -38,8 +38,8 @@ ParseStdoutTask::ParseStdoutTask(const doim::SysCommandSPtr& command,
 
 ECode ParseStdoutTask::operator()()
 {
-    auto executeTask = gManager->valid(
-        std::make_shared<task::ExecuteCommandTask>(command(), targetDirectory()));
+    auto executeTask =
+        gManager->valid(task::ExecuteCommandTask::make(command(), targetDirectory()));
     gTPool->ensureScheduled(executeTask);
     EHTest(executeTask->join());
 

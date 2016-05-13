@@ -25,6 +25,12 @@ template <typename T, typename... Args>
 class Base : public tpool::Task, public rtti::RttiInfo<T>
 {
 public:
+    template <typename... MakeArgs>
+    static std::shared_ptr<T> make(const MakeArgs&... args)
+    {
+        return std::make_shared<T>(args...);
+    }
+
     typedef std::tuple<Args...> Tuple;
 
     Base(const Args&... args)

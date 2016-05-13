@@ -9,38 +9,38 @@
 
 TEST(FsDirectoryTest, path)
 {
-    auto root = std::make_shared<doim::FsDirectory>();
+    auto root = doim::FsDirectory::make();
     root = doim::gManager->unique(root);
     ASSERT_STREQ("/", root->path(nullptr).c_str());
 
-    auto directory = std::make_shared<doim::FsDirectory>(nullptr, "foo");
+    auto directory = doim::FsDirectory::make(nullptr, "foo");
     ASSERT_STREQ("foo/", directory->path(nullptr).c_str());
 
-    directory = std::make_shared<doim::FsDirectory>(root, "foo");
+    directory = doim::FsDirectory::make(root, "foo");
     ASSERT_STREQ("/foo/", directory->path(nullptr).c_str());
     ASSERT_STREQ("foo/", directory->path(root).c_str());
 }
 
 TEST(FsDirectoryTest, level)
 {
-    auto root = std::make_shared<doim::FsDirectory>();
+    auto root = doim::FsDirectory::make();
     root = doim::gManager->unique(root);
     ASSERT_EQ(1u, root->level());
 
-    auto directory = std::make_shared<doim::FsDirectory>(root, "");
+    auto directory = doim::FsDirectory::make(root, "");
     ASSERT_EQ(2u, directory->level());
 }
 
 TEST(FsDirectoryTest, commonAncestor)
 {
-    auto root = std::make_shared<doim::FsDirectory>();
+    auto root = doim::FsDirectory::make();
     root = doim::gManager->unique(root);
     ASSERT_EQ(root, root->commonAncestor(root));
 
-    auto foo = std::make_shared<doim::FsDirectory>(root, "foo");
+    auto foo = doim::FsDirectory::make(root, "foo");
     ASSERT_EQ(root, root->commonAncestor(foo));
     ASSERT_EQ(root, foo->commonAncestor(root));
 
-    auto bar = std::make_shared<doim::FsDirectory>(root, "bar");
+    auto bar = doim::FsDirectory::make(root, "bar");
     ASSERT_EQ(root, bar->commonAncestor(foo));
 }

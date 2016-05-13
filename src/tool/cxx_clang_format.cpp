@@ -34,15 +34,15 @@ tpool::TaskSPtr CxxClangFormat::formatCommand(const doim::FsDirectorySPtr& direc
     auto argument_i = doim::gManager->obtainArgument("-i " + file);
     arguments->insert(argument_i);
 
-    auto formatCommand = std::make_shared<doim::SysCommand>(mFormatter, arguments);
+    auto formatCommand = doim::SysCommand::make(mFormatter, arguments);
     formatCommand = doim::gManager->unique(formatCommand);
 
     auto id = rtti::RttiInfo<CxxClangFormat, 0>::classId();
     return task::gManager->valid(
-        std::make_shared<task::ParseStdoutTask>(formatCommand,
-                                                cxxFile->file()->directory(),
-                                                id,
-                                                task::ParseStdoutTask::logOnError(),
-                                                "Format " + file));
+        task::ParseStdoutTask::make(formatCommand,
+                                    cxxFile->file()->directory(),
+                                    id,
+                                    task::ParseStdoutTask::logOnError(),
+                                    "Format " + file));
 }
 }

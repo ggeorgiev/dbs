@@ -93,25 +93,22 @@ int main(int argc, char* argv[])
     const auto& clangFormatFile =
         doim::gManager->obtainFile(cwd, "clang/bin/clang-format");
     const auto& clangFormat =
-        doim::gManager->unique(std::make_shared<doim::SysExecutable>(clangFormatFile));
+        doim::gManager->unique(doim::SysExecutable::make(clangFormatFile));
     const auto& clangFormatTool = std::make_shared<tool::CxxClangFormat>(clangFormat);
 
-    const auto& clangBinary =
-        doim::gManager->unique(std::make_shared<doim::FsBinary>("clang++"));
-    const auto& clang =
-        doim::gManager->unique(std::make_shared<doim::SysExecutable>(clangBinary));
+    const auto& clangBinary = doim::gManager->unique(doim::FsBinary::make("clang++"));
+    const auto& clang = doim::gManager->unique(doim::SysExecutable::make(clangBinary));
     const auto& compiler = std::make_shared<tool::CxxCompiler>(clang);
 
     const auto& iwyuFile =
         doim::gManager->obtainFile(cwd, "clang/bin/include-what-you-use");
-    const auto& iwyu =
-        doim::gManager->unique(std::make_shared<doim::SysExecutable>(iwyuFile));
+    const auto& iwyu = doim::gManager->unique(doim::SysExecutable::make(iwyuFile));
     const auto& iwyuTool = std::make_shared<tool::CxxIwyu>(iwyu);
 
     const auto& engine =
         std::make_shared<engine::CxxEngine>(clangFormatTool, compiler, iwyuTool);
 
-    const auto& verb = doim::gManager->find(std::make_shared<doim::Tag>(arg[2]));
+    const auto& verb = doim::gManager->find(doim::Tag::make(arg[2]));
 
     if (verb == nullptr)
     {
@@ -147,7 +144,7 @@ int main(int argc, char* argv[])
             ASSERT(false);
     }
 
-    auto group = std::make_shared<tpool::TaskGroup>(task::gTPool, 0, tasks);
+    auto group = tpool::TaskGroup::make(task::gTPool, 0, tasks);
     task::gTPool->ensureScheduled(group);
 
     code = group->join();

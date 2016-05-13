@@ -23,7 +23,7 @@ DbKeySPtr DbKey::global(const DbKeySPtr& ancestor,
                         DbKeySPtr& key)
 {
     auto fn = [&ancestor, name, &key]() -> bool {
-        key = gManager->unique(std::make_shared<DbKey>(ancestor, name));
+        key = gManager->unique(DbKey::make(ancestor, name));
         return true;
     };
 

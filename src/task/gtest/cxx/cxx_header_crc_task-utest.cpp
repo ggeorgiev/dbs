@@ -51,12 +51,12 @@ public:
 
 TEST_F(CxxHeaderCrcTaskTest, simple)
 {
-    auto cxxHeader = std::make_shared<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
-                                                       mFsSimpleCxx,
-                                                       mEmptyCxxIncludeDirectorySet);
+    auto cxxHeader = doim::CxxHeader::make(doim::CxxHeader::Type::kUser,
+                                           mFsSimpleCxx,
+                                           mEmptyCxxIncludeDirectorySet);
     cxxHeader = doim::gManager->unique(cxxHeader);
 
-    auto task = std::make_shared<task::CxxHeaderCrcTask>(cxxHeader, nullptr);
+    auto task = task::CxxHeaderCrcTask::make(cxxHeader, nullptr);
 
     ASSERT_OKAY((*task)());
 
@@ -65,20 +65,20 @@ TEST_F(CxxHeaderCrcTaskTest, simple)
 
 TEST_F(CxxHeaderCrcTaskTest, notFoundInclude)
 {
-    auto cxxIncludeDirectory = std::make_shared<
-        doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
-                                   mCxxDirectory,
-                                   mEmptyCxxHeaderSet);
+    auto cxxIncludeDirectory =
+        doim::CxxIncludeDirectory::make(doim::CxxIncludeDirectory::EType::kUser,
+                                        mCxxDirectory,
+                                        mEmptyCxxHeaderSet);
     cxxIncludeDirectory = doim::gManager->unique(cxxIncludeDirectory);
 
     auto cxxIncludeDirectories = std::make_shared<doim::CxxIncludeDirectorySet>();
     cxxIncludeDirectories->insert(doim::gManager->unique(cxxIncludeDirectory));
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
 
-    auto cxxHeader = std::make_shared<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
-                                                       mFsIncludesCxx,
-                                                       cxxIncludeDirectories);
+    auto cxxHeader = doim::CxxHeader::make(doim::CxxHeader::Type::kUser,
+                                           mFsIncludesCxx,
+                                           cxxIncludeDirectories);
     cxxHeader = doim::gManager->unique(cxxHeader);
-    auto task = std::make_shared<task::CxxHeaderCrcTask>(cxxHeader, nullptr);
+    auto task = task::CxxHeaderCrcTask::make(cxxHeader, nullptr);
     ASSERT_BANNED(kNotFound, (*task)());
 }

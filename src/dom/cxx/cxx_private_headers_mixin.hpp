@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -47,10 +47,10 @@ public:
             return nullptr;
 
         const auto& directory =
-            std::make_shared<doim::CxxIncludeDirectory>(static_cast<const Subject*>(this)
-                                                            ->cxxIncludeDirectoryType(),
-                                                        privateHeadersDirectory(),
-                                                        privateCxxHeaders(root));
+            doim::CxxIncludeDirectory::make(static_cast<const Subject*>(this)
+                                                ->cxxIncludeDirectoryType(),
+                                            privateHeadersDirectory(),
+                                            privateCxxHeaders(root));
         return doim::gManager->unique(directory);
     }
 
@@ -65,8 +65,7 @@ public:
                 static_cast<const Subject*>(this)->indirectCxxIncludeDirectories(root);
             for (const auto& header : *mCxxPrivateHeaders)
             {
-                const auto& cxxHeader =
-                    std::make_shared<doim::CxxHeader>(type, header, directories);
+                const auto& cxxHeader = doim::CxxHeader::make(type, header, directories);
                 headers->insert(doim::gManager->unique(cxxHeader));
             }
         }

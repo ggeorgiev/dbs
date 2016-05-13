@@ -17,6 +17,12 @@ typedef std::shared_ptr<TaskCallback> TaskCallbackSPtr;
 class TaskCallback : public Task
 {
 public:
+    template <typename... MakeArgs>
+    static std::shared_ptr<TaskCallback> make(const MakeArgs&... args)
+    {
+        return std::make_shared<TaskCallback>(args...);
+    }
+
     typedef std::function<ECode(const TaskSPtr&)> Function;
 
     TaskCallback(int priority,

@@ -34,9 +34,7 @@ ObjectSPtr Manager::obtainObject(const LocationSPtr& base,
         return ObjectSPtr();
 
     auto working =
-        std::make_shared<Object>(type,
-                                 std::string(object.begin() + pos, object.end()),
-                                 location);
+        Object::make(type, std::string(object.begin() + pos, object.end()), location);
     return unique(working);
 }
 
@@ -91,7 +89,7 @@ FsDirectorySPtr traceDirectory(Trace&& trace,
     }
 
     if (parent == nullptr)
-        parent = std::make_shared<FsDirectory>();
+        parent = FsDirectory::make();
 
     return trace(parent);
 }
@@ -151,8 +149,7 @@ FsFileSPtr traceFile(TraceDirectory&& traceDirectory,
     if (directory == nullptr)
         return FsFileSPtr();
 
-    return std::make_shared<FsFile>(directory,
-                                    std::string(file.begin() + pos, file.end()));
+    return FsFile::make(directory, std::string(file.begin() + pos, file.end()));
 }
 
 FsFileSPtr Manager::findFile(const FsDirectorySPtr& base, const string_view& file)
