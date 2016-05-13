@@ -3,6 +3,6 @@
 
 #pragma once
 
-#include <experimental/string_view> // IWYU pragma: extern
+#include <experimental/string_view> // IWYU pragma: export
 
 using string_view = std::experimental::string_view;

@@ -5,6 +5,7 @@
 #include "task/manager.h"
 #include "task/sys/parse_stdout_task.h"
 #include "doim/cxx/cxx_file.h"
+#include "doim/cxx/cxx_static_library.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "doim/sys/argument.h"
