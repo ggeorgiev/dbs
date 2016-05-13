@@ -33,6 +33,7 @@ cxx_library stl
         string
         thread
         tuple
+        type_traits
         typeindex
         unordered_map
         unordered_set

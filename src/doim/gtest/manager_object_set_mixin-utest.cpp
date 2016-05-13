@@ -3,14 +3,10 @@
 
 #include "doim/manager.h"
 #include "doim/fs/fs_directory.h"
-#include "doim/fs/fs_file.h"
-#include "doim/generic/object.h"
-#include "err/gtest/err_assert.h"
+#include "doim/generic/location.hpp"
 #include "gtest/framework.h"
 #include <memory>
 #include <ostream>
-#include <stdexcept>
-#include <string>
 
 TEST(ManagerObjectMixinTest, unique)
 {

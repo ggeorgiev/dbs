@@ -1,16 +1,12 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "doim/manager_object_mixin.hpp"
-#include "doim/fs/fs_directory.h"
-#include "doim/generic/object.h"
 #include "doim/manager.h"
-#include "err/gtest/err_assert.h"
+#include "doim/generic/location.hpp"
 #include "gtest/framework.h"
 #include <memory>
 #include <ostream>
-#include <stdexcept>
-#include <string>
+#include <unordered_set>
 
 TEST(ManagerObjectSetMixinTest, unique)
 {

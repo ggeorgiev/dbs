@@ -9,6 +9,7 @@
 #include "doim/fs/fs_file.h"
 #include <memory>
 #include <tuple>
+#include <type_traits>
 #include <unordered_set>
 
 namespace doim

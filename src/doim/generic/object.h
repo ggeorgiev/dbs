@@ -8,6 +8,7 @@
 #include <iosfwd>
 #include <memory>
 #include <tuple>
+#include <type_traits>
 
 namespace doim
 {
