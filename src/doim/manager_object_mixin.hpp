@@ -7,9 +7,9 @@
 #include <boost/thread/locks.hpp>
 #include <boost/thread/shared_mutex.hpp>
 #include <algorithm>
-#include <experimental/string_view>
 #include <iosfwd>
 #include <memory>
+#include <string_view>
 #include <typeindex>
 #include <unordered_map>
 #include <unordered_set>

@@ -10,8 +10,7 @@
 namespace task
 {
 doim::CxxHeaderSPtr CxxCrcTaskMixin::findInclude(
-    const std::experimental::string_view& include,
-    const doim::CxxIncludeDirectorySPtr& includeDirectory)
+    const string_view& include, const doim::CxxIncludeDirectorySPtr& includeDirectory)
 {
     if (includeDirectory == nullptr)
         return nullptr;
@@ -24,7 +23,7 @@ doim::CxxHeaderSPtr CxxCrcTaskMixin::findInclude(
 }
 
 ECode CxxCrcTaskMixin::findInclude(
-    const std::experimental::string_view& include,
+    const string_view& include,
     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
     const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
     HeaderDirectory& headerDirectory)

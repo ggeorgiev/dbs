@@ -22,9 +22,9 @@
 #include "doim/sys/executable.h"
 #include "doim/tag/tag.h"
 #include "im/initialization_manager.hpp"
-#include <experimental/string_view>
 #include <iosfwd>
 #include <memory>
+#include <string_view>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -77,8 +77,7 @@ public:
     }
 
     // Obtain an unique location.
-    LocationSPtr obtainLocation(const LocationSPtr& base,
-                                const std::experimental::string_view& location)
+    LocationSPtr obtainLocation(const LocationSPtr& base, const string_view& location)
     {
         return obtainDirectory(base, location);
     }
@@ -90,7 +89,7 @@ public:
     // Obtain an unique object.
     ObjectSPtr obtainObject(const LocationSPtr& base,
                             const Object::EType type,
-                            const std::experimental::string_view& object);
+                            const string_view& object);
 
     using ManagerObjectMixin<FsBinary>::unique;
     using ManagerObjectMixin<FsBinary>::isUnique;
@@ -105,10 +104,10 @@ public:
     using ManagerObjectSetMixin<FsDirectory>::find;
 
     FsDirectorySPtr findDirectory(const FsDirectorySPtr& base,
-                                  const std::experimental::string_view& directory);
+                                  const string_view& directory);
     // Obtain an unique directory.
     FsDirectorySPtr obtainDirectory(const FsDirectorySPtr& base,
-                                    const std::experimental::string_view& directory);
+                                    const string_view& directory);
 
     // Obtain the unique corresponding directory of directory in toDirectory to that in
     // fromDirectory. Note that directory must be subdirectory of fromDirectory.
@@ -120,11 +119,9 @@ public:
     using ManagerObjectMixin<FsFile>::isUnique;
     using ManagerObjectMixin<FsFile>::find;
 
-    FsFileSPtr findFile(const FsDirectorySPtr& base,
-                        const std::experimental::string_view& file);
+    FsFileSPtr findFile(const FsDirectorySPtr& base, const string_view& file);
 
-    FsFileSPtr obtainFile(const FsDirectorySPtr& base,
-                          const std::experimental::string_view& file);
+    FsFileSPtr obtainFile(const FsDirectorySPtr& base, const string_view& file);
 
     using ManagerObjectSetMixin<FsFile>::unique;
 

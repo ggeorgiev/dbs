@@ -3,7 +3,7 @@ cxx_library stl
 
     cxx_header
         @visibility=public
-        @directory=../../clang/include/c++/v1:
+        @directory=.:
 
         experimental/string_view
         algorithm
@@ -39,5 +39,8 @@ cxx_library stl
         unordered_set
         utility
         vector
+
+        # wrapper
+        string_view
     ;
 ;

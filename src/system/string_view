@@ -1,0 +1,8 @@
+//  Copyright © 2016 George Georgiev. All rights reserved.
+//
+
+#pragma once
+
+#include <experimental/string_view> // IWYU pragma: extern
+
+using string_view = std::experimental::string_view;

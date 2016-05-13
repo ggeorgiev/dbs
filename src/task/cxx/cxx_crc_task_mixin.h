@@ -14,10 +14,10 @@
 #include <boost/filesystem/operations.hpp>
 #include "math/crc.hpp"
 #include <algorithm>
-#include <experimental/string_view>
 #include <fstream>
 #include <iterator>
 #include <memory>
+#include <string_view>
 #include <utility>
 #include <vector>
 
@@ -35,10 +35,10 @@ protected:
     typedef std::pair<doim::CxxHeaderSPtr, doim::CxxIncludeDirectorySPtr> HeaderDirectory;
 
     doim::CxxHeaderSPtr findInclude(
-        const std::experimental::string_view& include,
+        const string_view& include,
         const doim::CxxIncludeDirectorySPtr& includeDirectory);
 
-    ECode findInclude(const std::experimental::string_view& include,
+    ECode findInclude(const string_view& include,
                       const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
                       const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
                       HeaderDirectory& headerDirectory);
@@ -65,7 +65,7 @@ protected:
         for (const auto& include : parser.includes(content))
         {
             HeaderDirectory headerDirectory;
-            EHTest(findInclude(std::experimental::string_view(include.mPath),
+            EHTest(findInclude(string_view(include.mPath),
                                include.mType ==
                                        parser::CxxParser::EIncludeType::kProgrammerDefined
                                    ? currentIncludeDirectory

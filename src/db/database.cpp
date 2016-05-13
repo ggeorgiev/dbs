@@ -46,8 +46,8 @@ void Database::close()
     mRocksDb.reset();
 }
 
-ECode Database::get(const std::experimental::string_view& key,
-                    const std::experimental::string_view& defaultValue,
+ECode Database::get(const string_view& key,
+                    const string_view& defaultValue,
                     std::string& value)
 {
     const auto& status = mRocksDb->Get(rocksdb::ReadOptions(),
@@ -68,7 +68,7 @@ ECode Database::get(const std::experimental::string_view& key,
     EHEnd;
 }
 
-ECode Database::get(const std::experimental::string_view& key, std::string& value)
+ECode Database::get(const string_view& key, std::string& value)
 {
     const auto& status = mRocksDb->Get(rocksdb::ReadOptions(),
                                        rocksdb::Slice(key.data(), key.size()),
@@ -86,8 +86,7 @@ ECode Database::get(const std::experimental::string_view& key, std::string& valu
     EHEnd;
 }
 
-ECode Database::put(const std::experimental::string_view& key,
-                    const std::experimental::string_view& value)
+ECode Database::put(const string_view& key, const string_view& value)
 {
     const auto& status = mRocksDb->Put(rocksdb::WriteOptions(),
                                        rocksdb::Slice(key.data(), key.size()),
@@ -100,7 +99,7 @@ ECode Database::put(const std::experimental::string_view& key,
     EHEnd;
 }
 
-ECode Database::erase(const std::experimental::string_view& key)
+ECode Database::erase(const string_view& key)
 {
     const auto& status =
         mRocksDb->Delete(rocksdb::WriteOptions(), rocksdb::Slice(key.data(), key.size()));

@@ -6,9 +6,9 @@
 #include "err/err.h"
 #include "im/initialization_manager.hpp"
 #include <rocksdb/db.h>
-#include <experimental/string_view>
 #include <memory>
 #include <sstream>
+#include <string_view>
 
 namespace db
 {
@@ -25,46 +25,42 @@ public:
     void close();
 
     template <typename V>
-    ECode get(const std::experimental::string_view& key, V& value)
+    ECode get(const string_view& key, V& value)
     {
         V defaultValue = V();
 
         std::string buffer;
         EHTest(get(key,
-                   std::experimental::string_view(reinterpret_cast<const char*>(
-                                                      &defaultValue),
-                                                  sizeof(defaultValue)),
+                   string_view(reinterpret_cast<const char*>(&defaultValue),
+                               sizeof(defaultValue)),
                    buffer));
         value = *reinterpret_cast<const V*>(buffer.data());
         EHEnd;
     }
 
     template <typename V>
-    ECode put(const std::experimental::string_view& key, const V& value)
+    ECode put(const string_view& key, const V& value)
     {
-        EHTest(put(key,
-                   std::experimental::string_view(reinterpret_cast<const char*>(&value),
-                                                  sizeof(value))));
+        EHTest(
+            put(key, string_view(reinterpret_cast<const char*>(&value), sizeof(value))));
         EHEnd;
     }
 
-    ECode get(const std::experimental::string_view& key,
-              const std::experimental::string_view& defaultValue,
+    ECode get(const string_view& key,
+              const string_view& defaultValue,
               std::string& value);
-    ECode get(const std::experimental::string_view& key, std::string& value);
-    ECode put(const std::experimental::string_view& key,
-              const std::experimental::string_view& value);
-    ECode erase(const std::experimental::string_view& key);
+    ECode get(const string_view& key, std::string& value);
+    ECode put(const string_view& key, const string_view& value);
+    ECode erase(const string_view& key);
 
 private:
     std::unique_ptr<rocksdb::DB> mRocksDb;
 };
 
 template <>
-inline ECode Database::put(const std::experimental::string_view& key,
-                           const std::string& value)
+inline ECode Database::put(const string_view& key, const std::string& value)
 {
-    EHTest(put(key, std::experimental::string_view(value)));
+    EHTest(put(key, string_view(value)));
     EHEnd;
 }
 

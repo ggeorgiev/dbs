@@ -16,7 +16,7 @@ ManagerSPtr gManager = im::InitializationManager::subscribe(gManager);
 
 ObjectSPtr Manager::obtainObject(const LocationSPtr& base,
                                  const Object::EType type,
-                                 const std::experimental::string_view& object)
+                                 const string_view& object)
 {
     auto pos = object.size();
     while (pos-- > 0)
@@ -29,8 +29,7 @@ ObjectSPtr Manager::obtainObject(const LocationSPtr& base,
     if (pos == object.size())
         return ObjectSPtr();
 
-    auto location =
-        obtainLocation(base, std::experimental::string_view(object.begin(), pos));
+    auto location = obtainLocation(base, string_view(object.begin(), pos));
     if (location == nullptr)
         return ObjectSPtr();
 
@@ -44,7 +43,7 @@ ObjectSPtr Manager::obtainObject(const LocationSPtr& base,
 template <typename Trace>
 FsDirectorySPtr traceDirectory(Trace&& trace,
                                const FsDirectorySPtr& base,
-                               const std::experimental::string_view& directory)
+                               const string_view& directory)
 {
     if (directory.empty())
         return base;
@@ -98,7 +97,7 @@ FsDirectorySPtr traceDirectory(Trace&& trace,
 }
 
 FsDirectorySPtr Manager::findDirectory(const FsDirectorySPtr& base,
-                                       const std::experimental::string_view& directory)
+                                       const string_view& directory)
 {
     auto trace = [this](const FsDirectorySPtr& directory) -> FsDirectorySPtr {
         return find(directory);
@@ -108,7 +107,7 @@ FsDirectorySPtr Manager::findDirectory(const FsDirectorySPtr& base,
 }
 
 FsDirectorySPtr Manager::obtainDirectory(const FsDirectorySPtr& base,
-                                         const std::experimental::string_view& directory)
+                                         const string_view& directory)
 {
     auto trace = [this](const FsDirectorySPtr& directory) -> FsDirectorySPtr {
         return unique(directory);
@@ -135,7 +134,7 @@ FsDirectorySPtr Manager::obtainCorrespondingDirectory(
 template <typename TraceDirectory>
 FsFileSPtr traceFile(TraceDirectory&& traceDirectory,
                      const FsDirectorySPtr& base,
-                     const std::experimental::string_view& file)
+                     const string_view& file)
 {
     auto pos = file.size();
     while (pos-- > 0)
@@ -148,8 +147,7 @@ FsFileSPtr traceFile(TraceDirectory&& traceDirectory,
     if (pos == file.size())
         return FsFileSPtr();
 
-    const auto& directory =
-        traceDirectory(base, std::experimental::string_view(file.begin(), pos));
+    const auto& directory = traceDirectory(base, string_view(file.begin(), pos));
     if (directory == nullptr)
         return FsFileSPtr();
 
@@ -157,24 +155,20 @@ FsFileSPtr traceFile(TraceDirectory&& traceDirectory,
                                     std::string(file.begin() + pos, file.end()));
 }
 
-FsFileSPtr Manager::findFile(const FsDirectorySPtr& base,
-                             const std::experimental::string_view& file)
+FsFileSPtr Manager::findFile(const FsDirectorySPtr& base, const string_view& file)
 {
-    auto traceDirectory =
-        [this](const FsDirectorySPtr& base,
-               const std::experimental::string_view& directory) -> FsDirectorySPtr {
+    auto traceDirectory = [this](const FsDirectorySPtr& base,
+                                 const string_view& directory) -> FsDirectorySPtr {
         return findDirectory(base, directory);
     };
 
     return find(traceFile(traceDirectory, base, file));
 }
 
-FsFileSPtr Manager::obtainFile(const FsDirectorySPtr& base,
-                               const std::experimental::string_view& file)
+FsFileSPtr Manager::obtainFile(const FsDirectorySPtr& base, const string_view& file)
 {
-    auto traceDirectory =
-        [this](const FsDirectorySPtr& base,
-               const std::experimental::string_view& directory) -> FsDirectorySPtr {
+    auto traceDirectory = [this](const FsDirectorySPtr& base,
+                                 const string_view& directory) -> FsDirectorySPtr {
         return obtainDirectory(base, directory);
     };
 
