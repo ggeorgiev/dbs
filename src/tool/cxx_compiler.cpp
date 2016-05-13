@@ -115,8 +115,8 @@ tpool::TaskSPtr CxxCompiler::compileCommand(
                                                 "Compile " + file));
 }
 
-tpool::TaskSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& directory,
-                                         const doim::CxxProgramSPtr& program) const
+doim::SysCommandSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& directory,
+                                              const doim::CxxProgramSPtr& program) const
 {
     auto linkArguments = std::make_shared<doim::SysArgumentSet>();
     linkArguments->insert(gStdLibc11Argument);
@@ -157,14 +157,6 @@ tpool::TaskSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& directory,
     linkArguments = doim::gManager->unique(linkArguments);
 
     auto linkCommand = std::make_shared<doim::SysCommand>(mCompiler, linkArguments);
-    linkCommand = doim::gManager->unique(linkCommand);
-
-    auto id = rtti::RttiInfo<CxxCompiler, 1>::classId();
-    return task::gManager->valid(
-        std::make_shared<task::ParseStdoutTask>(linkCommand,
-                                                program->file()->directory(),
-                                                id,
-                                                task::ParseStdoutTask::logOnError(),
-                                                path));
+    return doim::gManager->unique(linkCommand);
 }
 }

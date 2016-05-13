@@ -34,6 +34,35 @@ doim::DbKeySPtr CxxEngine::gReleaseDbKey =
 doim::DbKeySPtr CxxEngine::gProfileDbKey =
     doim::DbKey::global(gBuildDbKey, 1, "profile", CxxEngine::gProfileDbKey);
 
+std::map<CxxEngine::EBuildFor, std::string>
+    CxxEngine::gSubDirectory{{CxxEngine::EBuildFor::kDebug, "debug"},
+                             {CxxEngine::EBuildFor::kRelease, "release"},
+                             {CxxEngine::EBuildFor::kProfile, "profile"}};
+
+std::map<CxxEngine::EBuildFor, doim::CxxProgram::EPurpose>
+    CxxEngine::gProgramPurpose{{CxxEngine::EBuildFor::kDebug,
+                                doim::CxxProgram::EPurpose::kDebug},
+                               {CxxEngine::EBuildFor::kRelease,
+                                doim::CxxProgram::EPurpose::kRelease},
+                               {CxxEngine::EBuildFor::kProfile,
+                                doim::CxxProgram::EPurpose::kProfile}};
+
+bool CxxEngine::initDbKeyPurpose()
+{
+    CxxEngine::gDbKeyPurpose = {{CxxEngine::EBuildFor::kDebug, gDebugDbKey},
+                                {CxxEngine::EBuildFor::kRelease, gReleaseDbKey},
+                                {CxxEngine::EBuildFor::kProfile, gProfileDbKey}};
+    return true;
+}
+
+std::map<CxxEngine::EBuildFor, doim::DbKeySPtr> CxxEngine::gDbKeyPurpose =
+    im::InitializationManager::subscribe<
+        std::map<CxxEngine::EBuildFor,
+                 doim::DbKeySPtr>>(doim::Manager::object_initialization_rank() +
+                                       im::InitializationManager::rank_step() * 2,
+                                   initDbKeyPurpose,
+                                   nullptr);
+
 CxxEngine::CxxEngine(const tool::CxxClangFormatSPtr& formatter,
                      const tool::CxxCompilerSPtr& compiler,
                      const tool::CxxIwyuSPtr& iwyu)
@@ -120,7 +149,18 @@ tpool::TaskSPtr CxxEngine::buildObjects(const doim::DbKeySPtr& ancenstor,
     tpool::TaskCallback::Function onFinish =
         [this, self, directory, program](const tpool::TaskSPtr& task) -> ECode {
 
-        auto linkTask = mCompiler->linkCommand(directory, program);
+        auto linkCommand = mCompiler->linkCommand(directory, program);
+
+        auto id = rtti::RttiInfo<CxxEngine, 1>::classId();
+        const std::string& description = "Link " + program->file()->path(directory);
+        auto linkTask =
+            std::make_shared<task::ParseStdoutTask>(linkCommand,
+                                                    program->file()->directory(),
+                                                    id,
+                                                    task::ParseStdoutTask::logOnError(),
+                                                    description);
+        linkTask = task::gManager->valid(linkTask);
+
         task::gTPool->ensureScheduled(linkTask);
         EHTest(linkTask->join());
         EHEnd;
@@ -131,71 +171,22 @@ tpool::TaskSPtr CxxEngine::buildObjects(const doim::DbKeySPtr& ancenstor,
     return groupCb;
 }
 
-std::string CxxEngine::subdirectory(CxxEngine::EBuildFor buildFor)
-{
-    switch (buildFor)
-    {
-        case EBuildFor::kDebug:
-            return "debug";
-            break;
-        case EBuildFor::kRelease:
-            return "release";
-            break;
-        case EBuildFor::kProfile:
-            return "profile";
-            break;
-    }
-
-    return "";
-}
-
-doim::DbKeySPtr CxxEngine::dbKey(CxxEngine::EBuildFor buildFor)
-{
-    switch (buildFor)
-    {
-        case EBuildFor::kDebug:
-            return gDebugDbKey;
-            break;
-        case EBuildFor::kRelease:
-            return gReleaseDbKey;
-            break;
-        case EBuildFor::kProfile:
-            return gProfileDbKey;
-            break;
-    }
-
-    return nullptr;
-}
-
-doim::CxxProgram::EPurpose CxxEngine::programPurpose(EBuildFor buildFor) const
-{
-    switch (buildFor)
-    {
-        case EBuildFor::kDebug:
-            return doim::CxxProgram::EPurpose::kDebug;
-        case EBuildFor::kRelease:
-            return doim::CxxProgram::EPurpose::kRelease;
-        case EBuildFor::kProfile:
-            return doim::CxxProgram::EPurpose::kProfile;
-    }
-}
-
 tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
                                  const doim::FsDirectorySPtr& directory,
                                  const dom::CxxProgramSPtr& program)
 {
     const auto& build = doim::gManager->obtainDirectory(directory, "build");
     const auto& intermediate =
-        doim::gManager->obtainDirectory(build, subdirectory(buildFor));
+        doim::gManager->obtainDirectory(build, gSubDirectory[buildFor]);
 
     const auto& cxxProgram =
-        program->cxxProgram(programPurpose(buildFor), directory, intermediate);
+        program->cxxProgram(gProgramPurpose[buildFor], directory, intermediate);
 
     auto crcTask =
         task::gManager->valid(std::make_shared<task::CxxProgramCrcTask>(cxxProgram));
     task::gTPool->ensureScheduled(crcTask);
 
-    auto ancestor = dbKey(buildFor);
+    auto ancestor = gDbKeyPurpose[buildFor];
 
     auto self = shared_from_this();
     tpool::TaskCallback::Function onFinish =

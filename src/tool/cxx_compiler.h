@@ -29,8 +29,8 @@ public:
     tpool::TaskSPtr compileCommand(const doim::FsDirectorySPtr& directory,
                                    const doim::CxxObjectFileSPtr& objectFile) const;
 
-    tpool::TaskSPtr linkCommand(const doim::FsDirectorySPtr& directory,
-                                const doim::CxxProgramSPtr& program) const;
+    doim::SysCommandSPtr linkCommand(const doim::FsDirectorySPtr& directory,
+                                     const doim::CxxProgramSPtr& program) const;
 
 private:
     static doim::SysArgumentSPtr gOptimizationLevel0Argument;

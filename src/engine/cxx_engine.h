@@ -49,10 +49,11 @@ private:
     static doim::DbKeySPtr gReleaseDbKey;
     static doim::DbKeySPtr gProfileDbKey;
 
-    static std::string subdirectory(EBuildFor buildFor);
-    static doim::DbKeySPtr dbKey(EBuildFor buildFor);
+    static std::map<EBuildFor, std::string> gSubDirectory;
+    static std::map<EBuildFor, doim::CxxProgram::EPurpose> gProgramPurpose;
 
-    doim::CxxProgram::EPurpose programPurpose(EBuildFor buildFor) const;
+    static bool initDbKeyPurpose();
+    static std::map<EBuildFor, doim::DbKeySPtr> gDbKeyPurpose;
 
     tpool::TaskSPtr updateDbTask(const tpool::TaskSPtr& task,
                                  const doim::DbKeySPtr& key,
