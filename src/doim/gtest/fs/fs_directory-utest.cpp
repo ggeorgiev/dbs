@@ -4,8 +4,8 @@
 #include "doim/fs/fs_directory.h"
 #include "doim/manager.h"
 #include "gtest/framework.h"
-#include <iosfwd>
 #include <memory>
+#include <str>
 
 TEST(FsDirectoryTest, path)
 {

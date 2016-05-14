@@ -5,7 +5,6 @@
 
 #include "gtest/framework.h"
 #include <boost/chrono/process_cpu_clocks.hpp>
-#include <iosfwd>
 #include <str>
 #include <unordered_map>
 

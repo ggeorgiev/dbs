@@ -5,8 +5,8 @@
 
 #include "doim/base.hpp"
 #include "doim/generic/location.hpp"
-#include <iosfwd>
 #include <memory>
+#include <str>
 #include <tuple>
 #include <type_traits>
 #include <unordered>

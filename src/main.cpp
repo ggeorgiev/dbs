@@ -26,6 +26,7 @@
 #include <iostream>
 #include <iterator>
 #include <memory>
+#include <str>
 #include <vector>
 #include <stdio.h>
 #include <sys/errno.h>

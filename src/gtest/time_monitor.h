@@ -4,7 +4,6 @@
 #pragma once
 
 #include "gtest/framework.h"
-#include <iosfwd>
 #include <str>
 #include <stddef.h>
 

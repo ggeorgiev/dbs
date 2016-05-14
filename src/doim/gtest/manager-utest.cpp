@@ -8,7 +8,6 @@
 #include "err/gtest/err_assert.h"
 #include "gtest/framework.h"
 #include <memory>
-#include <ostream>
 #include <stdexcept>
 #include <str>
 

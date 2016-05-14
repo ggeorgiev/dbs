@@ -10,7 +10,6 @@
 #include "doim/sys/command.h"
 #include "rtti/class_rtti.hpp"
 #include <memory>
-#include <sstream>
 #include <str>
 #include <unordered>
 

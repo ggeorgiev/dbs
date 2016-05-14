@@ -14,9 +14,10 @@
 #include <boost/filesystem/operations.hpp>
 #include "math/crc.hpp"
 #include <algorithm>
-#include <fstream>
+#include <fstream> // IWYU pragma: keep
 #include <iterator>
 #include <memory>
+#include <str>
 #include <string_view>
 #include <utility>
 #include <vector>

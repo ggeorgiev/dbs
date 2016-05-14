@@ -6,7 +6,6 @@
 #include "err/gtest/err.h"
 #include "gtest/framework.h"
 #include "gtest/intermittent.h"
-#include <ostream>
 #include <str>
 
 TEST(DatabaseTest, VERYSLOW_open)

@@ -2,7 +2,7 @@
 #include "err/err_serialize.h"
 #include "gtest/framework.h"
 #include <cstdio>
-#include <sstream>
+#include <str>
 
 struct SerialiazeBase
 {

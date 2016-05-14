@@ -22,7 +22,6 @@
 #include "rtti/class_rtti.hpp"
 #include "math/crc.hpp"
 #include <functional>
-#include <iosfwd>
 #include <str>
 #include <vector>
 

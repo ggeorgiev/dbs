@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include <iosfwd>
 #include <str>
 
 extern string kEmptyString;

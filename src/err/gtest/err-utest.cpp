@@ -3,7 +3,7 @@
 
 #include "err/err.h"
 #include "gtest/framework.h"
-#include <sstream>
+#include <str>
 
 ECode return0()
 {

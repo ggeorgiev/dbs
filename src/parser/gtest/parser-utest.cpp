@@ -11,7 +11,7 @@
 #include "gtest/framework.h"
 #include <limits>
 #include <shared_ptr>
-#include <sstream>
+#include <str>
 #include <stddef.h>
 
 template <typename T>

@@ -5,7 +5,6 @@
 
 #include "doim/base.hpp"
 #include "doim/fs/fs_directory.h"
-#include <iosfwd>
 #include <memory>
 #include <str>
 #include <tuple>

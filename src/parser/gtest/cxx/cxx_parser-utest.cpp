@@ -3,7 +3,7 @@
 
 #include "parser/cxx/cxx_parser.h"
 #include "gtest/framework.h"
-#include <ostream>
+#include <str>
 #include <stddef.h>
 
 template <typename T>

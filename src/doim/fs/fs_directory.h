@@ -4,7 +4,6 @@
 #pragma once
 
 #include "doim/base.hpp"
-#include <iostream>
 #include <memory>
 #include <str>
 #include <tuple>

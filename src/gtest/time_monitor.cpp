@@ -4,7 +4,7 @@
 #include "gtest/time_monitor.h"
 #include "gtest/framework.h"
 #include <limits>
-#include <ostream>
+#include <str>
 #include <string.h>
 
 namespace testing

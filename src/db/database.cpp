@@ -10,7 +10,6 @@
 #include <rocksdb/slice.h>
 #include <rocksdb/status.h>
 #include <functional>
-#include <sstream>
 
 namespace db
 {

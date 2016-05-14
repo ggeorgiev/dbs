@@ -11,6 +11,7 @@
 #include "gtest/time_monitor.h"
 #include <iostream>
 #include <memory>
+#include <str>
 #include <stdio.h>
 #include <sys/errno.h>
 #include <unistd.h>

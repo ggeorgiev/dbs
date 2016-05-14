@@ -14,9 +14,9 @@
 #include "doim/db/db_key.h"
 #include "doim/db/db_value.hpp"
 #include "doim/fs/fs_directory.h"
-#include <iosfwd>
 #include <map>
 #include <memory>
+#include <str>
 
 namespace engine
 {

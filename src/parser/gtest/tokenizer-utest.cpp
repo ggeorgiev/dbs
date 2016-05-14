@@ -8,7 +8,7 @@
 #include "gtest/framework.h"
 #include <bitset>
 #include <shared_ptr>
-#include <sstream>
+#include <str>
 
 template <typename T>
 class TokenizerTest : public ::testing::Test

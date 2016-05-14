@@ -6,8 +6,8 @@
 #include "doim/base.hpp"
 #include "doim/fs/fs_binary.h"
 #include "doim/fs/fs_file.h"
-#include <iosfwd>
 #include <memory>
+#include <str>
 
 namespace doim
 {

@@ -6,7 +6,6 @@
 #include "doim/base.hpp"
 #include "doim/sys/executable.h"
 #include "dp/simple_memoization.hpp"
-#include <iosfwd>
 #include <memory>
 #include <str>
 #include <tuple>

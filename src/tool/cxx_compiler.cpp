@@ -9,7 +9,6 @@
 #include "doim/sys/argument.h"
 #include "doim/sys/command.h"
 #include <memory>
-#include <sstream>
 #include <str>
 #include <unordered>
 
