@@ -10,7 +10,7 @@
 #include <mutex>
 #include <queue>
 #include <thread>
-#include <unordered_map>
+#include <unordered>
 
 namespace tpool
 {
@@ -20,7 +20,7 @@ typedef shared_ptr<Priority> PrioritySPtr;
 class Priority
 {
 public:
-    typedef std::unordered_map<PrioritySPtr, int> Map;
+    typedef unordered_map<PrioritySPtr, int> Map;
 
     Priority()
         : mValue(std::numeric_limits<int>::max())

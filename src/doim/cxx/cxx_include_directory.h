@@ -10,7 +10,6 @@
 #include <tuple>
 #include <type_traits>
 #include <unordered>
-#include <unordered_map>
 
 namespace doim
 {
@@ -67,6 +66,6 @@ public:
     CxxHeaderSPtr header(const FsFileSPtr& file) const;
 
 private:
-    std::unordered_map<FsFileSPtr, CxxHeaderSPtr> mFiles;
+    unordered_map<FsFileSPtr, CxxHeaderSPtr> mFiles;
 };
 }

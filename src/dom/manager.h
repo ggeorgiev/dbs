@@ -8,7 +8,7 @@
 #include "doim/generic/object.h"
 #include "im/initialization_manager.hpp"
 #include <shared_ptr>
-#include <unordered_map>
+#include <unordered>
 
 namespace dom
 {
@@ -22,7 +22,7 @@ public:
     typedef V Value;
     typedef shared_ptr<Value> ValueSPtr;
 
-    typedef std::unordered_map<KeySPtr, ValueSPtr> Map;
+    typedef unordered_map<KeySPtr, ValueSPtr> Map;
 
     ValueSPtr obtain(const shared_ptr<Key>& key)
     {

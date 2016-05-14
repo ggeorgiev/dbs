@@ -5,6 +5,7 @@
 #include "doim/cxx/cxx_header.h"
 #include "doim/manager.h"
 #include "err/err_assert.h"
+#include <unordered>
 #include <utility>
 
 namespace doim

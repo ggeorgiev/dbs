@@ -14,7 +14,7 @@
 #include <boost/thread/tss.hpp> // IWYU pragma: export
 #include <memory>
 #include <str>
-#include <unordered_map>
+#include <unordered>
 #include <vector>
 #include <stddef.h>
 
@@ -56,7 +56,7 @@ struct EnumHasher
     }
 };
 
-typedef std::unordered_map<ECode, const char*, EnumHasher> NameMap;
+typedef unordered_map<ECode, const char*, EnumHasher> NameMap;
 
 extern NameMap gNames;
 

@@ -11,7 +11,7 @@
 #include <boost/thread/locks.hpp>
 #include <boost/thread/shared_mutex.hpp>
 #include <tuple>
-#include <unordered_map>
+#include <unordered>
 
 namespace dp
 {
@@ -49,9 +49,9 @@ public:
         }
     };
 
-    typedef std::unordered_map<Tuple,
-                               std::pair<Value, std::vector<Handle::ControllerSPtr>>,
-                               Hasher>
+    typedef unordered_map<Tuple,
+                          std::pair<Value, std::vector<Handle::ControllerSPtr>>,
+                          Hasher>
         Map;
 
     Tuple key(const HandleSPtr& handle, Args... args)

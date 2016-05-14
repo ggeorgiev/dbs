@@ -26,7 +26,6 @@
 #include <str>
 #include <string_view>
 #include <unordered>
-#include <unordered_map>
 
 namespace doim
 {
@@ -185,7 +184,7 @@ public:
     using ManagerObjectSetMixin<Tag>::unique;
 
 private:
-    std::unordered_map<FsFileSPtr, CxxHeaderSPtr> mFile2CxxHeader;
+    unordered_map<FsFileSPtr, CxxHeaderSPtr> mFile2CxxHeader;
 };
 
 std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectory& directory);
