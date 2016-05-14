@@ -16,7 +16,7 @@
 namespace task
 {
 class ExecuteCommandTask;
-typedef std::shared_ptr<ExecuteCommandTask> ExecuteCommandTaskSPtr;
+typedef shared_ptr<ExecuteCommandTask> ExecuteCommandTaskSPtr;
 
 class ExecuteCommandTask
     : public Base<ExecuteCommandTask, doim::SysCommandSPtr, doim::FsDirectorySPtr>

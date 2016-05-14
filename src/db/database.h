@@ -7,6 +7,7 @@
 #include "im/initialization_manager.hpp"
 #include <rocksdb/db.h>
 #include <memory>
+#include <shared_ptr>
 #include <sstream>
 #include <string_view>
 
@@ -64,7 +65,7 @@ inline ECode Database::put(const string_view& key, const std::string& value)
     EHEnd;
 }
 
-typedef std::shared_ptr<Database> DatabaseSPtr;
+typedef shared_ptr<Database> DatabaseSPtr;
 
 extern DatabaseSPtr gDatabase;
 }

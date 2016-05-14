@@ -24,10 +24,10 @@ class ManagerObjectSetMixin : public ManagerObjectMixin<T>
 {
 public:
     typedef T MixinObject;
-    typedef std::shared_ptr<MixinObject> MixinObjectSPtr;
+    typedef shared_ptr<MixinObject> MixinObjectSPtr;
 
     typedef unordered_set<MixinObjectSPtr> MixinObjectSet;
-    typedef std::shared_ptr<MixinObjectSet> MixinObjectSetSPtr;
+    typedef shared_ptr<MixinObjectSet> MixinObjectSetSPtr;
 
     struct Hasher
     {

@@ -16,14 +16,14 @@ namespace tpool
 {
 class TPool;
 
-typedef std::shared_ptr<TPool> TPoolSPtr;
+typedef shared_ptr<TPool> TPoolSPtr;
 typedef std::weak_ptr<TPool> TPoolWPtr;
 
 class TPool : public std::enable_shared_from_this<TPool>
 {
 public:
     typedef std::thread Thread;
-    typedef std::shared_ptr<Thread> ThreadSPtr;
+    typedef shared_ptr<Thread> ThreadSPtr;
 
     typedef std::future<ECode> Future;
 

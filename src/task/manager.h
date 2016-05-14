@@ -23,7 +23,7 @@ class ManagerMixin
 {
 public:
     typedef T Task;
-    typedef std::shared_ptr<Task> TaskSPtr;
+    typedef shared_ptr<Task> TaskSPtr;
 
     typedef H Hasher;
 
@@ -75,7 +75,7 @@ public:
     using ManagerMixin<ParseStdoutTask>::valid;
 };
 
-typedef std::shared_ptr<Manager> ManagerSPtr;
+typedef shared_ptr<Manager> ManagerSPtr;
 
 extern ManagerSPtr gManager;
 }

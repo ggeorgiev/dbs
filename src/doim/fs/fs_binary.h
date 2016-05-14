@@ -11,7 +11,7 @@
 namespace doim
 {
 class FsBinary;
-typedef std::shared_ptr<FsBinary> FsBinarySPtr;
+typedef shared_ptr<FsBinary> FsBinarySPtr;
 
 class FsBinary : public Base<FsBinary, std::string>
 {

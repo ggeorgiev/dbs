@@ -17,14 +17,14 @@ class ManagerMixin
 {
 public:
     typedef K Key;
-    typedef std::shared_ptr<Key> KeySPtr;
+    typedef shared_ptr<Key> KeySPtr;
 
     typedef V Value;
-    typedef std::shared_ptr<Value> ValueSPtr;
+    typedef shared_ptr<Value> ValueSPtr;
 
     typedef std::unordered_map<KeySPtr, ValueSPtr> Map;
 
-    ValueSPtr obtain(const std::shared_ptr<Key>& key)
+    ValueSPtr obtain(const shared_ptr<Key>& key)
     {
         auto it = mMixinObjects.find(key);
         if (it == mMixinObjects.end())
@@ -60,7 +60,7 @@ public:
     }
 };
 
-typedef std::shared_ptr<Manager> ManagerSPtr;
+typedef shared_ptr<Manager> ManagerSPtr;
 
 extern ManagerSPtr gManager;
 }

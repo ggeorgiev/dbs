@@ -17,9 +17,9 @@ class FsDirectory;
 
 typedef FsDirectory* FsDirectoryRPtr;
 typedef FsDirectory const* FsDirectoryRCPtr;
-typedef std::shared_ptr<FsDirectory> FsDirectorySPtr;
+typedef shared_ptr<FsDirectory> FsDirectorySPtr;
 typedef unordered_set<FsDirectorySPtr> FsDirectorySet;
-typedef std::shared_ptr<FsDirectorySet> FsDirectorySetSPtr;
+typedef shared_ptr<FsDirectorySet> FsDirectorySetSPtr;
 
 class FsDirectory : public Base<FsDirectory, FsDirectorySPtr, std::string>
 {

@@ -12,7 +12,7 @@ namespace tpool
 {
 class TaskCallback;
 
-typedef std::shared_ptr<TaskCallback> TaskCallbackSPtr;
+typedef shared_ptr<TaskCallback> TaskCallbackSPtr;
 
 class TaskCallback : public enable_make_shared<TaskCallback>, public Task
 {

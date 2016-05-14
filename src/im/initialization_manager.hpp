@@ -4,6 +4,7 @@
 #pragma once
 
 #include <map>
+#include <shared_ptr>
 #include <vector>
 
 namespace im
@@ -52,7 +53,7 @@ public:
     }
 
     template <typename T>
-    static inline std::shared_ptr<T> subscribe(std::shared_ptr<T>& shared)
+    static inline shared_ptr<T> subscribe(shared_ptr<T>& shared)
     {
         add(T::initialization_rank(),
             [&shared]() -> bool {

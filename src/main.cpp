@@ -32,10 +32,10 @@
 #include <unistd.h>
 
 typedef parser::StringStream<char> Stream;
-typedef std::shared_ptr<Stream> StreamSPtr;
+typedef shared_ptr<Stream> StreamSPtr;
 
 typedef parser::Parser<Stream> Parser;
-typedef std::shared_ptr<Parser> ParserSPtr;
+typedef shared_ptr<Parser> ParserSPtr;
 
 ECode run(const doim::FsFileSPtr& dbsFile)
 {

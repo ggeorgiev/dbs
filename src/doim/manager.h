@@ -31,7 +31,7 @@
 namespace doim
 {
 class Manager;
-typedef std::shared_ptr<Manager> ManagerSPtr;
+typedef shared_ptr<Manager> ManagerSPtr;
 
 extern ManagerSPtr gManager;
 
@@ -64,15 +64,15 @@ public:
     }
 
     template <typename T, typename... Args>
-    static std::shared_ptr<T> global(const Args&... args, std::shared_ptr<T>& object)
+    static shared_ptr<T> global(const Args&... args, shared_ptr<T>& object)
     {
-        im::InitializationManager::subscribe<
-            std::shared_ptr<T>>(object_initialization_rank(),
-                                [&object]() -> bool {
-                                    object = gManager->unique(object);
-                                    return true;
-                                },
-                                nullptr);
+        im::InitializationManager::subscribe<shared_ptr<T>>(object_initialization_rank(),
+                                                            [&object]() -> bool {
+                                                                object = gManager->unique(
+                                                                    object);
+                                                                return true;
+                                                            },
+                                                            nullptr);
         return std::make_shared<T>(args...);
     }
 

@@ -14,7 +14,7 @@
 namespace doim
 {
 class DbValue;
-typedef std::shared_ptr<DbValue> DbValueSPtr;
+typedef shared_ptr<DbValue> DbValueSPtr;
 
 class DbValue : public Base<DbValue, std::string>
 {

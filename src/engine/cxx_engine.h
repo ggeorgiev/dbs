@@ -21,7 +21,7 @@
 namespace engine
 {
 class CxxEngine;
-typedef std::shared_ptr<CxxEngine> CxxEngineSPtr;
+typedef shared_ptr<CxxEngine> CxxEngineSPtr;
 
 class CxxEngine : public std::enable_shared_from_this<CxxEngine>
 {

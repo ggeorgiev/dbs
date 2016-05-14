@@ -19,10 +19,10 @@ class Parser
 {
 public:
     typedef S Stream;
-    typedef std::shared_ptr<Stream> StreamSPtr;
+    typedef shared_ptr<Stream> StreamSPtr;
 
     typedef Tokenizer<Stream> Tokenizer;
-    typedef std::shared_ptr<Tokenizer> TokenizerSPtr;
+    typedef shared_ptr<Tokenizer> TokenizerSPtr;
 
     typedef typename Tokenizer::Token Token;
 

@@ -17,7 +17,7 @@ namespace task
 {
 class DbPutTask;
 
-typedef std::shared_ptr<DbPutTask> DbPutTaskSPtr;
+typedef shared_ptr<DbPutTask> DbPutTaskSPtr;
 
 class DbPutTask : public Base<DbPutTask, doim::DbKeySPtr>
 {

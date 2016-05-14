@@ -14,9 +14,9 @@
 namespace doim
 {
 class CxxObjectFile;
-typedef std::shared_ptr<CxxObjectFile> CxxObjectFileSPtr;
+typedef shared_ptr<CxxObjectFile> CxxObjectFileSPtr;
 typedef unordered_set<CxxObjectFileSPtr> CxxObjectFileSet;
-typedef std::shared_ptr<CxxObjectFileSet> CxxObjectFileSetSPtr;
+typedef shared_ptr<CxxObjectFileSet> CxxObjectFileSetSPtr;
 
 namespace cof_details
 {

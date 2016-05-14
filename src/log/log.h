@@ -12,8 +12,8 @@
 #include <spdlog/details/line_logger_impl.h> // IWYU pragma: export
 #include <spdlog/details/logger_impl.h>      // IWYU pragma: export
 #include <spdlog/details/spdlog_impl.h>      // IWYU pragma: export
-
 #include <memory>
+#include <shared_ptr>
 
 namespace dbslog
 {
@@ -24,7 +24,7 @@ constexpr int initialization_rank()
 }
 
 typedef spdlog::logger DbsLogger;
-typedef std::shared_ptr<DbsLogger> DbsLoggerSPtr;
+typedef shared_ptr<DbsLogger> DbsLoggerSPtr;
 
 extern DbsLoggerSPtr gLogger;
 }

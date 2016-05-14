@@ -12,7 +12,7 @@
 namespace doim
 {
 class SysExecutable;
-typedef std::shared_ptr<SysExecutable> SysExecutableSPtr;
+typedef shared_ptr<SysExecutable> SysExecutableSPtr;
 
 class SysExecutable : public Base<SysExecutable, doim::FsFileSPtr, doim::FsBinarySPtr>
 {

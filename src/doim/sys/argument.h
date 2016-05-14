@@ -13,9 +13,9 @@
 namespace doim
 {
 class SysArgument;
-typedef std::shared_ptr<SysArgument> SysArgumentSPtr;
+typedef shared_ptr<SysArgument> SysArgumentSPtr;
 typedef unordered_set<SysArgumentSPtr> SysArgumentSet;
-typedef std::shared_ptr<SysArgumentSet> SysArgumentSetSPtr;
+typedef shared_ptr<SysArgumentSet> SysArgumentSetSPtr;
 
 class SysArgument : public Base<SysArgument, std::string>
 {

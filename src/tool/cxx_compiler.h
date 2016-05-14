@@ -14,7 +14,7 @@
 namespace tool
 {
 class CxxCompiler;
-typedef std::shared_ptr<CxxCompiler> CxxCompilerSPtr;
+typedef shared_ptr<CxxCompiler> CxxCompilerSPtr;
 
 class CxxCompiler : public std::enable_shared_from_this<CxxCompiler>
 {

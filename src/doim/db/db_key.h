@@ -12,7 +12,7 @@
 namespace doim
 {
 class DbKey;
-typedef std::shared_ptr<DbKey> DbKeySPtr;
+typedef shared_ptr<DbKey> DbKeySPtr;
 
 class DbKey : public Base<DbKey, DbKeySPtr, std::string>
 {

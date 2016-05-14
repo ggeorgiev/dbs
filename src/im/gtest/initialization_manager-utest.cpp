@@ -16,7 +16,7 @@ public:
     }
 };
 
-typedef std::shared_ptr<GlobalObject> GlobalObjectSPtr;
+typedef shared_ptr<GlobalObject> GlobalObjectSPtr;
 GlobalObjectSPtr gObjectSPtr = im::InitializationManager::subscribe(gObjectSPtr);
 
 TEST(InitializationManagerTest, shared)

@@ -12,9 +12,9 @@
 namespace doim
 {
 class CxxStaticLibrary;
-typedef std::shared_ptr<CxxStaticLibrary> CxxStaticLibrarySPtr;
+typedef shared_ptr<CxxStaticLibrary> CxxStaticLibrarySPtr;
 typedef unordered_set<CxxStaticLibrarySPtr> CxxStaticLibrarySet;
-typedef std::shared_ptr<CxxStaticLibrarySet> CxxStaticLibrarySetSPtr;
+typedef shared_ptr<CxxStaticLibrarySet> CxxStaticLibrarySetSPtr;
 
 class CxxStaticLibrary : public Base<CxxStaticLibrary, FsFileSPtr>
 {

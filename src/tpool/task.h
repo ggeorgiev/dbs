@@ -24,7 +24,7 @@ namespace tpool
 {
 class Task;
 
-typedef std::shared_ptr<Task> TaskSPtr;
+typedef shared_ptr<Task> TaskSPtr;
 
 class Task
 {

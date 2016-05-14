@@ -11,7 +11,7 @@ namespace task
 {
 class TPool;
 
-typedef std::shared_ptr<TPool> TPoolSPtr;
+typedef shared_ptr<TPool> TPoolSPtr;
 
 class TPool : public tpool::TPool
 {

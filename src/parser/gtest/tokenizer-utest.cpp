@@ -15,7 +15,7 @@ class TokenizerTest : public ::testing::Test
 {
 public:
     typedef T Tokenizer;
-    typedef std::shared_ptr<Tokenizer> TokenizerSPtr;
+    typedef shared_ptr<Tokenizer> TokenizerSPtr;
 
     typedef typename Tokenizer::Stream Stream;
     typedef typename Tokenizer::StreamSPtr StreamSPtr;

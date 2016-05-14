@@ -80,15 +80,14 @@ public:
             mutable std::size_t mSeed;
         };
 
-        std::size_t operator()(const std::shared_ptr<T>& object) const
+        std::size_t operator()(const shared_ptr<T>& object) const
         {
             HashItem hashItem(mClassIdHasher(T::classId()));
             boost::fusion::for_each(object->mArgs, hashItem);
             return hashItem.mSeed;
         }
 
-        bool operator()(const std::shared_ptr<T>& object1,
-                        const std::shared_ptr<T>& object2) const
+        bool operator()(const shared_ptr<T>& object1, const shared_ptr<T>& object2) const
         {
             return object1->mArgs == object2->mArgs;
         }

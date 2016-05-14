@@ -21,7 +21,7 @@ public:
     bool isVisible(const doim::TagSet& tags);
 };
 
-typedef std::shared_ptr<Verbose> VerboseSPtr;
+typedef shared_ptr<Verbose> VerboseSPtr;
 
 extern VerboseSPtr gVerbose;
 }

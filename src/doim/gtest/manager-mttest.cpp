@@ -17,7 +17,7 @@ TEST(ManagerTest, mt_unique)
     size_t count = 10;
 
     boost::barrier barrier(count);
-    std::vector<std::shared_ptr<std::thread>> threads;
+    std::vector<shared_ptr<std::thread>> threads;
 
     std::unique_ptr<doim::TagSPtr[]> tags(new doim::TagSPtr[count]);
 
@@ -43,7 +43,7 @@ TEST(ManagerTest, mt_unique_set)
     size_t count = 10;
 
     boost::barrier barrier(count);
-    std::vector<std::shared_ptr<std::thread>> threads;
+    std::vector<shared_ptr<std::thread>> threads;
 
     std::unique_ptr<doim::TagSetSPtr[]> tagSets(new doim::TagSetSPtr[count]);
 
@@ -72,7 +72,7 @@ TEST(ManagerTest, mt_addSameObject)
     size_t count = 10;
 
     boost::barrier barrier(count);
-    std::vector<std::shared_ptr<std::thread>> threads;
+    std::vector<shared_ptr<std::thread>> threads;
 
     std::unique_ptr<doim::FsDirectorySPtr[]> directories(
         new doim::FsDirectorySPtr[count]);

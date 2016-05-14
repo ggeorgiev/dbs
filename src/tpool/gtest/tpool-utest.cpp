@@ -15,7 +15,7 @@ class TPoolTest : public ::testing::Test
 {
 public:
     typedef T TPool;
-    typedef std::shared_ptr<TPool> TPoolSPtr;
+    typedef shared_ptr<TPool> TPoolSPtr;
 };
 
 typedef ::testing::Types<tpool::TPool> TPoolType;

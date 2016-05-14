@@ -15,7 +15,7 @@ namespace task
 {
 class EnsureDirectoryTask;
 
-typedef std::shared_ptr<EnsureDirectoryTask> EnsureDirectoryTaskSPtr;
+typedef shared_ptr<EnsureDirectoryTask> EnsureDirectoryTaskSPtr;
 
 class EnsureDirectoryTask : public Base<EnsureDirectoryTask, doim::FsDirectorySPtr>
 {

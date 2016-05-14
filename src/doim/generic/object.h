@@ -31,9 +31,9 @@ enum class EType
 }
 
 class Object;
-typedef std::shared_ptr<Object> ObjectSPtr;
+typedef shared_ptr<Object> ObjectSPtr;
 typedef unordered_set<ObjectSPtr> ObjectSet;
-typedef std::shared_ptr<ObjectSet> ObjectSetSPtr;
+typedef shared_ptr<ObjectSet> ObjectSetSPtr;
 
 class Object : public Base<Object,
                            std::underlying_type<o_details::EType>::type,

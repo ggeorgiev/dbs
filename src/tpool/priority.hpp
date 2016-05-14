@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -15,7 +15,7 @@
 namespace tpool
 {
 class Priority;
-typedef std::shared_ptr<Priority> PrioritySPtr;
+typedef shared_ptr<Priority> PrioritySPtr;
 
 class Priority
 {

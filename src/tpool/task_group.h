@@ -12,12 +12,12 @@ namespace tpool
 {
 class TPool;
 
-typedef std::shared_ptr<TPool> TPoolSPtr;
+typedef shared_ptr<TPool> TPoolSPtr;
 typedef std::weak_ptr<TPool> TPoolWPtr;
 
 class TaskGroup;
 
-typedef std::shared_ptr<TaskGroup> TaskGroupSPtr;
+typedef shared_ptr<TaskGroup> TaskGroupSPtr;
 
 class TaskGroup : public enable_make_shared<TaskGroup>, public Task
 {

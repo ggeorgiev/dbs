@@ -15,9 +15,9 @@
 namespace doim
 {
 class CxxProgram;
-typedef std::shared_ptr<CxxProgram> CxxProgramSPtr;
+typedef shared_ptr<CxxProgram> CxxProgramSPtr;
 typedef unordered_set<CxxProgramSPtr> CxxProgramSet;
-typedef std::shared_ptr<CxxProgramSet> CxxProgramSetSPtr;
+typedef shared_ptr<CxxProgramSet> CxxProgramSetSPtr;
 
 namespace cp_details
 {

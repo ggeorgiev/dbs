@@ -24,7 +24,7 @@ class ManagerObjectMixin
 {
 public:
     typedef T MixinObject;
-    typedef std::shared_ptr<MixinObject> MixinObjectSPtr;
+    typedef shared_ptr<MixinObject> MixinObjectSPtr;
     typedef typename MixinObject::Hasher Hasher;
     typedef unordered_set<MixinObjectSPtr, Hasher, Hasher> Set;
 

@@ -10,7 +10,7 @@
 namespace dp
 {
 class Handle;
-typedef std::shared_ptr<Handle> HandleSPtr;
+typedef shared_ptr<Handle> HandleSPtr;
 typedef std::weak_ptr<Handle> HandleWPtr;
 
 class Handle
@@ -33,7 +33,7 @@ public:
         HandleWPtr mHandle;
     };
 
-    typedef std::shared_ptr<Controller> ControllerSPtr;
+    typedef shared_ptr<Controller> ControllerSPtr;
     typedef std::function<void()> ClearFunction;
 
     static HandleSPtr create(const ClearFunction& function)

@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -16,7 +16,7 @@ class Tokenizer
 {
 public:
     typedef S Stream;
-    typedef std::shared_ptr<Stream> StreamSPtr;
+    typedef shared_ptr<Stream> StreamSPtr;
 
     typedef typename Stream::String String;
 
@@ -24,7 +24,7 @@ public:
     typedef typename Stream::Code Code;
 
     typedef Token<Code> Token;
-    typedef std::shared_ptr<Token> TokenSPtr;
+    typedef shared_ptr<Token> TokenSPtr;
 
     typedef typename Token::Type Type;
 

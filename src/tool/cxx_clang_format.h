@@ -13,7 +13,7 @@
 namespace tool
 {
 class CxxClangFormat;
-typedef std::shared_ptr<CxxClangFormat> CxxClangFormatSPtr;
+typedef shared_ptr<CxxClangFormat> CxxClangFormatSPtr;
 
 class CxxClangFormat : public std::enable_shared_from_this<CxxClangFormat>
 {

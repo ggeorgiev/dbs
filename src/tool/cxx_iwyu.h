@@ -12,7 +12,7 @@
 namespace tool
 {
 class CxxIwyu;
-typedef std::shared_ptr<CxxIwyu> CxxIwyuSPtr;
+typedef shared_ptr<CxxIwyu> CxxIwyuSPtr;
 
 class CxxIwyu
 {

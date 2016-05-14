@@ -17,7 +17,7 @@ namespace task
 {
 class CxxFileCrcTask;
 
-typedef std::shared_ptr<CxxFileCrcTask> CxxFileCrcTaskSPtr;
+typedef shared_ptr<CxxFileCrcTask> CxxFileCrcTaskSPtr;
 
 class CxxFileCrcTask : public CxxCrcTaskMixin,
                        public Base<CxxFileCrcTask, doim::CxxFileSPtr>

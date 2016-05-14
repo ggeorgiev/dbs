@@ -20,7 +20,7 @@ class ParserTest : public ::testing::Test
 {
 public:
     typedef T Parser;
-    typedef std::shared_ptr<Parser> ParserSPtr;
+    typedef shared_ptr<Parser> ParserSPtr;
 
     typedef typename Parser::Stream Stream;
     typedef typename Parser::StreamSPtr StreamSPtr;

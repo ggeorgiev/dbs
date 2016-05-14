@@ -24,9 +24,9 @@ struct Attribute;
 namespace dom
 {
 class CxxLibrary;
-typedef std::shared_ptr<CxxLibrary> CxxLibrarySPtr;
+typedef shared_ptr<CxxLibrary> CxxLibrarySPtr;
 typedef unordered_set<CxxLibrarySPtr> CxxLibrarySet;
-typedef std::shared_ptr<CxxLibrarySet> CxxLibrarySetSPtr;
+typedef shared_ptr<CxxLibrarySet> CxxLibrarySetSPtr;
 
 class CxxLibrary : public enable_make_shared<CxxLibrary>,
                    public CxxFilesMixin<CxxLibrary>,
@@ -119,7 +119,7 @@ private:
                             doim::CxxIncludeDirectorySetSPtr,
                             doim::FsDirectorySPtr>
         RecursiveCxxIncludeDirectoriesMemoization;
-    typedef std::shared_ptr<RecursiveCxxIncludeDirectoriesMemoization>
+    typedef shared_ptr<RecursiveCxxIncludeDirectoriesMemoization>
         RecursiveCxxIncludeDirectoriesMemoizationSPtr;
 
     dp::HandleSPtr mMemoizationHandle;

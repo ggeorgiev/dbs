@@ -14,12 +14,12 @@
 namespace doim
 {
 class SysArgument;
-typedef std::shared_ptr<SysArgument> SysArgumentSPtr;
+typedef shared_ptr<SysArgument> SysArgumentSPtr;
 typedef unordered_set<SysArgumentSPtr> SysArgumentSet;
-typedef std::shared_ptr<SysArgumentSet> SysArgumentSetSPtr;
+typedef shared_ptr<SysArgumentSet> SysArgumentSetSPtr;
 
 class SysCommand;
-typedef std::shared_ptr<SysCommand> SysCommandSPtr;
+typedef shared_ptr<SysCommand> SysCommandSPtr;
 
 class SysCommand : public Base<SysCommand, SysExecutableSPtr, SysArgumentSetSPtr>
 {

@@ -17,7 +17,7 @@
 namespace task
 {
 class ParseStdoutTask;
-typedef std::shared_ptr<ParseStdoutTask> ParseStdoutTaskSPtr;
+typedef shared_ptr<ParseStdoutTask> ParseStdoutTaskSPtr;
 
 class ParseStdoutTask : public Base<ParseStdoutTask,
                                     doim::SysCommandSPtr,

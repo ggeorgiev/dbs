@@ -21,7 +21,7 @@ namespace dom
 {
 class CxxProgram;
 
-typedef std::shared_ptr<CxxProgram> CxxProgramSPtr;
+typedef shared_ptr<CxxProgram> CxxProgramSPtr;
 
 class CxxProgram : public enable_make_shared<CxxProgram>,
                    public CxxFilesMixin<CxxProgram>,

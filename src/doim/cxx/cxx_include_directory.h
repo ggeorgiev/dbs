@@ -16,15 +16,15 @@ namespace doim
 {
 class CxxHeader;
 
-typedef std::shared_ptr<CxxHeader> CxxHeaderSPtr;
+typedef shared_ptr<CxxHeader> CxxHeaderSPtr;
 typedef unordered_set<CxxHeaderSPtr> CxxHeaderSet;
-typedef std::shared_ptr<CxxHeaderSet> CxxHeaderSetSPtr;
+typedef shared_ptr<CxxHeaderSet> CxxHeaderSetSPtr;
 
 class CxxIncludeDirectory;
 
-typedef std::shared_ptr<CxxIncludeDirectory> CxxIncludeDirectorySPtr;
+typedef shared_ptr<CxxIncludeDirectory> CxxIncludeDirectorySPtr;
 typedef unordered_set<CxxIncludeDirectorySPtr> CxxIncludeDirectorySet;
-typedef std::shared_ptr<CxxIncludeDirectorySet> CxxIncludeDirectorySetSPtr;
+typedef shared_ptr<CxxIncludeDirectorySet> CxxIncludeDirectorySetSPtr;
 
 namespace cid_details
 {
