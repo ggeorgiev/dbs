@@ -42,5 +42,6 @@ cxx_library stl
 
         # wrapper
         string_view
+        shared_ptr
     ;
 ;

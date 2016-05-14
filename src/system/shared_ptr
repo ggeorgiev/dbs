@@ -1,0 +1,19 @@
+//  Copyright © 2016 George Georgiev. All rights reserved.
+//
+
+#pragma once
+
+#include <memory> // IWYU pragma: export
+
+template<typename T>
+using shared_ptr = std::shared_ptr<T>;
+
+template <typename T>
+struct enable_make_shared
+{
+    template <typename... Args>
+    static std::shared_ptr<T> make(const Args&... args)
+    {
+        return std::make_shared<T>(args...);
+    }
+};

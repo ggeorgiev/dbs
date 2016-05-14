@@ -6,6 +6,7 @@
 #include "doim/manager.h"
 #include "err/err.h"
 #include <functional>
+#include <shared_ptr>
 #include <sstream>
 #include <string>
 #include <unordered_set>
@@ -55,7 +56,7 @@ ECode CxxLibrary::updateCxxPublicHeaders(const doim::FsDirectorySPtr& directory,
     resetRecursiveCxxIncludeDirectoriesMemoization();
 
     mPublicHeadersDirectory = directory;
-    mCxxPublicHeaders = std::make_shared<doim::FsFileSet>();
+    mCxxPublicHeaders = doim::FsFileSet::make();
     mCxxPublicHeaders->swap(files);
     EHEnd;
 }
@@ -120,7 +121,7 @@ doim::CxxIncludeDirectorySPtr CxxLibrary::cxxPublicIncludeDirectory(
 doim::CxxIncludeDirectorySetSPtr CxxLibrary::sublibraryCxxIncludeDirectories(
     const doim::FsDirectorySPtr& root) const
 {
-    auto directories = std::make_shared<doim::CxxIncludeDirectorySet>();
+    auto directories = doim::CxxIncludeDirectorySet::make();
 
     for (const auto& cxxLibrary : mCxxLibraries)
     {
@@ -134,7 +135,7 @@ doim::CxxIncludeDirectorySetSPtr CxxLibrary::sublibraryCxxIncludeDirectories(
 doim::CxxIncludeDirectorySetSPtr CxxLibrary::indirectCxxIncludeDirectories(
     const doim::FsDirectorySPtr& root) const
 {
-    auto directories = std::make_shared<doim::CxxIncludeDirectorySet>();
+    auto directories = doim::CxxIncludeDirectorySet::make();
 
     const auto& publicDirectory = cxxPublicIncludeDirectory(root);
     if (publicDirectory != nullptr)
@@ -154,7 +155,7 @@ doim::CxxIncludeDirectorySetSPtr CxxLibrary::recursiveCxxIncludeDirectories(
 {
     auto fn = [this](doim::FsDirectorySPtr root,
                      std::vector<dp::Handle::ControllerSPtr>& dependencies) {
-        auto directories = std::make_shared<doim::CxxIncludeDirectorySet>();
+        auto directories = doim::CxxIncludeDirectorySet::make();
 
         const auto& privateDirectory = cxxPrivateIncludeDirectory(root);
         if (privateDirectory != nullptr)
@@ -179,7 +180,7 @@ doim::CxxIncludeDirectorySetSPtr CxxLibrary::recursiveCxxIncludeDirectories(
 doim::CxxHeaderSetSPtr CxxLibrary::publicCxxHeaders(
     const doim::FsDirectorySPtr& root) const
 {
-    auto headers = std::make_shared<doim::CxxHeaderSet>();
+    auto headers = doim::CxxHeaderSet::make();
 
     if (mCxxPublicHeaders != nullptr)
     {
@@ -197,7 +198,7 @@ doim::CxxHeaderSetSPtr CxxLibrary::publicCxxHeaders(
 doim::CxxHeaderSetSPtr CxxLibrary::indirectCxxHeaders(
     const doim::FsDirectorySPtr& root) const
 {
-    auto headers = std::make_shared<doim::CxxHeaderSet>();
+    auto headers = doim::CxxHeaderSet::make();
 
     const auto& publicHeaders = publicCxxHeaders(root);
     if (publicHeaders != nullptr)
@@ -214,7 +215,7 @@ doim::CxxHeaderSetSPtr CxxLibrary::indirectCxxHeaders(
 doim::CxxHeaderSetSPtr CxxLibrary::recursiveCxxHeaders(
     const doim::FsDirectorySPtr& root) const
 {
-    auto headers = std::make_shared<doim::CxxHeaderSet>();
+    auto headers = doim::CxxHeaderSet::make();
 
     const auto& publicHeaders = publicCxxHeaders(root);
     if (publicHeaders != nullptr)

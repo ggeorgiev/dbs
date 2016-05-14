@@ -7,6 +7,7 @@
 #include <boost/fusion/adapted/std_tuple.hpp>
 #include <boost/fusion/algorithm.hpp>
 #include <memory>
+#include <shared_ptr>
 #include <string_view>
 #include <tuple>
 #include <unordered_map>
@@ -16,16 +17,10 @@
 namespace doim
 {
 template <typename T, typename... Args>
-class Base
+class Base : public enable_make_shared<T>
 {
 public:
     typedef std::tuple<Args...> Tuple;
-
-    template <typename... MakeArgs>
-    static std::shared_ptr<T> make(const MakeArgs&... args)
-    {
-        return std::make_shared<T>(args...);
-    }
 
     Base(const Args&... args)
         : mArgs(args...)
@@ -71,5 +66,11 @@ public:
 
 protected:
     Tuple mArgs;
+};
+
+template <typename T>
+struct SetBase : public enable_make_shared<SetBase<T>>, public std::unordered_set<T>
+{
+    using std::unordered_set<T>::unordered_set;
 };
 }

@@ -15,7 +15,7 @@ namespace doim
 {
 class FsFile;
 typedef std::shared_ptr<FsFile> FsFileSPtr;
-typedef std::unordered_set<FsFileSPtr> FsFileSet;
+typedef SetBase<FsFileSPtr> FsFileSet;
 typedef std::shared_ptr<FsFileSet> FsFileSetSPtr;
 
 class FsFile : public Base<FsFile, FsDirectorySPtr, std::string>

@@ -26,7 +26,7 @@ public:
     typedef T MixinObject;
     typedef std::shared_ptr<MixinObject> MixinObjectSPtr;
 
-    typedef std::unordered_set<MixinObjectSPtr> MixinObjectSet;
+    typedef SetBase<MixinObjectSPtr> MixinObjectSet;
     typedef std::shared_ptr<MixinObjectSet> MixinObjectSetSPtr;
 
     struct Hasher

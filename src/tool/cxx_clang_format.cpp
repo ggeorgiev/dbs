@@ -27,7 +27,7 @@ CxxClangFormat::CxxClangFormat(const doim::SysExecutableSPtr& formatter)
 tpool::TaskSPtr CxxClangFormat::formatCommand(const doim::FsDirectorySPtr& directory,
                                               const doim::CxxFileSPtr& cxxFile) const
 {
-    auto arguments = std::make_shared<doim::SysArgumentSet>();
+    auto arguments = doim::SysArgumentSet::make();
     arguments->insert(gSortIncludesArgument);
 
     const std::string& file = cxxFile->file()->path(directory);

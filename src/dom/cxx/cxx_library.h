@@ -13,7 +13,7 @@
 #include "dp/map_container.hpp"
 #include "dp/memoization.hpp"
 #include "err/err.h"
-#include <memory>
+#include <shared_ptr>
 #include <unordered_set>
 
 namespace dom
@@ -27,7 +27,8 @@ class CxxLibrary;
 
 typedef std::shared_ptr<CxxLibrary> CxxLibrarySPtr;
 
-class CxxLibrary : public CxxFilesMixin<CxxLibrary>,
+class CxxLibrary : public enable_make_shared<CxxLibrary>,
+                   public CxxFilesMixin<CxxLibrary>,
                    public CxxPrivateHeadersMixin<CxxLibrary>
 {
 public:

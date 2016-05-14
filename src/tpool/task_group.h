@@ -5,7 +5,7 @@
 
 #include "tpool/task.h"
 #include "err/err.h"
-#include <memory>
+#include <shared_ptr>
 #include <vector>
 
 namespace tpool
@@ -19,15 +19,9 @@ class TaskGroup;
 
 typedef std::shared_ptr<TaskGroup> TaskGroupSPtr;
 
-class TaskGroup : public Task
+class TaskGroup : public enable_make_shared<TaskGroup>, public Task
 {
 public:
-    template <typename... MakeArgs>
-    static std::shared_ptr<TaskGroup> make(const MakeArgs&... args)
-    {
-        return std::make_shared<TaskGroup>(args...);
-    }
-
     TaskGroup(const TPoolSPtr& pool, int priority, const std::vector<TaskSPtr>& tasks);
     virtual ~TaskGroup();
 

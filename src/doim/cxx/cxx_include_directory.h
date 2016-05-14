@@ -10,20 +10,19 @@
 #include <tuple>
 #include <type_traits>
 #include <unordered_map>
-#include <unordered_set>
 
 namespace doim
 {
 class CxxHeader;
 
 typedef std::shared_ptr<CxxHeader> CxxHeaderSPtr;
-typedef std::unordered_set<CxxHeaderSPtr> CxxHeaderSet;
+typedef SetBase<CxxHeaderSPtr> CxxHeaderSet;
 typedef std::shared_ptr<CxxHeaderSet> CxxHeaderSetSPtr;
 
 class CxxIncludeDirectory;
 
 typedef std::shared_ptr<CxxIncludeDirectory> CxxIncludeDirectorySPtr;
-typedef std::unordered_set<CxxIncludeDirectorySPtr> CxxIncludeDirectorySet;
+typedef SetBase<CxxIncludeDirectorySPtr> CxxIncludeDirectorySet;
 typedef std::shared_ptr<CxxIncludeDirectorySet> CxxIncludeDirectorySetSPtr;
 
 namespace cid_details

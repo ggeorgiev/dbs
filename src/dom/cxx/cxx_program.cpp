@@ -39,10 +39,10 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
     const doim::FsDirectorySPtr& root,
     const doim::FsDirectorySPtr& intermediate) const
 {
-    auto objectFiles = std::make_shared<doim::CxxObjectFileSet>();
+    auto objectFiles = doim::CxxObjectFileSet::make();
     *objectFiles = cxxObjectFiles(objectPurpose(purpose), root, intermediate);
 
-    auto staticLibraries = std::make_shared<doim::CxxStaticLibrarySet>();
+    auto staticLibraries = doim::CxxStaticLibrarySet::make();
 
     auto libraries = recursiveCxxLibraries();
 
@@ -84,7 +84,7 @@ std::unordered_set<CxxLibrarySPtr> CxxProgram::recursiveCxxLibraries() const
 doim::CxxIncludeDirectorySetSPtr CxxProgram::recursiveCxxIncludeDirectories(
     const doim::FsDirectorySPtr& root) const
 {
-    auto directories = std::make_shared<doim::CxxIncludeDirectorySet>();
+    auto directories = doim::CxxIncludeDirectorySet::make();
 
     for (const auto& cxxLibrary : mCxxLibraries)
     {
@@ -97,7 +97,7 @@ doim::CxxIncludeDirectorySetSPtr CxxProgram::recursiveCxxIncludeDirectories(
 
 doim::CxxHeaderSetSPtr CxxProgram::cxxHeaders(const doim::FsDirectorySPtr& root) const
 {
-    auto headers = std::make_shared<doim::CxxHeaderSet>();
+    auto headers = doim::CxxHeaderSet::make();
     for (const auto& cxxLibrary : mCxxLibraries)
     {
         const auto& libHeaders = cxxLibrary->recursiveCxxHeaders(root);

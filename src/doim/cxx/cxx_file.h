@@ -14,7 +14,7 @@ namespace doim
 {
 class CxxFile;
 typedef std::shared_ptr<CxxFile> CxxFileSPtr;
-typedef std::unordered_set<CxxFileSPtr> CxxFileSet;
+typedef SetBase<CxxFileSPtr> CxxFileSet;
 typedef std::shared_ptr<CxxFileSet> CxxFileSetSPtr;
 
 class CxxFile : public Base<CxxFile, FsFileSPtr, CxxIncludeDirectorySetSPtr>

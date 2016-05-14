@@ -57,12 +57,11 @@ public:
         return cxxFiles;
     }
 
-    std::unordered_set<doim::CxxObjectFileSPtr> cxxObjectFiles(
-        doim::CxxObjectFile::EPurpose purpose,
-        const doim::FsDirectorySPtr& root,
-        const doim::FsDirectorySPtr& intermediate) const
+    doim::CxxObjectFileSet cxxObjectFiles(doim::CxxObjectFile::EPurpose purpose,
+                                          const doim::FsDirectorySPtr& root,
+                                          const doim::FsDirectorySPtr& intermediate) const
     {
-        std::unordered_set<doim::CxxObjectFileSPtr> cxxObjectFiles;
+        doim::CxxObjectFileSet cxxObjectFiles;
 
         const auto& files = cxxFiles(root);
 
@@ -84,6 +83,6 @@ public:
     }
 
 private:
-    std::unordered_set<doim::FsFileSPtr> mCxxFilesList;
+    doim::FsFileSet mCxxFilesList;
 };
 }

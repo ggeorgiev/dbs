@@ -29,7 +29,7 @@ public:
         auto it = mMixinObjects.find(key);
         if (it == mMixinObjects.end())
         {
-            auto value = typename Map::value_type(key, std::make_shared<Value>());
+            auto value = typename Map::value_type(key, Value::make());
             it = mMixinObjects.insert(value).first;
         }
         return it->second;

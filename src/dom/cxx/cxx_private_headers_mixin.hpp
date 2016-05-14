@@ -24,7 +24,7 @@ public:
                                   std::unordered_set<doim::FsFileSPtr>& files)
     {
         mPrivateHeadersDirectory = directory;
-        mCxxPrivateHeaders = std::make_shared<doim::FsFileSet>();
+        mCxxPrivateHeaders = doim::FsFileSet::make();
         mCxxPrivateHeaders->swap(files);
         EHEnd;
     }
@@ -56,7 +56,7 @@ public:
 
     doim::CxxHeaderSetSPtr privateCxxHeaders(const doim::FsDirectorySPtr& root) const
     {
-        auto headers = std::make_shared<doim::CxxHeaderSet>();
+        auto headers = doim::CxxHeaderSet::make();
 
         if (mCxxPrivateHeaders != nullptr)
         {

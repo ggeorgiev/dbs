@@ -13,7 +13,7 @@
 #include "err/err.h"
 #include <algorithm>
 #include <iosfwd>
-#include <memory>
+#include <shared_ptr>
 #include <unordered_set>
 #include <vector>
 
@@ -23,7 +23,8 @@ class CxxProgram;
 
 typedef std::shared_ptr<CxxProgram> CxxProgramSPtr;
 
-class CxxProgram : public CxxFilesMixin<CxxProgram>,
+class CxxProgram : public enable_make_shared<CxxProgram>,
+                   public CxxFilesMixin<CxxProgram>,
                    public CxxPrivateHeadersMixin<CxxProgram>
 {
 public:

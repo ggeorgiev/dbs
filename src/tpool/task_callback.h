@@ -6,7 +6,7 @@
 #include "tpool/task.h"
 #include "err/err.h"
 #include <functional>
-#include <memory>
+#include <shared_ptr>
 
 namespace tpool
 {
@@ -14,15 +14,9 @@ class TaskCallback;
 
 typedef std::shared_ptr<TaskCallback> TaskCallbackSPtr;
 
-class TaskCallback : public Task
+class TaskCallback : public enable_make_shared<TaskCallback>, public Task
 {
 public:
-    template <typename... MakeArgs>
-    static std::shared_ptr<TaskCallback> make(const MakeArgs&... args)
-    {
-        return std::make_shared<TaskCallback>(args...);
-    }
-
     typedef std::function<ECode(const TaskSPtr&)> Function;
 
     TaskCallback(int priority,

@@ -169,7 +169,7 @@ public:
 
     SysArgumentSetSPtr obtainArguments(const SysArgumentSPtr argument)
     {
-        auto arguments = std::make_shared<SysArgumentSet>();
+        auto arguments = SysArgumentSet::make();
         arguments->insert(argument);
         return unique(arguments);
     }

@@ -33,10 +33,9 @@ public:
         mFsUser1H = doim::gManager->obtainFile(mCxxDirectory, "user1.h");
         mFsUser2H = doim::gManager->obtainFile(mCxxDirectory, "user2.h");
 
-        mEmptyCxxHeaderSet =
-            doim::gManager->unique(std::make_shared<doim::CxxHeaderSet>());
+        mEmptyCxxHeaderSet = doim::gManager->unique(doim::CxxHeaderSet::make());
         mEmptyCxxIncludeDirectorySet =
-            doim::gManager->unique(std::make_shared<doim::CxxIncludeDirectorySet>());
+            doim::gManager->unique(doim::CxxIncludeDirectorySet::make());
     }
 
     void TearDown()
@@ -72,7 +71,7 @@ TEST_F(CxxFileCrcTaskTest, notFoundInclude)
                                         mEmptyCxxHeaderSet);
     cxxIncludeDirectory = doim::gManager->unique(cxxIncludeDirectory);
 
-    auto cxxIncludeDirectories = std::make_shared<doim::CxxIncludeDirectorySet>();
+    auto cxxIncludeDirectories = doim::CxxIncludeDirectorySet::make();
     cxxIncludeDirectories->insert(cxxIncludeDirectory);
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
 
@@ -95,7 +94,7 @@ TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
                                                      mFsUser2H,
                                                      mEmptyCxxIncludeDirectorySet));
 
-    auto cxxHeaders = std::make_shared<doim::CxxHeaderSet>();
+    auto cxxHeaders = doim::CxxHeaderSet::make();
     cxxHeaders->insert(cxxHeader1);
     cxxHeaders->insert(cxxHeader2);
     cxxHeaders = doim::gManager->unique(cxxHeaders);
@@ -106,7 +105,7 @@ TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
                                         cxxHeaders);
     cxxIncludeDirectory = doim::gManager->unique(cxxIncludeDirectory);
 
-    auto cxxIncludeDirectories = std::make_shared<doim::CxxIncludeDirectorySet>();
+    auto cxxIncludeDirectories = doim::CxxIncludeDirectorySet::make();
     cxxIncludeDirectories->insert(cxxIncludeDirectory);
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
 
@@ -130,7 +129,7 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
                                                      mFsUser2H,
                                                      mEmptyCxxIncludeDirectorySet));
 
-    auto cxxHeaders2 = std::make_shared<doim::CxxHeaderSet>();
+    auto cxxHeaders2 = doim::CxxHeaderSet::make();
     cxxHeaders2->insert(cxxHeader2);
     cxxHeaders2 = doim::gManager->unique(cxxHeaders2);
 
@@ -140,7 +139,7 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
                                         cxxHeaders2);
     cxxIncludeDirectory2 = doim::gManager->unique(cxxIncludeDirectory2);
 
-    auto cxxIncludeDirectories2 = std::make_shared<doim::CxxIncludeDirectorySet>();
+    auto cxxIncludeDirectories2 = doim::CxxIncludeDirectorySet::make();
     cxxIncludeDirectories2->insert(cxxIncludeDirectory2);
     cxxIncludeDirectories2 = doim::gManager->unique(cxxIncludeDirectories2);
 
@@ -149,7 +148,7 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
                                                      mFsUser1H,
                                                      cxxIncludeDirectories2));
 
-    auto cxxHeaders1 = std::make_shared<doim::CxxHeaderSet>();
+    auto cxxHeaders1 = doim::CxxHeaderSet::make();
     cxxHeaders1->insert(cxxHeader1);
     cxxHeaders1 = doim::gManager->unique(cxxHeaders1);
 
@@ -159,7 +158,7 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
                                         cxxHeaders1);
     cxxIncludeDirectory1 = doim::gManager->unique(cxxIncludeDirectory1);
 
-    auto cxxIncludeDirectories1 = std::make_shared<doim::CxxIncludeDirectorySet>();
+    auto cxxIncludeDirectories1 = doim::CxxIncludeDirectorySet::make();
     cxxIncludeDirectories1->insert(cxxIncludeDirectory1);
     cxxIncludeDirectories1 = doim::gManager->unique(cxxIncludeDirectories1);
 

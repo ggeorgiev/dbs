@@ -30,10 +30,9 @@ public:
         mFsIncludesCxx = doim::gManager->obtainFile(mCxxDirectory, "includes.cxx");
         mFsUserH = doim::gManager->obtainFile(mCxxDirectory, "user.h");
 
-        mEmptyCxxHeaderSet =
-            doim::gManager->unique(std::make_shared<doim::CxxHeaderSet>());
+        mEmptyCxxHeaderSet = doim::gManager->unique(doim::CxxHeaderSet::make());
         mEmptyCxxIncludeDirectorySet =
-            doim::gManager->unique(std::make_shared<doim::CxxIncludeDirectorySet>());
+            doim::gManager->unique(doim::CxxIncludeDirectorySet::make());
     }
 
     void TearDown()
@@ -71,7 +70,7 @@ TEST_F(CxxHeaderCrcTaskTest, notFoundInclude)
                                         mEmptyCxxHeaderSet);
     cxxIncludeDirectory = doim::gManager->unique(cxxIncludeDirectory);
 
-    auto cxxIncludeDirectories = std::make_shared<doim::CxxIncludeDirectorySet>();
+    auto cxxIncludeDirectories = doim::CxxIncludeDirectorySet::make();
     cxxIncludeDirectories->insert(doim::gManager->unique(cxxIncludeDirectory));
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
 

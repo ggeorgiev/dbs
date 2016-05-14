@@ -13,6 +13,7 @@
 #include <boost/fusion/algorithm.hpp>
 #include <functional>
 #include <memory>
+#include <shared_ptr>
 #include <string_view>
 #include <tuple>
 #include <unordered_map>
@@ -22,15 +23,9 @@
 namespace task
 {
 template <typename T, typename... Args>
-class Base : public tpool::Task, public rtti::RttiInfo<T>
+class Base : public enable_make_shared<T>, public tpool::Task, public rtti::RttiInfo<T>
 {
 public:
-    template <typename... MakeArgs>
-    static std::shared_ptr<T> make(const MakeArgs&... args)
-    {
-        return std::make_shared<T>(args...);
-    }
-
     typedef std::tuple<Args...> Tuple;
 
     Base(const Args&... args)

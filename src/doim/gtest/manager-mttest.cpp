@@ -51,7 +51,7 @@ TEST(ManagerTest, mt_unique_set)
     {
         auto thread = std::make_shared<std::thread>([&barrier, &tagSets, i]() {
             auto tag = doim::gManager->unique(doim::Tag::make("foo"));
-            auto tagSet = std::make_shared<doim::TagSet>();
+            auto tagSet = doim::TagSet::make();
             tagSet->insert(tag);
 
             barrier.wait();

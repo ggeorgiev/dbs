@@ -15,7 +15,7 @@ namespace doim
 class Tag;
 
 typedef std::shared_ptr<Tag> TagSPtr;
-typedef std::unordered_set<TagSPtr> TagSet;
+typedef SetBase<TagSPtr> TagSet;
 typedef std::shared_ptr<TagSet> TagSetSPtr;
 
 class Tag : public Base<Tag, std::string>

@@ -13,7 +13,7 @@ namespace doim
 {
 class CxxStaticLibrary;
 typedef std::shared_ptr<CxxStaticLibrary> CxxStaticLibrarySPtr;
-typedef std::unordered_set<CxxStaticLibrarySPtr> CxxStaticLibrarySet;
+typedef SetBase<CxxStaticLibrarySPtr> CxxStaticLibrarySet;
 typedef std::shared_ptr<CxxStaticLibrarySet> CxxStaticLibrarySetSPtr;
 
 class CxxStaticLibrary : public Base<CxxStaticLibrary, FsFileSPtr>

@@ -13,7 +13,7 @@ TEST(ManagerObjectSetMixinTest, unique)
     doim::LocationSetSPtr locations;
     ASSERT_EQ(nullptr, doim::gManager->unique(locations));
 
-    locations = std::make_shared<doim::LocationSet>();
+    locations = doim::LocationSet::make();
 
     auto location = doim::gManager->obtainLocation(nullptr, "/unique");
     locations->insert(location);
@@ -26,7 +26,7 @@ TEST(ManagerObjectSetMixinTest, isUnique)
     doim::LocationSetSPtr locations;
     ASSERT_TRUE(doim::gManager->isUnique(locations));
 
-    locations = std::make_shared<doim::LocationSet>();
+    locations = doim::LocationSet::make();
 
     auto location = doim::gManager->obtainLocation(nullptr, "/isUnique");
     locations->insert(location);
@@ -42,7 +42,7 @@ TEST(ManagerObjectSetMixinTest, find)
     doim::LocationSetSPtr locations;
     ASSERT_EQ(nullptr, doim::gManager->find(locations));
 
-    locations = std::make_shared<doim::LocationSet>();
+    locations = doim::LocationSet::make();
 
     auto location = doim::gManager->obtainLocation(nullptr, "/find");
     locations->insert(location);
@@ -52,7 +52,7 @@ TEST(ManagerObjectSetMixinTest, find)
     locations = doim::gManager->unique(locations);
     ASSERT_EQ(locations, doim::gManager->find(locations));
 
-    auto locations1 = std::make_shared<doim::LocationSet>();
+    auto locations1 = doim::LocationSet::make();
     locations1->insert(location);
 
     ASSERT_EQ(locations, doim::gManager->find(locations1));

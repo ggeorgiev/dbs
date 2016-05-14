@@ -35,7 +35,7 @@ doim::SysArgumentSetSPtr CxxCompiler::includeArguments(
     const doim::FsDirectorySPtr& directory,
     const doim::CxxIncludeDirectorySetSPtr& includeDirectories)
 {
-    auto arguments = std::make_shared<doim::SysArgumentSet>();
+    auto arguments = doim::SysArgumentSet::make();
 
     for (const auto& includeDirectory : *includeDirectories)
     {
@@ -107,7 +107,7 @@ doim::SysCommandSPtr CxxCompiler::compileCommand(
 doim::SysCommandSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& directory,
                                               const doim::CxxProgramSPtr& program) const
 {
-    auto linkArguments = std::make_shared<doim::SysArgumentSet>();
+    auto linkArguments = doim::SysArgumentSet::make();
     linkArguments->insert(gStdLibc11Argument);
 
     switch (program->purpose())
