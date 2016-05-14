@@ -65,12 +65,12 @@ public:
     template <typename T, typename... Args>
     static shared_ptr<T> global(const Args&... args, shared_ptr<T>& object)
     {
+        auto fn = [&object]() -> bool {
+            object = gManager->unique(object);
+            return true;
+        };
         im::InitializationManager::subscribe<shared_ptr<T>>(object_initialization_rank(),
-                                                            [&object]() -> bool {
-                                                                object = gManager->unique(
-                                                                    object);
-                                                                return true;
-                                                            },
+                                                            fn,
                                                             nullptr);
         return std::make_shared<T>(args...);
     }
@@ -186,6 +186,12 @@ public:
 private:
     unordered_map<FsFileSPtr, CxxHeaderSPtr> mFile2CxxHeader;
 };
+
+template <typename T, typename... Args>
+shared_ptr<T> unique(const Args&... args)
+{
+    return gManager->unique(T::make(args...));
+}
 
 std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectory& directory);
 std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectorySet& directories);

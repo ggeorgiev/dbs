@@ -30,9 +30,8 @@ public:
         mFsIncludesCxx = doim::gManager->obtainFile(mCxxDirectory, "includes.cxx");
         mFsUserH = doim::gManager->obtainFile(mCxxDirectory, "user.h");
 
-        mEmptyCxxHeaderSet = doim::gManager->unique(doim::CxxHeaderSet::make());
-        mEmptyCxxIncludeDirectorySet =
-            doim::gManager->unique(doim::CxxIncludeDirectorySet::make());
+        mEmptyCxxHeaderSet = doim::unique<doim::CxxHeaderSet>();
+        mEmptyCxxIncludeDirectorySet = doim::unique<doim::CxxIncludeDirectorySet>();
     }
 
     void TearDown()
@@ -50,10 +49,9 @@ public:
 
 TEST_F(CxxHeaderCrcTaskTest, simple)
 {
-    auto cxxHeader = doim::CxxHeader::make(doim::CxxHeader::Type::kUser,
-                                           mFsSimpleCxx,
-                                           mEmptyCxxIncludeDirectorySet);
-    cxxHeader = doim::gManager->unique(cxxHeader);
+    auto cxxHeader = doim::unique<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
+                                                   mFsSimpleCxx,
+                                                   mEmptyCxxIncludeDirectorySet);
 
     auto task = task::CxxHeaderCrcTask::make(cxxHeader, nullptr);
 
@@ -65,19 +63,17 @@ TEST_F(CxxHeaderCrcTaskTest, simple)
 TEST_F(CxxHeaderCrcTaskTest, notFoundInclude)
 {
     auto cxxIncludeDirectory =
-        doim::CxxIncludeDirectory::make(doim::CxxIncludeDirectory::EType::kUser,
-                                        mCxxDirectory,
-                                        mEmptyCxxHeaderSet);
-    cxxIncludeDirectory = doim::gManager->unique(cxxIncludeDirectory);
+        doim::unique<doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
+                                                mCxxDirectory,
+                                                mEmptyCxxHeaderSet);
 
     auto cxxIncludeDirectories = doim::CxxIncludeDirectorySet::make();
-    cxxIncludeDirectories->insert(doim::gManager->unique(cxxIncludeDirectory));
+    cxxIncludeDirectories->insert(cxxIncludeDirectory);
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
 
-    auto cxxHeader = doim::CxxHeader::make(doim::CxxHeader::Type::kUser,
-                                           mFsIncludesCxx,
-                                           cxxIncludeDirectories);
-    cxxHeader = doim::gManager->unique(cxxHeader);
+    auto cxxHeader = doim::unique<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
+                                                   mFsIncludesCxx,
+                                                   cxxIncludeDirectories);
     auto task = task::CxxHeaderCrcTask::make(cxxHeader, nullptr);
     ASSERT_BANNED(kNotFound, (*task)());
 }

@@ -16,6 +16,8 @@ namespace tool
 {
 doim::SysArgumentSPtr CxxCompiler::gOptimizationLevel0Argument =
     doim::SysArgument::global("-O0", CxxCompiler::gOptimizationLevel0Argument);
+doim::SysArgumentSPtr CxxCompiler::gOptimizationLevel3Argument =
+    doim::SysArgument::global("-O3", CxxCompiler::gOptimizationLevel3Argument);
 doim::SysArgumentSPtr CxxCompiler::gDebuggingInformationArgument =
     doim::SysArgument::global("-g", CxxCompiler::gDebuggingInformationArgument);
 doim::SysArgumentSPtr CxxCompiler::gStdCpp11Argument =
@@ -77,6 +79,7 @@ doim::SysCommandSPtr CxxCompiler::compileCommand(
             compileArguments->insert(gDebuggingInformationArgument);
             break;
         case doim::CxxObjectFile::EPurpose::kRelease:
+            compileArguments->insert(gOptimizationLevel3Argument);
             break;
         case doim::CxxObjectFile::EPurpose::kProfile:
             compileArguments->insert(gFProfileArcArgument);
@@ -99,8 +102,7 @@ doim::SysCommandSPtr CxxCompiler::compileCommand(
     compileArguments->insert(argument_o);
     compileArguments = doim::gManager->unique(compileArguments);
 
-    auto compileCommand = doim::SysCommand::make(mCompiler, compileArguments);
-    return doim::gManager->unique(compileCommand);
+    return doim::unique<doim::SysCommand>(mCompiler, compileArguments);
 }
 
 doim::SysCommandSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& directory,
@@ -144,7 +146,6 @@ doim::SysCommandSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& direc
     linkArguments->insert(argument_o);
     linkArguments = doim::gManager->unique(linkArguments);
 
-    auto linkCommand = doim::SysCommand::make(mCompiler, linkArguments);
-    return doim::gManager->unique(linkCommand);
+    return doim::unique<doim::SysCommand>(mCompiler, linkArguments);
 }
 }

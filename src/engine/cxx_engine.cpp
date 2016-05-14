@@ -99,8 +99,7 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
         [this, self, ancenstor, directory, objectFile](
             const tpool::TaskSPtr& task) -> ECode {
 
-        auto key = doim::DbKey::make(ancenstor, objectFile->file()->path());
-        key = doim::gManager->unique(key);
+        auto key = doim::unique<doim::DbKey>(ancenstor, objectFile->file()->path());
 
         math::Crcsum crc;
         db::gDatabase->get(key->toString(), crc);
@@ -144,8 +143,7 @@ tpool::TaskSPtr CxxEngine::buildObjects(const doim::DbKeySPtr& ancenstor,
                                         const doim::FsDirectorySPtr& directory,
                                         const doim::CxxProgramSPtr& program)
 {
-    auto objectFileKey = doim::DbKey::make(ancenstor, "object-file");
-    objectFileKey = doim::gManager->unique(objectFileKey);
+    auto objectFileKey = doim::unique<doim::DbKey>(ancenstor, "object-file");
 
     std::vector<tpool::TaskSPtr> allTasks;
     for (const auto& objectFile : *program->cxxObjectFiles())
@@ -203,11 +201,10 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
         [this, self, ancestor, directory, cxxProgram](
             const tpool::TaskSPtr& task) -> ECode {
 
-        auto cxxProgramKey =
-            doim::gManager->unique(doim::DbKey::make(ancestor, "cxx_program"));
+        auto cxxProgramKey = doim::unique<doim::DbKey>(ancestor, "cxx_program");
 
         const auto& path = cxxProgram->file()->path(directory);
-        auto key = doim::gManager->unique(doim::DbKey::make(cxxProgramKey, path));
+        auto key = doim::unique<doim::DbKey>(cxxProgramKey, path);
 
         math::Crcsum crc;
         db::gDatabase->get(key->toString(), crc);
@@ -242,8 +239,7 @@ tpool::TaskSPtr CxxEngine::iwyuTask(const doim::FsDirectorySPtr& directory,
     tpool::TaskCallback::Function onFinish =
         [this, self, directory, cxxFile](const tpool::TaskSPtr& task) -> ECode {
 
-        auto key = doim::DbKey::make("iwyu:" + cxxFile->file()->path());
-        key = doim::gManager->unique(key);
+        auto key = doim::unique<doim::DbKey>("iwyu:" + cxxFile->file()->path());
 
         math::Crcsum crc;
         db::gDatabase->get(key->toString(), crc);

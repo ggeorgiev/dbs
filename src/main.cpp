@@ -93,17 +93,16 @@ int main(int argc, char* argv[])
 
     const auto& clangFormatFile =
         doim::gManager->obtainFile(cwd, "clang/bin/clang-format");
-    const auto& clangFormat =
-        doim::gManager->unique(doim::SysExecutable::make(clangFormatFile));
+    const auto& clangFormat = doim::unique<doim::SysExecutable>(clangFormatFile);
     const auto& clangFormatTool = std::make_shared<tool::CxxClangFormat>(clangFormat);
 
-    const auto& clangBinary = doim::gManager->unique(doim::FsBinary::make("clang++"));
-    const auto& clang = doim::gManager->unique(doim::SysExecutable::make(clangBinary));
+    const auto& clangBinary = doim::unique<doim::FsBinary>("clang++");
+    const auto& clang = doim::unique<doim::SysExecutable>(clangBinary);
     const auto& compiler = std::make_shared<tool::CxxCompiler>(clang);
 
     const auto& iwyuFile =
         doim::gManager->obtainFile(cwd, "clang/bin/include-what-you-use");
-    const auto& iwyu = doim::gManager->unique(doim::SysExecutable::make(iwyuFile));
+    const auto& iwyu = doim::unique<doim::SysExecutable>(iwyuFile);
     const auto& iwyuTool = std::make_shared<tool::CxxIwyu>(iwyu);
 
     const auto& engine =

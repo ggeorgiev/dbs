@@ -24,7 +24,7 @@ TEST(ManagerTest, mt_unique)
     for (size_t i = 0; i < count; ++i)
     {
         auto thread = std::make_shared<std::thread>([&barrier, &tags, i]() {
-            auto tag = doim::gManager->unique(doim::Tag::make("foo"));
+            auto tag = doim::unique<doim::Tag>("foo");
 
             barrier.wait();
             tags[i] = doim::gManager->unique(tag);
@@ -50,7 +50,7 @@ TEST(ManagerTest, mt_unique_set)
     for (size_t i = 0; i < count; ++i)
     {
         auto thread = std::make_shared<std::thread>([&barrier, &tagSets, i]() {
-            auto tag = doim::gManager->unique(doim::Tag::make("foo"));
+            auto tag = doim::unique<doim::Tag>("foo");
             auto tagSet = doim::TagSet::make();
             tagSet->insert(tag);
 

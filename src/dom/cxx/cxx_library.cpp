@@ -111,10 +111,9 @@ doim::CxxIncludeDirectorySPtr CxxLibrary::cxxPublicIncludeDirectory(
     if (publicHeadersDirectory() == nullptr)
         return nullptr;
 
-    const auto& directory = doim::CxxIncludeDirectory::make(cxxIncludeDirectoryType(),
-                                                            publicHeadersDirectory(),
-                                                            publicCxxHeaders(root));
-    return doim::gManager->unique(directory);
+    return doim::unique<doim::CxxIncludeDirectory>(cxxIncludeDirectoryType(),
+                                                   publicHeadersDirectory(),
+                                                   publicCxxHeaders(root));
 }
 
 doim::CxxIncludeDirectorySetSPtr CxxLibrary::sublibraryCxxIncludeDirectories(
@@ -187,8 +186,8 @@ doim::CxxHeaderSetSPtr CxxLibrary::publicCxxHeaders(
         const auto& directories = sublibraryCxxIncludeDirectories(root);
         for (const auto& header : *mCxxPublicHeaders)
         {
-            const auto& cxxHeader = doim::CxxHeader::make(type, header, directories);
-            headers->insert(doim::gManager->unique(cxxHeader));
+            auto cxxHeader = doim::unique<doim::CxxHeader>(type, header, directories);
+            headers->insert(cxxHeader);
         }
     }
     return doim::gManager->unique(headers);

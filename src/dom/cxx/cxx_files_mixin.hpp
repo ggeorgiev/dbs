@@ -47,8 +47,8 @@ public:
 
         for (const auto& fsFile : mCxxFilesList)
         {
-            auto cxxFile = doim::CxxFile::make(fsFile, directories);
-            cxxFiles.insert(doim::gManager->unique(cxxFile));
+            auto cxxFile = doim::unique<doim::CxxFile>(fsFile, directories);
+            cxxFiles.insert(cxxFile);
 
             DLOG("fsFile: {0}", fsFile->path());
         }
@@ -73,9 +73,8 @@ public:
             const auto& outputFile =
                 doim::gManager->obtainFile(directory, cxxFile->file()->name() + ".o");
 
-            auto objectFile = doim::CxxObjectFile::make(purpose, cxxFile, outputFile);
-            objectFile = doim::gManager->unique(objectFile);
-
+            auto objectFile =
+                doim::unique<doim::CxxObjectFile>(purpose, cxxFile, outputFile);
             cxxObjectFiles.insert(objectFile);
         }
         return cxxObjectFiles;

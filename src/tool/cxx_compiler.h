@@ -33,6 +33,7 @@ public:
 
 private:
     static doim::SysArgumentSPtr gOptimizationLevel0Argument;
+    static doim::SysArgumentSPtr gOptimizationLevel3Argument;
     static doim::SysArgumentSPtr gDebuggingInformationArgument;
     static doim::SysArgumentSPtr gStdCpp11Argument;
     static doim::SysArgumentSPtr gFProfileArcArgument;
