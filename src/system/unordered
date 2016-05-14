@@ -7,9 +7,12 @@
 #include <unordered_set> // IWYU pragma: export
 #include <__hash_table>  // IWYU pragma: export
 
-template <typename T>
-struct unordered_set : public enable_make_shared<unordered_set<T>>, 
-                       public std::unordered_set<T>
+template <class Key,
+          class Hash = std::hash<Key>,
+          class KeyEqual = std::equal_to<Key>,
+          class Allocator = std::allocator<Key>>
+struct unordered_set : public enable_make_shared<unordered_set<Key, Hash, KeyEqual, Allocator>>, 
+                       public std::unordered_set<Key, Hash, KeyEqual, Allocator>
 {
-    using std::unordered_set<T>::unordered_set;
+    using std::unordered_set<Key, Hash, KeyEqual, Allocator>::unordered_set;
 };

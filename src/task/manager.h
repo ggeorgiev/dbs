@@ -47,7 +47,7 @@ public:
 
 protected:
     std::mutex mTaskMutex;
-    std::unordered_set<TaskSPtr, Hasher, Hasher> mTasks;
+    unordered_set<TaskSPtr, Hasher, Hasher> mTasks;
 };
 
 class Manager : public ManagerMixin<CxxFileCrcTask>,

@@ -74,7 +74,7 @@ TYPED_TEST(ParserTest, parseFiles)
         auto parser = std::make_shared<typename TestFixture::Parser>();
         ASSERT_OKAY(parser->initialize(stream, location));
 
-        std::unordered_set<doim::FsFileSPtr> files;
+        doim::FsFileSet files;
         ASSERT_OKAY(
             parser->parseFiles(directory, std::numeric_limits<size_t>::max(), files));
 

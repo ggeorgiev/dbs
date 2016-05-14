@@ -9,7 +9,7 @@
 
 namespace dom
 {
-ECode CxxProgram::updateCxxLibraries(std::unordered_set<CxxLibrarySPtr>& libraries)
+ECode CxxProgram::updateCxxLibraries(CxxLibrarySet& libraries)
 {
     mCxxLibraries.swap(libraries);
     EHEnd;
@@ -70,9 +70,9 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
     return doim::gManager->unique(program);
 }
 
-std::unordered_set<CxxLibrarySPtr> CxxProgram::recursiveCxxLibraries() const
+CxxLibrarySet CxxProgram::recursiveCxxLibraries() const
 {
-    std::unordered_set<CxxLibrarySPtr> libraries = mCxxLibraries;
+    CxxLibrarySet libraries = mCxxLibraries;
     for (const auto& cxxLibrary : mCxxLibraries)
     {
         const auto& libs = cxxLibrary->recursiveCxxLibraries();

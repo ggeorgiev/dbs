@@ -10,6 +10,6 @@ TEST(CxxProgramTest, foo)
 {
     dom::CxxProgram cxxProgram;
 
-    std::unordered_set<doim::FsFileSPtr> files;
+    doim::FsFileSet files;
     cxxProgram.updateCxxFilesList(files);
 }

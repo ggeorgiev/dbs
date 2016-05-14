@@ -51,7 +51,7 @@ ECode CxxLibrary::updateBinary(const doim::FsFileSPtr& binary)
 }
 
 ECode CxxLibrary::updateCxxPublicHeaders(const doim::FsDirectorySPtr& directory,
-                                         std::unordered_set<doim::FsFileSPtr>& files)
+                                         doim::FsFileSet& files)
 {
     resetRecursiveCxxIncludeDirectoriesMemoization();
 
@@ -61,7 +61,7 @@ ECode CxxLibrary::updateCxxPublicHeaders(const doim::FsDirectorySPtr& directory,
     EHEnd;
 }
 
-ECode CxxLibrary::updateCxxLibraries(std::unordered_set<CxxLibrarySPtr>& libraries)
+ECode CxxLibrary::updateCxxLibraries(CxxLibrarySet& libraries)
 {
     resetRecursiveCxxIncludeDirectoriesMemoization();
 
@@ -95,9 +95,9 @@ doim::CxxHeader::Type CxxLibrary::cxxHeaderType() const
     }
 }
 
-std::unordered_set<CxxLibrarySPtr> CxxLibrary::recursiveCxxLibraries() const
+CxxLibrarySet CxxLibrary::recursiveCxxLibraries() const
 {
-    std::unordered_set<CxxLibrarySPtr> libraries = mCxxLibraries;
+    CxxLibrarySet libraries = mCxxLibraries;
     for (const auto& cxxLibrary : mCxxLibraries)
     {
         const auto& libs = cxxLibrary->recursiveCxxLibraries();

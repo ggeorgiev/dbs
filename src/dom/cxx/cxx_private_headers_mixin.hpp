@@ -21,7 +21,7 @@ public:
     typedef T Subject;
 
     ECode updateCxxPrivateHeaders(const doim::FsDirectorySPtr& directory,
-                                  std::unordered_set<doim::FsFileSPtr>& files)
+                                  doim::FsFileSet& files)
     {
         mPrivateHeadersDirectory = directory;
         mCxxPrivateHeaders = doim::FsFileSet::make();

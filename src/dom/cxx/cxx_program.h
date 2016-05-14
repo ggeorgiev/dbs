@@ -29,8 +29,7 @@ class CxxProgram : public enable_make_shared<CxxProgram>,
 {
 public:
     template <typename T>
-    std::vector<T> difference(const std::unordered_set<T>& a,
-                              const std::unordered_set<T>& b)
+    std::vector<T> difference(const unordered_set<T>& a, const unordered_set<T>& b)
     {
         std::vector<T> result;
         std::copy_if(a.begin(), a.end(), back_inserter(result), [&b](T needle) {
@@ -44,12 +43,12 @@ public:
         return mName;
     }
 
-    const std::unordered_set<CxxLibrarySPtr>& cxxLibraries() const
+    const CxxLibrarySet& cxxLibraries() const
     {
         return mCxxLibraries;
     }
 
-    ECode updateCxxLibraries(std::unordered_set<CxxLibrarySPtr>& libraries);
+    ECode updateCxxLibraries(CxxLibrarySet& libraries);
 
     ECode updateName(const std::string& name);
 
@@ -58,7 +57,7 @@ public:
                                     const doim::FsDirectorySPtr& root,
                                     const doim::FsDirectorySPtr& intermediate) const;
 
-    std::unordered_set<CxxLibrarySPtr> recursiveCxxLibraries() const;
+    CxxLibrarySet recursiveCxxLibraries() const;
 
     doim::CxxIncludeDirectorySetSPtr recursiveCxxIncludeDirectories(
         const doim::FsDirectorySPtr& root) const;
@@ -67,6 +66,6 @@ public:
 
 private:
     std::string mName;
-    std::unordered_set<CxxLibrarySPtr> mCxxLibraries;
+    CxxLibrarySet mCxxLibraries;
 };
 }

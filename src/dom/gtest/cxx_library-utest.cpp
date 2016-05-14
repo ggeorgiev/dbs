@@ -35,7 +35,7 @@ TEST(CxxLibraryTest, publicCxxHeaders)
     const auto& cxxHeaders1 = library.publicCxxHeaders(directory);
     ASSERT_EQ(0U, cxxHeaders1->size());
 
-    std::unordered_set<doim::FsFileSPtr> files;
+    doim::FsFileSet files;
 
     const auto& file = doim::gManager->obtainFile(directory, "header.h");
     files.insert(file);
@@ -58,7 +58,7 @@ TEST(CxxLibraryTest, recursiveCxxHeaders)
     const auto& cxxHeaders1 = library.recursiveCxxHeaders(directory);
     ASSERT_EQ(0U, cxxHeaders1->size());
 
-    std::unordered_set<doim::FsFileSPtr> files;
+    doim::FsFileSet files;
 
     const auto& file = doim::gManager->obtainFile(directory, "header.h");
     files.insert(file);

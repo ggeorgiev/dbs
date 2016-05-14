@@ -53,7 +53,7 @@ public:
                 if (!type.test(Token::kOperatorColon))
                     EHBan(kUnable);
 
-                std::unordered_set<doim::FsFileSPtr> files;
+                doim::FsFileSet files;
                 EHTest(parseFiles(mLocation->directory(),
                                   std::numeric_limits<size_t>::max(),
                                   files));
@@ -165,7 +165,7 @@ public:
                 if (!type.test(Token::kOperatorColon))
                     EHBan(kUnable);
 
-                std::unordered_set<doim::FsFileSPtr> files;
+                doim::FsFileSet files;
                 EHTest(parseFiles(directory, std::numeric_limits<size_t>::max(), files));
                 if (visibility == "public")
                     EHTest(library->updateCxxPublicHeaders(directory, files));
@@ -181,7 +181,7 @@ public:
             {
                 auto type = nextMeaningfulToken();
 
-                std::unordered_set<doim::FsFileSPtr> files;
+                doim::FsFileSet files;
                 EHTest(parseFiles(mLocation->directory(), 1, files));
 
                 if (files.size() < 1)
@@ -199,12 +199,12 @@ public:
                 if (!type.test(Token::kOperatorColon))
                     EHBan(kUnable);
 
-                std::unordered_set<doim::ObjectSPtr> objects;
+                doim::ObjectSet objects;
                 EHTest(parseObjects(mLocation->directory(),
                                     doim::Object::EType::kCxxLibrary,
                                     objects));
 
-                std::unordered_set<dom::CxxLibrarySPtr> libraries;
+                dom::CxxLibrarySet libraries;
                 for (const auto& object : objects)
                     libraries.insert(dom::gManager->obtainCxxLibrary(object));
 
@@ -220,7 +220,7 @@ public:
                 if (!type.test(Token::kOperatorColon))
                     EHBan(kUnable);
 
-                std::unordered_set<doim::FsFileSPtr> files;
+                doim::FsFileSet files;
                 EHTest(parseFiles(mLocation->directory(),
                                   std::numeric_limits<size_t>::max(),
                                   files));
@@ -267,7 +267,7 @@ public:
                 if (!type.test(Token::kOperatorColon))
                     EHBan(kUnable);
 
-                std::unordered_set<doim::FsFileSPtr> files;
+                doim::FsFileSet files;
                 EHTest(parseFiles(mLocation->directory(),
                                   std::numeric_limits<size_t>::max(),
                                   files));
@@ -283,12 +283,12 @@ public:
                 if (!type.test(Token::kOperatorColon))
                     EHBan(kUnable);
 
-                std::unordered_set<doim::ObjectSPtr> objects;
+                doim::ObjectSet objects;
                 EHTest(parseObjects(mLocation->directory(),
                                     doim::Object::EType::kCxxLibrary,
                                     objects));
 
-                std::unordered_set<dom::CxxLibrarySPtr> libraries;
+                dom::CxxLibrarySet libraries;
                 for (const auto& object : objects)
                     libraries.insert(dom::gManager->obtainCxxLibrary(object));
 
@@ -305,7 +305,7 @@ public:
 
     ECode parseObjects(const doim::LocationSPtr& location,
                        const doim::Object::EType objectType,
-                       std::unordered_set<doim::ObjectSPtr>& objects)
+                       doim::ObjectSet& objects)
     {
         for (;;)
         {
@@ -329,7 +329,7 @@ public:
 
     ECode parseDirectories(const doim::FsDirectorySPtr& directory,
                            const size_t limit,
-                           std::unordered_set<doim::FsDirectorySPtr>& directories)
+                           doim::FsDirectorySet& directories)
     {
         for (;;)
         {
@@ -357,7 +357,7 @@ public:
 
     ECode parseFiles(const doim::FsDirectorySPtr& directory,
                      const size_t limit,
-                     std::unordered_set<doim::FsFileSPtr>& files)
+                     doim::FsFileSet& files)
     {
         for (;;)
         {

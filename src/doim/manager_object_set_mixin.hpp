@@ -90,6 +90,6 @@ public:
 
 protected:
     mutable boost::shared_mutex mMixinObjectSetsMutex;
-    std::unordered_set<MixinObjectSetSPtr, Hasher, Hasher> mMixinObjectSets;
+    unordered_set<MixinObjectSetSPtr, Hasher, Hasher> mMixinObjectSets;
 };
 }

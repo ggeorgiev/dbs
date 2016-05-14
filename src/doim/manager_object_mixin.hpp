@@ -11,8 +11,8 @@
 #include <memory>
 #include <string_view>
 #include <typeindex>
+#include <unordered>
 #include <unordered_map>
-#include <unordered_set>
 #include <utility>
 #include <vector>
 #include <stddef.h>
@@ -26,7 +26,7 @@ public:
     typedef T MixinObject;
     typedef std::shared_ptr<MixinObject> MixinObjectSPtr;
     typedef typename MixinObject::Hasher Hasher;
-    typedef std::unordered_set<MixinObjectSPtr, Hasher, Hasher> Set;
+    typedef unordered_set<MixinObjectSPtr, Hasher, Hasher> Set;
 
     MixinObjectSPtr unique(const MixinObjectSPtr& object)
     {

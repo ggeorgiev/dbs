@@ -24,8 +24,9 @@ struct Attribute;
 namespace dom
 {
 class CxxLibrary;
-
 typedef std::shared_ptr<CxxLibrary> CxxLibrarySPtr;
+typedef unordered_set<CxxLibrarySPtr> CxxLibrarySet;
+typedef std::shared_ptr<CxxLibrarySet> CxxLibrarySetSPtr;
 
 class CxxLibrary : public enable_make_shared<CxxLibrary>,
                    public CxxFilesMixin<CxxLibrary>,
@@ -63,7 +64,7 @@ public:
         return mCxxPublicHeaders;
     }
 
-    const std::unordered_set<CxxLibrarySPtr>& cxxLibraries() const
+    const CxxLibrarySet& cxxLibraries() const
     {
         return mCxxLibraries;
     }
@@ -74,16 +75,16 @@ public:
     ECode updateBinary(const doim::FsFileSPtr& binary);
 
     ECode updateCxxPublicHeaders(const doim::FsDirectorySPtr& directory,
-                                 std::unordered_set<doim::FsFileSPtr>& files);
+                                 doim::FsFileSet& files);
 
-    ECode updateCxxLibraries(std::unordered_set<CxxLibrarySPtr>& libraries);
+    ECode updateCxxLibraries(CxxLibrarySet& libraries);
 
     // Computations
     doim::CxxIncludeDirectory::EType cxxIncludeDirectoryType() const;
 
     doim::CxxHeader::Type cxxHeaderType() const;
 
-    std::unordered_set<CxxLibrarySPtr> recursiveCxxLibraries() const;
+    CxxLibrarySet recursiveCxxLibraries() const;
 
     doim::CxxIncludeDirectorySPtr cxxPublicIncludeDirectory(
         const doim::FsDirectorySPtr& root) const;
@@ -110,7 +111,7 @@ private:
     doim::FsDirectorySPtr mPublicHeadersDirectory;
     doim::FsFileSetSPtr mCxxPublicHeaders;
 
-    std::unordered_set<CxxLibrarySPtr> mCxxLibraries;
+    CxxLibrarySet mCxxLibraries;
 
     void resetRecursiveCxxIncludeDirectoriesMemoization();
 

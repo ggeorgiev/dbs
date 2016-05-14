@@ -22,23 +22,22 @@ class CxxFilesMixin
 public:
     typedef T Subject;
 
-    ECode updateCxxFilesList(std::unordered_set<doim::FsFileSPtr>& files)
+    ECode updateCxxFilesList(doim::FsFileSet& files)
     {
         mCxxFilesList.swap(files);
         EHEnd;
     }
 
-    const std::unordered_set<doim::FsFileSPtr>& cxxFilesList() const
+    const doim::FsFileSet& cxxFilesList() const
     {
         return mCxxFilesList;
     }
 
-    std::unordered_set<doim::CxxFileSPtr> cxxFiles(
-        const doim::FsDirectorySPtr& root) const
+    doim::CxxFileSet cxxFiles(const doim::FsDirectorySPtr& root) const
     {
         TLOG_FUNCTION;
 
-        std::unordered_set<doim::CxxFileSPtr> cxxFiles;
+        doim::CxxFileSet cxxFiles;
 
         const auto& directories =
             static_cast<const Subject*>(this)->recursiveCxxIncludeDirectories(root);
