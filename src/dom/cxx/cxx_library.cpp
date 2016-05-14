@@ -9,7 +9,7 @@
 #include <shared_ptr>
 #include <sstream>
 #include <string>
-#include <unordered_set>
+#include <unordered>
 #include <vector>
 
 namespace dom

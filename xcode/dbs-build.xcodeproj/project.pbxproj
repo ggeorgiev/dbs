@@ -368,6 +368,7 @@
 		5EE351921CE45FA6003305CC /* manager_object_mixin-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "manager_object_mixin-utest.cpp"; sourceTree = "<group>"; };
 		5EE351931CE45FA6003305CC /* manager_object_set_mixin-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "manager_object_set_mixin-utest.cpp"; sourceTree = "<group>"; };
 		5EE51C231CE6CC0F00DB0DDA /* shared_ptr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shared_ptr; sourceTree = "<group>"; };
+		5EE51C241CE6D32300DB0DDA /* unordered */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = unordered; sourceTree = "<group>"; };
 		5EFDAF5B1CDB89B70092AAD2 /* parse_stdout_task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = parse_stdout_task.cpp; sourceTree = "<group>"; };
 		5EFDAF5C1CDB89B70092AAD2 /* parse_stdout_task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parse_stdout_task.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -747,6 +748,7 @@
 				5E10B38A1C70F272009C73E4 /* zip.dbs */,
 				5EE51C231CE6CC0F00DB0DDA /* shared_ptr */,
 				5E192E6A1CE5911600B1B747 /* string_view */,
+				5EE51C241CE6D32300DB0DDA /* unordered */,
 			);
 			path = system;
 			sourceTree = "<group>";

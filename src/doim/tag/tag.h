@@ -8,14 +8,14 @@
 #include <memory>
 #include <string>
 #include <tuple>
-#include <unordered_set>
+#include <unordered>
 
 namespace doim
 {
 class Tag;
 
 typedef std::shared_ptr<Tag> TagSPtr;
-typedef SetBase<TagSPtr> TagSet;
+typedef unordered_set<TagSPtr> TagSet;
 typedef std::shared_ptr<TagSet> TagSetSPtr;
 
 class Tag : public Base<Tag, std::string>

@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 #include <tuple>
+#include <unordered>
 #include <stddef.h>
 
 namespace doim
@@ -17,7 +18,7 @@ class FsDirectory;
 typedef FsDirectory* FsDirectoryRPtr;
 typedef FsDirectory const* FsDirectoryRCPtr;
 typedef std::shared_ptr<FsDirectory> FsDirectorySPtr;
-typedef SetBase<FsDirectorySPtr> FsDirectorySet;
+typedef unordered_set<FsDirectorySPtr> FsDirectorySet;
 typedef std::shared_ptr<FsDirectorySet> FsDirectorySetSPtr;
 
 class FsDirectory : public Base<FsDirectory, FsDirectorySPtr, std::string>

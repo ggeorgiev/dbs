@@ -5,7 +5,7 @@
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/cxx/cxx_static_library.h"
 #include "doim/manager.h"
-#include <unordered_set>
+#include <unordered>
 
 namespace dom
 {

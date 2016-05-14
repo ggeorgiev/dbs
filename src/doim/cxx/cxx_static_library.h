@@ -7,13 +7,13 @@
 #include "doim/fs/fs_file.h"
 #include <memory>
 #include <tuple>
-#include <unordered_set>
+#include <unordered>
 
 namespace doim
 {
 class CxxStaticLibrary;
 typedef std::shared_ptr<CxxStaticLibrary> CxxStaticLibrarySPtr;
-typedef SetBase<CxxStaticLibrarySPtr> CxxStaticLibrarySet;
+typedef unordered_set<CxxStaticLibrarySPtr> CxxStaticLibrarySet;
 typedef std::shared_ptr<CxxStaticLibrarySet> CxxStaticLibrarySetSPtr;
 
 class CxxStaticLibrary : public Base<CxxStaticLibrary, FsFileSPtr>

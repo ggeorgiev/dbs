@@ -67,10 +67,4 @@ public:
 protected:
     Tuple mArgs;
 };
-
-template <typename T>
-struct SetBase : public enable_make_shared<SetBase<T>>, public std::unordered_set<T>
-{
-    using std::unordered_set<T>::unordered_set;
-};
 }

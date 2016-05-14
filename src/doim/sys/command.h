@@ -9,13 +9,13 @@
 #include <iosfwd>
 #include <memory>
 #include <tuple>
-#include <unordered_set>
+#include <unordered>
 
 namespace doim
 {
 class SysArgument;
 typedef std::shared_ptr<SysArgument> SysArgumentSPtr;
-typedef SetBase<SysArgumentSPtr> SysArgumentSet;
+typedef unordered_set<SysArgumentSPtr> SysArgumentSet;
 typedef std::shared_ptr<SysArgumentSet> SysArgumentSetSPtr;
 
 class SysCommand;

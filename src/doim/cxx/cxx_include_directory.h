@@ -9,6 +9,7 @@
 #include <memory>
 #include <tuple>
 #include <type_traits>
+#include <unordered>
 #include <unordered_map>
 
 namespace doim
@@ -16,13 +17,13 @@ namespace doim
 class CxxHeader;
 
 typedef std::shared_ptr<CxxHeader> CxxHeaderSPtr;
-typedef SetBase<CxxHeaderSPtr> CxxHeaderSet;
+typedef unordered_set<CxxHeaderSPtr> CxxHeaderSet;
 typedef std::shared_ptr<CxxHeaderSet> CxxHeaderSetSPtr;
 
 class CxxIncludeDirectory;
 
 typedef std::shared_ptr<CxxIncludeDirectory> CxxIncludeDirectorySPtr;
-typedef SetBase<CxxIncludeDirectorySPtr> CxxIncludeDirectorySet;
+typedef unordered_set<CxxIncludeDirectorySPtr> CxxIncludeDirectorySet;
 typedef std::shared_ptr<CxxIncludeDirectorySet> CxxIncludeDirectorySetSPtr;
 
 namespace cid_details

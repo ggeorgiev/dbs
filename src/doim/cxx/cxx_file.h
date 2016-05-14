@@ -8,13 +8,13 @@
 #include "doim/fs/fs_file.h"
 #include <memory>
 #include <tuple>
-#include <unordered_set>
+#include <unordered>
 
 namespace doim
 {
 class CxxFile;
 typedef std::shared_ptr<CxxFile> CxxFileSPtr;
-typedef SetBase<CxxFileSPtr> CxxFileSet;
+typedef unordered_set<CxxFileSPtr> CxxFileSet;
 typedef std::shared_ptr<CxxFileSet> CxxFileSetSPtr;
 
 class CxxFile : public Base<CxxFile, FsFileSPtr, CxxIncludeDirectorySetSPtr>

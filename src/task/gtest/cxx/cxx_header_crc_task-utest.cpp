@@ -13,7 +13,7 @@
 #include "gtest/test_resource.h"
 #include <memory>
 #include <ostream>
-#include <unordered_set>
+#include <unordered>
 
 class CxxHeaderCrcTaskTest : public ::testing::Test
 {

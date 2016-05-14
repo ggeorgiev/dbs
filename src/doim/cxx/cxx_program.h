@@ -10,13 +10,13 @@
 #include <memory>
 #include <tuple>
 #include <type_traits>
-#include <unordered_set>
+#include <unordered>
 
 namespace doim
 {
 class CxxProgram;
 typedef std::shared_ptr<CxxProgram> CxxProgramSPtr;
-typedef SetBase<CxxProgramSPtr> CxxProgramSet;
+typedef unordered_set<CxxProgramSPtr> CxxProgramSet;
 typedef std::shared_ptr<CxxProgramSet> CxxProgramSetSPtr;
 
 namespace cp_details

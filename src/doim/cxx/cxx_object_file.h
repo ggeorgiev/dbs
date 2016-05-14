@@ -9,12 +9,13 @@
 #include <memory>
 #include <tuple>
 #include <type_traits>
+#include <unordered>
 
 namespace doim
 {
 class CxxObjectFile;
 typedef std::shared_ptr<CxxObjectFile> CxxObjectFileSPtr;
-typedef SetBase<CxxObjectFileSPtr> CxxObjectFileSet;
+typedef unordered_set<CxxObjectFileSPtr> CxxObjectFileSet;
 typedef std::shared_ptr<CxxObjectFileSet> CxxObjectFileSetSPtr;
 
 namespace cof_details
