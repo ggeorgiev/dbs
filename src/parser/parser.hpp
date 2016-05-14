@@ -88,8 +88,8 @@ public:
         if (!fstream.is_open())
             EHBan(kUnable, path);
 
-        std::string str((std::istreambuf_iterator<char>(fstream)),
-                        std::istreambuf_iterator<char>());
+        string str((std::istreambuf_iterator<char>(fstream)),
+                   std::istreambuf_iterator<char>());
 
         auto stream = std::make_shared<Stream>();
         EHTest(stream->initialize(str));
@@ -144,7 +144,7 @@ public:
                 auto type = nextMeaningfulToken();
 
                 auto directory = mLocation->directory();
-                std::string visibility;
+                string visibility;
                 while (type.test(Token::kOperatorAt))
                 {
                     dom::Attribute attribute;

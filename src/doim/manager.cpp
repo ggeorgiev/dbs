@@ -9,7 +9,7 @@
 #include <iosfwd>
 #include <ostream>
 #include <shared_ptr>
-#include <string>
+#include <str>
 
 namespace doim
 {
@@ -35,7 +35,7 @@ ObjectSPtr Manager::obtainObject(const LocationSPtr& base,
         return ObjectSPtr();
 
     auto working =
-        Object::make(type, std::string(object.begin() + pos, object.end()), location);
+        Object::make(type, string(object.begin() + pos, object.end()), location);
     return unique(working);
 }
 
@@ -60,7 +60,7 @@ FsDirectorySPtr traceDirectory(Trace&& trace,
 
         if (next != pos || parent == nullptr)
         {
-            std::string name(pos, next);
+            string name(pos, next);
             if (name == kParentDirectoryString)
             {
                 if (parent == nullptr)
@@ -150,7 +150,7 @@ FsFileSPtr traceFile(TraceDirectory&& traceDirectory,
     if (directory == nullptr)
         return FsFileSPtr();
 
-    return FsFile::make(directory, std::string(file.begin() + pos, file.end()));
+    return FsFile::make(directory, string(file.begin() + pos, file.end()));
 }
 
 FsFileSPtr Manager::findFile(const FsDirectorySPtr& base, const string_view& file)

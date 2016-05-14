@@ -10,7 +10,7 @@
 #include "doim/sys/command.h"
 #include <memory>
 #include <sstream>
-#include <string>
+#include <str>
 #include <unordered>
 
 namespace tool
@@ -39,7 +39,7 @@ doim::SysArgumentSetSPtr CxxCompiler::includeArguments(
 
     for (const auto& includeDirectory : *includeDirectories)
     {
-        std::string value;
+        string value;
         switch (includeDirectory->type())
         {
             case doim::CxxIncludeDirectory::EType::kUser:
@@ -90,7 +90,7 @@ doim::SysCommandSPtr CxxCompiler::compileCommand(
         "MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk");
     compileArguments->insert(argument_cxxflags);
 
-    const std::string& file = objectFile->cxxFile()->file()->path(directory);
+    const string& file = objectFile->cxxFile()->file()->path(directory);
 
     auto argument_c = doim::gManager->obtainArgument("-c " + file);
     compileArguments->insert(argument_c);
@@ -127,7 +127,7 @@ doim::SysCommandSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& direc
             "-L " + cxxLibrary->binary()->directory()->path(directory));
         linkArguments->insert(argument_L);
 
-        std::string name = cxxLibrary->binary()->name();
+        string name = cxxLibrary->binary()->name();
         auto argument_l =
             doim::gManager->obtainArgument("-l" + name.substr(3, name.size() - 5));
         linkArguments->insert(argument_l);

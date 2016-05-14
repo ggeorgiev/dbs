@@ -11,7 +11,7 @@
 #include "rtti/class_rtti.hpp"
 #include <memory>
 #include <sstream>
-#include <string>
+#include <str>
 #include <unordered>
 
 namespace tool
@@ -30,7 +30,7 @@ tpool::TaskSPtr CxxClangFormat::formatCommand(const doim::FsDirectorySPtr& direc
     auto arguments = doim::SysArgumentSet::make();
     arguments->insert(gSortIncludesArgument);
 
-    const std::string& file = cxxFile->file()->path(directory);
+    const string& file = cxxFile->file()->path(directory);
     auto argument_i = doim::gManager->obtainArgument("-i " + file);
     arguments->insert(argument_i);
 

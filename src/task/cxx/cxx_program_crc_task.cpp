@@ -12,7 +12,7 @@
 #include "doim/manager.h"
 #include "err/err_assert.h"
 #include <algorithm>
-#include <string>
+#include <str>
 #include <unordered>
 #include <vector>
 
@@ -56,7 +56,7 @@ ECode CxxProgramCrcTask::operator()()
     EHEnd;
 }
 
-std::string CxxProgramCrcTask::description() const
+string CxxProgramCrcTask::description() const
 {
     return "Cxx program crc " + cxxProgram()->file()->path();
 }

@@ -6,9 +6,9 @@
 
 namespace parser
 {
-static std::string gInclude = "include";
+static string gInclude = "include";
 
-std::vector<CxxParser::Include> CxxParser::includes(const std::string content)
+std::vector<CxxParser::Include> CxxParser::includes(const string content)
 {
     std::vector<Include> result;
     size_t pos = 0;

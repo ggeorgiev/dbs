@@ -20,6 +20,6 @@ public:
     SysExecutable(const doim::FsFileSPtr& file);
     SysExecutable(const doim::FsBinarySPtr& binary);
 
-    std::string path() const;
+    string path() const;
 };
 }

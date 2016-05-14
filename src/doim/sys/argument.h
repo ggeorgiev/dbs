@@ -6,7 +6,7 @@
 #include "doim/base.hpp"
 #include <iosfwd>
 #include <memory>
-#include <string>
+#include <str>
 #include <tuple>
 #include <unordered>
 
@@ -17,17 +17,17 @@ typedef shared_ptr<SysArgument> SysArgumentSPtr;
 typedef unordered_set<SysArgumentSPtr> SysArgumentSet;
 typedef shared_ptr<SysArgumentSet> SysArgumentSetSPtr;
 
-class SysArgument : public Base<SysArgument, std::string>
+class SysArgument : public Base<SysArgument, string>
 {
 public:
-    static SysArgumentSPtr global(const std::string& value, SysArgumentSPtr& argument);
+    static SysArgumentSPtr global(const string& value, SysArgumentSPtr& argument);
 
-    SysArgument(const std::string& value)
+    SysArgument(const string& value)
         : Base(value)
     {
     }
 
-    const std::string& value() const
+    const string& value() const
     {
         return std::get<0>(mArgs);
     }

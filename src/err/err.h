@@ -13,7 +13,7 @@
 #include <fmt/format.h>
 #include <boost/thread/tss.hpp> // IWYU pragma: export
 #include <memory>
-#include <sstream>
+#include <str>
 #include <unordered_map>
 #include <vector>
 #include <stddef.h>
@@ -101,12 +101,12 @@ public:
         return mCode;
     }
 
-    std::string message() const
+    string message() const
     {
         return mMessage.str();
     }
 
-    std::stringstream& message_stream()
+    stringstream& message_stream()
     {
         return mMessage;
     }
@@ -116,9 +116,9 @@ public:
         mCallstack.push_back(location);
     }
 
-    std::string callstack()
+    string callstack()
     {
-        std::string stack;
+        string stack;
         for (const auto& location : mCallstack)
         {
             stack += fmt::format("{}:{}: @ {}\n",
@@ -131,7 +131,7 @@ public:
 
 private:
     ECode mCode;
-    std::stringstream mMessage;
+    stringstream mMessage;
     std::vector<Location> mCallstack;
 };
 

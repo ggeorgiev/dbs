@@ -34,7 +34,7 @@ public:
     {
     }
 
-    virtual std::string description() const = 0;
+    virtual string description() const = 0;
 
     virtual doim::TagSet tags() const
     {

@@ -8,7 +8,7 @@
 #include "err/err_assert.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
-#include <string>
+#include <str>
 
 namespace task
 {
@@ -39,7 +39,7 @@ ECode EnsureDirectoryTask::operator()()
     EHEnd;
 }
 
-std::string EnsureDirectoryTask::description() const
+string EnsureDirectoryTask::description() const
 {
     return "Ensure directory " + directory()->path();
 }

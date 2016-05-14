@@ -16,7 +16,7 @@
 #include <memory>
 #include <regex>
 #include <sstream>
-#include <string>
+#include <str>
 #include <unordered>
 
 namespace tool
@@ -38,7 +38,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
         "MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk");
     arguments->insert(argument_cxxflags);
 
-    const std::string& file = cxxFile->file()->path(directory);
+    const string& file = cxxFile->file()->path(directory);
 
     auto argument_file = doim::gManager->obtainArgument(file);
     arguments->insert(argument_file);
@@ -47,7 +47,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
     auto command = doim::SysCommand::make(mTool, arguments);
     command = doim::gManager->unique(command);
 
-    auto fn = [](int exit, const std::string& output) -> ECode {
+    auto fn = [](int exit, const string& output) -> ECode {
         if (exit == 0)
         {
             ELOG("Unexpected exit code from iwyu tool: {}", exit);

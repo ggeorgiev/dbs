@@ -41,13 +41,13 @@ public:
     }
 
     int exit() const;
-    ECode stdoutput(std::string& stdoutput) const;
+    ECode stdoutput(string& stdoutput) const;
 
     ECode operator()() override;
-    std::string description() const override;
+    string description() const override;
 
 private:
     int mExit;
-    std::string stdoutputDbKey() const;
+    string stdoutputDbKey() const;
 };
 }

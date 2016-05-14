@@ -21,9 +21,9 @@ TYPED_TEST(CxxParserTest, includes)
 {
     struct Test
     {
-        std::string file;
+        string file;
         parser::CxxParser::EIncludeType type;
-        std::string includes[10];
+        string includes[10];
     };
 
     Test tests[]{

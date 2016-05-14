@@ -7,8 +7,8 @@
 
 namespace doim
 {
-SysArgumentSPtr SysArgument::global(const std::string& value, SysArgumentSPtr& argument)
+SysArgumentSPtr SysArgument::global(const string& value, SysArgumentSPtr& argument)
 {
-    return Manager::global<SysArgument, std::string>(value, argument);
+    return Manager::global<SysArgument, string>(value, argument);
 }
 }

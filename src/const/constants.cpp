@@ -1,12 +1,12 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "const/constants.h"
-#include <string>
+#include <str>
 
-std::string kEmptyString;
+string kEmptyString;
 const char* kEmptyStringLiteral = "";
 
-std::string kCurrentDirectoryString = ".";
+string kCurrentDirectoryString = ".";
 
-std::string kParentDirectoryString = "..";
+string kParentDirectoryString = "..";

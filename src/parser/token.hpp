@@ -1,10 +1,10 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
 
 #include <bitset>
-#include <string>
+#include <str>
 
 #define BITMASK0(X) static const uint64_t X##Mask = 1 << X
 

@@ -38,7 +38,7 @@ public:
         return result;
     }
 
-    std::string name() const
+    string name() const
     {
         return mName;
     }
@@ -50,7 +50,7 @@ public:
 
     ECode updateCxxLibraries(CxxLibrarySet& libraries);
 
-    ECode updateName(const std::string& name);
+    ECode updateName(const string& name);
 
     // Computations
     doim::CxxProgramSPtr cxxProgram(doim::CxxProgram::EPurpose purpose,
@@ -65,7 +65,7 @@ public:
     doim::CxxHeaderSetSPtr cxxHeaders(const doim::FsDirectorySPtr& root) const;
 
 private:
-    std::string mName;
+    string mName;
     CxxLibrarySet mCxxLibraries;
 };
 }

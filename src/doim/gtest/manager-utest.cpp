@@ -10,7 +10,7 @@
 #include <memory>
 #include <ostream>
 #include <stdexcept>
-#include <string>
+#include <str>
 
 TEST(ManagerTest, obtainObject)
 {
@@ -108,10 +108,10 @@ TEST(ManagerTest, obtainDirectory)
 {
     struct Test
     {
-        std::string root;
-        std::string dir;
-        std::string absolute;
-        std::string relative;
+        string root;
+        string dir;
+        string absolute;
+        string relative;
     };
 
     Test tests[]{
@@ -157,8 +157,8 @@ TEST(ManagerTest, obtainRelativeDirectory)
 {
     struct Test
     {
-        std::string dir;
-        std::string relative;
+        string dir;
+        string relative;
     };
 
     Test tests[]{
@@ -185,10 +185,10 @@ TEST(ManagerTest, obtainCorrespondingDirectory)
 {
     struct Test
     {
-        std::string dir;
-        std::string from;
-        std::string to;
-        std::string corresponding;
+        string dir;
+        string from;
+        string to;
+        string corresponding;
     };
 
     Test tests[]{

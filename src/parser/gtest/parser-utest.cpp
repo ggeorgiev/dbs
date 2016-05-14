@@ -48,7 +48,7 @@ TYPED_TEST(ParserTest, parseFiles)
 {
     struct Test
     {
-        std::string files;
+        string files;
         size_t count;
     };
 

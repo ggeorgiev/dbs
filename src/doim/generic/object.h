@@ -38,20 +38,20 @@ typedef shared_ptr<ObjectSet> ObjectSetSPtr;
 
 class Object : public Base<Object,
                            std::underlying_type<o_details::EType>::type,
-                           std::string,
+                           string,
                            LocationSPtr>
 {
 public:
     typedef o_details::EType EType;
 
-    Object(const EType type, const std::string& name, const LocationSPtr& location);
+    Object(const EType type, const string& name, const LocationSPtr& location);
 
     EType type() const
     {
         return static_cast<EType>(std::get<0>(mArgs));
     }
 
-    const std::string& name() const
+    const string& name() const
     {
         return std::get<1>(mArgs);
     }

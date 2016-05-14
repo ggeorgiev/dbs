@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
@@ -6,7 +6,7 @@
 #include "parser/fixed_encoding_traits.hpp"
 #include "err/err.h"
 #include "const/constants.h"
-#include <string>
+#include <str>
 
 namespace parser
 {

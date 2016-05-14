@@ -11,7 +11,7 @@
 #include "log/log.h"
 #include <boost/filesystem/operations.hpp>
 #include <iterator>
-#include <string>
+#include <str>
 
 namespace task
 {
@@ -34,8 +34,8 @@ ECode CxxObjectFileCrcTask::operator()()
     task::gTPool->ensureScheduled(task);
 
     std::ifstream fstream(path.c_str());
-    std::string content((std::istreambuf_iterator<char>(fstream)),
-                        std::istreambuf_iterator<char>());
+    string content((std::istreambuf_iterator<char>(fstream)),
+                   std::istreambuf_iterator<char>());
 
     math::CrcProcessor crcProcessor;
     crcProcessor.process_bytes(content.data(), content.size());
@@ -55,7 +55,7 @@ ECode CxxObjectFileCrcTask::operator()()
     EHEnd;
 }
 
-std::string CxxObjectFileCrcTask::description() const
+string CxxObjectFileCrcTask::description() const
 {
     return "Cxx object file crc " + cxxObjectFile()->file()->path();
 }

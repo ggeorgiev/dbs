@@ -1,16 +1,16 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
 
 #include <iosfwd>
-#include <string>
+#include <str>
 
-extern std::string kEmptyString;
+extern string kEmptyString;
 extern const char* kEmptyStringLiteral;
 
-extern std::string kCurrentDirectoryString;
-extern std::string kParentDirectoryString;
+extern string kCurrentDirectoryString;
+extern string kParentDirectoryString;
 
 inline char slash()
 {

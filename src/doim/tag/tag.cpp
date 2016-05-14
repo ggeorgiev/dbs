@@ -7,9 +7,9 @@
 
 namespace doim
 {
-TagSPtr Tag::global(const std::string& name, TagSPtr& tag)
+TagSPtr Tag::global(const string& name, TagSPtr& tag)
 {
-    return Manager::global<Tag, std::string>(name, tag);
+    return Manager::global<Tag, string>(name, tag);
 }
 
 TagSPtr gBuildTag = Tag::global("build", gBuildTag);

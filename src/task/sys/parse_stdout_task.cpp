@@ -12,9 +12,9 @@
 
 namespace task
 {
-std::function<ECode(int, const std::string&)> ParseStdoutTask::logOnError()
+std::function<ECode(int, const string&)> ParseStdoutTask::logOnError()
 {
-    return [](int exit, const std::string& stdoutput) -> ECode {
+    return [](int exit, const string& stdoutput) -> ECode {
         if (exit != 0)
         {
             ELOG("\n{}", stdoutput);
@@ -27,8 +27,8 @@ std::function<ECode(int, const std::string&)> ParseStdoutTask::logOnError()
 ParseStdoutTask::ParseStdoutTask(const doim::SysCommandSPtr& command,
                                  const doim::FsDirectorySPtr& targetDirectory,
                                  rtti::ClassId parseId,
-                                 std::function<ECode(int, const std::string&)> parse,
-                                 const std::string& description)
+                                 std::function<ECode(int, const string&)> parse,
+                                 const string& description)
     : Base(command, targetDirectory, parseId)
     , mParse(parse)
     , mDescription(description)
@@ -43,14 +43,14 @@ ECode ParseStdoutTask::operator()()
     gTPool->ensureScheduled(executeTask);
     EHTest(executeTask->join());
 
-    std::string stdoutput;
+    string stdoutput;
     EHTest(executeTask->stdoutput(stdoutput));
 
     EHTest(mParse(executeTask->exit(), stdoutput));
     EHEnd;
 }
 
-std::string ParseStdoutTask::description() const
+string ParseStdoutTask::description() const
 {
     return mDescription;
 }

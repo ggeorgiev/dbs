@@ -6,7 +6,7 @@
 #include "gtest/framework.h"
 #include <boost/chrono/process_cpu_clocks.hpp>
 #include <iosfwd>
-#include <string>
+#include <str>
 #include <unordered_map>
 
 namespace testing
@@ -37,7 +37,7 @@ public:
         kReportError
     };
 
-    typedef std::unordered_map<std::string, boost::chrono::process_cpu_clock::time_point>
+    typedef std::unordered_map<string, boost::chrono::process_cpu_clock::time_point>
         TrackMap;
 
 private:

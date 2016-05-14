@@ -8,18 +8,18 @@
 #include "im/initialization_manager.hpp"
 #include <functional>
 #include <memory>
-#include <string>
+#include <str>
 
 namespace doim
 {
-DbKeySPtr DbKey::global(const std::string& name, DbKeySPtr& key)
+DbKeySPtr DbKey::global(const string& name, DbKeySPtr& key)
 {
-    return Manager::global<DbKey, DbKeySPtr, std::string>(nullptr, name, key);
+    return Manager::global<DbKey, DbKeySPtr, string>(nullptr, name, key);
 }
 
 DbKeySPtr DbKey::global(const DbKeySPtr& ancestor,
                         int level,
-                        const std::string& name,
+                        const string& name,
                         DbKeySPtr& key)
 {
     auto fn = [&ancestor, name, &key]() -> bool {
@@ -33,22 +33,22 @@ DbKeySPtr DbKey::global(const DbKeySPtr& ancestor,
     return nullptr;
 }
 
-DbKey::DbKey(const std::string& name)
+DbKey::DbKey(const string& name)
     : Base(nullptr, name)
 {
 }
-DbKey::DbKey(const DbKeySPtr& ancestor, const std::string& name)
+DbKey::DbKey(const DbKeySPtr& ancestor, const string& name)
     : Base(ancestor, name)
 {
     ASSERT(gManager->isUnique(ancestor));
 }
 
-std::string DbKey::string() const
+string DbKey::toString() const
 {
     if (ancestor() == nullptr)
     {
         return name();
     }
-    return ancestor()->string() + ":" + name();
+    return ancestor()->toString() + ":" + name();
 }
 }

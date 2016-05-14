@@ -5,7 +5,7 @@
 
 namespace doim
 {
-FsBinary::FsBinary(const std::string& name)
+FsBinary::FsBinary(const string& name)
     : Base(name)
 {
 }

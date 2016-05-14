@@ -11,7 +11,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
 #include <memory>
-#include <string>
+#include <str>
 #include <stdio.h>
 #include <sys/wait.h>
 
@@ -40,7 +40,7 @@ ECode ExecuteCommandTask::operator()()
         }
     }
 
-    const auto& cmd = command()->string() + " 2>&1";
+    const auto& cmd = command()->toString() + " 2>&1";
 
     auto pipe = popen(cmd.c_str(), "r");
     if (!pipe)
@@ -48,7 +48,7 @@ ECode ExecuteCommandTask::operator()()
 
     char buffer[1024];
 
-    std::string stdoutput;
+    string stdoutput;
     while (!feof(pipe))
     {
         if (fgets(buffer, sizeof(buffer), pipe) != NULL)
@@ -67,21 +67,21 @@ int ExecuteCommandTask::exit() const
     return mExit;
 }
 
-ECode ExecuteCommandTask::stdoutput(std::string& stdoutput) const
+ECode ExecuteCommandTask::stdoutput(string& stdoutput) const
 {
     ASSERT(finished());
     EHTest(db::gDatabase->get(stdoutputDbKey(), stdoutput));
     EHEnd;
 }
 
-std::string ExecuteCommandTask::stdoutputDbKey() const
+string ExecuteCommandTask::stdoutputDbKey() const
 {
-    return "stdout: " + command()->string();
+    return "stdout: " + command()->toString();
 }
 
-std::string ExecuteCommandTask::description() const
+string ExecuteCommandTask::description() const
 {
-    return "System execute " + command()->string();
+    return "System execute " + command()->toString();
 }
 
 } // namespace task

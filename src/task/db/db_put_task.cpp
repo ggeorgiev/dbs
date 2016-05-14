@@ -5,7 +5,7 @@
 #include "doim/manager.h"
 #include "db/database.h"
 #include "err/err_assert.h"
-#include <string>
+#include <str>
 
 namespace task
 {
@@ -18,13 +18,13 @@ DbPutTask::DbPutTask(const doim::DbKeySPtr& key, const doim::DbValueSPtr& value)
 
 ECode DbPutTask::operator()()
 {
-    EHTest(db::gDatabase->put(key()->string(), value()->bytes()));
+    EHTest(db::gDatabase->put(key()->toString(), value()->bytes()));
     EHEnd;
 }
 
-std::string DbPutTask::description() const
+string DbPutTask::description() const
 {
-    return "Update key " + key()->string();
+    return "Update key " + key()->toString();
 }
 
 } // namespace task

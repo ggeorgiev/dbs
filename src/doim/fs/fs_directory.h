@@ -6,7 +6,7 @@
 #include "doim/base.hpp"
 #include <iostream>
 #include <memory>
-#include <string>
+#include <str>
 #include <tuple>
 #include <unordered>
 #include <stddef.h>
@@ -21,7 +21,7 @@ typedef shared_ptr<FsDirectory> FsDirectorySPtr;
 typedef unordered_set<FsDirectorySPtr> FsDirectorySet;
 typedef shared_ptr<FsDirectorySet> FsDirectorySetSPtr;
 
-class FsDirectory : public Base<FsDirectory, FsDirectorySPtr, std::string>
+class FsDirectory : public Base<FsDirectory, FsDirectorySPtr, string>
 {
 public:
     class Builder
@@ -49,7 +49,7 @@ public:
             mFsDirectory->mLevel = parent == nullptr ? 1 : parent->level() + 1;
         }
 
-        void set_name(const std::string& name) const
+        void set_name(const string& name) const
         {
             std::get<1>(mFsDirectory->mArgs) = name;
         }
@@ -59,18 +59,18 @@ public:
     };
 
     static FsDirectorySPtr global(const FsDirectorySPtr& parent,
-                                  const std::string& name,
+                                  const string& name,
                                   FsDirectorySPtr& directory);
 
     FsDirectory();
-    FsDirectory(const FsDirectorySPtr& parent, const std::string& name);
+    FsDirectory(const FsDirectorySPtr& parent, const string& name);
 
     const FsDirectorySPtr& parent() const
     {
         return std::get<0>(mArgs);
     }
 
-    const std::string& name() const
+    const string& name() const
     {
         return std::get<1>(mArgs);
     }
@@ -81,10 +81,10 @@ public:
     }
 
     FsDirectorySPtr commonAncestor(const FsDirectorySPtr& directory) const;
-    std::string path(const FsDirectorySPtr& directory = nullptr) const;
+    string path(const FsDirectorySPtr& directory = nullptr) const;
 
 private:
-    void calculate(FsDirectoryRPtr directory, size_t length, std::string& path) const;
+    void calculate(FsDirectoryRPtr directory, size_t length, string& path) const;
 
     size_t mLevel;
 };

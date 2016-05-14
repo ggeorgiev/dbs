@@ -4,7 +4,7 @@
 #pragma once
 
 #include <iosfwd>
-#include <string>
+#include <str>
 #include <vector>
 
 namespace parser
@@ -21,9 +21,9 @@ public:
     struct Include
     {
         EIncludeType mType;
-        std::string mPath;
+        string mPath;
     };
 
-    std::vector<Include> includes(const std::string content);
+    std::vector<Include> includes(const string content);
 };
 }

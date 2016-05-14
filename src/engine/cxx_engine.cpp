@@ -23,7 +23,7 @@
 #include "math/crc.hpp"
 #include <functional>
 #include <iosfwd>
-#include <string>
+#include <str>
 #include <vector>
 
 namespace engine
@@ -37,7 +37,7 @@ doim::DbKeySPtr CxxEngine::gReleaseDbKey =
 doim::DbKeySPtr CxxEngine::gProfileDbKey =
     doim::DbKey::global(gBuildDbKey, 1, "profile", CxxEngine::gProfileDbKey);
 
-std::map<CxxEngine::EBuildFor, std::string>
+std::map<CxxEngine::EBuildFor, string>
     CxxEngine::gSubDirectory{{CxxEngine::EBuildFor::kDebug, "debug"},
                              {CxxEngine::EBuildFor::kRelease, "release"},
                              {CxxEngine::EBuildFor::kProfile, "profile"}};
@@ -104,7 +104,7 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
         key = doim::gManager->unique(key);
 
         math::Crcsum crc;
-        db::gDatabase->get(key->string(), crc);
+        db::gDatabase->get(key->toString(), crc);
 
         auto crcTask = std::static_pointer_cast<task::CxxObjectFileCrcTask>(task);
         if (crcTask->crc() != 0 && crcTask->crc() == crc)
@@ -117,7 +117,7 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
         auto compileCommand = mCompiler->compileCommand(directory, objectFile);
 
         auto id = rtti::RttiInfo<CxxEngine, 0>::classId();
-        const std::string& description =
+        const string& description =
             "Compile " + objectFile->cxxFile()->file()->path(directory);
         auto compileTask = task::gManager->valid(
             task::ParseStdoutTask::make(compileCommand,
@@ -165,7 +165,7 @@ tpool::TaskSPtr CxxEngine::buildObjects(const doim::DbKeySPtr& ancenstor,
         auto linkCommand = mCompiler->linkCommand(directory, program);
 
         auto id = rtti::RttiInfo<CxxEngine, 1>::classId();
-        const std::string& description = "Link " + program->file()->path(directory);
+        const string& description = "Link " + program->file()->path(directory);
         auto linkTask = task::gManager->valid(
             task::ParseStdoutTask::make(linkCommand,
                                         program->file()->directory(),
@@ -211,7 +211,7 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
         auto key = doim::gManager->unique(doim::DbKey::make(cxxProgramKey, path));
 
         math::Crcsum crc;
-        db::gDatabase->get(key->string(), crc);
+        db::gDatabase->get(key->toString(), crc);
 
         auto crcTask = std::static_pointer_cast<task::CxxProgramCrcTask>(task);
         if (crcTask->crc() == crc)
@@ -247,7 +247,7 @@ tpool::TaskSPtr CxxEngine::iwyuTask(const doim::FsDirectorySPtr& directory,
         key = doim::gManager->unique(key);
 
         math::Crcsum crc;
-        db::gDatabase->get(key->string(), crc);
+        db::gDatabase->get(key->toString(), crc);
 
         auto crcTask = std::static_pointer_cast<task::CxxFileCrcTask>(task);
         if (crcTask->crc() == crc)

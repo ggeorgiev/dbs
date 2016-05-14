@@ -8,7 +8,7 @@
 #include "doim/manager.h"
 #include "err/err_assert.h"
 #include "log/log.h"
-#include <string>
+#include <str>
 
 namespace task
 {
@@ -29,7 +29,7 @@ ECode CxxFileCrcTask::operator()()
     EHEnd;
 }
 
-std::string CxxFileCrcTask::description() const
+string CxxFileCrcTask::description() const
 {
     return "Cxx file crc " + cxxFile()->file()->path();
 }

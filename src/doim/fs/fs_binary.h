@@ -6,6 +6,7 @@
 #include "doim/base.hpp"
 #include <iosfwd>
 #include <memory>
+#include <str>
 #include <tuple>
 
 namespace doim
@@ -13,12 +14,12 @@ namespace doim
 class FsBinary;
 typedef shared_ptr<FsBinary> FsBinarySPtr;
 
-class FsBinary : public Base<FsBinary, std::string>
+class FsBinary : public Base<FsBinary, string>
 {
 public:
-    FsBinary(const std::string& name);
+    FsBinary(const string& name);
 
-    const std::string& name() const
+    const string& name() const
     {
         return std::get<0>(mArgs);
     }

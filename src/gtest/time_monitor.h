@@ -5,6 +5,7 @@
 
 #include "gtest/framework.h"
 #include <iosfwd>
+#include <str>
 #include <stddef.h>
 
 namespace testing
@@ -41,6 +42,6 @@ public:
 
 private:
     Mode mMode;
-    std::string mFailedFilter;
+    string mFailedFilter;
 };
 }

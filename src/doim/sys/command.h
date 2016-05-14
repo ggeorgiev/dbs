@@ -8,6 +8,7 @@
 #include "dp/simple_memoization.hpp"
 #include <iosfwd>
 #include <memory>
+#include <str>
 #include <tuple>
 #include <unordered>
 
@@ -36,9 +37,9 @@ public:
         return std::get<1>(mArgs);
     }
 
-    std::string string() const;
+    string toString() const;
 
 private:
-    mutable dp::SimpleMemoization<std::string> mCommandMemoization;
+    mutable dp::SimpleMemoization<string> mCommandMemoization;
 };
 }

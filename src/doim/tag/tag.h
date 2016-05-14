@@ -6,7 +6,7 @@
 #include "doim/base.hpp"
 #include <iosfwd>
 #include <memory>
-#include <string>
+#include <str>
 #include <tuple>
 #include <unordered>
 
@@ -18,17 +18,17 @@ typedef shared_ptr<Tag> TagSPtr;
 typedef unordered_set<TagSPtr> TagSet;
 typedef shared_ptr<TagSet> TagSetSPtr;
 
-class Tag : public Base<Tag, std::string>
+class Tag : public Base<Tag, string>
 {
 public:
-    static TagSPtr global(const std::string& name, TagSPtr& tag);
+    static TagSPtr global(const string& name, TagSPtr& tag);
 
-    Tag(const std::string& name)
+    Tag(const string& name)
         : Base(name)
     {
     }
 
-    const std::string& name() const
+    const string& name() const
     {
         return std::get<0>(mArgs);
     }

@@ -21,7 +21,7 @@ public:
                im::InitializationManager::rank_step();
     }
 
-    ECode open(const std::string& file);
+    ECode open(const string& file);
     void close();
 
     template <typename V>
@@ -29,7 +29,7 @@ public:
     {
         V defaultValue = V();
 
-        std::string buffer;
+        string buffer;
         EHTest(get(key,
                    string_view(reinterpret_cast<const char*>(&defaultValue),
                                sizeof(defaultValue)),
@@ -46,10 +46,8 @@ public:
         EHEnd;
     }
 
-    ECode get(const string_view& key,
-              const string_view& defaultValue,
-              std::string& value);
-    ECode get(const string_view& key, std::string& value);
+    ECode get(const string_view& key, const string_view& defaultValue, string& value);
+    ECode get(const string_view& key, string& value);
     ECode put(const string_view& key, const string_view& value);
     ECode erase(const string_view& key);
 
@@ -58,7 +56,7 @@ private:
 };
 
 template <>
-inline ECode Database::put(const string_view& key, const std::string& value)
+inline ECode Database::put(const string_view& key, const string& value)
 {
     EHTest(put(key, string_view(value)));
     EHEnd;

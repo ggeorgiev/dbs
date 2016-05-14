@@ -162,7 +162,7 @@ public:
     using ManagerObjectSetMixin<SysArgument>::unique;
     using ManagerObjectSetMixin<SysArgument>::isUnique;
 
-    SysArgumentSPtr obtainArgument(const std::string& value)
+    SysArgumentSPtr obtainArgument(const string& value)
     {
         return unique(doim::SysArgument::make(value));
     }

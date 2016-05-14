@@ -50,7 +50,7 @@ private:
     static doim::DbKeySPtr gReleaseDbKey;
     static doim::DbKeySPtr gProfileDbKey;
 
-    static std::map<EBuildFor, std::string> gSubDirectory;
+    static std::map<EBuildFor, string> gSubDirectory;
     static std::map<EBuildFor, doim::CxxProgram::EPurpose> gProgramPurpose;
 
     static bool initDbKeyPurpose();

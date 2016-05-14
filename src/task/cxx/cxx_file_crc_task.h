@@ -36,6 +36,6 @@ public:
     }
 
     ECode operator()() override;
-    std::string description() const override;
+    string description() const override;
 };
 }

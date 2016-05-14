@@ -40,8 +40,8 @@ typedef shared_ptr<Parser> ParserSPtr;
 ECode run(const doim::FsFileSPtr& dbsFile)
 {
     std::ifstream fstream(dbsFile->path(nullptr));
-    std::string str((std::istreambuf_iterator<char>(fstream)),
-                    std::istreambuf_iterator<char>());
+    string str((std::istreambuf_iterator<char>(fstream)),
+               std::istreambuf_iterator<char>());
 
     auto stream = std::make_shared<Stream>();
     EHTest(stream->initialize(str));

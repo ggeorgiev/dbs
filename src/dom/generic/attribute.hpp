@@ -1,16 +1,16 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #pragma once
 
-#include <string>
+#include <str>
 
 namespace dom
 {
 struct Attribute
 {
 public:
-    std::string mName;
-    std::string mValue;
+    string mName;
+    string mValue;
 };
 }

@@ -6,7 +6,7 @@
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
 #include "err/err_assert.h"
-#include <string>
+#include <str>
 
 namespace task
 {
@@ -33,7 +33,7 @@ ECode CxxHeaderCrcTask::operator()()
     EHEnd;
 }
 
-std::string CxxHeaderCrcTask::description() const
+string CxxHeaderCrcTask::description() const
 {
     return "Cxx header file crc " + cxxHeader()->file()->path();
 }

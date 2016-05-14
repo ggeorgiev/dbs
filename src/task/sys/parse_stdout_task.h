@@ -25,13 +25,13 @@ class ParseStdoutTask : public Base<ParseStdoutTask,
                                     rtti::ClassId>
 {
 public:
-    static std::function<ECode(int, const std::string&)> logOnError();
+    static std::function<ECode(int, const string&)> logOnError();
 
     ParseStdoutTask(const doim::SysCommandSPtr& command,
                     const doim::FsDirectorySPtr& targetDirectory,
                     rtti::ClassId parseId,
-                    std::function<ECode(int, const std::string&)> parse,
-                    const std::string& description);
+                    std::function<ECode(int, const string&)> parse,
+                    const string& description);
 
     doim::SysCommandSPtr command() const
     {
@@ -44,10 +44,10 @@ public:
     }
 
     ECode operator()() override;
-    std::string description() const override;
+    string description() const override;
 
 private:
-    std::function<ECode(int, const std::string&)> mParse;
-    std::string mDescription;
+    std::function<ECode(int, const string&)> mParse;
+    string mDescription;
 };
 }

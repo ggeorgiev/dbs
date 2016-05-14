@@ -56,8 +56,8 @@ protected:
         }
 
         std::ifstream fstream(file->path(nullptr).c_str());
-        std::string content((std::istreambuf_iterator<char>(fstream)),
-                            std::istreambuf_iterator<char>());
+        string content((std::istreambuf_iterator<char>(fstream)),
+                       std::istreambuf_iterator<char>());
 
         parser::CxxParser parser;
 

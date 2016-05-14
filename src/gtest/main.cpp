@@ -1,4 +1,4 @@
-//  Copyright © 2015 George Georgiev. All rights reserved.
+//  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
 #include "doim/fs/fs_directory.h"
@@ -17,7 +17,7 @@
 
 namespace testing
 {
-std::string gIntermittentDirectory;
+string gIntermittentDirectory;
 doim::FsDirectorySPtr gIntermittentFsDirectory;
 
 doim::FsDirectorySPtr gTestResourceDirectory;

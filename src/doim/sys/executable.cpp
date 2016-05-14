@@ -15,7 +15,7 @@ SysExecutable::SysExecutable(const doim::FsBinarySPtr& binary)
 {
 }
 
-std::string SysExecutable::path() const
+string SysExecutable::path() const
 {
     const doim::FsFileSPtr& file = std::get<0>(mArgs);
     if (file != nullptr)

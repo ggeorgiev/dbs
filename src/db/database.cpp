@@ -16,7 +16,7 @@ namespace db
 {
 DatabaseSPtr gDatabase = im::InitializationManager::subscribe(gDatabase);
 
-ECode Database::open(const std::string& file)
+ECode Database::open(const string& file)
 {
     boost::filesystem::path path(file);
     if (!boost::filesystem::create_directories(path.parent_path()))
@@ -48,7 +48,7 @@ void Database::close()
 
 ECode Database::get(const string_view& key,
                     const string_view& defaultValue,
-                    std::string& value)
+                    string& value)
 {
     const auto& status = mRocksDb->Get(rocksdb::ReadOptions(),
                                        rocksdb::Slice(key.data(), key.size()),
@@ -68,7 +68,7 @@ ECode Database::get(const string_view& key,
     EHEnd;
 }
 
-ECode Database::get(const string_view& key, std::string& value)
+ECode Database::get(const string_view& key, string& value)
 {
     const auto& status = mRocksDb->Get(rocksdb::ReadOptions(),
                                        rocksdb::Slice(key.data(), key.size()),

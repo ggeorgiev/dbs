@@ -52,8 +52,8 @@ TYPED_TEST(TokenizerTest, token)
 {
     struct Test
     {
-        std::string str;
-        std::string tokens[10];
+        string str;
+        string tokens[10];
     };
 
     Test tests[]{
@@ -119,7 +119,7 @@ TYPED_TEST(TokenizerTest, sequence)
     typedef typename TestFixture::Tokenizer::Token Token;
     struct Test
     {
-        std::string str;
+        string str;
         typename Token::Type types[10];
     };
 

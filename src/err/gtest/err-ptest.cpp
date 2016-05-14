@@ -16,9 +16,9 @@ struct SerialiazeBase
 
 protected:
     int mA;
-    std::string mB;
+    string mB;
     int mC;
-    std::string mD;
+    string mD;
 };
 
 struct SerialiazeStringStream : public SerialiazeBase
@@ -29,7 +29,7 @@ struct SerialiazeStringStream : public SerialiazeBase
     }
 
 private:
-    std::stringstream mStream;
+    stringstream mStream;
 };
 
 struct SerialiazeFormat : public SerialiazeBase
@@ -40,7 +40,7 @@ struct SerialiazeFormat : public SerialiazeBase
     }
 
 private:
-    std::string mString;
+    string mString;
 };
 
 struct SerialiazePrintf : public SerialiazeBase
@@ -59,7 +59,7 @@ struct SerialiazePrintf : public SerialiazeBase
     }
 
 private:
-    std::string mString;
+    string mString;
 };
 
 template <typename T>

@@ -15,7 +15,7 @@ ECode CxxProgram::updateCxxLibraries(CxxLibrarySet& libraries)
     EHEnd;
 }
 
-ECode CxxProgram::updateName(const std::string& name)
+ECode CxxProgram::updateName(const string& name)
 {
     mName = name;
     EHEnd;

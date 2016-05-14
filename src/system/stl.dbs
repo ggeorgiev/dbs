@@ -41,8 +41,9 @@ cxx_library stl
         vector
 
         # wrapper
-        string_view
         shared_ptr
+        str
+        string_view
         unordered
     ;
 ;

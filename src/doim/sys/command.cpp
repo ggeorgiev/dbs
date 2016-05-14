@@ -7,7 +7,7 @@
 #include "err/err_assert.h"
 #include <algorithm>
 #include <functional>
-#include <string>
+#include <str>
 #include <vector>
 
 namespace doim
@@ -20,18 +20,18 @@ SysCommand::SysCommand(const SysExecutableSPtr& executable,
     ASSERT(gManager->isUnique(arguments));
 }
 
-std::string SysCommand::string() const
+string SysCommand::toString() const
 {
-    auto fn = [this]() -> std::string {
-        std::vector<std::string> strings;
+    auto fn = [this]() -> string {
+        std::vector<string> strings;
         for (const auto& argument : *arguments())
             strings.push_back(argument->value());
 
         std::sort(strings.begin(), strings.end());
 
-        std::string result = executable()->path();
-        for (const auto& string : strings)
-            result += " " + string;
+        string result = executable()->path();
+        for (const auto& str : strings)
+            result += " " + str;
 
         return result;
     };
