@@ -13,7 +13,7 @@ namespace tpool
 class TPool;
 
 typedef shared_ptr<TPool> TPoolSPtr;
-typedef std::weak_ptr<TPool> TPoolWPtr;
+typedef weak_ptr<TPool> TPoolWPtr;
 
 class TaskGroup;
 

@@ -7,7 +7,7 @@
 #include "err/gtest/err_assert.h"
 #include "gtest/framework.h"
 #include <bitset>
-#include <memory>
+#include <shared_ptr>
 #include <sstream>
 
 template <typename T>

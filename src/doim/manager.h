@@ -23,7 +23,7 @@
 #include "doim/tag/tag.h"
 #include "im/initialization_manager.hpp"
 #include <iosfwd>
-#include <memory>
+#include <shared_ptr>
 #include <string_view>
 #include <unordered>
 #include <unordered_map>

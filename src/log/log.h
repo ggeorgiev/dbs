@@ -13,7 +13,6 @@
 #include <spdlog/details/logger_impl.h>      // IWYU pragma: export
 #include <spdlog/details/spdlog_impl.h>      // IWYU pragma: export
 #include <memory>
-#include <shared_ptr>
 
 namespace dbslog
 {

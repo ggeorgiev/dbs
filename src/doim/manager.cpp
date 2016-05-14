@@ -8,6 +8,7 @@
 #include <functional>
 #include <iosfwd>
 #include <ostream>
+#include <shared_ptr>
 #include <string>
 
 namespace doim

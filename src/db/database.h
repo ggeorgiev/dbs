@@ -7,7 +7,6 @@
 #include "im/initialization_manager.hpp"
 #include <rocksdb/db.h>
 #include <memory>
-#include <shared_ptr>
 #include <sstream>
 #include <string_view>
 

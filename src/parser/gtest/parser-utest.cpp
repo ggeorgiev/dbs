@@ -10,9 +10,8 @@
 #include "err/gtest/err_assert.h"
 #include "gtest/framework.h"
 #include <limits>
-#include <memory>
+#include <shared_ptr>
 #include <sstream>
-#include <unordered_set>
 #include <stddef.h>
 
 template <typename T>

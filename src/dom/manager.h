@@ -7,7 +7,7 @@
 #include "dom/cxx/cxx_program.h"
 #include "doim/generic/object.h"
 #include "im/initialization_manager.hpp"
-#include <memory>
+#include <shared_ptr>
 #include <unordered_map>
 
 namespace dom

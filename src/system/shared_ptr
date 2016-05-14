@@ -8,6 +8,9 @@
 template<typename T>
 using shared_ptr = std::shared_ptr<T>;
 
+template<typename T>
+using weak_ptr = std::weak_ptr<T>;
+
 template <typename T>
 struct enable_make_shared
 {

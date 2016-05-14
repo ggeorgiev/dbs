@@ -14,7 +14,7 @@
 #include <algorithm>
 #include <iosfwd>
 #include <shared_ptr>
-#include <unordered_set>
+#include <unordered>
 #include <vector>
 
 namespace dom

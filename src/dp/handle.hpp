@@ -11,7 +11,7 @@ namespace dp
 {
 class Handle;
 typedef shared_ptr<Handle> HandleSPtr;
-typedef std::weak_ptr<Handle> HandleWPtr;
+typedef weak_ptr<Handle> HandleWPtr;
 
 class Handle
 {

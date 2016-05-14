@@ -6,7 +6,7 @@
 #include "err/err.h"
 #include "err/gtest/err.h"
 #include "gtest/framework.h"
-#include <memory>
+#include <shared_ptr>
 
 namespace tpool
 {

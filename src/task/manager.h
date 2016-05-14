@@ -12,9 +12,9 @@
 #include "task/sys/execute_command_task.h"
 #include "task/sys/parse_stdout_task.h"
 #include "im/initialization_manager.hpp"
-#include <memory>
 #include <mutex>
-#include <unordered_set>
+#include <shared_ptr>
+#include <unordered>
 
 namespace task
 {
