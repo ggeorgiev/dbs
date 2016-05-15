@@ -2,6 +2,7 @@
 //
 
 #include "doim/sys/command.h"
+#include "doim/set.hpp"
 #include "doim/sys/argument.h"
 #include "err/err_assert.h"
 #include <algorithm>

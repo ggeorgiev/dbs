@@ -3,6 +3,7 @@
 
 #include "doim/cxx/cxx_header.h"
 #include "err/err_assert.h"
+#include <ostream>
 
 namespace doim
 {

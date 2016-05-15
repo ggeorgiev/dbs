@@ -14,7 +14,6 @@
 #include "gtest/test_resource.h"
 #include <memory>
 #include <ostream>
-#include <unordered>
 
 class CxxFileCrcTaskTest : public ::testing::Test
 {

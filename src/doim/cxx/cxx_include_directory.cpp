@@ -3,7 +3,9 @@
 
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/cxx/cxx_header.h"
+#include "doim/set.hpp"
 #include "err/err_assert.h"
+#include <ostream>
 #include <unordered>
 #include <utility>
 

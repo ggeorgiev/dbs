@@ -2,7 +2,7 @@
 //
 
 #include "doim/generic/object.h"
-
+#include "doim/fs/fs_directory.h"
 #include "err/err_assert.h"
 #include "const/constants.h"
 

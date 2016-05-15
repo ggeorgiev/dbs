@@ -1,13 +1,14 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
+#include "doim/set.hpp"
+#include "doim/fs/fs_directory.h"
 #include "doim/generic/location.hpp"
 #include "gtest/framework.h"
 #include <memory>
 #include <ostream>
-#include <unordered>
 
-TEST(ManagerObjectSetMixinTest, unique)
+TEST(SetManagerTest, unique)
 {
     doim::LocationSetSPtr locations;
     ASSERT_EQ(nullptr, doim::LocationSet::unique(locations));
@@ -20,7 +21,7 @@ TEST(ManagerObjectSetMixinTest, unique)
     ASSERT_EQ(locations, doim::LocationSet::unique(locations));
 }
 
-TEST(ManagerObjectSetMixinTest, isUnique)
+TEST(SetManagerTest, isUnique)
 {
     doim::LocationSetSPtr locations;
     ASSERT_TRUE(locations->isUnique());
@@ -36,7 +37,7 @@ TEST(ManagerObjectSetMixinTest, isUnique)
     ASSERT_TRUE(location->isUnique());
 }
 
-TEST(ManagerObjectSetMixinTest, find)
+TEST(SetManagerTest, find)
 {
     doim::LocationSetSPtr locations;
     ASSERT_EQ(nullptr, locations->find());

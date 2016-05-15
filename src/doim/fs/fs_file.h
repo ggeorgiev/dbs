@@ -5,10 +5,11 @@
 
 #include "doim/element.hpp"
 #include "doim/fs/fs_directory.h"
+#include "doim/set.hpp"
 #include <memory>
 #include <str>
+#include <string_view>
 #include <tuple>
-#include <unordered>
 
 namespace doim
 {

@@ -7,7 +7,6 @@
 #include <boost/thread/barrier.hpp>
 #include <memory>
 #include <thread>
-#include <unordered>
 #include <vector>
 #include <stddef.h>
 

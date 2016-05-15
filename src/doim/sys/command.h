@@ -10,7 +10,6 @@
 #include <memory>
 #include <str>
 #include <tuple>
-#include <unordered>
 
 namespace doim
 {

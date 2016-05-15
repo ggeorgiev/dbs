@@ -7,6 +7,8 @@
 #include "task/sys/parse_stdout_task.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
+#include "doim/set.hpp"
+#include "doim/sys/argument.h"
 #include "doim/sys/command.h"
 #include "err/err.h"
 #include "log/log.h"
@@ -15,7 +17,6 @@
 #include <memory>
 #include <regex>
 #include <str>
-#include <unordered>
 
 namespace tool
 {
@@ -29,9 +30,10 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
 {
     auto arguments =
         CxxCompiler::includeArguments(directory, cxxFile->cxxIncludeDirectories());
+    arguments->insert(CxxCompiler::gStdCpp14Argument);
+    arguments->insert(CxxCompiler::gOptimizationLevel0Argument);
 
     auto argument_cxxflags = doim::SysArgument::unique(
-        "-std=c++11 -stdlib=libc++ -O0 -g "
         "-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/"
         "MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk");
     arguments->insert(argument_cxxflags);

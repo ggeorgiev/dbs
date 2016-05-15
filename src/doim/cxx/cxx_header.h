@@ -7,9 +7,9 @@
 #include "doim/element.hpp"
 #include "doim/fs/fs_file.h"
 #include "doim/set.hpp"
+#include <iosfwd>
 #include <memory>
 #include <tuple>
-#include <unordered>
 
 namespace doim
 {

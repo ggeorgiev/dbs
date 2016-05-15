@@ -5,6 +5,8 @@
 
 #include "err/err_assert.h"
 #include <boost/functional/hash/hash.hpp>
+#include <boost/thread/locks.hpp>
+#include <boost/thread/shared_mutex.hpp>
 #include <algorithm>
 #include <initializer_list>
 #include <iosfwd>

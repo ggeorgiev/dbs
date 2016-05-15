@@ -7,10 +7,9 @@
 #include "doim/cxx/cxx_static_library.h"
 #include "doim/element.hpp"
 #include "doim/fs/fs_file.h"
+#include "doim/set.hpp"
 #include <memory>
 #include <tuple>
-#include <type_traits>
-#include <unordered>
 
 namespace doim
 {

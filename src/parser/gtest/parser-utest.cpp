@@ -3,8 +3,8 @@
 
 #include "parser/parser.hpp" // IWYU pragma: keep
 #include "parser/string_stream.hpp"
+#include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
-
 #include "err/err.h"
 #include "err/gtest/err.h"
 #include "err/gtest/err_assert.h"

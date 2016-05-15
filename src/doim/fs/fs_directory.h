@@ -7,8 +7,8 @@
 #include "doim/set.hpp"
 #include <memory>
 #include <str>
+#include <string_view>
 #include <tuple>
-#include <unordered>
 #include <stddef.h>
 
 namespace doim

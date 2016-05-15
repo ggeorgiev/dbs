@@ -9,11 +9,10 @@
 #include "tpool/task_group.h"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/fs/fs_file.h"
-
+#include "doim/set.hpp"
 #include "err/err_assert.h"
 #include <algorithm>
 #include <str>
-#include <unordered>
 #include <vector>
 
 namespace task

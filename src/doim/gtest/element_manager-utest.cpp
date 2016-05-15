@@ -7,7 +7,7 @@
 #include <memory>
 #include <ostream>
 
-TEST(ManagerObjectMixinTest, unique)
+TEST(ElementManagerTest, unique)
 {
     doim::LocationSPtr location;
     ASSERT_EQ(nullptr, doim::Location::unique(location));
@@ -16,7 +16,7 @@ TEST(ManagerObjectMixinTest, unique)
     ASSERT_EQ(location, doim::Location::unique(location));
 }
 
-TEST(ManagerObjectMixinTest, isUnique)
+TEST(ElementManagerTest, isUnique)
 {
     doim::LocationSPtr location;
     ASSERT_TRUE(location->isUnique());
@@ -28,7 +28,7 @@ TEST(ManagerObjectMixinTest, isUnique)
     ASSERT_FALSE(location->isUnique());
 }
 
-TEST(ManagerObjectMixinTest, find)
+TEST(ElementManagerTest, find)
 {
     doim::LocationSPtr location;
     ASSERT_EQ(nullptr, location->find());

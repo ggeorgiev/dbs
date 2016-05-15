@@ -3,7 +3,7 @@
 
 #include "dom/cxx/cxx_library.h"
 #include "dom/generic/attribute.hpp"
-
+#include "doim/set.hpp"
 #include "err/err.h"
 #include <functional>
 #include <shared_ptr>

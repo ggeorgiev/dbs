@@ -6,11 +6,11 @@
 #include "task/sys/parse_stdout_task.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
+#include "doim/set.hpp"
 #include "doim/sys/command.h"
 #include "rtti/class_rtti.hpp"
 #include <memory>
 #include <str>
-#include <unordered>
 
 namespace tool
 {

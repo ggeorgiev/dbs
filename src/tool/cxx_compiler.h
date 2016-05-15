@@ -7,6 +7,7 @@
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/cxx/cxx_program.h"
 #include "doim/fs/fs_directory.h"
+#include "doim/sys/argument.h"
 #include "doim/sys/command.h"
 #include "doim/sys/executable.h"
 #include <memory>
@@ -19,6 +20,17 @@ typedef shared_ptr<CxxCompiler> CxxCompilerSPtr;
 class CxxCompiler : public std::enable_shared_from_this<CxxCompiler>
 {
 public:
+    static doim::SysArgumentSPtr gOptimizationLevel0Argument;
+    static doim::SysArgumentSPtr gOptimizationLevel3Argument;
+    static doim::SysArgumentSPtr gDebuggingInformationArgument;
+    static doim::SysArgumentSPtr gStdCpp11Argument;
+    static doim::SysArgumentSPtr gStdCpp14Argument;
+    static doim::SysArgumentSPtr gFProfileArcArgument;
+    static doim::SysArgumentSPtr gFTestCoverageArgument;
+
+    static doim::SysArgumentSPtr gCoverageArgument;
+    static doim::SysArgumentSPtr gStdLibc11Argument;
+
     static doim::SysArgumentSetSPtr includeArguments(
         const doim::FsDirectorySPtr& directory,
         const doim::CxxIncludeDirectorySetSPtr& includeDirectories);
@@ -32,17 +44,6 @@ public:
                                      const doim::CxxProgramSPtr& program) const;
 
 private:
-    static doim::SysArgumentSPtr gOptimizationLevel0Argument;
-    static doim::SysArgumentSPtr gOptimizationLevel3Argument;
-    static doim::SysArgumentSPtr gDebuggingInformationArgument;
-    static doim::SysArgumentSPtr gStdCpp11Argument;
-    static doim::SysArgumentSPtr gStdCpp14Argument;
-    static doim::SysArgumentSPtr gFProfileArcArgument;
-    static doim::SysArgumentSPtr gFTestCoverageArgument;
-
-    static doim::SysArgumentSPtr gCoverageArgument;
-    static doim::SysArgumentSPtr gStdLibc11Argument;
-
     doim::SysExecutableSPtr mCompiler;
 };
 }
