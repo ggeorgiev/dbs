@@ -57,7 +57,7 @@ TEST_F(CxxHeaderCrcTaskTest, simple)
 
     ASSERT_OKAY((*task)());
 
-    EXPECT_EQ(0x9f9163a56c247be9, task->crc()) << std::hex << task->crc();
+    EXPECT_EQ(0x9946caabb97e05b3, task->crc()) << std::hex << task->crc();
 }
 
 TEST_F(CxxHeaderCrcTaskTest, notFoundInclude)

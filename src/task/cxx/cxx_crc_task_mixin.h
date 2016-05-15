@@ -99,20 +99,19 @@ protected:
 
         EHTest(group->join());
 
-        std::vector<math::Crcsum> crcs;
-        crcs.reserve(headerDirectories.size());
+        math::Crcsum x = 0;
         for (const auto& task : tasks)
-            crcs.push_back(std::static_pointer_cast<Task>(task)->crc());
-
-        std::sort(crcs.begin(), crcs.end());
-
-        if (crcs.size() > 0 && crcs[0] == 0)
         {
-            mCrcsum = 0;
-            EHEnd;
+            auto n = std::static_pointer_cast<Task>(task)->crc();
+            if (n == 0)
+            {
+                mCrcsum = 0;
+                EHEnd;
+            }
+            x ^= n;
         }
 
-        crcProcessor.process_bytes(crcs.data(), sizeof(math::Crcsum) * crcs.size());
+        crcProcessor.process_bytes(&x, sizeof(x));
         mCrcsum = crcProcessor.checksum();
 
         EHEnd;
