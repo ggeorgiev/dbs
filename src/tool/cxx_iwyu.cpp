@@ -43,7 +43,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
     arguments->insert(argument_file);
     arguments = doim::gManager->unique(arguments);
 
-    auto command = doim::unique<doim::SysCommand>(mTool, arguments);
+    auto command = doim::SysCommand::unique(mTool, arguments);
 
     auto fn = [](int exit, const string& output) -> ECode {
         if (exit == 0)

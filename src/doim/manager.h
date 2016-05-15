@@ -18,7 +18,6 @@
 #include "doim/manager_object_mixin.hpp"
 #include "doim/manager_object_set_mixin.hpp"
 #include "doim/sys/argument.h"
-#include "doim/sys/command.h"
 #include "doim/tag/tag.h"
 #include "im/initialization_manager.hpp"
 #include <shared_ptr>
@@ -45,7 +44,6 @@ class Manager : public ManagerObjectMixin<CxxFile>,
                 public ManagerObjectSetMixin<FsFile>,
                 public ManagerObjectMixin<Object>,
                 public ManagerObjectSetMixin<SysArgument>,
-                public ManagerObjectMixin<SysCommand>,
                 public ManagerObjectSetMixin<Tag>
 {
 public:
@@ -170,9 +168,6 @@ public:
         arguments->insert(argument);
         return unique(arguments);
     }
-
-    using ManagerObjectMixin<SysCommand>::unique;
-    using ManagerObjectMixin<SysCommand>::isUnique;
 
     using ManagerObjectMixin<Tag>::unique;
     using ManagerObjectMixin<Tag>::find;

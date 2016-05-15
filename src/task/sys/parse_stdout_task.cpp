@@ -33,7 +33,7 @@ ParseStdoutTask::ParseStdoutTask(const doim::SysCommandSPtr& command,
     , mParse(parse)
     , mDescription(description)
 {
-    ASSERT(doim::gManager->isUnique(command));
+    ASSERT(command->isUnique());
 }
 
 ECode ParseStdoutTask::operator()()
