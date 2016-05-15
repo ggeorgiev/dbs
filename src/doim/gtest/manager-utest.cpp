@@ -13,9 +13,8 @@
 
 TEST(ManagerTest, obtainObject)
 {
-    const auto& obj = doim::gManager->obtainObject(nullptr,
-                                                   doim::Object::EType::kCxxLibrary,
-                                                   "/foo/obj");
+    const auto& obj =
+        doim::Object::obtain(nullptr, doim::Object::EType::kCxxLibrary, "/foo/obj");
     ASSERT_EQ(doim::Object::EType::kCxxLibrary, obj->type());
     ASSERT_STREQ("obj", obj->name().c_str());
 }
@@ -23,29 +22,22 @@ TEST(ManagerTest, obtainObject)
 TEST(ManagerTest, obtainEmptyObject)
 {
     ASSERT_EQ(nullptr,
-              doim::gManager->obtainObject(nullptr,
-                                           doim::Object::EType::kCxxLibrary,
-                                           ""));
+              doim::Object::obtain(nullptr, doim::Object::EType::kCxxLibrary, ""));
     ASSERT_EQ(nullptr,
-              doim::gManager->obtainObject(nullptr,
-                                           doim::Object::EType::kCxxLibrary,
-                                           "obj"));
+              doim::Object::obtain(nullptr, doim::Object::EType::kCxxLibrary, "obj"));
 
     const auto& root = doim::gManager->obtainLocation(nullptr, "/");
+    ASSERT_EQ(nullptr, doim::Object::obtain(root, doim::Object::EType::kCxxLibrary, "/"));
     ASSERT_EQ(nullptr,
-              doim::gManager->obtainObject(root, doim::Object::EType::kCxxLibrary, "/"));
-    ASSERT_EQ(nullptr,
-              doim::gManager->obtainObject(root,
-                                           doim::Object::EType::kCxxLibrary,
-                                           "foo/"));
+              doim::Object::obtain(root, doim::Object::EType::kCxxLibrary, "foo/"));
 
     const auto& rootFoo1 =
-        doim::gManager->obtainObject(nullptr, doim::Object::EType::kCxxLibrary, "/obj");
+        doim::Object::obtain(nullptr, doim::Object::EType::kCxxLibrary, "/obj");
     ASSERT_NE(nullptr, rootFoo1);
 
-    const auto& rootFoo2 = doim::gManager->obtainObject(rootFoo1->location(),
-                                                        doim::Object::EType::kCxxLibrary,
-                                                        "obj");
+    const auto& rootFoo2 = doim::Object::obtain(rootFoo1->location(),
+                                                doim::Object::EType::kCxxLibrary,
+                                                "obj");
     ASSERT_NE(nullptr, rootFoo2);
 }
 
@@ -54,9 +46,9 @@ TEST(ManagerTest, obtainUniqueObject)
     const auto& root = doim::gManager->obtainLocation(nullptr, "/");
 
     const auto& rootFoo1 =
-        doim::gManager->obtainObject(root, doim::Object::EType::kCxxLibrary, "obj");
+        doim::Object::obtain(root, doim::Object::EType::kCxxLibrary, "obj");
     const auto& rootFoo2 =
-        doim::gManager->obtainObject(nullptr, doim::Object::EType::kCxxLibrary, "/obj");
+        doim::Object::obtain(nullptr, doim::Object::EType::kCxxLibrary, "/obj");
     ASSERT_EQ(rootFoo1, rootFoo2);
 }
 

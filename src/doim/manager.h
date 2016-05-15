@@ -14,7 +14,6 @@
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/location.hpp"
-#include "doim/generic/object.h"
 #include "doim/manager_object_mixin.hpp"
 #include "doim/manager_object_set_mixin.hpp"
 #include "doim/sys/argument.h"
@@ -42,7 +41,6 @@ class Manager : public ManagerObjectMixin<CxxFile>,
                 public ManagerObjectMixin<FsBinary>,
                 public ManagerObjectSetMixin<FsDirectory>,
                 public ManagerObjectSetMixin<FsFile>,
-                public ManagerObjectMixin<Object>,
                 public ManagerObjectSetMixin<SysArgument>,
                 public ManagerObjectSetMixin<Tag>
 {
@@ -76,15 +74,6 @@ public:
     {
         return obtainDirectory(base, location);
     }
-
-    using ManagerObjectMixin<Object>::unique;
-    using ManagerObjectMixin<Object>::isUnique;
-    using ManagerObjectMixin<Object>::find;
-
-    // Obtain an unique object.
-    ObjectSPtr obtainObject(const LocationSPtr& base,
-                            const Object::EType type,
-                            const string_view& object);
 
     using ManagerObjectMixin<FsBinary>::unique;
     using ManagerObjectMixin<FsBinary>::isUnique;

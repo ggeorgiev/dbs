@@ -109,9 +109,9 @@ public:
             EHBan(kUnable);
 
         auto name = mTokenizer->token();
-        auto object = doim::gManager->obtainObject(mLocation->directory(),
-                                                   doim::Object::EType::kCxxLibrary,
-                                                   name);
+        auto object = doim::Object::obtain(mLocation->directory(),
+                                           doim::Object::EType::kCxxLibrary,
+                                           name);
         auto library = dom::gManager->obtainCxxLibrary(object);
 
         for (;;)
@@ -243,9 +243,9 @@ public:
             EHBan(kUnable);
 
         auto name = mTokenizer->token();
-        auto object = doim::gManager->obtainObject(mLocation->directory(),
-                                                   doim::Object::EType::kCxxProgram,
-                                                   name);
+        auto object = doim::Object::obtain(mLocation->directory(),
+                                           doim::Object::EType::kCxxProgram,
+                                           name);
         auto program = dom::gManager->obtainCxxProgram(object);
         EHTest(program->updateName(name));
 
@@ -317,7 +317,7 @@ public:
             if (type.test(Token::kPath))
             {
                 auto token = mTokenizer->token();
-                auto object = doim::gManager->obtainObject(location, objectType, token);
+                auto object = doim::Object::obtain(location, objectType, token);
                 objects.insert(object);
                 continue;
             }

@@ -40,6 +40,10 @@ class Object : public ObjectEnums,
                public Base<Object, ObjectEnums::EType, string, LocationSPtr>
 {
 public:
+    static ObjectSPtr obtain(const LocationSPtr& base,
+                             const Object::EType type,
+                             const string_view& object);
+
     Object(const EType type, const string& name, const LocationSPtr& location);
 
     EType type() const

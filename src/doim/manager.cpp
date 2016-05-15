@@ -13,30 +13,6 @@ namespace doim
 {
 ManagerSPtr gManager = im::InitializationManager::subscribe(gManager);
 
-ObjectSPtr Manager::obtainObject(const LocationSPtr& base,
-                                 const Object::EType type,
-                                 const string_view& object)
-{
-    auto pos = object.size();
-    while (pos-- > 0)
-    {
-        if (object[pos] == slash())
-            break;
-    }
-    ++pos;
-
-    if (pos == object.size())
-        return ObjectSPtr();
-
-    auto location = obtainLocation(base, string_view(object.begin(), pos));
-    if (location == nullptr)
-        return ObjectSPtr();
-
-    auto working =
-        Object::make(type, string(object.begin() + pos, object.end()), location);
-    return unique(working);
-}
-
 template <typename Trace>
 FsDirectorySPtr traceDirectory(Trace&& trace,
                                const FsDirectorySPtr& base,

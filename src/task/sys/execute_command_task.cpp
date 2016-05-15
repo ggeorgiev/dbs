@@ -22,7 +22,7 @@ ExecuteCommandTask::ExecuteCommandTask(const doim::SysCommandSPtr& command,
     : Base(command, targetDirectory)
 {
     ASSERT(command->isUnique());
-    ASSERT(targetDirectory->isUnique());
+    ASSERT(doim::gManager->isUnique(targetDirectory));
 }
 
 ECode ExecuteCommandTask::operator()()

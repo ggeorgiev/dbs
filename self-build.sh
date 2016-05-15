@@ -12,7 +12,7 @@ fi
 
 build/debug/dbs-test --gtest_filter=-*.PERFORMANCE_* || exit 1
 
-cmp --silent dbs build/debug/dbs || cp dbs dbs.`date +%Y-%m-%d:%H:%M:%S`
+cmp --silent dbs build/debug/dbs || cp dbs dbs.`date +%Y-%m-%dT%H-%M-%S`
 cp build/debug/dbs dbs
 
 

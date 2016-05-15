@@ -121,9 +121,9 @@ int main(int argc, char* argv[])
     std::vector<tpool::TaskSPtr> tasks;
     for (size_t i = 3; i < arg.size(); ++i)
     {
-        auto object = doim::gManager->obtainObject(file->directory(),
-                                                   doim::Object::EType::kCxxProgram,
-                                                   arg[i]);
+        auto object = doim::Object::obtain(file->directory(),
+                                           doim::Object::EType::kCxxProgram,
+                                           arg[i]);
         auto program = dom::gManager->obtainCxxProgram(object);
         if (program == nullptr)
             continue;
