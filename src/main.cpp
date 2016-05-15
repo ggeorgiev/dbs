@@ -96,7 +96,7 @@ int main(int argc, char* argv[])
     const auto& clangFormat = doim::SysExecutable::unique(clangFormatFile, nullptr);
     const auto& clangFormatTool = std::make_shared<tool::CxxClangFormat>(clangFormat);
 
-    const auto& clangBinary = doim::unique<doim::FsBinary>("clang++");
+    const auto& clangBinary = doim::FsBinary::unique("clang++");
     const auto& clang = doim::SysExecutable::unique(nullptr, clangBinary);
     const auto& compiler = std::make_shared<tool::CxxCompiler>(clang);
 

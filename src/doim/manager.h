@@ -10,7 +10,6 @@
 #include "doim/cxx/cxx_program.h"
 #include "doim/cxx/cxx_static_library.h"
 #include "doim/db/db_key.h"
-#include "doim/fs/fs_binary.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/location.hpp"
@@ -38,7 +37,6 @@ class Manager : public ManagerObjectMixin<CxxFile>,
                 public ManagerObjectSetMixin<CxxStaticLibrary>,
                 public ManagerObjectMixin<CxxProgram>,
                 public ManagerObjectMixin<DbKey>,
-                public ManagerObjectMixin<FsBinary>,
                 public ManagerObjectSetMixin<FsDirectory>,
                 public ManagerObjectSetMixin<FsFile>,
                 public ManagerObjectSetMixin<SysArgument>,
@@ -74,10 +72,6 @@ public:
     {
         return obtainDirectory(base, location);
     }
-
-    using ManagerObjectMixin<FsBinary>::unique;
-    using ManagerObjectMixin<FsBinary>::isUnique;
-    using ManagerObjectMixin<FsBinary>::find;
 
     using ManagerObjectMixin<FsDirectory>::unique;
     using ManagerObjectMixin<FsDirectory>::isUnique;
