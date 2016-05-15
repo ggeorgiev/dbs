@@ -31,7 +31,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
     auto arguments =
         CxxCompiler::includeArguments(directory, cxxFile->cxxIncludeDirectories());
 
-    auto argument_cxxflags = doim::gManager->obtainArgument(
+    auto argument_cxxflags = doim::SysArgument::unique(
         "-std=c++11 -stdlib=libc++ -O0 -g "
         "-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/"
         "MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk");
@@ -39,9 +39,9 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
 
     const string& file = cxxFile->file()->path(directory);
 
-    auto argument_file = doim::gManager->obtainArgument(file);
+    auto argument_file = doim::SysArgument::unique(file);
     arguments->insert(argument_file);
-    arguments = doim::gManager->unique(arguments);
+    arguments = doim::SysArgumentSet::unique(arguments);
 
     auto command = doim::SysCommand::unique(mTool, arguments);
 

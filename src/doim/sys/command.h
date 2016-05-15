@@ -4,6 +4,7 @@
 #pragma once
 
 #include "doim/base.hpp"
+#include "doim/sys/argument.h"
 #include "doim/sys/executable.h"
 #include "dp/simple_memoization.hpp"
 #include <memory>
@@ -13,11 +14,6 @@
 
 namespace doim
 {
-class SysArgument;
-typedef shared_ptr<SysArgument> SysArgumentSPtr;
-typedef unordered_set<SysArgumentSPtr> SysArgumentSet;
-typedef shared_ptr<SysArgumentSet> SysArgumentSetSPtr;
-
 class SysCommand;
 typedef shared_ptr<SysCommand> SysCommandSPtr;
 

@@ -55,7 +55,7 @@ doim::SysArgumentSetSPtr CxxCompiler::includeArguments(
 
         value += includeDirectory->directory()->path(directory);
 
-        arguments->insert(doim::gManager->obtainArgument(value));
+        arguments->insert(doim::SysArgument::unique(value));
     }
 
     return arguments;
@@ -89,20 +89,20 @@ doim::SysCommandSPtr CxxCompiler::compileCommand(
             break;
     }
 
-    auto argument_cxxflags = doim::gManager->obtainArgument(
+    auto argument_cxxflags = doim::SysArgument::unique(
         "-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/"
         "MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk");
     compileArguments->insert(argument_cxxflags);
 
     const string& file = objectFile->cxxFile()->file()->path(directory);
 
-    auto argument_c = doim::gManager->obtainArgument("-c " + file);
+    auto argument_c = doim::SysArgument::unique("-c " + file);
     compileArguments->insert(argument_c);
 
     auto argument_o =
-        doim::gManager->obtainArgument("-o " + objectFile->file()->path(directory));
+        doim::SysArgument::unique("-o " + objectFile->file()->path(directory));
     compileArguments->insert(argument_o);
-    compileArguments = doim::gManager->unique(compileArguments);
+    compileArguments = doim::SysArgumentSet::unique(compileArguments);
 
     return doim::SysCommand::unique(mCompiler, compileArguments);
 }
@@ -126,27 +126,27 @@ doim::SysCommandSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& direc
 
     for (const auto& cxxLibrary : *program->staticLibraries())
     {
-        auto argument_L = doim::gManager->obtainArgument(
+        auto argument_L = doim::SysArgument::unique(
             "-L " + cxxLibrary->binary()->directory()->path(directory));
         linkArguments->insert(argument_L);
 
         string name = cxxLibrary->binary()->name();
         auto argument_l =
-            doim::gManager->obtainArgument("-l" + name.substr(3, name.size() - 5));
+            doim::SysArgument::unique("-l" + name.substr(3, name.size() - 5));
         linkArguments->insert(argument_l);
     }
 
     for (const auto& objectFile : *program->cxxObjectFiles())
     {
         auto argument_obj =
-            doim::gManager->obtainArgument(objectFile->file()->path(directory));
+            doim::SysArgument::unique(objectFile->file()->path(directory));
         linkArguments->insert(argument_obj);
     }
 
     const auto& path = program->file()->path(directory);
-    auto argument_o = doim::gManager->obtainArgument("-o " + path);
+    auto argument_o = doim::SysArgument::unique("-o " + path);
     linkArguments->insert(argument_o);
-    linkArguments = doim::gManager->unique(linkArguments);
+    linkArguments = doim::SysArgumentSet::unique(linkArguments);
 
     return doim::SysCommand::unique(mCompiler, linkArguments);
 }

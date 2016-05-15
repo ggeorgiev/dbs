@@ -30,7 +30,7 @@ tpool::TaskSPtr CxxClangFormat::formatCommand(const doim::FsDirectorySPtr& direc
     arguments->insert(gSortIncludesArgument);
 
     const string& file = cxxFile->file()->path(directory);
-    auto argument_i = doim::gManager->obtainArgument("-i " + file);
+    auto argument_i = doim::SysArgument::unique("-i " + file);
     arguments->insert(argument_i);
 
     auto formatCommand = doim::SysCommand::unique(mFormatter, arguments);

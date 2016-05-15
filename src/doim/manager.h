@@ -10,7 +10,6 @@
 #include "doim/generic/location.hpp"
 #include "doim/manager_object_mixin.hpp"
 #include "doim/manager_object_set_mixin.hpp"
-#include "doim/sys/argument.h"
 #include "im/initialization_manager.hpp"
 #include <shared_ptr>
 #include <str>
@@ -26,8 +25,7 @@ extern ManagerSPtr gManager;
 
 class Manager : public ManagerObjectMixin<DbKey>,
                 public ManagerObjectSetMixin<FsDirectory>,
-                public ManagerObjectSetMixin<FsFile>,
-                public ManagerObjectSetMixin<SysArgument>
+                public ManagerObjectSetMixin<FsFile>
 {
 public:
     static constexpr int rank()
@@ -89,22 +87,6 @@ public:
 
     using ManagerObjectMixin<DbKey>::unique;
     using ManagerObjectMixin<DbKey>::isUnique;
-
-    using ManagerObjectMixin<SysArgument>::unique;
-    using ManagerObjectSetMixin<SysArgument>::unique;
-    using ManagerObjectSetMixin<SysArgument>::isUnique;
-
-    SysArgumentSPtr obtainArgument(const string& value)
-    {
-        return unique(doim::SysArgument::make(value));
-    }
-
-    SysArgumentSetSPtr obtainArguments(const SysArgumentSPtr argument)
-    {
-        auto arguments = SysArgumentSet::make();
-        arguments->insert(argument);
-        return unique(arguments);
-    }
 
 private:
     unordered_map<FsFileSPtr, CxxHeaderSPtr> mFile2CxxHeader;

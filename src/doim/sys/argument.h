@@ -4,6 +4,7 @@
 #pragma once
 
 #include "doim/base.hpp"
+#include "doim/set.hpp"
 #include <memory>
 #include <str>
 #include <tuple>
@@ -13,14 +14,12 @@ namespace doim
 {
 class SysArgument;
 typedef shared_ptr<SysArgument> SysArgumentSPtr;
-typedef unordered_set<SysArgumentSPtr> SysArgumentSet;
+typedef NewObjectSet<SysArgument> SysArgumentSet;
 typedef shared_ptr<SysArgumentSet> SysArgumentSetSPtr;
 
 class SysArgument : public Base<SysArgument, string>
 {
 public:
-    static SysArgumentSPtr global(const string& value, SysArgumentSPtr& argument);
-
     SysArgument(const string& value)
         : Base(value)
     {

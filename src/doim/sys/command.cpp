@@ -17,7 +17,7 @@ SysCommand::SysCommand(const SysExecutableSPtr& executable,
     : Base(executable, arguments)
 {
     ASSERT(executable->isUnique());
-    ASSERT(gManager->isUnique(arguments));
+    ASSERT(arguments->isUnique());
 }
 
 string SysCommand::toString() const
