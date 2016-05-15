@@ -12,7 +12,7 @@ CxxHeader::CxxHeader(const EType type,
                      const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories)
     : Base(type, file, cxxIncludeDirectories)
 {
-    ASSERT(gManager->isUnique(file));
+    ASSERT(file->isUnique());
     ASSERT(cxxIncludeDirectories->isUnique());
 }
 

@@ -69,7 +69,7 @@ int main(int argc, char* argv[])
         return errno;
 
     auto cwd = doim::FsDirectory::obtain(nullptr, current);
-    auto file = doim::gManager->obtainFile(cwd, arg[1]);
+    auto file = doim::FsFile::obtain(cwd, arg[1]);
 
     ILOG("Load dbs file: {}", file->path(cwd));
 
@@ -91,8 +91,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    const auto& clangFormatFile =
-        doim::gManager->obtainFile(cwd, "clang/bin/clang-format");
+    const auto& clangFormatFile = doim::FsFile::obtain(cwd, "clang/bin/clang-format");
     const auto& clangFormat = doim::SysExecutable::unique(clangFormatFile, nullptr);
     const auto& clangFormatTool = std::make_shared<tool::CxxClangFormat>(clangFormat);
 
@@ -100,8 +99,7 @@ int main(int argc, char* argv[])
     const auto& clang = doim::SysExecutable::unique(nullptr, clangBinary);
     const auto& compiler = std::make_shared<tool::CxxCompiler>(clang);
 
-    const auto& iwyuFile =
-        doim::gManager->obtainFile(cwd, "clang/bin/include-what-you-use");
+    const auto& iwyuFile = doim::FsFile::obtain(cwd, "clang/bin/include-what-you-use");
     const auto& iwyu = doim::SysExecutable::unique(iwyuFile, nullptr);
     const auto& iwyuTool = std::make_shared<tool::CxxIwyu>(iwyu);
 

@@ -27,10 +27,10 @@ public:
     void SetUp()
     {
         mCxxDirectory = doim::FsDirectory::obtain(testing::gTestResourceDirectory, "cxx");
-        mFsSimpleCxx = doim::gManager->obtainFile(mCxxDirectory, "simple.cxx");
-        mFsIncludesCxx = doim::gManager->obtainFile(mCxxDirectory, "includes.cxx");
-        mFsUser1H = doim::gManager->obtainFile(mCxxDirectory, "user1.h");
-        mFsUser2H = doim::gManager->obtainFile(mCxxDirectory, "user2.h");
+        mFsSimpleCxx = doim::FsFile::obtain(mCxxDirectory, "simple.cxx");
+        mFsIncludesCxx = doim::FsFile::obtain(mCxxDirectory, "includes.cxx");
+        mFsUser1H = doim::FsFile::obtain(mCxxDirectory, "user1.h");
+        mFsUser2H = doim::FsFile::obtain(mCxxDirectory, "user2.h");
 
         mEmptyCxxHeaderSet = doim::CxxHeaderSet::make();
         mEmptyCxxHeaderSet = doim::CxxHeaderSet::unique(mEmptyCxxHeaderSet);

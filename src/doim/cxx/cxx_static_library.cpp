@@ -10,6 +10,6 @@ namespace doim
 CxxStaticLibrary::CxxStaticLibrary(const FsFileSPtr& binary)
     : Base(binary)
 {
-    ASSERT(gManager->isUnique(binary));
+    ASSERT(binary->isUnique());
 }
 }

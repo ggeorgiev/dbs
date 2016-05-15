@@ -369,7 +369,7 @@ public:
             if (type.test(Token::kPath))
             {
                 const auto& token = mTokenizer->token();
-                const auto& file = doim::gManager->obtainFile(directory, token);
+                const auto& file = doim::FsFile::obtain(directory, token);
                 files.insert(file);
 
                 if (files.size() > limit)

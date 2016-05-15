@@ -11,7 +11,7 @@ CxxFile::CxxFile(const FsFileSPtr& file,
                  const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories)
     : Base(file, cxxIncludeDirectories)
 {
-    ASSERT(gManager->isUnique(file));
+    ASSERT(file->isUnique());
     ASSERT(cxxIncludeDirectories->isUnique());
 }
 }

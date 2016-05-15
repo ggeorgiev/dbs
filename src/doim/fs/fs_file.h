@@ -14,18 +14,18 @@ namespace doim
 {
 class FsFile;
 typedef shared_ptr<FsFile> FsFileSPtr;
-typedef unordered_set<FsFileSPtr> FsFileSet;
+typedef NewObjectSet<FsFile> FsFileSet;
 typedef shared_ptr<FsFileSet> FsFileSetSPtr;
 
 class FsFile : public Base<FsFile, FsDirectorySPtr, string>
 {
 public:
-    FsFile(const FsDirectorySPtr& directory, const string& name);
+    using Base<FsFile, FsDirectorySPtr, string>::find;
+    static FsFileSPtr find(const FsDirectorySPtr& base, const string_view& file);
 
-    string path(const FsDirectorySPtr& root = nullptr) const
-    {
-        return directory()->path(root) + name();
-    }
+    static FsFileSPtr obtain(const FsDirectorySPtr& base, const string_view& file);
+
+    FsFile(const FsDirectorySPtr& directory, const string& name);
 
     const FsDirectorySPtr& directory() const
     {
@@ -35,6 +35,11 @@ public:
     const string& name() const
     {
         return std::get<1>(mArgs);
+    }
+
+    string path(const FsDirectorySPtr& root = nullptr) const
+    {
+        return directory()->path(root) + name();
     }
 };
 }

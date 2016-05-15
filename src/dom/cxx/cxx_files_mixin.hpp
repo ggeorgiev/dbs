@@ -71,7 +71,7 @@ public:
                                                  root,
                                                  intermediate);
             const auto& outputFile =
-                doim::gManager->obtainFile(directory, cxxFile->file()->name() + ".o");
+                doim::FsFile::obtain(directory, cxxFile->file()->name() + ".o");
 
             auto objectFile = doim::CxxObjectFile::unique(purpose, cxxFile, outputFile);
             cxxObjectFiles.insert(objectFile);

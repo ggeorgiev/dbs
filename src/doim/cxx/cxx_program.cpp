@@ -13,7 +13,7 @@ CxxProgram::CxxProgram(EPurpose purpose,
                        const CxxObjectFileSetSPtr& cxxObjectFiles)
     : Base(purpose, file, staticLibraries, cxxObjectFiles)
 {
-    ASSERT(gManager->isUnique(file));
+    ASSERT(file->isUnique());
     ASSERT(staticLibraries->isUnique());
     ASSERT(cxxObjectFiles->isUnique());
 }

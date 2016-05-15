@@ -13,6 +13,6 @@ CxxObjectFile::CxxObjectFile(EPurpose purpose,
     : Base(purpose, cxxFile, file)
 {
     ASSERT(cxxFile->isUnique());
-    ASSERT(gManager->isUnique(file));
+    ASSERT(file->isUnique());
 }
 }

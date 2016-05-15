@@ -37,7 +37,7 @@ TEST(CxxLibraryTest, publicCxxHeaders)
 
     doim::FsFileSet files;
 
-    const auto& file = doim::gManager->obtainFile(directory, "header.h");
+    const auto& file = doim::FsFile::obtain(directory, "header.h");
     files.insert(file);
 
     ASSERT_OKAY(library.updateCxxPublicHeaders(directory, files));
@@ -60,7 +60,7 @@ TEST(CxxLibraryTest, recursiveCxxHeaders)
 
     doim::FsFileSet files;
 
-    const auto& file = doim::gManager->obtainFile(directory, "header.h");
+    const auto& file = doim::FsFile::obtain(directory, "header.h");
     files.insert(file);
 
     ASSERT_OKAY(library.updateCxxPublicHeaders(directory, files));

@@ -203,18 +203,18 @@ TEST(ManagerTest, obtainCorrespondingDirectory)
 
 TEST(ManagerTest, obtainEmptyFile)
 {
-    ASSERT_EQ(nullptr, doim::gManager->obtainFile(nullptr, ""));
-    ASSERT_EQ(nullptr, doim::gManager->obtainFile(nullptr, "foo.cpp"));
+    ASSERT_EQ(nullptr, doim::FsFile::obtain(nullptr, ""));
+    ASSERT_EQ(nullptr, doim::FsFile::obtain(nullptr, "foo.cpp"));
 
     const auto& root = doim::FsDirectory::obtain(nullptr, "/");
-    ASSERT_EQ(nullptr, doim::gManager->obtainFile(root, ""));
-    ASSERT_EQ(nullptr, doim::gManager->obtainFile(root, "/"));
-    ASSERT_EQ(nullptr, doim::gManager->obtainFile(root, "foo/"));
+    ASSERT_EQ(nullptr, doim::FsFile::obtain(root, ""));
+    ASSERT_EQ(nullptr, doim::FsFile::obtain(root, "/"));
+    ASSERT_EQ(nullptr, doim::FsFile::obtain(root, "foo/"));
 
-    const auto& rootFoo1 = doim::gManager->obtainFile(nullptr, "/foo.cpp");
+    const auto& rootFoo1 = doim::FsFile::obtain(nullptr, "/foo.cpp");
     ASSERT_NE(nullptr, rootFoo1);
 
-    const auto& rootFoo2 = doim::gManager->obtainFile(rootFoo1->directory(), "foo.cpp");
+    const auto& rootFoo2 = doim::FsFile::obtain(rootFoo1->directory(), "foo.cpp");
     ASSERT_NE(nullptr, rootFoo2);
 }
 
@@ -222,7 +222,7 @@ TEST(ManagerTest, obtainUniqueFile)
 {
     const auto& root = doim::FsDirectory::obtain(nullptr, "/");
 
-    const auto& rootFoo1 = doim::gManager->obtainFile(root, "foo.cpp");
-    const auto& rootFoo2 = doim::gManager->obtainFile(nullptr, "/foo.cpp");
+    const auto& rootFoo1 = doim::FsFile::obtain(root, "foo.cpp");
+    const auto& rootFoo2 = doim::FsFile::obtain(nullptr, "/foo.cpp");
     ASSERT_EQ(rootFoo1, rootFoo2);
 }

@@ -22,7 +22,7 @@ typedef shared_ptr<Manager> ManagerSPtr;
 
 extern ManagerSPtr gManager;
 
-class Manager : public ManagerObjectMixin<DbKey>, public ManagerObjectSetMixin<FsFile>
+class Manager : public ManagerObjectMixin<DbKey>
 {
 public:
     static constexpr int rank()
@@ -51,16 +51,6 @@ public:
     {
         return FsDirectory::obtain(base, location);
     }
-
-    using ManagerObjectMixin<FsFile>::unique;
-    using ManagerObjectMixin<FsFile>::isUnique;
-    using ManagerObjectMixin<FsFile>::find;
-
-    FsFileSPtr findFile(const FsDirectorySPtr& base, const string_view& file);
-
-    FsFileSPtr obtainFile(const FsDirectorySPtr& base, const string_view& file);
-
-    using ManagerObjectSetMixin<FsFile>::unique;
 
     using ManagerObjectMixin<DbKey>::unique;
     using ManagerObjectMixin<DbKey>::isUnique;

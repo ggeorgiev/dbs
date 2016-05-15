@@ -15,7 +15,7 @@ doim::CxxHeaderSPtr CxxCrcTaskMixin::findInclude(
     if (includeDirectory == nullptr)
         return nullptr;
 
-    const auto& file = doim::gManager->findFile(includeDirectory->directory(), include);
+    const auto& file = doim::FsFile::find(includeDirectory->directory(), include);
     if (file == nullptr)
         return nullptr;
 

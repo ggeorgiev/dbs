@@ -40,7 +40,7 @@ TYPED_TEST(ParserTest, initialize)
     ASSERT_EHASSERT(parser->initialize(stream, location));
     stream.reset();
 
-    location = doim::gManager->obtainFile(nullptr, "/foo.dbs");
+    location = doim::FsFile::obtain(nullptr, "/foo.dbs");
     ASSERT_EHASSERT(parser->initialize(stream, location));
 }
 
@@ -61,7 +61,7 @@ TYPED_TEST(ParserTest, parseFiles)
     };
 
     auto directory = doim::FsDirectory::obtain(nullptr, "/");
-    auto location = doim::gManager->obtainFile(nullptr, "/foo.dbs");
+    auto location = doim::FsFile::obtain(nullptr, "/foo.dbs");
 
     for (const auto& test : tests)
     {
