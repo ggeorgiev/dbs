@@ -15,7 +15,7 @@ TEST(ManagerObjectSetMixinTest, unique)
 
     locations = doim::LocationSet::make();
 
-    auto location = doim::gManager->obtainLocation(nullptr, "/unique");
+    auto location = doim::Location::obtain(nullptr, "/unique");
     locations->insert(location);
 
     ASSERT_EQ(locations, doim::LocationSet::unique(locations));
@@ -28,7 +28,7 @@ TEST(ManagerObjectSetMixinTest, isUnique)
 
     locations = doim::LocationSet::make();
 
-    auto location = doim::gManager->obtainLocation(nullptr, "/isUnique");
+    auto location = doim::Location::obtain(nullptr, "/isUnique");
     locations->insert(location);
 
     ASSERT_FALSE(locations->isUnique());
@@ -44,7 +44,7 @@ TEST(ManagerObjectSetMixinTest, find)
 
     locations = doim::LocationSet::make();
 
-    auto location = doim::gManager->obtainLocation(nullptr, "/find");
+    auto location = doim::Location::obtain(nullptr, "/find");
     locations->insert(location);
 
     ASSERT_EQ(nullptr, locations->find());

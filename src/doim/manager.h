@@ -3,10 +3,7 @@
 
 #pragma once
 
-#include "doim/cxx/cxx_program.h"
 #include "doim/db/db_key.h"
-#include "doim/fs/fs_file.h"
-#include "doim/generic/location.hpp"
 #include "doim/manager_object_mixin.hpp"
 #include "doim/manager_object_set_mixin.hpp"
 #include "im/initialization_manager.hpp"
@@ -46,17 +43,8 @@ public:
         return std::make_shared<T>(args...);
     }
 
-    // Obtain an unique location.
-    LocationSPtr obtainLocation(const LocationSPtr& base, const string_view& location)
-    {
-        return FsDirectory::obtain(base, location);
-    }
-
     using ManagerObjectMixin<DbKey>::unique;
     using ManagerObjectMixin<DbKey>::isUnique;
-
-private:
-    unordered_map<FsFileSPtr, CxxHeaderSPtr> mFile2CxxHeader;
 };
 
 template <typename T, typename... Args>

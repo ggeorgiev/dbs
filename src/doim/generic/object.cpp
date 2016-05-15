@@ -29,7 +29,7 @@ ObjectSPtr Object::obtain(const LocationSPtr& base,
     if (pos == object.size())
         return ObjectSPtr();
 
-    auto location = gManager->obtainLocation(base, string_view(object.begin(), pos));
+    auto location = Location::obtain(base, string_view(object.begin(), pos));
     if (location == nullptr)
         return ObjectSPtr();
 

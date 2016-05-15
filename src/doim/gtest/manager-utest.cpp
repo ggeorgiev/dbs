@@ -26,7 +26,7 @@ TEST(ManagerTest, obtainEmptyObject)
     ASSERT_EQ(nullptr,
               doim::Object::obtain(nullptr, doim::Object::EType::kCxxLibrary, "obj"));
 
-    const auto& root = doim::gManager->obtainLocation(nullptr, "/");
+    const auto& root = doim::Location::obtain(nullptr, "/");
     ASSERT_EQ(nullptr, doim::Object::obtain(root, doim::Object::EType::kCxxLibrary, "/"));
     ASSERT_EQ(nullptr,
               doim::Object::obtain(root, doim::Object::EType::kCxxLibrary, "foo/"));
@@ -43,7 +43,7 @@ TEST(ManagerTest, obtainEmptyObject)
 
 TEST(ManagerTest, obtainUniqueObject)
 {
-    const auto& root = doim::gManager->obtainLocation(nullptr, "/");
+    const auto& root = doim::Location::obtain(nullptr, "/");
 
     const auto& rootFoo1 =
         doim::Object::obtain(root, doim::Object::EType::kCxxLibrary, "obj");

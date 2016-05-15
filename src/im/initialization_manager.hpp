@@ -53,15 +53,21 @@ public:
     }
 
     template <typename T>
-    static inline shared_ptr<T> subscribe(shared_ptr<T>& shared)
+    static inline shared_ptr<T> subscribe(int rank, shared_ptr<T>& shared)
     {
-        add(T::rank(),
+        add(rank,
             [&shared]() -> bool {
                 shared = std::make_shared<T>();
                 return true;
             },
             [&shared]() { shared.reset(); });
         return nullptr;
+    }
+
+    template <typename T>
+    static inline shared_ptr<T> subscribe(shared_ptr<T>& shared)
+    {
+        return subscribe(T::rank(), shared);
     }
 
 private:

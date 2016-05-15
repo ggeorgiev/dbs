@@ -34,6 +34,11 @@ public:
         return gManagerObjectMixin->unique(object);
     }
 
+    static int constexpr rank()
+    {
+        return im::InitializationManager::rank() + im::InitializationManager::step();
+    }
+
     static shared_ptr<T> global(const Args&... args, shared_ptr<T>& object)
     {
         auto fn = [&object]() -> bool {
