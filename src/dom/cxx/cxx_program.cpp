@@ -50,8 +50,7 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
     {
         if (cxxLibrary->binary() != nullptr)
         {
-            auto staticLibrary =
-                doim::unique<doim::CxxStaticLibrary>(cxxLibrary->binary());
+            auto staticLibrary = doim::CxxStaticLibrary::unique(cxxLibrary->binary());
             staticLibraries->insert(staticLibrary);
         }
         else
@@ -62,7 +61,7 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
         }
     }
     objectFiles = doim::CxxObjectFileSet::unique(objectFiles);
-    staticLibraries = doim::gManager->unique(staticLibraries);
+    staticLibraries = doim::CxxStaticLibrarySet::unique(staticLibraries);
 
     const auto& programFile = doim::gManager->obtainFile(intermediate, name());
     return doim::unique<doim::CxxProgram>(purpose,

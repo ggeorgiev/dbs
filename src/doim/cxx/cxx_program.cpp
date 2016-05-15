@@ -14,7 +14,7 @@ CxxProgram::CxxProgram(EPurpose purpose,
     : Base(purpose, file, staticLibraries, cxxObjectFiles)
 {
     ASSERT(gManager->isUnique(file));
-    ASSERT(gManager->isUnique(staticLibraries));
+    ASSERT(staticLibraries->isUnique());
     ASSERT(cxxObjectFiles->isUnique());
 }
 }
