@@ -35,7 +35,7 @@ public:
 
     bool isUnique()
     {
-        std::shared_ptr<T> key(std::shared_ptr<T>(), static_cast<T*>(this));
+        shared_ptr<T> key(shared_ptr<T>(), static_cast<T*>(this));
         return gManagerObjectMixin->isUnique(key);
     }
 

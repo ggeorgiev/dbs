@@ -172,20 +172,4 @@ std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectorySet& direct
     return out;
 }
 
-std::ostream& operator<<(std::ostream& out, const CxxHeader& header)
-{
-    out << "header { type: ";
-    switch (header.type())
-    {
-        case CxxHeader::EType::kUser:
-            out << "user";
-            break;
-        case CxxHeader::EType::kSystem:
-            out << "system";
-            break;
-    }
-    out << ", file: " << header.file()->path() << "}" << std::endl;
-    return out;
-}
-
 } // namespace doim

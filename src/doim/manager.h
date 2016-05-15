@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/cxx/cxx_program.h"
@@ -29,8 +28,7 @@ typedef shared_ptr<Manager> ManagerSPtr;
 
 extern ManagerSPtr gManager;
 
-class Manager : public ManagerObjectSetMixin<CxxHeader>,
-                public ManagerObjectSetMixin<CxxIncludeDirectory>,
+class Manager : public ManagerObjectSetMixin<CxxIncludeDirectory>,
                 public ManagerObjectSetMixin<CxxObjectFile>,
                 public ManagerObjectSetMixin<CxxStaticLibrary>,
                 public ManagerObjectMixin<CxxProgram>,
@@ -106,12 +104,6 @@ public:
 
     using ManagerObjectSetMixin<CxxIncludeDirectory>::unique;
     using ManagerObjectSetMixin<CxxIncludeDirectory>::isUnique;
-
-    using ManagerObjectMixin<CxxHeader>::unique;
-    using ManagerObjectMixin<CxxHeader>::isUnique;
-
-    using ManagerObjectSetMixin<CxxHeader>::unique;
-    using ManagerObjectSetMixin<CxxHeader>::isUnique;
 
     using ManagerObjectMixin<CxxObjectFile>::unique;
     using ManagerObjectMixin<CxxObjectFile>::isUnique;

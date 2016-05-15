@@ -30,7 +30,8 @@ public:
         mFsIncludesCxx = doim::gManager->obtainFile(mCxxDirectory, "includes.cxx");
         mFsUserH = doim::gManager->obtainFile(mCxxDirectory, "user.h");
 
-        mEmptyCxxHeaderSet = doim::unique<doim::CxxHeaderSet>();
+        mEmptyCxxHeaderSet = doim::CxxHeaderSet::make();
+        mEmptyCxxHeaderSet = doim::CxxHeaderSet::unique(mEmptyCxxHeaderSet);
         mEmptyCxxIncludeDirectorySet = doim::unique<doim::CxxIncludeDirectorySet>();
     }
 
@@ -49,9 +50,9 @@ public:
 
 TEST_F(CxxHeaderCrcTaskTest, simple)
 {
-    auto cxxHeader = doim::unique<doim::CxxHeader>(doim::CxxHeader::EType::kUser,
-                                                   mFsSimpleCxx,
-                                                   mEmptyCxxIncludeDirectorySet);
+    auto cxxHeader = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
+                                             mFsSimpleCxx,
+                                             mEmptyCxxIncludeDirectorySet);
 
     auto task = task::CxxHeaderCrcTask::make(cxxHeader, nullptr);
 
@@ -71,9 +72,9 @@ TEST_F(CxxHeaderCrcTaskTest, notFoundInclude)
     cxxIncludeDirectories->insert(cxxIncludeDirectory);
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
 
-    auto cxxHeader = doim::unique<doim::CxxHeader>(doim::CxxHeader::EType::kUser,
-                                                   mFsIncludesCxx,
-                                                   cxxIncludeDirectories);
+    auto cxxHeader = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
+                                             mFsIncludesCxx,
+                                             cxxIncludeDirectories);
     auto task = task::CxxHeaderCrcTask::make(cxxHeader, nullptr);
     ASSERT_BANNED(kNotFound, (*task)());
 }

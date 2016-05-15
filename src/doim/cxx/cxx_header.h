@@ -6,6 +6,7 @@
 #include "doim/base.hpp"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_file.h"
+#include "doim/set.hpp"
 #include <memory>
 #include <tuple>
 #include <unordered>
@@ -14,7 +15,8 @@ namespace doim
 {
 class CxxHeader;
 typedef shared_ptr<CxxHeader> CxxHeaderSPtr;
-typedef unordered_set<CxxHeaderSPtr> CxxHeaderSet;
+
+typedef NewObjectSet<CxxHeader> CxxHeaderSet;
 typedef shared_ptr<CxxHeaderSet> CxxHeaderSetSPtr;
 
 struct CxxHeaderEnums
@@ -52,4 +54,6 @@ public:
         return std::get<2>(mArgs);
     }
 };
+
+std::ostream& operator<<(std::ostream& out, const CxxHeader& header);
 }

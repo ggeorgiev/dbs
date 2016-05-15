@@ -104,6 +104,6 @@ doim::CxxHeaderSetSPtr CxxProgram::cxxHeaders(const doim::FsDirectorySPtr& root)
         const auto& libHeaders = cxxLibrary->recursiveCxxHeaders(root);
         headers->insert(libHeaders->begin(), libHeaders->end());
     }
-    return doim::gManager->unique(headers);
+    return doim::CxxHeaderSet::unique(headers);
 }
 }

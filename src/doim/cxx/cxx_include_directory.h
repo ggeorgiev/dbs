@@ -6,6 +6,7 @@
 #include "doim/base.hpp"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
+#include "doim/set.hpp"
 #include <memory>
 #include <tuple>
 #include <type_traits>
@@ -16,7 +17,7 @@ namespace doim
 class CxxHeader;
 
 typedef shared_ptr<CxxHeader> CxxHeaderSPtr;
-typedef unordered_set<CxxHeaderSPtr> CxxHeaderSet;
+typedef NewObjectSet<CxxHeader> CxxHeaderSet;
 typedef shared_ptr<CxxHeaderSet> CxxHeaderSetSPtr;
 
 class CxxIncludeDirectory;

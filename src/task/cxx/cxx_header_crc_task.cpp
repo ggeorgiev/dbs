@@ -20,7 +20,7 @@ CxxHeaderCrcTask::CxxHeaderCrcTask(
     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory)
     : Base(cxxHeader, currentIncludeDirectory)
 {
-    ASSERT(doim::gManager->isUnique(cxxHeader));
+    ASSERT(cxxHeader->isUnique());
     ASSERT(doim::gManager->isUnique(currentIncludeDirectory));
 }
 

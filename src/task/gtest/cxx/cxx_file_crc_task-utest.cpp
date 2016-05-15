@@ -33,7 +33,8 @@ public:
         mFsUser1H = doim::gManager->obtainFile(mCxxDirectory, "user1.h");
         mFsUser2H = doim::gManager->obtainFile(mCxxDirectory, "user2.h");
 
-        mEmptyCxxHeaderSet = doim::unique<doim::CxxHeaderSet>();
+        mEmptyCxxHeaderSet = doim::CxxHeaderSet::make();
+        mEmptyCxxHeaderSet = doim::CxxHeaderSet::unique(mEmptyCxxHeaderSet);
         mEmptyCxxIncludeDirectorySet = doim::unique<doim::CxxIncludeDirectorySet>();
     }
 
@@ -53,8 +54,7 @@ public:
 
 TEST_F(CxxFileCrcTaskTest, SLOW_simple)
 {
-    auto cxxFile =
-        doim::CxxFile::unique(mFsSimpleCxx, mEmptyCxxIncludeDirectorySet);
+    auto cxxFile = doim::CxxFile::unique(mFsSimpleCxx, mEmptyCxxIncludeDirectorySet);
     auto task = task::CxxFileCrcTask::make(cxxFile);
     task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
@@ -82,17 +82,14 @@ TEST_F(CxxFileCrcTaskTest, notFoundInclude)
 
 TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
 {
-    auto cxxHeader1 = doim::unique<doim::CxxHeader>(doim::CxxHeader::EType::kUser,
-                                                    mFsUser1H,
-                                                    mEmptyCxxIncludeDirectorySet);
-    auto cxxHeader2 = doim::unique<doim::CxxHeader>(doim::CxxHeader::EType::kUser,
-                                                    mFsUser2H,
-                                                    mEmptyCxxIncludeDirectorySet);
+    auto cxxHeader1 = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
+                                              mFsUser1H,
+                                              mEmptyCxxIncludeDirectorySet);
+    auto cxxHeader2 = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
+                                              mFsUser2H,
+                                              mEmptyCxxIncludeDirectorySet);
 
-    auto cxxHeaders = doim::CxxHeaderSet::make();
-    cxxHeaders->insert(cxxHeader1);
-    cxxHeaders->insert(cxxHeader2);
-    cxxHeaders = doim::gManager->unique(cxxHeaders);
+    auto cxxHeaders = doim::CxxHeaderSet::unique({cxxHeader1, cxxHeader2});
 
     auto cxxIncludeDirectory =
         doim::unique<doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
@@ -117,13 +114,11 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     // This test makes sure that including from having more than one include directory
     // with the same fs directory is working.
 
-    auto cxxHeader2 = doim::unique<doim::CxxHeader>(doim::CxxHeader::EType::kUser,
-                                                    mFsUser2H,
-                                                    mEmptyCxxIncludeDirectorySet);
+    auto cxxHeader2 = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
+                                              mFsUser2H,
+                                              mEmptyCxxIncludeDirectorySet);
 
-    auto cxxHeaders2 = doim::CxxHeaderSet::make();
-    cxxHeaders2->insert(cxxHeader2);
-    cxxHeaders2 = doim::gManager->unique(cxxHeaders2);
+    auto cxxHeaders2 = doim::CxxHeaderSet::unique({cxxHeader2});
 
     auto cxxIncludeDirectory2 =
         doim::unique<doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
@@ -134,13 +129,11 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     cxxIncludeDirectories2->insert(cxxIncludeDirectory2);
     cxxIncludeDirectories2 = doim::gManager->unique(cxxIncludeDirectories2);
 
-    auto cxxHeader1 = doim::unique<doim::CxxHeader>(doim::CxxHeader::EType::kUser,
-                                                    mFsUser1H,
-                                                    cxxIncludeDirectories2);
+    auto cxxHeader1 = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
+                                              mFsUser1H,
+                                              cxxIncludeDirectories2);
 
-    auto cxxHeaders1 = doim::CxxHeaderSet::make();
-    cxxHeaders1->insert(cxxHeader1);
-    cxxHeaders1 = doim::gManager->unique(cxxHeaders1);
+    auto cxxHeaders1 = doim::CxxHeaderSet::unique({cxxHeader1});
 
     auto cxxIncludeDirectory1 =
         doim::unique<doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,

@@ -17,7 +17,7 @@ CxxIncludeDirectory::CxxIncludeDirectory(const EType type,
 {
     ASSERT(directory != nullptr);
     ASSERT(gManager->isUnique(directory));
-    ASSERT(gManager->isUnique(headerFiles));
+    ASSERT(headerFiles->isUnique());
 }
 
 void CxxIncludeDirectory::finally()

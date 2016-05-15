@@ -4,6 +4,7 @@
 #pragma once
 
 #include "doim/cxx/cxx_file.h"
+#include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/fs/fs_file.h"
 #include "doim/manager.h"
@@ -63,11 +64,12 @@ public:
                 static_cast<const Subject*>(this)->indirectCxxIncludeDirectories(root);
             for (const auto& header : *mCxxPrivateHeaders)
             {
-                const auto& cxxHeader = doim::CxxHeader::make(type, header, directories);
-                headers->insert(doim::gManager->unique(cxxHeader));
+                const auto& cxxHeader =
+                    doim::CxxHeader::unique(type, header, directories);
+                headers->insert(cxxHeader);
             }
         }
-        return doim::gManager->unique(headers);
+        return doim::CxxHeaderSet::unique(headers);
     }
 
 private:
