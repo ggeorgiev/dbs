@@ -34,21 +34,12 @@ public:
     {
         std::size_t operator()(const ObjectSetSPtr& objects) const
         {
-            std::vector<ObjectSPtr> vector;
-            vector.reserve(objects->size());
-            vector.insert(vector.begin(), objects->begin(), objects->end());
-            std::sort(vector.begin(), vector.end());
+            std::uintptr_t x = 0;
+            for (const auto& object : *objects)
+                x ^= (std::uintptr_t)object.get();
 
-            std::hash<ObjectSPtr> hash;
-
-            std::size_t seed = 0;
-            for (const auto& object : vector)
-            {
-                ASSERT(object != nullptr);
-                boost::hash_combine(seed, hash(object));
-            }
-
-            return seed;
+            std::hash<uintptr_t> hash;
+            return hash(x);
         }
 
         bool operator()(const ObjectSetSPtr& objects1,
