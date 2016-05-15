@@ -4,6 +4,7 @@
 #pragma once
 
 #include "doim/manager_object_mixin.hpp"
+#include "im/initialization_manager.hpp"
 #include <boost/functional/hash.hpp>
 #include <boost/fusion/adapted/std_tuple.hpp>
 #include <boost/fusion/algorithm.hpp>
@@ -28,6 +29,20 @@ public:
         return gManagerObjectMixin->unique(enable_make_shared<T>::make(args...));
     }
 
+    static shared_ptr<T> global(const Args&... args, shared_ptr<T>& object)
+    {
+        auto fn = [&object]() -> bool {
+            object = gManagerObjectMixin->unique(object);
+            return true;
+        };
+        im::InitializationManager::subscribe<
+            shared_ptr<T>>(ManagerObjectMixin<T>::rank() +
+                               im::InitializationManager::step(),
+                           fn,
+                           nullptr);
+        return std::make_shared<T>(args...);
+    }
+
     Base(const Args&... args)
         : mArgs(args...)
     {
@@ -37,6 +52,12 @@ public:
     {
         shared_ptr<T> key(shared_ptr<T>(), static_cast<T*>(this));
         return gManagerObjectMixin->isUnique(key);
+    }
+
+    shared_ptr<T> find()
+    {
+        shared_ptr<T> key(shared_ptr<T>(), static_cast<T*>(this));
+        return gManagerObjectMixin->find(key);
     }
 
     void finally()
@@ -82,5 +103,5 @@ protected:
 
 template <typename T, typename... Args>
 shared_ptr<ManagerObjectMixin<T>> Base<T, Args...>::gManagerObjectMixin =
-    std::make_shared<ManagerObjectMixin<T>>();
+    im::InitializationManager::subscribe(gManagerObjectMixin);
 }

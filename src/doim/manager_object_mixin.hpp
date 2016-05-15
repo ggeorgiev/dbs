@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "im/initialization_manager.hpp"
 #include <boost/functional/hash/hash.hpp>
 #include <boost/thread/locks.hpp>
 #include <boost/thread/shared_mutex.hpp>
@@ -27,6 +28,11 @@ public:
     typedef shared_ptr<MixinObject> MixinObjectSPtr;
     typedef typename MixinObject::Hasher Hasher;
     typedef unordered_set<MixinObjectSPtr, Hasher, Hasher> Set;
+
+    static constexpr int rank()
+    {
+        return im::InitializationManager::rank() + im::InitializationManager::step();
+    }
 
     MixinObjectSPtr unique(const MixinObjectSPtr& object)
     {

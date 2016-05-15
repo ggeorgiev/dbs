@@ -11,7 +11,6 @@
 #include "doim/manager_object_mixin.hpp"
 #include "doim/manager_object_set_mixin.hpp"
 #include "doim/sys/argument.h"
-#include "doim/tag/tag.h"
 #include "im/initialization_manager.hpp"
 #include <shared_ptr>
 #include <str>
@@ -28,8 +27,7 @@ extern ManagerSPtr gManager;
 class Manager : public ManagerObjectMixin<DbKey>,
                 public ManagerObjectSetMixin<FsDirectory>,
                 public ManagerObjectSetMixin<FsFile>,
-                public ManagerObjectSetMixin<SysArgument>,
-                public ManagerObjectSetMixin<Tag>
+                public ManagerObjectSetMixin<SysArgument>
 {
 public:
     static constexpr int rank()
@@ -107,10 +105,6 @@ public:
         arguments->insert(argument);
         return unique(arguments);
     }
-
-    using ManagerObjectMixin<Tag>::unique;
-    using ManagerObjectMixin<Tag>::find;
-    using ManagerObjectSetMixin<Tag>::unique;
 
 private:
     unordered_map<FsFileSPtr, CxxHeaderSPtr> mFile2CxxHeader;

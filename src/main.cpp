@@ -108,7 +108,7 @@ int main(int argc, char* argv[])
     const auto& engine =
         std::make_shared<engine::CxxEngine>(clangFormatTool, compiler, iwyuTool);
 
-    const auto& verb = doim::gManager->find(doim::Tag::make(arg[2]));
+    const auto& verb = doim::Tag::make(arg[2])->find();
 
     if (verb == nullptr)
     {

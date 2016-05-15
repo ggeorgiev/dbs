@@ -117,6 +117,12 @@ public:
         return gManagerObjectSetMixin->isUnique(key);
     }
 
+    shared_ptr<NewObjectSet<T>> find()
+    {
+        shared_ptr<NewObjectSet<T>> key(shared_ptr<NewObjectSet<T>>(), this);
+        return gManagerObjectSetMixin->find(key);
+    }
+
     struct Hasher
     {
         std::size_t operator()(const shared_ptr<NewObjectSet<T>>& objects) const

@@ -4,6 +4,7 @@
 #pragma once
 
 #include "doim/base.hpp"
+#include "doim/set.hpp"
 #include <memory>
 #include <str>
 #include <tuple>
@@ -14,14 +15,12 @@ namespace doim
 class Tag;
 
 typedef shared_ptr<Tag> TagSPtr;
-typedef unordered_set<TagSPtr> TagSet;
+typedef NewObjectSet<Tag> TagSet;
 typedef shared_ptr<TagSet> TagSetSPtr;
 
 class Tag : public Base<Tag, string>
 {
 public:
-    static TagSPtr global(const string& name, TagSPtr& tag);
-
     Tag(const string& name)
         : Base(name)
     {

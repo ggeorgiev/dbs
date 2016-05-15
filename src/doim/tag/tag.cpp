@@ -7,11 +7,6 @@
 
 namespace doim
 {
-TagSPtr Tag::global(const string& name, TagSPtr& tag)
-{
-    return Manager::global<Tag, string>(name, tag);
-}
-
 TagSPtr gBuildTag = Tag::global("build", gBuildTag);
 TagSPtr gCoverageTag = Tag::global("coverage", gCoverageTag);
 TagSPtr gIwyuTag = Tag::global("iwyu", gIwyuTag);
