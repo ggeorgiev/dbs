@@ -24,7 +24,7 @@ cxx_library doim
         doim/generic/object.h
         doim/base.hpp
         doim/manager_object_mixin.hpp
-        doim/manager_object_set_mixin.hpp
+        doim/set_manager.hpp
         doim/set.hpp
     ;
 

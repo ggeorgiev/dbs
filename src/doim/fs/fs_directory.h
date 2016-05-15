@@ -18,7 +18,7 @@ class FsDirectory;
 typedef FsDirectory* FsDirectoryRPtr;
 typedef FsDirectory const* FsDirectoryRCPtr;
 typedef shared_ptr<FsDirectory> FsDirectorySPtr;
-typedef NewObjectSet<FsDirectory> FsDirectorySet;
+typedef Set<FsDirectory> FsDirectorySet;
 typedef shared_ptr<FsDirectorySet> FsDirectorySetSPtr;
 
 class FsDirectory : public Base<FsDirectory, FsDirectorySPtr, string>

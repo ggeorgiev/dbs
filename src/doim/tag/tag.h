@@ -15,7 +15,7 @@ namespace doim
 class Tag;
 
 typedef shared_ptr<Tag> TagSPtr;
-typedef NewObjectSet<Tag> TagSet;
+typedef Set<Tag> TagSet;
 typedef shared_ptr<TagSet> TagSetSPtr;
 
 class Tag : public Base<Tag, string>

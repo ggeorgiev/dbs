@@ -15,7 +15,7 @@ namespace doim
 {
 class CxxHeader;
 typedef shared_ptr<CxxHeader> CxxHeaderSPtr;
-typedef NewObjectSet<CxxHeader> CxxHeaderSet;
+typedef Set<CxxHeader> CxxHeaderSet;
 typedef shared_ptr<CxxHeaderSet> CxxHeaderSetSPtr;
 
 struct CxxHeaderEnums

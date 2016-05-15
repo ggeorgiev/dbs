@@ -14,7 +14,7 @@ namespace doim
 {
 class SysArgument;
 typedef shared_ptr<SysArgument> SysArgumentSPtr;
-typedef NewObjectSet<SysArgument> SysArgumentSet;
+typedef Set<SysArgument> SysArgumentSet;
 typedef shared_ptr<SysArgumentSet> SysArgumentSetSPtr;
 
 class SysArgument : public Base<SysArgument, string>

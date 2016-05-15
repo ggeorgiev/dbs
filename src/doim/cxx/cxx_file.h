@@ -15,7 +15,7 @@ namespace doim
 {
 class CxxFile;
 typedef shared_ptr<CxxFile> CxxFileSPtr;
-typedef NewObjectSet<CxxFile> CxxFileSet;
+typedef Set<CxxFile> CxxFileSet;
 typedef shared_ptr<CxxFileSet> CxxFileSetSPtr;
 
 class CxxFile : public Base<CxxFile, FsFileSPtr, CxxIncludeDirectorySetSPtr>

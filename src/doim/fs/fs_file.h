@@ -14,7 +14,7 @@ namespace doim
 {
 class FsFile;
 typedef shared_ptr<FsFile> FsFileSPtr;
-typedef NewObjectSet<FsFile> FsFileSet;
+typedef Set<FsFile> FsFileSet;
 typedef shared_ptr<FsFileSet> FsFileSetSPtr;
 
 class FsFile : public Base<FsFile, FsDirectorySPtr, string>

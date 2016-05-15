@@ -16,7 +16,7 @@ namespace doim
 {
 class CxxProgram;
 typedef shared_ptr<CxxProgram> CxxProgramSPtr;
-typedef NewObjectSet<CxxProgram> CxxProgramSet;
+typedef Set<CxxProgram> CxxProgramSet;
 typedef shared_ptr<CxxProgramSet> CxxProgramSetSPtr;
 
 struct CxxProgramEnums

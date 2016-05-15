@@ -14,7 +14,7 @@ namespace doim
 {
 class CxxStaticLibrary;
 typedef shared_ptr<CxxStaticLibrary> CxxStaticLibrarySPtr;
-typedef NewObjectSet<CxxStaticLibrary> CxxStaticLibrarySet;
+typedef Set<CxxStaticLibrary> CxxStaticLibrarySet;
 typedef shared_ptr<CxxStaticLibrarySet> CxxStaticLibrarySetSPtr;
 
 class CxxStaticLibrary : public Base<CxxStaticLibrary, FsFileSPtr>

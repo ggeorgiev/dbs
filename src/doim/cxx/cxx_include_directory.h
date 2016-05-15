@@ -16,12 +16,12 @@ namespace doim
 {
 class CxxHeader;
 typedef shared_ptr<CxxHeader> CxxHeaderSPtr;
-typedef NewObjectSet<CxxHeader> CxxHeaderSet;
+typedef Set<CxxHeader> CxxHeaderSet;
 typedef shared_ptr<CxxHeaderSet> CxxHeaderSetSPtr;
 
 class CxxIncludeDirectory;
 typedef shared_ptr<CxxIncludeDirectory> CxxIncludeDirectorySPtr;
-typedef NewObjectSet<CxxIncludeDirectory> CxxIncludeDirectorySet;
+typedef Set<CxxIncludeDirectory> CxxIncludeDirectorySet;
 typedef shared_ptr<CxxIncludeDirectorySet> CxxIncludeDirectorySetSPtr;
 
 struct CxxIncludeDirectoryEnums
