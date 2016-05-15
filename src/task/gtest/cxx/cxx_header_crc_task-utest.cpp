@@ -49,7 +49,7 @@ public:
 
 TEST_F(CxxHeaderCrcTaskTest, simple)
 {
-    auto cxxHeader = doim::unique<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
+    auto cxxHeader = doim::unique<doim::CxxHeader>(doim::CxxHeader::EType::kUser,
                                                    mFsSimpleCxx,
                                                    mEmptyCxxIncludeDirectorySet);
 
@@ -71,7 +71,7 @@ TEST_F(CxxHeaderCrcTaskTest, notFoundInclude)
     cxxIncludeDirectories->insert(cxxIncludeDirectory);
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
 
-    auto cxxHeader = doim::unique<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
+    auto cxxHeader = doim::unique<doim::CxxHeader>(doim::CxxHeader::EType::kUser,
                                                    mFsIncludesCxx,
                                                    cxxIncludeDirectories);
     auto task = task::CxxHeaderCrcTask::make(cxxHeader, nullptr);

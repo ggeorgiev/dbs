@@ -22,33 +22,29 @@ namespace doim
  *
  */
 
-namespace o_details
+struct ObjectEnums
 {
-enum class EType
-{
-    kCxxLibrary,
-    kCxxProgram,
+    enum class EType
+    {
+        kCxxLibrary,
+        kCxxProgram,
+    };
 };
-}
 
 class Object;
 typedef shared_ptr<Object> ObjectSPtr;
 typedef unordered_set<ObjectSPtr> ObjectSet;
 typedef shared_ptr<ObjectSet> ObjectSetSPtr;
 
-class Object : public Base<Object,
-                           std::underlying_type<o_details::EType>::type,
-                           string,
-                           LocationSPtr>
+class Object : public ObjectEnums,
+               public Base<Object, ObjectEnums::EType, string, LocationSPtr>
 {
 public:
-    typedef o_details::EType EType;
-
     Object(const EType type, const string& name, const LocationSPtr& location);
 
     EType type() const
     {
-        return static_cast<EType>(std::get<0>(mArgs));
+        return std::get<0>(mArgs);
     }
 
     const string& name() const

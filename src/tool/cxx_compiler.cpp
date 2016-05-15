@@ -22,6 +22,8 @@ doim::SysArgumentSPtr CxxCompiler::gDebuggingInformationArgument =
     doim::SysArgument::global("-g", CxxCompiler::gDebuggingInformationArgument);
 doim::SysArgumentSPtr CxxCompiler::gStdCpp11Argument =
     doim::SysArgument::global("-std=c++11", CxxCompiler::gStdCpp11Argument);
+doim::SysArgumentSPtr CxxCompiler::gStdCpp14Argument =
+    doim::SysArgument::global("-std=c++14", CxxCompiler::gStdCpp14Argument);
 doim::SysArgumentSPtr CxxCompiler::gFProfileArcArgument =
     doim::SysArgument::global("-fprofile-arcs", CxxCompiler::gFProfileArcArgument);
 doim::SysArgumentSPtr CxxCompiler::gFTestCoverageArgument =
@@ -70,7 +72,7 @@ doim::SysCommandSPtr CxxCompiler::compileCommand(
 {
     auto compileArguments =
         includeArguments(directory, objectFile->cxxFile()->cxxIncludeDirectories());
-    compileArguments->insert(gStdCpp11Argument);
+    compileArguments->insert(gStdCpp14Argument);
 
     switch (objectFile->purpose())
     {

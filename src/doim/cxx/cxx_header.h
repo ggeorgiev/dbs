@@ -17,22 +17,29 @@ typedef shared_ptr<CxxHeader> CxxHeaderSPtr;
 typedef unordered_set<CxxHeaderSPtr> CxxHeaderSet;
 typedef shared_ptr<CxxHeaderSet> CxxHeaderSetSPtr;
 
-class CxxHeader : public Base<CxxHeader, int, FsFileSPtr, CxxIncludeDirectorySetSPtr>
+struct CxxHeaderEnums
 {
-public:
-    enum class Type
+    enum class EType
     {
         kUser,
         kSystem,
     };
+};
 
-    CxxHeader(const Type type,
+class CxxHeader : public CxxHeaderEnums,
+                  public Base<CxxHeader,
+                              CxxHeaderEnums::EType,
+                              FsFileSPtr,
+                              CxxIncludeDirectorySetSPtr>
+{
+public:
+    CxxHeader(const EType type,
               const FsFileSPtr& file,
               const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories);
 
-    Type type() const
+    EType type() const
     {
-        return static_cast<Type>(std::get<0>(mArgs));
+        return std::get<0>(mArgs);
     }
 
     const FsFileSPtr& file() const

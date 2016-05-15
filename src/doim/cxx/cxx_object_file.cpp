@@ -10,9 +10,7 @@ namespace doim
 CxxObjectFile::CxxObjectFile(EPurpose purpose,
                              const CxxFileSPtr& cxxFile,
                              const FsFileSPtr& file)
-    : Base(static_cast<typename std::underlying_type<EPurpose>::type>(purpose),
-           cxxFile,
-           file)
+    : Base(purpose, cxxFile, file)
 {
     ASSERT(gManager->isUnique(cxxFile));
     ASSERT(gManager->isUnique(file));

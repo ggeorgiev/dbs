@@ -13,7 +13,7 @@ namespace doim
 CxxIncludeDirectory::CxxIncludeDirectory(const EType type,
                                          const FsDirectorySPtr& directory,
                                          const CxxHeaderSetSPtr& headerFiles)
-    : Base(static_cast<int>(type), directory, headerFiles)
+    : Base(type, directory, headerFiles)
 {
     ASSERT(directory != nullptr);
     ASSERT(gManager->isUnique(directory));

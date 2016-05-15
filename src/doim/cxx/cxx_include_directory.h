@@ -25,30 +25,29 @@ typedef shared_ptr<CxxIncludeDirectory> CxxIncludeDirectorySPtr;
 typedef unordered_set<CxxIncludeDirectorySPtr> CxxIncludeDirectorySet;
 typedef shared_ptr<CxxIncludeDirectorySet> CxxIncludeDirectorySetSPtr;
 
-namespace cid_details
+struct CxxIncludeDirectoryEnums
 {
-enum class EType
-{
-    kUser,
-    kSystem,
+    enum class EType
+    {
+        kUser,
+        kSystem,
+    };
 };
-}
 
-class CxxIncludeDirectory : public Base<CxxIncludeDirectory,
-                                        std::underlying_type<cid_details::EType>::type,
+class CxxIncludeDirectory : public CxxIncludeDirectoryEnums,
+                            public Base<CxxIncludeDirectory,
+                                        CxxIncludeDirectoryEnums::EType,
                                         FsDirectorySPtr,
                                         CxxHeaderSetSPtr>
 {
 public:
-    typedef cid_details::EType EType;
-
     CxxIncludeDirectory(const EType type,
                         const FsDirectorySPtr& directory,
                         const CxxHeaderSetSPtr& headerFiles);
 
     EType type() const
     {
-        return static_cast<EType>(std::get<0>(mArgs));
+        return std::get<0>(mArgs);
     }
 
     const FsDirectorySPtr& directory() const

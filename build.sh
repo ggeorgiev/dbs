@@ -5,7 +5,7 @@ cd $BASEDIR
 
 IWYU=include-what-you-use
 
-CXXFLAGS="-std=c++11 -stdlib=libc++"
+CXXFLAGS="-std=c++14 -stdlib=libc++"
 CXXFLAGS="$CXXFLAGS -isysroot /Applications/Xcode.app/Contents/Developer/Platforms"
 CXXFLAGS="$CXXFLAGS/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk"
 

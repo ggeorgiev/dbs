@@ -14,7 +14,7 @@
 namespace dom
 {
 CxxLibrary::CxxLibrary()
-    : mType(Type::kUser)
+    : mType(EType::kUser)
     , mRecursiveCxxIncludeDirectoriesMemoization(
           std::make_shared<RecursiveCxxIncludeDirectoriesMemoization>())
 {
@@ -26,13 +26,13 @@ ECode CxxLibrary::updateAttribute(const Attribute& attribute)
     if (attribute.mName == "type")
     {
         if (attribute.mValue == "system")
-            mType = Type::kSystem;
+            mType = EType::kSystem;
         else if (attribute.mValue == "test")
-            mType = Type::kTest;
+            mType = EType::kTest;
         else if (attribute.mValue == "3rdparty")
-            mType = Type::kThirdParty;
+            mType = EType::kThirdParty;
         else if (attribute.mValue == "user")
-            mType = Type::kUser;
+            mType = EType::kUser;
         else
             EHBan(kUnable, attribute.mName, attribute.mValue);
     }
@@ -72,25 +72,25 @@ doim::CxxIncludeDirectory::EType CxxLibrary::cxxIncludeDirectoryType() const
 {
     switch (mType)
     {
-        case Type::kUser:
-        case Type::kTest:
+        case EType::kUser:
+        case EType::kTest:
             return doim::CxxIncludeDirectory::EType::kUser;
-        case Type::kThirdParty:
-        case Type::kSystem:
+        case EType::kThirdParty:
+        case EType::kSystem:
             return doim::CxxIncludeDirectory::EType::kSystem;
     }
 }
 
-doim::CxxHeader::Type CxxLibrary::cxxHeaderType() const
+doim::CxxHeader::EType CxxLibrary::cxxHeaderType() const
 {
     switch (mType)
     {
-        case Type::kUser:
-        case Type::kTest:
-            return doim::CxxHeader::Type::kUser;
-        case Type::kThirdParty:
-        case Type::kSystem:
-            return doim::CxxHeader::Type::kSystem;
+        case EType::kUser:
+        case EType::kTest:
+            return doim::CxxHeader::EType::kUser;
+        case EType::kThirdParty:
+        case EType::kSystem:
+            return doim::CxxHeader::EType::kSystem;
     }
 }
 

@@ -82,10 +82,10 @@ TEST_F(CxxFileCrcTaskTest, notFoundInclude)
 
 TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
 {
-    auto cxxHeader1 = doim::unique<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
+    auto cxxHeader1 = doim::unique<doim::CxxHeader>(doim::CxxHeader::EType::kUser,
                                                     mFsUser1H,
                                                     mEmptyCxxIncludeDirectorySet);
-    auto cxxHeader2 = doim::unique<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
+    auto cxxHeader2 = doim::unique<doim::CxxHeader>(doim::CxxHeader::EType::kUser,
                                                     mFsUser2H,
                                                     mEmptyCxxIncludeDirectorySet);
 
@@ -117,7 +117,7 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     // This test makes sure that including from having more than one include directory
     // with the same fs directory is working.
 
-    auto cxxHeader2 = doim::unique<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
+    auto cxxHeader2 = doim::unique<doim::CxxHeader>(doim::CxxHeader::EType::kUser,
                                                     mFsUser2H,
                                                     mEmptyCxxIncludeDirectorySet);
 
@@ -134,7 +134,7 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     cxxIncludeDirectories2->insert(cxxIncludeDirectory2);
     cxxIncludeDirectories2 = doim::gManager->unique(cxxIncludeDirectories2);
 
-    auto cxxHeader1 = doim::unique<doim::CxxHeader>(doim::CxxHeader::Type::kUser,
+    auto cxxHeader1 = doim::unique<doim::CxxHeader>(doim::CxxHeader::EType::kUser,
                                                     mFsUser1H,
                                                     cxxIncludeDirectories2);
 

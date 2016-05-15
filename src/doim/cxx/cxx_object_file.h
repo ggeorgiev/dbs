@@ -18,24 +18,21 @@ typedef shared_ptr<CxxObjectFile> CxxObjectFileSPtr;
 typedef unordered_set<CxxObjectFileSPtr> CxxObjectFileSet;
 typedef shared_ptr<CxxObjectFileSet> CxxObjectFileSetSPtr;
 
-namespace cof_details
+struct CxxObjectFileEnums
 {
-enum class EPurpose
-{
-    kDebug,
-    kRelease,
-    kProfile,
+    enum class EPurpose
+    {
+        kDebug,
+        kRelease,
+        kProfile,
+    };
 };
-}
 
-class CxxObjectFile : public Base<CxxObjectFile,
-                                  std::underlying_type<cof_details::EPurpose>::type,
-                                  CxxFileSPtr,
-                                  FsFileSPtr>
+class CxxObjectFile
+    : public CxxObjectFileEnums,
+      public Base<CxxObjectFile, CxxObjectFileEnums::EPurpose, CxxFileSPtr, FsFileSPtr>
 {
 public:
-    typedef cof_details::EPurpose EPurpose;
-
     CxxObjectFile(EPurpose purpose, const CxxFileSPtr& cxxFile, const FsFileSPtr& file);
 
     EPurpose purpose() const

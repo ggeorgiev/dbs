@@ -7,10 +7,10 @@
 
 namespace doim
 {
-CxxHeader::CxxHeader(const Type type,
+CxxHeader::CxxHeader(const EType type,
                      const FsFileSPtr& file,
                      const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories)
-    : Base(static_cast<int>(type), file, cxxIncludeDirectories)
+    : Base(type, file, cxxIncludeDirectories)
 {
     ASSERT(gManager->isUnique(file));
     ASSERT(gManager->isUnique(cxxIncludeDirectories));

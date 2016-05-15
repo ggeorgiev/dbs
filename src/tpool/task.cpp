@@ -14,7 +14,7 @@ bool Task::Compare::operator()(const TaskSPtr& task1, const TaskSPtr& task2) con
 
 Task::Task(int priority)
     : mPriority(std::make_shared<Priority>(priority))
-    , mState(State::kConstructed)
+    , mState(EState::kConstructed)
 {
 }
 
@@ -25,10 +25,10 @@ Task::~Task()
 bool Task::markAsScheduled()
 {
     std::unique_lock<std::mutex> lock(mStateMutex);
-    if (mState != State::kConstructed)
+    if (mState != EState::kConstructed)
         return false;
 
-    mState = State::kScheduled;
+    mState = EState::kScheduled;
     mStateCondition.notify_all();
 
     return true;
@@ -37,13 +37,13 @@ bool Task::markAsScheduled()
 bool Task::finished() const
 {
     std::unique_lock<std::mutex> lock(mStateMutex);
-    return mState == State::kFinished;
+    return mState == EState::kFinished;
 }
 
 bool Task::conjoin()
 {
     std::unique_lock<std::mutex> lock(mStateMutex);
-    if (mState == State::kScheduled)
+    if (mState == EState::kScheduled)
     {
         run(lock);
         return true;
@@ -67,11 +67,11 @@ void Task::run()
 
 void Task::run(std::unique_lock<std::mutex>& lock)
 {
-    ASSERT(mState != State::kConstructed);
-    if (mState != State::kScheduled)
+    ASSERT(mState != EState::kConstructed);
+    if (mState != EState::kScheduled)
         return;
 
-    mState = State::kStarted;
+    mState = EState::kStarted;
     mStateCondition.notify_all();
     {
         reverse_lock<std::unique_lock<std::mutex>> un(lock);
@@ -84,7 +84,7 @@ void Task::run(std::unique_lock<std::mutex>& lock)
         if (code != err::kSuccess)
             mExecutionError.reset(err::gError.release());
     }
-    mState = State::kFinished;
+    mState = EState::kFinished;
     mStateCondition.notify_all();
 }
 
@@ -92,13 +92,13 @@ ECode Task::join()
 {
     {
         std::unique_lock<std::mutex> lock(mStateMutex);
-        ASSERT(this->mState == State::kScheduled || this->mState == State::kStarted ||
-               this->mState == State::kFinished);
+        ASSERT(this->mState == EState::kScheduled || this->mState == EState::kStarted ||
+               this->mState == EState::kFinished);
 
-        if (mState == State::kScheduled)
+        if (mState == EState::kScheduled)
             run(lock);
 
-        mStateCondition.wait(lock, [this] { return this->mState == State::kFinished; });
+        mStateCondition.wait(lock, [this] { return this->mState == EState::kFinished; });
     }
     EHTest(reportError());
     EHEnd;
@@ -108,9 +108,9 @@ ECode Task::execute()
 {
     {
         std::unique_lock<std::mutex> lock(mStateMutex);
-        ASSERT(this->mState == State::kConstructed);
+        ASSERT(this->mState == EState::kConstructed);
 
-        mState = State::kScheduled;
+        mState = EState::kScheduled;
         run(lock);
     }
     EHTest(reportError());

@@ -33,7 +33,7 @@ class CxxLibrary : public enable_make_shared<CxxLibrary>,
                    public CxxPrivateHeadersMixin<CxxLibrary>
 {
 public:
-    enum class Type
+    enum class EType
     {
         kSystem,
         kTest,
@@ -44,7 +44,7 @@ public:
     CxxLibrary();
 
     // Accessors
-    Type type()
+    EType type()
     {
         return mType;
     }
@@ -82,7 +82,7 @@ public:
     // Computations
     doim::CxxIncludeDirectory::EType cxxIncludeDirectoryType() const;
 
-    doim::CxxHeader::Type cxxHeaderType() const;
+    doim::CxxHeader::EType cxxHeaderType() const;
 
     CxxLibrarySet recursiveCxxLibraries() const;
 
@@ -105,7 +105,7 @@ public:
     doim::CxxHeaderSetSPtr recursiveCxxHeaders(const doim::FsDirectorySPtr& root) const;
 
 private:
-    Type mType;
+    EType mType;
     doim::FsFileSPtr mBinary;
 
     doim::FsDirectorySPtr mPublicHeadersDirectory;

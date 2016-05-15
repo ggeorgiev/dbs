@@ -19,25 +19,24 @@ typedef shared_ptr<CxxProgram> CxxProgramSPtr;
 typedef unordered_set<CxxProgramSPtr> CxxProgramSet;
 typedef shared_ptr<CxxProgramSet> CxxProgramSetSPtr;
 
-namespace cp_details
+struct CxxProgramEnums
 {
-enum class EPurpose
-{
-    kDebug,
-    kRelease,
-    kProfile,
+    enum class EPurpose
+    {
+        kDebug,
+        kRelease,
+        kProfile,
+    };
 };
-}
 
-class CxxProgram : public Base<CxxProgram,
-                               std::underlying_type<cp_details::EPurpose>::type,
+class CxxProgram : public CxxProgramEnums,
+                   public Base<CxxProgram,
+                               CxxProgramEnums::EPurpose,
                                FsFileSPtr,
                                CxxStaticLibrarySetSPtr,
                                CxxObjectFileSetSPtr>
 {
 public:
-    typedef cp_details::EPurpose EPurpose;
-
     CxxProgram(EPurpose purpose,
                const FsFileSPtr& file,
                const CxxStaticLibrarySetSPtr& staticLibraries,

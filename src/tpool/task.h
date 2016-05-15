@@ -69,7 +69,7 @@ protected:
     virtual void onStart() const;
     virtual void onFinish(ECode code) const;
 
-    enum class State
+    enum class EState
     {
         kConstructed,
         kScheduled,
@@ -99,7 +99,7 @@ private:
 
     mutable std::mutex mStateMutex;
     std::condition_variable mStateCondition;
-    std::atomic<State> mState;
+    std::atomic<EState> mState;
 };
 
 } // namespace tpool

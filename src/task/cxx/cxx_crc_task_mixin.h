@@ -82,7 +82,7 @@ protected:
 
         for (const auto& headerDirectory : headerDirectories)
         {
-            if (headerDirectory.first->type() == doim::CxxHeader::Type::kSystem)
+            if (headerDirectory.first->type() == doim::CxxHeader::EType::kSystem)
                 continue;
 
             auto task =

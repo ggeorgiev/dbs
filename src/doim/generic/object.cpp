@@ -8,7 +8,7 @@
 namespace doim
 {
 Object::Object(const EType type, const string& name, const LocationSPtr& location)
-    : Base(static_cast<int>(type), name, location)
+    : Base(type, name, location)
 {
     ASSERT(gManager->isUnique(location));
 }
