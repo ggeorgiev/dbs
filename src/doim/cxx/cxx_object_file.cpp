@@ -12,7 +12,7 @@ CxxObjectFile::CxxObjectFile(EPurpose purpose,
                              const FsFileSPtr& file)
     : Base(purpose, cxxFile, file)
 {
-    ASSERT(gManager->isUnique(cxxFile));
+    ASSERT(cxxFile->isUnique());
     ASSERT(gManager->isUnique(file));
 }
 }

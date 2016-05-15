@@ -47,7 +47,7 @@ public:
 
         for (const auto& fsFile : mCxxFilesList)
         {
-            auto cxxFile = doim::unique<doim::CxxFile>(fsFile, directories);
+            auto cxxFile = doim::CxxFile::unique(fsFile, directories);
             cxxFiles.insert(cxxFile);
 
             DLOG("fsFile: {0}", fsFile->path());

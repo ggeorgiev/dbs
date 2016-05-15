@@ -54,7 +54,7 @@ public:
 TEST_F(CxxFileCrcTaskTest, SLOW_simple)
 {
     auto cxxFile =
-        doim::unique<doim::CxxFile>(mFsSimpleCxx, mEmptyCxxIncludeDirectorySet);
+        doim::CxxFile::unique(mFsSimpleCxx, mEmptyCxxIncludeDirectorySet);
     auto task = task::CxxFileCrcTask::make(cxxFile);
     task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
@@ -73,7 +73,7 @@ TEST_F(CxxFileCrcTaskTest, notFoundInclude)
     cxxIncludeDirectories->insert(cxxIncludeDirectory);
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
 
-    auto cxxFile = doim::unique<doim::CxxFile>(mFsIncludesCxx, cxxIncludeDirectories);
+    auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories);
 
     auto task = task::CxxFileCrcTask::make(cxxFile);
     task::gTPool->ensureScheduled(task);
@@ -103,7 +103,7 @@ TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
     cxxIncludeDirectories->insert(cxxIncludeDirectory);
     cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
 
-    auto cxxFile = doim::unique<doim::CxxFile>(mFsIncludesCxx, cxxIncludeDirectories);
+    auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories);
 
     auto task = task::CxxFileCrcTask::make(cxxFile);
     task::gTPool->ensureScheduled(task);
@@ -151,7 +151,7 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     cxxIncludeDirectories1->insert(cxxIncludeDirectory1);
     cxxIncludeDirectories1 = doim::gManager->unique(cxxIncludeDirectories1);
 
-    auto cxxFile = doim::unique<doim::CxxFile>(mFsIncludesCxx, cxxIncludeDirectories1);
+    auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories1);
 
     auto task = task::CxxFileCrcTask::make(cxxFile);
     task::gTPool->ensureScheduled(task);
