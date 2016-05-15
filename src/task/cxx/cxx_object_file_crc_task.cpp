@@ -18,7 +18,7 @@ namespace task
 CxxObjectFileCrcTask::CxxObjectFileCrcTask(const doim::CxxObjectFileSPtr& cxxObjectFile)
     : Base(cxxObjectFile)
 {
-    ASSERT(doim::gManager->isUnique(cxxObjectFile));
+    ASSERT(cxxObjectFile->isUnique());
 }
 
 ECode CxxObjectFileCrcTask::operator()()

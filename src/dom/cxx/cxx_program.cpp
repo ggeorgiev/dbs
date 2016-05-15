@@ -61,7 +61,7 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
             objectFiles->insert(libObjectFiles.begin(), libObjectFiles.end());
         }
     }
-    objectFiles = doim::gManager->unique(objectFiles);
+    objectFiles = doim::CxxObjectFileSet::unique(objectFiles);
     staticLibraries = doim::gManager->unique(staticLibraries);
 
     const auto& programFile = doim::gManager->obtainFile(intermediate, name());

@@ -73,8 +73,7 @@ public:
             const auto& outputFile =
                 doim::gManager->obtainFile(directory, cxxFile->file()->name() + ".o");
 
-            auto objectFile =
-                doim::unique<doim::CxxObjectFile>(purpose, cxxFile, outputFile);
+            auto objectFile = doim::CxxObjectFile::unique(purpose, cxxFile, outputFile);
             cxxObjectFiles.insert(objectFile);
         }
         return cxxObjectFiles;

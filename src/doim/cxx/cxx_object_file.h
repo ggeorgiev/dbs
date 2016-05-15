@@ -15,7 +15,7 @@ namespace doim
 {
 class CxxObjectFile;
 typedef shared_ptr<CxxObjectFile> CxxObjectFileSPtr;
-typedef unordered_set<CxxObjectFileSPtr> CxxObjectFileSet;
+typedef NewObjectSet<CxxObjectFile> CxxObjectFileSet;
 typedef shared_ptr<CxxObjectFileSet> CxxObjectFileSetSPtr;
 
 struct CxxObjectFileEnums
