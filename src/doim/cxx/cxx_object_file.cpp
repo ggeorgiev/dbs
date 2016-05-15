@@ -10,7 +10,7 @@ namespace doim
 CxxObjectFile::CxxObjectFile(EPurpose purpose,
                              const CxxFileSPtr& cxxFile,
                              const FsFileSPtr& file)
-    : Base(purpose, cxxFile, file)
+    : Element(purpose, cxxFile, file)
 {
     ASSERT(cxxFile->isUnique());
     ASSERT(file->isUnique());

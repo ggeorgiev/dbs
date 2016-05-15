@@ -12,7 +12,7 @@
 namespace task
 {
 CxxFileCrcTask::CxxFileCrcTask(const doim::CxxFileSPtr& cxxFile)
-    : Base(cxxFile)
+    : Element(cxxFile)
 {
     ASSERT(cxxFile->isUnique());
 }

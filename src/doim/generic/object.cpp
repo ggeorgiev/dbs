@@ -9,7 +9,7 @@
 namespace doim
 {
 Object::Object(const EType type, const string& name, const LocationSPtr& location)
-    : Base(type, name, location)
+    : Element(type, name, location)
 {
     ASSERT(location->isUnique());
 }

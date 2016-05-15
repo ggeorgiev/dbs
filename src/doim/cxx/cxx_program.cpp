@@ -11,7 +11,7 @@ CxxProgram::CxxProgram(EPurpose purpose,
                        const FsFileSPtr& file,
                        const CxxStaticLibrarySetSPtr& staticLibraries,
                        const CxxObjectFileSetSPtr& cxxObjectFiles)
-    : Base(purpose, file, staticLibraries, cxxObjectFiles)
+    : Element(purpose, file, staticLibraries, cxxObjectFiles)
 {
     ASSERT(file->isUnique());
     ASSERT(staticLibraries->isUnique());

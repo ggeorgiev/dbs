@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "doim/base.hpp"
+#include "doim/element.hpp"
 #include "doim/fs/fs_directory.h"
 #include <memory>
 #include <str>
@@ -17,10 +17,10 @@ typedef shared_ptr<FsFile> FsFileSPtr;
 typedef Set<FsFile> FsFileSet;
 typedef shared_ptr<FsFileSet> FsFileSetSPtr;
 
-class FsFile : public Base<FsFile, FsDirectorySPtr, string>
+class FsFile : public Element<FsFile, FsDirectorySPtr, string>
 {
 public:
-    using Base<FsFile, FsDirectorySPtr, string>::find;
+    using Element<FsFile, FsDirectorySPtr, string>::find;
     static FsFileSPtr find(const FsDirectorySPtr& base, const string_view& file);
 
     static FsFileSPtr obtain(const FsDirectorySPtr& base, const string_view& file);

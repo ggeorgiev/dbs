@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "doim/base.hpp"
 #include "doim/cxx/cxx_file.h"
+#include "doim/element.hpp"
 #include "doim/fs/fs_file.h"
 #include <memory>
 #include <tuple>
@@ -30,7 +30,7 @@ struct CxxObjectFileEnums
 
 class CxxObjectFile
     : public CxxObjectFileEnums,
-      public Base<CxxObjectFile, CxxObjectFileEnums::EPurpose, CxxFileSPtr, FsFileSPtr>
+      public Element<CxxObjectFile, CxxObjectFileEnums::EPurpose, CxxFileSPtr, FsFileSPtr>
 {
 public:
     CxxObjectFile(EPurpose purpose, const CxxFileSPtr& cxxFile, const FsFileSPtr& file);

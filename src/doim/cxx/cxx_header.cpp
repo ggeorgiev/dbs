@@ -9,7 +9,7 @@ namespace doim
 CxxHeader::CxxHeader(const EType type,
                      const FsFileSPtr& file,
                      const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories)
-    : Base(type, file, cxxIncludeDirectories)
+    : Element(type, file, cxxIncludeDirectories)
 {
     ASSERT(file->isUnique());
     ASSERT(cxxIncludeDirectories->isUnique());

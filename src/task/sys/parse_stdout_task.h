@@ -19,10 +19,10 @@ namespace task
 class ParseStdoutTask;
 typedef shared_ptr<ParseStdoutTask> ParseStdoutTaskSPtr;
 
-class ParseStdoutTask : public Base<ParseStdoutTask,
-                                    doim::SysCommandSPtr,
-                                    doim::FsDirectorySPtr,
-                                    rtti::ClassId>
+class ParseStdoutTask : public Element<ParseStdoutTask,
+                                       doim::SysCommandSPtr,
+                                       doim::FsDirectorySPtr,
+                                       rtti::ClassId>
 {
 public:
     static std::function<ECode(int, const string&)> logOnError();

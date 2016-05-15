@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "doim/base.hpp"
+#include "doim/element.hpp"
 #include "doim/fs/fs_file.h"
 #include "doim/set.hpp"
 #include <memory>
@@ -17,7 +17,7 @@ typedef shared_ptr<CxxStaticLibrary> CxxStaticLibrarySPtr;
 typedef Set<CxxStaticLibrary> CxxStaticLibrarySet;
 typedef shared_ptr<CxxStaticLibrarySet> CxxStaticLibrarySetSPtr;
 
-class CxxStaticLibrary : public Base<CxxStaticLibrary, FsFileSPtr>
+class CxxStaticLibrary : public Element<CxxStaticLibrary, FsFileSPtr>
 {
 public:
     CxxStaticLibrary(const FsFileSPtr& binary);

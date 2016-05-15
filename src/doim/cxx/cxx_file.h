@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "doim/base.hpp"
 #include "doim/cxx/cxx_include_directory.h"
+#include "doim/element.hpp"
 #include "doim/fs/fs_file.h"
 #include "doim/set.hpp"
 #include <memory>
@@ -18,7 +18,7 @@ typedef shared_ptr<CxxFile> CxxFileSPtr;
 typedef Set<CxxFile> CxxFileSet;
 typedef shared_ptr<CxxFileSet> CxxFileSetSPtr;
 
-class CxxFile : public Base<CxxFile, FsFileSPtr, CxxIncludeDirectorySetSPtr>
+class CxxFile : public Element<CxxFile, FsFileSPtr, CxxIncludeDirectorySetSPtr>
 {
 public:
     CxxFile(const FsFileSPtr& file,

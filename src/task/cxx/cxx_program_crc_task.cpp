@@ -19,7 +19,7 @@
 namespace task
 {
 CxxProgramCrcTask::CxxProgramCrcTask(const doim::CxxProgramSPtr& cxxProgram)
-    : Base(cxxProgram)
+    : Element(cxxProgram)
 {
     ASSERT(cxxProgram->isUnique());
 }

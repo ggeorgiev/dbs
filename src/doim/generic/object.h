@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "doim/base.hpp"
+#include "doim/element.hpp"
 #include "doim/generic/location.hpp"
 #include <memory>
 #include <str>
@@ -37,7 +37,7 @@ typedef unordered_set<ObjectSPtr> ObjectSet;
 typedef shared_ptr<ObjectSet> ObjectSetSPtr;
 
 class Object : public ObjectEnums,
-               public Base<Object, ObjectEnums::EType, string, LocationSPtr>
+               public Element<Object, ObjectEnums::EType, string, LocationSPtr>
 {
 public:
     static ObjectSPtr obtain(const LocationSPtr& base,

@@ -6,7 +6,7 @@
 namespace doim
 {
 FsBinary::FsBinary(const string& name)
-    : Base(name)
+    : Element(name)
 {
 }
 }

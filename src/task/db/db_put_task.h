@@ -19,7 +19,7 @@ class DbPutTask;
 
 typedef shared_ptr<DbPutTask> DbPutTaskSPtr;
 
-class DbPutTask : public Base<DbPutTask, doim::DbKeySPtr>
+class DbPutTask : public Element<DbPutTask, doim::DbKeySPtr>
 {
 public:
     DbPutTask(const doim::DbKeySPtr& key, const doim::DbValueSPtr& value);

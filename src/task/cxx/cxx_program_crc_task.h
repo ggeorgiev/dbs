@@ -19,7 +19,7 @@ class CxxProgramCrcTask;
 
 typedef shared_ptr<CxxProgramCrcTask> CxxProgramCrcTaskSPtr;
 
-class CxxProgramCrcTask : public Base<CxxProgramCrcTask, doim::CxxProgramSPtr>
+class CxxProgramCrcTask : public Element<CxxProgramCrcTask, doim::CxxProgramSPtr>
 {
 public:
     CxxProgramCrcTask(const doim::CxxProgramSPtr& cxxProgram);

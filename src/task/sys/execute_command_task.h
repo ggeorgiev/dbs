@@ -19,7 +19,7 @@ class ExecuteCommandTask;
 typedef shared_ptr<ExecuteCommandTask> ExecuteCommandTaskSPtr;
 
 class ExecuteCommandTask
-    : public Base<ExecuteCommandTask, doim::SysCommandSPtr, doim::FsDirectorySPtr>
+    : public Element<ExecuteCommandTask, doim::SysCommandSPtr, doim::FsDirectorySPtr>
 {
 public:
     ExecuteCommandTask(const doim::SysCommandSPtr& command,

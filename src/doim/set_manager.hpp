@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include "doim/manager_object_mixin.hpp"
 #include "err/err_assert.h"
 #include <boost/functional/hash/hash.hpp>
 #include <algorithm>

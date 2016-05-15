@@ -17,7 +17,7 @@ CxxHeaderCrcTaskSPtr CxxHeaderCrcTask::valid(const CxxHeaderCrcTaskSPtr& task)
 CxxHeaderCrcTask::CxxHeaderCrcTask(
     const doim::CxxHeaderSPtr& cxxHeader,
     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory)
-    : Base(cxxHeader, currentIncludeDirectory)
+    : Element(cxxHeader, currentIncludeDirectory)
 {
     ASSERT(cxxHeader->isUnique());
     ASSERT(currentIncludeDirectory->isUnique());

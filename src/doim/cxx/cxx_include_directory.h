@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "doim/base.hpp"
+#include "doim/element.hpp"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/set.hpp"
@@ -34,10 +34,10 @@ struct CxxIncludeDirectoryEnums
 };
 
 class CxxIncludeDirectory : public CxxIncludeDirectoryEnums,
-                            public Base<CxxIncludeDirectory,
-                                        CxxIncludeDirectoryEnums::EType,
-                                        FsDirectorySPtr,
-                                        CxxHeaderSetSPtr>
+                            public Element<CxxIncludeDirectory,
+                                           CxxIncludeDirectoryEnums::EType,
+                                           FsDirectorySPtr,
+                                           CxxHeaderSetSPtr>
 {
 public:
     CxxIncludeDirectory(const EType type,

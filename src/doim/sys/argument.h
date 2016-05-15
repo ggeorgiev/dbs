@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "doim/base.hpp"
+#include "doim/element.hpp"
 #include "doim/set.hpp"
 #include <memory>
 #include <str>
@@ -17,11 +17,11 @@ typedef shared_ptr<SysArgument> SysArgumentSPtr;
 typedef Set<SysArgument> SysArgumentSet;
 typedef shared_ptr<SysArgumentSet> SysArgumentSetSPtr;
 
-class SysArgument : public Base<SysArgument, string>
+class SysArgument : public Element<SysArgument, string>
 {
 public:
     SysArgument(const string& value)
-        : Base(value)
+        : Element(value)
     {
     }
 

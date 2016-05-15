@@ -9,7 +9,7 @@ namespace doim
 {
 SysExecutable::SysExecutable(const doim::FsFileSPtr& file,
                              const doim::FsBinarySPtr& binary)
-    : Base(file, binary)
+    : Element(file, binary)
 {
     ASSERT(file == nullptr || binary == nullptr);
     ASSERT(file != nullptr || binary != nullptr);

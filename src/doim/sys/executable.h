@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "doim/base.hpp"
+#include "doim/element.hpp"
 #include "doim/fs/fs_binary.h"
 #include "doim/fs/fs_file.h"
 #include <memory>
@@ -14,7 +14,7 @@ namespace doim
 class SysExecutable;
 typedef shared_ptr<SysExecutable> SysExecutableSPtr;
 
-class SysExecutable : public Base<SysExecutable, doim::FsFileSPtr, doim::FsBinarySPtr>
+class SysExecutable : public Element<SysExecutable, doim::FsFileSPtr, doim::FsBinarySPtr>
 {
 public:
     SysExecutable(const doim::FsFileSPtr& file, const doim::FsBinarySPtr& binary);

@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "doim/manager_object_mixin.hpp"
+#include "doim/element_manager.hpp"
 #include "im/initialization_manager.hpp"
 #include <boost/functional/hash.hpp>
 #include <boost/fusion/adapted/std_tuple.hpp>
@@ -19,19 +19,19 @@
 namespace doim
 {
 template <typename T, typename... Args>
-class Base : public enable_make_shared<T>
+class Element : public enable_make_shared<T>
 {
 public:
     typedef std::tuple<Args...> Tuple;
 
     static shared_ptr<T> unique(const Args&... args)
     {
-        return gManagerObjectMixin->unique(enable_make_shared<T>::make(args...));
+        return gElementManager->unique(enable_make_shared<T>::make(args...));
     }
 
     static shared_ptr<T> unique(const shared_ptr<T>& object)
     {
-        return gManagerObjectMixin->unique(object);
+        return gElementManager->unique(object);
     }
 
     static int constexpr rank()
@@ -42,18 +42,17 @@ public:
     static shared_ptr<T> global(const Args&... args, shared_ptr<T>& object)
     {
         auto fn = [&object]() -> bool {
-            object = gManagerObjectMixin->unique(object);
+            object = gElementManager->unique(object);
             return true;
         };
         im::InitializationManager::subscribe<
-            shared_ptr<T>>(ManagerObjectMixin<T>::rank() +
-                               im::InitializationManager::step(),
+            shared_ptr<T>>(ElementManager<T>::rank() + im::InitializationManager::step(),
                            fn,
                            nullptr);
         return std::make_shared<T>(args...);
     }
 
-    Base(const Args&... args)
+    Element(const Args&... args)
         : mArgs(args...)
     {
     }
@@ -61,13 +60,13 @@ public:
     bool isUnique()
     {
         shared_ptr<T> key(shared_ptr<T>(), static_cast<T*>(this));
-        return gManagerObjectMixin->isUnique(key);
+        return gElementManager->isUnique(key);
     }
 
     shared_ptr<T> find()
     {
         shared_ptr<T> key(shared_ptr<T>(), static_cast<T*>(this));
-        return gManagerObjectMixin->find(key);
+        return gElementManager->find(key);
     }
 
     void finally()
@@ -107,11 +106,11 @@ public:
     };
 
 protected:
-    static shared_ptr<ManagerObjectMixin<T>> gManagerObjectMixin;
+    static shared_ptr<ElementManager<T>> gElementManager;
     Tuple mArgs;
 };
 
 template <typename T, typename... Args>
-shared_ptr<ManagerObjectMixin<T>> Base<T, Args...>::gManagerObjectMixin =
-    im::InitializationManager::subscribe(gManagerObjectMixin);
+shared_ptr<ElementManager<T>> Element<T, Args...>::gElementManager =
+    im::InitializationManager::subscribe(gElementManager);
 }

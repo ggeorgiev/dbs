@@ -29,7 +29,7 @@ ParseStdoutTask::ParseStdoutTask(const doim::SysCommandSPtr& command,
                                  rtti::ClassId parseId,
                                  std::function<ECode(int, const string&)> parse,
                                  const string& description)
-    : Base(command, targetDirectory, parseId)
+    : Element(command, targetDirectory, parseId)
     , mParse(parse)
     , mDescription(description)
 {

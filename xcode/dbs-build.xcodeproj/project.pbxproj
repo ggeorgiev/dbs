@@ -130,11 +130,11 @@
 		5E4205391C78EB620090FA05 /* base.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E4205381C78EB620090FA05 /* base.hpp */; };
 		5E42053C1C78FA8F0090FA05 /* cxx_crc_task_mixin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E42053A1C78FA8F0090FA05 /* cxx_crc_task_mixin.cpp */; };
 		5E42053D1C78FA8F0090FA05 /* cxx_crc_task_mixin.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E42053B1C78FA8F0090FA05 /* cxx_crc_task_mixin.h */; };
-		5E42053F1C79097C0090FA05 /* manager_object_mixin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E42053E1C79097C0090FA05 /* manager_object_mixin.hpp */; };
+		5E42053F1C79097C0090FA05 /* element_manager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E42053E1C79097C0090FA05 /* element_manager.hpp */; };
 		5E5692641C724929000A233C /* crc.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E5692621C724929000A233C /* crc.hpp */; };
 		5E56926E1C726458000A233C /* cxx_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E56926C1C726458000A233C /* cxx_file.cpp */; };
 		5E56926F1C726458000A233C /* cxx_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E56926D1C726458000A233C /* cxx_file.h */; };
-		5E5692711C727076000A233C /* base.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E5692701C727076000A233C /* base.hpp */; };
+		5E5692711C727076000A233C /* element.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E5692701C727076000A233C /* element.hpp */; };
 		5E83145F1CDC5A7F00344DB5 /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E83145E1CDC5A7F00344DB5 /* framework.h */; };
 		5EABCAB71CE054E000E79FFD /* fs_binary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EABCAB51CE054E000E79FFD /* fs_binary.cpp */; };
 		5EABCAB81CE054E000E79FFD /* fs_binary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EABCAB61CE054E000E79FFD /* fs_binary.h */; };
@@ -324,7 +324,7 @@
 		5E4205381C78EB620090FA05 /* base.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = base.hpp; sourceTree = "<group>"; };
 		5E42053A1C78FA8F0090FA05 /* cxx_crc_task_mixin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_crc_task_mixin.cpp; sourceTree = "<group>"; };
 		5E42053B1C78FA8F0090FA05 /* cxx_crc_task_mixin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_crc_task_mixin.h; sourceTree = "<group>"; };
-		5E42053E1C79097C0090FA05 /* manager_object_mixin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = manager_object_mixin.hpp; sourceTree = "<group>"; };
+		5E42053E1C79097C0090FA05 /* element_manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = element_manager.hpp; sourceTree = "<group>"; };
 		5E5692621C724929000A233C /* crc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = crc.hpp; sourceTree = "<group>"; };
 		5E5692631C724929000A233C /* math.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = math.dbs; sourceTree = "<group>"; };
 		5E5692651C725443000A233C /* build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = build.sh; path = ../build.sh; sourceTree = "<group>"; };
@@ -333,7 +333,7 @@
 		5E5692681C725443000A233C /* self-build.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = "self-build.sh"; path = "../self-build.sh"; sourceTree = "<group>"; };
 		5E56926C1C726458000A233C /* cxx_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_file.cpp; sourceTree = "<group>"; };
 		5E56926D1C726458000A233C /* cxx_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_file.h; sourceTree = "<group>"; };
-		5E5692701C727076000A233C /* base.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = base.hpp; sourceTree = "<group>"; };
+		5E5692701C727076000A233C /* element.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = element.hpp; sourceTree = "<group>"; };
 		5E83145E1CDC5A7F00344DB5 /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
 		5EABCAB51CE054E000E79FFD /* fs_binary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fs_binary.cpp; sourceTree = "<group>"; };
 		5EABCAB61CE054E000E79FFD /* fs_binary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs_binary.h; sourceTree = "<group>"; };
@@ -473,8 +473,8 @@
 				5E10B33E1C70F272009C73E4 /* sys */,
 				5E290B261CB9EC3900F10210 /* tag */,
 				5E10B3301C70F272009C73E4 /* doim.dbs */,
-				5E5692701C727076000A233C /* base.hpp */,
-				5E42053E1C79097C0090FA05 /* manager_object_mixin.hpp */,
+				5E5692701C727076000A233C /* element.hpp */,
+				5E42053E1C79097C0090FA05 /* element_manager.hpp */,
 				5EE51C281CE9087300DB0DDA /* set_manager.hpp */,
 				5EE51C261CE84B3700DB0DDA /* set.hpp */,
 				5E10B3371C70F272009C73E4 /* gtest */,
@@ -1003,7 +1003,7 @@
 				5E10B3AF1C70F272009C73E4 /* constants.h in Headers */,
 				5E10B3F51C70F272009C73E4 /* cxx_file_crc_task.h in Headers */,
 				5E10B3BB1C70F272009C73E4 /* location.hpp in Headers */,
-				5E5692711C727076000A233C /* base.hpp in Headers */,
+				5E5692711C727076000A233C /* element.hpp in Headers */,
 				5E10B3B11C70F272009C73E4 /* database.h in Headers */,
 				5E10B3EF1C70F272009C73E4 /* parser.hpp in Headers */,
 				5E10B3DD1C70F272009C73E4 /* performance_arbiter.h in Headers */,
@@ -1038,7 +1038,7 @@
 				5EAE677F1C72BE59005B3F8D /* cxx_program.h in Headers */,
 				5E10B4031C70F272009C73E4 /* cxx_compiler.h in Headers */,
 				5E3CA9AE1CCEC90600F6D7ED /* solitary_container.hpp in Headers */,
-				5E42053F1C79097C0090FA05 /* manager_object_mixin.hpp in Headers */,
+				5E42053F1C79097C0090FA05 /* element_manager.hpp in Headers */,
 				5E290B391CBAB92500F10210 /* tpool.h in Headers */,
 				5E10B3E51C70F272009C73E4 /* log.h in Headers */,
 				5EABCABC1CE057FD00E79FFD /* executable.h in Headers */,

@@ -19,7 +19,7 @@ class CxxObjectFileCrcTask;
 
 typedef shared_ptr<CxxObjectFileCrcTask> CxxObjectFileCrcTaskSPtr;
 
-class CxxObjectFileCrcTask : public Base<CxxObjectFileCrcTask, doim::CxxObjectFileSPtr>
+class CxxObjectFileCrcTask : public Element<CxxObjectFileCrcTask, doim::CxxObjectFileSPtr>
 {
 public:
     CxxObjectFileCrcTask(const doim::CxxObjectFileSPtr& cxxObjectFile);

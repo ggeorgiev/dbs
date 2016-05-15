@@ -57,7 +57,7 @@ FsFileSPtr FsFile::obtain(const FsDirectorySPtr& base, const string_view& file)
 }
 
 FsFile::FsFile(const FsDirectorySPtr& directory, const string& name)
-    : Base(directory, name)
+    : Element(directory, name)
 {
     ASSERT(directory->isUnique());
 }

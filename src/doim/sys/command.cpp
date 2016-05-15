@@ -13,7 +13,7 @@ namespace doim
 {
 SysCommand::SysCommand(const SysExecutableSPtr& executable,
                        const SysArgumentSetSPtr& arguments)
-    : Base(executable, arguments)
+    : Element(executable, arguments)
 {
     ASSERT(executable->isUnique());
     ASSERT(arguments->isUnique());

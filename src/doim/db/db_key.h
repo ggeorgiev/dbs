@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "doim/base.hpp"
+#include "doim/element.hpp"
 #include <memory>
 #include <str>
 #include <tuple>
@@ -13,7 +13,7 @@ namespace doim
 class DbKey;
 typedef shared_ptr<DbKey> DbKeySPtr;
 
-class DbKey : public Base<DbKey, DbKeySPtr, string>
+class DbKey : public Element<DbKey, DbKeySPtr, string>
 {
 public:
     static int constexpr rankLevels()
@@ -21,7 +21,7 @@ public:
         return 2;
     }
 
-    using Base<DbKey, DbKeySPtr, string>::global;
+    using Element<DbKey, DbKeySPtr, string>::global;
     static DbKeySPtr global(const DbKeySPtr& ancestor,
                             int level,
                             const string& name,

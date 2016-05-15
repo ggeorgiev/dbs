@@ -12,7 +12,7 @@ namespace doim
 CxxIncludeDirectory::CxxIncludeDirectory(const EType type,
                                          const FsDirectorySPtr& directory,
                                          const CxxHeaderSetSPtr& headerFiles)
-    : Base(type, directory, headerFiles)
+    : Element(type, directory, headerFiles)
 {
     ASSERT(directory != nullptr);
     ASSERT(directory->isUnique());

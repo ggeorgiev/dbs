@@ -17,7 +17,7 @@ class EnsureDirectoryTask;
 
 typedef shared_ptr<EnsureDirectoryTask> EnsureDirectoryTaskSPtr;
 
-class EnsureDirectoryTask : public Base<EnsureDirectoryTask, doim::FsDirectorySPtr>
+class EnsureDirectoryTask : public Element<EnsureDirectoryTask, doim::FsDirectorySPtr>
 {
 public:
     EnsureDirectoryTask(const doim::FsDirectorySPtr& directory);

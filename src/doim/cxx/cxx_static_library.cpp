@@ -7,7 +7,7 @@
 namespace doim
 {
 CxxStaticLibrary::CxxStaticLibrary(const FsFileSPtr& binary)
-    : Base(binary)
+    : Element(binary)
 {
     ASSERT(binary->isUnique());
 }

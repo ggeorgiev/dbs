@@ -21,9 +21,9 @@ cxx_library doim
         doim/sys/executable.h
         doim/tag/tag.h
         doim/generic/location.hpp
-        doim/generic/object.h
-        doim/base.hpp
-        doim/manager_object_mixin.hpp
+        doim/generic/object.h        
+        doim/element.hpp
+        doim/element_manager.hpp
         doim/set_manager.hpp
         doim/set.hpp
     ;

@@ -10,13 +10,13 @@
 namespace doim
 {
 FsDirectory::FsDirectory()
-    : Base(FsDirectorySPtr(), string())
+    : Element(FsDirectorySPtr(), string())
     , mLevel(1)
 {
 }
 
 FsDirectory::FsDirectory(const FsDirectorySPtr& parent, const string& name)
-    : Base(parent, name)
+    : Element(parent, name)
     , mLevel(parent == nullptr ? 1 : parent->level() + 1)
 {
     ASSERT(parent->isUnique());

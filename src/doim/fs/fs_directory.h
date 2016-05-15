@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "doim/base.hpp"
+#include "doim/element.hpp"
 #include "doim/set.hpp"
 #include <memory>
 #include <str>
@@ -21,7 +21,7 @@ typedef shared_ptr<FsDirectory> FsDirectorySPtr;
 typedef Set<FsDirectory> FsDirectorySet;
 typedef shared_ptr<FsDirectorySet> FsDirectorySetSPtr;
 
-class FsDirectory : public Base<FsDirectory, FsDirectorySPtr, string>
+class FsDirectory : public Element<FsDirectory, FsDirectorySPtr, string>
 {
 public:
     class Builder
@@ -58,7 +58,7 @@ public:
         FsDirectorySPtr mFsDirectory;
     };
 
-    using Base<FsDirectory, FsDirectorySPtr, string>::find;
+    using Element<FsDirectory, FsDirectorySPtr, string>::find;
     static FsDirectorySPtr find(const FsDirectorySPtr& base,
                                 const string_view& directory);
 

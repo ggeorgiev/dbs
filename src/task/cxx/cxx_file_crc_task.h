@@ -20,7 +20,7 @@ class CxxFileCrcTask;
 typedef shared_ptr<CxxFileCrcTask> CxxFileCrcTaskSPtr;
 
 class CxxFileCrcTask : public CxxCrcTaskMixin,
-                       public Base<CxxFileCrcTask, doim::CxxFileSPtr>
+                       public Element<CxxFileCrcTask, doim::CxxFileSPtr>
 {
 public:
     CxxFileCrcTask(const doim::CxxFileSPtr& cxxFile);

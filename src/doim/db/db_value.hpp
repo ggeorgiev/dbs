@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "doim/base.hpp"
+#include "doim/element.hpp"
 #include <boost/functional/hash.hpp>
 #include <memory>
 #include <str>
@@ -16,12 +16,12 @@ namespace doim
 class DbValue;
 typedef shared_ptr<DbValue> DbValueSPtr;
 
-class DbValue : public Base<DbValue, string>
+class DbValue : public Element<DbValue, string>
 {
 public:
     template <typename T>
     DbValue(const T& obj)
-        : Base(string(reinterpret_cast<const char*>(&obj), sizeof(obj)))
+        : Element(string(reinterpret_cast<const char*>(&obj), sizeof(obj)))
     {
     }
 
@@ -33,7 +33,7 @@ public:
 
 template <>
 inline DbValue::DbValue(const string& bytes)
-    : Base(bytes)
+    : Element(bytes)
 {
 }
 }

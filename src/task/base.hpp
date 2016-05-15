@@ -23,12 +23,12 @@
 namespace task
 {
 template <typename T, typename... Args>
-class Base : public enable_make_shared<T>, public tpool::Task, public rtti::RttiInfo<T>
+class Element : public enable_make_shared<T>, public tpool::Task, public rtti::RttiInfo<T>
 {
 public:
     typedef std::tuple<Args...> Tuple;
 
-    Base(const Args&... args)
+    Element(const Args&... args)
         : tpool::Task(0)
         , mArgs(args...)
     {

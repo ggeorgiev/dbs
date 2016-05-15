@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include "doim/base.hpp"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/cxx/cxx_static_library.h"
+#include "doim/element.hpp"
 #include "doim/fs/fs_file.h"
 #include <memory>
 #include <tuple>
@@ -30,11 +30,11 @@ struct CxxProgramEnums
 };
 
 class CxxProgram : public CxxProgramEnums,
-                   public Base<CxxProgram,
-                               CxxProgramEnums::EPurpose,
-                               FsFileSPtr,
-                               CxxStaticLibrarySetSPtr,
-                               CxxObjectFileSetSPtr>
+                   public Element<CxxProgram,
+                                  CxxProgramEnums::EPurpose,
+                                  FsFileSPtr,
+                                  CxxStaticLibrarySetSPtr,
+                                  CxxObjectFileSetSPtr>
 {
 public:
     CxxProgram(EPurpose purpose,

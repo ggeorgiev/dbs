@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "doim/base.hpp"
 #include "doim/cxx/cxx_include_directory.h"
+#include "doim/element.hpp"
 #include "doim/fs/fs_file.h"
 #include "doim/set.hpp"
 #include <memory>
@@ -28,10 +28,10 @@ struct CxxHeaderEnums
 };
 
 class CxxHeader : public CxxHeaderEnums,
-                  public Base<CxxHeader,
-                              CxxHeaderEnums::EType,
-                              FsFileSPtr,
-                              CxxIncludeDirectorySetSPtr>
+                  public Element<CxxHeader,
+                                 CxxHeaderEnums::EType,
+                                 FsFileSPtr,
+                                 CxxIncludeDirectorySetSPtr>
 {
 public:
     CxxHeader(const EType type,

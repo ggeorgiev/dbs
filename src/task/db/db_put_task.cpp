@@ -10,7 +10,7 @@
 namespace task
 {
 DbPutTask::DbPutTask(const doim::DbKeySPtr& key, const doim::DbValueSPtr& value)
-    : Base(key)
+    : Element(key)
     , mValue(value)
 {
     ASSERT(key->isUnique());

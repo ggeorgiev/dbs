@@ -19,7 +19,7 @@ namespace task
 {
 ExecuteCommandTask::ExecuteCommandTask(const doim::SysCommandSPtr& command,
                                        const doim::FsDirectorySPtr& targetDirectory)
-    : Base(command, targetDirectory)
+    : Element(command, targetDirectory)
 {
     ASSERT(command->isUnique());
     ASSERT(targetDirectory->isUnique());

@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "doim/base.hpp"
+#include "doim/element.hpp"
 #include "doim/set.hpp"
 #include <memory>
 #include <str>
@@ -18,11 +18,11 @@ typedef shared_ptr<Tag> TagSPtr;
 typedef Set<Tag> TagSet;
 typedef shared_ptr<TagSet> TagSetSPtr;
 
-class Tag : public Base<Tag, string>
+class Tag : public Element<Tag, string>
 {
 public:
     Tag(const string& name)
-        : Base(name)
+        : Element(name)
     {
     }
 

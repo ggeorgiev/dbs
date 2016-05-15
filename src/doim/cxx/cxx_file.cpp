@@ -8,7 +8,7 @@ namespace doim
 {
 CxxFile::CxxFile(const FsFileSPtr& file,
                  const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories)
-    : Base(file, cxxIncludeDirectories)
+    : Element(file, cxxIncludeDirectories)
 {
     ASSERT(file->isUnique());
     ASSERT(cxxIncludeDirectories->isUnique());

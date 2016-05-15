@@ -2,7 +2,7 @@
 //
 
 #include "doim/db/db_key.h"
-#include "doim/base.hpp"
+#include "doim/element.hpp"
 #include "err/err_assert.h"
 #include "im/initialization_manager.hpp"
 #include <functional>
@@ -28,7 +28,7 @@ DbKeySPtr DbKey::global(const DbKeySPtr& ancestor,
 }
 
 DbKey::DbKey(const DbKeySPtr& ancestor, const string& name)
-    : Base(ancestor, name)
+    : Element(ancestor, name)
 {
     ASSERT(ancestor->isUnique());
 }

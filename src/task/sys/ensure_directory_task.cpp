@@ -13,7 +13,7 @@
 namespace task
 {
 EnsureDirectoryTask::EnsureDirectoryTask(const doim::FsDirectorySPtr& directory)
-    : Base(directory)
+    : Element(directory)
 {
     ASSERT(directory->isUnique());
 }

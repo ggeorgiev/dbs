@@ -22,7 +22,7 @@ typedef shared_ptr<CxxHeaderCrcTask> CxxHeaderCrcTaskSPtr;
 
 class CxxHeaderCrcTask
     : public CxxCrcTaskMixin,
-      public Base<CxxHeaderCrcTask, doim::CxxHeaderSPtr, doim::CxxIncludeDirectorySPtr>
+      public Element<CxxHeaderCrcTask, doim::CxxHeaderSPtr, doim::CxxIncludeDirectorySPtr>
 {
 public:
     static CxxHeaderCrcTaskSPtr valid(const CxxHeaderCrcTaskSPtr& task);
