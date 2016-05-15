@@ -19,7 +19,7 @@ typedef shared_ptr<Manager> ManagerSPtr;
 
 extern ManagerSPtr gManager;
 
-class Manager : public ManagerObjectMixin<DbKey>
+class Manager
 {
 public:
     static constexpr int rank()
@@ -31,25 +31,5 @@ public:
     {
         return rank() + im::InitializationManager::step();
     }
-
-    template <typename T, typename... Args>
-    static shared_ptr<T> global(const Args&... args, shared_ptr<T>& object)
-    {
-        auto fn = [&object]() -> bool {
-            object = gManager->unique(object);
-            return true;
-        };
-        im::InitializationManager::subscribe<shared_ptr<T>>(object_rank(), fn, nullptr);
-        return std::make_shared<T>(args...);
-    }
-
-    using ManagerObjectMixin<DbKey>::unique;
-    using ManagerObjectMixin<DbKey>::isUnique;
 };
-
-template <typename T, typename... Args>
-shared_ptr<T> unique(const Args&... args)
-{
-    return gManager->unique(T::make(args...));
-}
 }

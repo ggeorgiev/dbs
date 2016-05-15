@@ -28,7 +28,7 @@ public:
 
 TEST_F(DbPutTaskTest, simple)
 {
-    auto key = doim::unique<doim::DbKey>("key");
+    auto key = doim::DbKey::unique(nullptr, "key");
 
     int crc = 5;
     auto value = doim::DbValue::make(crc);

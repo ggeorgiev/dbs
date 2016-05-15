@@ -16,14 +16,12 @@ typedef shared_ptr<DbKey> DbKeySPtr;
 class DbKey : public Base<DbKey, DbKeySPtr, string>
 {
 public:
-    static DbKeySPtr global(const string& name, DbKeySPtr& key);
-
+    using Base<DbKey, DbKeySPtr, string>::global;
     static DbKeySPtr global(const DbKeySPtr& ancestor,
                             int level,
                             const string& name,
                             DbKeySPtr& key);
 
-    DbKey(const string& name);
     DbKey(const DbKeySPtr& ancestor, const string& name);
 
     const DbKeySPtr& ancestor() const
