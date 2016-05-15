@@ -32,7 +32,9 @@ public:
 
         mEmptyCxxHeaderSet = doim::CxxHeaderSet::make();
         mEmptyCxxHeaderSet = doim::CxxHeaderSet::unique(mEmptyCxxHeaderSet);
-        mEmptyCxxIncludeDirectorySet = doim::unique<doim::CxxIncludeDirectorySet>();
+        mEmptyCxxIncludeDirectorySet = doim::CxxIncludeDirectorySet::make();
+        mEmptyCxxIncludeDirectorySet =
+            doim::CxxIncludeDirectorySet::unique(mEmptyCxxIncludeDirectorySet);
     }
 
     void TearDown()
@@ -64,13 +66,12 @@ TEST_F(CxxHeaderCrcTaskTest, simple)
 TEST_F(CxxHeaderCrcTaskTest, notFoundInclude)
 {
     auto cxxIncludeDirectory =
-        doim::unique<doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
-                                                mCxxDirectory,
-                                                mEmptyCxxHeaderSet);
+        doim::CxxIncludeDirectory::unique(doim::CxxIncludeDirectory::EType::kUser,
+                                          mCxxDirectory,
+                                          mEmptyCxxHeaderSet);
 
-    auto cxxIncludeDirectories = doim::CxxIncludeDirectorySet::make();
-    cxxIncludeDirectories->insert(cxxIncludeDirectory);
-    cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
+    auto cxxIncludeDirectories =
+        doim::CxxIncludeDirectorySet::unique({cxxIncludeDirectory});
 
     auto cxxHeader = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
                                              mFsIncludesCxx,

@@ -47,10 +47,10 @@ public:
         if (privateHeadersDirectory() == nullptr)
             return nullptr;
 
-        return doim::unique<doim::CxxIncludeDirectory>(static_cast<const Subject*>(this)
-                                                           ->cxxIncludeDirectoryType(),
-                                                       privateHeadersDirectory(),
-                                                       privateCxxHeaders(root));
+        return doim::CxxIncludeDirectory::unique(static_cast<const Subject*>(this)
+                                                     ->cxxIncludeDirectoryType(),
+                                                 privateHeadersDirectory(),
+                                                 privateCxxHeaders(root));
     }
 
     doim::CxxHeaderSetSPtr privateCxxHeaders(const doim::FsDirectorySPtr& root) const

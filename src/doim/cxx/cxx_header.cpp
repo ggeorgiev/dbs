@@ -13,7 +13,7 @@ CxxHeader::CxxHeader(const EType type,
     : Base(type, file, cxxIncludeDirectories)
 {
     ASSERT(gManager->isUnique(file));
-    ASSERT(gManager->isUnique(cxxIncludeDirectories));
+    ASSERT(cxxIncludeDirectories->isUnique());
 }
 
 std::ostream& operator<<(std::ostream& out, const CxxHeader& header)

@@ -93,7 +93,7 @@ doim::CxxIncludeDirectorySetSPtr CxxProgram::recursiveCxxIncludeDirectories(
         directories->insert(libDirectories->begin(), libDirectories->end());
     }
 
-    return doim::gManager->unique(directories);
+    return doim::CxxIncludeDirectorySet::unique(directories);
 }
 
 doim::CxxHeaderSetSPtr CxxProgram::cxxHeaders(const doim::FsDirectorySPtr& root) const

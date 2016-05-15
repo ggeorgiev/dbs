@@ -21,7 +21,7 @@ CxxHeaderCrcTask::CxxHeaderCrcTask(
     : Base(cxxHeader, currentIncludeDirectory)
 {
     ASSERT(cxxHeader->isUnique());
-    ASSERT(doim::gManager->isUnique(currentIncludeDirectory));
+    ASSERT(currentIncludeDirectory->isUnique());
 }
 
 ECode CxxHeaderCrcTask::operator()()

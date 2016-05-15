@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include "doim/cxx/cxx_include_directory.h"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/cxx/cxx_program.h"
 #include "doim/cxx/cxx_static_library.h"
@@ -28,8 +27,7 @@ typedef shared_ptr<Manager> ManagerSPtr;
 
 extern ManagerSPtr gManager;
 
-class Manager : public ManagerObjectSetMixin<CxxIncludeDirectory>,
-                public ManagerObjectSetMixin<CxxObjectFile>,
+class Manager : public ManagerObjectSetMixin<CxxObjectFile>,
                 public ManagerObjectSetMixin<CxxStaticLibrary>,
                 public ManagerObjectMixin<CxxProgram>,
                 public ManagerObjectMixin<DbKey>,
@@ -98,12 +96,6 @@ public:
     FsFileSPtr obtainFile(const FsDirectorySPtr& base, const string_view& file);
 
     using ManagerObjectSetMixin<FsFile>::unique;
-
-    using ManagerObjectMixin<CxxIncludeDirectory>::unique;
-    using ManagerObjectMixin<CxxIncludeDirectory>::isUnique;
-
-    using ManagerObjectSetMixin<CxxIncludeDirectory>::unique;
-    using ManagerObjectSetMixin<CxxIncludeDirectory>::isUnique;
 
     using ManagerObjectMixin<CxxObjectFile>::unique;
     using ManagerObjectMixin<CxxObjectFile>::isUnique;

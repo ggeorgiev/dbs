@@ -111,9 +111,9 @@ doim::CxxIncludeDirectorySPtr CxxLibrary::cxxPublicIncludeDirectory(
     if (publicHeadersDirectory() == nullptr)
         return nullptr;
 
-    return doim::unique<doim::CxxIncludeDirectory>(cxxIncludeDirectoryType(),
-                                                   publicHeadersDirectory(),
-                                                   publicCxxHeaders(root));
+    return doim::CxxIncludeDirectory::unique(cxxIncludeDirectoryType(),
+                                             publicHeadersDirectory(),
+                                             publicCxxHeaders(root));
 }
 
 doim::CxxIncludeDirectorySetSPtr CxxLibrary::sublibraryCxxIncludeDirectories(
@@ -127,7 +127,7 @@ doim::CxxIncludeDirectorySetSPtr CxxLibrary::sublibraryCxxIncludeDirectories(
         directories->insert(libDirectories->begin(), libDirectories->end());
     }
 
-    return doim::gManager->unique(directories);
+    return doim::CxxIncludeDirectorySet::unique(directories);
 }
 
 doim::CxxIncludeDirectorySetSPtr CxxLibrary::indirectCxxIncludeDirectories(
@@ -145,7 +145,7 @@ doim::CxxIncludeDirectorySetSPtr CxxLibrary::indirectCxxIncludeDirectories(
         directories->insert(libDirectories->begin(), libDirectories->end());
     }
 
-    return doim::gManager->unique(directories);
+    return doim::CxxIncludeDirectorySet::unique(directories);
 }
 
 doim::CxxIncludeDirectorySetSPtr CxxLibrary::recursiveCxxIncludeDirectories(
@@ -169,7 +169,7 @@ doim::CxxIncludeDirectorySetSPtr CxxLibrary::recursiveCxxIncludeDirectories(
             directories->insert(libDirectories->begin(), libDirectories->end());
         }
 
-        return doim::gManager->unique(directories);
+        return doim::CxxIncludeDirectorySet::unique(directories);
     };
 
     return mRecursiveCxxIncludeDirectoriesMemoization->get(mMemoizationHandle, root, fn);

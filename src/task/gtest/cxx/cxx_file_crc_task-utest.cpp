@@ -35,7 +35,9 @@ public:
 
         mEmptyCxxHeaderSet = doim::CxxHeaderSet::make();
         mEmptyCxxHeaderSet = doim::CxxHeaderSet::unique(mEmptyCxxHeaderSet);
-        mEmptyCxxIncludeDirectorySet = doim::unique<doim::CxxIncludeDirectorySet>();
+        mEmptyCxxIncludeDirectorySet = doim::CxxIncludeDirectorySet::make();
+        mEmptyCxxIncludeDirectorySet =
+            doim::CxxIncludeDirectorySet::unique(mEmptyCxxIncludeDirectorySet);
     }
 
     void TearDown()
@@ -65,13 +67,12 @@ TEST_F(CxxFileCrcTaskTest, SLOW_simple)
 TEST_F(CxxFileCrcTaskTest, notFoundInclude)
 {
     auto cxxIncludeDirectory =
-        doim::unique<doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
-                                                mCxxDirectory,
-                                                mEmptyCxxHeaderSet);
+        doim::CxxIncludeDirectory::unique(doim::CxxIncludeDirectory::EType::kUser,
+                                          mCxxDirectory,
+                                          mEmptyCxxHeaderSet);
 
-    auto cxxIncludeDirectories = doim::CxxIncludeDirectorySet::make();
-    cxxIncludeDirectories->insert(cxxIncludeDirectory);
-    cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
+    auto cxxIncludeDirectories =
+        doim::CxxIncludeDirectorySet::unique({cxxIncludeDirectory});
 
     auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories);
 
@@ -92,13 +93,12 @@ TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
     auto cxxHeaders = doim::CxxHeaderSet::unique({cxxHeader1, cxxHeader2});
 
     auto cxxIncludeDirectory =
-        doim::unique<doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
-                                                mCxxDirectory,
-                                                cxxHeaders);
+        doim::CxxIncludeDirectory::unique(doim::CxxIncludeDirectory::EType::kUser,
+                                          mCxxDirectory,
+                                          cxxHeaders);
 
-    auto cxxIncludeDirectories = doim::CxxIncludeDirectorySet::make();
-    cxxIncludeDirectories->insert(cxxIncludeDirectory);
-    cxxIncludeDirectories = doim::gManager->unique(cxxIncludeDirectories);
+    auto cxxIncludeDirectories =
+        doim::CxxIncludeDirectorySet::unique({cxxIncludeDirectory});
 
     auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories);
 
@@ -121,13 +121,12 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     auto cxxHeaders2 = doim::CxxHeaderSet::unique({cxxHeader2});
 
     auto cxxIncludeDirectory2 =
-        doim::unique<doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
-                                                mCxxDirectory,
-                                                cxxHeaders2);
+        doim::CxxIncludeDirectory::unique(doim::CxxIncludeDirectory::EType::kUser,
+                                          mCxxDirectory,
+                                          cxxHeaders2);
 
-    auto cxxIncludeDirectories2 = doim::CxxIncludeDirectorySet::make();
-    cxxIncludeDirectories2->insert(cxxIncludeDirectory2);
-    cxxIncludeDirectories2 = doim::gManager->unique(cxxIncludeDirectories2);
+    auto cxxIncludeDirectories2 =
+        doim::CxxIncludeDirectorySet::unique({cxxIncludeDirectory2});
 
     auto cxxHeader1 = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
                                               mFsUser1H,
@@ -136,13 +135,12 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     auto cxxHeaders1 = doim::CxxHeaderSet::unique({cxxHeader1});
 
     auto cxxIncludeDirectory1 =
-        doim::unique<doim::CxxIncludeDirectory>(doim::CxxIncludeDirectory::EType::kUser,
-                                                mCxxDirectory,
-                                                cxxHeaders1);
+        doim::CxxIncludeDirectory::unique(doim::CxxIncludeDirectory::EType::kUser,
+                                          mCxxDirectory,
+                                          cxxHeaders1);
 
-    auto cxxIncludeDirectories1 = doim::CxxIncludeDirectorySet::make();
-    cxxIncludeDirectories1->insert(cxxIncludeDirectory1);
-    cxxIncludeDirectories1 = doim::gManager->unique(cxxIncludeDirectories1);
+    auto cxxIncludeDirectories1 =
+        doim::CxxIncludeDirectorySet::unique({cxxIncludeDirectory1});
 
     auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories1);
 
