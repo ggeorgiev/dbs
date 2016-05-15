@@ -23,7 +23,7 @@ DbKeySPtr DbKey::global(const DbKeySPtr& ancestor,
                         DbKeySPtr& key)
 {
     auto fn = [&ancestor, name, &key]() -> bool {
-        key = unique<DbKey>(ancestor, name);
+        key = doim::unique<DbKey>(ancestor, name);
         return true;
     };
 

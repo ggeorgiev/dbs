@@ -2,17 +2,17 @@
 //
 
 #include "doim/sys/executable.h"
+#include "err/err_assert.h"
 #include <tuple>
 
 namespace doim
 {
-SysExecutable::SysExecutable(const doim::FsFileSPtr& file)
-    : Base(file, nullptr)
+SysExecutable::SysExecutable(const doim::FsFileSPtr& file,
+                             const doim::FsBinarySPtr& binary)
+    : Base(file, binary)
 {
-}
-SysExecutable::SysExecutable(const doim::FsBinarySPtr& binary)
-    : Base(nullptr, binary)
-{
+    ASSERT(file == nullptr || binary == nullptr);
+    ASSERT(file != nullptr || binary != nullptr);
 }
 
 string SysExecutable::path() const

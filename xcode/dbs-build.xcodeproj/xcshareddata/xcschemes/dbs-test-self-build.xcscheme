@@ -45,7 +45,7 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
-         FilePath = "/Users/george/github/dbs/build/dbs">
+         FilePath = "/Users/george/github/dbs/dbs">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference
@@ -63,11 +63,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "build"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "iwyu"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "dbs"

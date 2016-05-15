@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "doim/manager_object_mixin.hpp"
 #include <boost/functional/hash.hpp>
 #include <boost/fusion/adapted/std_tuple.hpp>
 #include <boost/fusion/algorithm.hpp>
@@ -22,9 +23,20 @@ class Base : public enable_make_shared<T>
 public:
     typedef std::tuple<Args...> Tuple;
 
+    static shared_ptr<T> unique(const Args&... args)
+    {
+        return gManagerObjectMixin->unique(enable_make_shared<T>::make(args...));
+    }
+
     Base(const Args&... args)
         : mArgs(args...)
     {
+    }
+
+    bool isUnique()
+    {
+        std::shared_ptr<T> key(std::shared_ptr<T>(), static_cast<T*>(this));
+        return gManagerObjectMixin->isUnique(key);
     }
 
     void finally()
@@ -64,6 +76,11 @@ public:
     };
 
 protected:
+    static shared_ptr<ManagerObjectMixin<T>> gManagerObjectMixin;
     Tuple mArgs;
 };
+
+template <typename T, typename... Args>
+shared_ptr<ManagerObjectMixin<T>> Base<T, Args...>::gManagerObjectMixin =
+    std::make_shared<ManagerObjectMixin<T>>();
 }

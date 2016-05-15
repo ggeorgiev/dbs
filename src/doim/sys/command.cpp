@@ -16,7 +16,7 @@ SysCommand::SysCommand(const SysExecutableSPtr& executable,
                        const SysArgumentSetSPtr& arguments)
     : Base(executable, arguments)
 {
-    ASSERT(gManager->isUnique(executable));
+    ASSERT(executable->isUnique());
     ASSERT(gManager->isUnique(arguments));
 }
 

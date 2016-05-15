@@ -17,8 +17,7 @@ typedef shared_ptr<SysExecutable> SysExecutableSPtr;
 class SysExecutable : public Base<SysExecutable, doim::FsFileSPtr, doim::FsBinarySPtr>
 {
 public:
-    SysExecutable(const doim::FsFileSPtr& file);
-    SysExecutable(const doim::FsBinarySPtr& binary);
+    SysExecutable(const doim::FsFileSPtr& file, const doim::FsBinarySPtr& binary);
 
     string path() const;
 };
