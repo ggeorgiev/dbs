@@ -6,7 +6,7 @@
 #include "dom/manager.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/object.h"
-#include "doim/manager.h"
+
 #include "err/err.h"
 #include <fstream>
 #include <memory>

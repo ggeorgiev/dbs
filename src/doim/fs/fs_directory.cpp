@@ -2,7 +2,7 @@
 //
 
 #include "doim/fs/fs_directory.h"
-#include "doim/manager.h"
+
 #include "err/err_assert.h"
 #include "const/constants.h"
 #include "functional"

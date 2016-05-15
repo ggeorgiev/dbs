@@ -3,7 +3,6 @@
 
 #include "dom/cxx/cxx_library.h"
 #include "doim/fs/fs_file.h"
-#include "doim/manager.h"
 #include "err/err.h"
 #include "err/gtest/err.h"
 #include "gtest/framework.h"

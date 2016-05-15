@@ -25,7 +25,6 @@ cxx_library doim
         doim/base.hpp
         doim/manager_object_mixin.hpp
         doim/manager_object_set_mixin.hpp
-        doim/manager.h
         doim/set.hpp
     ;
 
@@ -55,7 +54,6 @@ cxx_library doim
         sys/command.cpp
         sys/executable.cpp
         tag/tag.cpp
-        manager.cpp
     ;
 ;
 

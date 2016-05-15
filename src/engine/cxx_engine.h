@@ -26,6 +26,12 @@ typedef shared_ptr<CxxEngine> CxxEngineSPtr;
 class CxxEngine : public std::enable_shared_from_this<CxxEngine>
 {
 public:
+    static int constexpr rank()
+    {
+        return doim::DbKey::rank() +
+               doim::DbKey::rankLevels() * im::InitializationManager::step();
+    }
+
     CxxEngine(const tool::CxxClangFormatSPtr& formatter,
               const tool::CxxCompilerSPtr& compiler,
               const tool::CxxIwyuSPtr& iwyu);

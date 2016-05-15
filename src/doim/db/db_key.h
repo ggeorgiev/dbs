@@ -16,6 +16,11 @@ typedef shared_ptr<DbKey> DbKeySPtr;
 class DbKey : public Base<DbKey, DbKeySPtr, string>
 {
 public:
+    static int constexpr rankLevels()
+    {
+        return 2;
+    }
+
     using Base<DbKey, DbKeySPtr, string>::global;
     static DbKeySPtr global(const DbKeySPtr& ancestor,
                             int level,

@@ -1,7 +1,6 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "doim/manager.h"
 #include "doim/generic/location.hpp"
 #include "gtest/framework.h"
 #include <memory>

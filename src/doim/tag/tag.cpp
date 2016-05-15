@@ -2,7 +2,7 @@
 //
 
 #include "doim/tag/tag.h"
-#include "doim/manager.h"
+
 #include <functional>
 
 namespace doim

@@ -8,7 +8,6 @@
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
-#include "doim/manager.h"
 #include "err/err.h"
 #include "err/gtest/err.h"
 #include "gtest/framework.h"

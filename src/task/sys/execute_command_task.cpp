@@ -5,7 +5,7 @@
 #include "task/manager.h"
 #include "task/sys/ensure_directory_task.h"
 #include "task/tpool.h"
-#include "doim/manager.h"
+
 #include "db/database.h"
 #include "err/err_assert.h"
 #include <boost/filesystem/operations.hpp>

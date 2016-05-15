@@ -5,7 +5,6 @@
 #include "task/cxx/cxx_header_crc_task.h"
 #include "doim/cxx/cxx_header.h"
 #include "doim/fs/fs_file.h"
-#include "doim/manager.h"
 #include "err/err_assert.h"
 #include "log/log.h"
 #include <str>

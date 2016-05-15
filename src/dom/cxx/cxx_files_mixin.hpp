@@ -6,7 +6,6 @@
 #include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/fs/fs_file.h"
-#include "doim/manager.h"
 #include "err/err.h"
 #include "log/log.h"
 #include "log/log_function.hpp"

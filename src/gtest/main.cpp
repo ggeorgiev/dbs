@@ -2,7 +2,7 @@
 //
 
 #include "doim/fs/fs_directory.h"
-#include "doim/manager.h"
+
 #include "db/database.h"
 #include "err/err.h"
 #include "im/initialization_manager.hpp"

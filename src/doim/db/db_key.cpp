@@ -3,7 +3,6 @@
 
 #include "doim/db/db_key.h"
 #include "doim/base.hpp"
-#include "doim/manager.h"
 #include "err/err_assert.h"
 #include "im/initialization_manager.hpp"
 #include <functional>
@@ -17,12 +16,13 @@ DbKeySPtr DbKey::global(const DbKeySPtr& ancestor,
                         const string& name,
                         DbKeySPtr& key)
 {
+    ASSERT(level < rankLevels());
     auto fn = [&ancestor, name, &key]() -> bool {
         key = DbKey::unique(ancestor, name);
         return true;
     };
 
-    int rank = Manager::object_rank() + level * im::InitializationManager::step();
+    int rank = DbKey::rank() + level * im::InitializationManager::step();
     im::InitializationManager::subscribe<DbKeySPtr>(rank, fn, nullptr);
     return nullptr;
 }

@@ -2,7 +2,7 @@
 //
 
 #include "doim/fs/fs_directory.h"
-#include "doim/manager.h"
+
 #include "gtest/framework.h"
 #include <memory>
 #include <str>

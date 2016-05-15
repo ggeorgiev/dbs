@@ -6,7 +6,7 @@
 #include "task/manager.h"
 #include "task/tpool.h"
 #include "doim/fs/fs_file.h"
-#include "doim/manager.h"
+
 #include "err/err_assert.h"
 #include "log/log.h"
 #include <boost/filesystem/operations.hpp>

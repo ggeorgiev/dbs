@@ -3,7 +3,6 @@
 
 #include "task/cxx/cxx_crc_task_mixin.h"
 #include "doim/fs/fs_directory.h"
-#include "doim/manager.h"
 #include "err/err.h"
 #include "log/log.h"
 

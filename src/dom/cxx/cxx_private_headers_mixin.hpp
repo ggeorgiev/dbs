@@ -7,7 +7,7 @@
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/fs/fs_file.h"
-#include "doim/manager.h"
+
 #include "err/err.h"
 #include <memory>
 #include <set>

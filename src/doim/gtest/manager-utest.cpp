@@ -1,7 +1,6 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "doim/manager.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/object.h"

@@ -2,7 +2,6 @@
 //
 
 #include "doim/cxx/cxx_static_library.h"
-#include "doim/manager.h"
 #include "err/err_assert.h"
 
 namespace doim

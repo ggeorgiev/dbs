@@ -14,7 +14,6 @@
 #include "tpool/task_group.h"
 #include "doim/cxx/cxx_program.h"
 #include "doim/fs/fs_file.h"
-#include "doim/manager.h"
 #include "db/database.h"
 #include "err/err.h"
 #include "im/initialization_manager.hpp"
@@ -59,11 +58,9 @@ bool CxxEngine::initDbKeyPurpose()
 
 std::map<CxxEngine::EBuildFor, doim::DbKeySPtr> CxxEngine::gDbKeyPurpose =
     im::InitializationManager::subscribe<
-        std::map<CxxEngine::EBuildFor,
-                 doim::DbKeySPtr>>(doim::Manager::object_rank() +
-                                       im::InitializationManager::step() * 2,
-                                   initDbKeyPurpose,
-                                   nullptr);
+        std::map<CxxEngine::EBuildFor, doim::DbKeySPtr>>(CxxEngine::rank(),
+                                                         initDbKeyPurpose,
+                                                         nullptr);
 
 CxxEngine::CxxEngine(const tool::CxxClangFormatSPtr& formatter,
                      const tool::CxxCompilerSPtr& compiler,

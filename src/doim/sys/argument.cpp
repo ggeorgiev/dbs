@@ -2,7 +2,6 @@
 //
 
 #include "doim/sys/argument.h"
-#include "doim/manager.h"
 #include <functional>
 
 namespace doim

@@ -2,7 +2,7 @@
 //
 
 #include "doim/generic/object.h"
-#include "doim/manager.h"
+
 #include "err/err_assert.h"
 #include "const/constants.h"
 
