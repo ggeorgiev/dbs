@@ -78,7 +78,7 @@ TEST(ManagerTest, mt_addSameObject)
     {
         auto thread = std::make_shared<std::thread>([&barrier, &directories, i]() {
             barrier.wait();
-            directories[i] = doim::gManager->obtainDirectory(nullptr, "/");
+            directories[i] = doim::FsDirectory::obtain(nullptr, "/");
         });
         threads.push_back(thread);
     }

@@ -60,7 +60,7 @@ TYPED_TEST(ParserTest, parseFiles)
         Test{.files = "foo  bar foo bar;", .count = 2},
     };
 
-    auto directory = doim::gManager->obtainDirectory(nullptr, "/");
+    auto directory = doim::FsDirectory::obtain(nullptr, "/");
     auto location = doim::gManager->obtainFile(nullptr, "/foo.dbs");
 
     for (const auto& test : tests)

@@ -5,7 +5,6 @@
 
 #include "doim/cxx/cxx_program.h"
 #include "doim/db/db_key.h"
-#include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/location.hpp"
 #include "doim/manager_object_mixin.hpp"
@@ -23,9 +22,7 @@ typedef shared_ptr<Manager> ManagerSPtr;
 
 extern ManagerSPtr gManager;
 
-class Manager : public ManagerObjectMixin<DbKey>,
-                public ManagerObjectSetMixin<FsDirectory>,
-                public ManagerObjectSetMixin<FsFile>
+class Manager : public ManagerObjectMixin<DbKey>, public ManagerObjectSetMixin<FsFile>
 {
 public:
     static constexpr int rank()
@@ -52,28 +49,8 @@ public:
     // Obtain an unique location.
     LocationSPtr obtainLocation(const LocationSPtr& base, const string_view& location)
     {
-        return obtainDirectory(base, location);
+        return FsDirectory::obtain(base, location);
     }
-
-    using ManagerObjectMixin<FsDirectory>::unique;
-    using ManagerObjectMixin<FsDirectory>::isUnique;
-    using ManagerObjectMixin<FsDirectory>::find;
-
-    using ManagerObjectSetMixin<FsDirectory>::unique;
-    using ManagerObjectSetMixin<FsDirectory>::isUnique;
-    using ManagerObjectSetMixin<FsDirectory>::find;
-
-    FsDirectorySPtr findDirectory(const FsDirectorySPtr& base,
-                                  const string_view& directory);
-    // Obtain an unique directory.
-    FsDirectorySPtr obtainDirectory(const FsDirectorySPtr& base,
-                                    const string_view& directory);
-
-    // Obtain the unique corresponding directory of directory in toDirectory to that in
-    // fromDirectory. Note that directory must be subdirectory of fromDirectory.
-    FsDirectorySPtr obtainCorrespondingDirectory(const FsDirectorySPtr& directory,
-                                                 const FsDirectorySPtr& fromDirectory,
-                                                 const FsDirectorySPtr& toDirectory);
 
     using ManagerObjectMixin<FsFile>::unique;
     using ManagerObjectMixin<FsFile>::isUnique;
@@ -97,8 +74,4 @@ shared_ptr<T> unique(const Args&... args)
 {
     return gManager->unique(T::make(args...));
 }
-
-std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectory& directory);
-std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectorySet& directories);
-std::ostream& operator<<(std::ostream& out, const CxxHeader& header);
 }

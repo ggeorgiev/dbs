@@ -15,7 +15,7 @@ namespace task
 EnsureDirectoryTask::EnsureDirectoryTask(const doim::FsDirectorySPtr& directory)
     : Base(directory)
 {
-    ASSERT(doim::gManager->isUnique(directory));
+    ASSERT(directory->isUnique());
 }
 
 ECode EnsureDirectoryTask::operator()()

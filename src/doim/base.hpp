@@ -29,6 +29,11 @@ public:
         return gManagerObjectMixin->unique(enable_make_shared<T>::make(args...));
     }
 
+    static shared_ptr<T> unique(const shared_ptr<T>& object)
+    {
+        return gManagerObjectMixin->unique(object);
+    }
+
     static shared_ptr<T> global(const Args&... args, shared_ptr<T>& object)
     {
         auto fn = [&object]() -> bool {

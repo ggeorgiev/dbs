@@ -11,7 +11,7 @@ namespace doim
 Object::Object(const EType type, const string& name, const LocationSPtr& location)
     : Base(type, name, location)
 {
-    ASSERT(gManager->isUnique(location));
+    ASSERT(location->isUnique());
 }
 
 ObjectSPtr Object::obtain(const LocationSPtr& base,

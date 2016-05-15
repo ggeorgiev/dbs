@@ -9,7 +9,7 @@
 
 TEST(FsDirectoryTest, path)
 {
-    auto root = doim::unique<doim::FsDirectory>();
+    auto root = doim::FsDirectory::unique(nullptr, "");
     ASSERT_STREQ("/", root->path(nullptr).c_str());
 
     auto directory = doim::FsDirectory::make(nullptr, "foo");
@@ -22,7 +22,7 @@ TEST(FsDirectoryTest, path)
 
 TEST(FsDirectoryTest, level)
 {
-    auto root = doim::unique<doim::FsDirectory>();
+    auto root = doim::FsDirectory::unique(nullptr, "");
     ASSERT_EQ(1u, root->level());
 
     auto directory = doim::FsDirectory::make(root, "");
@@ -31,7 +31,7 @@ TEST(FsDirectoryTest, level)
 
 TEST(FsDirectoryTest, commonAncestor)
 {
-    auto root = doim::unique<doim::FsDirectory>();
+    auto root = doim::FsDirectory::unique(nullptr, "");
     ASSERT_EQ(root, root->commonAncestor(root));
 
     auto foo = doim::FsDirectory::make(root, "foo");

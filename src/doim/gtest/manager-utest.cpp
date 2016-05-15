@@ -54,44 +54,44 @@ TEST(ManagerTest, obtainUniqueObject)
 
 TEST(ManagerTest, obtainEmptyDirectory)
 {
-    const auto& emptyDir = doim::gManager->obtainDirectory(nullptr, "");
+    const auto& emptyDir = doim::FsDirectory::obtain(nullptr, "");
     ASSERT_EQ(nullptr, emptyDir);
 
-    const auto& rootDir = doim::gManager->obtainDirectory(nullptr, "/");
+    const auto& rootDir = doim::FsDirectory::obtain(nullptr, "/");
     ASSERT_NE(nullptr, rootDir);
     ASSERT_EQ(nullptr, rootDir->parent());
     ASSERT_TRUE(rootDir->name().empty());
 
-    const auto& dir = doim::gManager->obtainDirectory(rootDir, "");
+    const auto& dir = doim::FsDirectory::obtain(rootDir, "");
     ASSERT_EQ(dir, rootDir);
 
-    ASSERT_ASSERT(doim::gManager->obtainDirectory(nullptr, "bar/"));
+    ASSERT_ASSERT(doim::FsDirectory::obtain(nullptr, "bar/"));
 }
 
 TEST(ManagerTest, obtainUniqueDirectory)
 {
-    const auto& root1 = doim::gManager->obtainDirectory(nullptr, "/");
-    const auto& root2 = doim::gManager->obtainDirectory(nullptr, "/");
+    const auto& root1 = doim::FsDirectory::obtain(nullptr, "/");
+    const auto& root2 = doim::FsDirectory::obtain(nullptr, "/");
     ASSERT_EQ(root1, root2);
 
-    const auto& foo1 = doim::gManager->obtainDirectory(nullptr, "/foo/");
-    const auto& foo2 = doim::gManager->obtainDirectory(nullptr, "/foo/");
+    const auto& foo1 = doim::FsDirectory::obtain(nullptr, "/foo/");
+    const auto& foo2 = doim::FsDirectory::obtain(nullptr, "/foo/");
     ASSERT_EQ(foo1, foo2);
 
-    const auto& foo3 = doim::gManager->obtainDirectory(root1, "foo/");
+    const auto& foo3 = doim::FsDirectory::obtain(root1, "foo/");
     ASSERT_EQ(foo1, foo3);
 
-    const auto& foo4 = doim::gManager->obtainDirectory(foo1, "");
+    const auto& foo4 = doim::FsDirectory::obtain(foo1, "");
     ASSERT_EQ(foo1, foo4);
 
-    const auto& foo5 = doim::gManager->obtainDirectory(nullptr, "/foo/../foo");
+    const auto& foo5 = doim::FsDirectory::obtain(nullptr, "/foo/../foo");
     ASSERT_EQ(foo1, foo5);
 
-    const auto& bar1 = doim::gManager->obtainDirectory(root1, "bar/");
-    const auto& bar2 = doim::gManager->obtainDirectory(foo1, "bar/");
+    const auto& bar1 = doim::FsDirectory::obtain(root1, "bar/");
+    const auto& bar2 = doim::FsDirectory::obtain(foo1, "bar/");
     ASSERT_NE(bar1, bar2);
 
-    const auto& bar3 = doim::gManager->obtainDirectory(foo1, "../foo/bar/");
+    const auto& bar3 = doim::FsDirectory::obtain(foo1, "../foo/bar/");
     ASSERT_NE(bar1, bar3);
 }
 
@@ -132,8 +132,8 @@ TEST(ManagerTest, obtainDirectory)
         SCOPED_TRACE("absolute:" + test.absolute);
         SCOPED_TRACE("relative:" + test.relative);
 
-        const auto& root = doim::gManager->obtainDirectory(nullptr, test.root);
-        const auto& directory = doim::gManager->obtainDirectory(root, test.dir);
+        const auto& root = doim::FsDirectory::obtain(nullptr, test.root);
+        const auto& directory = doim::FsDirectory::obtain(root, test.dir);
         ASSERT_NE(nullptr, directory);
 
         ASSERT_EQ(test.absolute, directory->path(nullptr))
@@ -191,13 +191,11 @@ TEST(ManagerTest, obtainCorrespondingDirectory)
 
     for (const auto& test : tests)
     {
-        const auto& from = doim::gManager->obtainDirectory(nullptr, test.from);
-        const auto& directory = doim::gManager->obtainDirectory(from, test.dir);
-        const auto& to = doim::gManager->obtainDirectory(nullptr, test.to);
-        const auto& expected =
-            doim::gManager->obtainDirectory(nullptr, test.corresponding);
-        const auto& actual =
-            doim::gManager->obtainCorrespondingDirectory(directory, from, to);
+        const auto& from = doim::FsDirectory::obtain(nullptr, test.from);
+        const auto& directory = doim::FsDirectory::obtain(from, test.dir);
+        const auto& to = doim::FsDirectory::obtain(nullptr, test.to);
+        const auto& expected = doim::FsDirectory::obtain(nullptr, test.corresponding);
+        const auto& actual = doim::FsDirectory::corresponding(directory, from, to);
 
         ASSERT_EQ(expected->path(nullptr), actual->path(nullptr));
     }
@@ -208,7 +206,7 @@ TEST(ManagerTest, obtainEmptyFile)
     ASSERT_EQ(nullptr, doim::gManager->obtainFile(nullptr, ""));
     ASSERT_EQ(nullptr, doim::gManager->obtainFile(nullptr, "foo.cpp"));
 
-    const auto& root = doim::gManager->obtainDirectory(nullptr, "/");
+    const auto& root = doim::FsDirectory::obtain(nullptr, "/");
     ASSERT_EQ(nullptr, doim::gManager->obtainFile(root, ""));
     ASSERT_EQ(nullptr, doim::gManager->obtainFile(root, "/"));
     ASSERT_EQ(nullptr, doim::gManager->obtainFile(root, "foo/"));
@@ -222,7 +220,7 @@ TEST(ManagerTest, obtainEmptyFile)
 
 TEST(ManagerTest, obtainUniqueFile)
 {
-    const auto& root = doim::gManager->obtainDirectory(nullptr, "/");
+    const auto& root = doim::FsDirectory::obtain(nullptr, "/");
 
     const auto& rootFoo1 = doim::gManager->obtainFile(root, "foo.cpp");
     const auto& rootFoo2 = doim::gManager->obtainFile(nullptr, "/foo.cpp");

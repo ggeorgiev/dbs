@@ -184,9 +184,8 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
                                  const doim::FsDirectorySPtr& directory,
                                  const dom::CxxProgramSPtr& program)
 {
-    const auto& build = doim::gManager->obtainDirectory(directory, "build");
-    const auto& intermediate =
-        doim::gManager->obtainDirectory(build, gSubDirectory[buildFor]);
+    const auto& build = doim::FsDirectory::obtain(directory, "build");
+    const auto& intermediate = doim::FsDirectory::obtain(build, gSubDirectory[buildFor]);
 
     const auto& cxxProgram =
         program->cxxProgram(gProgramPurpose[buildFor], directory, intermediate);
@@ -278,7 +277,7 @@ tpool::TaskSPtr CxxEngine::iwyuTask(const doim::FsDirectorySPtr& directory,
 tpool::TaskSPtr CxxEngine::iwyu(const doim::FsDirectorySPtr& directory,
                                 const dom::CxxProgramSPtr& program)
 {
-    const auto& intermediate = doim::gManager->obtainDirectory(directory, "build");
+    const auto& intermediate = doim::FsDirectory::obtain(directory, "build");
     const auto& cxxProgram =
         program->cxxProgram(doim::CxxProgram::EPurpose::kDebug, directory, intermediate);
 

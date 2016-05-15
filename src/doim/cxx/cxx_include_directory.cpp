@@ -16,7 +16,7 @@ CxxIncludeDirectory::CxxIncludeDirectory(const EType type,
     : Base(type, directory, headerFiles)
 {
     ASSERT(directory != nullptr);
-    ASSERT(gManager->isUnique(directory));
+    ASSERT(directory->isUnique());
     ASSERT(headerFiles->isUnique());
 }
 
@@ -35,5 +35,30 @@ CxxHeaderSPtr CxxIncludeDirectory::header(const FsFileSPtr& file) const
     if (it != mFiles.end())
         return it->second;
     return nullptr;
+}
+
+std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectory& directory)
+{
+    out << "type:";
+    switch (directory.type())
+    {
+        case CxxIncludeDirectory::EType::kUser:
+            out << "user";
+            break;
+        case CxxIncludeDirectory::EType::kSystem:
+            out << "system";
+            break;
+    }
+    out << ", directory: " << directory.directory()->path() << std::endl;
+    for (const auto& header : *directory.headerFiles())
+        out << *header << std::endl;
+    return out;
+}
+
+std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectorySet& directories)
+{
+    for (const auto& directory : directories)
+        out << *directory << std::endl;
+    return out;
 }
 }

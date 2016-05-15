@@ -68,12 +68,12 @@ int main(int argc, char* argv[])
     if (getcwd(current, sizeof(current)) == nullptr)
         return errno;
 
-    auto cwd = doim::gManager->obtainDirectory(nullptr, current);
+    auto cwd = doim::FsDirectory::obtain(nullptr, current);
     auto file = doim::gManager->obtainFile(cwd, arg[1]);
 
     ILOG("Load dbs file: {}", file->path(cwd));
 
-    auto db = doim::gManager->obtainDirectory(cwd, "build/db");
+    auto db = doim::FsDirectory::obtain(cwd, "build/db");
 
     ECode code = db::gDatabase->open(db->path());
     if (code != err::kSuccess)

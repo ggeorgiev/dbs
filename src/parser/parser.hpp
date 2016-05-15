@@ -152,7 +152,7 @@ public:
                     if (attribute.mName == "directory")
                     {
                         directory =
-                            doim::gManager->obtainDirectory(directory, attribute.mValue);
+                            doim::FsDirectory::obtain(directory, attribute.mValue);
                     }
                     else if (attribute.mName == "visibility")
                     {
@@ -341,7 +341,7 @@ public:
             if (type.test(Token::kPath))
             {
                 const auto& token = mTokenizer->token();
-                const auto& dir = doim::gManager->obtainDirectory(directory, token);
+                const auto& dir = doim::FsDirectory::obtain(directory, token);
                 directories.insert(dir);
 
                 if (directories.size() > limit)

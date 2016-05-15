@@ -24,8 +24,7 @@ public:
 
     void SetUp()
     {
-        mCxxDirectory =
-            doim::gManager->obtainDirectory(testing::gTestResourceDirectory, "cxx");
+        mCxxDirectory = doim::FsDirectory::obtain(testing::gTestResourceDirectory, "cxx");
         mFsSimpleCxx = doim::gManager->obtainFile(mCxxDirectory, "simple.cxx");
         mFsIncludesCxx = doim::gManager->obtainFile(mCxxDirectory, "includes.cxx");
         mFsUserH = doim::gManager->obtainFile(mCxxDirectory, "user.h");

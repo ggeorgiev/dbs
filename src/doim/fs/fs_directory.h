@@ -4,6 +4,7 @@
 #pragma once
 
 #include "doim/base.hpp"
+#include "doim/set.hpp"
 #include <memory>
 #include <str>
 #include <tuple>
@@ -17,7 +18,7 @@ class FsDirectory;
 typedef FsDirectory* FsDirectoryRPtr;
 typedef FsDirectory const* FsDirectoryRCPtr;
 typedef shared_ptr<FsDirectory> FsDirectorySPtr;
-typedef unordered_set<FsDirectorySPtr> FsDirectorySet;
+typedef NewObjectSet<FsDirectory> FsDirectorySet;
 typedef shared_ptr<FsDirectorySet> FsDirectorySetSPtr;
 
 class FsDirectory : public Base<FsDirectory, FsDirectorySPtr, string>
@@ -57,9 +58,18 @@ public:
         FsDirectorySPtr mFsDirectory;
     };
 
-    static FsDirectorySPtr global(const FsDirectorySPtr& parent,
-                                  const string& name,
-                                  FsDirectorySPtr& directory);
+    using Base<FsDirectory, FsDirectorySPtr, string>::find;
+    static FsDirectorySPtr find(const FsDirectorySPtr& base,
+                                const string_view& directory);
+
+    static FsDirectorySPtr obtain(const FsDirectorySPtr& base,
+                                  const string_view& directory);
+
+    // Obtain the unique corresponding directory of directory in toDirectory to that in
+    // fromDirectory. Note that directory must be subdirectory of fromDirectory.
+    static FsDirectorySPtr corresponding(const FsDirectorySPtr& directory,
+                                         const FsDirectorySPtr& fromDirectory,
+                                         const FsDirectorySPtr& toDirectory);
 
     FsDirectory();
     FsDirectory(const FsDirectorySPtr& parent, const string& name);

@@ -11,32 +11,32 @@
 TEST(ManagerObjectMixinTest, unique)
 {
     doim::LocationSPtr location;
-    ASSERT_EQ(nullptr, doim::gManager->unique(location));
+    ASSERT_EQ(nullptr, doim::Location::unique(location));
 
     location = doim::gManager->obtainLocation(nullptr, "/unique");
-    ASSERT_EQ(location, doim::gManager->unique(location));
+    ASSERT_EQ(location, doim::Location::unique(location));
 }
 
 TEST(ManagerObjectMixinTest, isUnique)
 {
     doim::LocationSPtr location;
-    ASSERT_TRUE(doim::gManager->isUnique(location));
+    ASSERT_TRUE(location->isUnique());
 
     location = doim::gManager->obtainLocation(nullptr, "/isUnique");
-    ASSERT_TRUE(doim::gManager->isUnique(location));
+    ASSERT_TRUE(location->isUnique());
 
     location = doim::Location::make(nullptr, "isUnique");
-    ASSERT_FALSE(doim::gManager->isUnique(location));
+    ASSERT_FALSE(location->isUnique());
 }
 
 TEST(ManagerObjectMixinTest, find)
 {
     doim::LocationSPtr location;
-    ASSERT_EQ(nullptr, doim::gManager->find(location));
+    ASSERT_EQ(nullptr, location->find());
 
     location = doim::gManager->obtainLocation(nullptr, "/isUnique");
-    ASSERT_EQ(location, doim::gManager->find(location));
+    ASSERT_EQ(location, location->find());
 
     doim::LocationSPtr location1 = doim::Location::make(location->parent(), "isUnique");
-    ASSERT_EQ(location, doim::gManager->find(location1));
+    ASSERT_EQ(location, location1->find());
 }

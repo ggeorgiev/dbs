@@ -66,4 +66,7 @@ public:
 private:
     unordered_map<FsFileSPtr, CxxHeaderSPtr> mFiles;
 };
+
+std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectory& directory);
+std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectorySet& directories);
 }

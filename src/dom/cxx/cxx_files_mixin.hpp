@@ -67,9 +67,9 @@ public:
         for (const auto& cxxFile : files)
         {
             const auto& directory =
-                doim::gManager->obtainCorrespondingDirectory(cxxFile->file()->directory(),
-                                                             root,
-                                                             intermediate);
+                doim::FsDirectory::corresponding(cxxFile->file()->directory(),
+                                                 root,
+                                                 intermediate);
             const auto& outputFile =
                 doim::gManager->obtainFile(directory, cxxFile->file()->name() + ".o");
 

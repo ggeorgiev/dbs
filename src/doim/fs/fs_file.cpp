@@ -10,6 +10,6 @@ namespace doim
 FsFile::FsFile(const FsDirectorySPtr& directory, const string& name)
     : Base(directory, name)
 {
-    ASSERT(gManager->isUnique(directory));
+    ASSERT(directory->isUnique());
 }
 }

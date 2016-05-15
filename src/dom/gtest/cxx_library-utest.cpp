@@ -30,7 +30,7 @@ TEST(CxxLibraryTest, publicCxxHeaders)
 {
     dom::CxxLibrary library;
 
-    const auto& directory = doim::gManager->obtainDirectory(nullptr, "/foo/include");
+    const auto& directory = doim::FsDirectory::obtain(nullptr, "/foo/include");
 
     const auto& cxxHeaders1 = library.publicCxxHeaders(directory);
     ASSERT_EQ(0U, cxxHeaders1->size());
@@ -53,7 +53,7 @@ TEST(CxxLibraryTest, recursiveCxxHeaders)
 {
     dom::CxxLibrary library;
 
-    const auto& directory = doim::gManager->obtainDirectory(nullptr, "/foo/include");
+    const auto& directory = doim::FsDirectory::obtain(nullptr, "/foo/include");
 
     const auto& cxxHeaders1 = library.recursiveCxxHeaders(directory);
     ASSERT_EQ(0U, cxxHeaders1->size());
