@@ -21,7 +21,7 @@ namespace task
 CxxProgramCrcTask::CxxProgramCrcTask(const doim::CxxProgramSPtr& cxxProgram)
     : Base(cxxProgram)
 {
-    ASSERT(doim::gManager->isUnique(cxxProgram));
+    ASSERT(cxxProgram->isUnique());
 }
 
 ECode CxxProgramCrcTask::operator()()

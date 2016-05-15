@@ -25,8 +25,7 @@ typedef shared_ptr<Manager> ManagerSPtr;
 
 extern ManagerSPtr gManager;
 
-class Manager : public ManagerObjectMixin<CxxProgram>,
-                public ManagerObjectMixin<DbKey>,
+class Manager : public ManagerObjectMixin<DbKey>,
                 public ManagerObjectSetMixin<FsDirectory>,
                 public ManagerObjectSetMixin<FsFile>,
                 public ManagerObjectSetMixin<SysArgument>,
@@ -92,9 +91,6 @@ public:
     FsFileSPtr obtainFile(const FsDirectorySPtr& base, const string_view& file);
 
     using ManagerObjectSetMixin<FsFile>::unique;
-
-    using ManagerObjectMixin<CxxProgram>::unique;
-    using ManagerObjectMixin<CxxProgram>::isUnique;
 
     using ManagerObjectMixin<DbKey>::unique;
     using ManagerObjectMixin<DbKey>::isUnique;

@@ -64,10 +64,7 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
     staticLibraries = doim::CxxStaticLibrarySet::unique(staticLibraries);
 
     const auto& programFile = doim::gManager->obtainFile(intermediate, name());
-    return doim::unique<doim::CxxProgram>(purpose,
-                                          programFile,
-                                          staticLibraries,
-                                          objectFiles);
+    return doim::CxxProgram::unique(purpose, programFile, staticLibraries, objectFiles);
 }
 
 CxxLibrarySet CxxProgram::recursiveCxxLibraries() const
