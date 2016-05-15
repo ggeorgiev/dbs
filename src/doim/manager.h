@@ -32,15 +32,14 @@ class Manager : public ManagerObjectMixin<DbKey>,
                 public ManagerObjectSetMixin<Tag>
 {
 public:
-    static constexpr int initialization_rank()
+    static constexpr int rank()
     {
-        return im::InitializationManager::rank_base() +
-               im::InitializationManager::rank_step();
+        return im::InitializationManager::rank() + im::InitializationManager::step();
     }
 
-    static constexpr int object_initialization_rank()
+    static constexpr int object_rank()
     {
-        return initialization_rank() + im::InitializationManager::rank_step();
+        return rank() + im::InitializationManager::step();
     }
 
     template <typename T, typename... Args>
@@ -50,9 +49,7 @@ public:
             object = gManager->unique(object);
             return true;
         };
-        im::InitializationManager::subscribe<shared_ptr<T>>(object_initialization_rank(),
-                                                            fn,
-                                                            nullptr);
+        im::InitializationManager::subscribe<shared_ptr<T>>(object_rank(), fn, nullptr);
         return std::make_shared<T>(args...);
     }
 

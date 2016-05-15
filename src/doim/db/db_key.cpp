@@ -27,8 +27,7 @@ DbKeySPtr DbKey::global(const DbKeySPtr& ancestor,
         return true;
     };
 
-    int rank = Manager::object_initialization_rank() +
-               level * im::InitializationManager::rank_step();
+    int rank = Manager::object_rank() + level * im::InitializationManager::step();
     im::InitializationManager::subscribe<DbKeySPtr>(rank, fn, nullptr);
     return nullptr;
 }

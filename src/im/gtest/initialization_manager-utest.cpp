@@ -9,10 +9,9 @@
 class GlobalObject
 {
 public:
-    static constexpr int initialization_rank()
+    static constexpr int rank()
     {
-        return im::InitializationManager::rank_base() +
-               im::InitializationManager::rank_step();
+        return im::InitializationManager::rank() + im::InitializationManager::step();
     }
 };
 

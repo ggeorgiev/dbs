@@ -60,8 +60,8 @@ bool CxxEngine::initDbKeyPurpose()
 std::map<CxxEngine::EBuildFor, doim::DbKeySPtr> CxxEngine::gDbKeyPurpose =
     im::InitializationManager::subscribe<
         std::map<CxxEngine::EBuildFor,
-                 doim::DbKeySPtr>>(doim::Manager::object_initialization_rank() +
-                                       im::InitializationManager::rank_step() * 2,
+                 doim::DbKeySPtr>>(doim::Manager::object_rank() +
+                                       im::InitializationManager::step() * 2,
                                    initDbKeyPurpose,
                                    nullptr);
 

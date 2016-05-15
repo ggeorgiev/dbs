@@ -33,12 +33,12 @@ public:
         uninitialize_objects();
     }
 
-    static constexpr int rank_base()
+    static constexpr int rank()
     {
         return 1;
     }
 
-    static constexpr int rank_step()
+    static constexpr int step()
     {
         return 2;
     }
@@ -55,7 +55,7 @@ public:
     template <typename T>
     static inline shared_ptr<T> subscribe(shared_ptr<T>& shared)
     {
-        add(T::initialization_rank(),
+        add(T::rank(),
             [&shared]() -> bool {
                 shared = std::make_shared<T>();
                 return true;

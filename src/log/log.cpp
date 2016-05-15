@@ -15,7 +15,7 @@ static bool init()
 }
 
 DbsLoggerSPtr gLogger =
-    im::InitializationManager::subscribe<DbsLoggerSPtr>(initialization_rank(), &init, [] {
+    im::InitializationManager::subscribe<DbsLoggerSPtr>(rank(), &init, [] {
         gLogger->flush();
         gLogger.reset();
     });

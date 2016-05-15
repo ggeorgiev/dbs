@@ -25,7 +25,6 @@ static bool init()
     return true;
 }
 
-NameMap gNames =
-    im::InitializationManager::subscribe<NameMap>(initialization_rank(), &init, nullptr);
+NameMap gNames = im::InitializationManager::subscribe<NameMap>(rank(), &init, nullptr);
 
 } // namespace err

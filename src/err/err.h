@@ -20,10 +20,9 @@
 
 namespace err
 {
-constexpr int initialization_rank()
+constexpr int rank()
 {
-    return im::InitializationManager::rank_base() +
-           im::InitializationManager::rank_step();
+    return im::InitializationManager::rank() + im::InitializationManager::step();
 }
 
 enum ECode
