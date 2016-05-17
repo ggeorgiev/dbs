@@ -31,7 +31,7 @@ install:
   - gem install coveralls-lcov
 
 script:
-    .travis.sh
+    ./.travis.sh
 
 after_success:
   - lcov --directory build --base-directory src --capture --no-external --output-file coverage.info | grep Processing # capture coverage info
