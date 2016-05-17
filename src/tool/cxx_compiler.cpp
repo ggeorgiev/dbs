@@ -88,11 +88,6 @@ doim::SysCommandSPtr CxxCompiler::compileCommand(
             break;
     }
 
-    auto argument_cxxflags = doim::SysArgument::unique(
-        "-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/"
-        "MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk");
-    compileArguments->insert(argument_cxxflags);
-
     const string& file = objectFile->cxxFile()->file()->path(directory);
 
     auto argument_c = doim::SysArgument::unique("-c " + file);

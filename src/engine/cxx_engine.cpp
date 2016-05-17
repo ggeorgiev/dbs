@@ -326,8 +326,17 @@ string CxxEngine::buildScript(EBuildFor buildFor,
     unordered_set<doim::FsDirectorySPtr> directories;
     directories.insert(directory);
 
-    std::vector<tpool::TaskSPtr> allTasks;
-    for (const auto& objectFile : *cxxProgram->cxxObjectFiles())
+    auto files = cxxProgram->cxxObjectFiles();
+    std::vector<doim::CxxObjectFileSPtr> objects;
+    objects.insert(objects.begin(), files->begin(), files->end());
+
+    std::sort(objects.begin(),
+              objects.end(),
+              [](const doim::CxxObjectFileSPtr& a, const doim::CxxObjectFileSPtr& b) {
+                  return a->file()->path() < b->file()->path();
+              });
+
+    for (const auto& objectFile : objects)
     {
         auto compileCommand = mCompiler->compileCommand(directory, objectFile);
         stream << makeDirectory(directory, objectFile->file()->directory(), directories);
