@@ -342,8 +342,10 @@ string CxxEngine::buildScript(EBuildFor buildFor,
         stream << makeDirectory(directory, objectFile->file()->directory(), directories);
         stream << "echo Compile " << objectFile->cxxFile()->file()->path(directory)
                << std::endl;
-        stream << compileCommand->toString() << std::endl;
+        stream << compileCommand->toString() << " &" << std::endl;
     }
+
+    stream << "wait" << std::endl;
 
     auto linkCommand = mCompiler->linkCommand(directory, cxxProgram);
     stream << makeDirectory(directory, cxxProgram->file()->directory(), directories);

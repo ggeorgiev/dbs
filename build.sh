@@ -4,96 +4,96 @@ if [ ! -e build/release/src/ ]; then mkdir build/release/src/; fi
 if [ ! -e build/release/src/const/ ]; then mkdir build/release/src/const/; fi
 echo Compile src/const/constants.cpp
 clang++ -I src/ -O3 -c src/const/constants.cpp -isystem src/system/ \
-    -o build/release/src/const/constants.cpp.o -std=c++14
+    -o build/release/src/const/constants.cpp.o -std=c++14 &
 if [ ! -e build/release/src/db/ ]; then mkdir build/release/src/db/; fi
 echo Compile src/db/database.cpp
 clang++ -I src/ -O3 -c src/db/database.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/db/database.cpp.o -std=c++14
+    -o build/release/src/db/database.cpp.o -std=c++14 &
 if [ ! -e build/release/src/doim/ ]; then mkdir build/release/src/doim/; fi
 if [ ! -e build/release/src/doim/cxx/ ]; then mkdir build/release/src/doim/cxx/; fi
 echo Compile src/doim/cxx/cxx_file.cpp
 clang++ -I src/ -O3 -c src/doim/cxx/cxx_file.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/cxx/cxx_file.cpp.o -std=c++14
+    -o build/release/src/doim/cxx/cxx_file.cpp.o -std=c++14 &
 echo Compile src/doim/cxx/cxx_header.cpp
 clang++ -I src/ -O3 -c src/doim/cxx/cxx_header.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/cxx/cxx_header.cpp.o -std=c++14
+    -o build/release/src/doim/cxx/cxx_header.cpp.o -std=c++14 &
 echo Compile src/doim/cxx/cxx_include_directory.cpp
 clang++ -I src/ -O3 -c src/doim/cxx/cxx_include_directory.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/cxx/cxx_include_directory.cpp.o -std=c++14
+    -o build/release/src/doim/cxx/cxx_include_directory.cpp.o -std=c++14 &
 echo Compile src/doim/cxx/cxx_object_file.cpp
 clang++ -I src/ -O3 -c src/doim/cxx/cxx_object_file.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/cxx/cxx_object_file.cpp.o -std=c++14
+    -o build/release/src/doim/cxx/cxx_object_file.cpp.o -std=c++14 &
 echo Compile src/doim/cxx/cxx_program.cpp
 clang++ -I src/ -O3 -c src/doim/cxx/cxx_program.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/cxx/cxx_program.cpp.o -std=c++14
+    -o build/release/src/doim/cxx/cxx_program.cpp.o -std=c++14 &
 echo Compile src/doim/cxx/cxx_static_library.cpp
 clang++ -I src/ -O3 -c src/doim/cxx/cxx_static_library.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/cxx/cxx_static_library.cpp.o -std=c++14
+    -o build/release/src/doim/cxx/cxx_static_library.cpp.o -std=c++14 &
 if [ ! -e build/release/src/doim/db/ ]; then mkdir build/release/src/doim/db/; fi
 echo Compile src/doim/db/db_key.cpp
 clang++ -I src/ -O3 -c src/doim/db/db_key.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/db/db_key.cpp.o -std=c++14
+    -o build/release/src/doim/db/db_key.cpp.o -std=c++14 &
 if [ ! -e build/release/src/doim/fs/ ]; then mkdir build/release/src/doim/fs/; fi
 echo Compile src/doim/fs/fs_binary.cpp
 clang++ -I src/ -O3 -c src/doim/fs/fs_binary.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/fs/fs_binary.cpp.o -std=c++14
+    -o build/release/src/doim/fs/fs_binary.cpp.o -std=c++14 &
 echo Compile src/doim/fs/fs_directory.cpp
 clang++ -I src/ -O3 -c src/doim/fs/fs_directory.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/fs/fs_directory.cpp.o -std=c++14
+    -o build/release/src/doim/fs/fs_directory.cpp.o -std=c++14 &
 echo Compile src/doim/fs/fs_file.cpp
 clang++ -I src/ -O3 -c src/doim/fs/fs_file.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/fs/fs_file.cpp.o -std=c++14
+    -o build/release/src/doim/fs/fs_file.cpp.o -std=c++14 &
 if [ ! -e build/release/src/doim/generic/ ]; then mkdir build/release/src/doim/generic/; fi
 echo Compile src/doim/generic/object.cpp
 clang++ -I src/ -O3 -c src/doim/generic/object.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/generic/object.cpp.o -std=c++14
+    -o build/release/src/doim/generic/object.cpp.o -std=c++14 &
 if [ ! -e build/release/src/doim/sys/ ]; then mkdir build/release/src/doim/sys/; fi
 echo Compile src/doim/sys/argument.cpp
 clang++ -I src/ -O3 -c src/doim/sys/argument.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/sys/argument.cpp.o -std=c++14
+    -o build/release/src/doim/sys/argument.cpp.o -std=c++14 &
 echo Compile src/doim/sys/command.cpp
 clang++ -I src/ -O3 -c src/doim/sys/command.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/sys/command.cpp.o -std=c++14
+    -o build/release/src/doim/sys/command.cpp.o -std=c++14 &
 echo Compile src/doim/sys/executable.cpp
 clang++ -I src/ -O3 -c src/doim/sys/executable.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/sys/executable.cpp.o -std=c++14
+    -o build/release/src/doim/sys/executable.cpp.o -std=c++14 &
 if [ ! -e build/release/src/doim/tag/ ]; then mkdir build/release/src/doim/tag/; fi
 echo Compile src/doim/tag/tag.cpp
 clang++ -I src/ -O3 -c src/doim/tag/tag.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/tag/tag.cpp.o -std=c++14
+    -o build/release/src/doim/tag/tag.cpp.o -std=c++14 &
 if [ ! -e build/release/src/dom/ ]; then mkdir build/release/src/dom/; fi
 if [ ! -e build/release/src/dom/cxx/ ]; then mkdir build/release/src/dom/cxx/; fi
 echo Compile src/dom/cxx/cxx_library.cpp
@@ -101,48 +101,48 @@ clang++ -I src/ -O3 -c src/dom/cxx/cxx_library.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/dom/cxx/cxx_library.cpp.o \
-    -std=c++14
+    -std=c++14 &
 echo Compile src/dom/cxx/cxx_program.cpp
 clang++ -I src/ -O3 -c src/dom/cxx/cxx_program.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/dom/cxx/cxx_program.cpp.o \
-    -std=c++14
+    -std=c++14 &
 echo Compile src/dom/manager.cpp
 clang++ -I src/ -O3 -c src/dom/manager.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
-    -isystem src/system/ -o build/release/src/dom/manager.cpp.o -std=c++14
+    -isystem src/system/ -o build/release/src/dom/manager.cpp.o -std=c++14 &
 if [ ! -e build/release/src/engine/ ]; then mkdir build/release/src/engine/; fi
 echo Compile src/engine/cxx_engine.cpp
 clang++ -I src/ -O3 -c src/engine/cxx_engine.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/engine/cxx_engine.cpp.o -std=c++14
+    -o build/release/src/engine/cxx_engine.cpp.o -std=c++14 &
 if [ ! -e build/release/src/err/ ]; then mkdir build/release/src/err/; fi
 echo Compile src/err/err.cpp
 clang++ -I src/ -O3 -c src/err/err.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/err/err.cpp.o -std=c++14
+    -o build/release/src/err/err.cpp.o -std=c++14 &
 if [ ! -e build/release/src/log/ ]; then mkdir build/release/src/log/; fi
 echo Compile src/log/log.cpp
 clang++ -I src/ -O3 -c src/log/log.cpp -isystem boost/include/ \
     -isystem fmt/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/log/log.cpp.o -std=c++14
+    -o build/release/src/log/log.cpp.o -std=c++14 &
 echo Compile src/main.cpp
 clang++ -I src/ -O3 -c src/main.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/main.cpp.o -std=c++14
+    -o build/release/src/main.cpp.o -std=c++14 &
 if [ ! -e build/release/src/option/ ]; then mkdir build/release/src/option/; fi
 echo Compile src/option/verbose.cpp
 clang++ -I src/ -O3 -c src/option/verbose.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/option/verbose.cpp.o -std=c++14
+    -o build/release/src/option/verbose.cpp.o -std=c++14 &
 if [ ! -e build/release/src/parser/ ]; then mkdir build/release/src/parser/; fi
 if [ ! -e build/release/src/parser/cxx/ ]; then mkdir build/release/src/parser/cxx/; fi
 echo Compile src/parser/cxx/cxx_parser.cpp
@@ -150,7 +150,7 @@ clang++ -I src/ -O3 -c src/parser/cxx/cxx_parser.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/parser/cxx/cxx_parser.cpp.o \
-    -std=c++14
+    -std=c++14 &
 if [ ! -e build/release/src/task/ ]; then mkdir build/release/src/task/; fi
 if [ ! -e build/release/src/task/cxx/ ]; then mkdir build/release/src/task/cxx/; fi
 echo Compile src/task/cxx/cxx_crc_task_mixin.cpp
@@ -158,110 +158,111 @@ clang++ -I src/ -O3 -c src/task/cxx/cxx_crc_task_mixin.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/cxx/cxx_crc_task_mixin.cpp.o -std=c++14
+    -o build/release/src/task/cxx/cxx_crc_task_mixin.cpp.o -std=c++14 &
 echo Compile src/task/cxx/cxx_file_crc_task.cpp
 clang++ -I src/ -O3 -c src/task/cxx/cxx_file_crc_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/cxx/cxx_file_crc_task.cpp.o -std=c++14
+    -o build/release/src/task/cxx/cxx_file_crc_task.cpp.o -std=c++14 &
 echo Compile src/task/cxx/cxx_header_crc_task.cpp
 clang++ -I src/ -O3 -c src/task/cxx/cxx_header_crc_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/cxx/cxx_header_crc_task.cpp.o -std=c++14
+    -o build/release/src/task/cxx/cxx_header_crc_task.cpp.o -std=c++14 &
 echo Compile src/task/cxx/cxx_object_file_crc_task.cpp
 clang++ -I src/ -O3 -c src/task/cxx/cxx_object_file_crc_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/cxx/cxx_object_file_crc_task.cpp.o -std=c++14
+    -o build/release/src/task/cxx/cxx_object_file_crc_task.cpp.o -std=c++14 &
 echo Compile src/task/cxx/cxx_program_crc_task.cpp
 clang++ -I src/ -O3 -c src/task/cxx/cxx_program_crc_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/cxx/cxx_program_crc_task.cpp.o -std=c++14
+    -o build/release/src/task/cxx/cxx_program_crc_task.cpp.o -std=c++14 &
 if [ ! -e build/release/src/task/db/ ]; then mkdir build/release/src/task/db/; fi
 echo Compile src/task/db/db_put_task.cpp
 clang++ -I src/ -O3 -c src/task/db/db_put_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/db/db_put_task.cpp.o -std=c++14
+    -o build/release/src/task/db/db_put_task.cpp.o -std=c++14 &
 echo Compile src/task/manager.cpp
 clang++ -I src/ -O3 -c src/task/manager.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/manager.cpp.o -std=c++14
+    -o build/release/src/task/manager.cpp.o -std=c++14 &
 if [ ! -e build/release/src/task/sys/ ]; then mkdir build/release/src/task/sys/; fi
 echo Compile src/task/sys/ensure_directory_task.cpp
 clang++ -I src/ -O3 -c src/task/sys/ensure_directory_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/sys/ensure_directory_task.cpp.o -std=c++14
+    -o build/release/src/task/sys/ensure_directory_task.cpp.o -std=c++14 &
 echo Compile src/task/sys/execute_command_task.cpp
 clang++ -I src/ -O3 -c src/task/sys/execute_command_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/sys/execute_command_task.cpp.o -std=c++14
+    -o build/release/src/task/sys/execute_command_task.cpp.o -std=c++14 &
 echo Compile src/task/sys/parse_stdout_task.cpp
 clang++ -I src/ -O3 -c src/task/sys/parse_stdout_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/sys/parse_stdout_task.cpp.o -std=c++14
+    -o build/release/src/task/sys/parse_stdout_task.cpp.o -std=c++14 &
 echo Compile src/task/tpool.cpp
 clang++ -I src/ -O3 -c src/task/tpool.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/tpool.cpp.o -std=c++14
+    -o build/release/src/task/tpool.cpp.o -std=c++14 &
 if [ ! -e build/release/src/tool/ ]; then mkdir build/release/src/tool/; fi
 echo Compile src/tool/cxx_clang_format.cpp
 clang++ -I src/ -O3 -c src/tool/cxx_clang_format.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/tool/cxx_clang_format.cpp.o -std=c++14
+    -o build/release/src/tool/cxx_clang_format.cpp.o -std=c++14 &
 echo Compile src/tool/cxx_compiler.cpp
 clang++ -I src/ -O3 -c src/tool/cxx_compiler.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/tool/cxx_compiler.cpp.o -std=c++14
+    -o build/release/src/tool/cxx_compiler.cpp.o -std=c++14 &
 echo Compile src/tool/cxx_iwyu.cpp
 clang++ -I src/ -O3 -c src/tool/cxx_iwyu.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/tool/cxx_iwyu.cpp.o -std=c++14
+    -o build/release/src/tool/cxx_iwyu.cpp.o -std=c++14 &
 if [ ! -e build/release/src/tpool/ ]; then mkdir build/release/src/tpool/; fi
 echo Compile src/tpool/task.cpp
 clang++ -I src/ -O3 -c src/tpool/task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
-    -isystem src/system/ -o build/release/src/tpool/task.cpp.o -std=c++14
+    -isystem src/system/ -o build/release/src/tpool/task.cpp.o -std=c++14 &
 echo Compile src/tpool/task_callback.cpp
 clang++ -I src/ -O3 -c src/tpool/task_callback.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/tpool/task_callback.cpp.o \
-    -std=c++14
+    -std=c++14 &
 echo Compile src/tpool/task_group.cpp
 clang++ -I src/ -O3 -c src/tpool/task_group.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
-    -isystem src/system/ -o build/release/src/tpool/task_group.cpp.o -std=c++14
+    -isystem src/system/ -o build/release/src/tpool/task_group.cpp.o -std=c++14 &
 echo Compile src/tpool/tpool.cpp
 clang++ -I src/ -O3 -c src/tpool/tpool.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
-    -isystem src/system/ -o build/release/src/tpool/tpool.cpp.o -std=c++14
+    -isystem src/system/ -o build/release/src/tpool/tpool.cpp.o -std=c++14 &
+wait
 echo Link build/release/dbs
 clang++ -L boost/lib/ -L fmt/lib/ -L rocksdb/lib/ -L src/system/ \
     -lboost_filesystem -lboost_system -lboost_thread -lbz2 -lfmt -lrocksdb -lz \
