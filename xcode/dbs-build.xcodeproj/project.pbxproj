@@ -334,6 +334,7 @@
 		5E56926C1C726458000A233C /* cxx_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_file.cpp; sourceTree = "<group>"; };
 		5E56926D1C726458000A233C /* cxx_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_file.h; sourceTree = "<group>"; };
 		5E5692701C727076000A233C /* element.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = element.hpp; sourceTree = "<group>"; };
+		5E6DCC6F1CEADF5B00001C9C /* .travis.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = .travis.sh; path = ../.travis.sh; sourceTree = "<group>"; };
 		5E83145E1CDC5A7F00344DB5 /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
 		5EABCAB51CE054E000E79FFD /* fs_binary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fs_binary.cpp; sourceTree = "<group>"; };
 		5EABCAB61CE054E000E79FFD /* fs_binary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs_binary.h; sourceTree = "<group>"; };
@@ -960,6 +961,7 @@
 				5E290B401CBAD15200F10210 /* .clang-format */,
 				5E290B411CBAD15200F10210 /* .gitignore */,
 				5E290B421CBAD15200F10210 /* .travis.yml */,
+				5E6DCC6F1CEADF5B00001C9C /* .travis.sh */,
 				5E5692651C725443000A233C /* build.sh */,
 				5E5692661C725443000A233C /* prepare.sh */,
 				5E5692671C725443000A233C /* reformat.sh */,

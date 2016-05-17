@@ -137,7 +137,15 @@ int main(int argc, char* argv[])
                 engine->build(engine::CxxEngine::EBuildFor::kProfile, cwd, program));
         }
         else if (verb == doim::gIwyuTag)
+        {
             tasks.push_back(engine->iwyu(cwd, program));
+        }
+        else if (verb == doim::gBuildScriptTag)
+        {
+            std::cout << engine->buildScript(engine::CxxEngine::EBuildFor::kRelease,
+                                             cwd,
+                                             program);
+        }
         else
             ASSERT(false);
     }

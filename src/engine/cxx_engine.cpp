@@ -291,4 +291,53 @@ tpool::TaskSPtr CxxEngine::iwyu(const doim::FsDirectorySPtr& directory,
     task::gTPool->ensureScheduled(group);
     return group;
 }
+
+static string makeDirectory(const doim::FsDirectorySPtr& directory,
+                            const doim::FsDirectorySPtr& target,
+                            unordered_set<doim::FsDirectorySPtr>& directories)
+{
+    std::stringstream stream;
+    while (directories.find(target) == directories.end())
+    {
+        auto current = target;
+        while (directories.find(current->parent()) == directories.end())
+        {
+            current = current->parent();
+        }
+        directories.insert(current);
+        stream << "if [ ! -e " << current->path(directory) << " ]; then mkdir "
+               << current->path(directory) << "; fi" << std::endl;
+    }
+    return stream.str();
+}
+
+string CxxEngine::buildScript(EBuildFor buildFor,
+                              const doim::FsDirectorySPtr& directory,
+                              const dom::CxxProgramSPtr& program)
+{
+    std::stringstream stream;
+
+    const auto& build = doim::FsDirectory::obtain(directory, "build");
+    const auto& intermediate = doim::FsDirectory::obtain(build, gSubDirectory[buildFor]);
+
+    const auto& cxxProgram =
+        program->cxxProgram(gProgramPurpose[buildFor], directory, intermediate);
+
+    unordered_set<doim::FsDirectorySPtr> directories;
+    directories.insert(directory);
+
+    std::vector<tpool::TaskSPtr> allTasks;
+    for (const auto& objectFile : *cxxProgram->cxxObjectFiles())
+    {
+        auto compileCommand = mCompiler->compileCommand(directory, objectFile);
+        stream << makeDirectory(directory, objectFile->file()->directory(), directories);
+        stream << compileCommand->toString() << std::endl;
+    }
+
+    auto linkCommand = mCompiler->linkCommand(directory, cxxProgram);
+    stream << makeDirectory(directory, cxxProgram->file()->directory(), directories);
+    stream << linkCommand->toString() << std::endl;
+
+    return stream.str();
+}
 }

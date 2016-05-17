@@ -30,8 +30,17 @@ string SysCommand::toString() const
         std::sort(strings.begin(), strings.end());
 
         string result = executable()->path();
+        size_t line = result.size();
         for (const auto& str : strings)
+        {
+            line += str.size() + 1;
+            if (line > 80)
+            {
+                line = str.size() + 4;
+                result += " \\\n   ";
+            }
             result += " " + str;
+        }
 
         return result;
     };

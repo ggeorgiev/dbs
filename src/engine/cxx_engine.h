@@ -51,6 +51,10 @@ public:
     tpool::TaskSPtr iwyu(const doim::FsDirectorySPtr& directory,
                          const dom::CxxProgramSPtr& program);
 
+    string buildScript(EBuildFor buildFor,
+                       const doim::FsDirectorySPtr& directory,
+                       const dom::CxxProgramSPtr& program);
+
 private:
     static doim::DbKeySPtr gBuildDbKey;
     static doim::DbKeySPtr gDebugDbKey;
