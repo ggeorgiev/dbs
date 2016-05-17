@@ -140,16 +140,23 @@ string FsDirectory::path(const FsDirectorySPtr& directory) const
 {
     FsDirectorySPtr base = commonAncestor(directory);
 
-    auto levels = (directory != nullptr ? directory->level() : 0) -
-                  (base != nullptr ? base->level() : 0);
-
     string path;
-
-    if (levels > 0)
+    if (base != nullptr)
     {
-        path.reserve(levels * 3);
-        for (auto i = 0; i < levels; ++i)
-            path += "../";
+        if (base->parent() == nullptr && base != directory)
+        {
+            path = "/";
+        }
+        else
+        {
+            auto levels = (directory != nullptr ? directory->level() : 0) - base->level();
+            if (levels > 0)
+            {
+                path.reserve(levels * 3);
+                for (auto i = 0; i < levels; ++i)
+                    path += "../";
+            }
+        }
     }
 
     if (base.get() != this)

@@ -9,15 +9,20 @@
 
 TEST(FsDirectoryTest, path)
 {
-    auto root = doim::FsDirectory::unique(nullptr, "");
+    auto root = doim::FsDirectory::obtain(nullptr, "/");
     ASSERT_STREQ("/", root->path(nullptr).c_str());
 
-    auto directory = doim::FsDirectory::make(nullptr, "foo");
-    ASSERT_STREQ("foo/", directory->path(nullptr).c_str());
+    auto foo = doim::FsDirectory::obtain(nullptr, "/foo");
+    ASSERT_STREQ("/foo/", foo->path(nullptr).c_str());
+    ASSERT_STREQ("foo/", foo->path(root).c_str());
 
-    directory = doim::FsDirectory::make(root, "foo");
-    ASSERT_STREQ("/foo/", directory->path(nullptr).c_str());
-    ASSERT_STREQ("foo/", directory->path(root).c_str());
+    auto rootFoo = doim::FsDirectory::obtain(root, "foo");
+    ASSERT_EQ(rootFoo, foo);
+
+    auto directory1 = doim::FsDirectory::obtain(nullptr, "/foo1/bar1");
+    auto directory2 = doim::FsDirectory::obtain(nullptr, "/foo2/bar2");
+
+    ASSERT_STREQ("/foo1/bar1/", directory1->path(directory2).c_str());
 }
 
 TEST(FsDirectoryTest, level)
@@ -101,10 +106,10 @@ TEST(FsDirectoryTest, obtain)
         Test{.root = "", .dir = "////", .absolute = "/", .relative = "/"},
         Test{.root = "", .dir = "/foo", .absolute = "/foo/", .relative = "/foo/"},
         Test{.root = "", .dir = "/foo/", .absolute = "/foo/", .relative = "/foo/"},
-        Test{.root = "/bar", .dir = "/foo", .absolute = "/foo/", .relative = "../foo/"},
+        Test{.root = "/bar", .dir = "/foo", .absolute = "/foo/", .relative = "/foo/"},
         Test{.root = "", .dir = "///foo///", .absolute = "/foo/", .relative = "/foo/"},
         Test{.root = "/foo/", .dir = "bar", .absolute = "/foo/bar/", .relative = "bar/"},
-        Test{.root = "/foo/", .dir = "..", .absolute = "/", .relative = "../"},
+        Test{.root = "/foo/", .dir = "..", .absolute = "/", .relative = "/"},
         Test{.root = "/foo/bar", .dir = "../", .absolute = "/foo/", .relative = "../"},
         Test{.root = "/foo/bar",
              .dir = "../../foo",

@@ -45,7 +45,7 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
-         FilePath = "/Users/george/github/dbs/build/dbs-test">
+         FilePath = "/Users/george/github/dbs/build/debug/dbs-test">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference
@@ -60,6 +60,10 @@
          <CommandLineArgument
             argument = "--gtest_filter=TPoolTest/0.Schedule"
             isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--gtest_filter=FsDirectoryTest.path"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--gtest_filter=CxxFileCrcTaskTest.SLOW_includeFromOneDirectory"
