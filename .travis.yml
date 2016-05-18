@@ -41,6 +41,7 @@ after_success:
 cache:
     directories:
       - clang
+      - protobuf
       - iwyu
       - boost
       - fmt

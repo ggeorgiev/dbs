@@ -6,6 +6,7 @@
 /iwyu/
 /rocksdb/
 /spdlog/
+/protobuf/
 /build/
 
 xcuserdata/

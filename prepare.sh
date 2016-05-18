@@ -11,6 +11,28 @@ then
     rm  clang.zip
 fi
 
+
+if [ ! -e protobuf -o ! "$(ls -A protobuf)" ]
+then
+    git submodule update --init 3rdparty/protobuf || exit 1
+    
+    cd 3rdparty/protobuf || exit 1
+    
+    echo Build protobuf ...
+    
+    ./autogen.sh || exit 1
+    ./configure --prefix=`pwd`/../../protobuf CC=clang CXX=clang++ \
+        CXXFLAGS='-std=c++11 -stdlib=libc++ -O3 -g' \
+        LDFLAGS='-stdlib=libc++' LIBS="-lc++ -lc++abi" || exit 1
+    
+    make || exit 1
+    make install || exit 1
+    
+    git clean -fdx
+
+    cd ../..
+fi
+
 if [ ! -e gtest -o ! "$(ls -A gtest)" ]
 then
     git submodule update --init 3rdparty/gtest || exit 1
