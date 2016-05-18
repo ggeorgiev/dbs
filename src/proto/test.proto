@@ -1,0 +1,8 @@
+//  Copyright © 2016 George Georgiev. All rights reserved.
+//
+
+package proto;
+
+message Test {
+    string name = 1;
+}

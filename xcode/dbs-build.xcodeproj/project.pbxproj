@@ -340,6 +340,9 @@
 		5E83145E1CDC5A7F00344DB5 /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
 		5E874FA81CEC175F00C7C123 /* tool_command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tool_command.cpp; sourceTree = "<group>"; };
 		5E874FA91CEC175F00C7C123 /* tool_command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tool_command.h; sourceTree = "<group>"; };
+		5E874FAC1CEC347A00C7C123 /* protobuf.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = protobuf.dbs; sourceTree = "<group>"; };
+		5E874FAE1CEC3BA800C7C123 /* proto.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = proto.dbs; sourceTree = "<group>"; };
+		5E874FAF1CEC3BA800C7C123 /* test.proto */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.proto; sourceTree = "<group>"; };
 		5EABCAB51CE054E000E79FFD /* fs_binary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fs_binary.cpp; sourceTree = "<group>"; };
 		5EABCAB61CE054E000E79FFD /* fs_binary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs_binary.h; sourceTree = "<group>"; };
 		5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sys_executable.cpp; sourceTree = "<group>"; };
@@ -415,6 +418,7 @@
 				5E5692611C724929000A233C /* math */,
 				5E290B291CB9F4FC00F10210 /* option */,
 				5E10B3761C70F272009C73E4 /* parser */,
+				5E874FAD1CEC3BA800C7C123 /* proto */,
 				5E290B161CB9843100F10210 /* rtti */,
 				5E10B3861C70F272009C73E4 /* system */,
 				5E10B38B1C70F272009C73E4 /* task */,
@@ -433,6 +437,7 @@
 				5E10B3181C70F272009C73E4 /* boost.dbs */,
 				5E10B3191C70F272009C73E4 /* fmt.dbs */,
 				5E10B31A1C70F272009C73E4 /* gtest.dbs */,
+				5E874FAC1CEC347A00C7C123 /* protobuf.dbs */,
 				5E10B31B1C70F272009C73E4 /* rocksdb.dbs */,
 				5E10B31C1C70F272009C73E4 /* spdlog.dbs */,
 			);
@@ -982,6 +987,15 @@
 				5E874FA91CEC175F00C7C123 /* tool_command.h */,
 			);
 			path = tool;
+			sourceTree = "<group>";
+		};
+		5E874FAD1CEC3BA800C7C123 /* proto */ = {
+			isa = PBXGroup;
+			children = (
+				5E874FAE1CEC3BA800C7C123 /* proto.dbs */,
+				5E874FAF1CEC3BA800C7C123 /* test.proto */,
+			);
+			path = proto;
 			sourceTree = "<group>";
 		};
 		5EC659AD1CCD9EB600E99E04 /* dp */ = {

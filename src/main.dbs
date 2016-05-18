@@ -8,6 +8,7 @@ annex:
     3rdparty/fmt.dbs
     3rdparty/rocksdb.dbs
     3rdparty/gtest.dbs
+    3rdparty/protobuf.dbs
     3rdparty/spdlog.dbs
 
     const/const.dbs

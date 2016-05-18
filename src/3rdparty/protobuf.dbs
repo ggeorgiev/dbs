@@ -1,0 +1,15 @@
+cxx_library protobuf-lite
+    @type=system:
+
+    cxx_header
+        @visibility=public
+        @directory=../../protobuf/include:
+
+        google/protobuf/message_lite.h
+    ;
+
+    cxx_library:
+    ;
+
+    cxx_binary: ../../protobuf/lib/libprotobuf-lite.a;
+;
