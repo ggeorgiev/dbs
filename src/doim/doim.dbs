@@ -20,6 +20,7 @@ cxx_library doim
         doim/sys/sys_command.h
         doim/sys/sys_executable.h
         doim/tag/tag.h
+        doim/tool/tool_command.h
         doim/generic/location.hpp
         doim/generic/object.h        
         doim/element.hpp
@@ -54,6 +55,7 @@ cxx_library doim
         sys/sys_command.cpp
         sys/sys_executable.cpp
         tag/tag.cpp
+        tool/tool_command.cpp
     ;
 ;
 

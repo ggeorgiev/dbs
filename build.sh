@@ -73,27 +73,33 @@ clang++ -I src/ -O3 -c src/doim/generic/object.cpp \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
     -o build/release/src/doim/generic/object.cpp.o -std=c++14 &
 if [ ! -e build/release/src/doim/sys/ ]; then mkdir build/release/src/doim/sys/; fi
-echo Compile src/doim/sys/argument.cpp
-clang++ -I src/ -O3 -c src/doim/sys/argument.cpp \
+echo Compile src/doim/sys/sys_argument.cpp
+clang++ -I src/ -O3 -c src/doim/sys/sys_argument.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/sys/argument.cpp.o -std=c++14 &
-echo Compile src/doim/sys/command.cpp
-clang++ -I src/ -O3 -c src/doim/sys/command.cpp \
+    -o build/release/src/doim/sys/sys_argument.cpp.o -std=c++14 &
+echo Compile src/doim/sys/sys_command.cpp
+clang++ -I src/ -O3 -c src/doim/sys/sys_command.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/sys/command.cpp.o -std=c++14 &
-echo Compile src/doim/sys/executable.cpp
-clang++ -I src/ -O3 -c src/doim/sys/executable.cpp \
+    -o build/release/src/doim/sys/sys_command.cpp.o -std=c++14 &
+echo Compile src/doim/sys/sys_executable.cpp
+clang++ -I src/ -O3 -c src/doim/sys/sys_executable.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
-    -o build/release/src/doim/sys/executable.cpp.o -std=c++14 &
+    -o build/release/src/doim/sys/sys_executable.cpp.o -std=c++14 &
 if [ ! -e build/release/src/doim/tag/ ]; then mkdir build/release/src/doim/tag/; fi
 echo Compile src/doim/tag/tag.cpp
 clang++ -I src/ -O3 -c src/doim/tag/tag.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
     -o build/release/src/doim/tag/tag.cpp.o -std=c++14 &
+if [ ! -e build/release/src/doim/tool/ ]; then mkdir build/release/src/doim/tool/; fi
+echo Compile src/doim/tool/tool_command.cpp
+clang++ -I src/ -O3 -c src/doim/tool/tool_command.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
+    -o build/release/src/doim/tool/tool_command.cpp.o -std=c++14 &
 if [ ! -e build/release/src/dom/ ]; then mkdir build/release/src/dom/; fi
 if [ ! -e build/release/src/dom/cxx/ ]; then mkdir build/release/src/dom/cxx/; fi
 echo Compile src/dom/cxx/cxx_library.cpp
@@ -279,10 +285,11 @@ clang++ -L boost/lib/ -L fmt/lib/ -L rocksdb/lib/ -L src/system/ \
     build/release/src/doim/fs/fs_directory.cpp.o \
     build/release/src/doim/fs/fs_file.cpp.o \
     build/release/src/doim/generic/object.cpp.o \
-    build/release/src/doim/sys/argument.cpp.o \
-    build/release/src/doim/sys/command.cpp.o \
-    build/release/src/doim/sys/executable.cpp.o \
+    build/release/src/doim/sys/sys_argument.cpp.o \
+    build/release/src/doim/sys/sys_command.cpp.o \
+    build/release/src/doim/sys/sys_executable.cpp.o \
     build/release/src/doim/tag/tag.cpp.o \
+    build/release/src/doim/tool/tool_command.cpp.o \
     build/release/src/dom/cxx/cxx_library.cpp.o \
     build/release/src/dom/cxx/cxx_program.cpp.o \
     build/release/src/dom/manager.cpp.o \

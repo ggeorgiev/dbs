@@ -15,9 +15,8 @@
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/object.h"
-
 #include "doim/sys/sys_executable.h"
-#include "doim/tag/tag.h"
+#include "doim/tool/tool_command.h"
 #include "db/database.h"
 #include "err/err.h"
 #include "err/err_assert.h"
@@ -106,7 +105,7 @@ int main(int argc, char* argv[])
     const auto& engine =
         std::make_shared<engine::CxxEngine>(clangFormatTool, compiler, iwyuTool);
 
-    const auto& verb = doim::Tag::make(arg[2])->find();
+    const auto& verb = doim::ToolCommand::make(arg[2])->find();
 
     if (verb == nullptr)
     {
@@ -126,21 +125,21 @@ int main(int argc, char* argv[])
         if (program == nullptr)
             continue;
 
-        if (verb == doim::gBuildTag)
+        if (verb == doim::gBuildToolCommand)
         {
             tasks.push_back(
                 engine->build(engine::CxxEngine::EBuildFor::kDebug, cwd, program));
         }
-        else if (verb == doim::gCoverageTag)
+        else if (verb == doim::gCoverageToolCommand)
         {
             tasks.push_back(
                 engine->build(engine::CxxEngine::EBuildFor::kProfile, cwd, program));
         }
-        else if (verb == doim::gIwyuTag)
+        else if (verb == doim::gIwyuToolCommand)
         {
             tasks.push_back(engine->iwyu(cwd, program));
         }
-        else if (verb == doim::gBuildScriptTag)
+        else if (verb == doim::gGenerateToolCommand)
         {
             std::cout << engine->buildScript(engine::CxxEngine::EBuildFor::kRelease,
                                              cwd,

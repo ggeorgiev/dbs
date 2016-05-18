@@ -136,6 +136,8 @@
 		5E56926F1C726458000A233C /* cxx_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E56926D1C726458000A233C /* cxx_file.h */; };
 		5E5692711C727076000A233C /* element.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E5692701C727076000A233C /* element.hpp */; };
 		5E83145F1CDC5A7F00344DB5 /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E83145E1CDC5A7F00344DB5 /* framework.h */; };
+		5E874FAA1CEC175F00C7C123 /* tool_command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E874FA81CEC175F00C7C123 /* tool_command.cpp */; };
+		5E874FAB1CEC175F00C7C123 /* tool_command.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E874FA91CEC175F00C7C123 /* tool_command.h */; };
 		5EABCAB71CE054E000E79FFD /* fs_binary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EABCAB51CE054E000E79FFD /* fs_binary.cpp */; };
 		5EABCAB81CE054E000E79FFD /* fs_binary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EABCAB61CE054E000E79FFD /* fs_binary.h */; };
 		5EABCABB1CE057FD00E79FFD /* sys_executable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */; };
@@ -336,6 +338,8 @@
 		5E5692701C727076000A233C /* element.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = element.hpp; sourceTree = "<group>"; };
 		5E6DCC6F1CEADF5B00001C9C /* .travis.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = .travis.sh; path = ../.travis.sh; sourceTree = "<group>"; };
 		5E83145E1CDC5A7F00344DB5 /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
+		5E874FA81CEC175F00C7C123 /* tool_command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tool_command.cpp; sourceTree = "<group>"; };
+		5E874FA91CEC175F00C7C123 /* tool_command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tool_command.h; sourceTree = "<group>"; };
 		5EABCAB51CE054E000E79FFD /* fs_binary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fs_binary.cpp; sourceTree = "<group>"; };
 		5EABCAB61CE054E000E79FFD /* fs_binary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs_binary.h; sourceTree = "<group>"; };
 		5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sys_executable.cpp; sourceTree = "<group>"; };
@@ -473,6 +477,7 @@
 				5E10B3341C70F272009C73E4 /* generic */,
 				5E10B33E1C70F272009C73E4 /* sys */,
 				5E290B261CB9EC3900F10210 /* tag */,
+				5E874FA31CEC173D00C7C123 /* tool */,
 				5E10B3301C70F272009C73E4 /* doim.dbs */,
 				5E42053E1C79097C0090FA05 /* element_manager.hpp */,
 				5E5692701C727076000A233C /* element.hpp */,
@@ -970,6 +975,15 @@
 			name = scripts;
 			sourceTree = "<group>";
 		};
+		5E874FA31CEC173D00C7C123 /* tool */ = {
+			isa = PBXGroup;
+			children = (
+				5E874FA81CEC175F00C7C123 /* tool_command.cpp */,
+				5E874FA91CEC175F00C7C123 /* tool_command.h */,
+			);
+			path = tool;
+			sourceTree = "<group>";
+		};
 		5EC659AD1CCD9EB600E99E04 /* dp */ = {
 			isa = PBXGroup;
 			children = (
@@ -1067,6 +1081,7 @@
 				5E4113CE1CCD56B300489DA7 /* cxx_program.h in Headers */,
 				5E10B3D71C70F272009C73E4 /* err_assert.h in Headers */,
 				5E10B3C51C70F272009C73E4 /* cxx_files_mixin.hpp in Headers */,
+				5E874FAB1CEC175F00C7C123 /* tool_command.h in Headers */,
 				5E10B3CD1C70F272009C73E4 /* manager.h in Headers */,
 				5E290B311CB9F4FC00F10210 /* verbose.h in Headers */,
 				5E10B3C71C70F272009C73E4 /* cxx_private_headers_mixin.hpp in Headers */,
@@ -1256,6 +1271,7 @@
 				5E4205361C78DF5A0090FA05 /* sys_command.cpp in Sources */,
 				5E10B4011C70F272009C73E4 /* execute_command_task.cpp in Sources */,
 				5E10B3BF1C70F272009C73E4 /* manager-utest.cpp in Sources */,
+				5E874FAA1CEC175F00C7C123 /* tool_command.cpp in Sources */,
 				5E10B3E41C70F272009C73E4 /* log.cpp in Sources */,
 				5E10B3CA1C70F272009C73E4 /* cxx_library-utest.cpp in Sources */,
 			);

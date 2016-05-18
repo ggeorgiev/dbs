@@ -5,11 +5,6 @@
 
 namespace doim
 {
-TagSPtr gBuildTag = Tag::global("build", gBuildTag);
-TagSPtr gBuildScriptTag = Tag::global("build-script", gBuildScriptTag);
-TagSPtr gCoverageTag = Tag::global("coverage", gCoverageTag);
-TagSPtr gIwyuTag = Tag::global("iwyu", gIwyuTag);
-
 TagSPtr gTaskTag = Tag::global("task", gTaskTag);
 
 TagSPtr gCrcTag = Tag::global("crc", gCrcTag);
