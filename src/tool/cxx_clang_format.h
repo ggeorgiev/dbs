@@ -6,8 +6,8 @@
 #include "tpool/task.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_directory.h"
-#include "doim/sys/argument.h"
-#include "doim/sys/executable.h"
+#include "doim/sys/sys_argument.h"
+#include "doim/sys/sys_executable.h"
 #include <memory>
 
 namespace tool

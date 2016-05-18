@@ -5,7 +5,7 @@
 
 #include "task/base.hpp"
 #include "doim/fs/fs_directory.h"
-#include "doim/sys/command.h"
+#include "doim/sys/sys_command.h"
 #include "err/err.h"
 #include "rtti/class_rtti.hpp"
 #include <fmt/format.h>

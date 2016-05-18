@@ -1,14 +1,10 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "doim/fs/fs_directory.h"
-#include "doim/fs/fs_file.h"
 #include "doim/generic/location.hpp"
 #include "doim/generic/object.h"
-#include "err/gtest/err_assert.h"
 #include "gtest/framework.h"
 #include <memory>
-#include <stdexcept>
 #include <str>
 
 TEST(ManagerTest, obtainObject)

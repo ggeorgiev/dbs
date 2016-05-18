@@ -1,14 +1,15 @@
 //  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
-#include "doim/sys/command.h"
+#include "doim/sys/sys_command.h"
 #include "doim/set.hpp"
-#include "doim/sys/argument.h"
+#include "doim/sys/sys_argument.h"
 #include "err/err_assert.h"
 #include <algorithm>
 #include <functional>
 #include <str>
 #include <vector>
+#include <stddef.h>
 
 namespace doim
 {

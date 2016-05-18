@@ -14,14 +14,18 @@
 #include "tpool/task_group.h"
 #include "doim/cxx/cxx_program.h"
 #include "doim/fs/fs_file.h"
+#include "doim/set.hpp"
+#include "doim/sys/sys_command.h"
 #include "db/database.h"
 #include "err/err.h"
 #include "im/initialization_manager.hpp"
 #include "log/log.h"
 #include "rtti/class_rtti.hpp"
 #include "math/crc.hpp"
+#include <algorithm>
 #include <functional>
 #include <str>
+#include <unordered>
 #include <vector>
 
 namespace engine

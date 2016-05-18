@@ -13,7 +13,6 @@
 #include "err/err.h"
 #include <boost/filesystem/operations.hpp>
 #include "math/crc.hpp"
-#include <algorithm>
 #include <fstream> // IWYU pragma: keep
 #include <iterator>
 #include <memory>

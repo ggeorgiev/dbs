@@ -6,8 +6,8 @@
 #include "doim/cxx/cxx_static_library.h"
 #include "doim/fs/fs_file.h"
 #include "doim/set.hpp"
-#include "doim/sys/argument.h"
-#include "doim/sys/command.h"
+#include "doim/sys/sys_argument.h"
+#include "doim/sys/sys_command.h"
 #include <memory>
 #include <str>
 

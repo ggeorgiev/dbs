@@ -5,6 +5,7 @@
 #include "err/gtest/err_assert.h"
 #include "gtest/framework.h"
 #include <memory>
+#include <stdexcept>
 #include <str>
 
 TEST(FsDirectoryTest, path)

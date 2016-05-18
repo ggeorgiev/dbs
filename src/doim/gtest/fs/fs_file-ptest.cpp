@@ -4,6 +4,7 @@
 #include "doim/fs/fs_file.h"
 #include "doim/fs/fs_directory.h"
 #include "gtest/framework.h"
+#include <shared_ptr>
 
 TEST(FsFileTest, VERYSLOW_construct)
 {

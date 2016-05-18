@@ -16,7 +16,7 @@
 #include "doim/fs/fs_file.h"
 #include "doim/generic/object.h"
 
-#include "doim/sys/executable.h"
+#include "doim/sys/sys_executable.h"
 #include "doim/tag/tag.h"
 #include "db/database.h"
 #include "err/err.h"
