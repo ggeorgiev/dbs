@@ -188,6 +188,17 @@ then
     cp -r 3rdparty/spdlog/include spdlog || exit 1
 fi
 
+if [ ! -e axe -o ! "$(ls -A axe)" ]
+then
+    git submodule update --init 3rdparty/axe || exit 1
+
+    echo Build axe ...
+
+    mkdir -p axe || exit 1
+
+    cp -r 3rdparty/axe/include axe || exit 1
+fi
+
 if [ ! -e rocksdb -o ! "$(ls -A rocksdb)" ]
 then
     git submodule update --init 3rdparty/rocksdb || exit 1

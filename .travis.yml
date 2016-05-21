@@ -41,6 +41,7 @@ after_success:
 
 cache:
     directories:
+      - axe
       - clang
       - protobuf
       - iwyu
