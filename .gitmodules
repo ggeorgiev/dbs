@@ -28,4 +28,4 @@
 	url = https://github.com/google/protobuf.git
 [submodule "3rdparty/axe"]
 	path = 3rdparty/axe
-	url = git@github.com:ggeorgiev/axe.git
+	url = https://github.com/ggeorgiev/axe.git
