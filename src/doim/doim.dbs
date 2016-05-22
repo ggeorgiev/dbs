@@ -21,6 +21,9 @@ cxx_library doim
         doim/sys/sys_executable.h
         doim/tag/tag.h
         doim/tool/tool_command.h
+        doim/generic/attribute_name.h
+        doim/generic/attribute_value.h
+        doim/generic/attribute.h
         doim/generic/location.hpp
         doim/generic/object.h        
         doim/element.hpp
@@ -50,6 +53,9 @@ cxx_library doim
         fs/fs_binary.cpp
         fs/fs_directory.cpp
         fs/fs_file.cpp
+        generic/attribute_name.cpp
+        generic/attribute_value.cpp
+        generic/attribute.cpp
         generic/object.cpp
         sys/sys_argument.cpp
         sys/sys_command.cpp

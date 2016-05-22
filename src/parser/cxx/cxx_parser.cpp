@@ -9,33 +9,33 @@
 namespace parser
 {
 using namespace axe;
-static auto pound = r_char('#');
-static auto include = r_str("include");
-static auto endl = r_char('\n') | r_char('\r');
-static auto space = r_char(' ') | r_char('\t');
+static auto r_pound = r_char('#');
+static auto r_include = r_str("include");
+static auto r_endl = r_char('\n') | r_char('\r');
+static auto r_space = r_char(' ') | r_char('\t');
 
-static auto mlOpen = r_str("/*");
-static auto mlClose = r_str("*/");
-static auto mlComment = mlOpen & r_find(mlClose);
+static auto r_mlOpen = r_str("/*");
+static auto r_mlClose = r_str("*/");
+static auto r_mlComment = r_mlOpen & r_find(r_mlClose);
 
-static auto slComment = r_str("//") & r_find(endl);
+static auto r_slComment = r_str("//") & r_find(r_endl);
 
-static auto codeLine = r_find(endl);
+static auto r_codeLine = r_find(r_endl);
 
 template <typename S>
 void cxxFileParse(const S& store, const std::string& content)
 {
-    auto systemFile = r_find(r_char('>')) >> e_ref(store);
-    auto systemHeader = r_char('<') & systemFile;
-    auto programmerFile = r_find(r_char('"')) >> e_ref(store);
-    auto programmerHeader = r_char('"') & programmerFile;
-    auto header = systemHeader | programmerHeader;
+    auto r_systemFile = r_find(r_char('>')) >> e_ref(store);
+    auto r_systemHeader = r_char('<') & r_systemFile;
+    auto r_programmerFile = r_find(r_char('"')) >> e_ref(store);
+    auto r_programmerHeader = r_char('"') & r_programmerFile;
+    auto r_header = r_systemHeader | r_programmerHeader;
 
-    auto incLine = *space & pound & *space & include & *space & header &
-                   (mlComment | slComment | (*space & (endl | r_end())));
+    auto r_incLine = *r_space & r_pound & *r_space & r_include & *r_space & r_header &
+                     (r_mlComment | r_slComment | (*r_space & (r_endl | r_end())));
 
-    auto file = *(incLine | codeLine | mlComment);
-    file(content.begin(), content.end());
+    auto r_file = *(r_incLine | r_codeLine | r_mlComment);
+    r_file(content.begin(), content.end());
 }
 
 std::vector<CxxParser::Include> CxxParser::includes(const string& content)

@@ -6,6 +6,7 @@ cxx_library parser
         @directory=..:
 
         parser/cxx/cxx_parser.h
+        parser/dbs/dbs_parser.h
         parser/fixed_encoding_traits.hpp
         parser/parser.hpp
         parser/string_stream.hpp
@@ -16,11 +17,13 @@ cxx_library parser
     cxx_library:
         ../system/stl
         ../3rdparty/axe
+        ../3rdparty/boost_filesystem
         ../dom/dom
     ;
 
     cxx_file:
         cxx/cxx_parser.cpp
+        dbs/dbs_parser.cpp
     ;
 ;
 
@@ -38,6 +41,7 @@ cxx_library parser-test
 
     cxx_file:
         gtest/cxx/cxx_parser-utest.cpp
+        gtest/dbs/dbs_parser-utest.cpp
         gtest/parser-utest.cpp
         gtest/stream-utest.cpp
         gtest/token-utest.cpp

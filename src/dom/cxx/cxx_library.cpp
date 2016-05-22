@@ -2,7 +2,7 @@
 //
 
 #include "dom/cxx/cxx_library.h"
-#include "dom/generic/attribute.hpp"
+#include "doim/generic/attribute.h"
 #include "doim/set.hpp"
 #include "err/err.h"
 #include <functional>
@@ -13,6 +13,27 @@
 
 namespace dom
 {
+doim::AttributeNameSPtr CxxLibrary::gType =
+    doim::AttributeName::global("type", CxxLibrary::gType);
+doim::AttributeValueSPtr CxxLibrary::gSystem =
+    doim::AttributeValue::global("system", CxxLibrary::gSystem);
+doim::AttributeValueSPtr CxxLibrary::gTest =
+    doim::AttributeValue::global("test", CxxLibrary::gTest);
+doim::AttributeValueSPtr CxxLibrary::g3rdparty =
+    doim::AttributeValue::global("3rdparty", CxxLibrary::g3rdparty);
+doim::AttributeValueSPtr CxxLibrary::gUser =
+    doim::AttributeValue::global("user", CxxLibrary::gUser);
+
+doim::AttributeNameSPtr CxxLibrary::gDirectory =
+    doim::AttributeName::global("directory", CxxLibrary::gType);
+
+doim::AttributeNameSPtr CxxLibrary::gVisibility =
+    doim::AttributeName::global("visibility", CxxLibrary::gVisibility);
+doim::AttributeValueSPtr CxxLibrary::gPublic =
+    doim::AttributeValue::global("public", CxxLibrary::gPublic);
+doim::AttributeValueSPtr CxxLibrary::gPrivate =
+    doim::AttributeValue::global("private", CxxLibrary::gPrivate);
+
 CxxLibrary::CxxLibrary()
     : mType(EType::kUser)
     , mRecursiveCxxIncludeDirectoriesMemoization(
@@ -21,24 +42,24 @@ CxxLibrary::CxxLibrary()
     resetRecursiveCxxIncludeDirectoriesMemoization();
 }
 
-ECode CxxLibrary::updateAttribute(const Attribute& attribute)
+ECode CxxLibrary::updateAttribute(const doim::AttributeSPtr& attribute)
 {
-    if (attribute.mName == "type")
+    if (attribute->name() == gType)
     {
-        if (attribute.mValue == "system")
+        if (attribute->value() == gSystem)
             mType = EType::kSystem;
-        else if (attribute.mValue == "test")
+        else if (attribute->value() == gTest)
             mType = EType::kTest;
-        else if (attribute.mValue == "3rdparty")
+        else if (attribute->value() == g3rdparty)
             mType = EType::kThirdParty;
-        else if (attribute.mValue == "user")
+        else if (attribute->value() == gUser)
             mType = EType::kUser;
         else
-            EHBan(kUnable, attribute.mName, attribute.mValue);
+            EHBan(kUnable, attribute->name()->name(), attribute->value()->value());
     }
     else
     {
-        EHBan(kUnable, attribute.mName);
+        EHBan(kUnable, attribute->name()->name());
     }
     EHEnd;
 }

@@ -2,9 +2,9 @@
 //
 
 #include "parser/tokenizer.hpp"
-#include "dom/generic/attribute.hpp"
 #include "dom/manager.h"
 #include "doim/fs/fs_file.h"
+#include "doim/generic/attribute.h"
 #include "doim/generic/object.h"
 
 #include "err/err.h"
@@ -123,7 +123,7 @@ public:
 
             if (type.test(Token::kOperatorAt))
             {
-                dom::Attribute attribute;
+                doim::AttributeSPtr attribute;
                 EHTest(parseAttribute(attribute));
                 EHTest(library->updateAttribute(attribute));
                 continue;
@@ -143,20 +143,24 @@ public:
             {
                 auto type = nextMeaningfulToken();
 
+                auto attrDirectory = doim::AttributeName::unique("directory");
+                auto attrVisibility = doim::AttributeName::unique("visibility");
+
                 auto directory = mLocation->directory();
                 string visibility;
                 while (type.test(Token::kOperatorAt))
                 {
-                    dom::Attribute attribute;
+                    doim::AttributeSPtr attribute;
                     EHTest(parseAttribute(attribute));
-                    if (attribute.mName == "directory")
+                    if (attribute->name() == attrDirectory)
                     {
                         directory =
-                            doim::FsDirectory::obtain(directory, attribute.mValue);
+                            doim::FsDirectory::obtain(directory,
+                                                      attribute->value()->value());
                     }
-                    else if (attribute.mName == "visibility")
+                    else if (attribute->name() == attrVisibility)
                     {
-                        visibility = attribute.mValue;
+                        visibility = attribute->value()->value();
                     }
 
                     type = nextMeaningfulToken();
@@ -383,14 +387,14 @@ public:
         EHEnd;
     }
 
-    ECode parseAttribute(dom::Attribute& attribute)
+    ECode parseAttribute(doim::AttributeSPtr& attribute)
     {
         auto type = nextMeaningfulToken();
 
         if (!type.test(Token::kIdentifier))
             EHBan(kUnable, mTokenizer->token());
 
-        attribute.mName = mTokenizer->token();
+        auto name = doim::AttributeName::unique(mTokenizer->token());
 
         type = nextMeaningfulToken();
         if (!type.test(Token::kOperatorAssignment))
@@ -400,8 +404,9 @@ public:
         if (!type.test(Token::kIdentifier))
             EHBan(kUnable, mTokenizer->token());
 
-        attribute.mValue = mTokenizer->token();
+        auto value = doim::AttributeValue::unique(mTokenizer->token());
 
+        attribute = doim::Attribute::unique(name, value);
         EHEnd;
     }
 

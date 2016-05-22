@@ -77,6 +77,7 @@ int main(int argc, char* argv[])
     ECode code = db::gDatabase->open(db->path());
     if (code != err::kSuccess)
     {
+        EHReset;
         std::cout << err::gError->message() << "\n";
         std::cout << err::gError->callstack() << "\n";
         return 1;
@@ -85,6 +86,7 @@ int main(int argc, char* argv[])
     code = run(file);
     if (code != err::kSuccess)
     {
+        EHReset;
         std::cout << err::gError->message() << "\n";
         std::cout << err::gError->callstack() << "\n";
         return 1;
@@ -157,6 +159,7 @@ int main(int argc, char* argv[])
 
     if (code != err::kSuccess)
     {
+        EHReset;
         std::cout << err::gError->message() << "\n";
         std::cout << err::gError->callstack() << "\n";
         return 1;

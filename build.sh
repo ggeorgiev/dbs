@@ -67,6 +67,21 @@ clang++ -I src/ -O3 -c src/doim/fs/fs_file.cpp \
     -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
     -o build/release/src/doim/fs/fs_file.cpp.o -std=c++14 &
 if [ ! -e build/release/src/doim/generic/ ]; then mkdir build/release/src/doim/generic/; fi
+echo Compile src/doim/generic/attribute.cpp
+clang++ -I src/ -O3 -c src/doim/generic/attribute.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
+    -o build/release/src/doim/generic/attribute.cpp.o -std=c++14 &
+echo Compile src/doim/generic/attribute_name.cpp
+clang++ -I src/ -O3 -c src/doim/generic/attribute_name.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
+    -o build/release/src/doim/generic/attribute_name.cpp.o -std=c++14 &
+echo Compile src/doim/generic/attribute_value.cpp
+clang++ -I src/ -O3 -c src/doim/generic/attribute_value.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem src/system/ \
+    -o build/release/src/doim/generic/attribute_value.cpp.o -std=c++14 &
 echo Compile src/doim/generic/object.cpp
 clang++ -I src/ -O3 -c src/doim/generic/object.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
@@ -157,6 +172,13 @@ clang++ -I src/ -O3 -c src/parser/cxx/cxx_parser.cpp \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
     -o build/release/src/parser/cxx/cxx_parser.cpp.o -std=c++14 &
+if [ ! -e build/release/src/parser/dbs/ ]; then mkdir build/release/src/parser/dbs/; fi
+echo Compile src/parser/dbs/dbs_parser.cpp
+clang++ -I src/ -O3 -c src/parser/dbs/dbs_parser.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
+    -isystem spdlog/include/ -isystem src/system/ \
+    -o build/release/src/parser/dbs/dbs_parser.cpp.o -std=c++14 &
 if [ ! -e build/release/src/task/ ]; then mkdir build/release/src/task/; fi
 if [ ! -e build/release/src/task/cxx/ ]; then mkdir build/release/src/task/cxx/; fi
 echo Compile src/task/cxx/cxx_crc_task_mixin.cpp
@@ -284,6 +306,9 @@ clang++ -L boost/lib/ -L fmt/lib/ -L rocksdb/lib/ -L src/system/ \
     build/release/src/doim/fs/fs_binary.cpp.o \
     build/release/src/doim/fs/fs_directory.cpp.o \
     build/release/src/doim/fs/fs_file.cpp.o \
+    build/release/src/doim/generic/attribute.cpp.o \
+    build/release/src/doim/generic/attribute_name.cpp.o \
+    build/release/src/doim/generic/attribute_value.cpp.o \
     build/release/src/doim/generic/object.cpp.o \
     build/release/src/doim/sys/sys_argument.cpp.o \
     build/release/src/doim/sys/sys_command.cpp.o \
@@ -297,6 +322,7 @@ clang++ -L boost/lib/ -L fmt/lib/ -L rocksdb/lib/ -L src/system/ \
     build/release/src/log/log.cpp.o build/release/src/main.cpp.o \
     build/release/src/option/verbose.cpp.o \
     build/release/src/parser/cxx/cxx_parser.cpp.o \
+    build/release/src/parser/dbs/dbs_parser.cpp.o \
     build/release/src/task/cxx/cxx_crc_task_mixin.cpp.o \
     build/release/src/task/cxx/cxx_file_crc_task.cpp.o \
     build/release/src/task/cxx/cxx_header_crc_task.cpp.o \

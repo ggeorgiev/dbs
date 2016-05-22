@@ -9,17 +9,13 @@
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
+#include "doim/generic/attribute.h"
 #include "dp/handle.hpp"
 #include "dp/map_container.hpp"
 #include "dp/memoization.hpp"
 #include "err/err.h"
 #include <shared_ptr>
 #include <unordered>
-
-namespace dom
-{
-struct Attribute;
-} // namespace dom
 
 namespace dom
 {
@@ -33,6 +29,18 @@ class CxxLibrary : public enable_make_shared<CxxLibrary>,
                    public CxxPrivateHeadersMixin<CxxLibrary>
 {
 public:
+    static doim::AttributeNameSPtr gType;
+    static doim::AttributeValueSPtr gSystem;
+    static doim::AttributeValueSPtr gTest;
+    static doim::AttributeValueSPtr g3rdparty;
+    static doim::AttributeValueSPtr gUser;
+
+    static doim::AttributeNameSPtr gDirectory;
+
+    static doim::AttributeNameSPtr gVisibility;
+    static doim::AttributeValueSPtr gPublic;
+    static doim::AttributeValueSPtr gPrivate;
+
     enum class EType
     {
         kSystem,
@@ -70,7 +78,7 @@ public:
     }
 
     // Updates
-    ECode updateAttribute(const Attribute& attribute);
+    ECode updateAttribute(const doim::AttributeSPtr& attribute);
 
     ECode updateBinary(const doim::FsFileSPtr& binary);
 

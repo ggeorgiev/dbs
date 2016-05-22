@@ -214,7 +214,7 @@ using err::ECode;
 #define EHReset                                        \
     do                                                 \
     {                                                  \
-        EHAssert(err::gError != nullptr);              \
+        EHAssert(err::gError.get() != nullptr);        \
         EHAssert(err::gError->code() != err::kAssert); \
         err::gError.reset();                           \
     } while (false)

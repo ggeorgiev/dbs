@@ -6,18 +6,7 @@
 #include <str>
 #include <stddef.h>
 
-template <typename T>
-class CxxParserTest : public ::testing::Test
-{
-public:
-    typedef T CxxParser;
-};
-
-typedef ::testing::Types<parser::CxxParser> CxxParserType;
-
-TYPED_TEST_CASE(CxxParserTest, CxxParserType);
-
-TYPED_TEST(CxxParserTest, includes)
+TEST(CxxParserTest, includes)
 {
     struct Test
     {
@@ -65,7 +54,7 @@ TYPED_TEST(CxxParserTest, includes)
              .includes = {}},
     };
 
-    typename TestFixture::CxxParser parser;
+    parser::CxxParser parser;
 
     for (const auto& test : tests)
     {

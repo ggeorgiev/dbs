@@ -63,6 +63,10 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--gtest_filter=CxxParserTest*.*"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--gtest_filter=DbsParserTest*.*"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
