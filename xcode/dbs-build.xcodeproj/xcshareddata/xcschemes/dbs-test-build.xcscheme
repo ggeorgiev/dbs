@@ -62,8 +62,12 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--gtest_filter=FsDirectoryTest.path"
+            argument = "--gtest_filter=CxxParserTest*.*"
             isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--gtest_filter=FsDirectoryTest.path"
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--gtest_filter=CxxFileCrcTaskTest.SLOW_includeFromOneDirectory"

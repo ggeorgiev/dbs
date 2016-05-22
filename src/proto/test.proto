@@ -3,6 +3,7 @@
 
 package proto;
 
-message Test {
+message Test
+{
     string name = 1;
 }

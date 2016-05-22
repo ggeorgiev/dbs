@@ -1,0 +1,27 @@
+cxx_library axe
+    @type=system:
+
+    cxx_header
+        @visibility=public
+        @directory=../../axe/include:
+
+        axe.h
+        axe_composite.h
+        axe_composite_function.h
+        axe_exception.h
+        axe_expression.h
+        axe_expression_function.h
+        axe_extractor.h
+        axe_extractor_function.h
+        axe_iterator.h
+        axe_numeric.h
+        axe_numeric_function.h
+        axe_predicate.h
+        axe_predicate_function.h
+        axe_result.h
+        axe_shortcut.h
+        axe_terminal.h
+        axe_terminal_function.h
+        axe_trait.h
+    ;
+;

@@ -4,6 +4,7 @@ annex:
     system/bz2.dbs
     system/stl.dbs
 
+    3rdparty/axe.dbs
     3rdparty/boost.dbs
     3rdparty/fmt.dbs
     3rdparty/rocksdb.dbs

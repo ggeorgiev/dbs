@@ -13,16 +13,21 @@ class CxxParser
 public:
     enum class EIncludeType
     {
-        kProgrammerDefined,
+        kProgrammer,
         kStandard
     };
 
     struct Include
     {
+        Include(EIncludeType type, const string& path)
+            : mType(type)
+            , mPath(path)
+        {
+        }
         EIncludeType mType;
         string mPath;
     };
 
-    std::vector<Include> includes(const string content);
+    std::vector<Include> includes(const string& content);
 };
 }

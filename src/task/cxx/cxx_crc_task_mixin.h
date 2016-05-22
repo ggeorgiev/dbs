@@ -64,12 +64,13 @@ protected:
         std::vector<HeaderDirectory> headerDirectories;
         for (const auto& include : parser.includes(content))
         {
+            auto currentDirectory =
+                include.mType == parser::CxxParser::EIncludeType::kProgrammer
+                    ? currentIncludeDirectory
+                    : nullptr;
             HeaderDirectory headerDirectory;
             EHTest(findInclude(string_view(include.mPath),
-                               include.mType ==
-                                       parser::CxxParser::EIncludeType::kProgrammerDefined
-                                   ? currentIncludeDirectory
-                                   : nullptr,
+                               currentDirectory,
                                includeDirectories,
                                headerDirectory),
                    file->path());

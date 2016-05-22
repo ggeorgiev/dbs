@@ -54,8 +54,7 @@ public:
     // Returns the task priority.
     int priority();
 
-    // Changes a task priority. Returns if this actually affected its value, because
-    // the
+    // Changes a task priority. Returns if this actually affected its value, because the
     // priority of the task is also controlled from its dependees.
     bool updatePriority(int priority);
 

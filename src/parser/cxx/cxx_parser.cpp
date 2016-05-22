@@ -2,57 +2,54 @@
 //
 
 #include "parser/cxx/cxx_parser.h"
+#include <iostream>
+#include <axe.h>
 #include <stddef.h>
 
 namespace parser
 {
-static string gInclude = "include";
+using namespace axe;
+static auto pound = r_char('#');
+static auto include = r_str("include");
+static auto endl = r_char('\n') | r_char('\r');
+static auto space = r_char(' ') | r_char('\t');
 
-std::vector<CxxParser::Include> CxxParser::includes(const string content)
+static auto mlOpen = r_str("/*");
+static auto mlClose = r_str("*/");
+static auto mlComment = mlOpen & r_find(mlClose);
+
+static auto slComment = r_str("//") & r_find(endl);
+
+static auto codeLine = r_find(endl);
+
+template <typename S>
+void cxxFileParse(const S& store, const std::string& content)
+{
+    auto systemFile = r_find(r_char('>')) >> e_ref(store);
+    auto systemHeader = r_char('<') & systemFile;
+    auto programmerFile = r_find(r_char('"')) >> e_ref(store);
+    auto programmerHeader = r_char('"') & programmerFile;
+    auto header = systemHeader | programmerHeader;
+
+    auto incLine = *space & pound & *space & include & *space & header &
+                   (mlComment | slComment | (*space & (endl | r_end())));
+
+    auto file = *(incLine | codeLine | mlComment);
+    file(content.begin(), content.end());
+}
+
+std::vector<CxxParser::Include> CxxParser::includes(const string& content)
 {
     std::vector<Include> result;
-    size_t pos = 0;
-    while (pos < content.size())
-    {
-        do
-        {
-            while (content[pos] == ' ' || content[pos] == '\t')
-                ++pos;
-            if (content[pos] != '#')
-                break;
-            ++pos;
-            while (content[pos] == ' ' || content[pos] == '\t')
-                ++pos;
-            if (content.compare(pos, gInclude.length(), gInclude) != 0)
-                break;
-            pos += gInclude.length();
-            while (content[pos] == ' ' || content[pos] == '\t')
-                ++pos;
 
-            char closing;
-            if (content[pos] == '"')
-                closing = '"';
-            else if (content[pos] == '<')
-                closing = '>';
-            else
-                break;
+    auto store = [&result](const string::const_iterator& i1,
+                           const string::const_iterator& i2) {
+        auto e = i2 - 1;
+        auto type = *e == '"' ? EIncludeType::kProgrammer : EIncludeType::kStandard;
+        result.push_back(Include(type, std::string(i1, e)));
+    };
 
-            size_t start = ++pos;
-            while (content[pos] != closing)
-                ++pos;
-
-            Include include({closing == '"' ? EIncludeType::kProgrammerDefined
-                                            : EIncludeType::kStandard,
-                             content.substr(start, pos - start)});
-
-            result.push_back(include);
-            ++pos;
-        } while (false);
-
-        while (content[pos] != '\n' && content[pos] != '\0')
-            ++pos;
-        ++pos;
-    }
+    cxxFileParse(store, content);
     return result;
 }
 }

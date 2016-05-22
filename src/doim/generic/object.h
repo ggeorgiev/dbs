@@ -17,9 +17,8 @@ namespace doim
  * Generic Object
  *
  * Generic objects are identified by name and location. For sake of simplicity and code
- * efficiency
- * the location of the object is the shared with the fs directory infrastructure.
- *
+ * efficiency the location of the object is the shared with the fs directory
+ * infrastructure.
  */
 
 struct ObjectEnums

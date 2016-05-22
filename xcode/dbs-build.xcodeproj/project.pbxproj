@@ -343,6 +343,7 @@
 		5E874FAC1CEC347A00C7C123 /* protobuf.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = protobuf.dbs; sourceTree = "<group>"; };
 		5E874FAE1CEC3BA800C7C123 /* proto.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = proto.dbs; sourceTree = "<group>"; };
 		5E874FAF1CEC3BA800C7C123 /* test.proto */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.proto; sourceTree = "<group>"; };
+		5E87B9CD1CF1106500F042B4 /* axe.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = axe.dbs; sourceTree = "<group>"; };
 		5EABCAB51CE054E000E79FFD /* fs_binary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fs_binary.cpp; sourceTree = "<group>"; };
 		5EABCAB61CE054E000E79FFD /* fs_binary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs_binary.h; sourceTree = "<group>"; };
 		5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sys_executable.cpp; sourceTree = "<group>"; };
@@ -434,6 +435,7 @@
 		5E10B3171C70F272009C73E4 /* 3rdparty */ = {
 			isa = PBXGroup;
 			children = (
+				5E87B9CD1CF1106500F042B4 /* axe.dbs */,
 				5E10B3181C70F272009C73E4 /* boost.dbs */,
 				5E10B3191C70F272009C73E4 /* fmt.dbs */,
 				5E10B31A1C70F272009C73E4 /* gtest.dbs */,
