@@ -10,7 +10,6 @@
 #include "tpool/task_group.h"
 #include "parser/parser.hpp"
 #include "parser/string_stream.hpp"
-#include "dom/manager.h"
 #include "doim/fs/fs_binary.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
@@ -123,7 +122,7 @@ int main(int argc, char* argv[])
         auto object = doim::Object::obtain(file->directory(),
                                            doim::Object::EType::kCxxProgram,
                                            arg[i]);
-        auto program = dom::gManager->obtainCxxProgram(object);
+        auto program = dom::CxxProgram::obtain(object);
         if (program == nullptr)
             continue;
 

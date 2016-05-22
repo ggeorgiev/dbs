@@ -2,11 +2,11 @@
 //
 
 #include "parser/tokenizer.hpp"
-#include "dom/manager.h"
+#include "dom/cxx/cxx_library.h"
+#include "dom/cxx/cxx_program.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/attribute.h"
 #include "doim/generic/object.h"
-
 #include "err/err.h"
 #include <fstream>
 #include <memory>
@@ -112,7 +112,7 @@ public:
         auto object = doim::Object::obtain(mLocation->directory(),
                                            doim::Object::EType::kCxxLibrary,
                                            name);
-        auto library = dom::gManager->obtainCxxLibrary(object);
+        auto library = dom::CxxLibrary::obtain(object);
 
         for (;;)
         {
@@ -210,7 +210,7 @@ public:
 
                 dom::CxxLibrarySet libraries;
                 for (const auto& object : objects)
-                    libraries.insert(dom::gManager->obtainCxxLibrary(object));
+                    libraries.insert(dom::CxxLibrary::obtain(object));
 
                 EHTest(library->updateCxxLibraries(libraries));
 
@@ -250,7 +250,7 @@ public:
         auto object = doim::Object::obtain(mLocation->directory(),
                                            doim::Object::EType::kCxxProgram,
                                            name);
-        auto program = dom::gManager->obtainCxxProgram(object);
+        auto program = dom::CxxProgram::obtain(object);
         EHTest(program->updateName(name));
 
         type = nextMeaningfulToken();
@@ -294,7 +294,7 @@ public:
 
                 dom::CxxLibrarySet libraries;
                 for (const auto& object : objects)
-                    libraries.insert(dom::gManager->obtainCxxLibrary(object));
+                    libraries.insert(dom::CxxLibrary::obtain(object));
 
                 EHTest(program->updateCxxLibraries(libraries));
 

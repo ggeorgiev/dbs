@@ -5,6 +5,7 @@
 
 #include "dom/cxx/cxx_files_mixin.hpp"
 #include "dom/cxx/cxx_private_headers_mixin.hpp"
+#include "dom/element.hpp"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_directory.h"
@@ -24,7 +25,7 @@ typedef shared_ptr<CxxLibrary> CxxLibrarySPtr;
 typedef unordered_set<CxxLibrarySPtr> CxxLibrarySet;
 typedef shared_ptr<CxxLibrarySet> CxxLibrarySetSPtr;
 
-class CxxLibrary : public enable_make_shared<CxxLibrary>,
+class CxxLibrary : public Element<CxxLibrary>,
                    public CxxFilesMixin<CxxLibrary>,
                    public CxxPrivateHeadersMixin<CxxLibrary>
 {

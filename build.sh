@@ -129,11 +129,6 @@ clang++ -I src/ -O3 -c src/dom/cxx/cxx_program.cpp \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/dom/cxx/cxx_program.cpp.o \
     -std=c++14 &
-echo Compile src/dom/manager.cpp
-clang++ -I src/ -O3 -c src/dom/manager.cpp \
-    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
-    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
-    -isystem src/system/ -o build/release/src/dom/manager.cpp.o -std=c++14 &
 if [ ! -e build/release/src/engine/ ]; then mkdir build/release/src/engine/; fi
 echo Compile src/engine/cxx_engine.cpp
 clang++ -I src/ -O3 -c src/engine/cxx_engine.cpp \
@@ -317,7 +312,6 @@ clang++ -L boost/lib/ -L fmt/lib/ -L rocksdb/lib/ -L src/system/ \
     build/release/src/doim/tool/tool_command.cpp.o \
     build/release/src/dom/cxx/cxx_library.cpp.o \
     build/release/src/dom/cxx/cxx_program.cpp.o \
-    build/release/src/dom/manager.cpp.o \
     build/release/src/engine/cxx_engine.cpp.o build/release/src/err/err.cpp.o \
     build/release/src/log/log.cpp.o build/release/src/main.cpp.o \
     build/release/src/option/verbose.cpp.o \

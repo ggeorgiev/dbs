@@ -9,7 +9,8 @@ cxx_library dom
         dom/cxx/cxx_library.h
         dom/cxx/cxx_private_headers_mixin.hpp
         dom/cxx/cxx_program.h
-        dom/manager.h
+        dom/element_manager.hpp
+        dom/element.hpp
     ;
 
     cxx_library:
@@ -22,7 +23,6 @@ cxx_library dom
     cxx_file:
         cxx/cxx_library.cpp
         cxx/cxx_program.cpp
-        manager.cpp
     ;
 ;
 
