@@ -36,26 +36,26 @@ typedef unordered_set<ObjectSPtr> ObjectSet;
 typedef shared_ptr<ObjectSet> ObjectSetSPtr;
 
 class Object : public ObjectEnums,
-               public Element<Object, ObjectEnums::EType, string, LocationSPtr>
+               public Element<Object, ObjectEnums::EType, LocationSPtr, string>
 {
 public:
-    static ObjectSPtr obtain(const LocationSPtr& base,
-                             const Object::EType type,
+    static ObjectSPtr obtain(const Object::EType type,
+                             const LocationSPtr& base,
                              const string_view& object);
 
-    Object(const EType type, const string& name, const LocationSPtr& location);
+    Object(const EType type, const LocationSPtr& location, const string& name);
 
     EType type() const
     {
         return std::get<0>(mArgs);
     }
 
-    const string& name() const
+    const LocationSPtr& location() const
     {
         return std::get<1>(mArgs);
     }
 
-    const LocationSPtr& location() const
+    const string& name() const
     {
         return std::get<2>(mArgs);
     }

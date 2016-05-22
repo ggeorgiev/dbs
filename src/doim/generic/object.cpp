@@ -8,14 +8,14 @@
 
 namespace doim
 {
-Object::Object(const EType type, const string& name, const LocationSPtr& location)
-    : Element(type, name, location)
+Object::Object(const EType type, const LocationSPtr& location, const string& name)
+    : Element(type, location, name)
 {
     ASSERT(location->isUnique());
 }
 
-ObjectSPtr Object::obtain(const LocationSPtr& base,
-                          const Object::EType type,
+ObjectSPtr Object::obtain(const Object::EType type,
+                          const LocationSPtr& base,
                           const string_view& object)
 {
     auto pos = object.size();
@@ -33,6 +33,6 @@ ObjectSPtr Object::obtain(const LocationSPtr& base,
     if (location == nullptr)
         return ObjectSPtr();
 
-    return unique(type, string(object.begin() + pos, object.end()), location);
+    return unique(type, location, string(object.begin() + pos, object.end()));
 }
 }
