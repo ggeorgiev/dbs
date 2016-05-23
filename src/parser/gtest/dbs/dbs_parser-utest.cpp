@@ -7,7 +7,7 @@
 #include <str>
 #include <stddef.h>
 
-TEST(DbsParserTest, CxxLibrary)
+TEST(DbsParserTest, SLOW_CxxLibrary)
 {
     auto mDbsDirectory =
         doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
@@ -39,7 +39,7 @@ TEST(DbsParserTest, CxxLibrary)
     EXPECT_EQ(dom::CxxLibrary::EType::kUser, cxxLibraryUser->type());
 }
 
-TEST(DbsParserTest, CxxLibraryCxxHeader)
+TEST(DbsParserTest, SLOW_CxxLibraryCxxHeader)
 {
     auto mDbsDirectory =
         doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
@@ -58,7 +58,7 @@ TEST(DbsParserTest, CxxLibraryCxxHeader)
     ASSERT_NE(nullptr, cxxLibraryCxxHeaderPublic);
 }
 
-TEST(DbsParserTest, CxxLibraryCxxLibrary)
+TEST(DbsParserTest, SLOW_CxxLibraryCxxLibrary)
 {
     auto mDbsDirectory =
         doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
@@ -78,7 +78,7 @@ TEST(DbsParserTest, CxxLibraryCxxLibrary)
     ASSERT_EQ(1, cxxLibraryCxxLibraries->cxxLibraries().size());
 }
 
-TEST(DbsParserTest, CxxLibraryCxxFile)
+TEST(DbsParserTest, SLOW_CxxLibraryCxxFile)
 {
     auto mDbsDirectory =
         doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
@@ -97,7 +97,7 @@ TEST(DbsParserTest, CxxLibraryCxxFile)
     ASSERT_EQ(1, cxxLibraryCxxFiles->cxxFilesList().size());
 }
 
-TEST(DbsParserTest, CxxLibraryBinary)
+TEST(DbsParserTest, SLOW_CxxLibraryBinary)
 {
     auto mDbsDirectory =
         doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
