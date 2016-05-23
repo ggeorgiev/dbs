@@ -1,0 +1,10 @@
+cxx_library empty:
+; 
+
+cxx_library system 
+    @type=system:
+; 
+
+cxx_library user 
+    @type=user:
+; 

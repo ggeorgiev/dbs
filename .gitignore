@@ -13,6 +13,6 @@
 xcuserdata/
 
 .DS_Store
-dbs
-dbs.*
-build.sh.*
+/dbs
+/dbs.*
+/build.sh.*
