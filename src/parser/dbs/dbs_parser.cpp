@@ -32,6 +32,8 @@ static auto r_cxxLibraryKeyword = r_str("cxx_library");
 static auto r_cxxLibraryCxxLibraryKeyword = r_str("cxx_library");
 static auto r_cxxLibraryCxxHeaderKeyword = r_str("cxx_header");
 static auto r_cxxLibraryCxxFileKeyword = r_str("cxx_file");
+// TODO: change this ti just binary
+static auto r_cxxLibraryCxxBinaryKeyword = r_str("cxx_binary");
 
 ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
 {
@@ -217,6 +219,17 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
                                 *(r_cxxLibraryCxxFileFile & *r_wspace) & r_semicolon) >>
                                e_ref(cxxLibraryCxxFileFn);
 
+    // CxxLibrary CxxBinary
+    auto cxxLibraryCxxBinaryFn = [&location, &cxxLibrary](I& i1, I& i2) {
+        auto path = string_view(&*i1, std::distance(i1, i2));
+        auto file = doim::FsFile::obtain(location, path);
+        cxxLibrary->updateBinary(file);
+    };
+    auto r_cxxLibraryCxxBinary = r_cxxLibraryCxxBinaryKeyword & *r_wspace & r_colon &
+                                 *r_wspace & (r_file >> e_ref(cxxLibraryCxxBinaryFn)) &
+                                 r_semicolon;
+
+    // ... CxxLibrary
     auto cxxLibraryNameFn = [&location, &cxxLibrary](I& i1, I& i2) {
         auto objType = doim::Object::EType::kCxxLibrary;
         const auto name = string(i1, i2);
@@ -236,11 +249,11 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     auto r_cxxLibraryCap = r_cxxLibraryKeyword & *r_wspace & r_cxxLibraryName &
                            *r_wspace & *r_cxxLibraryAttribute & r_colon;
 
-    auto r_cxxLibrary =
-        r_cxxLibraryCap & *r_wspace &
-        *((r_cxxLibraryCxxHeader | r_cxxLibraryCxxLibrary | r_cxxLibraryCxxFile) &
-          *r_wspace) &
-        r_semicolon;
+    auto r_cxxLibrary = r_cxxLibraryCap & *r_wspace &
+                        *((r_cxxLibraryCxxHeader | r_cxxLibraryCxxLibrary |
+                           r_cxxLibraryCxxFile | r_cxxLibraryCxxBinary) &
+                          *r_wspace) &
+                        r_semicolon;
 
     // Dbs file
     const auto& path = dbsFile->path();

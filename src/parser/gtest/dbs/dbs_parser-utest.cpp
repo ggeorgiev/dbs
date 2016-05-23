@@ -48,7 +48,6 @@ TEST(DbsParserTest, CxxLibraryCxxHeader)
     parser::DbsParser parser;
     parser.parse(main);
 
-    // User
     auto cxxLibraryCxxHeaderPublicObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary,
                              mDbsDirectory,
@@ -68,7 +67,6 @@ TEST(DbsParserTest, CxxLibraryCxxLibrary)
     parser::DbsParser parser;
     parser.parse(main);
 
-    // User
     auto cxxLibraryCxxLibrariesObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary,
                              mDbsDirectory,
@@ -89,7 +87,6 @@ TEST(DbsParserTest, CxxLibraryCxxFile)
     parser::DbsParser parser;
     parser.parse(main);
 
-    // User
     auto cxxLibraryCxxFilesObject = doim::Object::obtain(doim::Object::EType::kCxxLibrary,
                                                          mDbsDirectory,
                                                          "cxx_files");
@@ -98,4 +95,22 @@ TEST(DbsParserTest, CxxLibraryCxxFile)
     ASSERT_NE(nullptr, cxxLibraryCxxFiles);
 
     ASSERT_EQ(1, cxxLibraryCxxFiles->cxxFilesList().size());
+}
+
+TEST(DbsParserTest, CxxLibraryBinary)
+{
+    auto mDbsDirectory =
+        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto main = doim::FsFile::obtain(mDbsDirectory, "main.dbs");
+
+    parser::DbsParser parser;
+    parser.parse(main);
+
+    auto cxxLibraryBinaryObject =
+        doim::Object::obtain(doim::Object::EType::kCxxLibrary, mDbsDirectory, "binary");
+
+    auto cxxLibraryBinary = dom::CxxLibrary::find(cxxLibraryBinaryObject);
+    ASSERT_NE(nullptr, cxxLibraryBinary);
+    ASSERT_EQ("dbs/libfoo.a",
+              cxxLibraryBinary->binary()->path(testing::gTestResourceDirectory));
 }

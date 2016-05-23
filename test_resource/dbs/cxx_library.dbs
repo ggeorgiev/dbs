@@ -36,3 +36,9 @@ cxx_library cxx_files:
         foo.cpp
     ;
 ;
+
+cxx_library binary:
+    cxx_binary:
+        libfoo.a
+    ;
+;
