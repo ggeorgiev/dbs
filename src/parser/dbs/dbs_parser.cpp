@@ -99,7 +99,7 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     doim::FsFileSet cxxLibraryCxxHeaderFiles;
     doim::FsDirectorySPtr cxxLibraryCxxHeaderDirectory;
     doim::AttributeSPtr cxxLibraryCxxHeaderVisibility;
-    auto cxxLibraryCxxHeaderinitFn = [&cxxLibraryCxxHeaderDirectory,
+    auto cxxLibraryCxxHeaderInitFn = [&cxxLibraryCxxHeaderDirectory,
                                       &cxxLibraryCxxHeaderFiles,
                                       &cxxLibraryCxxHeaderVisibility](I& i1, I& i2) {
         cxxLibraryCxxHeaderDirectory.reset();
@@ -134,7 +134,7 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     auto r_cxxLibraryCxxHeaderFile = r_file >> e_ref(cxxLibraryCxxHeaderFileFn);
 
     auto r_cxxLibraryCxxHeaderCat =
-        (r_cxxLibraryCxxHeaderKeyword >> e_ref(cxxLibraryCxxHeaderinitFn)) & *r_wspace &
+        (r_cxxLibraryCxxHeaderKeyword >> e_ref(cxxLibraryCxxHeaderInitFn)) & *r_wspace &
         *r_cxxLibraryCxxHeaderAttribute & *r_wspace & r_colon;
 
     auto cxxLibraryCxxHeaderFn = [&cxxLibrary,
@@ -160,7 +160,36 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
          r_semicolon) >>
         e_ref(cxxLibraryCxxHeaderFn);
 
-    // static auto r_cxxLibraryCxxLibraryKeyword = r_str("cxx_library");
+    // CxxLibrary CxxLibrary
+
+    dom::CxxLibrarySet cxxLibraryCxxLibraryLibraries;
+    auto cxxLibraryCxxLibraryInitFn = [&cxxLibraryCxxLibraryLibraries](I& i1, I& i2) {
+        cxxLibraryCxxLibraryLibraries.clear();
+    };
+
+    auto cxxLibraryCxxLibraryLibraryFn = [&location,
+                                          &cxxLibraryCxxLibraryLibraries](I& i1, I& i2) {
+        auto objType = doim::Object::EType::kCxxLibrary;
+        auto path = string_view(&*i1, std::distance(i1, i2));
+        auto libraryObject = doim::Object::obtain(objType, location, path);
+        auto library = dom::CxxLibrary::obtain(libraryObject);
+        cxxLibraryCxxLibraryLibraries.insert(library);
+    };
+    auto r_cxxLibraryCxxLibraryLibrary = r_file >> e_ref(cxxLibraryCxxLibraryLibraryFn);
+
+    auto r_cxxLibraryCxxLibraryCat =
+        (r_cxxLibraryCxxLibraryKeyword >> e_ref(cxxLibraryCxxLibraryInitFn)) & *r_wspace &
+        r_colon;
+
+    auto cxxLibraryCxxLibraryFn = [&cxxLibrary, &cxxLibraryCxxLibraryLibraries](I& i1,
+                                                                                I& i2) {
+        cxxLibrary->updateCxxLibraries(cxxLibraryCxxLibraryLibraries);
+    };
+
+    auto r_cxxLibraryCxxLibrary =
+        (r_cxxLibraryCxxLibraryCat & *r_wspace &
+         *(r_cxxLibraryCxxLibraryLibrary & *r_wspace) & r_semicolon) >>
+        e_ref(cxxLibraryCxxLibraryFn);
 
     // static auto r_cxxLibraryCxxFileKeyword = r_str("cxx_file");
 
@@ -183,8 +212,9 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     auto r_cxxLibraryCap = r_cxxLibraryKeyword & *r_wspace & r_cxxLibraryName &
                            *r_wspace & *r_cxxLibraryAttribute & r_colon;
 
-    auto r_cxxLibrary =
-        r_cxxLibraryCap & *r_wspace & *r_cxxLibraryCxxHeader & *r_wspace & r_semicolon;
+    auto r_cxxLibrary = r_cxxLibraryCap & *r_wspace &
+                        *((r_cxxLibraryCxxHeader | r_cxxLibraryCxxLibrary) & *r_wspace) &
+                        r_semicolon;
 
     // Dbs file
     const auto& path = dbsFile->path();

@@ -16,3 +16,17 @@ cxx_library cxx_header_public:
         foo.cpp
     ;
 ; 
+
+cxx_library cxx_header_private:
+    cxx_header
+        @visibility=private:
+
+        foo.cpp
+    ;
+; 
+
+cxx_library cxx_libraries:
+    cxx_library:
+        foo
+    ;
+; 
