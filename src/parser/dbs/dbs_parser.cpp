@@ -36,7 +36,7 @@ static auto r_cxxLibraryCxxFileKeyword = r_str("cxx_file");
 ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
 {
     typedef const string::const_iterator I;
-    ILOG("Parse dbs file: {}", dbsFile->path());
+    DLOG("Parse dbs file: {}", dbsFile->path());
 
     doim::FsDirectorySPtr location = dbsFile->directory();
     std::vector<string> errors;
@@ -94,46 +94,72 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     // CxxLibrary
     dom::CxxLibrarySPtr cxxLibrary;
 
-    /*
-        // CxxLibrary CxxHeader
+    // CxxLibrary CxxHeader
 
-                doim::FsFileSetSPtr files;
-                doim::FsDirectorySPtr directory;
-                auto cxxHeaderFn = [=, &directory, &files]() {
-                    // doim::AttributeSPtr visibility;
-                    auto initFn = [&directory, &files](I& i1, I& i2) {
-                        // visibility.reset();
-                        directory.reset();
-                        files = doim::FsFileSet::make();
-                    };
+    doim::FsFileSet cxxLibraryCxxHeaderFiles;
+    doim::FsDirectorySPtr cxxLibraryCxxHeaderDirectory;
+    doim::AttributeSPtr cxxLibraryCxxHeaderVisibility;
+    auto cxxLibraryCxxHeaderinitFn = [&cxxLibraryCxxHeaderDirectory,
+                                      &cxxLibraryCxxHeaderFiles,
+                                      &cxxLibraryCxxHeaderVisibility](I& i1, I& i2) {
+        cxxLibraryCxxHeaderDirectory.reset();
+        cxxLibraryCxxHeaderFiles.clear();
+        cxxLibraryCxxHeaderVisibility.reset();
+    };
 
-                    auto attributeFn = [=, &directory](I& i1, I& i2) {
-                        if (attribute->name() == dom::CxxLibrary::gVisibility)
-                        {
-                            // visibility = attribute;
-                        }
-                        else if (attribute->name() == dom::CxxLibrary::gDirectory)
-                        {
-                            directory =
-                                doim::FsDirectory::obtain(location,
-           attribute->value()->value());
-                        }
-                    };
+    auto cxxLibraryCxxHeaderAttributeFn = [&location,
+                                           &attribute,
+                                           &cxxLibraryCxxHeaderDirectory,
+                                           &cxxLibraryCxxHeaderVisibility](I& i1, I& i2) {
+        if (attribute->name() == dom::CxxLibrary::gVisibility)
+        {
+            cxxLibraryCxxHeaderVisibility = attribute;
+        }
+        else if (attribute->name() == dom::CxxLibrary::gDirectory)
+        {
+            cxxLibraryCxxHeaderDirectory =
+                doim::FsDirectory::obtain(location, attribute->value()->value());
+        }
+    };
 
-                    auto fileFn = [directory, files](I& i1, I& i2) {
-                        auto size = std::distance(i1, i2);
-                        auto header = doim::FsFile::obtain(directory, string_view(&*i1,
-           size));
-                        files->insert(header);
-                    };
+    auto r_cxxLibraryCxxHeaderAttribute =
+        r_attribute >> e_ref(cxxLibraryCxxHeaderAttributeFn);
 
-                    return (r_cxxLibraryCxxHeaderKeyword >> e_sref(initFn)) & *r_wspace &
-                           *(r_attribute >> e_sref(attributeFn)) & *r_wspace &
-                           *(r_file >> e_sref(fileFn) & *r_wspace) & r_semicolon;
-                };
+    auto cxxLibraryCxxHeaderFileFn = [&cxxLibraryCxxHeaderDirectory,
+                                      &cxxLibraryCxxHeaderFiles](I& i1, I& i2) {
+        auto path = string_view(&*i1, std::distance(i1, i2));
+        auto header = doim::FsFile::obtain(cxxLibraryCxxHeaderDirectory, path);
+        cxxLibraryCxxHeaderFiles.insert(header);
+    };
+    auto r_cxxLibraryCxxHeaderFile = r_file >> e_ref(cxxLibraryCxxHeaderFileFn);
 
-                const auto& r_cxxHeader = cxxHeaderFn();
-*/
+    auto r_cxxLibraryCxxHeaderCat =
+        (r_cxxLibraryCxxHeaderKeyword >> e_ref(cxxLibraryCxxHeaderinitFn)) & *r_wspace &
+        *r_cxxLibraryCxxHeaderAttribute & *r_wspace & r_colon;
+
+    auto cxxLibraryCxxHeaderFn = [&cxxLibrary,
+                                  &cxxLibraryCxxHeaderDirectory,
+                                  &cxxLibraryCxxHeaderFiles,
+                                  &cxxLibraryCxxHeaderVisibility](I& i1, I& i2) {
+
+        if (cxxLibraryCxxHeaderVisibility != nullptr &&
+            cxxLibraryCxxHeaderVisibility->value() == dom::CxxLibrary::gPublic)
+        {
+            cxxLibrary->updateCxxPublicHeaders(cxxLibraryCxxHeaderDirectory,
+                                               cxxLibraryCxxHeaderFiles);
+        }
+        else
+        {
+            cxxLibrary->updateCxxPublicHeaders(cxxLibraryCxxHeaderDirectory,
+                                               cxxLibraryCxxHeaderFiles);
+        }
+    };
+
+    auto r_cxxLibraryCxxHeader =
+        (r_cxxLibraryCxxHeaderCat & *r_wspace & *(r_cxxLibraryCxxHeaderFile & *r_wspace) &
+         r_semicolon) >>
+        e_ref(cxxLibraryCxxHeaderFn);
+
     // static auto r_cxxLibraryCxxLibraryKeyword = r_str("cxx_library");
 
     // static auto r_cxxLibraryCxxFileKeyword = r_str("cxx_file");
@@ -154,13 +180,11 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     auto r_cxxLibraryAttribute =
         (r_attribute >> e_ref(cxxLibraryAttributeFn)) & *r_wspace;
 
-    auto r_cxxLibraryHeader = r_cxxLibraryKeyword & *r_wspace & r_cxxLibraryName &
-                              *r_wspace & *r_cxxLibraryAttribute & r_colon;
+    auto r_cxxLibraryCap = r_cxxLibraryKeyword & *r_wspace & r_cxxLibraryName &
+                           *r_wspace & *r_cxxLibraryAttribute & r_colon;
 
-    // return
-    // & *r_wspace & *r_cxxHeader & *r_wspace & r_semicolon;
-
-    auto r_cxxLibrary = r_cxxLibraryHeader & *r_wspace & r_semicolon;
+    auto r_cxxLibrary =
+        r_cxxLibraryCap & *r_wspace & *r_cxxLibraryCxxHeader & *r_wspace & r_semicolon;
 
     // Dbs file
     const auto& path = dbsFile->path();

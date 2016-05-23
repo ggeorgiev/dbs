@@ -8,3 +8,11 @@ cxx_library system
 cxx_library user 
     @type=user:
 ; 
+
+cxx_library cxx_header_public:
+    cxx_header
+        @visibility=public:
+        
+        foo.cpp
+    ;
+; 

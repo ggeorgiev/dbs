@@ -7,7 +7,7 @@
 #include <str>
 #include <stddef.h>
 
-TEST(DbsParserTest, _parse)
+TEST(DbsParserTest, CxxLibrary)
 {
     auto mDbsDirectory =
         doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
@@ -37,4 +37,24 @@ TEST(DbsParserTest, _parse)
     auto cxxLibraryUser = dom::CxxLibrary::find(cxxLibraryUserObject);
     ASSERT_NE(nullptr, cxxLibraryUser);
     EXPECT_EQ(dom::CxxLibrary::EType::kUser, cxxLibraryUser->type());
+}
+
+TEST(DbsParserTest, CxxLibraryCxxHeader)
+{
+    auto mDbsDirectory =
+        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto main = doim::FsFile::obtain(mDbsDirectory, "main.dbs");
+
+    parser::DbsParser parser;
+    parser.parse(main);
+
+    // User
+    auto cxxLibraryCxxHeaderPublicObject =
+        doim::Object::obtain(doim::Object::EType::kCxxLibrary,
+                             mDbsDirectory,
+                             "cxx_header_public");
+
+    auto cxxLibraryCxxHeaderPublic =
+        dom::CxxLibrary::find(cxxLibraryCxxHeaderPublicObject);
+    ASSERT_NE(nullptr, cxxLibraryCxxHeaderPublic);
 }
