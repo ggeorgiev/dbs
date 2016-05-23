@@ -79,3 +79,23 @@ TEST(DbsParserTest, CxxLibraryCxxLibrary)
 
     ASSERT_EQ(1, cxxLibraryCxxLibraries->cxxLibraries().size());
 }
+
+TEST(DbsParserTest, CxxLibraryCxxFile)
+{
+    auto mDbsDirectory =
+        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto main = doim::FsFile::obtain(mDbsDirectory, "main.dbs");
+
+    parser::DbsParser parser;
+    parser.parse(main);
+
+    // User
+    auto cxxLibraryCxxFilesObject = doim::Object::obtain(doim::Object::EType::kCxxLibrary,
+                                                         mDbsDirectory,
+                                                         "cxx_files");
+
+    auto cxxLibraryCxxFiles = dom::CxxLibrary::find(cxxLibraryCxxFilesObject);
+    ASSERT_NE(nullptr, cxxLibraryCxxFiles);
+
+    ASSERT_EQ(1, cxxLibraryCxxFiles->cxxFilesList().size());
+}

@@ -13,7 +13,7 @@ cxx_library cxx_header_public:
     cxx_header
         @visibility=public:
         
-        foo.cpp
+        foo.h
     ;
 ; 
 
@@ -21,7 +21,7 @@ cxx_library cxx_header_private:
     cxx_header
         @visibility=private:
 
-        foo.cpp
+        foo.h
     ;
 ; 
 
@@ -30,3 +30,9 @@ cxx_library cxx_libraries:
         foo
     ;
 ; 
+
+cxx_library cxx_files:
+    cxx_file:
+        foo.cpp
+    ;
+;
