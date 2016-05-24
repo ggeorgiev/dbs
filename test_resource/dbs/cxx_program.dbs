@@ -1,0 +1,14 @@
+cxx_program empty:
+; 
+
+cxx_program cxx_libraries:
+    cxx_library:
+        foo
+    ;
+; 
+
+cxx_program cxx_files:
+    cxx_file:
+        foo.cpp
+    ;
+;
