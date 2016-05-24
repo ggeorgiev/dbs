@@ -1,4 +1,4 @@
-cxx_library rocksdb
+cxx_library /rocksdb
     @type=system:
 
     cxx_header
@@ -12,8 +12,8 @@ cxx_library rocksdb
     ;
 
     cxx_library:
-        ../system/zip
-        ../system/bz2
+        /zip
+        /bz2
     ;
 
     cxx_binary: ../../rocksdb/lib/librocksdb.a;

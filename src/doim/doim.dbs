@@ -33,8 +33,8 @@ cxx_library doim
     ;
 
     cxx_library:
-        ../3rdparty/boost_template
-        ../3rdparty/boost_thread
+        /boost_template
+        /boost_thread
 
         ../const/const
         ../im/im
@@ -69,7 +69,7 @@ cxx_library doim-test
     @type=test:
 
     cxx_library:
-        ../3rdparty/gtest
+        /gtest
 
         ../gtest/gtest
         ../err/err-test

@@ -9,7 +9,7 @@ cxx_library const
     ;
 
     cxx_library:
-        ../system/stl
+        /stl
     ;
 
     cxx_file:

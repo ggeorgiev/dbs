@@ -9,7 +9,7 @@ cxx_library option
     ;
 
     cxx_library:
-        ../system/stl
+        /stl
 
         ../im/im
         ../err/err
@@ -25,7 +25,7 @@ cxx_library option-test
     @type=test:
 
     cxx_library:
-        ../3rdparty/gtest
+        /gtest
 
         ../gtest/gtest
         ../err/err-test

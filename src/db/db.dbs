@@ -9,10 +9,10 @@ cxx_library db
     ;
 
     cxx_library:
-        ../system/stl
+        /stl
 
-        ../3rdparty/boost_filesystem
-        ../3rdparty/rocksdb
+        /boost_filesystem
+        /rocksdb
 
         ../im/im
         ../log/log
@@ -29,7 +29,7 @@ cxx_library db-test
     @type=test:
 
     cxx_library:
-        ../3rdparty/gtest
+        /gtest
 
         ../gtest/gtest
         ../err/err-test

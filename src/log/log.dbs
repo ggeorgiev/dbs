@@ -10,11 +10,11 @@ cxx_library log
     ;
 
     cxx_library:
-       ../system/stl
+       /stl
 
-       ../3rdparty/spdlog
-       ../3rdparty/cppformat
-       ../3rdparty/boost_template
+       /spdlog
+       /cppformat
+       /boost_template
 
        ../im/im
     ;
@@ -28,7 +28,7 @@ cxx_library log-test
     @type=test:
 
     cxx_library:
-        ../3rdparty/gtest
+        /gtest
 
         ../gtest/gtest
 

@@ -9,9 +9,9 @@ cxx_library math
     ;
 
     cxx_library:
-        ../system/stl
+        /stl
 
-        ../3rdparty/boost_template
+        /boost_template
     ;
 
     cxx_file:

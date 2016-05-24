@@ -1,4 +1,4 @@
-cxx_library stl
+cxx_library /stl
     @type=system:
 
     cxx_header

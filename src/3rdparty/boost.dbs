@@ -1,4 +1,4 @@
-cxx_library boost_template
+cxx_library /boost_template
     @type=system:
 
     cxx_header
@@ -17,7 +17,7 @@ cxx_library boost_template
     ;
 ;
 
-cxx_library boost_system
+cxx_library /boost_system
     @type=system:
     cxx_header
         @visibility=public
@@ -29,7 +29,7 @@ cxx_library boost_system
     cxx_binary: ../../boost/lib/libboost_system.a;
 ;
 
-cxx_library boost_filesystem
+cxx_library /boost_filesystem
     @type=system:
     cxx_header
         @visibility=public
@@ -41,13 +41,13 @@ cxx_library boost_filesystem
     ;
 
     cxx_library:
-        boost_system
+        /boost_system
     ;
 
     cxx_binary: ../../boost/lib/libboost_filesystem.a;
 ;
 
-cxx_library boost_chrono
+cxx_library /boost_chrono
     @type=system:
     cxx_header
         @visibility=public
@@ -59,7 +59,7 @@ cxx_library boost_chrono
     cxx_binary: ../../boost/lib/libboost_chrono.a;
 ;
 
-cxx_library boost_thread
+cxx_library /boost_thread
     @type=system:
     cxx_header
         @visibility=public

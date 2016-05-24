@@ -19,7 +19,7 @@ cxx_library rtti-test
     @type=test:
 
     cxx_library:
-        ../3rdparty/gtest
+        /gtest
 
         ../gtest/gtest
 

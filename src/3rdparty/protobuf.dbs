@@ -1,4 +1,4 @@
-cxx_library protobuf-lite
+cxx_library /protobuf-lite
     @type=system:
 
     cxx_header

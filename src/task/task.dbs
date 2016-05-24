@@ -22,8 +22,8 @@ cxx_library task
     cxx_library:
         ../im/im
 
-        ../3rdparty/boost_template
-        ../3rdparty/boost_filesystem
+        /boost_template
+        /boost_filesystem
 
         ../rtti/rtti
         ../log/log
@@ -55,7 +55,7 @@ cxx_library task-test
     @type=test:
 
     cxx_library:
-        ../3rdparty/gtest
+        /gtest
 
         ../gtest/gtest
         ../err/err-test

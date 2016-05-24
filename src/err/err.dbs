@@ -15,11 +15,11 @@ cxx_library err
     ;
 
     cxx_library:
-        ../system/cstd
-        ../system/stl
+        /cstd
+        /stl
 
-        ../3rdparty/boost_thread
-        ../3rdparty/cppformat
+        /boost_thread
+        /cppformat
 
         ../im/im
     ;
@@ -41,7 +41,7 @@ cxx_library err-test
     ;
 
     cxx_library:
-        ../3rdparty/gtest
+        /gtest
 
         ../gtest/gtest
 

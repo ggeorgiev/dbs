@@ -15,9 +15,9 @@ cxx_library parser
     ;
 
     cxx_library:
-        ../system/stl
-        ../3rdparty/axe
-        ../3rdparty/boost_filesystem
+        /stl
+        /axe
+        /boost_filesystem
         ../dom/dom
     ;
 
@@ -31,7 +31,7 @@ cxx_library parser-test
     @type=test:
 
     cxx_library:
-        ../3rdparty/gtest
+        /gtest
 
         ../gtest/gtest
         ../err/err-test

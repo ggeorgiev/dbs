@@ -1,4 +1,4 @@
-cxx_library cppformat
+cxx_library /cppformat
     @type=system:
 
     cxx_header

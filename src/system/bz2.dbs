@@ -1,4 +1,4 @@
-cxx_library bz2
+cxx_library /bz2
     @type=system:
 
     cxx_binary: libbz2.a;

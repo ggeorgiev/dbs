@@ -14,8 +14,8 @@ cxx_library tpool
     ;
 
     cxx_library:
-        ../3rdparty/boost_template
-        ../3rdparty/boost_thread
+        /boost_template
+        /boost_thread
 
         ../log/log
         ../err/err
@@ -33,7 +33,7 @@ cxx_library tpool-test
     @type=test:
 
     cxx_library:
-        ../3rdparty/gtest
+        /gtest
 
         ../gtest/gtest
         ../err/err-test

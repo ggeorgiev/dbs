@@ -19,10 +19,10 @@ cxx_library gtest
 
     cxx_library:
         ../system/cstd
-        ../system/stl
+        /stl
 
-        ../3rdparty/boost_chrono
-        ../3rdparty/gtest
+        /boost_chrono
+        /gtest
 
         ../im/im
         ../doim/doim

@@ -1,4 +1,4 @@
-cxx_library gtest
+cxx_library /gtest
     @type=system:
 
     cxx_header

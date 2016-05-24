@@ -9,7 +9,7 @@ cxx_library im
     ;
 
     cxx_library:
-        ../system/stl
+        /stl
     ;
 ;
 
@@ -17,7 +17,7 @@ cxx_library im-test
     @type=test:
 
     cxx_library:
-        ../3rdparty/gtest
+        /gtest
 
         ../gtest/gtest
 

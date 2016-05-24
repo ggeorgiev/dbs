@@ -15,10 +15,10 @@ cxx_library dp
     ;
 
     cxx_library:
-        ../system/stl
+        /stl
 
-        ../3rdparty/boost_template
-        ../3rdparty/boost_thread
+        /boost_template
+        /boost_thread
 
         ../err/err
     ;
@@ -31,7 +31,7 @@ cxx_library dp-test
     @type=test:
 
     cxx_library:
-        ../3rdparty/gtest
+        /gtest
 
         ../gtest/gtest
         ../err/err-test

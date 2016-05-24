@@ -1,4 +1,4 @@
-cxx_library spdlog
+cxx_library /spdlog
     @type=system:
 
     cxx_header

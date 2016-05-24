@@ -1,4 +1,4 @@
-cxx_library cstd
+cxx_library /cstd
     @type=system:
 
     cxx_header

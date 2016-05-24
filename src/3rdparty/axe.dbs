@@ -1,4 +1,4 @@
-cxx_library axe
+cxx_library /axe
     @type=system:
 
     cxx_header

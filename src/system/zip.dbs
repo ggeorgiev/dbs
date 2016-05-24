@@ -1,4 +1,4 @@
-cxx_library zip
+cxx_library /zip
     @type=system:
 
     cxx_binary: libz.a;
