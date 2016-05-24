@@ -413,6 +413,7 @@
 		5EE51C251CE6E68900DB0DDA /* str */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = str; sourceTree = "<group>"; };
 		5EE51C261CE84B3700DB0DDA /* set.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = set.hpp; sourceTree = "<group>"; };
 		5EE51C281CE9087300DB0DDA /* set_manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = set_manager.hpp; sourceTree = "<group>"; };
+		5EEBDB371CF3FD9D008E1848 /* cxx_program.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = cxx_program.dbs; sourceTree = "<group>"; };
 		5EFDAF5B1CDB89B70092AAD2 /* parse_stdout_task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = parse_stdout_task.cpp; sourceTree = "<group>"; };
 		5EFDAF5C1CDB89B70092AAD2 /* parse_stdout_task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parse_stdout_task.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1078,6 +1079,7 @@
 			isa = PBXGroup;
 			children = (
 				5E87B9E21CF17A1F00F042B4 /* cxx_library.dbs */,
+				5EEBDB371CF3FD9D008E1848 /* cxx_program.dbs */,
 				5E87B9E11CF1607300F042B4 /* main.dbs */,
 			);
 			path = dbs;

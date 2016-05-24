@@ -2,6 +2,7 @@
 //
 
 #include "parser/dbs/dbs_parser.h"
+#include "dom/cxx/cxx_program.h"
 #include "doim/generic/object.h"
 #include <boost/filesystem/operations.hpp>
 #include <fstream>
@@ -28,10 +29,12 @@ static auto r_annexKeyword = r_str("annex");
 static auto r_at = r_char('@');
 static auto r_equal = r_char('=');
 
+static auto r_cxxProgramKeyword = r_str("cxx_program");
+
 static auto r_cxxLibraryKeyword = r_str("cxx_library");
-static auto r_cxxLibraryCxxLibraryKeyword = r_str("cxx_library");
+static auto r_cxxFileKeyword = r_str("cxx_file");
+
 static auto r_cxxLibraryCxxHeaderKeyword = r_str("cxx_header");
-static auto r_cxxLibraryCxxFileKeyword = r_str("cxx_file");
 // TODO: change this ti just binary
 static auto r_cxxLibraryCxxBinaryKeyword = r_str("cxx_binary");
 
@@ -52,7 +55,7 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
         ++line;
     };
 
-    auto r_wspace = r_space | (r_endl >> e_ref(newlineFn));
+    auto r_ws = r_space | (r_endl >> e_ref(newlineFn));
 
     // Attribute
     doim::AttributeNameSPtr attributeName;
@@ -71,9 +74,9 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     auto attributeFn = [&attributeName, &attributeValue, &attribute](I& i1, I& i2) {
         attribute = doim::Attribute::unique(attributeName, attributeValue);
     };
-    auto r_attribute = (r_at & *r_wspace & r_attributeName & *r_wspace & r_equal &
-                        *r_wspace & r_attributeValue) >>
-                       e_ref(attributeFn);
+    auto r_attribute =
+        (r_at & *r_ws & r_attributeName & *r_ws & r_equal & *r_ws & r_attributeValue) >>
+        e_ref(attributeFn);
 
     // File
     doim::FsFileSPtr file;
@@ -93,30 +96,54 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     auto filesResetFn = [&files](I& i1, I& i2) { files.clear(); };
     auto filesFn = [&file, &files](I& i1, I& i2) { files.insert(file); };
     auto r_files =
-        (r_empty() >> e_ref(filesResetFn)) & *((r_file >> e_ref(filesFn)) & *r_wspace);
+        (r_empty() >> e_ref(filesResetFn)) & *((r_file >> e_ref(filesFn)) & *r_ws);
 
     // Object
     doim::ObjectSPtr object;
     doim::Object::EType objType;
-    auto objTypeSetCxxLibraryFn = [&objType](I& i1, I& i2) {
-        objType = doim::Object::EType::kCxxLibrary;
-    };
-    auto r_setObjTypeCxxLibrary = r_empty() >> e_ref(objTypeSetCxxLibraryFn);
-
-    auto objectFn = [&location, objType, &object](I& i1, I& i2) {
+    auto objectFn = [&location, &objType, &object](I& i1, I& i2) {
         auto size = std::distance(i1, i2);
         auto path = string_view(&*i1, std::distance(i1, i2));
         object = doim::Object::obtain(objType, location, path);
     };
     auto r_object = r_path >> e_ref(objectFn);
 
+    auto objTypeSetCxxLibraryFn = [&objType](I& i1, I& i2) {
+        objType = doim::Object::EType::kCxxLibrary;
+    };
+    auto r_objectCxxLibrary = r_empty() >> e_ref(objTypeSetCxxLibraryFn) & r_object;
+
+    auto objTypeSetCxxProgramFn = [&objType](I& i1, I& i2) {
+        objType = doim::Object::EType::kCxxProgram;
+    };
+    auto r_objectCxxProgram = r_empty() >> e_ref(objTypeSetCxxProgramFn) & r_object;
+
     // dom::CxxLibrary Object
     dom::CxxLibrarySPtr cxxLibraryObject;
     auto cxxLibraryObjectFn = [&object, &cxxLibraryObject](I& i1, I& i2) {
         cxxLibraryObject = dom::CxxLibrary::obtain(object);
     };
-    auto r_cxxLibraryObject =
-        r_setObjTypeCxxLibrary & (r_object >> e_ref(cxxLibraryObjectFn));
+    auto r_cxxLibraryObject = r_objectCxxLibrary >> e_ref(cxxLibraryObjectFn);
+
+    // CxxFiles
+    auto r_cxxFiles = r_cxxFileKeyword & *r_ws & r_colon & *r_ws & r_setLocation &
+                      r_files & r_semicolon;
+
+    // CxxLibraries
+
+    dom::CxxLibrarySet cxxLibraries;
+    auto cxxLibrariesInitFn = [&cxxLibraries](I& i1, I& i2) { cxxLibraries.clear(); };
+
+    auto cxxLibraryFn = [&cxxLibraryObject, &cxxLibraries](I& i1, I& i2) {
+        cxxLibraries.insert(cxxLibraryObject);
+    };
+    auto r_cxxLibraryItem = r_cxxLibraryObject >> e_ref(cxxLibraryFn);
+
+    auto r_cxxLibrariesCat =
+        (r_cxxLibraryKeyword >> e_ref(cxxLibrariesInitFn)) & *r_ws & r_colon;
+
+    auto r_cxxLibraries =
+        r_cxxLibrariesCat & *r_ws & *(r_cxxLibraryItem & *r_ws) & r_semicolon;
 
     // Annex
     auto annexFileFn = [&file, &errors](I& i1, I& i2) {
@@ -129,8 +156,8 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
         }
     };
 
-    auto r_annex = r_annexKeyword & *r_wspace & r_colon & *r_wspace & r_setLocation &
-                   *(r_file >> e_ref(annexFileFn) & *r_wspace) & r_semicolon;
+    auto r_annex = r_annexKeyword & *r_ws & r_colon & *r_ws & r_setLocation &
+                   *(r_file >> e_ref(annexFileFn) & *r_ws) & r_semicolon;
 
     // CxxLibrary
     dom::CxxLibrarySPtr cxxLibrary;
@@ -158,8 +185,8 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
         r_attribute >> e_ref(cxxLibraryCxxHeaderAttributeFn);
 
     auto r_cxxLibraryCxxHeaderCat =
-        (r_cxxLibraryCxxHeaderKeyword >> e_ref(cxxLibraryCxxHeaderInitFn)) & *r_wspace &
-        *r_cxxLibraryCxxHeaderAttribute & *r_wspace & r_colon;
+        (r_cxxLibraryCxxHeaderKeyword >> e_ref(cxxLibraryCxxHeaderInitFn)) & *r_ws &
+        *r_cxxLibraryCxxHeaderAttribute & *r_ws & r_colon;
 
     auto cxxLibraryCxxHeaderFn =
         [&cxxLibrary, &directory, &files, &cxxLibraryCxxHeaderVisibility](I& i1, I& i2) {
@@ -172,54 +199,27 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
         };
 
     auto r_cxxLibraryCxxHeader =
-        (r_cxxLibraryCxxHeaderCat & *r_wspace & r_files & r_semicolon) >>
+        (r_cxxLibraryCxxHeaderCat & *r_ws & r_files & r_semicolon) >>
         e_ref(cxxLibraryCxxHeaderFn);
 
     // CxxLibrary CxxLibrary
-
-    dom::CxxLibrarySet cxxLibraryCxxLibraryLibraries;
-    auto cxxLibraryCxxLibraryInitFn = [&cxxLibraryCxxLibraryLibraries](I& i1, I& i2) {
-        cxxLibraryCxxLibraryLibraries.clear();
+    auto cxxLibraryCxxLibraryFn = [&cxxLibrary, &cxxLibraries](I& i1, I& i2) {
+        cxxLibrary->updateCxxLibraries(cxxLibraries);
     };
-
-    auto cxxLibraryCxxLibraryLibraryFn = [&cxxLibraryObject,
-                                          &cxxLibraryCxxLibraryLibraries](I& i1, I& i2) {
-        cxxLibraryCxxLibraryLibraries.insert(cxxLibraryObject);
-    };
-    auto r_cxxLibraryCxxLibraryLibrary =
-        r_cxxLibraryObject >> e_ref(cxxLibraryCxxLibraryLibraryFn);
-
-    auto r_cxxLibraryCxxLibraryCat =
-        (r_cxxLibraryCxxLibraryKeyword >> e_ref(cxxLibraryCxxLibraryInitFn)) & *r_wspace &
-        r_colon;
-
-    auto cxxLibraryCxxLibraryFn = [&cxxLibrary, &cxxLibraryCxxLibraryLibraries](I& i1,
-                                                                                I& i2) {
-        cxxLibrary->updateCxxLibraries(cxxLibraryCxxLibraryLibraries);
-    };
-
-    auto r_cxxLibraryCxxLibrary =
-        (r_cxxLibraryCxxLibraryCat & *r_wspace &
-         *(r_cxxLibraryCxxLibraryLibrary & *r_wspace) & r_semicolon) >>
-        e_ref(cxxLibraryCxxLibraryFn);
+    auto r_cxxLibraryCxxLibrary = r_cxxLibraries >> e_ref(cxxLibraryCxxLibraryFn);
 
     // CxxLibrary CxxFile
-    auto r_cxxLibraryCxxFileCat = r_cxxLibraryCxxFileKeyword & *r_wspace & r_colon;
-
     auto cxxLibraryCxxFileFn = [&cxxLibrary, &files](I& i1, I& i2) {
         cxxLibrary->updateCxxFilesList(files);
     };
-
-    auto r_cxxLibraryCxxFile =
-        (r_cxxLibraryCxxFileCat & *r_wspace & r_setLocation & r_files & r_semicolon) >>
-        e_ref(cxxLibraryCxxFileFn);
+    auto r_cxxLibraryCxxFile = r_cxxFiles >> e_ref(cxxLibraryCxxFileFn);
 
     // CxxLibrary CxxBinary
     auto cxxLibraryCxxBinaryFn = [&file, &cxxLibrary](I& i1, I& i2) {
         cxxLibrary->updateBinary(file);
     };
-    auto r_cxxLibraryCxxBinary = r_cxxLibraryCxxBinaryKeyword & *r_wspace & r_colon &
-                                 *r_wspace & r_setLocation &
+    auto r_cxxLibraryCxxBinary = r_cxxLibraryCxxBinaryKeyword & *r_ws & r_colon & *r_ws &
+                                 r_setLocation &
                                  (r_file >> e_ref(cxxLibraryCxxBinaryFn)) & r_semicolon;
 
     // ... CxxLibrary
@@ -232,16 +232,43 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
         cxxLibrary->updateAttribute(attribute);
     };
 
-    auto r_cxxLibraryAttribute =
-        (r_attribute >> e_ref(cxxLibraryAttributeFn)) & *r_wspace;
+    auto r_cxxLibraryAttribute = (r_attribute >> e_ref(cxxLibraryAttributeFn)) & *r_ws;
 
-    auto r_cxxLibraryCap = r_cxxLibraryKeyword & *r_wspace & r_cxxLibraryName &
-                           *r_wspace & *r_cxxLibraryAttribute & r_colon;
+    auto r_cxxLibraryCap = r_cxxLibraryKeyword & *r_ws & r_cxxLibraryName & *r_ws &
+                           *r_cxxLibraryAttribute & r_colon;
 
-    auto r_cxxLibrary = r_cxxLibraryCap & *r_wspace &
-                        *((r_cxxLibraryCxxHeader | r_cxxLibraryCxxLibrary |
-                           r_cxxLibraryCxxFile | r_cxxLibraryCxxBinary) &
-                          *r_wspace) &
+    auto r_cxxLibrary = r_cxxLibraryCap & *r_ws &
+                        *((r_cxxLibraryCxxFile | r_cxxLibraryCxxHeader |
+                           r_cxxLibraryCxxLibrary | r_cxxLibraryCxxBinary) &
+                          *r_ws) &
+                        r_semicolon;
+
+    // CxxProgram
+    dom::CxxProgramSPtr cxxProgram;
+
+    // CxxProgram CxxLibrary
+    auto cxxProgramCxxLibraryFn = [&cxxProgram, &cxxLibraries](I& i1, I& i2) {
+        cxxProgram->updateCxxLibraries(cxxLibraries);
+    };
+    auto r_cxxProgramCxxLibrary = r_cxxLibraries >> e_ref(cxxProgramCxxLibraryFn);
+
+    // CxxProgram CxxFile
+    auto cxxProgramCxxFileFn = [&cxxProgram, &files](I& i1, I& i2) {
+        cxxProgram->updateCxxFilesList(files);
+    };
+    auto r_cxxProgramCxxFile = r_cxxFiles >> e_ref(cxxProgramCxxFileFn);
+
+    // ... CxxProgram
+    auto cxxProgramNameFn = [&object, &cxxProgram](I& i1, I& i2) {
+        cxxProgram = dom::CxxProgram::obtain(object);
+    };
+    auto r_cxxProgramName = r_objectCxxProgram >> e_ref(cxxProgramNameFn);
+
+    auto r_cxxProgramCap =
+        r_cxxProgramKeyword & *r_ws & r_cxxProgramName & *r_ws & r_colon;
+
+    auto r_cxxProgram = r_cxxProgramCap & *r_ws &
+                        *((r_cxxProgramCxxFile | r_cxxProgramCxxLibrary) & *r_ws) &
                         r_semicolon;
 
     // Dbs file
@@ -253,7 +280,7 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     string content((std::istreambuf_iterator<char>(fstream)),
                    std::istreambuf_iterator<char>());
 
-    const auto& r_dbs = ~r_annex & *(r_cxxLibrary & *r_wspace);
+    const auto& r_dbs = ~r_annex & *((r_cxxLibrary | r_cxxProgram) & *r_ws);
 
     r_dbs(content.begin(), content.end());
 

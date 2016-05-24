@@ -7,14 +7,28 @@
 #include <str>
 #include <stddef.h>
 
-TEST(DbsParserTest, SLOW_CxxLibrary)
+static void parse()
 {
+    static bool parsed = false;
+    if (parsed)
+        return;
+
     auto mDbsDirectory =
         doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
     auto main = doim::FsFile::obtain(mDbsDirectory, "main.dbs");
 
     parser::DbsParser parser;
     parser.parse(main);
+
+    parsed = true;
+}
+
+TEST(DbsParserTest, SLOW_CxxLibrary)
+{
+    parse();
+
+    auto mDbsDirectory =
+        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
 
     auto cxxLibraryEmptyObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary, mDbsDirectory, "empty");
@@ -41,12 +55,10 @@ TEST(DbsParserTest, SLOW_CxxLibrary)
 
 TEST(DbsParserTest, SLOW_CxxLibraryCxxHeader)
 {
+    parse();
+
     auto mDbsDirectory =
         doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
-    auto main = doim::FsFile::obtain(mDbsDirectory, "main.dbs");
-
-    parser::DbsParser parser;
-    parser.parse(main);
 
     auto cxxLibraryCxxHeaderPublicObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary,
@@ -60,12 +72,10 @@ TEST(DbsParserTest, SLOW_CxxLibraryCxxHeader)
 
 TEST(DbsParserTest, SLOW_CxxLibraryCxxLibrary)
 {
+    parse();
+
     auto mDbsDirectory =
         doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
-    auto main = doim::FsFile::obtain(mDbsDirectory, "main.dbs");
-
-    parser::DbsParser parser;
-    parser.parse(main);
 
     auto cxxLibraryCxxLibrariesObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary,
@@ -80,12 +90,10 @@ TEST(DbsParserTest, SLOW_CxxLibraryCxxLibrary)
 
 TEST(DbsParserTest, SLOW_CxxLibraryCxxFile)
 {
+    parse();
+
     auto mDbsDirectory =
         doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
-    auto main = doim::FsFile::obtain(mDbsDirectory, "main.dbs");
-
-    parser::DbsParser parser;
-    parser.parse(main);
 
     auto cxxLibraryCxxFilesObject = doim::Object::obtain(doim::Object::EType::kCxxLibrary,
                                                          mDbsDirectory,
@@ -99,12 +107,10 @@ TEST(DbsParserTest, SLOW_CxxLibraryCxxFile)
 
 TEST(DbsParserTest, SLOW_CxxLibraryBinary)
 {
+    parse();
+
     auto mDbsDirectory =
         doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
-    auto main = doim::FsFile::obtain(mDbsDirectory, "main.dbs");
-
-    parser::DbsParser parser;
-    parser.parse(main);
 
     auto cxxLibraryBinaryObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary, mDbsDirectory, "binary");
@@ -113,4 +119,53 @@ TEST(DbsParserTest, SLOW_CxxLibraryBinary)
     ASSERT_NE(nullptr, cxxLibraryBinary);
     ASSERT_EQ("dbs/libfoo.a",
               cxxLibraryBinary->binary()->path(testing::gTestResourceDirectory));
+}
+
+TEST(DbsParserTest, SLOW_CxxProgramEmpty)
+{
+    parse();
+
+    auto mDbsDirectory =
+        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+
+    auto cxxProgramEmptyObject =
+        doim::Object::obtain(doim::Object::EType::kCxxProgram, mDbsDirectory, "empty");
+
+    auto cxxProgramEmpty = dom::CxxProgram::find(cxxProgramEmptyObject);
+    ASSERT_NE(nullptr, cxxProgramEmpty);
+}
+
+TEST(DbsParserTest, SLOW_CxxProgramCxxLibrary)
+{
+    parse();
+
+    auto mDbsDirectory =
+        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+
+    auto cxxProgramCxxLibrariesObject =
+        doim::Object::obtain(doim::Object::EType::kCxxProgram,
+                             mDbsDirectory,
+                             "cxx_libraries");
+
+    auto cxxProgramCxxLibraries = dom::CxxProgram::find(cxxProgramCxxLibrariesObject);
+    ASSERT_NE(nullptr, cxxProgramCxxLibraries);
+
+    ASSERT_EQ(1, cxxProgramCxxLibraries->cxxLibraries().size());
+}
+
+TEST(DbsParserTest, SLOW_CxxProgramCxxFile)
+{
+    parse();
+
+    auto mDbsDirectory =
+        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+
+    auto cxxProgramCxxFilesObject = doim::Object::obtain(doim::Object::EType::kCxxProgram,
+                                                         mDbsDirectory,
+                                                         "cxx_files");
+
+    auto cxxProgramCxxFiles = dom::CxxProgram::find(cxxProgramCxxFilesObject);
+    ASSERT_NE(nullptr, cxxProgramCxxFiles);
+
+    ASSERT_EQ(1, cxxProgramCxxFiles->cxxFilesList().size());
 }
