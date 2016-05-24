@@ -2,12 +2,21 @@
 //
 
 #include "parser/dbs/dbs_parser.h"
+#include "parser/axe.hpp" // IWYU pragma: keep
+#include "dom/cxx/cxx_library.h"
 #include "dom/cxx/cxx_program.h"
+#include "doim/fs/fs_directory.h"
+#include "doim/generic/attribute.h"
+#include "doim/generic/attribute_name.h"
+#include "doim/generic/attribute_value.h"
 #include "doim/generic/object.h"
 #include <boost/filesystem/operations.hpp>
-#include <fstream>
-#include <iostream>
-#include <axe.h>
+#include <fstream> // IWYU pragma: keep
+#include <iterator>
+#include <memory>
+#include <str>
+#include <string_view>
+#include <vector>
 #include <stddef.h>
 
 namespace parser

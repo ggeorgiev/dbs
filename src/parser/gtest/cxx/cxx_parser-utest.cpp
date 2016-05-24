@@ -4,6 +4,7 @@
 #include "parser/cxx/cxx_parser.h"
 #include "gtest/framework.h"
 #include <str>
+#include <vector>
 #include <stddef.h>
 
 TEST(CxxParserTest, includes)

@@ -2,6 +2,7 @@
 //
 
 #include "doim/generic/attribute.h"
+#include "err/err_assert.h"
 
 namespace doim
 {

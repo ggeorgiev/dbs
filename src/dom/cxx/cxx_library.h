@@ -11,6 +11,8 @@
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/attribute.h"
+#include "doim/generic/attribute_name.h"
+#include "doim/generic/attribute_value.h"
 #include "dp/handle.hpp"
 #include "dp/map_container.hpp"
 #include "dp/memoization.hpp"

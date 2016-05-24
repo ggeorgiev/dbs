@@ -10,6 +10,7 @@
 #include "tpool/task_group.h"
 #include "parser/parser.hpp"
 #include "parser/string_stream.hpp"
+#include "dom/cxx/cxx_program.h"
 #include "doim/fs/fs_binary.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
@@ -76,18 +77,18 @@ int main(int argc, char* argv[])
     ECode code = db::gDatabase->open(db->path());
     if (code != err::kSuccess)
     {
-        EHReset;
         std::cout << err::gError->message() << "\n";
         std::cout << err::gError->callstack() << "\n";
+        EHReset;
         return 1;
     }
 
     code = run(file);
     if (code != err::kSuccess)
     {
-        EHReset;
         std::cout << err::gError->message() << "\n";
         std::cout << err::gError->callstack() << "\n";
+        EHReset;
         return 1;
     }
 
@@ -158,9 +159,9 @@ int main(int argc, char* argv[])
 
     if (code != err::kSuccess)
     {
-        EHReset;
         std::cout << err::gError->message() << "\n";
         std::cout << err::gError->callstack() << "\n";
+        EHReset;
         return 1;
     }
 

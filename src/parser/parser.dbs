@@ -7,6 +7,7 @@ cxx_library parser
 
         parser/cxx/cxx_parser.h
         parser/dbs/dbs_parser.h
+        parser/axe.hpp
         parser/fixed_encoding_traits.hpp
         parser/parser.hpp
         parser/string_stream.hpp

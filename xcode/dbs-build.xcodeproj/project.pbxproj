@@ -179,6 +179,7 @@
 		5EE351951CE45FA6003305CC /* set_manager-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE351931CE45FA6003305CC /* set_manager-utest.cpp */; };
 		5EE51C271CE84B3700DB0DDA /* set.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EE51C261CE84B3700DB0DDA /* set.hpp */; };
 		5EE51C291CE9087300DB0DDA /* set_manager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EE51C281CE9087300DB0DDA /* set_manager.hpp */; };
+		5EEBDB391CF41A5C008E1848 /* axe.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EEBDB381CF41A5C008E1848 /* axe.hpp */; };
 		5EFDAF5D1CDB89B70092AAD2 /* parse_stdout_task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDAF5B1CDB89B70092AAD2 /* parse_stdout_task.cpp */; };
 		5EFDAF5E1CDB89B70092AAD2 /* parse_stdout_task.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDAF5C1CDB89B70092AAD2 /* parse_stdout_task.h */; };
 /* End PBXBuildFile section */
@@ -414,6 +415,7 @@
 		5EE51C261CE84B3700DB0DDA /* set.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = set.hpp; sourceTree = "<group>"; };
 		5EE51C281CE9087300DB0DDA /* set_manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = set_manager.hpp; sourceTree = "<group>"; };
 		5EEBDB371CF3FD9D008E1848 /* cxx_program.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = cxx_program.dbs; sourceTree = "<group>"; };
+		5EEBDB381CF41A5C008E1848 /* axe.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = axe.hpp; sourceTree = "<group>"; };
 		5EFDAF5B1CDB89B70092AAD2 /* parse_stdout_task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = parse_stdout_task.cpp; sourceTree = "<group>"; };
 		5EFDAF5C1CDB89B70092AAD2 /* parse_stdout_task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parse_stdout_task.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -746,6 +748,7 @@
 			children = (
 				5E10B3771C70F272009C73E4 /* cxx */,
 				5E87B9D11CF15BFC00F042B4 /* dbs */,
+				5EEBDB381CF41A5C008E1848 /* axe.hpp */,
 				5E10B3811C70F272009C73E4 /* parser.dbs */,
 				5E10B3791C70F272009C73E4 /* fixed_encoding_traits.hpp */,
 				5E10B3821C70F272009C73E4 /* parser.hpp */,
@@ -1136,6 +1139,7 @@
 				5EAE67751C7299B9005B3F8D /* cxx_header.h in Headers */,
 				5EE51C291CE9087300DB0DDA /* set_manager.hpp in Headers */,
 				5EC659B51CCDA12900E99E04 /* handle.hpp in Headers */,
+				5EEBDB391CF41A5C008E1848 /* axe.hpp in Headers */,
 				5EFDAF5E1CDB89B70092AAD2 /* parse_stdout_task.h in Headers */,
 				5EC659B31CCD9EB600E99E04 /* memoization.hpp in Headers */,
 				5EE51C271CE84B3700DB0DDA /* set.hpp in Headers */,

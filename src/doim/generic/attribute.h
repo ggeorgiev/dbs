@@ -8,7 +8,6 @@
 #include "doim/generic/attribute_value.h"
 #include "doim/set.hpp"
 #include <memory>
-#include <str>
 #include <tuple>
 
 namespace doim

@@ -4,7 +4,6 @@
 #pragma once
 
 #include "doim/element.hpp"
-#include "doim/set.hpp"
 #include <memory>
 #include <str>
 #include <tuple>
