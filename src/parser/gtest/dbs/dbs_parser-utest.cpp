@@ -129,6 +129,25 @@ TEST(DbsParserTest, SLOW_CxxLibraryBinary)
               cxxLibraryBinary->binary()->path(testing::gTestResourceDirectory));
 }
 
+TEST(DbsParserTest, SLOW_CxxLibraryAll)
+{
+    parse();
+
+    auto mDbsDirectory =
+        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+
+    auto cxxLibraryAllObject =
+        doim::Object::obtain(doim::Object::EType::kCxxLibrary, mDbsDirectory, "cxx_all");
+
+    auto cxxLibraryAll = dom::CxxLibrary::find(cxxLibraryAllObject);
+    ASSERT_EQ(1, cxxLibraryAll->cxxFilesList().size());
+    ASSERT_EQ(1, cxxLibraryAll->cxxLibraries().size());
+    ASSERT_NE(nullptr, cxxLibraryAll);
+    ASSERT_NE(nullptr, cxxLibraryAll->binary());
+    ASSERT_EQ("dbs/libfoo.a",
+              cxxLibraryAll->binary()->path(testing::gTestResourceDirectory));
+}
+
 TEST(DbsParserTest, SLOW_CxxProgramEmpty)
 {
     parse();

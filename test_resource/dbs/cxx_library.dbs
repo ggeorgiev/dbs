@@ -44,19 +44,30 @@ cxx_library binary:
 
 cxx_library cxx_all:
 
+
+cxx_library:
+foo
+;
+
     cxx_header
         @visibility=public
         @directory=..:
 
         bar/foo.h
     ;
+
+    cxx_header
+        @visibility=private
+        @directory=..:
+
+        baz/foo.h
+    ;
     
     cxx_file:
         foo.cpp
     ;
     
-    cxx_library:
-        foo
-    ;
+    binary: libfoo.a;
+
 ;
 
