@@ -124,6 +124,7 @@ TEST(DbsParserTest, SLOW_CxxLibraryBinary)
 
     auto cxxLibraryBinary = dom::CxxLibrary::find(cxxLibraryBinaryObject);
     ASSERT_NE(nullptr, cxxLibraryBinary);
+    ASSERT_NE(nullptr, cxxLibraryBinary->binary());
     ASSERT_EQ("dbs/libfoo.a",
               cxxLibraryBinary->binary()->path(testing::gTestResourceDirectory));
 }

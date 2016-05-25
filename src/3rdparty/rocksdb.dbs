@@ -16,5 +16,5 @@ cxx_library /rocksdb
         /bz2
     ;
 
-    cxx_binary: ../../rocksdb/lib/librocksdb.a;
+    binary: ../../rocksdb/lib/librocksdb.a;
 ;

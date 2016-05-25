@@ -26,7 +26,7 @@ cxx_library /boost_system
         boost/system/error_code.hpp
     ;
 
-    cxx_binary: ../../boost/lib/libboost_system.a;
+    binary: ../../boost/lib/libboost_system.a;
 ;
 
 cxx_library /boost_filesystem
@@ -44,7 +44,7 @@ cxx_library /boost_filesystem
         /boost_system
     ;
 
-    cxx_binary: ../../boost/lib/libboost_filesystem.a;
+    binary: ../../boost/lib/libboost_filesystem.a;
 ;
 
 cxx_library /boost_chrono
@@ -56,7 +56,7 @@ cxx_library /boost_chrono
         boost/chrono/process_cpu_clocks.hpp
     ;
 
-    cxx_binary: ../../boost/lib/libboost_chrono.a;
+    binary: ../../boost/lib/libboost_chrono.a;
 ;
 
 cxx_library /boost_thread
@@ -72,5 +72,5 @@ cxx_library /boost_thread
         boost/thread/tss.hpp
     ;
 
-    cxx_binary: ../../boost/lib/libboost_thread.a;
+    binary: ../../boost/lib/libboost_thread.a;
 ;

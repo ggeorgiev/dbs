@@ -8,5 +8,5 @@ cxx_library /cppformat
         fmt/format.h
     ;
 
-    cxx_binary: ../../fmt/lib/libfmt.a;
+    binary: ../../fmt/lib/libfmt.a;
 ;

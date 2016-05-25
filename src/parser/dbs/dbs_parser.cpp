@@ -44,8 +44,7 @@ static auto r_cxxLibraryKeyword = r_str("cxx_library");
 static auto r_cxxFileKeyword = r_str("cxx_file");
 
 static auto r_cxxLibraryCxxHeaderKeyword = r_str("cxx_header");
-// TODO: change this ti just binary
-static auto r_cxxLibraryCxxBinaryKeyword = r_str("cxx_binary");
+static auto r_cxxLibraryBinaryKeyword = r_str("binary");
 
 ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
 {
@@ -226,7 +225,7 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     auto cxxLibraryCxxBinaryFn = [&file, &cxxLibrary](I& i1, I& i2) {
         cxxLibrary->updateBinary(file);
     };
-    auto r_cxxLibraryCxxBinary = r_cxxLibraryCxxBinaryKeyword & *r_ws & r_colon & *r_ws &
+    auto r_cxxLibraryCxxBinary = r_cxxLibraryBinaryKeyword & *r_ws & r_colon & *r_ws &
                                  r_setLocation &
                                  (r_file >> e_ref(cxxLibraryCxxBinaryFn)) & r_semicolon;
 

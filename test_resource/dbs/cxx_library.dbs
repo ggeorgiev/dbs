@@ -39,9 +39,7 @@ cxx_library cxx_files:
 ;
 
 cxx_library binary:
-    cxx_binary:
-        libfoo.a
-    ;
+    binary: libfoo.a;
 ;
 
 cxx_library cxx_all:

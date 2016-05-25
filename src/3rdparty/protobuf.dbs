@@ -11,5 +11,5 @@ cxx_library /protobuf-lite
     cxx_library:
     ;
 
-    cxx_binary: ../../protobuf/lib/libprotobuf-lite.a;
+    binary: ../../protobuf/lib/libprotobuf-lite.a;
 ;

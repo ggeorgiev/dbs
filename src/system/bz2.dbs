@@ -1,5 +1,5 @@
 cxx_library /bz2
     @type=system:
 
-    cxx_binary: libbz2.a;
+    binary: libbz2.a;
 ;

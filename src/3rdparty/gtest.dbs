@@ -12,5 +12,5 @@ cxx_library /gtest
         gtest/gtest_pred_impl.h
     ;
 
-    cxx_binary: ../../gtest/lib/libgtest.a;
+    binary: ../../gtest/lib/libgtest.a;
 ;
