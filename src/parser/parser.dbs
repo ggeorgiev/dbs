@@ -8,11 +8,6 @@ cxx_library parser
         parser/cxx/cxx_parser.h
         parser/dbs/dbs_parser.h
         parser/axe.hpp
-        parser/fixed_encoding_traits.hpp
-        parser/parser.hpp
-        parser/string_stream.hpp
-        parser/token.hpp
-        parser/tokenizer.hpp
     ;
 
     cxx_library:
@@ -43,9 +38,5 @@ cxx_library parser-test
     cxx_file:
         gtest/cxx/cxx_parser-utest.cpp
         gtest/dbs/dbs_parser-utest.cpp
-        gtest/parser-utest.cpp
-        gtest/stream-utest.cpp
-        gtest/token-utest.cpp
-        gtest/tokenizer-utest.cpp
     ;
 ;
