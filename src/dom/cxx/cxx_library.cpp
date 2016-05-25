@@ -24,7 +24,7 @@ doim::AttributeValueSPtr CxxLibrary::gUser =
     doim::AttributeValue::global("user", CxxLibrary::gUser);
 
 doim::AttributeNameSPtr CxxLibrary::gDirectory =
-    doim::AttributeName::global("directory", CxxLibrary::gType);
+    doim::AttributeName::global("directory", CxxLibrary::gDirectory);
 
 doim::AttributeNameSPtr CxxLibrary::gVisibility =
     doim::AttributeName::global("visibility", CxxLibrary::gVisibility);

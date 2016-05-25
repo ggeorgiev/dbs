@@ -2,7 +2,7 @@
 //
 
 #include "parser/dbs/dbs_parser.h"
-#include "parser/axe.hpp" // IWYU pragma: keep
+#include "parser/axe.hpp"
 #include "dom/cxx/cxx_library.h"
 #include "dom/cxx/cxx_program.h"
 #include "doim/fs/fs_directory.h"
@@ -31,7 +31,7 @@ static auto r_slash = r_char('/');
 
 static auto r_illegal = r_any("/?<>\\:;*|\"");
 static auto r_pathChars = r_any() - r_illegal - r_space - r_endl;
-static auto r_path = +r_pathChars & *(r_slash & +r_pathChars);
+static auto r_path = ~r_slash & +r_pathChars & *(r_slash & +r_pathChars) & ~r_slash;
 
 static auto r_annexKeyword = r_str("annex");
 
@@ -77,7 +77,7 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     auto attributeValueFn = [&attributeValue](I& i1, I& i2) {
         attributeValue = doim::AttributeValue::unique(string(i1, i2));
     };
-    auto r_attributeValue = r_ident() >> e_ref(attributeValueFn);
+    auto r_attributeValue = (r_ident() | r_path) >> e_ref(attributeValueFn);
 
     doim::AttributeSPtr attribute;
     auto attributeFn = [&attributeName, &attributeValue, &attribute](I& i1, I& i2) {
@@ -195,20 +195,19 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
 
     auto r_cxxLibraryCxxHeaderCat =
         (r_cxxLibraryCxxHeaderKeyword >> e_ref(cxxLibraryCxxHeaderInitFn)) & *r_ws &
-        *r_cxxLibraryCxxHeaderAttribute & *r_ws & r_colon;
+        *(r_cxxLibraryCxxHeaderAttribute & *r_ws) & r_colon;
 
     auto cxxLibraryCxxHeaderFn =
         [&cxxLibrary, &directory, &files, &cxxLibraryCxxHeaderVisibility](I& i1, I& i2) {
-
             if (cxxLibraryCxxHeaderVisibility != nullptr &&
                 cxxLibraryCxxHeaderVisibility->value() == dom::CxxLibrary::gPublic)
                 cxxLibrary->updateCxxPublicHeaders(directory, files);
             else
-                cxxLibrary->updateCxxPublicHeaders(directory, files);
+                cxxLibrary->updateCxxPrivateHeaders(directory, files);
         };
 
     auto r_cxxLibraryCxxHeader =
-        (r_cxxLibraryCxxHeaderCat & *r_ws & r_files & r_semicolon) >>
+        (r_cxxLibraryCxxHeaderCat & *r_ws & r_files & *r_ws & r_semicolon) >>
         e_ref(cxxLibraryCxxHeaderFn);
 
     // CxxLibrary CxxLibrary
@@ -270,6 +269,7 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     // ... CxxProgram
     auto cxxProgramNameFn = [&object, &cxxProgram](I& i1, I& i2) {
         cxxProgram = dom::CxxProgram::obtain(object);
+        cxxProgram->updateName(string(i1, i2));
     };
     auto r_cxxProgramName = r_objectCxxProgram >> e_ref(cxxProgramNameFn);
 
@@ -289,7 +289,7 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     string content((std::istreambuf_iterator<char>(fstream)),
                    std::istreambuf_iterator<char>());
 
-    const auto& r_dbs = ~r_annex & *((r_cxxLibrary | r_cxxProgram) & *r_ws);
+    const auto& r_dbs = ~r_annex & *r_ws & *((r_cxxLibrary | r_cxxProgram) & *r_ws);
 
     r_dbs(content.begin(), content.end());
 

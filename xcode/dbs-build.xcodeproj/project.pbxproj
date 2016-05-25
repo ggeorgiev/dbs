@@ -981,9 +981,9 @@
 		5E290B431CBAD26100F10210 /* engine */ = {
 			isa = PBXGroup;
 			children = (
+				5E290B461CBAD26100F10210 /* engine.dbs */,
 				5E290B441CBAD26100F10210 /* cxx_engine.cpp */,
 				5E290B451CBAD26100F10210 /* cxx_engine.h */,
-				5E290B461CBAD26100F10210 /* engine.dbs */,
 			);
 			path = engine;
 			sourceTree = "<group>";

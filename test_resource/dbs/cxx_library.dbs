@@ -11,9 +11,10 @@ cxx_library user
 
 cxx_library cxx_header_public:
     cxx_header
-        @visibility=public:
+        @visibility=public
+        @directory=.:
         
-        foo.h
+        bar/foo.h
     ;
 ; 
 
@@ -42,3 +43,22 @@ cxx_library binary:
         libfoo.a
     ;
 ;
+
+cxx_library cxx_all:
+
+    cxx_header
+        @visibility=public
+        @directory=..:
+
+        bar/foo.h
+    ;
+    
+    cxx_file:
+        foo.cpp
+    ;
+    
+    cxx_library:
+        foo
+    ;
+;
+

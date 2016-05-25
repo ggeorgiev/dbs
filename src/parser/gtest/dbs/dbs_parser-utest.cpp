@@ -73,6 +73,8 @@ TEST(DbsParserTest, SLOW_CxxLibraryCxxHeader)
     auto cxxLibraryCxxHeaderPublic =
         dom::CxxLibrary::find(cxxLibraryCxxHeaderPublicObject);
     ASSERT_NE(nullptr, cxxLibraryCxxHeaderPublic);
+    ASSERT_NE(nullptr, cxxLibraryCxxHeaderPublic->publicHeaders());
+    ASSERT_EQ(1, cxxLibraryCxxHeaderPublic->publicHeaders()->size());
 }
 
 TEST(DbsParserTest, SLOW_CxxLibraryCxxLibrary)

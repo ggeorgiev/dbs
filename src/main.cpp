@@ -8,6 +8,7 @@
 #include "task/tpool.h"
 #include "tpool/task.h"
 #include "tpool/task_group.h"
+#include "parser/dbs/dbs_parser.h"
 #include "parser/parser.hpp"
 #include "parser/string_stream.hpp"
 #include "dom/cxx/cxx_program.h"
@@ -31,25 +32,10 @@
 #include <sys/errno.h>
 #include <unistd.h>
 
-typedef parser::StringStream<char> Stream;
-typedef shared_ptr<Stream> StreamSPtr;
-
-typedef parser::Parser<Stream> Parser;
-typedef shared_ptr<Parser> ParserSPtr;
-
 ECode run(const doim::FsFileSPtr& dbsFile)
 {
-    std::ifstream fstream(dbsFile->path(nullptr));
-    string str((std::istreambuf_iterator<char>(fstream)),
-               std::istreambuf_iterator<char>());
-
-    auto stream = std::make_shared<Stream>();
-    EHTest(stream->initialize(str));
-
-    auto parser = std::make_shared<Parser>();
-    EHTest(parser->initialize(stream, dbsFile));
-
-    EHTest(parser->parse());
+    parser::DbsParser parser;
+    EHTest(parser.parse(dbsFile));
     EHEnd;
 }
 
@@ -123,9 +109,12 @@ int main(int argc, char* argv[])
         auto object = doim::Object::obtain(doim::Object::EType::kCxxProgram,
                                            file->directory(),
                                            arg[i]);
-        auto program = dom::CxxProgram::obtain(object);
+        auto program = dom::CxxProgram::find(object);
         if (program == nullptr)
+        {
+            ELOG("Failed to find {}", object->name());
             continue;
+        }
 
         if (verb == doim::gBuildToolCommand)
         {
