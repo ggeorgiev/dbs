@@ -43,8 +43,8 @@ static auto r_cxxProgramKeyword = r_str("cxx_program");
 static auto r_cxxLibraryKeyword = r_str("cxx_library");
 static auto r_cxxFileKeyword = r_str("cxx_file");
 
-static auto r_cxxLibraryCxxHeaderKeyword = r_str("cxx_header");
-static auto r_cxxLibraryBinaryKeyword = r_str("binary");
+static auto r_cxxHeaderKeyword = r_str("cxx_header");
+static auto r_binaryKeyword = r_str("binary");
 
 ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
 {
@@ -173,47 +173,42 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
 
     // CxxLibrary CxxHeader
 
-    doim::AttributeSPtr cxxLibraryCxxHeaderVisibility;
-    auto cxxLibraryCxxHeaderInitFn =
-        [&location, &directory, &cxxLibraryCxxHeaderVisibility](I& i1, I& i2) {
-            directory = location;
-            cxxLibraryCxxHeaderVisibility.reset();
-        };
-
-    auto cxxLibraryCxxHeaderAttributeFn = [&location,
-                                           &attribute,
-                                           &directory,
-                                           &cxxLibraryCxxHeaderVisibility](I& i1, I& i2) {
-        if (attribute->name() == dom::CxxLibrary::gVisibility)
-            cxxLibraryCxxHeaderVisibility = attribute;
-        else if (attribute->name() == dom::CxxLibrary::gDirectory)
-            directory = doim::FsDirectory::obtain(location, attribute->value()->value());
+    doim::AttributeSPtr cxxHeaderVisibility;
+    auto cxxHeaderInitFn = [&location, &directory, &cxxHeaderVisibility](I& i1, I& i2) {
+        directory = location;
+        cxxHeaderVisibility.reset();
     };
 
-    auto r_cxxLibraryCxxHeaderAttribute =
-        r_attribute >> e_ref(cxxLibraryCxxHeaderAttributeFn);
-
-    auto r_cxxLibraryCxxHeaderCat =
-        *r_ws & (r_cxxLibraryCxxHeaderKeyword >> e_ref(cxxLibraryCxxHeaderInitFn)) &
-        *r_cxxLibraryCxxHeaderAttribute & r_he;
-
-    auto cxxLibraryCxxHeaderFn =
-        [&cxxLibrary, &directory, &files, &cxxLibraryCxxHeaderVisibility](I& i1, I& i2) {
-            if (cxxLibraryCxxHeaderVisibility != nullptr &&
-                cxxLibraryCxxHeaderVisibility->value() == dom::CxxLibrary::gPublic)
-                cxxLibrary->updateCxxPublicHeaders(directory, files);
-            else
-                cxxLibrary->updateCxxPrivateHeaders(directory, files);
+    auto cxxHeaderAttributeFn =
+        [&location, &attribute, &directory, &cxxHeaderVisibility](I& i1, I& i2) {
+            if (attribute->name() == dom::CxxLibrary::gVisibility)
+                cxxHeaderVisibility = attribute;
+            else if (attribute->name() == dom::CxxLibrary::gDirectory)
+                directory =
+                    doim::FsDirectory::obtain(location, attribute->value()->value());
         };
 
-    auto r_cxxLibraryCxxHeader =
-        (r_cxxLibraryCxxHeaderCat & r_files & r_se) >> e_ref(cxxLibraryCxxHeaderFn);
+    auto r_cxxHeaderAttribute = r_attribute >> e_ref(cxxHeaderAttributeFn);
+
+    auto r_cxxHeaderCat = *r_ws & (r_cxxHeaderKeyword >> e_ref(cxxHeaderInitFn)) &
+                          *r_cxxHeaderAttribute & r_he;
+
+    auto cxxHeaderFn = [&cxxLibrary, &directory, &files, &cxxHeaderVisibility](I& i1,
+                                                                               I& i2) {
+        if (cxxHeaderVisibility != nullptr &&
+            cxxHeaderVisibility->value() == dom::CxxLibrary::gPublic)
+            cxxLibrary->updateCxxPublicHeaders(directory, files);
+        else
+            cxxLibrary->updateCxxPrivateHeaders(directory, files);
+    };
+
+    auto r_cxxHeader = (r_cxxHeaderCat & r_files & r_se) >> e_ref(cxxHeaderFn);
 
     // CxxLibrary CxxLibrary
-    auto cxxLibraryCxxLibraryFn = [&cxxLibrary, &cxxLibraries](I& i1, I& i2) {
+    auto cxxLibraryX2Fn = [&cxxLibrary, &cxxLibraries](I& i1, I& i2) {
         cxxLibrary->updateCxxLibraries(cxxLibraries);
     };
-    auto r_cxxLibraryCxxLibrary = r_cxxLibraries >> e_ref(cxxLibraryCxxLibraryFn);
+    auto r_cxxLibraryX2 = r_cxxLibraries >> e_ref(cxxLibraryX2Fn);
 
     // CxxLibrary CxxFile
     auto cxxLibraryCxxFileFn = [&cxxLibrary, &files](I& i1, I& i2) {
@@ -222,12 +217,11 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     auto r_cxxLibraryCxxFile = r_cxxFiles >> e_ref(cxxLibraryCxxFileFn);
 
     // CxxLibrary CxxBinary
-    auto cxxLibraryCxxBinaryFn = [&file, &cxxLibrary](I& i1, I& i2) {
+    auto cxxBinaryFn = [&file, &cxxLibrary](I& i1, I& i2) {
         cxxLibrary->updateBinary(file);
     };
-    auto r_cxxLibraryCxxBinary = *r_ws & r_cxxLibraryBinaryKeyword & r_he &
-                                 r_setLocation &
-                                 (r_file >> e_ref(cxxLibraryCxxBinaryFn)) & r_se;
+    auto r_binary = *r_ws & r_binaryKeyword & r_he & r_setLocation &
+                    (r_file >> e_ref(cxxBinaryFn)) & r_se;
 
     // ... CxxLibrary
     auto cxxLibraryNameFn = [&cxxLibraryObject, &cxxLibrary](I& i1, I& i2) {
@@ -245,8 +239,7 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
         *r_ws & r_cxxLibraryKeyword & r_cxxLibraryName & *r_cxxLibraryAttribute & r_he;
 
     auto r_cxxLibrary = r_cxxLibraryCap &
-                        *(r_cxxLibraryCxxFile | r_cxxLibraryCxxHeader |
-                          r_cxxLibraryCxxLibrary | r_cxxLibraryCxxBinary) &
+                        *(r_cxxLibraryCxxFile | r_cxxHeader | r_cxxLibraryX2 | r_binary) &
                         r_se;
 
     // CxxProgram

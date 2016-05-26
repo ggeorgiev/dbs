@@ -44,10 +44,9 @@ cxx_library binary:
 
 cxx_library cxx_all:
 
-
-cxx_library:
-foo
-;
+    cxx_library:
+        foo
+    ;
 
     cxx_header
         @visibility=public

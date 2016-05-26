@@ -5,12 +5,51 @@
 #include "doim/cxx/cxx_header.h"
 #include "doim/set.hpp"
 #include "err/err_assert.h"
+#include "log/log.h"
 #include <ostream>
 #include <unordered>
 #include <utility>
 
 namespace doim
 {
+ECode CxxIncludeDirectory::findHeader(
+    const string_view& header,
+    const CxxIncludeDirectorySPtr& currentIncludeDirectory,
+    const CxxIncludeDirectorySetSPtr& includeDirectories,
+    CxxHeaderInfo& headerInfo)
+{
+    CxxHeaderInfo result;
+
+    if (currentIncludeDirectory != nullptr)
+    {
+        result.mHeader = currentIncludeDirectory->findHeader(header);
+        result.mIncludeDirectory = currentIncludeDirectory;
+    }
+
+    for (const auto& directory : *includeDirectories)
+    {
+        const auto& cxxHeader = directory->findHeader(header);
+        if (cxxHeader == nullptr)
+            continue;
+
+        if (result.mHeader != nullptr)
+            EHBan(kTooMany, header.to_string());
+
+        DLOG("Found header {} in directory {}",
+             cxxHeader->file()->path(),
+             directory->directory()->path());
+
+        result.mHeader = cxxHeader;
+        result.mIncludeDirectory = directory;
+    }
+
+    if (result.mHeader == nullptr)
+        EHBan(kNotFound, header.to_string());
+
+    headerInfo = result;
+    EHEnd;
+}
+
 CxxIncludeDirectory::CxxIncludeDirectory(const EType type,
                                          const FsDirectorySPtr& directory,
                                          const CxxHeaderSetSPtr& headerFiles)
@@ -30,7 +69,16 @@ void CxxIncludeDirectory::finally()
     }
 }
 
-CxxHeaderSPtr CxxIncludeDirectory::header(const FsFileSPtr& file) const
+CxxHeaderSPtr CxxIncludeDirectory::findHeader(const string_view& header) const
+{
+    const auto& file = doim::FsFile::find(directory(), header);
+    if (file == nullptr)
+        return nullptr;
+
+    return findHeader(file);
+}
+
+CxxHeaderSPtr CxxIncludeDirectory::findHeader(const FsFileSPtr& file) const
 {
     const auto& it = mFiles.find(file);
     if (it != mFiles.end())

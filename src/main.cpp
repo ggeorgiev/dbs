@@ -22,9 +22,7 @@
 #include "im/initialization_manager.hpp"
 #include "log/log.h"
 #include <iostream>
-#include <iterator>
 #include <memory>
-#include <str>
 #include <vector>
 #include <stdio.h>
 #include <sys/errno.h>

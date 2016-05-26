@@ -32,17 +32,6 @@ public:
     }
 
 protected:
-    typedef std::pair<doim::CxxHeaderSPtr, doim::CxxIncludeDirectorySPtr> HeaderDirectory;
-
-    doim::CxxHeaderSPtr findInclude(
-        const string_view& include,
-        const doim::CxxIncludeDirectorySPtr& includeDirectory);
-
-    ECode findInclude(const string_view& include,
-                      const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
-                      const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
-                      HeaderDirectory& headerDirectory);
-
     template <typename Task>
     ECode calculate(const doim::FsFileSPtr& file,
                     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
@@ -61,32 +50,32 @@ protected:
 
         parser::CxxParser parser;
 
-        std::vector<HeaderDirectory> headerDirectories;
+        std::vector<doim::CxxIncludeDirectory::CxxHeaderInfo> headersInfo;
         for (const auto& include : parser.includes(content))
         {
             auto currentDirectory =
                 include.mType == parser::CxxParser::EIncludeType::kProgrammer
                     ? currentIncludeDirectory
                     : nullptr;
-            HeaderDirectory headerDirectory;
-            EHTest(findInclude(string_view(include.mPath),
-                               currentDirectory,
-                               includeDirectories,
-                               headerDirectory),
+            doim::CxxIncludeDirectory::CxxHeaderInfo headerInfo;
+            EHTest(doim::CxxIncludeDirectory::findHeader(string_view(include.mPath),
+                                                         currentDirectory,
+                                                         includeDirectories,
+                                                         headerInfo),
                    file->path());
-            headerDirectories.push_back(headerDirectory);
+            headersInfo.push_back(headerInfo);
         }
 
         std::vector<tpool::TaskSPtr> tasks;
-        tasks.reserve(headerDirectories.size());
+        tasks.reserve(headersInfo.size());
 
-        for (const auto& headerDirectory : headerDirectories)
+        for (const auto& headerInfo : headersInfo)
         {
-            if (headerDirectory.first->type() == doim::CxxHeader::EType::kSystem)
+            if (headerInfo.mHeader->type() == doim::CxxHeader::EType::kSystem)
                 continue;
 
             auto task =
-                Task::valid(Task::make(headerDirectory.first, headerDirectory.second));
+                Task::valid(Task::make(headerInfo.mHeader, headerInfo.mIncludeDirectory));
             task::gTPool->ensureScheduled(task);
             tasks.push_back(task);
         }

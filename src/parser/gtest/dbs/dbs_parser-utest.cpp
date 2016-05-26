@@ -7,6 +7,7 @@
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/object.h"
+#include "doim/set.hpp"
 #include "gtest/framework.h"
 #include "gtest/test_resource.h"
 #include <memory>

@@ -7,6 +7,7 @@
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/set.hpp"
+#include "err/err.h"
 #include <iosfwd>
 #include <memory>
 #include <tuple>
@@ -40,6 +41,17 @@ class CxxIncludeDirectory : public CxxIncludeDirectoryEnums,
                                            CxxHeaderSetSPtr>
 {
 public:
+    struct CxxHeaderInfo
+    {
+        doim::CxxHeaderSPtr mHeader;
+        doim::CxxIncludeDirectorySPtr mIncludeDirectory;
+    };
+
+    static ECode findHeader(const string_view& header,
+                            const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
+                            const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
+                            CxxHeaderInfo& headerInfo);
+
     CxxIncludeDirectory(const EType type,
                         const FsDirectorySPtr& directory,
                         const CxxHeaderSetSPtr& headerFiles);
@@ -61,7 +73,8 @@ public:
 
     void finally();
 
-    CxxHeaderSPtr header(const FsFileSPtr& file) const;
+    CxxHeaderSPtr findHeader(const string_view& header) const;
+    CxxHeaderSPtr findHeader(const FsFileSPtr& file) const;
 
 private:
     unordered_map<FsFileSPtr, CxxHeaderSPtr> mFiles;
