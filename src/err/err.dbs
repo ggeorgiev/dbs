@@ -22,6 +22,7 @@ cxx_library err
         /cppformat
 
         ../im/im
+        ../log/log
     ;
 
     cxx_file:

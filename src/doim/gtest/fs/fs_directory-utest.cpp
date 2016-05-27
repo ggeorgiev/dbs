@@ -150,10 +150,8 @@ TEST(FsDirectoryTest, corresponding)
     };
 
     Test tests[]{
-        Test{.from = "/",
-             .dir = "foo/bar",
-             .to = "/baz",
-             .corresponding = "/baz/foo/bar"},
+        Test{
+            .from = "/", .dir = "foo/bar", .to = "/baz", .corresponding = "/baz/foo/bar"},
     };
 
     for (const auto& test : tests)

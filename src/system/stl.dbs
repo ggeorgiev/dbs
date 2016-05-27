@@ -47,5 +47,9 @@ cxx_library /stl
         str
         string_view
         unordered
+
+        # details
+        __functional_base
+        __mutex_base
     ;
 ;

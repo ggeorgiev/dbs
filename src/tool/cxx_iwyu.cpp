@@ -6,6 +6,8 @@
 #include "task/manager.h"
 #include "task/sys/parse_stdout_task.h"
 #include "doim/cxx/cxx_file.h"
+#include "doim/cxx/cxx_header.h"
+#include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/set.hpp"
 #include "doim/sys/sys_argument.h"
@@ -17,6 +19,8 @@
 #include <memory>
 #include <regex>
 #include <str>
+#include <string_view>
+#include <vector>
 
 namespace tool
 {
@@ -33,11 +37,6 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
     arguments->insert(CxxCompiler::gStdCpp14Argument);
     arguments->insert(CxxCompiler::gOptimizationLevel0Argument);
 
-    auto argument_cxxflags = doim::SysArgument::unique(
-        "-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/"
-        "MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk");
-    arguments->insert(argument_cxxflags);
-
     const string& file = cxxFile->file()->path(directory);
 
     auto argument_file = doim::SysArgument::unique(file);
@@ -46,7 +45,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
 
     auto command = doim::SysCommand::unique(mTool, arguments);
 
-    auto fn = [](int exit, const string& output) -> ECode {
+    auto fn = [directory, cxxFile](int exit, const string& output) -> ECode {
         if (exit == 0)
         {
             ELOG("Unexpected exit code from iwyu tool: {}", exit);
@@ -80,7 +79,15 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
 
         static std::regex addItemsRegex("(?:^|\n)(.*?) should add these lines:"
                                         "(?:[\\s\\r\\n]+#include.*?\\/\\/[^\\n]*)+");
-        static std::regex addItemRegex("(#include[^\\n]+)");
+        static std::regex addItemRegex("(#include\\s[\"<]([^\">]+)[^\\n]+)");
+
+        struct Warning
+        {
+            std::string erroredFile;
+            std::string missingHeader;
+        };
+
+        std::vector<Warning> warnings;
 
         its = std::sregex_iterator(output.begin(), output.end(), addItemsRegex);
         for (std::sregex_iterator items = its; items != std::sregex_iterator(); ++items)
@@ -93,8 +100,54 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
             {
                 success = false;
                 std::smatch smatch = *item;
-                ELOG("\n{}:1:1: warning: missing {} ", smatchs[1].str(), smatch[1].str());
+                warnings.push_back(Warning{smatchs[1].str(), smatch[2].str()});
             }
+        }
+
+        for (const auto& warning : warnings)
+        {
+            auto file = doim::FsFile::find(directory, warning.erroredFile);
+            if (file == nullptr)
+            {
+                ELOG("IWYU reports issues for unknown file {}", warning.erroredFile);
+                continue;
+            }
+            doim::CxxIncludeDirectory::CxxHeaderInfo headerInfo;
+            if (cxxFile->file() == file)
+            {
+                EHLog(doim::CxxIncludeDirectory::findHeader(
+                    string_view(warning.missingHeader),
+                    nullptr,
+                    cxxFile->cxxIncludeDirectories(),
+                    headerInfo));
+            }
+            else
+            {
+                EHLog(doim::CxxIncludeDirectory::findHeader(
+                    file, nullptr, cxxFile->cxxIncludeDirectories(), headerInfo));
+
+                if (headerInfo.mHeader == nullptr)
+                {
+                    ELOG("IWYU reports issues for unknown file {}", warning.erroredFile);
+                    continue;
+                }
+
+                EHLog(doim::CxxIncludeDirectory::findHeader(
+                    string_view(warning.missingHeader),
+                    headerInfo.mIncludeDirectory,
+                    headerInfo.mHeader->cxxIncludeDirectories(),
+                    headerInfo));
+            }
+
+            if (headerInfo.mHeader == nullptr)
+            {
+                ELOG("IWYU suggest adding unknown header {}", warning.missingHeader);
+                continue;
+            }
+
+            ELOG("\n{}:1:1: warning: missing {} ",
+                 warning.erroredFile,
+                 warning.missingHeader);
         }
 
         if (!success)
@@ -106,11 +159,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
         EHEnd;
     };
 
-    return task::gManager->valid(
-        task::ParseStdoutTask::make(command,
-                                    nullptr,
-                                    rtti::RttiInfo<CxxIwyu>::classId(),
-                                    fn,
-                                    "Iwyu " + file));
+    return task::gManager->valid(task::ParseStdoutTask::make(
+        command, nullptr, rtti::RttiInfo<CxxIwyu>::classId(), fn, "Iwyu " + file));
 }
 }

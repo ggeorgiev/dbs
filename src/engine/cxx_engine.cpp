@@ -39,18 +39,15 @@ doim::DbKeySPtr CxxEngine::gReleaseDbKey =
 doim::DbKeySPtr CxxEngine::gProfileDbKey =
     doim::DbKey::global(gBuildDbKey, 1, "profile", CxxEngine::gProfileDbKey);
 
-std::map<CxxEngine::EBuildFor, string>
-    CxxEngine::gSubDirectory{{CxxEngine::EBuildFor::kDebug, "debug"},
-                             {CxxEngine::EBuildFor::kRelease, "release"},
-                             {CxxEngine::EBuildFor::kProfile, "profile"}};
+std::map<CxxEngine::EBuildFor, string> CxxEngine::gSubDirectory{
+    {CxxEngine::EBuildFor::kDebug, "debug"},
+    {CxxEngine::EBuildFor::kRelease, "release"},
+    {CxxEngine::EBuildFor::kProfile, "profile"}};
 
-std::map<CxxEngine::EBuildFor, doim::CxxProgram::EPurpose>
-    CxxEngine::gProgramPurpose{{CxxEngine::EBuildFor::kDebug,
-                                doim::CxxProgram::EPurpose::kDebug},
-                               {CxxEngine::EBuildFor::kRelease,
-                                doim::CxxProgram::EPurpose::kRelease},
-                               {CxxEngine::EBuildFor::kProfile,
-                                doim::CxxProgram::EPurpose::kProfile}};
+std::map<CxxEngine::EBuildFor, doim::CxxProgram::EPurpose> CxxEngine::gProgramPurpose{
+    {CxxEngine::EBuildFor::kDebug, doim::CxxProgram::EPurpose::kDebug},
+    {CxxEngine::EBuildFor::kRelease, doim::CxxProgram::EPurpose::kRelease},
+    {CxxEngine::EBuildFor::kProfile, doim::CxxProgram::EPurpose::kProfile}};
 
 bool CxxEngine::initDbKeyPurpose()
 {
@@ -61,10 +58,8 @@ bool CxxEngine::initDbKeyPurpose()
 }
 
 std::map<CxxEngine::EBuildFor, doim::DbKeySPtr> CxxEngine::gDbKeyPurpose =
-    im::InitializationManager::subscribe<
-        std::map<CxxEngine::EBuildFor, doim::DbKeySPtr>>(CxxEngine::rank(),
-                                                         initDbKeyPurpose,
-                                                         nullptr);
+    im::InitializationManager::subscribe<std::map<CxxEngine::EBuildFor, doim::DbKeySPtr>>(
+        CxxEngine::rank(), initDbKeyPurpose, nullptr);
 
 CxxEngine::CxxEngine(const tool::CxxClangFormatSPtr& formatter,
                      const tool::CxxCompilerSPtr& compiler,

@@ -10,7 +10,7 @@
 #include "err/err_cppformat.h" // IWYU pragma: export
 #include "err/macro.h"         // IWYU pragma: export
 #include "im/initialization_manager.hpp"
-#include <fmt/format.h>
+#include "log/log.h"
 #include <boost/thread/tss.hpp> // IWYU pragma: export
 #include <memory>
 #include <str>
@@ -128,6 +128,16 @@ public:
         return stack;
     }
 
+    void logInfo()
+    {
+        ILOG(message() + "\n" + callstack());
+    }
+
+    void logError()
+    {
+        ELOG(message() + "\n" + callstack());
+    }
+
 private:
     ECode mCode;
     stringstream mMessage;
@@ -217,6 +227,28 @@ using err::ECode;
         EHAssert(err::gError.get() != nullptr);        \
         EHAssert(err::gError->code() != err::kAssert); \
         err::gError.reset();                           \
+    } while (false)
+
+#define EHLogInfo(expression)          \
+    do                                 \
+    {                                  \
+        ECode preserve = (expression); \
+        if (preserve != err::kSuccess) \
+        {                              \
+            err::gError->logInfo();    \
+            EHReset;                   \
+        }                              \
+    } while (false)
+
+#define EHLog(expression)              \
+    do                                 \
+    {                                  \
+        ECode preserve = (expression); \
+        if (preserve != err::kSuccess) \
+        {                              \
+            err::gError->logError();   \
+            EHReset;                   \
+        }                              \
     } while (false)
 
 #define EHEnsureClear err::gError.reset();

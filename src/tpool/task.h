@@ -7,9 +7,9 @@
 #include "err/err.h"
 #include <boost/heap/fibonacci_heap.hpp>
 #include <atomic>
-#include <condition_variable>
+#include <condition_variable> // IWYU pragma: keep
 #include <memory>
-#include <mutex>
+#include <mutex> // IWYU pragma: keep
 
 namespace boost
 {

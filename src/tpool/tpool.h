@@ -8,7 +8,7 @@
 #include <atomic>
 #include <future>
 #include <memory>
-#include <mutex>
+#include <mutex> // IWYU pragma: keep
 #include <thread>
 #include <stddef.h>
 

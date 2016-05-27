@@ -10,6 +10,7 @@
 #include "err/err.h"
 #include <iosfwd>
 #include <memory>
+#include <string_view>
 #include <tuple>
 #include <unordered>
 
@@ -48,6 +49,11 @@ public:
     };
 
     static ECode findHeader(const string_view& header,
+                            const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
+                            const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
+                            CxxHeaderInfo& headerInfo);
+
+    static ECode findHeader(const FsFileSPtr& header,
                             const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
                             const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
                             CxxHeaderInfo& headerInfo);

@@ -22,8 +22,7 @@ ECode CxxIncludeDirectory::findHeader(
 
     if (currentIncludeDirectory != nullptr)
     {
-        result.mHeader = currentIncludeDirectory->findHeader(header);
-        result.mIncludeDirectory = currentIncludeDirectory;
+        result = {currentIncludeDirectory->findHeader(header), currentIncludeDirectory};
     }
 
     for (const auto& directory : *includeDirectories)
@@ -39,12 +38,47 @@ ECode CxxIncludeDirectory::findHeader(
              cxxHeader->file()->path(),
              directory->directory()->path());
 
-        result.mHeader = cxxHeader;
-        result.mIncludeDirectory = directory;
+        result = {cxxHeader, directory};
     }
 
     if (result.mHeader == nullptr)
         EHBan(kNotFound, header.to_string());
+
+    headerInfo = result;
+    EHEnd;
+}
+
+ECode CxxIncludeDirectory::findHeader(
+    const FsFileSPtr& header,
+    const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
+    const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
+    CxxHeaderInfo& headerInfo)
+{
+    CxxHeaderInfo result;
+
+    if (currentIncludeDirectory != nullptr)
+    {
+        result = {currentIncludeDirectory->findHeader(header), currentIncludeDirectory};
+    }
+
+    for (const auto& directory : *includeDirectories)
+    {
+        const auto& cxxHeader = directory->findHeader(header);
+        if (cxxHeader == nullptr)
+            continue;
+
+        if (result.mHeader != nullptr)
+            EHBan(kTooMany);
+
+        DLOG("Found header {} in directory {}",
+             cxxHeader->file()->path(),
+             directory->directory()->path());
+
+        result = {cxxHeader, directory};
+    }
+
+    if (result.mHeader == nullptr)
+        EHBan(kNotFound);
 
     headerInfo = result;
     EHEnd;

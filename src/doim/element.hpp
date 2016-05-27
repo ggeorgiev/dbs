@@ -45,10 +45,8 @@ public:
             object = gElementManager->unique(object);
             return true;
         };
-        im::InitializationManager::subscribe<
-            shared_ptr<T>>(ElementManager<T>::rank() + im::InitializationManager::step(),
-                           fn,
-                           nullptr);
+        im::InitializationManager::subscribe<shared_ptr<T>>(
+            ElementManager<T>::rank() + im::InitializationManager::step(), fn, nullptr);
         return std::make_shared<T>(args...);
     }
 
