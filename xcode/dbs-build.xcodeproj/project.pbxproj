@@ -20,7 +20,7 @@
 		5E10B3BE1C70F272009C73E4 /* fs_file-ptest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E10B33A1C70F272009C73E4 /* fs_file-ptest.cpp */; };
 		5E10B3BF1C70F272009C73E4 /* manager-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E10B33B1C70F272009C73E4 /* manager-utest.cpp */; };
 		5E10B3C51C70F272009C73E4 /* cxx_files_mixin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E10B3441C70F272009C73E4 /* cxx_files_mixin.hpp */; };
-		5E10B3C71C70F272009C73E4 /* cxx_private_headers_mixin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E10B3461C70F272009C73E4 /* cxx_private_headers_mixin.hpp */; };
+		5E10B3C71C70F272009C73E4 /* cxx_headers_mixin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E10B3461C70F272009C73E4 /* cxx_headers_mixin.hpp */; };
 		5E10B3CA1C70F272009C73E4 /* cxx_library-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E10B34C1C70F272009C73E4 /* cxx_library-utest.cpp */; };
 		5E10B3CB1C70F272009C73E4 /* cxx_program-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E10B34D1C70F272009C73E4 /* cxx_program-utest.cpp */; };
 		5E10B3CE1C70F272009C73E4 /* err.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E10B3511C70F272009C73E4 /* err.cpp */; };
@@ -207,7 +207,7 @@
 		5E10B33A1C70F272009C73E4 /* fs_file-ptest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "fs_file-ptest.cpp"; sourceTree = "<group>"; };
 		5E10B33B1C70F272009C73E4 /* manager-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "manager-utest.cpp"; sourceTree = "<group>"; };
 		5E10B3441C70F272009C73E4 /* cxx_files_mixin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cxx_files_mixin.hpp; sourceTree = "<group>"; };
-		5E10B3461C70F272009C73E4 /* cxx_private_headers_mixin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cxx_private_headers_mixin.hpp; sourceTree = "<group>"; };
+		5E10B3461C70F272009C73E4 /* cxx_headers_mixin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cxx_headers_mixin.hpp; sourceTree = "<group>"; };
 		5E10B3481C70F272009C73E4 /* dom.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dom.dbs; sourceTree = "<group>"; };
 		5E10B34C1C70F272009C73E4 /* cxx_library-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "cxx_library-utest.cpp"; sourceTree = "<group>"; };
 		5E10B34D1C70F272009C73E4 /* cxx_program-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "cxx_program-utest.cpp"; sourceTree = "<group>"; };
@@ -627,7 +627,7 @@
 				5E10B3441C70F272009C73E4 /* cxx_files_mixin.hpp */,
 				5E4113C71CCD56AB00489DA7 /* cxx_library.cpp */,
 				5E4113C81CCD56AB00489DA7 /* cxx_library.h */,
-				5E10B3461C70F272009C73E4 /* cxx_private_headers_mixin.hpp */,
+				5E10B3461C70F272009C73E4 /* cxx_headers_mixin.hpp */,
 				5E4113CB1CCD56B300489DA7 /* cxx_program.cpp */,
 				5E4113CC1CCD56B300489DA7 /* cxx_program.h */,
 			);
@@ -674,8 +674,8 @@
 		5E10B35F1C70F272009C73E4 /* gtest */ = {
 			isa = PBXGroup;
 			children = (
-				5E83145E1CDC5A7F00344DB5 /* framework.h */,
 				5E10B3601C70F272009C73E4 /* gtest.dbs */,
+				5E83145E1CDC5A7F00344DB5 /* framework.h */,
 				5E10B3611C70F272009C73E4 /* intermittent.h */,
 				5E10B3621C70F272009C73E4 /* main.cpp */,
 				5E10B3631C70F272009C73E4 /* performance_arbiter.cpp */,
@@ -1165,7 +1165,7 @@
 				5E10B3C51C70F272009C73E4 /* cxx_files_mixin.hpp in Headers */,
 				5E874FAB1CEC175F00C7C123 /* tool_command.h in Headers */,
 				5E290B311CB9F4FC00F10210 /* verbose.h in Headers */,
-				5E10B3C71C70F272009C73E4 /* cxx_private_headers_mixin.hpp in Headers */,
+				5E10B3C71C70F272009C73E4 /* cxx_headers_mixin.hpp in Headers */,
 				5E10B3D01C70F272009C73E4 /* err_assert.h in Headers */,
 				5E10B3D61C70F272009C73E4 /* err.h in Headers */,
 				5E10B3FE1C70F272009C73E4 /* manager.h in Headers */,

@@ -41,7 +41,9 @@ TEST(CxxLibraryTest, publicCxxHeaders)
     const auto& file = doim::FsFile::obtain(directory, "header.h");
     files.insert(file);
 
-    ASSERT_OKAY(library.updateCxxPublicHeaders(directory, files));
+    ASSERT_OKAY(library.updateCxxHeaders(doim::CxxHeader::EVisibility::kPublic,
+                                         directory,
+                                         files));
 
     const auto& cxxHeaders2 = library.publicCxxHeaders(directory);
     ASSERT_EQ(1U, cxxHeaders2->size());
@@ -64,7 +66,9 @@ TEST(CxxLibraryTest, recursiveCxxHeaders)
     const auto& file = doim::FsFile::obtain(directory, "header.h");
     files.insert(file);
 
-    ASSERT_OKAY(library.updateCxxPublicHeaders(directory, files));
+    ASSERT_OKAY(library.updateCxxHeaders(doim::CxxHeader::EVisibility::kPublic,
+                                         directory,
+                                         files));
 
     const auto& cxxHeaders2 = library.recursiveCxxHeaders(directory);
     ASSERT_EQ(1U, cxxHeaders2->size());

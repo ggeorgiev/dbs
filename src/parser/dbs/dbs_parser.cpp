@@ -197,9 +197,17 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
                                                                                I& i2) {
         if (cxxHeaderVisibility != nullptr &&
             cxxHeaderVisibility->value() == dom::CxxLibrary::gPublic)
-            cxxLibrary->updateCxxPublicHeaders(directory, files);
+        {
+            cxxLibrary->updateCxxHeaders(doim::CxxHeader::EVisibility::kPublic,
+                                         directory,
+                                         files);
+        }
         else
-            cxxLibrary->updateCxxPrivateHeaders(directory, files);
+        {
+            cxxLibrary->updateCxxHeaders(doim::CxxHeader::EVisibility::kPrivate,
+                                         directory,
+                                         files);
+        }
     };
 
     auto r_cxxHeader = (r_cxxHeaderCat & r_files & r_se) >> e_ref(cxxHeaderFn);

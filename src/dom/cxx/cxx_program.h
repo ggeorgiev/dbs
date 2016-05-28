@@ -4,8 +4,8 @@
 #pragma once
 
 #include "dom/cxx/cxx_files_mixin.hpp"
+#include "dom/cxx/cxx_headers_mixin.hpp"
 #include "dom/cxx/cxx_library.h"
-#include "dom/cxx/cxx_private_headers_mixin.hpp"
 #include "dom/element.hpp"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
@@ -25,7 +25,7 @@ typedef shared_ptr<CxxProgram> CxxProgramSPtr;
 
 class CxxProgram : public Element<CxxProgram>,
                    public CxxFilesMixin<CxxProgram>,
-                   public CxxPrivateHeadersMixin<CxxProgram>
+                   public CxxHeadersMixin<CxxProgram>
 {
 public:
     template <typename T>

@@ -5,14 +5,15 @@ cxx_library gtest
         @visibility=public
         @directory=..:
 
+        gtest/framework.h
         gtest/intermittent.h
         gtest/test_resource.h
     ;
 
     cxx_header
+        @visibility=private
         @directory=..:
 
-        gtest/framework.h
         gtest/performance_arbiter.h
         gtest/time_monitor.h
     ;

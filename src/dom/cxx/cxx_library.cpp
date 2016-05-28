@@ -69,17 +69,6 @@ ECode CxxLibrary::updateBinary(const doim::FsFileSPtr& binary)
     EHEnd;
 }
 
-ECode CxxLibrary::updateCxxPublicHeaders(const doim::FsDirectorySPtr& directory,
-                                         doim::FsFileSet& files)
-{
-    resetRecursiveCxxIncludeDirectoriesMemoization();
-
-    mPublicHeadersDirectory = directory;
-    mCxxPublicHeaders = doim::FsFileSet::make();
-    mCxxPublicHeaders->swap(files);
-    EHEnd;
-}
-
 ECode CxxLibrary::updateCxxLibraries(CxxLibrarySet& libraries)
 {
     resetRecursiveCxxIncludeDirectoriesMemoization();
@@ -128,11 +117,13 @@ CxxLibrarySet CxxLibrary::recursiveCxxLibraries() const
 doim::CxxIncludeDirectorySPtr CxxLibrary::cxxPublicIncludeDirectory(
     const doim::FsDirectorySPtr& root) const
 {
-    if (publicHeadersDirectory() == nullptr)
+    auto directory = headersDirectory(doim::CxxHeader::EVisibility::kPublic);
+
+    if (directory == nullptr)
         return nullptr;
 
     return doim::CxxIncludeDirectory::unique(cxxIncludeDirectoryType(),
-                                             publicHeadersDirectory(),
+                                             directory,
                                              publicCxxHeaders(root));
 }
 
@@ -200,16 +191,20 @@ doim::CxxHeaderSetSPtr CxxLibrary::publicCxxHeaders(
 {
     auto headers = doim::CxxHeaderSet::make();
 
-    if (mCxxPublicHeaders != nullptr)
+    const auto files = headerFiles(doim::CxxHeader::EVisibility::kPublic);
+
+    if (files == nullptr)
+        return doim::CxxHeaderSet::unique(headers);
+
+    auto type = cxxHeaderType();
+    const auto& directories = sublibraryCxxIncludeDirectories(root);
+    for (const auto& header : *files)
     {
-        auto type = cxxHeaderType();
-        const auto& directories = sublibraryCxxIncludeDirectories(root);
-        for (const auto& header : *mCxxPublicHeaders)
-        {
-            auto cxxHeader = doim::CxxHeader::unique(
-                type, doim::CxxHeader::EVisibility::kPublic, header, directories);
-            headers->insert(cxxHeader);
-        }
+        auto cxxHeader = doim::CxxHeader::unique(type,
+                                                 doim::CxxHeader::EVisibility::kPublic,
+                                                 header,
+                                                 directories);
+        headers->insert(cxxHeader);
     }
     return doim::CxxHeaderSet::unique(headers);
 }

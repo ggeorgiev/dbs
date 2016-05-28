@@ -4,7 +4,7 @@
 #pragma once
 
 #include "dom/cxx/cxx_files_mixin.hpp"
-#include "dom/cxx/cxx_private_headers_mixin.hpp"
+#include "dom/cxx/cxx_headers_mixin.hpp"
 #include "dom/element.hpp"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
@@ -29,7 +29,7 @@ typedef shared_ptr<CxxLibrarySet> CxxLibrarySetSPtr;
 
 class CxxLibrary : public Element<CxxLibrary>,
                    public CxxFilesMixin<CxxLibrary>,
-                   public CxxPrivateHeadersMixin<CxxLibrary>
+                   public CxxHeadersMixin<CxxLibrary>
 {
 public:
     static doim::AttributeNameSPtr gType;
@@ -65,16 +65,6 @@ public:
         return mBinary;
     }
 
-    doim::FsDirectorySPtr publicHeadersDirectory() const
-    {
-        return mPublicHeadersDirectory;
-    }
-
-    const doim::FsFileSetSPtr publicHeaders() const
-    {
-        return mCxxPublicHeaders;
-    }
-
     const CxxLibrarySet& cxxLibraries() const
     {
         return mCxxLibraries;
@@ -84,9 +74,6 @@ public:
     ECode updateAttribute(const doim::AttributeSPtr& attribute);
 
     ECode updateBinary(const doim::FsFileSPtr& binary);
-
-    ECode updateCxxPublicHeaders(const doim::FsDirectorySPtr& directory,
-                                 doim::FsFileSet& files);
 
     ECode updateCxxLibraries(CxxLibrarySet& libraries);
 
@@ -118,9 +105,6 @@ public:
 private:
     EType mType;
     doim::FsFileSPtr mBinary;
-
-    doim::FsDirectorySPtr mPublicHeadersDirectory;
-    doim::FsFileSetSPtr mCxxPublicHeaders;
 
     CxxLibrarySet mCxxLibraries;
 
