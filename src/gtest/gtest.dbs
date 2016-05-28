@@ -27,10 +27,12 @@ cxx_library gtest
 
         ../im/im
         ../doim/doim
+        ../db/db
     ;
 
     cxx_file:
         performance_arbiter.cpp
         time_monitor.cpp
+        entry_point.cpp
     ;
 ;

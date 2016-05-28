@@ -79,28 +79,18 @@ CxxLibrarySet CxxProgram::recursiveCxxLibraries() const
     return libraries;
 }
 
-doim::CxxIncludeDirectorySetSPtr CxxProgram::recursiveCxxIncludeDirectories(
+doim::CxxIncludeDirectorySetSPtr CxxProgram::visibleCxxIncludeDirectories(
     const doim::FsDirectorySPtr& root) const
 {
     auto directories = doim::CxxIncludeDirectorySet::make();
 
     for (const auto& cxxLibrary : mCxxLibraries)
     {
-        const auto& libDirectories = cxxLibrary->recursiveCxxIncludeDirectories(root);
+        const auto& libDirectories =
+            cxxLibrary->recursivePublicCxxIncludeDirectories(root);
         directories->insert(libDirectories->begin(), libDirectories->end());
     }
 
     return doim::CxxIncludeDirectorySet::unique(directories);
-}
-
-doim::CxxHeaderSetSPtr CxxProgram::cxxHeaders(const doim::FsDirectorySPtr& root) const
-{
-    auto headers = doim::CxxHeaderSet::make();
-    for (const auto& cxxLibrary : mCxxLibraries)
-    {
-        const auto& libHeaders = cxxLibrary->recursiveCxxHeaders(root);
-        headers->insert(libHeaders->begin(), libHeaders->end());
-    }
-    return doim::CxxHeaderSet::unique(headers);
 }
 }

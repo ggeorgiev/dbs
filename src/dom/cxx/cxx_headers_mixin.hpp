@@ -76,7 +76,7 @@ public:
 
         auto type = static_cast<const Subject*>(this)->cxxHeaderType();
         const auto& directories =
-            static_cast<const Subject*>(this)->indirectCxxIncludeDirectories(root);
+            static_cast<const Subject*>(this)->recursivePublicCxxIncludeDirectories(root);
         for (const auto& header : *files)
         {
             const auto& cxxHeader = doim::CxxHeader::unique(

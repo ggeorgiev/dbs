@@ -2,7 +2,6 @@
 //
 
 #include "doim/fs/fs_directory.h"
-
 #include "db/database.h"
 #include "err/err.h"
 #include "im/initialization_manager.hpp"
@@ -22,9 +21,8 @@ string gIntermittentDirectory;
 doim::FsDirectorySPtr gIntermittentFsDirectory;
 
 doim::FsDirectorySPtr gTestResourceDirectory;
-} // namespace testing
 
-int main(int argc, char* argv[])
+int run(int argc, char* argv[])
 {
     im::InitializationManager im;
 
@@ -67,4 +65,5 @@ int main(int argc, char* argv[])
     }
 
     return result;
+}
 }

@@ -21,9 +21,7 @@ ECode CxxIncludeDirectory::findHeader(
     CxxHeaderInfo result;
 
     if (currentIncludeDirectory != nullptr)
-    {
         result = {currentIncludeDirectory->findHeader(header), currentIncludeDirectory};
-    }
 
     for (const auto& directory : *includeDirectories)
     {

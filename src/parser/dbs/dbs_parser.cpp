@@ -286,7 +286,7 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     string content((std::istreambuf_iterator<char>(fstream)),
                    std::istreambuf_iterator<char>());
 
-    const auto& r_dbs = ~r_annex & *(r_cxxLibrary | r_cxxProgram);
+    const auto& r_dbs = ~r_annex & *(r_cxxLibrary | r_cxxProgram) & *r_ws & r_end();
 
     r_dbs(content.begin(), content.end());
 

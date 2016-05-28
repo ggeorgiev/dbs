@@ -2,13 +2,34 @@
 //
 
 #include "dom/cxx/cxx_program.h"
+#include "parser/dbs/dbs_parser.h"
 #include "doim/fs/fs_file.h"
 #include "gtest/framework.h"
+#include "gtest/framework.h"
+#include "gtest/test_resource.h"
 
-TEST(CxxProgramTest, foo)
+static void parse(string name)
 {
-    dom::CxxProgram cxxProgram;
+    auto mDbsDirectory =
+        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto file = doim::FsFile::obtain(mDbsDirectory, name);
 
-    doim::FsFileSet files;
-    cxxProgram.updateCxxFilesList(files);
+    parser::DbsParser parser;
+    parser.parse(file);
+}
+
+TEST(CxxProgramTest, SLOW_CxxProgramHeaders)
+{
+    parse("cxx_program_headers.dbs");
+
+    auto mDbsDirectory =
+        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+
+    auto cxxProgramCxxLibrariesObject =
+        doim::Object::obtain(doim::Object::EType::kCxxProgram,
+                             mDbsDirectory,
+                             "headers_prog1");
+
+    auto cxxProgramCxxLibraries = dom::CxxProgram::find(cxxProgramCxxLibrariesObject);
+    ASSERT_NE(nullptr, cxxProgramCxxLibraries);
 }

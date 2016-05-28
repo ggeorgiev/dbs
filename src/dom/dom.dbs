@@ -36,6 +36,11 @@ cxx_library dom-test
         ../err/err-test
 
         dom
+        
+        # It is not so good that dom depepnds on parser. But this are just the tests.
+        # It does not seem reasanable to move them somewhere else just to avoid this ...
+        # and writing tests with parser is so much easier. 
+        ../parser/parser
     ;
 
     cxx_file:

@@ -1,0 +1,35 @@
+cxx_library headers_lib1:
+    cxx_header
+        @visibility=public
+        @directory=.:
+        
+        public1.h
+    ;
+    
+    cxx_header
+        @visibility=private
+        @directory=.:
+
+        private1.h
+    ;
+; 
+
+cxx_library headers_lib2:
+    cxx_header
+        @visibility=public
+        @directory=.:
+
+        public2.h
+    ;
+
+    cxx_header
+        @visibility=private
+        @directory=.:
+
+        private2.h
+    ;
+    
+    cxx_library:
+        headers_lib1
+    ;
+; 

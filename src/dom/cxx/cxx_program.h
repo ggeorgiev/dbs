@@ -59,10 +59,8 @@ public:
 
     CxxLibrarySet recursiveCxxLibraries() const;
 
-    doim::CxxIncludeDirectorySetSPtr recursiveCxxIncludeDirectories(
+    doim::CxxIncludeDirectorySetSPtr visibleCxxIncludeDirectories(
         const doim::FsDirectorySPtr& root) const;
-
-    doim::CxxHeaderSetSPtr cxxHeaders(const doim::FsDirectorySPtr& root) const;
 
 private:
     string mName;

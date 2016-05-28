@@ -39,10 +39,14 @@ public:
         doim::CxxFileSet cxxFiles;
 
         const auto& directories =
-            static_cast<const Subject*>(this)->recursiveCxxIncludeDirectories(root);
+            static_cast<const Subject*>(this)->visibleCxxIncludeDirectories(root);
 
         for (const auto& directory : *directories)
-            DLOG("include directory: {0}", directory->directory()->path(root));
+        {
+            DLOG("include directory: {}", directory->directory()->path(root));
+            for (const auto& header : *directory->headerFiles())
+                DLOG("    header: {}", header->file()->path(root));
+        }
 
         for (const auto& fsFile : mCxxFilesList)
         {

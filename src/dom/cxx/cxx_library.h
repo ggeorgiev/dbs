@@ -87,20 +87,24 @@ public:
     doim::CxxIncludeDirectorySPtr cxxPublicIncludeDirectory(
         const doim::FsDirectorySPtr& root) const;
 
-    doim::CxxIncludeDirectorySetSPtr sublibraryCxxIncludeDirectories(
+    // Returns indirect include directories that can be used from objects of this library
+    doim::CxxIncludeDirectorySetSPtr indirectPublicCxxIncludeDirectories(
         const doim::FsDirectorySPtr& root) const;
 
-    doim::CxxIncludeDirectorySetSPtr indirectCxxIncludeDirectories(
+    // Returns direct and indirect include directories that can be used from objects
+    // that depend on this library
+    doim::CxxIncludeDirectorySetSPtr recursivePublicCxxIncludeDirectories(
         const doim::FsDirectorySPtr& root) const;
 
-    doim::CxxIncludeDirectorySetSPtr recursiveCxxIncludeDirectories(
+    // Returns direct and indirect include directories that objects from this library are
+    // able to see. This includes private and all depending public.
+    doim::CxxIncludeDirectorySetSPtr visibleCxxIncludeDirectories(
         const doim::FsDirectorySPtr& root) const;
 
     doim::CxxHeaderSetSPtr publicCxxHeaders(const doim::FsDirectorySPtr& root) const;
 
-    doim::CxxHeaderSetSPtr indirectCxxHeaders(const doim::FsDirectorySPtr& root) const;
-
-    doim::CxxHeaderSetSPtr recursiveCxxHeaders(const doim::FsDirectorySPtr& root) const;
+    doim::CxxHeaderSetSPtr recursivePublicCxxHeaders(
+        const doim::FsDirectorySPtr& root) const;
 
 private:
     EType mType;
@@ -119,6 +123,6 @@ private:
 
     dp::HandleSPtr mMemoizationHandle;
     RecursiveCxxIncludeDirectoriesMemoizationSPtr
-        mRecursiveCxxIncludeDirectoriesMemoization;
+        mIndirectPublicCxxIncludeDirectoriesMemoization;
 };
 }

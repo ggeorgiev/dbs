@@ -1,0 +1,16 @@
+annex:
+    cxx_library_headers.dbs
+; 
+
+cxx_program headers_prog1:
+    cxx_library:
+        headers_lib1
+        headers_lib2
+    ;
+    
+    cxx_header
+        @directory=.:
+        
+        prog1.h
+    ;
+;

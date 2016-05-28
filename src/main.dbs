@@ -64,6 +64,6 @@ cxx_program dbs-test:
     ;
 
     cxx_file:
-        gtest/main.cpp
+        main_gtest.cpp
     ;
 ;
