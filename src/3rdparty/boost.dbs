@@ -14,6 +14,7 @@ cxx_library /boost_template
         boost/current_function.hpp
         boost/fusion/adapted/std_tuple.hpp
         boost/fusion/algorithm.hpp
+        boost/variant.hpp
     ;
 ;
 

@@ -8,11 +8,11 @@
 namespace doim
 {
 CxxObjectFile::CxxObjectFile(EPurpose purpose,
-                             const CxxFileSPtr& cxxFile,
+                             const SourceSPtr& source,
                              const FsFileSPtr& file)
-    : Element(purpose, cxxFile, file)
+    : Element(purpose, source, file)
 {
-    ASSERT(cxxFile->isUnique());
+    ASSERT(boost::get<CxxFileSPtr>(source)->isUnique());
     ASSERT(file->isUnique());
 }
 }

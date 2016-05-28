@@ -127,7 +127,7 @@ TEST(DbsParserTest, SLOW_CxxLibraryProtobufFile)
     auto cxxLibraryProtobufFilesObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary,
                              mDbsDirectory,
-                             "protobuf_files");
+                             "cxx_protobufs");
 
     auto cxxLibraryProtobufFiles = dom::CxxLibrary::find(cxxLibraryProtobufFilesObject);
     ASSERT_NE(nullptr, cxxLibraryProtobufFiles);

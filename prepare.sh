@@ -114,10 +114,12 @@ then
     git submodule update --init libs/thread          || exit 1
     git submodule update --init libs/tuple           || exit 1
     git submodule update --init libs/type_traits     || exit 1
+    git submodule update --init libs/type_index      || exit 1
     git submodule update --init libs/smart_ptr       || exit 1
     git submodule update --init libs/static_assert   || exit 1
     git submodule update --init libs/system          || exit 1
     git submodule update --init libs/utility         || exit 1
+    git submodule update --init libs/variant         || exit 1
 
     git submodule foreach -q 'git checkout boost-1.59.0'
 

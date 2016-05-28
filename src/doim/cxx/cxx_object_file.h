@@ -7,6 +7,7 @@
 #include "doim/fs/fs_file.h"
 #include "doim/element.hpp"
 #include "doim/set.hpp"
+#include <boost/variant.hpp>
 #include <memory>
 #include <tuple>
 
@@ -27,21 +28,34 @@ struct CxxObjectFileEnums
     };
 };
 
-class CxxObjectFile
-    : public CxxObjectFileEnums,
-      public Element<CxxObjectFile, CxxObjectFileEnums::EPurpose, CxxFileSPtr, FsFileSPtr>
+struct CxxObjectFileVariants
+{
+    typedef boost::variant<CxxFileSPtr> SourceSPtr;
+};
+
+class CxxObjectFile : public CxxObjectFileEnums,
+                      public CxxObjectFileVariants,
+                      public Element<CxxObjectFile,
+                                     CxxObjectFileEnums::EPurpose,
+                                     CxxObjectFileVariants::SourceSPtr,
+                                     FsFileSPtr>
 {
 public:
-    CxxObjectFile(EPurpose purpose, const CxxFileSPtr& cxxFile, const FsFileSPtr& file);
+    CxxObjectFile(EPurpose purpose, const SourceSPtr& source, const FsFileSPtr& file);
 
     EPurpose purpose() const
     {
         return static_cast<EPurpose>(std::get<0>(mArgs));
     }
 
-    const CxxFileSPtr& cxxFile()
+    const SourceSPtr& source()
     {
         return std::get<1>(mArgs);
+    }
+
+    const CxxFileSPtr& cxxFile()
+    {
+        return boost::get<CxxFileSPtr>(source());
     }
 
     const FsFileSPtr& file()
