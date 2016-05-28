@@ -4,6 +4,7 @@
 #include "parser/dbs/dbs_parser.h"
 #include "dom/cxx/cxx_library.h"
 #include "dom/cxx/cxx_program.h"
+#include "doim/cxx/cxx_header.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/object.h"

@@ -44,19 +44,36 @@ class CxxIncludeDirectory : public CxxIncludeDirectoryEnums,
 public:
     struct CxxHeaderInfo
     {
-        doim::CxxHeaderSPtr mHeader;
-        doim::CxxIncludeDirectorySPtr mIncludeDirectory;
+        CxxHeaderSPtr mHeader;
+        CxxIncludeDirectorySPtr mIncludeDirectory;
     };
 
+    // Searches for a header with a string presentation in one current directory and a set
+    // of directories. The reason for the extra directory is that a header does not keep
+    // track of the directory it belongs too, but yet it might include header from it.
     static ECode findHeader(const string_view& header,
-                            const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
-                            const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
+                            const CxxIncludeDirectorySPtr& currentIncludeDirectory,
+                            const CxxIncludeDirectorySetSPtr& includeDirectories,
                             CxxHeaderInfo& headerInfo);
 
     static ECode findHeader(const FsFileSPtr& header,
-                            const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
-                            const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
+                            const CxxIncludeDirectorySPtr& currentIncludeDirectory,
+                            const CxxIncludeDirectorySetSPtr& includeDirectories,
                             CxxHeaderInfo& headerInfo);
+
+    // Searches deep for a header. Not all include directories that a particular file
+    // can see, are propagated up. For example a public header can see protected header,
+    // but a file that depends on it will not. Deep search goes recursively to track the
+    // header.
+    static ECode findHeaderDeep(const string_view& header,
+                                const CxxIncludeDirectorySPtr& currentIncludeDirectory,
+                                const CxxIncludeDirectorySetSPtr& includeDirectories,
+                                CxxHeaderInfo& headerInfo);
+
+    static ECode findHeaderDeep(const FsFileSPtr& header,
+                                const CxxIncludeDirectorySPtr& currentIncludeDirectory,
+                                const CxxIncludeDirectorySetSPtr& includeDirectories,
+                                CxxHeaderInfo& headerInfo);
 
     CxxIncludeDirectory(const EType type,
                         const FsDirectorySPtr& directory,

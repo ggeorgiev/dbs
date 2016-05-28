@@ -115,7 +115,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
             doim::CxxIncludeDirectory::CxxHeaderInfo headerInfo;
             if (cxxFile->file() == file)
             {
-                EHLog(doim::CxxIncludeDirectory::findHeader(
+                EHLog(doim::CxxIncludeDirectory::findHeaderDeep(
                     string_view(warning.missingHeader),
                     nullptr,
                     cxxFile->cxxIncludeDirectories(),
@@ -123,7 +123,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
             }
             else
             {
-                EHLog(doim::CxxIncludeDirectory::findHeader(
+                EHLog(doim::CxxIncludeDirectory::findHeaderDeep(
                     file, nullptr, cxxFile->cxxIncludeDirectories(), headerInfo));
 
                 if (headerInfo.mHeader == nullptr)
@@ -132,7 +132,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
                     continue;
                 }
 
-                EHLog(doim::CxxIncludeDirectory::findHeader(
+                EHLog(doim::CxxIncludeDirectory::findHeaderDeep(
                     string_view(warning.missingHeader),
                     headerInfo.mIncludeDirectory,
                     headerInfo.mHeader->cxxIncludeDirectories(),
@@ -142,6 +142,14 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
             if (headerInfo.mHeader == nullptr)
             {
                 ELOG("IWYU suggest adding unknown header {}", warning.missingHeader);
+                continue;
+            }
+
+            if (headerInfo.mHeader->visibility() ==
+                doim::CxxHeader::EVisibility::kProtected)
+            {
+                TLOG("IWYU suggest protected header {}, ignore those",
+                     warning.missingHeader);
                 continue;
             }
 

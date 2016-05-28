@@ -47,8 +47,12 @@ cxx_library /stl
         str
         string_view
         unordered
+    ;
 
-        # details
+    cxx_header
+        @visibility=protected
+        @directory=.:
+
         __functional_base
         __mutex_base
     ;

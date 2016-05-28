@@ -7,7 +7,6 @@ cxx_library parser
 
         parser/cxx/cxx_parser.h
         parser/dbs/dbs_parser.h
-        parser/axe.hpp
     ;
 
     cxx_library:

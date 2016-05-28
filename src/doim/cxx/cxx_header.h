@@ -27,7 +27,14 @@ struct CxxHeaderEnums
     };
     enum class EVisibility
     {
+        // Header file that is visible to the library and all libraries that depend on it.
         kPublic,
+
+        // Header that is visible to the library files and public headers, but not to the
+        // dependent libraries.
+        kProtected,
+
+        // Header that is visible only to the library files.
         kPrivate,
     };
 };

@@ -7,7 +7,6 @@
 #include "dom/cxx/cxx_headers_mixin.hpp"
 #include "dom/cxx/cxx_library.h"
 #include "dom/element.hpp"
-#include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/cxx/cxx_program.h"
 #include "doim/fs/fs_directory.h"

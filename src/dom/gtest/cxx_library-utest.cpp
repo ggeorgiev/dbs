@@ -3,14 +3,17 @@
 
 #include "dom/cxx/cxx_library.h"
 #include "parser/dbs/dbs_parser.h"
+#include "doim/cxx/cxx_header.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
+#include "doim/generic/object.h"
 #include "doim/set.hpp"
 #include "err/err.h"
 #include "err/gtest/err.h"
 #include "gtest/framework.h"
 #include "gtest/test_resource.h"
 #include <memory>
+#include <str>
 #include <unordered>
 
 static void parse(string name)
@@ -44,12 +47,15 @@ TEST(CxxLibraryTest, SLOW_CxxLibraryHeaders)
         cxxLibraryLib2->recursivePublicCxxHeaders(mDbsDirectory);
     ASSERT_EQ(2, recursivePublicHeaders->size());
 
+    const auto& protectedHeaders = cxxLibraryLib2->protectedCxxHeaders(mDbsDirectory);
+    ASSERT_EQ(1, protectedHeaders->size());
+
     const auto& privateHeaders = cxxLibraryLib2->privateCxxHeaders(mDbsDirectory);
     ASSERT_EQ(1, privateHeaders->size());
 
     const auto& visibleDirectories =
         cxxLibraryLib2->visibleCxxIncludeDirectories(mDbsDirectory);
-    ASSERT_EQ(3, visibleDirectories->size());
+    ASSERT_EQ(4, visibleDirectories->size());
 }
 
 TEST(CxxLibraryTest, cxxLibraries)

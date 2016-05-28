@@ -2,9 +2,9 @@
 //
 
 #include "parser/dbs/dbs_parser.h"
-#include "parser/axe.hpp"
 #include "dom/cxx/cxx_library.h"
 #include "dom/cxx/cxx_program.h"
+#include "doim/cxx/cxx_header.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/generic/attribute.h"
 #include "doim/generic/attribute_name.h"
@@ -17,6 +17,7 @@
 #include <str>
 #include <string_view>
 #include <vector>
+#include <axe.h> // IWYU pragma: keep
 #include <stddef.h>
 
 namespace parser
@@ -195,19 +196,21 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
 
     auto cxxHeaderFn = [&cxxLibrary, &directory, &files, &cxxHeaderVisibility](I& i1,
                                                                                I& i2) {
-        if (cxxHeaderVisibility != nullptr &&
-            cxxHeaderVisibility->value() == dom::CxxLibrary::gPublic)
-        {
-            cxxLibrary->updateCxxHeaders(doim::CxxHeader::EVisibility::kPublic,
-                                         directory,
-                                         files);
-        }
+
+        doim::CxxHeader::EVisibility visibility;
+        if (cxxHeaderVisibility == nullptr ||
+            cxxHeaderVisibility->value() == dom::CxxLibrary::gPrivate)
+            visibility = doim::CxxHeader::EVisibility::kPrivate;
+        else if (cxxHeaderVisibility->value() == dom::CxxLibrary::gPublic)
+            visibility = doim::CxxHeader::EVisibility::kPublic;
+        else if (cxxHeaderVisibility->value() == dom::CxxLibrary::gProtected)
+            visibility = doim::CxxHeader::EVisibility::kProtected;
         else
         {
-            cxxLibrary->updateCxxHeaders(doim::CxxHeader::EVisibility::kPrivate,
-                                         directory,
-                                         files);
+            // TODO
         }
+        cxxLibrary->updateCxxHeaders(visibility, directory, files);
+
     };
 
     auto r_cxxHeader = (r_cxxHeaderCat & r_files & r_se) >> e_ref(cxxHeaderFn);

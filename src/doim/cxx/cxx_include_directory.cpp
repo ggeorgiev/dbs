@@ -48,16 +48,14 @@ ECode CxxIncludeDirectory::findHeader(
 
 ECode CxxIncludeDirectory::findHeader(
     const FsFileSPtr& header,
-    const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
-    const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
+    const CxxIncludeDirectorySPtr& currentIncludeDirectory,
+    const CxxIncludeDirectorySetSPtr& includeDirectories,
     CxxHeaderInfo& headerInfo)
 {
     CxxHeaderInfo result;
 
     if (currentIncludeDirectory != nullptr)
-    {
         result = {currentIncludeDirectory->findHeader(header), currentIncludeDirectory};
-    }
 
     for (const auto& directory : *includeDirectories)
     {
@@ -82,6 +80,79 @@ ECode CxxIncludeDirectory::findHeader(
     EHEnd;
 }
 
+template <typename H>
+ECode findHeaderDeepTemplate(const H& header,
+                             const CxxIncludeDirectorySPtr& currentIncludeDirectory,
+                             const CxxIncludeDirectorySetSPtr& includeDirectories,
+                             CxxIncludeDirectory::CxxHeaderInfo& headerInfo)
+{
+    CxxIncludeDirectorySet checked;
+    CxxIncludeDirectorySet todo;
+    if (currentIncludeDirectory != nullptr)
+        todo.insert(currentIncludeDirectory);
+    todo.insert(includeDirectories->begin(), includeDirectories->end());
+
+    CxxIncludeDirectory::CxxHeaderInfo result;
+    while (!todo.empty())
+    {
+        auto current = *todo.begin();
+        todo.erase(todo.begin());
+        checked.insert(current);
+
+        for (const auto cxxHeader : *current->headerFiles())
+        {
+            for (auto includeDir : *cxxHeader->cxxIncludeDirectories())
+            {
+                if (checked.count(includeDir) == 0)
+                    todo.insert(includeDir);
+            }
+        }
+
+        auto cxxHeader = current->findHeader(header);
+        if (cxxHeader == nullptr)
+            continue;
+
+        if (result.mHeader != nullptr)
+            EHBan(kTooMany);
+
+        DLOG("Deep found header {} in directory {}",
+             cxxHeader->file()->path(),
+             current->directory()->path());
+
+        result = {cxxHeader, current};
+    }
+
+    if (result.mHeader == nullptr)
+        EHBan(kNotFound);
+
+    headerInfo = result;
+    EHEnd;
+}
+
+ECode CxxIncludeDirectory::findHeaderDeep(
+    const string_view& header,
+    const CxxIncludeDirectorySPtr& currentIncludeDirectory,
+    const CxxIncludeDirectorySetSPtr& includeDirectories,
+    CxxHeaderInfo& headerInfo)
+{
+    return findHeaderDeepTemplate(header,
+                                  currentIncludeDirectory,
+                                  includeDirectories,
+                                  headerInfo);
+}
+
+ECode CxxIncludeDirectory::findHeaderDeep(
+    const FsFileSPtr& header,
+    const CxxIncludeDirectorySPtr& currentIncludeDirectory,
+    const CxxIncludeDirectorySetSPtr& includeDirectories,
+    CxxHeaderInfo& headerInfo)
+{
+    return findHeaderDeepTemplate(header,
+                                  currentIncludeDirectory,
+                                  includeDirectories,
+                                  headerInfo);
+}
+
 CxxIncludeDirectory::CxxIncludeDirectory(const EType type,
                                          const FsDirectorySPtr& directory,
                                          const CxxHeaderSetSPtr& headerFiles)
@@ -103,7 +174,7 @@ void CxxIncludeDirectory::finally()
 
 CxxHeaderSPtr CxxIncludeDirectory::findHeader(const string_view& header) const
 {
-    const auto& file = doim::FsFile::find(directory(), header);
+    const auto& file = FsFile::find(directory(), header);
     if (file == nullptr)
         return nullptr;
 

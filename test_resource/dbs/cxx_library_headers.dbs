@@ -7,6 +7,13 @@ cxx_library headers_lib1:
     ;
     
     cxx_header
+        @visibility=protected
+        @directory=.:
+
+        protected1.h
+    ;
+
+    cxx_header
         @visibility=private
         @directory=.:
 
@@ -20,6 +27,13 @@ cxx_library headers_lib2:
         @directory=.:
 
         public2.h
+    ;
+
+    cxx_header
+        @visibility=protected
+        @directory=.:
+
+        protected2.h
     ;
 
     cxx_header

@@ -3,10 +3,13 @@
 
 #include "dom/cxx/cxx_program.h"
 #include "parser/dbs/dbs_parser.h"
+#include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
-#include "gtest/framework.h"
+#include "doim/generic/object.h"
 #include "gtest/framework.h"
 #include "gtest/test_resource.h"
+#include <memory>
+#include <str>
 
 static void parse(string name)
 {

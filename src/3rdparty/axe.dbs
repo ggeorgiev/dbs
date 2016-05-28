@@ -6,6 +6,12 @@ cxx_library /axe
         @directory=../../axe/include:
 
         axe.h
+    ;
+    
+    cxx_header
+        @visibility=protected
+        @directory=../../axe/include:
+        
         axe_composite.h
         axe_composite_function.h
         axe_exception.h

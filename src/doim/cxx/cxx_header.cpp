@@ -35,6 +35,9 @@ std::ostream& operator<<(std::ostream& out, const CxxHeader& header)
         case CxxHeader::EVisibility::kPublic:
             out << "public";
             break;
+        case CxxHeader::EVisibility::kProtected:
+            out << "protected";
+            break;
         case CxxHeader::EVisibility::kPrivate:
             out << "private";
             break;

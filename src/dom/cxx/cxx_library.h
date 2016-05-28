@@ -42,6 +42,7 @@ public:
 
     static doim::AttributeNameSPtr gVisibility;
     static doim::AttributeValueSPtr gPublic;
+    static doim::AttributeValueSPtr gProtected;
     static doim::AttributeValueSPtr gPrivate;
 
     enum class EType
@@ -87,8 +88,16 @@ public:
     doim::CxxIncludeDirectorySPtr cxxPublicIncludeDirectory(
         const doim::FsDirectorySPtr& root) const;
 
+    doim::CxxIncludeDirectorySPtr cxxProtectedIncludeDirectory(
+        const doim::FsDirectorySPtr& root) const;
+
     // Returns indirect include directories that can be used from objects of this library
     doim::CxxIncludeDirectorySetSPtr indirectPublicCxxIncludeDirectories(
+        const doim::FsDirectorySPtr& root) const;
+
+    // Returns the protected and indirect include directories that can be used from
+    // public headers of this library.
+    doim::CxxIncludeDirectorySetSPtr recursiveProtectedCxxIncludeDirectories(
         const doim::FsDirectorySPtr& root) const;
 
     // Returns direct and indirect include directories that can be used from objects
@@ -103,6 +112,8 @@ public:
 
     doim::CxxHeaderSetSPtr publicCxxHeaders(const doim::FsDirectorySPtr& root) const;
 
+    doim::CxxHeaderSetSPtr protectedCxxHeaders(const doim::FsDirectorySPtr& root) const;
+
     doim::CxxHeaderSetSPtr recursivePublicCxxHeaders(
         const doim::FsDirectorySPtr& root) const;
 
@@ -112,7 +123,7 @@ private:
 
     CxxLibrarySet mCxxLibraries;
 
-    void resetRecursiveCxxIncludeDirectoriesMemoization();
+    void resetCxxIncludeDirectoriesMemoization();
 
     typedef dp::Memoization<dp::MapContainer,
                             doim::CxxIncludeDirectorySetSPtr,
@@ -121,8 +132,12 @@ private:
     typedef shared_ptr<RecursiveCxxIncludeDirectoriesMemoization>
         RecursiveCxxIncludeDirectoriesMemoizationSPtr;
 
-    dp::HandleSPtr mMemoizationHandle;
+    dp::HandleSPtr mCxxIncludeDirectoriesMemoizationHandle;
     RecursiveCxxIncludeDirectoriesMemoizationSPtr
         mIndirectPublicCxxIncludeDirectoriesMemoization;
+    RecursiveCxxIncludeDirectoriesMemoizationSPtr
+        mRecursivePublicCxxIncludeDirectoriesMemoization;
+    RecursiveCxxIncludeDirectoriesMemoizationSPtr
+        mVisibleCxxIncludeDirectoriesMemoization;
 };
 }
