@@ -9,6 +9,7 @@ cxx_library dom
         dom/cxx/cxx_library.h
         dom/cxx/cxx_headers_mixin.hpp
         dom/cxx/cxx_program.h
+        dom/cxx/cxx_protobufs_mixin.hpp
         dom/element_manager.hpp
         dom/element.hpp
     ;

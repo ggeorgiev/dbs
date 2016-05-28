@@ -38,6 +38,12 @@ cxx_library cxx_files:
     ;
 ;
 
+cxx_library cxx_protobufs:
+    protobuf_file:
+        foo.cpp
+    ;
+;
+
 cxx_library binary:
     binary: libfoo.a;
 ;

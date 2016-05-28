@@ -97,6 +97,13 @@ clang++ -I src/ -O3 -c src/doim/generic/object.cpp \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/doim/generic/object.cpp.o \
     -std=c++14 &
+if [ ! -e build/release/src/doim/protobuf/ ]; then mkdir build/release/src/doim/protobuf/; fi
+echo Compile src/doim/protobuf/protobuf_file.cpp
+clang++ -I src/ -O3 -c src/doim/protobuf/protobuf_file.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/doim/protobuf/protobuf_file.cpp.o \
+    -std=c++14 &
 if [ ! -e build/release/src/doim/sys/ ]; then mkdir build/release/src/doim/sys/; fi
 echo Compile src/doim/sys/sys_argument.cpp
 clang++ -I src/ -O3 -c src/doim/sys/sys_argument.cpp \
@@ -319,6 +326,7 @@ clang++ -L boost/lib/ -L fmt/lib/ -L rocksdb/lib/ -L src/system/ \
     build/release/src/doim/generic/attribute_name.cpp.o \
     build/release/src/doim/generic/attribute_value.cpp.o \
     build/release/src/doim/generic/object.cpp.o \
+    build/release/src/doim/protobuf/protobuf_file.cpp.o \
     build/release/src/doim/sys/sys_argument.cpp.o \
     build/release/src/doim/sys/sys_command.cpp.o \
     build/release/src/doim/sys/sys_executable.cpp.o \

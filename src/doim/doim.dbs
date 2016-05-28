@@ -25,7 +25,8 @@ cxx_library doim
         doim/generic/attribute_value.h
         doim/generic/attribute.h
         doim/generic/location.hpp
-        doim/generic/object.h        
+        doim/generic/object.h
+        doim/protobuf/protobuf_file.h        
         doim/element.hpp
         doim/element_manager.hpp
         doim/set_manager.hpp
@@ -58,6 +59,7 @@ cxx_library doim
         generic/attribute_value.cpp
         generic/attribute.cpp
         generic/object.cpp
+        protobuf/protobuf_file.cpp
         sys/sys_argument.cpp
         sys/sys_command.cpp
         sys/sys_executable.cpp

@@ -43,6 +43,7 @@ static auto r_cxxProgramKeyword = r_str("cxx_program");
 
 static auto r_cxxLibraryKeyword = r_str("cxx_library");
 static auto r_cxxFileKeyword = r_str("cxx_file");
+static auto r_protobufFileKeyword = r_str("protobuf_file");
 
 static auto r_cxxHeaderKeyword = r_str("cxx_header");
 static auto r_binaryKeyword = r_str("binary");
@@ -140,6 +141,10 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     // CxxFiles
     auto r_cxxFiles = *r_ws & r_cxxFileKeyword & r_he & r_setLocation & r_files & r_se;
 
+    // ProtobufFiles
+    auto r_protobufFiles =
+        *r_ws & r_protobufFileKeyword & r_he & r_setLocation & r_files & r_se;
+
     // CxxLibraries
 
     dom::CxxLibrarySet cxxLibraries;
@@ -226,6 +231,11 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
         cxxLibrary->updateCxxFilesList(files);
     };
     auto r_cxxLibraryCxxFile = r_cxxFiles >> e_ref(cxxLibraryCxxFileFn);
+    // CxxLibrary ProtobufFile
+    auto cxxLibraryProtobufFileFn = [&cxxLibrary, &files](I& i1, I& i2) {
+        cxxLibrary->updateProtobufsList(files);
+    };
+    auto r_cxxLibraryProtobufFile = r_protobufFiles >> e_ref(cxxLibraryProtobufFileFn);
 
     // CxxLibrary CxxBinary
     auto cxxBinaryFn = [&file, &cxxLibrary](I& i1, I& i2) {
@@ -250,7 +260,8 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
         *r_ws & r_cxxLibraryKeyword & r_cxxLibraryName & *r_cxxLibraryAttribute & r_he;
 
     auto r_cxxLibrary = r_cxxLibraryCap &
-                        *(r_cxxLibraryCxxFile | r_cxxHeader | r_cxxLibraryX2 | r_binary) &
+                        *(r_cxxLibraryCxxFile | r_cxxLibraryProtobufFile | r_cxxHeader |
+                          r_cxxLibraryX2 | r_binary) &
                         r_se;
 
     // CxxProgram
