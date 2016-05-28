@@ -81,9 +81,11 @@ TEST_F(CxxFileCrcTaskTest, notFoundInclude)
 TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
 {
     auto cxxHeader1 = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
+                                              doim::CxxHeader::EVisibility::kPublic,
                                               mFsUser1H,
                                               mEmptyCxxIncludeDirectorySet);
     auto cxxHeader2 = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
+                                              doim::CxxHeader::EVisibility::kPublic,
                                               mFsUser2H,
                                               mEmptyCxxIncludeDirectorySet);
 
@@ -112,6 +114,7 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     // with the same fs directory is working.
 
     auto cxxHeader2 = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
+                                              doim::CxxHeader::EVisibility::kPublic,
                                               mFsUser2H,
                                               mEmptyCxxIncludeDirectorySet);
 
@@ -126,6 +129,7 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
         doim::CxxIncludeDirectorySet::unique({cxxIncludeDirectory2});
 
     auto cxxHeader1 = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
+                                              doim::CxxHeader::EVisibility::kPublic,
                                               mFsUser1H,
                                               cxxIncludeDirectories2);
 

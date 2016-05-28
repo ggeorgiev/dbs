@@ -64,8 +64,8 @@ public:
                 static_cast<const Subject*>(this)->indirectCxxIncludeDirectories(root);
             for (const auto& header : *mCxxPrivateHeaders)
             {
-                const auto& cxxHeader =
-                    doim::CxxHeader::unique(type, header, directories);
+                const auto& cxxHeader = doim::CxxHeader::unique(
+                    type, doim::CxxHeader::EVisibility::kPrivate, header, directories);
                 headers->insert(cxxHeader);
             }
         }

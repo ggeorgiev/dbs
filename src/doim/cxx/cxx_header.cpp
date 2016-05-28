@@ -8,9 +8,10 @@
 namespace doim
 {
 CxxHeader::CxxHeader(const EType type,
+                     const EVisibility visibility,
                      const FsFileSPtr& file,
                      const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories)
-    : Element(type, file, cxxIncludeDirectories)
+    : Element(type, visibility, file, cxxIncludeDirectories)
 {
     ASSERT(file->isUnique());
     ASSERT(cxxIncludeDirectories->isUnique());
@@ -26,6 +27,16 @@ std::ostream& operator<<(std::ostream& out, const CxxHeader& header)
             break;
         case CxxHeader::EType::kSystem:
             out << "system";
+            break;
+    }
+    out << ", visibility: ";
+    switch (header.visibility())
+    {
+        case CxxHeader::EVisibility::kPublic:
+            out << "public";
+            break;
+        case CxxHeader::EVisibility::kPrivate:
+            out << "private";
             break;
     }
     out << ", file: " << header.file()->path() << "}" << std::endl;

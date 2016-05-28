@@ -25,16 +25,23 @@ struct CxxHeaderEnums
         kUser,
         kSystem,
     };
+    enum class EVisibility
+    {
+        kPublic,
+        kPrivate,
+    };
 };
 
 class CxxHeader : public CxxHeaderEnums,
                   public Element<CxxHeader,
                                  CxxHeaderEnums::EType,
+                                 CxxHeaderEnums::EVisibility,
                                  FsFileSPtr,
                                  CxxIncludeDirectorySetSPtr>
 {
 public:
     CxxHeader(const EType type,
+              const EVisibility visibility,
               const FsFileSPtr& file,
               const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories);
 
@@ -43,14 +50,19 @@ public:
         return std::get<0>(mArgs);
     }
 
-    const FsFileSPtr& file() const
+    EVisibility visibility() const
     {
         return std::get<1>(mArgs);
     }
 
-    const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories() const
+    const FsFileSPtr& file() const
     {
         return std::get<2>(mArgs);
+    }
+
+    const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories() const
+    {
+        return std::get<3>(mArgs);
     }
 };
 

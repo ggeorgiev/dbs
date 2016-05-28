@@ -206,7 +206,8 @@ doim::CxxHeaderSetSPtr CxxLibrary::publicCxxHeaders(
         const auto& directories = sublibraryCxxIncludeDirectories(root);
         for (const auto& header : *mCxxPublicHeaders)
         {
-            auto cxxHeader = doim::CxxHeader::unique(type, header, directories);
+            auto cxxHeader = doim::CxxHeader::unique(
+                type, doim::CxxHeader::EVisibility::kPublic, header, directories);
             headers->insert(cxxHeader);
         }
     }
