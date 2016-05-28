@@ -46,51 +46,63 @@ DisableFormat:   false
 ExperimentalAutoDetectBinPacking: false
 ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH ]
 IncludeCategories:
-  - Regex:           '^"engine/*.'
+  - Regex:           '^"engine/.*'
     Priority:        0
-  - Regex:           '^"tool/*.'
+  - Regex:           '^"tool/.*'
     Priority:        10
-  - Regex:           '^"task/*.'
+
+  - Regex:           '^"task/[^/]*$'
+    Priority:        21
+  - Regex:           '^"task/.*'
     Priority:        20
-  - Regex:           '^"tpool/*.'
+
+  - Regex:           '^"tpool/.*'
     Priority:        30
-  - Regex:           '^"parser/*.'
+  - Regex:           '^"parser/.*'
     Priority:        40
-  - Regex:           '^"dom/*.'
+
+  - Regex:           '^"dom/[^/]*$'
+    Priority:        51
+  - Regex:           '^"dom/.*'
     Priority:        50
-  - Regex:           '^"option/*.'
+
+  - Regex:           '^"option/.*'
     Priority:        60
-  - Regex:           '^"doim/*.'
+
+  - Regex:           '^"doim/[^/]*$'
+    Priority:        71
+  - Regex:           '^"doim/.*'
     Priority:        70
-  - Regex:           '^"dp/*.'
+
+  - Regex:           '^"dp/.*'
     Priority:        80
-  - Regex:           '^"db/*.'
+  - Regex:           '^"db/.*'
     Priority:        90
-  - Regex:           '^"err/*.'
+  - Regex:           '^"err/.*'
     Priority:        90
-  - Regex:           '^"log/*.'
+  - Regex:           '^"log/.*'
     Priority:        100
-  - Regex:           '^"im/*.'
+  - Regex:           '^"im/.*'
     Priority:        100
-  - Regex:           '^"const/*.'
+  - Regex:           '^"const/.*'
     Priority:        110
-  - Regex:           '^"rtti/*.'
+  - Regex:           '^"rtti/.*'
     Priority:        110
-  - Regex:           '^"gtest/*.'
+  - Regex:           '^"gtest/.*'
     Priority:        120
-  - Regex:           '^<gtest/*.'
+  - Regex:           '^<gtest/.*'
     Priority:        130
 #Note: that cppformat has to be on top of spdlog, even the real dependency is the opposite
 #      we need this to be able to override the internal version of spdlog
-  - Regex:           '^<fmt/*.'
+  - Regex:           '^<fmt/.*'
     Priority:        140
-  - Regex:           '^<spdlog/details/*.'
+  - Regex:           '^<spdlog/details/.*'
     Priority:        151
-  - Regex:           '^<spdlog/*.'
+  - Regex:           '^<spdlog/.*'
     Priority:        150
-  - Regex:           '^<boost/*.'
+  - Regex:           '^<boost/.*'
     Priority:        150
-  - Regex:           '^<rocksdb/*.'
+  - Regex:           '^<rocksdb/.*'
     Priority:        150
   - Regex:           '^".*"$'
     Priority:        1000

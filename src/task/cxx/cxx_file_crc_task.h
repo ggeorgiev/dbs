@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "task/base.hpp"
 #include "task/cxx/cxx_crc_task_mixin.h"
+#include "task/element.hpp"
 #include "doim/cxx/cxx_file.h"
 #include "doim/tag/tag.h"
 #include "err/err.h"

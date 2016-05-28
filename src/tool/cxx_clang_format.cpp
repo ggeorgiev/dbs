@@ -2,12 +2,12 @@
 //
 
 #include "tool/cxx_clang_format.h"
-#include "task/manager.h"
 #include "task/sys/parse_stdout_task.h"
+#include "task/manager.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
-#include "doim/set.hpp"
 #include "doim/sys/sys_command.h"
+#include "doim/set.hpp"
 #include "rtti/class_rtti.hpp"
 #include <memory>
 #include <str>

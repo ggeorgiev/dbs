@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include "doim/element.hpp"
 #include "doim/sys/sys_argument.h"
 #include "doim/sys/sys_executable.h"
+#include "doim/element.hpp"
 #include "dp/simple_memoization.hpp"
 #include <memory>
 #include <str>

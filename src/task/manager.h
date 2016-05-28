@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include "task/base.hpp"
 #include "task/cxx/cxx_file_crc_task.h"
 #include "task/cxx/cxx_header_crc_task.h"
 #include "task/cxx/cxx_object_file_crc_task.h"
@@ -11,8 +10,9 @@
 #include "task/sys/ensure_directory_task.h"
 #include "task/sys/execute_command_task.h"
 #include "task/sys/parse_stdout_task.h"
+#include "task/element.hpp"
 #include "im/initialization_manager.hpp"
-#include <mutex>
+#include <mutex> // IWYU pragma: keep
 #include <shared_ptr>
 #include <unordered>
 

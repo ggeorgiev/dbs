@@ -2,8 +2,8 @@
 //
 
 #include "doim/sys/sys_command.h"
-#include "doim/set.hpp"
 #include "doim/sys/sys_argument.h"
+#include "doim/set.hpp"
 #include "err/err_assert.h"
 #include <algorithm>
 #include <functional>

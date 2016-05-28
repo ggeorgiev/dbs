@@ -5,7 +5,7 @@ cxx_library task
         @visibility=public
         @directory=..:
 
-        task/base.hpp
+        task/element.hpp
         task/cxx/cxx_crc_task_mixin.h
         task/cxx/cxx_file_crc_task.h
         task/cxx/cxx_header_crc_task.h
