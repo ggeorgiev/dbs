@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "task/element.hpp"
+#include "task/crc_task.hpp"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/tag/tag.h"
 #include "err/err.h"
@@ -16,10 +16,9 @@
 namespace task
 {
 class CxxObjectFileCrcTask;
-
 typedef shared_ptr<CxxObjectFileCrcTask> CxxObjectFileCrcTaskSPtr;
 
-class CxxObjectFileCrcTask : public Element<CxxObjectFileCrcTask, doim::CxxObjectFileSPtr>
+class CxxObjectFileCrcTask : public CrcTask<CxxObjectFileCrcTask, doim::CxxObjectFileSPtr>
 {
 public:
     CxxObjectFileCrcTask(const doim::CxxObjectFileSPtr& cxxObjectFile);

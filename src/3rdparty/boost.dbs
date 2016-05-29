@@ -16,6 +16,7 @@ cxx_library /boost_template
         boost/fusion/algorithm.hpp
         boost/variant/variant.hpp
         boost/variant/get.hpp
+        boost/type_index.hpp
     ;
     
     cxx_header

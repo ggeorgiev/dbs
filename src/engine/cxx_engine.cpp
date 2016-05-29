@@ -22,6 +22,7 @@
 #include "log/log.h"
 #include "math/crc.hpp"
 #include "rtti/class_rtti.hpp"
+#include <boost/type_index.hpp>
 #include <algorithm>
 #include <functional>
 #include <str>

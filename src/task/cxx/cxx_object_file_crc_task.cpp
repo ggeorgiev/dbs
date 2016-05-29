@@ -3,20 +3,23 @@
 
 #include "task/cxx/cxx_object_file_crc_task.h"
 #include "task/cxx/cxx_file_crc_task.h"
+#include "task/protobuf/protobuf_file_crc_task.h"
 #include "task/manager.h"
 #include "task/tpool.h"
+#include "tpool/task.h"
+#include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
-
 #include "err/err_assert.h"
 #include "log/log.h"
 #include <boost/filesystem/operations.hpp>
+#include <boost/type_index.hpp>
 #include <iterator>
 #include <str>
 
 namespace task
 {
 CxxObjectFileCrcTask::CxxObjectFileCrcTask(const doim::CxxObjectFileSPtr& cxxObjectFile)
-    : Element(cxxObjectFile)
+    : CrcTask(cxxObjectFile)
 {
     ASSERT(cxxObjectFile->isUnique());
 }
@@ -30,7 +33,7 @@ ECode CxxObjectFileCrcTask::operator()()
         EHEnd;
     }
 
-    boost::variant<CxxFileCrcTaskSPtr, ProtobufFileCrcTaskSPtr> task;
+    tpool::TaskSPtr task;
     if (cxxObjectFile()->source().type() == typeid(doim::CxxFileSPtr))
         task = gManager->valid(CxxFileCrcTask::make(cxxObjectFile()->cxxFile()));
     else if (cxxObjectFile()->source().type() == typeid(doim::CxxFileSPtr))
@@ -38,8 +41,8 @@ ECode CxxObjectFileCrcTask::operator()()
             gManager->valid(ProtobufFileCrcTask::make(cxxObjectFile()->protobufFile()));
     else
         ASSERT(false);
-    boost::apply_visitor(
-        [](auto const& task) { return task::gTPool->ensureScheduled(task); }, task);
+
+    task::gTPool->ensureScheduled(task);
 
     std::ifstream fstream(path.c_str());
     string content((std::istreambuf_iterator<char>(fstream)),
@@ -48,9 +51,9 @@ ECode CxxObjectFileCrcTask::operator()()
     math::CrcProcessor crcProcessor;
     crcProcessor.process_bytes(content.data(), content.size());
 
-    EHTest(boost::apply_visitor([](auto const& task) { EHTest(task->join()); }, task));
+    EHTest(task->join());
 
-    auto crc = boost::apply_visitor([](auto const& task) { return task->crc(); }, task);
+    auto crc = std::static_pointer_cast<CrcTask>(task)->crc();
     if (crc == 0)
     {
         mCrcsum = 0;
