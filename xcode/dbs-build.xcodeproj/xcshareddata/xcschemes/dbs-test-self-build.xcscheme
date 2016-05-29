@@ -63,11 +63,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "build"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "iwyu"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "dbs"

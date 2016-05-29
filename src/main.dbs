@@ -17,6 +17,7 @@ annex:
     im/im.dbs
     log/log.dbs
     err/err.dbs
+    rpc/rpc.dbs
     dp/dp.dbs
     math/math.dbs
     db/db.dbs
@@ -37,6 +38,7 @@ cxx_program dbs:
         im/im
         log/log
         err/err
+        rpc/rpc
         engine/engine
     ;
 

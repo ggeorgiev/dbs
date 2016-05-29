@@ -60,6 +60,11 @@ public:
         return boost::get<CxxFileSPtr>(source());
     }
 
+    const ProtobufFileSPtr& protobufFile()
+    {
+        return boost::get<ProtobufFileSPtr>(source());
+    }
+
     const FsFileSPtr& file()
     {
         return std::get<2>(mArgs);

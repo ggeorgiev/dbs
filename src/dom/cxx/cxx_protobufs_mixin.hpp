@@ -16,7 +16,7 @@
 namespace dom
 {
 template <typename T>
-class CxxProtobufsMixin
+class ProtobufsMixin
 {
 public:
     typedef T Subject;

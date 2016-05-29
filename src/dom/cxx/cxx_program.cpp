@@ -41,7 +41,8 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
     const doim::FsDirectorySPtr& intermediate) const
 {
     auto objectFiles = doim::CxxObjectFileSet::make();
-    *objectFiles = cxxObjectFiles(objectPurpose(purpose), root, intermediate);
+    auto objPurpose = objectPurpose(purpose);
+    *objectFiles = cxxObjectFiles(objPurpose, root, intermediate);
 
     auto staticLibraries = doim::CxxStaticLibrarySet::make();
 
@@ -57,8 +58,12 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
         else
         {
             const auto& libObjectFiles =
-                cxxLibrary->cxxObjectFiles(objectPurpose(purpose), root, intermediate);
+                cxxLibrary->cxxObjectFiles(objPurpose, root, intermediate);
             objectFiles->insert(libObjectFiles.begin(), libObjectFiles.end());
+            const auto& libProtobufObjectFiles =
+                cxxLibrary->protobufCxxObjectFiles(objPurpose, root, intermediate);
+            objectFiles->insert(libProtobufObjectFiles.begin(),
+                                libProtobufObjectFiles.end());
         }
     }
     objectFiles = doim::CxxObjectFileSet::unique(objectFiles);

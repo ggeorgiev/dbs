@@ -7,6 +7,7 @@
 #include "task/cxx/cxx_header_crc_task.h"
 #include "task/cxx/cxx_object_file_crc_task.h"
 #include "task/cxx/cxx_program_crc_task.h"
+#include "task/protobuf/protobuf_file_crc_task.h"
 #include "task/sys/ensure_directory_task.h"
 #include "task/sys/execute_command_task.h"
 #include "task/sys/parse_stdout_task.h"
@@ -54,6 +55,7 @@ class Manager : public ManagerMixin<CxxFileCrcTask>,
                 public ManagerMixin<CxxHeaderCrcTask>,
                 public ManagerMixin<CxxObjectFileCrcTask>,
                 public ManagerMixin<CxxProgramCrcTask>,
+                public ManagerMixin<ProtobufFileCrcTask>,
                 public ManagerMixin<EnsureDirectoryTask>,
                 public ManagerMixin<ExecuteCommandTask>,
                 public ManagerMixin<ParseStdoutTask>
@@ -69,6 +71,7 @@ public:
     using ManagerMixin<CxxHeaderCrcTask>::valid;
     using ManagerMixin<CxxObjectFileCrcTask>::valid;
     using ManagerMixin<CxxProgramCrcTask>::valid;
+    using ManagerMixin<ProtobufFileCrcTask>::valid;
     using ManagerMixin<EnsureDirectoryTask>::valid;
     using ManagerMixin<ExecuteCommandTask>::valid;
     using ManagerMixin<ParseStdoutTask>::valid;

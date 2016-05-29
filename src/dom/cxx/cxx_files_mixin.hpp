@@ -53,7 +53,7 @@ public:
             auto cxxFile = doim::CxxFile::unique(fsFile, directories);
             cxxFiles.insert(cxxFile);
 
-            DLOG("fsFile: {0}", fsFile->path());
+            DLOG("generate cxx file for: {0}", fsFile->path());
         }
 
         return cxxFiles;

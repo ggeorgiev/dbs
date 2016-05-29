@@ -1,0 +1,6 @@
+cxx_library rpc
+    @type=user:
+
+    protobuf_file:
+    ;
+;
