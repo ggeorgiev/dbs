@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "task/element_manager.hpp"
 #include "tpool/task.h"
 #include "option/verbose.h"
 #include "doim/tag/tag.h"
@@ -16,8 +17,7 @@
 #include <shared_ptr>
 #include <string_view>
 #include <tuple>
-#include <unordered_map>
-#include <unordered_set>
+#include <unordered>
 #include <vector>
 
 namespace task
@@ -26,6 +26,11 @@ template <typename T, typename... Args>
 class Element : public enable_make_shared<T>, public tpool::Task, public rtti::RttiInfo<T>
 {
 public:
+    static shared_ptr<T> valid(const Args&... args)
+    {
+        return gElementManager->valid(enable_make_shared<T>::make(args...));
+    }
+
     typedef std::tuple<Args...> Tuple;
 
     Element(const Args&... args)
@@ -98,5 +103,11 @@ public:
 
 protected:
     Tuple mArgs;
+
+    static shared_ptr<ElementManager<T, Args...>> gElementManager;
 };
+
+template <typename T, typename... Args>
+shared_ptr<ElementManager<T, Args...>> Element<T, Args...>::gElementManager =
+    im::InitializationManager::subscribe(gElementManager);
 }

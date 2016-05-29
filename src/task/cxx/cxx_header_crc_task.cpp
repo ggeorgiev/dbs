@@ -2,18 +2,12 @@
 //
 
 #include "task/cxx/cxx_header_crc_task.h"
-#include "task/manager.h"
 #include "doim/fs/fs_file.h"
 #include "err/err_assert.h"
 #include <str>
 
 namespace task
 {
-CxxHeaderCrcTaskSPtr CxxHeaderCrcTask::valid(const CxxHeaderCrcTaskSPtr& task)
-{
-    return gManager->valid(task);
-}
-
 CxxHeaderCrcTask::CxxHeaderCrcTask(
     const doim::CxxHeaderSPtr& cxxHeader,
     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory)

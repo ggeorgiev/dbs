@@ -228,12 +228,6 @@ clang++ -I src/ -O3 -c src/task/db/db_put_task.cpp \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
     -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
     -o build/release/src/task/db/db_put_task.cpp.o -std=c++14 &
-echo Compile src/task/manager.cpp
-clang++ -I src/ -O3 -c src/task/manager.cpp \
-    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
-    -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/manager.cpp.o -std=c++14 &
 if [ ! -e build/release/src/task/protobuf/ ]; then mkdir build/release/src/task/protobuf/; fi
 echo Compile src/task/protobuf/protobuf_file_crc_task.cpp
 clang++ -I src/ -O3 -c src/task/protobuf/protobuf_file_crc_task.cpp \
@@ -345,7 +339,6 @@ clang++ -L boost/lib/ -L fmt/lib/ -L rocksdb/lib/ -L src/system/ \
     build/release/src/task/cxx/cxx_object_file_crc_task.cpp.o \
     build/release/src/task/cxx/cxx_program_crc_task.cpp.o \
     build/release/src/task/db/db_put_task.cpp.o \
-    build/release/src/task/manager.cpp.o \
     build/release/src/task/protobuf/protobuf_file_crc_task.cpp.o \
     build/release/src/task/sys/ensure_directory_task.cpp.o \
     build/release/src/task/sys/execute_command_task.cpp.o \

@@ -6,6 +6,7 @@ cxx_library task
         @directory=..:
 
         task/element.hpp
+        task/element_manager.hpp
         task/crc_task.hpp
         task/cxx/cxx_crc_task_mixin.hpp
         task/cxx/cxx_file_crc_task.h
@@ -17,7 +18,6 @@ cxx_library task
         task/sys/ensure_directory_task.h
         task/sys/execute_command_task.h
         task/sys/parse_stdout_task.h
-        task/manager.h
         task/tpool.h
     ;
 
@@ -48,7 +48,6 @@ cxx_library task
         sys/ensure_directory_task.cpp
         sys/execute_command_task.cpp
         sys/parse_stdout_task.cpp
-        manager.cpp
         tpool.cpp
     ;
 ;

@@ -3,9 +3,7 @@
 
 #include "task/sys/parse_stdout_task.h"
 #include "task/sys/execute_command_task.h"
-#include "task/manager.h"
 #include "task/tpool.h"
-
 #include "err/err_assert.h"
 #include "log/log.h"
 #include <memory>
@@ -38,8 +36,7 @@ ParseStdoutTask::ParseStdoutTask(const doim::SysCommandSPtr& command,
 
 ECode ParseStdoutTask::operator()()
 {
-    auto executeTask =
-        gManager->valid(task::ExecuteCommandTask::make(command(), targetDirectory()));
+    auto executeTask = task::ExecuteCommandTask::valid(command(), targetDirectory());
     gTPool->ensureScheduled(executeTask);
     EHTest(executeTask->join());
 

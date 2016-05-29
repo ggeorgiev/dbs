@@ -4,7 +4,6 @@
 #include "tool/cxx_iwyu.h"
 #include "tool/cxx_compiler.h"
 #include "task/sys/parse_stdout_task.h"
-#include "task/manager.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
@@ -167,7 +166,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
         EHEnd;
     };
 
-    return task::gManager->valid(task::ParseStdoutTask::make(
-        command, nullptr, rtti::RttiInfo<CxxIwyu>::classId(), fn, "Iwyu " + file));
+    return task::ParseStdoutTask::valid(
+        command, nullptr, rtti::RttiInfo<CxxIwyu>::classId(), fn, "Iwyu " + file);
 }
 }

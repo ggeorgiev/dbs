@@ -3,9 +3,7 @@
 
 #include "task/sys/execute_command_task.h"
 #include "task/sys/ensure_directory_task.h"
-#include "task/manager.h"
 #include "task/tpool.h"
-
 #include "db/database.h"
 #include "err/err_assert.h"
 #include <boost/filesystem/operations.hpp>
@@ -33,8 +31,7 @@ ECode ExecuteCommandTask::operator()()
 
         if (!boost::filesystem::is_directory(path))
         {
-            auto mkdirTask =
-                task::gManager->valid(task::EnsureDirectoryTask::make(targetDirectory()));
+            auto mkdirTask = task::EnsureDirectoryTask::valid(targetDirectory());
             gTPool->ensureScheduled(mkdirTask);
             EHTest(mkdirTask->join());
         }

@@ -68,8 +68,7 @@ protected:
             if (headerInfo.mHeader->type() == doim::CxxHeader::EType::kSystem)
                 continue;
 
-            auto task =
-                Task::valid(Task::make(headerInfo.mHeader, headerInfo.mIncludeDirectory));
+            auto task = Task::valid(headerInfo.mHeader, headerInfo.mIncludeDirectory);
             task::gTPool->ensureScheduled(task);
             tasks.push_back(task);
         }

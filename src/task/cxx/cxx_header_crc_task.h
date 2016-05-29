@@ -25,8 +25,6 @@ class CxxHeaderCrcTask
       public CrcTask<CxxHeaderCrcTask, doim::CxxHeaderSPtr, doim::CxxIncludeDirectorySPtr>
 {
 public:
-    static CxxHeaderCrcTaskSPtr valid(const CxxHeaderCrcTaskSPtr& task);
-
     CxxHeaderCrcTask(const doim::CxxHeaderSPtr& cxxHeader,
                      const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory);
 

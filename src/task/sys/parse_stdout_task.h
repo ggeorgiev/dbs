@@ -27,6 +27,12 @@ class ParseStdoutTask : public Element<ParseStdoutTask,
 public:
     static std::function<ECode(int, const string&)> logOnError();
 
+    template <typename... Args>
+    static shared_ptr<ParseStdoutTask> valid(const Args&... args)
+    {
+        return gElementManager->valid(enable_make_shared<ParseStdoutTask>::make(args...));
+    }
+
     ParseStdoutTask(const doim::SysCommandSPtr& command,
                     const doim::FsDirectorySPtr& targetDirectory,
                     rtti::ClassId parseId,

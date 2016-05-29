@@ -4,7 +4,6 @@
 #include "task/cxx/cxx_program_crc_task.h"
 #include "task/cxx/cxx_file_crc_task.h"
 #include "task/protobuf/protobuf_file_crc_task.h"
-#include "task/manager.h"
 #include "task/tpool.h"
 #include "tpool/task.h"
 #include "tpool/task_group.h"
@@ -38,9 +37,9 @@ ECode CxxProgramCrcTask::operator()()
     {
         tpool::TaskSPtr task;
         if (objectFile->source().type() == typeid(doim::CxxFileSPtr))
-            task = gManager->valid(CxxFileCrcTask::make(objectFile->cxxFile()));
+            task = CxxFileCrcTask::valid(objectFile->cxxFile());
         else if (objectFile->source().type() == typeid(doim::CxxFileSPtr))
-            task = gManager->valid(ProtobufFileCrcTask::make(objectFile->protobufFile()));
+            task = ProtobufFileCrcTask::valid(objectFile->protobufFile());
         else
             ASSERT(false);
 

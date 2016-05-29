@@ -8,7 +8,6 @@
 #include "task/cxx/cxx_program_crc_task.h"
 #include "task/db/db_put_task.h"
 #include "task/sys/parse_stdout_task.h"
-#include "task/manager.h"
 #include "task/tpool.h"
 #include "tpool/task_callback.h"
 #include "tpool/task_group.h"
@@ -88,7 +87,7 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
                                        const doim::FsDirectorySPtr& directory,
                                        const doim::CxxObjectFileSPtr& objectFile)
 {
-    auto crcTask = task::gManager->valid(task::CxxObjectFileCrcTask::make(objectFile));
+    auto crcTask = task::CxxObjectFileCrcTask::valid(objectFile);
     task::gTPool->ensureScheduled(crcTask);
 
     auto self = shared_from_this();
@@ -114,12 +113,12 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
         auto id = rtti::RttiInfo<CxxEngine, 0>::classId();
         const string& description =
             "Compile " + objectFile->cxxFile()->file()->path(directory);
-        auto compileTask = task::gManager->valid(
-            task::ParseStdoutTask::make(compileCommand,
-                                        objectFile->file()->directory(),
-                                        id,
-                                        task::ParseStdoutTask::logOnError(),
-                                        description));
+        auto compileTask =
+            task::ParseStdoutTask::valid(compileCommand,
+                                         objectFile->file()->directory(),
+                                         id,
+                                         task::ParseStdoutTask::logOnError(),
+                                         description);
 
         task::gTPool->ensureScheduled(compileTask);
 
@@ -160,12 +159,11 @@ tpool::TaskSPtr CxxEngine::buildObjects(const doim::DbKeySPtr& ancenstor,
 
         auto id = rtti::RttiInfo<CxxEngine, 1>::classId();
         const string& description = "Link " + program->file()->path(directory);
-        auto linkTask = task::gManager->valid(
-            task::ParseStdoutTask::make(linkCommand,
-                                        program->file()->directory(),
-                                        id,
-                                        task::ParseStdoutTask::logOnError(),
-                                        description));
+        auto linkTask = task::ParseStdoutTask::valid(linkCommand,
+                                                     program->file()->directory(),
+                                                     id,
+                                                     task::ParseStdoutTask::logOnError(),
+                                                     description);
 
         task::gTPool->ensureScheduled(linkTask);
         EHTest(linkTask->join());
@@ -187,7 +185,7 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
     const auto& cxxProgram =
         program->cxxProgram(gProgramPurpose[buildFor], directory, intermediate);
 
-    auto crcTask = task::gManager->valid(task::CxxProgramCrcTask::make(cxxProgram));
+    auto crcTask = task::CxxProgramCrcTask::valid(cxxProgram);
     task::gTPool->ensureScheduled(crcTask);
 
     auto ancestor = gDbKeyPurpose[buildFor];
@@ -228,7 +226,7 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
 tpool::TaskSPtr CxxEngine::iwyuTask(const doim::FsDirectorySPtr& directory,
                                     const doim::CxxFileSPtr& cxxFile)
 {
-    auto crcTask = task::gManager->valid(task::CxxFileCrcTask::make(cxxFile));
+    auto crcTask = task::CxxFileCrcTask::valid(cxxFile);
     task::gTPool->ensureScheduled(crcTask);
 
     auto self = shared_from_this();

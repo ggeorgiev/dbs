@@ -3,7 +3,7 @@
 
 #include "tool/cxx_clang_format.h"
 #include "task/sys/parse_stdout_task.h"
-#include "task/manager.h"
+
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
 #include "doim/sys/sys_command.h"
@@ -35,11 +35,10 @@ tpool::TaskSPtr CxxClangFormat::formatCommand(const doim::FsDirectorySPtr& direc
     auto formatCommand = doim::SysCommand::unique(mFormatter, arguments);
 
     auto id = rtti::RttiInfo<CxxClangFormat, 0>::classId();
-    return task::gManager->valid(
-        task::ParseStdoutTask::make(formatCommand,
-                                    cxxFile->file()->directory(),
-                                    id,
-                                    task::ParseStdoutTask::logOnError(),
-                                    "Format " + file));
+    return task::ParseStdoutTask::valid(formatCommand,
+                                        cxxFile->file()->directory(),
+                                        id,
+                                        task::ParseStdoutTask::logOnError(),
+                                        "Format " + file);
 }
 }

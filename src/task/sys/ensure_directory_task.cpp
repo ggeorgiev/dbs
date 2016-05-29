@@ -2,9 +2,7 @@
 //
 
 #include "task/sys/ensure_directory_task.h"
-#include "task/manager.h"
 #include "task/tpool.h"
-
 #include "err/err_assert.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
@@ -25,8 +23,7 @@ ECode EnsureDirectoryTask::operator()()
         boost::filesystem::path path(directory()->parent()->path());
         if (!boost::filesystem::is_directory(path))
         {
-            auto mkdirTask = task::gManager->valid(
-                task::EnsureDirectoryTask::make(directory()->parent()));
+            auto mkdirTask = task::EnsureDirectoryTask::valid(directory()->parent());
             task::gTPool->ensureScheduled(mkdirTask);
             EHTest(mkdirTask->join());
         }
