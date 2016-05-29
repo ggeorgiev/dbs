@@ -5,9 +5,11 @@
 
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
+#include "doim/protobuf/protobuf_file.h"
 #include "doim/element.hpp"
 #include "doim/set.hpp"
-#include <boost/variant.hpp>
+#include <boost/variant/variant.hpp>
+#include <boost/variant/get.hpp>
 #include <memory>
 #include <tuple>
 
@@ -30,7 +32,7 @@ struct CxxObjectFileEnums
 
 struct CxxObjectFileVariants
 {
-    typedef boost::variant<CxxFileSPtr> SourceSPtr;
+    typedef boost::variant<CxxFileSPtr, ProtobufFileSPtr> SourceSPtr;
 };
 
 class CxxObjectFile : public CxxObjectFileEnums,

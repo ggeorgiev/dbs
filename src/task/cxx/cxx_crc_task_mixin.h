@@ -36,14 +36,14 @@ protected:
                     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
                     const doim::CxxIncludeDirectorySetSPtr& includeDirectories)
     {
-        const auto& path = file->path(nullptr);
+        const auto& path = file->path();
         if (!boost::filesystem::exists(path))
         {
             mCrcsum = 0;
             EHEnd;
         }
 
-        std::ifstream fstream(file->path(nullptr).c_str());
+        std::ifstream fstream(file->path().c_str());
         string content((std::istreambuf_iterator<char>(fstream)),
                        std::istreambuf_iterator<char>());
 

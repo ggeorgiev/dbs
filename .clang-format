@@ -86,6 +86,8 @@ IncludeCategories:
     Priority:        100
   - Regex:           '^"const/.*'
     Priority:        110
+  - Regex:           '^"math/.*'
+    Priority:        110
   - Regex:           '^"rtti/.*'
     Priority:        110
   - Regex:           '^"gtest/.*'

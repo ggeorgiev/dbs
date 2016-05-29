@@ -129,6 +129,8 @@
 		5E5A05031CFA499200DA4443 /* protobuf_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E5A05011CFA499200DA4443 /* protobuf_file.cpp */; };
 		5E5A05041CFA499200DA4443 /* protobuf_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E5A05021CFA499200DA4443 /* protobuf_file.h */; };
 		5E5A05061CFA4F2E00DA4443 /* cxx_protobufs_mixin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E5A05051CFA4F2E00DA4443 /* cxx_protobufs_mixin.hpp */; };
+		5E5A050A1CFA727900DA4443 /* protobuf_file_crc_task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E5A05081CFA727900DA4443 /* protobuf_file_crc_task.cpp */; };
+		5E5A050B1CFA727900DA4443 /* protobuf_file_crc_task.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E5A05091CFA727900DA4443 /* protobuf_file_crc_task.h */; };
 		5E83145F1CDC5A7F00344DB5 /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E83145E1CDC5A7F00344DB5 /* framework.h */; };
 		5E874FAA1CEC175F00C7C123 /* tool_command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E874FA81CEC175F00C7C123 /* tool_command.cpp */; };
 		5E874FAB1CEC175F00C7C123 /* tool_command.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E874FA91CEC175F00C7C123 /* tool_command.h */; };
@@ -349,6 +351,8 @@
 		5E5A05011CFA499200DA4443 /* protobuf_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protobuf_file.cpp; sourceTree = "<group>"; };
 		5E5A05021CFA499200DA4443 /* protobuf_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protobuf_file.h; sourceTree = "<group>"; };
 		5E5A05051CFA4F2E00DA4443 /* cxx_protobufs_mixin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cxx_protobufs_mixin.hpp; sourceTree = "<group>"; };
+		5E5A05081CFA727900DA4443 /* protobuf_file_crc_task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protobuf_file_crc_task.cpp; sourceTree = "<group>"; };
+		5E5A05091CFA727900DA4443 /* protobuf_file_crc_task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protobuf_file_crc_task.h; sourceTree = "<group>"; };
 		5E6DCC6F1CEADF5B00001C9C /* .travis.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = .travis.sh; path = ../.travis.sh; sourceTree = "<group>"; };
 		5E83145E1CDC5A7F00344DB5 /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
 		5E874FA81CEC175F00C7C123 /* tool_command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tool_command.cpp; sourceTree = "<group>"; };
@@ -790,6 +794,7 @@
 			children = (
 				5E10B38C1C70F272009C73E4 /* cxx */,
 				5E10B3921C70F272009C73E4 /* db */,
+				5E5A05071CFA723A00DA4443 /* protobuf */,
 				5E10B39D1C70F272009C73E4 /* sys */,
 				5E10B3A21C70F272009C73E4 /* task.dbs */,
 				5E4205381C78EB620090FA05 /* element.hpp */,
@@ -1011,6 +1016,15 @@
 			path = protobuf;
 			sourceTree = "<group>";
 		};
+		5E5A05071CFA723A00DA4443 /* protobuf */ = {
+			isa = PBXGroup;
+			children = (
+				5E5A05081CFA727900DA4443 /* protobuf_file_crc_task.cpp */,
+				5E5A05091CFA727900DA4443 /* protobuf_file_crc_task.h */,
+			);
+			path = protobuf;
+			sourceTree = "<group>";
+		};
 		5E874FA31CEC173D00C7C123 /* tool */ = {
 			isa = PBXGroup;
 			children = (
@@ -1152,6 +1166,7 @@
 				5E5A05041CFA499200DA4443 /* protobuf_file.h in Headers */,
 				5E057CA61CE2E4000042D252 /* db_key.h in Headers */,
 				5E87B9E61CF18DAB00F042B4 /* attribute_name.h in Headers */,
+				5E5A050B1CFA727900DA4443 /* protobuf_file_crc_task.h in Headers */,
 				5EAE67811C72BE59005B3F8D /* cxx_static_library.h in Headers */,
 				5E4205391C78EB620090FA05 /* element.hpp in Headers */,
 				5E83145F1CDC5A7F00344DB5 /* framework.h in Headers */,
@@ -1316,6 +1331,7 @@
 				5E3CA9B81CCF290600F6D7ED /* cxx_parser.cpp in Sources */,
 				5E5A04FF1CFA189300DA4443 /* main_gtest.cpp in Sources */,
 				5E10B3FF1C70F272009C73E4 /* ensure_directory_task.cpp in Sources */,
+				5E5A050A1CFA727900DA4443 /* protobuf_file_crc_task.cpp in Sources */,
 				5E10B3FB1C70F272009C73E4 /* cxx_header_crc_task-utest.cpp in Sources */,
 				5E10B3FD1C70F272009C73E4 /* manager.cpp in Sources */,
 				5EE351951CE45FA6003305CC /* set_manager-utest.cpp in Sources */,
