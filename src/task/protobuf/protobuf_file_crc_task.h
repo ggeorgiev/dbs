@@ -35,13 +35,5 @@ public:
 
     ECode operator()() override;
     string description() const override;
-
-    math::Crcsum crc()
-    {
-        return mCrcsum;
-    }
-
-protected:
-    math::Crcsum mCrcsum;
 };
 }

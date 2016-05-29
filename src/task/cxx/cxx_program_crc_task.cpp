@@ -30,20 +30,28 @@ ECode CxxProgramCrcTask::operator()()
 {
     const auto& objectFiles = cxxProgram()->cxxObjectFiles();
 
+    std::vector<ICrcTaskSPtr> crcTasks;
+    crcTasks.reserve(objectFiles->size());
+
     std::vector<tpool::TaskSPtr> tasks;
     tasks.reserve(objectFiles->size());
 
     for (const auto& objectFile : *objectFiles)
     {
-        tpool::TaskSPtr task;
         if (objectFile->source().type() == typeid(doim::CxxFileSPtr))
-            task = CxxFileCrcTask::valid(objectFile->cxxFile());
+        {
+            auto cxxTask = CxxFileCrcTask::valid(objectFile->cxxFile());
+            tasks.push_back(cxxTask);
+            crcTasks.push_back(cxxTask);
+        }
         else if (objectFile->source().type() == typeid(doim::CxxFileSPtr))
-            task = ProtobufFileCrcTask::valid(objectFile->protobufFile());
+        {
+            auto protobufTask = ProtobufFileCrcTask::valid(objectFile->protobufFile());
+            tasks.push_back(protobufTask);
+            crcTasks.push_back(protobufTask);
+        }
         else
             ASSERT(false);
-
-        tasks.push_back(task);
     }
 
     auto group = tpool::TaskGroup::make(gTPool, 0, tasks);
@@ -53,8 +61,8 @@ ECode CxxProgramCrcTask::operator()()
     std::vector<math::Crcsum> crcs;
     crcs.reserve(objectFiles->size());
 
-    for (const auto& task : group->tasks())
-        crcs.push_back(std::static_pointer_cast<CrcTask>(task)->crc());
+    for (const auto& task : crcTasks)
+        crcs.push_back(task->crc());
 
     std::sort(crcs.begin(), crcs.end());
 

@@ -28,11 +28,6 @@ public:
         return std::get<0>(mArgs);
     }
 
-    math::Crcsum crc()
-    {
-        return mCrcsum;
-    }
-
     doim::TagSet tags() const override
     {
         return doim::TagSet{doim::gTaskTag, doim::gCrcTag};
@@ -40,8 +35,5 @@ public:
 
     ECode operator()() override;
     string description() const override;
-
-private:
-    math::Crcsum mCrcsum;
 };
 }

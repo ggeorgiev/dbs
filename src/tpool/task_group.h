@@ -16,7 +16,6 @@ typedef shared_ptr<TPool> TPoolSPtr;
 typedef weak_ptr<TPool> TPoolWPtr;
 
 class TaskGroup;
-
 typedef shared_ptr<TaskGroup> TaskGroupSPtr;
 
 class TaskGroup : public enable_make_shared<TaskGroup>, public Task

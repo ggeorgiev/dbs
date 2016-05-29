@@ -23,15 +23,30 @@
 
 namespace task
 {
+struct ICrcTask
+{
+    virtual math::Crcsum crc() = 0;
+    virtual ECode crc(math::Crcsum& crcsum) = 0;
+};
+
+typedef shared_ptr<ICrcTask> ICrcTaskSPtr;
+
 template <typename T, typename... Args>
-class CrcTask : public Element<T, Args...>
+class CrcTask : public ICrcTask, public Element<T, Args...>
 {
 public:
     using Element<T, Args...>::Element;
 
-    math::Crcsum crc()
+    virtual math::Crcsum crc() override
     {
         return mCrcsum;
+    }
+
+    ECode crc(math::Crcsum& crcsum) override
+    {
+        EHTest(tpool::Task::join());
+        crcsum = mCrcsum;
+        EHEnd;
     }
 
 protected:
