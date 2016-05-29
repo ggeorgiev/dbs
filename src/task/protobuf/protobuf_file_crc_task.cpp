@@ -12,7 +12,7 @@
 namespace task
 {
 ProtobufFileCrcTask::ProtobufFileCrcTask(const doim::ProtobufFileSPtr& protobufFile)
-    : Element(protobufFile)
+    : CrcTask(protobufFile)
 {
     ASSERT(protobufFile->isUnique());
 }

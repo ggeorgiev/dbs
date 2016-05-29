@@ -17,6 +17,13 @@ cxx_library /boost_template
         boost/variant/variant.hpp
         boost/variant/get.hpp
     ;
+    
+    cxx_header
+        @visibility=protected
+        @directory=../../boost/include:
+        
+        boost/variant/detail/apply_visitor_unary.hpp
+    ;
 ;
 
 cxx_library /boost_system

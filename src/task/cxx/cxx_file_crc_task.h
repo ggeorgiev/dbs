@@ -4,7 +4,7 @@
 #pragma once
 
 #include "task/cxx/cxx_crc_task_mixin.h"
-#include "task/element.hpp"
+#include "task/crc_task.hpp"
 #include "doim/cxx/cxx_file.h"
 #include "doim/tag/tag.h"
 #include "err/err.h"
@@ -20,7 +20,7 @@ class CxxFileCrcTask;
 typedef shared_ptr<CxxFileCrcTask> CxxFileCrcTaskSPtr;
 
 class CxxFileCrcTask : public CxxCrcTaskMixin,
-                       public Element<CxxFileCrcTask, doim::CxxFileSPtr>
+                       public CrcTask<CxxFileCrcTask, doim::CxxFileSPtr>
 {
 public:
     CxxFileCrcTask(const doim::CxxFileSPtr& cxxFile);

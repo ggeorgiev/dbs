@@ -15,7 +15,7 @@
 #include <boost/filesystem/operations.hpp>
 #include <fstream> // IWYU pragma: keep
 #include <iterator>
-#include <memory>
+#include <shared_ptr>
 #include <str>
 #include <string_view>
 #include <vector>
@@ -24,22 +24,17 @@ namespace task
 {
 class CxxCrcTaskMixin
 {
-public:
-    math::Crcsum crc()
-    {
-        return mCrcsum;
-    }
-
 protected:
     template <typename Task>
     ECode calculate(const doim::FsFileSPtr& file,
                     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
-                    const doim::CxxIncludeDirectorySetSPtr& includeDirectories)
+                    const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
+                    math::Crcsum& crcsum)
     {
         const auto& path = file->path();
         if (!boost::filesystem::exists(path))
         {
-            mCrcsum = 0;
+            crcsum = 0;
             EHEnd;
         }
 
@@ -93,18 +88,16 @@ protected:
             auto n = std::static_pointer_cast<Task>(task)->crc();
             if (n == 0)
             {
-                mCrcsum = 0;
+                crcsum = 0;
                 EHEnd;
             }
             x ^= n;
         }
 
         crcProcessor.process_bytes(&x, sizeof(x));
-        mCrcsum = crcProcessor.checksum();
+        crcsum = crcProcessor.checksum();
 
         EHEnd;
     }
-
-    math::Crcsum mCrcsum;
 };
 }

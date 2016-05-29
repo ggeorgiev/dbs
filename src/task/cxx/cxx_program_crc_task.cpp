@@ -11,6 +11,7 @@
 #include "doim/fs/fs_file.h"
 #include "doim/set.hpp"
 #include "err/err_assert.h"
+#include "math/crc.hpp"
 #include <algorithm>
 #include <str>
 #include <vector>
@@ -18,7 +19,7 @@
 namespace task
 {
 CxxProgramCrcTask::CxxProgramCrcTask(const doim::CxxProgramSPtr& cxxProgram)
-    : Element(cxxProgram)
+    : CrcTask(cxxProgram)
 {
     ASSERT(cxxProgram->isUnique());
 }

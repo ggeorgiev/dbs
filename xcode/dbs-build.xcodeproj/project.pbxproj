@@ -135,6 +135,7 @@
 		5E83145F1CDC5A7F00344DB5 /* framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E83145E1CDC5A7F00344DB5 /* framework.h */; };
 		5E874FAA1CEC175F00C7C123 /* tool_command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E874FA81CEC175F00C7C123 /* tool_command.cpp */; };
 		5E874FAB1CEC175F00C7C123 /* tool_command.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E874FA91CEC175F00C7C123 /* tool_command.h */; };
+		5E875BB71CFAA3CD008AC423 /* crc_task.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E875BB61CFAA3CD008AC423 /* crc_task.hpp */; };
 		5E87B9D01CF15BE000F042B4 /* dbs_parser-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E87B9CF1CF15BE000F042B4 /* dbs_parser-utest.cpp */; };
 		5E87B9D41CF15BFC00F042B4 /* dbs_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E87B9D21CF15BFC00F042B4 /* dbs_parser.cpp */; };
 		5E87B9D51CF15BFC00F042B4 /* dbs_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E87B9D31CF15BFC00F042B4 /* dbs_parser.h */; };
@@ -361,6 +362,7 @@
 		5E874FA81CEC175F00C7C123 /* tool_command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tool_command.cpp; sourceTree = "<group>"; };
 		5E874FA91CEC175F00C7C123 /* tool_command.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tool_command.h; sourceTree = "<group>"; };
 		5E874FAC1CEC347A00C7C123 /* protobuf.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = protobuf.dbs; sourceTree = "<group>"; };
+		5E875BB61CFAA3CD008AC423 /* crc_task.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = crc_task.hpp; sourceTree = "<group>"; };
 		5E87B9CD1CF1106500F042B4 /* axe.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = axe.dbs; sourceTree = "<group>"; };
 		5E87B9CF1CF15BE000F042B4 /* dbs_parser-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "dbs_parser-utest.cpp"; sourceTree = "<group>"; };
 		5E87B9D21CF15BFC00F042B4 /* dbs_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dbs_parser.cpp; sourceTree = "<group>"; };
@@ -801,6 +803,7 @@
 				5E5A05071CFA723A00DA4443 /* protobuf */,
 				5E10B39D1C70F272009C73E4 /* sys */,
 				5E10B3A21C70F272009C73E4 /* task.dbs */,
+				5E875BB61CFAA3CD008AC423 /* crc_task.hpp */,
 				5E4205381C78EB620090FA05 /* element.hpp */,
 				5E10B39B1C70F272009C73E4 /* manager.cpp */,
 				5E10B39C1C70F272009C73E4 /* manager.h */,
@@ -1171,6 +1174,7 @@
 				5E10B4031C70F272009C73E4 /* cxx_compiler.h in Headers */,
 				5E3CA9AE1CCEC90600F6D7ED /* solitary_container.hpp in Headers */,
 				5E42053F1C79097C0090FA05 /* element_manager.hpp in Headers */,
+				5E875BB71CFAA3CD008AC423 /* crc_task.hpp in Headers */,
 				5E283C1A1CF23BC600852F24 /* element_manager.hpp in Headers */,
 				5E290B391CBAB92500F10210 /* tpool.h in Headers */,
 				5E10B3E51C70F272009C73E4 /* log.h in Headers */,

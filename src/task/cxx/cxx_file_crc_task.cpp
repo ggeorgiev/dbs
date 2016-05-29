@@ -12,7 +12,7 @@
 namespace task
 {
 CxxFileCrcTask::CxxFileCrcTask(const doim::CxxFileSPtr& cxxFile)
-    : Element(cxxFile)
+    : CrcTask(cxxFile)
 {
     ASSERT(cxxFile->isUnique());
 }
@@ -20,9 +20,8 @@ CxxFileCrcTask::CxxFileCrcTask(const doim::CxxFileSPtr& cxxFile)
 ECode CxxFileCrcTask::operator()()
 {
     doim::CxxHeaderSet includes;
-    EHTest(calculate<CxxHeaderCrcTask>(cxxFile()->file(),
-                                       nullptr,
-                                       cxxFile()->cxxIncludeDirectories()));
+    EHTest(calculate<CxxHeaderCrcTask>(
+        cxxFile()->file(), nullptr, cxxFile()->cxxIncludeDirectories(), mCrcsum));
 
     DLOG("Crc for {0} is {1:x}", cxxFile()->file()->name(), mCrcsum);
     EHEnd;

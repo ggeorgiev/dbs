@@ -17,7 +17,7 @@ CxxHeaderCrcTaskSPtr CxxHeaderCrcTask::valid(const CxxHeaderCrcTaskSPtr& task)
 CxxHeaderCrcTask::CxxHeaderCrcTask(
     const doim::CxxHeaderSPtr& cxxHeader,
     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory)
-    : Element(cxxHeader, currentIncludeDirectory)
+    : CrcTask(cxxHeader, currentIncludeDirectory)
 {
     ASSERT(cxxHeader->isUnique());
     ASSERT(currentIncludeDirectory->isUnique());
@@ -28,7 +28,8 @@ ECode CxxHeaderCrcTask::operator()()
     doim::CxxHeaderSet includes;
     EHTest(calculate<CxxHeaderCrcTask>(cxxHeader()->file(),
                                        currentIncludeDirectory(),
-                                       cxxHeader()->cxxIncludeDirectories()));
+                                       cxxHeader()->cxxIncludeDirectories(),
+                                       mCrcsum));
     EHEnd;
 }
 

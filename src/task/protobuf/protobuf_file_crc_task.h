@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "task/element.hpp"
+#include "task/crc_task.hpp"
 #include "doim/protobuf/protobuf_file.h"
 #include "doim/tag/tag.h"
 #include "err/err.h"
@@ -18,7 +18,7 @@ namespace task
 class ProtobufFileCrcTask;
 typedef shared_ptr<ProtobufFileCrcTask> ProtobufFileCrcTaskSPtr;
 
-class ProtobufFileCrcTask : public Element<ProtobufFileCrcTask, doim::ProtobufFileSPtr>
+class ProtobufFileCrcTask : public CrcTask<ProtobufFileCrcTask, doim::ProtobufFileSPtr>
 {
 public:
     ProtobufFileCrcTask(const doim::ProtobufFileSPtr& protobufFile);
