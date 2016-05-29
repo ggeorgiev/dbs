@@ -97,7 +97,6 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
 
             for (std::sregex_iterator item = it; item != std::sregex_iterator(); ++item)
             {
-                success = false;
                 std::smatch smatch = *item;
                 warnings.push_back(Warning{smatchs[1].str(), smatch[2].str()});
             }
@@ -108,6 +107,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
             auto file = doim::FsFile::find(directory, warning.erroredFile);
             if (file == nullptr)
             {
+                success = false;
                 ELOG("IWYU reports issues for unknown file {}", warning.erroredFile);
                 continue;
             }
@@ -127,6 +127,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
 
                 if (headerInfo.mHeader == nullptr)
                 {
+                    success = false;
                     ELOG("IWYU reports issues for unknown file {}", warning.erroredFile);
                     continue;
                 }
@@ -140,6 +141,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
 
             if (headerInfo.mHeader == nullptr)
             {
+                success = false;
                 ELOG("IWYU suggest adding unknown header {}", warning.missingHeader);
                 continue;
             }
@@ -152,6 +154,7 @@ tpool::TaskSPtr CxxIwyu::iwyuCommand(const doim::FsDirectorySPtr& directory,
                 continue;
             }
 
+            success = false;
             ELOG("\n{}:1:1: warning: missing {} ",
                  warning.erroredFile,
                  warning.missingHeader);

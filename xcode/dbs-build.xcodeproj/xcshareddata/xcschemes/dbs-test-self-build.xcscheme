@@ -87,6 +87,10 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <PathRunnable
+         runnableDebuggingMode = "0"
+         FilePath = "/Users/george/github/dbs/build/release/dbs">
+      </PathRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"

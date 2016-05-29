@@ -4,13 +4,14 @@
 #pragma once
 
 #include "task/element.hpp"
+#include "task/element_manager.hpp"
 #include "doim/fs/fs_directory.h"
 #include "doim/sys/sys_command.h"
 #include "err/err.h"
 #include "rtti/class_rtti.hpp"
 #include <fmt/format.h>
 #include <functional>
-#include <memory>
+#include <shared_ptr>
 #include <str>
 #include <tuple>
 

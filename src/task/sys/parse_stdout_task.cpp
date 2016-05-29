@@ -6,7 +6,6 @@
 #include "task/tpool.h"
 #include "err/err_assert.h"
 #include "log/log.h"
-#include <memory>
 
 namespace task
 {
