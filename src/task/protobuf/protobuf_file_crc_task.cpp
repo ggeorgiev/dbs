@@ -5,9 +5,9 @@
 #include "doim/fs/fs_file.h"
 #include "err/err_assert.h"
 #include "log/log.h"
-#include <str>
+#include <fstream> // IWYU pragma: keep
 #include <iterator>
-#include <fstream>
+#include <str>
 
 namespace task
 {

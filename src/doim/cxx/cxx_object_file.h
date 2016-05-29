@@ -8,8 +8,8 @@
 #include "doim/protobuf/protobuf_file.h"
 #include "doim/element.hpp"
 #include "doim/set.hpp"
-#include <boost/variant/variant.hpp>
 #include <boost/variant/get.hpp>
+#include <boost/variant/variant.hpp>
 #include <memory>
 #include <tuple>
 

@@ -7,8 +7,8 @@
 #include "doim/cxx/cxx_program.h"
 #include "doim/tag/tag.h"
 #include "err/err.h"
-#include <fmt/format.h>
 #include "math/crc.hpp"
+#include <fmt/format.h>
 #include <memory>
 #include <str>
 #include <tuple>

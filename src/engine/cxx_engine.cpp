@@ -20,8 +20,8 @@
 #include "err/err.h"
 #include "im/initialization_manager.hpp"
 #include "log/log.h"
-#include "rtti/class_rtti.hpp"
 #include "math/crc.hpp"
+#include "rtti/class_rtti.hpp"
 #include <algorithm>
 #include <functional>
 #include <str>
