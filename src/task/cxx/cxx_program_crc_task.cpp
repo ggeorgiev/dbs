@@ -33,7 +33,14 @@ ECode CxxProgramCrcTask::operator()()
 
     for (const auto& objectFile : *objectFiles)
     {
-        auto task = gManager->valid(CxxFileCrcTask::make(objectFile->cxxFile()));
+        tpool::TaskSPtr task;
+        if (objectFile->source().type() == typeid(doim::CxxFileSPtr))
+            task = gManager->valid(CxxFileCrcTask::make(objectFile->cxxFile()));
+        else if (objectFile->source().type() == typeid(doim::CxxFileSPtr))
+            task = gManager->valid(ProtobufFileCrcTask::make(objectFile->protobufFile()));
+        else
+            ASSERT(false);
+
         tasks.push_back(task);
     }
 
@@ -45,7 +52,7 @@ ECode CxxProgramCrcTask::operator()()
     crcs.reserve(objectFiles->size());
 
     for (const auto& task : group->tasks())
-        crcs.push_back(std::static_pointer_cast<CxxFileCrcTask>(task)->crc());
+        crcs.push_back(std::static_pointer_cast<CrcTask>(task)->crc());
 
     std::sort(crcs.begin(), crcs.end());
 

@@ -197,12 +197,6 @@ clang++ -I src/ -O3 -c src/parser/dbs/dbs_parser.cpp \
     -o build/release/src/parser/dbs/dbs_parser.cpp.o -std=c++14 &
 if [ ! -e build/release/src/task/ ]; then mkdir build/release/src/task/; fi
 if [ ! -e build/release/src/task/cxx/ ]; then mkdir build/release/src/task/cxx/; fi
-echo Compile src/task/cxx/cxx_crc_task_mixin.cpp
-clang++ -I src/ -O3 -c src/task/cxx/cxx_crc_task_mixin.cpp \
-    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
-    -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/cxx/cxx_crc_task_mixin.cpp.o -std=c++14 &
 echo Compile src/task/cxx/cxx_file_crc_task.cpp
 clang++ -I src/ -O3 -c src/task/cxx/cxx_file_crc_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
@@ -346,7 +340,6 @@ clang++ -L boost/lib/ -L fmt/lib/ -L rocksdb/lib/ -L src/system/ \
     build/release/src/option/verbose.cpp.o \
     build/release/src/parser/cxx/cxx_parser.cpp.o \
     build/release/src/parser/dbs/dbs_parser.cpp.o \
-    build/release/src/task/cxx/cxx_crc_task_mixin.cpp.o \
     build/release/src/task/cxx/cxx_file_crc_task.cpp.o \
     build/release/src/task/cxx/cxx_header_crc_task.cpp.o \
     build/release/src/task/cxx/cxx_object_file_crc_task.cpp.o \

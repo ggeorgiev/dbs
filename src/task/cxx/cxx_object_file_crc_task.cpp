@@ -30,8 +30,16 @@ ECode CxxObjectFileCrcTask::operator()()
         EHEnd;
     }
 
-    auto task = gManager->valid(CxxFileCrcTask::make(cxxObjectFile()->cxxFile()));
-    task::gTPool->ensureScheduled(task);
+    boost::variant<CxxFileCrcTaskSPtr, ProtobufFileCrcTaskSPtr> task;
+    if (cxxObjectFile()->source().type() == typeid(doim::CxxFileSPtr))
+        task = gManager->valid(CxxFileCrcTask::make(cxxObjectFile()->cxxFile()));
+    else if (cxxObjectFile()->source().type() == typeid(doim::CxxFileSPtr))
+        task =
+            gManager->valid(ProtobufFileCrcTask::make(cxxObjectFile()->protobufFile()));
+    else
+        ASSERT(false);
+    boost::apply_visitor(
+        [](auto const& task) { return task::gTPool->ensureScheduled(task); }, task);
 
     std::ifstream fstream(path.c_str());
     string content((std::istreambuf_iterator<char>(fstream)),
@@ -40,9 +48,9 @@ ECode CxxObjectFileCrcTask::operator()()
     math::CrcProcessor crcProcessor;
     crcProcessor.process_bytes(content.data(), content.size());
 
-    EHTest(task->join());
+    EHTest(boost::apply_visitor([](auto const& task) { EHTest(task->join()); }, task));
 
-    auto crc = task->crc();
+    auto crc = boost::apply_visitor([](auto const& task) { return task->crc(); }, task);
     if (crc == 0)
     {
         mCrcsum = 0;

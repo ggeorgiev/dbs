@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "task/cxx/cxx_crc_task_mixin.h"
+#include "task/cxx/cxx_crc_task_mixin.hpp"
 #include "task/crc_task.hpp"
 #include "doim/cxx/cxx_file.h"
 #include "doim/tag/tag.h"
