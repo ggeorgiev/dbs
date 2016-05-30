@@ -6,9 +6,10 @@
 #include <boost/variant.hpp>         // IWYU pragma: export
 #include <boost/variant/variant.hpp> // IWYU pragma: export
 
-template <typename... Args>
-using variant = boost::variant<Args...>;
-
+using boost::variant;
 using boost::apply_visitor;
 
+namespace vst
+{
 auto isNullptr = [](auto const& object) { return object == nullptr; };
+}

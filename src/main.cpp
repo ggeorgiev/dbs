@@ -86,8 +86,14 @@ int main(int argc, char* argv[])
     const auto& iwyu = doim::SysExecutable::unique(iwyuFile, nullptr);
     const auto& iwyuTool = std::make_shared<tool::CxxIwyu>(iwyu);
 
-    const auto& engine =
-        std::make_shared<engine::CxxEngine>(clangFormatTool, compiler, iwyuTool);
+    const auto& protobufFile = doim::FsFile::obtain(cwd, "protobuf/bin/protoc");
+    const auto& protobuf = doim::SysExecutable::unique(protobufFile, nullptr);
+    const auto& protobufTool = std::make_shared<tool::ProtobufCompiler>(protobuf);
+
+    const auto& engine = std::make_shared<engine::CxxEngine>(clangFormatTool,
+                                                             compiler,
+                                                             iwyuTool,
+                                                             protobufTool);
 
     const auto& verb = doim::ToolCommand::make(arg[2])->find();
 

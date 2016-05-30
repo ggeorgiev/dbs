@@ -79,7 +79,7 @@ TEST_F(CxxFileCrcTaskTest, notFoundInclude)
     ASSERT_BANNED(kNotFound, task->join());
 }
 
-TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
+TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromOneDirectory)
 {
     auto cxxHeader1 = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
                                               doim::CxxHeader::EVisibility::kPublic,

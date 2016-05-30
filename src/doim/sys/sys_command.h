@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "doim/fs/fs_directory.h"
 #include "doim/sys/sys_argument.h"
 #include "doim/sys/sys_executable.h"
 #include "doim/element.hpp"
@@ -16,19 +17,27 @@ namespace doim
 class SysCommand;
 typedef shared_ptr<SysCommand> SysCommandSPtr;
 
-class SysCommand : public Element<SysCommand, SysExecutableSPtr, SysArgumentSetSPtr>
+class SysCommand
+    : public Element<SysCommand, FsDirectorySPtr, SysExecutableSPtr, SysArgumentSetSPtr>
 {
 public:
-    SysCommand(const SysExecutableSPtr& executable, const SysArgumentSetSPtr& arguments);
+    SysCommand(const FsDirectorySPtr& directory,
+               const SysExecutableSPtr& executable,
+               const SysArgumentSetSPtr& arguments);
 
-    const SysExecutableSPtr& executable() const
+    const FsDirectorySPtr& directory() const
     {
         return std::get<0>(mArgs);
     }
 
-    const SysArgumentSetSPtr& arguments() const
+    const SysExecutableSPtr& executable() const
     {
         return std::get<1>(mArgs);
+    }
+
+    const SysArgumentSetSPtr& arguments() const
+    {
+        return std::get<2>(mArgs);
     }
 
     string toString() const;

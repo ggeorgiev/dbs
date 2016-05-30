@@ -101,7 +101,7 @@ doim::SysCommandSPtr CxxCompiler::compileCommand(
     compileArguments->insert(argument_o);
     compileArguments = doim::SysArgumentSet::unique(compileArguments);
 
-    return doim::SysCommand::unique(mCompiler, compileArguments);
+    return doim::SysCommand::unique(nullptr, mCompiler, compileArguments);
 }
 
 doim::SysCommandSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& directory,
@@ -145,6 +145,6 @@ doim::SysCommandSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& direc
     linkArguments->insert(argument_o);
     linkArguments = doim::SysArgumentSet::unique(linkArguments);
 
-    return doim::SysCommand::unique(mCompiler, linkArguments);
+    return doim::SysCommand::unique(nullptr, mCompiler, linkArguments);
 }
 }

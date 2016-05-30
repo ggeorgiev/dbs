@@ -3,6 +3,7 @@
 
 #include "task/cxx/cxx_source_crc_task.h"
 #include "task/cxx/cxx_source_headers_task.h"
+#include "task/protobuf/protobuf_file_crc_task.h"
 #include "task/tpool.h"
 #include "tpool/task_group.h"
 #include "doim/cxx/cxx_header.h"
@@ -35,6 +36,24 @@ CxxSourceCrcTask::CxxSourceCrcTask(
 
 ECode CxxSourceCrcTask::operator()()
 {
+    auto origin =
+        apply_visitor([](auto const& element) { return element->origin(); }, cxxSource());
+
+    if (!apply_visitor(vst::isNullptr, origin))
+    {
+        if (origin.type() == typeid(doim::ProtobufFileSPtr))
+        {
+            auto originTask =
+                ProtobufFileCrcTask::valid(boost::get<doim::ProtobufFileSPtr>(origin));
+            gTPool->ensureScheduled(originTask);
+            EHTest(originTask->join());
+            mCrcsum = originTask->crc();
+        }
+        else
+            ASSERT(false);
+        EHEnd;
+    }
+
     const auto& path = apply_visitor(doim::vst::path, cxxSource());
 
     if (!boost::filesystem::exists(path))

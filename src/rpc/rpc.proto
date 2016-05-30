@@ -1,6 +1,8 @@
 //  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
+option optimize_for = LITE_RUNTIME;
+
 message Rpc
 {
 }

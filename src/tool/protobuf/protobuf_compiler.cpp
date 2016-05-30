@@ -13,8 +13,24 @@ ProtobufCompiler::ProtobufCompiler(const doim::SysExecutableSPtr& compiler)
 }
 
 doim::SysCommandSPtr ProtobufCompiler::compileCommand(
-    const doim::FsDirectorySPtr& directory, const doim::CxxFileSPtr& cxxFile) const
+    const doim::FsDirectorySPtr& directory,
+    const doim::FsDirectorySPtr& destination,
+    const doim::ProtobufFileSPtr& protobufFile,
+    const doim::CxxFileSPtr& cxxFile) const
 {
-    return doim::SysCommandSPtr();
+    ASSERT(protobufFile != nullptr);
+    ASSERT(cxxFile != nullptr);
+
+    auto compileArguments = doim::SysArgumentSet::make();
+
+    auto argument_cpp_out = doim::SysArgument::unique("--cpp_out=" + destination->path());
+    compileArguments->insert(argument_cpp_out);
+
+    auto argument_proto =
+        doim::SysArgument::unique(protobufFile->file()->path(directory));
+    compileArguments->insert(argument_proto);
+    compileArguments = doim::SysArgumentSet::unique(compileArguments);
+
+    return doim::SysCommand::unique(directory, mCompiler, compileArguments);
 }
 }

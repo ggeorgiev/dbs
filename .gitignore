@@ -16,3 +16,6 @@ xcuserdata/
 /dbs
 /dbs.*
 /build.sh.*
+
+*.pb.cc
+*.pb.h

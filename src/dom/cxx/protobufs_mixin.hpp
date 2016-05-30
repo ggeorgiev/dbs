@@ -6,6 +6,7 @@
 #include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/fs/fs_file.h"
+#include "doim/generic/object.h"
 #include "doim/protobuf/protobuf_file.h"
 #include "err/err.h"
 #include "log/log.h"
@@ -31,6 +32,20 @@ public:
     const doim::FsFileSet& protobufsList() const
     {
         return mProtobufsList;
+    }
+
+    const doim::CxxFileSPtr cxxFile(
+        const doim::ProtobufFileSPtr& protobufFile,
+        const doim::CxxIncludeDirectorySetSPtr& cxxIncludeDirectories) const
+    {
+        auto name = protobufFile->file()->name();
+
+        const auto& fsfile =
+            doim::FsFile::obtain(protobufFile->file()->directory(),
+                                 name.substr(0, name.length() - sizeof("proto")) +
+                                     ".pb.cc");
+
+        return doim::CxxFile::unique(fsfile, cxxIncludeDirectories, protobufFile);
     }
 
     doim::ProtobufFileSet protobufFiles(const doim::FsDirectorySPtr& root) const
@@ -59,22 +74,30 @@ public:
 
         const auto& files = protobufFiles(root);
 
+        auto protobuflib = doim::CxxIncludeDirectory::unique(
+            doim::CxxIncludeDirectory::EType::kSystem,
+            doim::FsDirectory::obtain(root, "protobuf/include"),
+            doim::CxxHeaderSet::unique(doim::CxxHeaderSet::make()));
+
+        auto cxxIncludeDirectories = doim::CxxIncludeDirectorySet::make();
+        cxxIncludeDirectories->insert(protobuflib);
+        cxxIncludeDirectories =
+            doim::CxxIncludeDirectorySet::unique(cxxIncludeDirectories);
+
         for (const auto& protobufFile : files)
         {
-            /*
-                        const auto& directory =
-                            doim::FsDirectory::corresponding(protobufFile->file()->directory(),
-                                                             root,
-                                                             intermediate);
-                        const auto& outputFile =
-                            doim::FsFile::obtain(directory, protobufFile->file()->name() +
-               ".o");
+            const auto& directory =
+                doim::FsDirectory::corresponding(protobufFile->file()->directory(),
+                                                 root,
+                                                 intermediate);
+            const auto& outputFile =
+                doim::FsFile::obtain(directory, protobufFile->file()->name() + ".o");
 
-                        auto objectFile =
-                            doim::CxxObjectFile::unique(purpose, protobufFile,
-               outputFile);
-                        cxxObjectFiles.insert(objectFile);
-            */
+            auto compilefile = cxxFile(protobufFile, cxxIncludeDirectories);
+
+            auto objectFile =
+                doim::CxxObjectFile::unique(purpose, compilefile, outputFile);
+            cxxObjectFiles.insert(objectFile);
         }
         return cxxObjectFiles;
     }

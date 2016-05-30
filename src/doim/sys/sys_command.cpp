@@ -13,10 +13,12 @@
 
 namespace doim
 {
-SysCommand::SysCommand(const SysExecutableSPtr& executable,
+SysCommand::SysCommand(const FsDirectorySPtr& directory,
+                       const SysExecutableSPtr& executable,
                        const SysArgumentSetSPtr& arguments)
-    : Element(executable, arguments)
+    : Element(directory, executable, arguments)
 {
+    ASSERT(directory == nullptr || directory->isUnique());
     ASSERT(executable->isUnique());
     ASSERT(arguments->isUnique());
 }
@@ -30,7 +32,12 @@ string SysCommand::toString() const
 
         std::sort(strings.begin(), strings.end());
 
-        string result = executable()->path();
+        string result;
+
+        if (directory() != nullptr)
+            result += "cd " + directory()->path() + " && \\\n";
+
+        result += executable()->path();
         size_t line = result.size();
         for (const auto& str : strings)
         {

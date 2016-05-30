@@ -12,8 +12,8 @@ CxxFile::CxxFile(const FsFileSPtr& file,
                  const OriginSPtr& origin)
     : Element(file, cxxIncludeDirectories, origin)
 {
-    ASSERT(file->isUnique());
-    ASSERT(cxxIncludeDirectories->isUnique());
+    ASSERT(file != nullptr && file->isUnique());
+    ASSERT(cxxIncludeDirectories != nullptr && cxxIncludeDirectories->isUnique());
     ASSERT(apply_visitor(vst::isUniqueIfAny, origin));
 }
 }

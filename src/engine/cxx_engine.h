@@ -6,6 +6,7 @@
 #include "tool/cxx/cxx_clang_format.h"
 #include "tool/cxx/cxx_compiler.h"
 #include "tool/cxx/cxx_iwyu.h"
+#include "tool/protobuf/protobuf_compiler.h"
 #include "tpool/task.h"
 #include "dom/cxx/cxx_program.h"
 #include "doim/cxx/cxx_file.h"
@@ -35,7 +36,8 @@ public:
 
     CxxEngine(const tool::CxxClangFormatSPtr& formatter,
               const tool::CxxCompilerSPtr& compiler,
-              const tool::CxxIwyuSPtr& iwyu);
+              const tool::CxxIwyuSPtr& iwyu,
+              const tool::ProtobufCompilerSPtr& protobufCompiler);
 
     enum class EBuildFor
     {
@@ -75,9 +77,9 @@ private:
                                 const doim::FsDirectorySPtr& directory,
                                 const doim::CxxObjectFileSPtr& objectFile);
 
-    tpool::TaskSPtr buildObjects(const doim::DbKeySPtr& ancenstor,
-                                 const doim::FsDirectorySPtr& directory,
-                                 const doim::CxxProgramSPtr& program);
+    tpool::TaskSPtr compileObjects(const doim::DbKeySPtr& ancenstor,
+                                   const doim::FsDirectorySPtr& directory,
+                                   const doim::CxxProgramSPtr& program);
 
     tpool::TaskSPtr iwyuTask(const doim::FsDirectorySPtr& directory,
                              const doim::CxxFileSPtr& cxxFile);
@@ -85,5 +87,7 @@ private:
     tool::CxxClangFormatSPtr mFormatter;
     tool::CxxCompilerSPtr mCompiler;
     tool::CxxIwyuSPtr mIwyu;
+
+    tool::ProtobufCompilerSPtr mProtobufCompiler;
 };
 }

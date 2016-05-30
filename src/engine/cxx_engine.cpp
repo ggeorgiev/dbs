@@ -62,10 +62,12 @@ std::map<CxxEngine::EBuildFor, doim::DbKeySPtr> CxxEngine::gDbKeyPurpose =
 
 CxxEngine::CxxEngine(const tool::CxxClangFormatSPtr& formatter,
                      const tool::CxxCompilerSPtr& compiler,
-                     const tool::CxxIwyuSPtr& iwyu)
+                     const tool::CxxIwyuSPtr& iwyu,
+                     const tool::ProtobufCompilerSPtr& protobufCompiler)
     : mFormatter(formatter)
     , mCompiler(compiler)
     , mIwyu(iwyu)
+    , mProtobufCompiler(protobufCompiler)
 {
 }
 
@@ -107,6 +109,32 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
             EHEnd;
         }
 
+        auto origin = objectFile->cxxFile()->origin();
+        if (!apply_visitor(vst::isNullptr, origin))
+        {
+            if (origin.type() == typeid(doim::ProtobufFileSPtr))
+            {
+                const auto& protobufFile = boost::get<doim::ProtobufFileSPtr>(origin);
+                auto compileProtobufCommand = mProtobufCompiler->compileCommand(
+                    directory, directory, protobufFile, objectFile->cxxFile());
+
+                auto id = rtti::RttiInfo<CxxEngine, 2>::classId();
+                const string& description =
+                    "Compile " + objectFile->cxxFile()->file()->path(directory);
+                auto compileTask = task::ParseStdoutTask::valid(
+                    compileProtobufCommand,
+                    objectFile->cxxFile()->file()->directory(),
+                    id,
+                    task::ParseStdoutTask::logOnError(),
+                    description);
+
+                task::gTPool->ensureScheduled(compileTask);
+                EHTest(compileTask->join());
+            }
+            else
+                ASSERT(false);
+        }
+
         auto compileCommand = mCompiler->compileCommand(directory, objectFile);
 
         auto id = rtti::RttiInfo<CxxEngine, 0>::classId();
@@ -134,9 +162,9 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
     return task;
 }
 
-tpool::TaskSPtr CxxEngine::buildObjects(const doim::DbKeySPtr& ancenstor,
-                                        const doim::FsDirectorySPtr& directory,
-                                        const doim::CxxProgramSPtr& program)
+tpool::TaskSPtr CxxEngine::compileObjects(const doim::DbKeySPtr& ancenstor,
+                                          const doim::FsDirectorySPtr& directory,
+                                          const doim::CxxProgramSPtr& program)
 {
     auto objectFileKey = doim::DbKey::unique(ancenstor, "object-file");
 
@@ -210,7 +238,7 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
         }
 
         auto value = doim::DbValue::make(crcTask->crc());
-        auto comTask = buildObjects(ancestor, directory, cxxProgram);
+        auto comTask = compileObjects(ancestor, directory, cxxProgram);
         auto updateTask = updateDbTask(comTask, key, value);
         task::gTPool->ensureScheduled(updateTask);
         EHTest(updateTask->join());

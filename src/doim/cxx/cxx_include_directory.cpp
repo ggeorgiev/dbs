@@ -158,9 +158,8 @@ CxxIncludeDirectory::CxxIncludeDirectory(const EType type,
                                          const CxxHeaderSetSPtr& headerFiles)
     : Element(type, directory, headerFiles)
 {
-    ASSERT(directory != nullptr);
-    ASSERT(directory->isUnique());
-    ASSERT(headerFiles->isUnique());
+    ASSERT(directory != nullptr && directory->isUnique());
+    ASSERT(headerFiles != nullptr && headerFiles->isUnique());
 }
 
 void CxxIncludeDirectory::finally()
