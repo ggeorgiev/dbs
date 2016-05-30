@@ -27,7 +27,7 @@ public:
         , mPool(pool)
     {
         mTasks.reserve(tasks.size());
-        for (const auto& task : mTasks)
+        for (const auto& task : tasks)
         {
             ASSERT(task != nullptr);
             mTasks.push_back(std::static_pointer_cast<tpool::Task>(task));
