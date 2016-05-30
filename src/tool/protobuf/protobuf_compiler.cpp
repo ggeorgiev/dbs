@@ -23,7 +23,8 @@ doim::SysCommandSPtr ProtobufCompiler::compileCommand(
 
     auto compileArguments = doim::SysArgumentSet::make();
 
-    auto argument_cpp_out = doim::SysArgument::unique("--cpp_out=" + destination->path());
+    auto argument_cpp_out =
+        doim::SysArgument::unique("--cpp_out=" + destination->path(directory));
     compileArguments->insert(argument_cpp_out);
 
     auto argument_proto =

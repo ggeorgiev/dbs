@@ -15,11 +15,11 @@ SysExecutable::SysExecutable(const doim::FsFileSPtr& file,
     ASSERT(file != nullptr || binary != nullptr);
 }
 
-string SysExecutable::path() const
+string SysExecutable::path(const doim::FsDirectorySPtr& root) const
 {
     const doim::FsFileSPtr& file = std::get<0>(mArgs);
     if (file != nullptr)
-        return file->path();
+        return file->path(root);
 
     const doim::FsBinarySPtr& binary = std::get<1>(mArgs);
     return binary->name();

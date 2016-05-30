@@ -37,7 +37,7 @@ ECode ExecuteCommandTask::operator()()
         }
     }
 
-    const auto& cmd = command()->toString() + " 2>&1";
+    const auto& cmd = command()->toString(nullptr) + " 2>&1";
 
     auto pipe = popen(cmd.c_str(), "r");
     if (!pipe)
@@ -73,12 +73,12 @@ ECode ExecuteCommandTask::stdoutput(string& stdoutput) const
 
 string ExecuteCommandTask::stdoutputDbKey() const
 {
-    return "stdout: " + command()->toString();
+    return "stdout: " + command()->toString(nullptr);
 }
 
 string ExecuteCommandTask::description() const
 {
-    return "System execute " + command()->toString();
+    return "System execute " + command()->toString(nullptr);
 }
 
 } // namespace task

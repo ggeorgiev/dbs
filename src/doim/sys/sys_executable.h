@@ -14,11 +14,12 @@ namespace doim
 class SysExecutable;
 typedef shared_ptr<SysExecutable> SysExecutableSPtr;
 
+// TODO: switch to variant
 class SysExecutable : public Element<SysExecutable, doim::FsFileSPtr, doim::FsBinarySPtr>
 {
 public:
     SysExecutable(const doim::FsFileSPtr& file, const doim::FsBinarySPtr& binary);
 
-    string path() const;
+    string path(const doim::FsDirectorySPtr& root) const;
 };
 }

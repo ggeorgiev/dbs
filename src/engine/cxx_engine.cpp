@@ -374,7 +374,7 @@ string CxxEngine::buildScript(EBuildFor buildFor,
                 auto compileProtobufCommand = mProtobufCompiler->compileCommand(
                     directory, directory, protobufFile, objectFile->cxxFile());
 
-                compileOrigin = compileProtobufCommand->toString() + " && \\\n";
+                compileOrigin = compileProtobufCommand->toString(directory) + " && \\\n";
             }
             else
                 ASSERT(false);
@@ -384,7 +384,8 @@ string CxxEngine::buildScript(EBuildFor buildFor,
         stream << "echo Compile " << objectFile->cxxFile()->file()->path(directory)
                << std::endl;
         auto compileCommand = mCompiler->compileCommand(directory, objectFile);
-        stream << compileOrigin << compileCommand->toString() << " &" << std::endl;
+        stream << compileOrigin << compileCommand->toString(directory) << " &"
+               << std::endl;
     }
 
     stream << "wait" << std::endl;
@@ -392,7 +393,7 @@ string CxxEngine::buildScript(EBuildFor buildFor,
     auto linkCommand = mCompiler->linkCommand(directory, cxxProgram);
     stream << makeDirectory(directory, cxxProgram->file()->directory(), directories);
     stream << "echo Link " << cxxProgram->file()->path(directory) << std::endl;
-    stream << linkCommand->toString() << std::endl;
+    stream << linkCommand->toString(directory) << std::endl;
 
     return stream.str();
 }

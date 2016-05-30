@@ -40,9 +40,6 @@ public:
         return std::get<2>(mArgs);
     }
 
-    string toString() const;
-
-private:
-    mutable dp::SimpleMemoization<string> mCommandMemoization;
+    string toString(const FsDirectorySPtr& root) const;
 };
 }

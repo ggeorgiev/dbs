@@ -23,39 +23,35 @@ SysCommand::SysCommand(const FsDirectorySPtr& directory,
     ASSERT(arguments->isUnique());
 }
 
-string SysCommand::toString() const
+string SysCommand::toString(const FsDirectorySPtr& root) const
 {
-    auto fn = [this]() -> string {
-        std::vector<string> strings;
-        for (const auto& argument : *arguments())
-            strings.push_back(argument->value());
+    std::vector<string> strings;
+    for (const auto& argument : *arguments())
+        strings.push_back(argument->value());
 
-        std::sort(strings.begin(), strings.end());
+    std::sort(strings.begin(), strings.end());
 
-        string result;
+    string result;
 
-        if (directory() != nullptr)
-            result += "pushd " + directory()->path() + " && \\\n";
+    if (directory() != nullptr)
+        result += "pushd " + directory()->path(root) + " && \\\n";
 
-        result += executable()->path();
-        size_t line = result.size();
-        for (const auto& str : strings)
+    result += executable()->path(root);
+    size_t line = result.size();
+    for (const auto& str : strings)
+    {
+        line += str.size() + 1;
+        if (line > 80)
         {
-            line += str.size() + 1;
-            if (line > 80)
-            {
-                line = str.size() + 4;
-                result += " \\\n   ";
-            }
-            result += " " + str;
+            line = str.size() + 4;
+            result += " \\\n   ";
         }
+        result += " " + str;
+    }
 
-        if (directory() != nullptr)
-            result += " && \\\npopd";
+    if (directory() != nullptr)
+        result += " && \\\npopd";
 
-        return result;
-    };
-
-    return mCommandMemoization.get(fn);
+    return result;
 }
 }
