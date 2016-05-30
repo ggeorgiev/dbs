@@ -81,6 +81,9 @@ protected:
 
         EHTest(group->join());
 
+        // TODO: this algorithm requires that no two objects return the same crc
+        unordered_set<math::Crcsum> crcs;
+
         math::Crcsum x = 0;
         for (const auto& task : tasks)
         {
@@ -90,6 +93,9 @@ protected:
                 crcsum = 0;
                 EHEnd;
             }
+            auto unique = crcs.insert(n).second;
+            if (!unique)
+                EHBan(kTooMany, "There are at least two items with the same crc");
             x ^= n;
         }
 

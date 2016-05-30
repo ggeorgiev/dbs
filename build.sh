@@ -261,24 +261,32 @@ clang++ -I src/ -O3 -c src/task/tpool.cpp \
     -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
     -o build/release/src/task/tpool.cpp.o -std=c++14 &
 if [ ! -e build/release/src/tool/ ]; then mkdir build/release/src/tool/; fi
-echo Compile src/tool/cxx_clang_format.cpp
-clang++ -I src/ -O3 -c src/tool/cxx_clang_format.cpp \
+if [ ! -e build/release/src/tool/cxx/ ]; then mkdir build/release/src/tool/cxx/; fi
+echo Compile src/tool/cxx/cxx_clang_format.cpp
+clang++ -I src/ -O3 -c src/tool/cxx/cxx_clang_format.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
     -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/tool/cxx_clang_format.cpp.o -std=c++14 &
-echo Compile src/tool/cxx_compiler.cpp
-clang++ -I src/ -O3 -c src/tool/cxx_compiler.cpp \
+    -o build/release/src/tool/cxx/cxx_clang_format.cpp.o -std=c++14 &
+echo Compile src/tool/cxx/cxx_compiler.cpp
+clang++ -I src/ -O3 -c src/tool/cxx/cxx_compiler.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
     -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/tool/cxx_compiler.cpp.o -std=c++14 &
-echo Compile src/tool/cxx_iwyu.cpp
-clang++ -I src/ -O3 -c src/tool/cxx_iwyu.cpp \
+    -o build/release/src/tool/cxx/cxx_compiler.cpp.o -std=c++14 &
+echo Compile src/tool/cxx/cxx_iwyu.cpp
+clang++ -I src/ -O3 -c src/tool/cxx/cxx_iwyu.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
     -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/tool/cxx_iwyu.cpp.o -std=c++14 &
+    -o build/release/src/tool/cxx/cxx_iwyu.cpp.o -std=c++14 &
+if [ ! -e build/release/src/tool/protobuf/ ]; then mkdir build/release/src/tool/protobuf/; fi
+echo Compile src/tool/protobuf/protobuf_compiler.cpp
+clang++ -I src/ -O3 -c src/tool/protobuf/protobuf_compiler.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
+    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
+    -o build/release/src/tool/protobuf/protobuf_compiler.cpp.o -std=c++14 &
 if [ ! -e build/release/src/tpool/ ]; then mkdir build/release/src/tpool/; fi
 echo Compile src/tpool/task.cpp
 clang++ -I src/ -O3 -c src/tpool/task.cpp \
@@ -344,8 +352,10 @@ clang++ -L boost/lib/ -L fmt/lib/ -L rocksdb/lib/ -L src/system/ \
     build/release/src/task/sys/execute_command_task.cpp.o \
     build/release/src/task/sys/parse_stdout_task.cpp.o \
     build/release/src/task/tpool.cpp.o \
-    build/release/src/tool/cxx_clang_format.cpp.o \
-    build/release/src/tool/cxx_compiler.cpp.o \
-    build/release/src/tool/cxx_iwyu.cpp.o build/release/src/tpool/task.cpp.o \
+    build/release/src/tool/cxx/cxx_clang_format.cpp.o \
+    build/release/src/tool/cxx/cxx_compiler.cpp.o \
+    build/release/src/tool/cxx/cxx_iwyu.cpp.o \
+    build/release/src/tool/protobuf/protobuf_compiler.cpp.o \
+    build/release/src/tpool/task.cpp.o \
     build/release/src/tpool/task_callback.cpp.o \
     build/release/src/tpool/task_group.cpp.o build/release/src/tpool/tpool.cpp.o

@@ -2,7 +2,7 @@
 //
 
 #include "engine/cxx_engine.h"
-#include "tool/cxx_compiler.h"
+#include "tool/cxx/cxx_compiler.h"
 #include "task/cxx/cxx_file_crc_task.h"
 #include "task/cxx/cxx_object_file_crc_task.h"
 #include "task/cxx/cxx_program_crc_task.h"

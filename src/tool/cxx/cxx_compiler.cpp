@@ -1,7 +1,7 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "tool/cxx_compiler.h"
+#include "tool/cxx/cxx_compiler.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_static_library.h"
 #include "doim/fs/fs_file.h"

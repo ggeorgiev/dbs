@@ -1,9 +1,8 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "tool/cxx_clang_format.h"
+#include "tool/cxx/cxx_clang_format.h"
 #include "task/sys/parse_stdout_task.h"
-
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
 #include "doim/sys/sys_command.h"

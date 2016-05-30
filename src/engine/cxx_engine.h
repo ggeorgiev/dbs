@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include "tool/cxx_clang_format.h"
-#include "tool/cxx_compiler.h"
-#include "tool/cxx_iwyu.h"
+#include "tool/cxx/cxx_clang_format.h"
+#include "tool/cxx/cxx_compiler.h"
+#include "tool/cxx/cxx_iwyu.h"
 #include "tpool/task.h"
 #include "dom/cxx/cxx_program.h"
 #include "doim/cxx/cxx_file.h"

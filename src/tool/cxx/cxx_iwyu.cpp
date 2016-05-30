@@ -1,8 +1,8 @@
 //  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
-#include "tool/cxx_iwyu.h"
-#include "tool/cxx_compiler.h"
+#include "tool/cxx/cxx_iwyu.h"
+#include "tool/cxx/cxx_compiler.h"
 #include "task/sys/parse_stdout_task.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_header.h"
