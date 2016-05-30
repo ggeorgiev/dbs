@@ -7,13 +7,11 @@
 namespace doim
 {
 CxxObjectFile::CxxObjectFile(EPurpose purpose,
-                             const SourceSPtr& source,
+                             const CxxFileSPtr& cxxFile,
                              const FsFileSPtr& file)
-    : Element(purpose, source, file)
+    : Element(purpose, cxxFile, file)
 {
-    ASSERT(boost::apply_visitor(
-        [](auto const& source) { return source != nullptr && source->isUnique(); },
-        source));
+    ASSERT(cxxFile->isUnique());
     ASSERT(file->isUnique());
 }
 }

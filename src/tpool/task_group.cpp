@@ -8,17 +8,6 @@
 
 namespace tpool
 {
-TaskGroup::TaskGroup(const TPoolSPtr& pool,
-                     int priority,
-                     const std::vector<TaskSPtr>& tasks)
-    : Task(priority)
-    , mPool(pool)
-    , mTasks(tasks)
-{
-    for (const auto& task : mTasks)
-        ASSERT(task != nullptr);
-}
-
 TaskGroup::~TaskGroup()
 {
 }

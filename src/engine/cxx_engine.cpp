@@ -281,9 +281,6 @@ tpool::TaskSPtr CxxEngine::iwyu(const doim::FsDirectorySPtr& directory,
     std::vector<tpool::TaskSPtr> allTasks;
     for (const auto& objectFile : *objectFiles)
     {
-        if (objectFile->source().type() != typeid(doim::CxxFileSPtr))
-            continue;
-
         tpool::TaskSPtr task = iwyuTask(directory, objectFile->cxxFile());
         allTasks.push_back(task);
     }

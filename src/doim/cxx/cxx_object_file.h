@@ -30,39 +30,21 @@ struct CxxObjectFileEnums
     };
 };
 
-struct CxxObjectFileVariants
-{
-    typedef boost::variant<CxxFileSPtr, ProtobufFileSPtr> SourceSPtr;
-};
-
-class CxxObjectFile : public CxxObjectFileEnums,
-                      public CxxObjectFileVariants,
-                      public Element<CxxObjectFile,
-                                     CxxObjectFileEnums::EPurpose,
-                                     CxxObjectFileVariants::SourceSPtr,
-                                     FsFileSPtr>
+class CxxObjectFile
+    : public CxxObjectFileEnums,
+      public Element<CxxObjectFile, CxxObjectFileEnums::EPurpose, CxxFileSPtr, FsFileSPtr>
 {
 public:
-    CxxObjectFile(EPurpose purpose, const SourceSPtr& source, const FsFileSPtr& file);
+    CxxObjectFile(EPurpose purpose, const CxxFileSPtr& cxxFile, const FsFileSPtr& file);
 
     EPurpose purpose() const
     {
         return static_cast<EPurpose>(std::get<0>(mArgs));
     }
 
-    const SourceSPtr& source()
-    {
-        return std::get<1>(mArgs);
-    }
-
     const CxxFileSPtr& cxxFile()
     {
-        return boost::get<CxxFileSPtr>(source());
-    }
-
-    const ProtobufFileSPtr& protobufFile()
-    {
-        return boost::get<ProtobufFileSPtr>(source());
+        return std::get<1>(mArgs);
     }
 
     const FsFileSPtr& file()

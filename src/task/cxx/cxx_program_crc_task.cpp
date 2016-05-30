@@ -30,28 +30,13 @@ ECode CxxProgramCrcTask::operator()()
 {
     const auto& objectFiles = cxxProgram()->cxxObjectFiles();
 
-    std::vector<ICrcTaskSPtr> crcTasks;
-    crcTasks.reserve(objectFiles->size());
-
-    std::vector<tpool::TaskSPtr> tasks;
+    std::vector<CxxFileCrcTaskSPtr> tasks;
     tasks.reserve(objectFiles->size());
 
     for (const auto& objectFile : *objectFiles)
     {
-        if (objectFile->source().type() == typeid(doim::CxxFileSPtr))
-        {
-            auto cxxTask = CxxFileCrcTask::valid(objectFile->cxxFile());
-            tasks.push_back(cxxTask);
-            crcTasks.push_back(cxxTask);
-        }
-        else if (objectFile->source().type() == typeid(doim::CxxFileSPtr))
-        {
-            auto protobufTask = ProtobufFileCrcTask::valid(objectFile->protobufFile());
-            tasks.push_back(protobufTask);
-            crcTasks.push_back(protobufTask);
-        }
-        else
-            ASSERT(false);
+        auto cxxTask = CxxFileCrcTask::valid(objectFile->cxxFile());
+        tasks.push_back(cxxTask);
     }
 
     auto group = tpool::TaskGroup::make(gTPool, 0, tasks);
@@ -61,7 +46,7 @@ ECode CxxProgramCrcTask::operator()()
     std::vector<math::Crcsum> crcs;
     crcs.reserve(objectFiles->size());
 
-    for (const auto& task : crcTasks)
+    for (const auto& task : tasks)
         crcs.push_back(task->crc());
 
     std::sort(crcs.begin(), crcs.end());

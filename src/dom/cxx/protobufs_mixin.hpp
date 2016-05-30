@@ -60,16 +60,20 @@ public:
 
         for (const auto& protobufFile : files)
         {
-            const auto& directory =
-                doim::FsDirectory::corresponding(protobufFile->file()->directory(),
-                                                 root,
-                                                 intermediate);
-            const auto& outputFile =
-                doim::FsFile::obtain(directory, protobufFile->file()->name() + ".o");
+            /*
+                        const auto& directory =
+                            doim::FsDirectory::corresponding(protobufFile->file()->directory(),
+                                                             root,
+                                                             intermediate);
+                        const auto& outputFile =
+                            doim::FsFile::obtain(directory, protobufFile->file()->name() +
+               ".o");
 
-            auto objectFile =
-                doim::CxxObjectFile::unique(purpose, protobufFile, outputFile);
-            cxxObjectFiles.insert(objectFile);
+                        auto objectFile =
+                            doim::CxxObjectFile::unique(purpose, protobufFile,
+               outputFile);
+                        cxxObjectFiles.insert(objectFile);
+            */
         }
         return cxxObjectFiles;
     }

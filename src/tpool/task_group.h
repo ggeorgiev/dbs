@@ -21,7 +21,18 @@ typedef shared_ptr<TaskGroup> TaskGroupSPtr;
 class TaskGroup : public enable_make_shared<TaskGroup>, public Task
 {
 public:
-    TaskGroup(const TPoolSPtr& pool, int priority, const std::vector<TaskSPtr>& tasks);
+    template <typename T>
+    TaskGroup(const TPoolSPtr& pool, int priority, const std::vector<T>& tasks)
+        : Task(priority)
+        , mPool(pool)
+    {
+        mTasks.reserve(tasks.size());
+        for (const auto& task : mTasks)
+        {
+            ASSERT(task != nullptr);
+            mTasks.push_back(std::static_pointer_cast<tpool::Task>(task));
+        }
+    }
     virtual ~TaskGroup();
 
     ECode operator()() override;
