@@ -35,7 +35,7 @@ string SysCommand::toString() const
         string result;
 
         if (directory() != nullptr)
-            result += "cd " + directory()->path() + " && \\\n";
+            result += "pushd " + directory()->path() + " && \\\n";
 
         result += executable()->path();
         size_t line = result.size();
@@ -49,6 +49,9 @@ string SysCommand::toString() const
             }
             result += " " + str;
         }
+
+        if (directory() != nullptr)
+            result += " && \\\npopd";
 
         return result;
     };

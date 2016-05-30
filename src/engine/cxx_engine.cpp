@@ -363,11 +363,28 @@ string CxxEngine::buildScript(EBuildFor buildFor,
 
     for (const auto& objectFile : objects)
     {
-        auto compileCommand = mCompiler->compileCommand(directory, objectFile);
+        string compileOrigin;
+
+        auto origin = objectFile->cxxFile()->origin();
+        if (!apply_visitor(vst::isNullptr, origin))
+        {
+            if (origin.type() == typeid(doim::ProtobufFileSPtr))
+            {
+                const auto& protobufFile = boost::get<doim::ProtobufFileSPtr>(origin);
+                auto compileProtobufCommand = mProtobufCompiler->compileCommand(
+                    directory, directory, protobufFile, objectFile->cxxFile());
+
+                compileOrigin = compileProtobufCommand->toString() + " && \\\n";
+            }
+            else
+                ASSERT(false);
+        }
+
         stream << makeDirectory(directory, objectFile->file()->directory(), directories);
         stream << "echo Compile " << objectFile->cxxFile()->file()->path(directory)
                << std::endl;
-        stream << compileCommand->toString() << " &" << std::endl;
+        auto compileCommand = mCompiler->compileCommand(directory, objectFile);
+        stream << compileOrigin << compileCommand->toString() << " &" << std::endl;
     }
 
     stream << "wait" << std::endl;
