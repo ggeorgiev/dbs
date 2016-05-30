@@ -60,7 +60,7 @@ protected:
             headersInfo.push_back(headerInfo);
         }
 
-        std::vector<tpool::TaskSPtr> tasks;
+        std::vector<shared_ptr<Task>> tasks;
         tasks.reserve(headersInfo.size());
 
         for (const auto& headerInfo : headersInfo)
@@ -87,7 +87,7 @@ protected:
         math::Crcsum x = 0;
         for (const auto& task : tasks)
         {
-            auto n = std::static_pointer_cast<Task>(task)->crc();
+            auto n = task->crc();
             if (n == 0)
             {
                 crcsum = 0;
