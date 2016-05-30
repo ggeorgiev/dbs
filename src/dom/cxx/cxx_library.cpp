@@ -245,10 +245,8 @@ doim::CxxHeaderSetSPtr CxxLibrary::publicCxxHeaders(
     const auto& directories = recursiveProtectedCxxIncludeDirectories(root);
     for (const auto& header : *files)
     {
-        auto cxxHeader = doim::CxxHeader::unique(type,
-                                                 doim::CxxHeader::EVisibility::kPublic,
-                                                 header,
-                                                 directories);
+        auto cxxHeader = doim::CxxHeader::unique(
+            type, doim::CxxHeader::EVisibility::kPublic, header, directories, nullptr);
         headers->insert(cxxHeader);
     }
     return doim::CxxHeaderSet::unique(headers);
@@ -268,10 +266,8 @@ doim::CxxHeaderSetSPtr CxxLibrary::protectedCxxHeaders(
     const auto& directories = indirectPublicCxxIncludeDirectories(root);
     for (const auto& header : *files)
     {
-        auto cxxHeader = doim::CxxHeader::unique(type,
-                                                 doim::CxxHeader::EVisibility::kProtected,
-                                                 header,
-                                                 directories);
+        auto cxxHeader = doim::CxxHeader::unique(
+            type, doim::CxxHeader::EVisibility::kProtected, header, directories, nullptr);
         headers->insert(cxxHeader);
     }
     return doim::CxxHeaderSet::unique(headers);

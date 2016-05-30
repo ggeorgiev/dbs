@@ -26,8 +26,9 @@ CxxSourceCrcTask::CxxSourceCrcTask(
     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory)
     : CrcTask(cxxSource, currentIncludeDirectory)
 {
-    ASSERT(boost::apply_visitor([](auto const& source) { return source->isUnique(); },
-                                cxxSource));
+    ASSERT(boost::apply_visitor(
+        [](auto const& source) { return source != nullptr && source->isUnique(); },
+        cxxSource));
 
     ASSERT(currentIncludeDirectory->isUnique());
 }

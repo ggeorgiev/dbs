@@ -10,8 +10,9 @@ namespace doim
 CxxHeader::CxxHeader(const EType type,
                      const EVisibility visibility,
                      const FsFileSPtr& file,
-                     const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories)
-    : Element(type, visibility, file, cxxIncludeDirectories)
+                     const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories,
+                     const OriginSPtr& origin)
+    : Element(type, visibility, file, cxxIncludeDirectories, origin)
 {
     ASSERT(file->isUnique());
     ASSERT(cxxIncludeDirectories->isUnique());

@@ -5,8 +5,10 @@
 
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_file.h"
+#include "doim/protobuf/protobuf_file.h"
 #include "doim/element.hpp"
 #include "doim/set.hpp"
+#include <boost/variant/variant.hpp>
 #include <memory>
 #include <tuple>
 
@@ -17,11 +19,21 @@ typedef shared_ptr<CxxFile> CxxFileSPtr;
 typedef Set<CxxFile> CxxFileSet;
 typedef shared_ptr<CxxFileSet> CxxFileSetSPtr;
 
-class CxxFile : public Element<CxxFile, FsFileSPtr, CxxIncludeDirectorySetSPtr>
+struct CxxFileVariants
+{
+    typedef boost::variant<ProtobufFileSPtr> OriginSPtr;
+};
+
+class CxxFile : public CxxFileVariants,
+                public Element<CxxFile,
+                               FsFileSPtr,
+                               CxxIncludeDirectorySetSPtr,
+                               CxxFileVariants::OriginSPtr>
 {
 public:
     CxxFile(const FsFileSPtr& file,
-            const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories);
+            const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories,
+            const OriginSPtr& origin);
 
     const FsFileSPtr& file() const
     {
@@ -31,6 +43,11 @@ public:
     const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories() const
     {
         return std::get<1>(mArgs);
+    }
+
+    const OriginSPtr& origin() const
+    {
+        return std::get<2>(mArgs);
     }
 };
 }

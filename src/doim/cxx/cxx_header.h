@@ -5,8 +5,10 @@
 
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_file.h"
+#include "doim/protobuf/protobuf_file.h"
 #include "doim/element.hpp"
 #include "doim/set.hpp"
+#include <boost/variant/variant.hpp>
 #include <iosfwd>
 #include <memory>
 #include <tuple>
@@ -40,18 +42,26 @@ struct CxxHeaderEnums
     };
 };
 
+struct CxxHeaderVariants
+{
+    typedef boost::variant<ProtobufFileSPtr> OriginSPtr;
+};
+
 class CxxHeader : public CxxHeaderEnums,
+                  public CxxHeaderVariants,
                   public Element<CxxHeader,
                                  CxxHeaderEnums::EType,
                                  CxxHeaderEnums::EVisibility,
                                  FsFileSPtr,
-                                 CxxIncludeDirectorySetSPtr>
+                                 CxxIncludeDirectorySetSPtr,
+                                 CxxHeaderVariants::OriginSPtr>
 {
 public:
     CxxHeader(const EType type,
               const EVisibility visibility,
               const FsFileSPtr& file,
-              const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories);
+              const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories,
+              const OriginSPtr& origin);
 
     EType type() const
     {

@@ -79,8 +79,12 @@ public:
             static_cast<const Subject*>(this)->recursivePublicCxxIncludeDirectories(root);
         for (const auto& header : *files)
         {
-            const auto& cxxHeader = doim::CxxHeader::unique(
-                type, doim::CxxHeader::EVisibility::kPrivate, header, directories);
+            const auto& cxxHeader =
+                doim::CxxHeader::unique(type,
+                                        doim::CxxHeader::EVisibility::kPrivate,
+                                        header,
+                                        directories,
+                                        nullptr);
             headers->insert(cxxHeader);
         }
         return doim::CxxHeaderSet::unique(headers);

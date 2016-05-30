@@ -7,10 +7,14 @@
 namespace doim
 {
 CxxFile::CxxFile(const FsFileSPtr& file,
-                 const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories)
-    : Element(file, cxxIncludeDirectories)
+                 const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories,
+                 const OriginSPtr& origin)
+    : Element(file, cxxIncludeDirectories, origin)
 {
     ASSERT(file->isUnique());
     ASSERT(cxxIncludeDirectories->isUnique());
+    ASSERT(boost::apply_visitor(
+        [](auto const& origin) { return origin == nullptr || origin->isUnique(); },
+        origin));
 }
 }

@@ -52,7 +52,8 @@ TEST_F(CxxHeaderCrcTaskTest, simple)
     auto cxxHeader = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
                                              doim::CxxHeader::EVisibility::kPublic,
                                              mFsSimpleCxx,
-                                             mEmptyCxxIncludeDirectorySet);
+                                             mEmptyCxxIncludeDirectorySet,
+                                             nullptr);
 
     auto task = task::CxxSourceCrcTask::make(cxxHeader, nullptr);
 
@@ -74,7 +75,8 @@ TEST_F(CxxHeaderCrcTaskTest, notFoundInclude)
     auto cxxHeader = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
                                              doim::CxxHeader::EVisibility::kPublic,
                                              mFsIncludesCxx,
-                                             cxxIncludeDirectories);
+                                             cxxIncludeDirectories,
+                                             nullptr);
     auto task = task::CxxSourceCrcTask::make(cxxHeader, nullptr);
     ASSERT_BANNED(kNotFound, (*task)());
 }

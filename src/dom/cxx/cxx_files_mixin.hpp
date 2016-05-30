@@ -50,7 +50,7 @@ public:
 
         for (const auto& fsFile : mCxxFilesList)
         {
-            auto cxxFile = doim::CxxFile::unique(fsFile, directories);
+            auto cxxFile = doim::CxxFile::unique(fsFile, directories, nullptr);
             cxxFiles.insert(cxxFile);
 
             DLOG("generate cxx file for: {0}", fsFile->path());

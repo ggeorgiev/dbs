@@ -53,7 +53,8 @@ public:
 
 TEST_F(CxxFileCrcTaskTest, SLOW_simple)
 {
-    auto cxxFile = doim::CxxFile::unique(mFsSimpleCxx, mEmptyCxxIncludeDirectorySet);
+    auto cxxFile =
+        doim::CxxFile::unique(mFsSimpleCxx, mEmptyCxxIncludeDirectorySet, nullptr);
     auto task = task::CxxSourceCrcTask::make(cxxFile, nullptr);
     task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
@@ -71,7 +72,7 @@ TEST_F(CxxFileCrcTaskTest, notFoundInclude)
     auto cxxIncludeDirectories =
         doim::CxxIncludeDirectorySet::unique({cxxIncludeDirectory});
 
-    auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories);
+    auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories, nullptr);
 
     auto task = task::CxxSourceCrcTask::make(cxxFile, nullptr);
     task::gTPool->ensureScheduled(task);
@@ -83,11 +84,13 @@ TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
     auto cxxHeader1 = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
                                               doim::CxxHeader::EVisibility::kPublic,
                                               mFsUser1H,
-                                              mEmptyCxxIncludeDirectorySet);
+                                              mEmptyCxxIncludeDirectorySet,
+                                              nullptr);
     auto cxxHeader2 = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
                                               doim::CxxHeader::EVisibility::kPublic,
                                               mFsUser2H,
-                                              mEmptyCxxIncludeDirectorySet);
+                                              mEmptyCxxIncludeDirectorySet,
+                                              nullptr);
 
     auto cxxHeaders = doim::CxxHeaderSet::unique({cxxHeader1, cxxHeader2});
 
@@ -99,7 +102,7 @@ TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
     auto cxxIncludeDirectories =
         doim::CxxIncludeDirectorySet::unique({cxxIncludeDirectory});
 
-    auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories);
+    auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories, nullptr);
 
     auto task = task::CxxSourceCrcTask::make(cxxFile, nullptr);
     task::gTPool->ensureScheduled(task);
@@ -116,7 +119,8 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     auto cxxHeader2 = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
                                               doim::CxxHeader::EVisibility::kPublic,
                                               mFsUser2H,
-                                              mEmptyCxxIncludeDirectorySet);
+                                              mEmptyCxxIncludeDirectorySet,
+                                              nullptr);
 
     auto cxxHeaders2 = doim::CxxHeaderSet::unique({cxxHeader2});
 
@@ -131,7 +135,8 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     auto cxxHeader1 = doim::CxxHeader::unique(doim::CxxHeader::EType::kUser,
                                               doim::CxxHeader::EVisibility::kPublic,
                                               mFsUser1H,
-                                              cxxIncludeDirectories2);
+                                              cxxIncludeDirectories2,
+                                              nullptr);
 
     auto cxxHeaders1 = doim::CxxHeaderSet::unique({cxxHeader1});
 
@@ -143,7 +148,7 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     auto cxxIncludeDirectories1 =
         doim::CxxIncludeDirectorySet::unique({cxxIncludeDirectory1});
 
-    auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories1);
+    auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories1, nullptr);
 
     auto task = task::CxxSourceCrcTask::make(cxxFile, nullptr);
     task::gTPool->ensureScheduled(task);
