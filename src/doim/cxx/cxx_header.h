@@ -25,6 +25,7 @@ struct CxxHeaderEnums
         kUser,
         kSystem,
     };
+
     enum class EVisibility
     {
         // Header file that is visible to the library and all libraries that depend on it.

@@ -43,16 +43,25 @@ ECode CxxProgramCrcTask::operator()()
     gTPool->ensureScheduled(group);
     EHTest(group->join());
 
-    std::vector<math::Crcsum> crcs;
-    crcs.reserve(objectFiles->size());
+    unordered_set<math::Crcsum> crcs;
 
+    math::Crcsum x = 0;
     for (const auto& task : tasks)
-        crcs.push_back(task->crc());
-
-    std::sort(crcs.begin(), crcs.end());
+    {
+        auto n = task->crc();
+        if (n == 0)
+        {
+            mCrcsum = 0;
+            EHEnd;
+        }
+        auto unique = crcs.insert(n).second;
+        if (!unique)
+            EHBan(kTooMany, "There are at least two items with the same crc");
+        x ^= n;
+    }
 
     math::CrcProcessor crcProcessor;
-    crcProcessor.process_bytes(crcs.data(), sizeof(math::Crcsum) * crcs.size());
+    crcProcessor.process_bytes(&x, sizeof(x));
     mCrcsum = crcProcessor.checksum();
 
     EHEnd;

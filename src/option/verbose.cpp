@@ -10,6 +10,8 @@ VerboseSPtr gVerbose = im::InitializationManager::subscribe(gVerbose);
 
 bool Verbose::isVisible(const doim::TagSet& tags)
 {
+    if (tags.count(doim::gParseTag) > 0)
+        return false;
     if (tags.count(doim::gCrcTag) > 0)
         return false;
     if (tags.count(doim::gDbTag) > 0)

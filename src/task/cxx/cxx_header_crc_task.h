@@ -17,7 +17,6 @@
 namespace task
 {
 class CxxHeaderCrcTask;
-
 typedef shared_ptr<CxxHeaderCrcTask> CxxHeaderCrcTaskSPtr;
 
 class CxxHeaderCrcTask

@@ -78,7 +78,7 @@ public:
             template <typename Item>
             void operator()(const Item& item) const
             {
-                std::hash<Item> hash;
+                boost::hash<Item> hash;
                 boost::hash_combine(mSeed, hash(item));
             }
 

@@ -53,6 +53,9 @@ TEST(CxxParserTest, includes)
         Test{.file = "something #include <foo>",
              .type = parser::CxxParser::EIncludeType::kStandard,
              .includes = {}},
+        Test{.file = "#include <foo/bar> // IWYU pragma: keep\n",
+             .type = parser::CxxParser::EIncludeType::kStandard,
+             .includes = {"foo/bar"}},
     };
 
     parser::CxxParser parser;

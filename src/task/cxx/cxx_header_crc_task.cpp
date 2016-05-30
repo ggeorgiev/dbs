@@ -20,10 +20,7 @@ CxxHeaderCrcTask::CxxHeaderCrcTask(
 ECode CxxHeaderCrcTask::operator()()
 {
     doim::CxxHeaderSet includes;
-    EHTest(calculate<CxxHeaderCrcTask>(cxxHeader()->file(),
-                                       currentIncludeDirectory(),
-                                       cxxHeader()->cxxIncludeDirectories(),
-                                       mCrcsum));
+    EHTest(calculate<CxxHeaderCrcTask>(cxxHeader(), currentIncludeDirectory(), mCrcsum));
     EHEnd;
 }
 

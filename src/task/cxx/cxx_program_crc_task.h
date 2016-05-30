@@ -15,7 +15,6 @@
 namespace task
 {
 class CxxProgramCrcTask;
-
 typedef shared_ptr<CxxProgramCrcTask> CxxProgramCrcTaskSPtr;
 
 class CxxProgramCrcTask : public CrcTask<CxxProgramCrcTask, doim::CxxProgramSPtr>

@@ -16,7 +16,6 @@
 namespace task
 {
 class CxxFileCrcTask;
-
 typedef shared_ptr<CxxFileCrcTask> CxxFileCrcTaskSPtr;
 
 class CxxFileCrcTask : public CxxCrcTaskMixin,

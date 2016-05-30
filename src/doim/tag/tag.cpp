@@ -9,6 +9,7 @@ TagSPtr gTaskTag = Tag::global("task", gTaskTag);
 
 TagSPtr gCrcTag = Tag::global("crc", gCrcTag);
 TagSPtr gDbTag = Tag::global("db", gDbTag);
+TagSPtr gParseTag = Tag::global("parse", gParseTag);
 TagSPtr gSysTag = Tag::global("sys", gSysTag);
 
 TagSPtr gRunTag = Tag::global("run", gRunTag);

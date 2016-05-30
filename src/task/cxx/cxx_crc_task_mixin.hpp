@@ -3,16 +3,20 @@
 
 #pragma once
 
+#include "task/cxx/cxx_source_headers_task.h"
 #include "task/tpool.h"
 #include "tpool/task.h"
 #include "tpool/task_group.h"
 #include "parser/cxx/cxx_parser.h"
+#include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_file.h"
 #include "err/err.h"
+#include "log/log.h"
 #include "math/crc.hpp"
 #include <boost/filesystem/operations.hpp>
+#include <boost/variant/variant.hpp>
 #include <fstream> // IWYU pragma: keep
 #include <iterator>
 #include <shared_ptr>
@@ -26,40 +30,29 @@ class CxxCrcTaskMixin
 {
 protected:
     template <typename Task>
-    ECode calculate(const doim::FsFileSPtr& file,
+    ECode calculate(boost::variant<doim::CxxFileSPtr, doim::CxxHeaderSPtr> cxxSourceSPtr,
                     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory,
-                    const doim::CxxIncludeDirectorySetSPtr& includeDirectories,
                     math::Crcsum& crcsum)
     {
-        const auto& path = file->path();
+        const auto& path = boost::apply_visitor(
+            [](auto const& source) { return source->file()->path(); }, cxxSourceSPtr);
+
         if (!boost::filesystem::exists(path))
         {
             crcsum = 0;
             EHEnd;
         }
 
-        std::ifstream fstream(file->path().c_str());
+        std::ifstream fstream(path.c_str());
         string content((std::istreambuf_iterator<char>(fstream)),
                        std::istreambuf_iterator<char>());
 
-        parser::CxxParser parser;
+        auto headersTask =
+            CxxSourceHeadersTask::valid(cxxSourceSPtr, currentIncludeDirectory);
+        gTPool->ensureScheduled(headersTask);
+        EHTest(headersTask->join());
 
-        std::vector<doim::CxxIncludeDirectory::CxxHeaderInfo> headersInfo;
-        for (const auto& include : parser.includes(content))
-        {
-            auto currentDirectory =
-                include.mType == parser::CxxParser::EIncludeType::kProgrammer
-                    ? currentIncludeDirectory
-                    : nullptr;
-            doim::CxxIncludeDirectory::CxxHeaderInfo headerInfo;
-            EHTest(doim::CxxIncludeDirectory::findHeader(string_view(include.mPath),
-                                                         currentDirectory,
-                                                         includeDirectories,
-                                                         headerInfo),
-                   file->path());
-            headersInfo.push_back(headerInfo);
-        }
-
+        const auto& headersInfo = headersTask->headersInfo();
         std::vector<shared_ptr<Task>> tasks;
         tasks.reserve(headersInfo.size());
 
@@ -81,7 +74,6 @@ protected:
 
         EHTest(group->join());
 
-        // TODO: this algorithm requires that no two objects return the same crc
         unordered_set<math::Crcsum> crcs;
 
         math::Crcsum x = 0;
@@ -101,7 +93,6 @@ protected:
 
         crcProcessor.process_bytes(&x, sizeof(x));
         crcsum = crcProcessor.checksum();
-
         EHEnd;
     }
 };

@@ -16,7 +16,6 @@
 namespace task
 {
 class DbPutTask;
-
 typedef shared_ptr<DbPutTask> DbPutTaskSPtr;
 
 class DbPutTask : public Element<DbPutTask, doim::DbKeySPtr>

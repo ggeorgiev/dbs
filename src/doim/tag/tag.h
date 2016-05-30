@@ -35,6 +35,7 @@ extern TagSPtr gTaskTag;
 
 extern TagSPtr gCrcTag;
 extern TagSPtr gDbTag;
+extern TagSPtr gParseTag;
 extern TagSPtr gSysTag;
 
 extern TagSPtr gRunTag;

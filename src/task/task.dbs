@@ -13,6 +13,7 @@ cxx_library task
         task/cxx/cxx_header_crc_task.h
         task/cxx/cxx_object_file_crc_task.h
         task/cxx/cxx_program_crc_task.h
+        task/cxx/cxx_source_headers_task.h
         task/db/db_put_task.h
         task/protobuf/protobuf_file_crc_task.h
         task/sys/ensure_directory_task.h
@@ -43,6 +44,7 @@ cxx_library task
         cxx/cxx_header_crc_task.cpp
         cxx/cxx_object_file_crc_task.cpp
         cxx/cxx_program_crc_task.cpp
+        cxx/cxx_source_headers_task.cpp
         db/db_put_task.cpp
         protobuf/protobuf_file_crc_task.cpp
         sys/ensure_directory_task.cpp

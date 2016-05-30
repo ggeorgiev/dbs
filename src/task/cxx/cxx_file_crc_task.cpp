@@ -20,9 +20,7 @@ CxxFileCrcTask::CxxFileCrcTask(const doim::CxxFileSPtr& cxxFile)
 ECode CxxFileCrcTask::operator()()
 {
     doim::CxxHeaderSet includes;
-    EHTest(calculate<CxxHeaderCrcTask>(
-        cxxFile()->file(), nullptr, cxxFile()->cxxIncludeDirectories(), mCrcsum));
-
+    EHTest(calculate<CxxHeaderCrcTask>(cxxFile(), nullptr, mCrcsum));
     DLOG("Crc for {0} is {1:x}", cxxFile()->file()->name(), mCrcsum);
     EHEnd;
 }

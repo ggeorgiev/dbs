@@ -138,6 +138,8 @@
 		5E875BC81CFBBDE8008AC423 /* cxx_iwyu.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E875BC21CFBBDE8008AC423 /* cxx_iwyu.h */; };
 		5E875BCC1CFBBE53008AC423 /* protobuf_compiler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E875BCA1CFBBE53008AC423 /* protobuf_compiler.cpp */; };
 		5E875BCD1CFBBE53008AC423 /* protobuf_compiler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E875BCB1CFBBE53008AC423 /* protobuf_compiler.h */; };
+		5E875BD01CFC0F33008AC423 /* cxx_source_headers_task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E875BCE1CFC0F33008AC423 /* cxx_source_headers_task.cpp */; };
+		5E875BD11CFC0F33008AC423 /* cxx_source_headers_task.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E875BCF1CFC0F33008AC423 /* cxx_source_headers_task.h */; };
 		5E87B9D01CF15BE000F042B4 /* dbs_parser-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E87B9CF1CF15BE000F042B4 /* dbs_parser-utest.cpp */; };
 		5E87B9D41CF15BFC00F042B4 /* dbs_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E87B9D21CF15BFC00F042B4 /* dbs_parser.cpp */; };
 		5E87B9D51CF15BFC00F042B4 /* dbs_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E87B9D31CF15BFC00F042B4 /* dbs_parser.h */; };
@@ -365,6 +367,8 @@
 		5E875BC21CFBBDE8008AC423 /* cxx_iwyu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_iwyu.h; sourceTree = "<group>"; };
 		5E875BCA1CFBBE53008AC423 /* protobuf_compiler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protobuf_compiler.cpp; sourceTree = "<group>"; };
 		5E875BCB1CFBBE53008AC423 /* protobuf_compiler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protobuf_compiler.h; sourceTree = "<group>"; };
+		5E875BCE1CFC0F33008AC423 /* cxx_source_headers_task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_source_headers_task.cpp; sourceTree = "<group>"; };
+		5E875BCF1CFC0F33008AC423 /* cxx_source_headers_task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_source_headers_task.h; sourceTree = "<group>"; };
 		5E87B9CD1CF1106500F042B4 /* axe.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = axe.dbs; sourceTree = "<group>"; };
 		5E87B9CF1CF15BE000F042B4 /* dbs_parser-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "dbs_parser-utest.cpp"; sourceTree = "<group>"; };
 		5E87B9D21CF15BFC00F042B4 /* dbs_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dbs_parser.cpp; sourceTree = "<group>"; };
@@ -825,6 +829,8 @@
 				5E290B3B1CBAC1B000F10210 /* cxx_object_file_crc_task.h */,
 				5E217B661C713CDC00F082A1 /* cxx_program_crc_task.cpp */,
 				5E217B671C713CDC00F082A1 /* cxx_program_crc_task.h */,
+				5E875BCE1CFC0F33008AC423 /* cxx_source_headers_task.cpp */,
+				5E875BCF1CFC0F33008AC423 /* cxx_source_headers_task.h */,
 			);
 			path = cxx;
 			sourceTree = "<group>";
@@ -1198,6 +1204,7 @@
 				5EABCABC1CE057FD00E79FFD /* sys_executable.h in Headers */,
 				5E10B3F71C70F272009C73E4 /* cxx_header_crc_task.h in Headers */,
 				5E5A05041CFA499200DA4443 /* protobuf_file.h in Headers */,
+				5E875BD11CFC0F33008AC423 /* cxx_source_headers_task.h in Headers */,
 				5E057CA61CE2E4000042D252 /* db_key.h in Headers */,
 				5E87B9E61CF18DAB00F042B4 /* attribute_name.h in Headers */,
 				5E5A050B1CFA727900DA4443 /* protobuf_file_crc_task.h in Headers */,
@@ -1349,6 +1356,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E875BD01CFC0F33008AC423 /* cxx_source_headers_task.cpp in Sources */,
 				5EE328641CD846880042B6FF /* simple_memoization-utest.cpp in Sources */,
 				5EC659B21CCD9EB600E99E04 /* memoization-utest.cpp in Sources */,
 				5E42052E1C78CB200090FA05 /* fs_directory.cpp in Sources */,
