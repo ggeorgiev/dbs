@@ -3,6 +3,7 @@
 
 #include "doim/cxx/cxx_file.h"
 #include "err/err_assert.h"
+#include <variant>
 
 namespace doim
 {
@@ -13,8 +14,6 @@ CxxFile::CxxFile(const FsFileSPtr& file,
 {
     ASSERT(file->isUnique());
     ASSERT(cxxIncludeDirectories->isUnique());
-    ASSERT(boost::apply_visitor(
-        [](auto const& origin) { return origin == nullptr || origin->isUnique(); },
-        origin));
+    ASSERT(apply_visitor(vst::isUniqueIfAny, origin));
 }
 }

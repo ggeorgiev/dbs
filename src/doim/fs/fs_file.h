@@ -43,4 +43,9 @@ public:
         return directory()->path(root) + name();
     }
 };
+
+namespace vst
+{
+auto path = [](auto const& element) { return element->file()->path(); };
+}
 }

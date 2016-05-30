@@ -8,9 +8,9 @@
 #include "doim/protobuf/protobuf_file.h"
 #include "doim/element.hpp"
 #include "doim/set.hpp"
-#include <boost/variant/variant.hpp>
 #include <memory>
 #include <tuple>
+#include <variant>
 
 namespace doim
 {
@@ -21,7 +21,7 @@ typedef shared_ptr<CxxFileSet> CxxFileSetSPtr;
 
 struct CxxFileVariants
 {
-    typedef boost::variant<ProtobufFileSPtr> OriginSPtr;
+    typedef variant<ProtobufFileSPtr> OriginSPtr;
 };
 
 class CxxFile : public CxxFileVariants,

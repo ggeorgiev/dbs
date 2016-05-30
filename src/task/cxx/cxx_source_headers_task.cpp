@@ -4,11 +4,14 @@
 #include "task/cxx/cxx_source_headers_task.h"
 #include "parser/cxx/cxx_parser.h"
 #include "doim/cxx/cxx_header.h" // IWYU pragma: keep
+#include "doim/fs/fs_file.h"
+#include "doim/element.hpp"
 #include "err/err_assert.h"
 #include <fstream> // IWYU pragma: keep
 #include <iterator>
 #include <str>
 #include <string_view>
+#include <variant>
 
 namespace task
 {
@@ -17,22 +20,19 @@ CxxSourceHeadersTask::CxxSourceHeadersTask(
     const doim::CxxIncludeDirectorySPtr& cxxIncludeDirectory)
     : Element(cxxSource, cxxIncludeDirectory)
 {
-    ASSERT(boost::apply_visitor([](auto const& source) { return source->isUnique(); },
-                                cxxSource));
+    ASSERT(apply_visitor(doim::vst::isUnique, cxxSource));
 }
 
 ECode CxxSourceHeadersTask::operator()()
 {
-    const auto& path =
-        boost::apply_visitor([](auto const& source) { return source->file()->path(); },
-                             cxxSource());
+    const auto& path = apply_visitor(doim::vst::path, cxxSource());
 
     std::ifstream fstream(path.c_str());
     string content((std::istreambuf_iterator<char>(fstream)),
                    std::istreambuf_iterator<char>());
 
-    const auto& includeDirectories = boost::apply_visitor(
-        [](auto const& source) { return source->cxxIncludeDirectories(); }, cxxSource());
+    const auto& includeDirectories =
+        apply_visitor(doim::vst::cxxIncludeDirectories, cxxSource());
 
     parser::CxxParser parser;
 
@@ -55,9 +55,7 @@ ECode CxxSourceHeadersTask::operator()()
 
 string CxxSourceHeadersTask::description() const
 {
-    auto path =
-        boost::apply_visitor([](auto const& source) { return source->file()->path(); },
-                             cxxSource());
+    auto path = apply_visitor(doim::vst::path, cxxSource());
     return "Cxx file headers " + path;
 }
 

@@ -111,4 +111,15 @@ protected:
 template <typename T, typename... Args>
 shared_ptr<ElementManager<T>> Element<T, Args...>::gElementManager =
     im::InitializationManager::subscribe(gElementManager);
+
+namespace vst
+{
+auto isUnique = [](auto const& element) {
+    return element != nullptr && element->isUnique();
+};
+
+auto isUniqueIfAny = [](auto const& element) {
+    return element == nullptr || element->isUnique();
+};
+}
 }

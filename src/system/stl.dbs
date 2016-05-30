@@ -47,6 +47,7 @@ cxx_library /stl
         str
         string_view
         unordered
+        variant
     ;
 
     cxx_header
@@ -54,6 +55,7 @@ cxx_library /stl
         @directory=.:
 
         __functional_base
+        __hash_table
         __mutex_base
     ;
 ;

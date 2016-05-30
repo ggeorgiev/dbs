@@ -1,0 +1,14 @@
+//  Copyright © 2016 George Georgiev. All rights reserved.
+//
+
+#pragma once
+
+#include <boost/variant.hpp>         // IWYU pragma: export
+#include <boost/variant/variant.hpp> // IWYU pragma: export
+
+template <typename... Args>
+using variant = boost::variant<Args...>;
+
+using boost::apply_visitor;
+
+auto isNullptr = [](auto const& object) { return object == nullptr; };

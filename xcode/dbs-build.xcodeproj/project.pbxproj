@@ -346,6 +346,7 @@
 		5E5A05091CFA727900DA4443 /* protobuf_file_crc_task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protobuf_file_crc_task.h; sourceTree = "<group>"; };
 		5E5A050D1CFA835D00DA4443 /* rpc.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rpc.dbs; sourceTree = "<group>"; };
 		5E5A050E1CFA835D00DA4443 /* rpc.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rpc.proto; sourceTree = "<group>"; };
+		5E5C93661CFCB737003D3D84 /* variant */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = variant; sourceTree = "<group>"; };
 		5E6DCC6F1CEADF5B00001C9C /* .travis.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = .travis.sh; path = ../.travis.sh; sourceTree = "<group>"; };
 		5E83145E1CDC5A7F00344DB5 /* framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = framework.h; sourceTree = "<group>"; };
 		5E874FA81CEC175F00C7C123 /* tool_command.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tool_command.cpp; sourceTree = "<group>"; };
@@ -789,6 +790,7 @@
 				5EE51C251CE6E68900DB0DDA /* str */,
 				5E192E6A1CE5911600B1B747 /* string_view */,
 				5EE51C241CE6D32300DB0DDA /* unordered */,
+				5E5C93661CFCB737003D3D84 /* variant */,
 			);
 			path = system;
 			sourceTree = "<group>";

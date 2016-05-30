@@ -6,25 +6,26 @@
 #include <shared_ptr>
 #include <unordered_map> // IWYU pragma: export
 #include <unordered_set> // IWYU pragma: export
-#include <__hash_table>  // IWYU pragma: export
 
 template <class Key,
           class Hash = std::hash<Key>,
           class KeyEqual = std::equal_to<Key>,
           class Allocator = std::allocator<Key>>
-struct unordered_set : public enable_make_shared<unordered_set<Key, Hash, KeyEqual, Allocator>>, 
-                       public std::unordered_set<Key, Hash, KeyEqual, Allocator>
+struct unordered_set
+    : public enable_make_shared<unordered_set<Key, Hash, KeyEqual, Allocator>>,
+      public std::unordered_set<Key, Hash, KeyEqual, Allocator>
 {
     using std::unordered_set<Key, Hash, KeyEqual, Allocator>::unordered_set;
 };
 
-template <class Key,                                
-          class T,                                     
-          class Hash = std::hash<Key>,                      
-          class Pred = std::equal_to<Key>,                  
-          class Alloc = std::allocator<std::pair<const Key,T>>>
-struct unordered_map : public enable_make_shared<unordered_map<Key, T, Hash, Pred, Alloc>>, 
-                       public std::unordered_map<Key, T, Hash, Pred, Alloc>
+template <class Key,
+          class T,
+          class Hash = std::hash<Key>,
+          class Pred = std::equal_to<Key>,
+          class Alloc = std::allocator<std::pair<const Key, T>>>
+struct unordered_map
+    : public enable_make_shared<unordered_map<Key, T, Hash, Pred, Alloc>>,
+      public std::unordered_map<Key, T, Hash, Pred, Alloc>
 {
     using std::unordered_map<Key, T, Hash, Pred, Alloc>::unordered_map;
 };

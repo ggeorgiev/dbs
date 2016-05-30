@@ -103,6 +103,13 @@ private:
     unordered_map<FsFileSPtr, CxxHeaderSPtr> mFiles;
 };
 
+namespace vst
+{
+auto cxxIncludeDirectories = [](auto const& element) {
+    return element->cxxIncludeDirectories();
+};
+}
+
 std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectory& directory);
 std::ostream& operator<<(std::ostream& out, const CxxIncludeDirectorySet& directories);
 }

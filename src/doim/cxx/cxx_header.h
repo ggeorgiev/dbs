@@ -82,6 +82,11 @@ public:
     {
         return std::get<3>(mArgs);
     }
+
+    const OriginSPtr& origin() const
+    {
+        return std::get<4>(mArgs);
+    }
 };
 
 std::ostream& operator<<(std::ostream& out, const CxxHeader& header);

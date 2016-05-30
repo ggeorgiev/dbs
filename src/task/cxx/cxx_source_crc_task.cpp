@@ -7,6 +7,8 @@
 #include "tpool/task_group.h"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
+#include "doim/fs/fs_file.h"
+#include "doim/element.hpp"
 #include "err/err.h"
 #include "err/err_assert.h"
 #include "log/log.h"
@@ -17,6 +19,7 @@
 #include <str>
 #include <unordered>
 #include <utility>
+#include <variant>
 #include <vector>
 
 namespace task
@@ -26,18 +29,13 @@ CxxSourceCrcTask::CxxSourceCrcTask(
     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory)
     : CrcTask(cxxSource, currentIncludeDirectory)
 {
-    ASSERT(boost::apply_visitor(
-        [](auto const& source) { return source != nullptr && source->isUnique(); },
-        cxxSource));
-
+    ASSERT(apply_visitor(doim::vst::isUnique, cxxSource));
     ASSERT(currentIncludeDirectory->isUnique());
 }
 
 ECode CxxSourceCrcTask::operator()()
 {
-    const auto& path =
-        boost::apply_visitor([](auto const& source) { return source->file()->path(); },
-                             cxxSource());
+    const auto& path = apply_visitor(doim::vst::path, cxxSource());
 
     if (!boost::filesystem::exists(path))
     {
@@ -103,9 +101,7 @@ ECode CxxSourceCrcTask::operator()()
 
 string CxxSourceCrcTask::description() const
 {
-    auto path =
-        boost::apply_visitor([](auto const& source) { return source->file()->path(); },
-                             cxxSource());
+    auto path = apply_visitor(doim::vst::path, cxxSource());
 
     return "Cxx source file crc " + path;
 }
