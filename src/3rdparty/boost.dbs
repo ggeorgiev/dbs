@@ -24,6 +24,7 @@ cxx_library /boost_template
         @directory=../../boost/include:
         
         boost/variant/detail/apply_visitor_unary.hpp
+        boost/variant/detail/hash_variant.hpp
     ;
 ;
 

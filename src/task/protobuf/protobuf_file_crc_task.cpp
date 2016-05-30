@@ -5,6 +5,7 @@
 #include "doim/fs/fs_file.h"
 #include "err/err_assert.h"
 #include "log/log.h"
+#include "math/crc.hpp"
 #include <fstream> // IWYU pragma: keep
 #include <iterator>
 #include <str>

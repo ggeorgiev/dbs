@@ -3,31 +3,38 @@
 
 #pragma once
 
-#include "task/cxx/cxx_crc_task_mixin.hpp"
 #include "task/crc_task.hpp"
+#include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/tag/tag.h"
 #include "err/err.h"
 #include <fmt/format.h>
+#include <boost/variant/variant.hpp>
 #include <memory>
 #include <str>
 #include <tuple>
 
 namespace task
 {
-class CxxHeaderCrcTask;
-typedef shared_ptr<CxxHeaderCrcTask> CxxHeaderCrcTaskSPtr;
+class CxxSourceCrcTask;
+typedef shared_ptr<CxxSourceCrcTask> CxxSourceCrcTaskSPtr;
 
-class CxxHeaderCrcTask
-    : public CxxCrcTaskMixin,
-      public CrcTask<CxxHeaderCrcTask, doim::CxxHeaderSPtr, doim::CxxIncludeDirectorySPtr>
+struct CxxSourceCrcTaskVariants
+{
+    typedef boost::variant<doim::CxxFileSPtr, doim::CxxHeaderSPtr> CxxSourceSPtr;
+};
+
+class CxxSourceCrcTask : public CxxSourceCrcTaskVariants,
+                         public CrcTask<CxxSourceCrcTask,
+                                        CxxSourceCrcTaskVariants::CxxSourceSPtr,
+                                        doim::CxxIncludeDirectorySPtr>
 {
 public:
-    CxxHeaderCrcTask(const doim::CxxHeaderSPtr& cxxHeader,
+    CxxSourceCrcTask(const CxxSourceSPtr& cxxSource,
                      const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory);
 
-    doim::CxxHeaderSPtr cxxHeader() const
+    const CxxSourceSPtr& cxxSource() const
     {
         return std::get<0>(mArgs);
     }

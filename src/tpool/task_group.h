@@ -5,6 +5,7 @@
 
 #include "tpool/task.h"
 #include "err/err.h"
+#include "err/err_assert.h"
 #include <shared_ptr>
 #include <vector>
 

@@ -1,9 +1,9 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "task/cxx/cxx_file_crc_task.h"
-#include "task/tpool.h"
 #include "doim/cxx/cxx_file.h"
+#include "task/cxx/cxx_source_crc_task.h"
+#include "task/tpool.h"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_directory.h"
@@ -54,7 +54,7 @@ public:
 TEST_F(CxxFileCrcTaskTest, SLOW_simple)
 {
     auto cxxFile = doim::CxxFile::unique(mFsSimpleCxx, mEmptyCxxIncludeDirectorySet);
-    auto task = task::CxxFileCrcTask::make(cxxFile);
+    auto task = task::CxxSourceCrcTask::make(cxxFile, nullptr);
     task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
 
@@ -73,7 +73,7 @@ TEST_F(CxxFileCrcTaskTest, notFoundInclude)
 
     auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories);
 
-    auto task = task::CxxFileCrcTask::make(cxxFile);
+    auto task = task::CxxSourceCrcTask::make(cxxFile, nullptr);
     task::gTPool->ensureScheduled(task);
     ASSERT_BANNED(kNotFound, task->join());
 }
@@ -101,7 +101,7 @@ TEST_F(CxxFileCrcTaskTest, SLOW_includeFromOneDirectory)
 
     auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories);
 
-    auto task = task::CxxFileCrcTask::make(cxxFile);
+    auto task = task::CxxSourceCrcTask::make(cxxFile, nullptr);
     task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
 
@@ -145,7 +145,7 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
 
     auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories1);
 
-    auto task = task::CxxFileCrcTask::make(cxxFile);
+    auto task = task::CxxSourceCrcTask::make(cxxFile, nullptr);
     task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
 

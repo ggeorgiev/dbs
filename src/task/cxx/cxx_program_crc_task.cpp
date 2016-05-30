@@ -2,10 +2,8 @@
 //
 
 #include "task/cxx/cxx_program_crc_task.h"
-#include "task/cxx/cxx_file_crc_task.h"
-#include "task/protobuf/protobuf_file_crc_task.h"
+#include "task/cxx/cxx_source_crc_task.h"
 #include "task/tpool.h"
-#include "tpool/task.h"
 #include "tpool/task_group.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_object_file.h"
@@ -13,9 +11,9 @@
 #include "doim/set.hpp"
 #include "err/err_assert.h"
 #include "math/crc.hpp"
-#include <boost/type_index.hpp>
-#include <algorithm>
 #include <str>
+#include <unordered>
+#include <utility>
 #include <vector>
 
 namespace task
@@ -30,12 +28,12 @@ ECode CxxProgramCrcTask::operator()()
 {
     const auto& objectFiles = cxxProgram()->cxxObjectFiles();
 
-    std::vector<CxxFileCrcTaskSPtr> tasks;
+    std::vector<CxxSourceCrcTaskSPtr> tasks;
     tasks.reserve(objectFiles->size());
 
     for (const auto& objectFile : *objectFiles)
     {
-        auto cxxTask = CxxFileCrcTask::valid(objectFile->cxxFile());
+        auto cxxTask = CxxSourceCrcTask::valid(objectFile->cxxFile(), nullptr);
         tasks.push_back(cxxTask);
     }
 

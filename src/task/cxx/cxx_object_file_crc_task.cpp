@@ -2,16 +2,15 @@
 //
 
 #include "task/cxx/cxx_object_file_crc_task.h"
-#include "task/cxx/cxx_file_crc_task.h"
-#include "task/protobuf/protobuf_file_crc_task.h"
+#include "task/cxx/cxx_source_crc_task.h"
 #include "task/tpool.h"
-#include "tpool/task.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
 #include "err/err_assert.h"
 #include "log/log.h"
+#include "math/crc.hpp"
 #include <boost/filesystem/operations.hpp>
-#include <boost/type_index.hpp>
+#include <fstream> // IWYU pragma: keep
 #include <iterator>
 #include <str>
 
@@ -32,7 +31,7 @@ ECode CxxObjectFileCrcTask::operator()()
         EHEnd;
     }
 
-    auto task = CxxFileCrcTask::valid(cxxObjectFile()->cxxFile());
+    auto task = CxxSourceCrcTask::valid(cxxObjectFile()->cxxFile(), nullptr);
     task::gTPool->ensureScheduled(task);
 
     std::ifstream fstream(path.c_str());

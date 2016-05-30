@@ -2,12 +2,13 @@
 //
 
 #include "task/cxx/cxx_source_headers_task.h"
-#include "task/cxx/cxx_header_crc_task.h"
-#include "doim/cxx/cxx_header.h"
-#include "doim/fs/fs_file.h"
+#include "parser/cxx/cxx_parser.h"
+#include "doim/cxx/cxx_header.h" // IWYU pragma: keep
 #include "err/err_assert.h"
-#include "log/log.h"
+#include <fstream> // IWYU pragma: keep
+#include <iterator>
 #include <str>
+#include <string_view>
 
 namespace task
 {

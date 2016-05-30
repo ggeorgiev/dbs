@@ -1,8 +1,8 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
-#include "task/cxx/cxx_header_crc_task.h"
 #include "doim/cxx/cxx_header.h"
+#include "task/cxx/cxx_source_crc_task.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
@@ -54,7 +54,7 @@ TEST_F(CxxHeaderCrcTaskTest, simple)
                                              mFsSimpleCxx,
                                              mEmptyCxxIncludeDirectorySet);
 
-    auto task = task::CxxHeaderCrcTask::make(cxxHeader, nullptr);
+    auto task = task::CxxSourceCrcTask::make(cxxHeader, nullptr);
 
     ASSERT_OKAY((*task)());
 
@@ -75,6 +75,6 @@ TEST_F(CxxHeaderCrcTaskTest, notFoundInclude)
                                              doim::CxxHeader::EVisibility::kPublic,
                                              mFsIncludesCxx,
                                              cxxIncludeDirectories);
-    auto task = task::CxxHeaderCrcTask::make(cxxHeader, nullptr);
+    auto task = task::CxxSourceCrcTask::make(cxxHeader, nullptr);
     ASSERT_BANNED(kNotFound, (*task)());
 }

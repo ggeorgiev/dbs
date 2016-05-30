@@ -2,7 +2,6 @@
 //
 
 #include "parser/cxx/cxx_parser.h"
-#include <type_traits>
 #include <axe.h> // IWYU pragma: keep
 
 namespace parser

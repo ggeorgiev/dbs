@@ -8,11 +8,9 @@ cxx_library task
         task/element.hpp
         task/element_manager.hpp
         task/crc_task.hpp
-        task/cxx/cxx_crc_task_mixin.hpp
-        task/cxx/cxx_file_crc_task.h
-        task/cxx/cxx_header_crc_task.h
         task/cxx/cxx_object_file_crc_task.h
         task/cxx/cxx_program_crc_task.h
+        task/cxx/cxx_source_crc_task.h
         task/cxx/cxx_source_headers_task.h
         task/db/db_put_task.h
         task/protobuf/protobuf_file_crc_task.h
@@ -40,10 +38,9 @@ cxx_library task
     ;
 
     cxx_file:
-        cxx/cxx_file_crc_task.cpp
-        cxx/cxx_header_crc_task.cpp
         cxx/cxx_object_file_crc_task.cpp
         cxx/cxx_program_crc_task.cpp
+        cxx/cxx_source_crc_task.cpp
         cxx/cxx_source_headers_task.cpp
         db/db_put_task.cpp
         protobuf/protobuf_file_crc_task.cpp

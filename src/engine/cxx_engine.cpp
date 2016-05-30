@@ -3,9 +3,9 @@
 
 #include "engine/cxx_engine.h"
 #include "tool/cxx/cxx_compiler.h"
-#include "task/cxx/cxx_file_crc_task.h"
 #include "task/cxx/cxx_object_file_crc_task.h"
 #include "task/cxx/cxx_program_crc_task.h"
+#include "task/cxx/cxx_source_crc_task.h"
 #include "task/db/db_put_task.h"
 #include "task/sys/parse_stdout_task.h"
 #include "task/tpool.h"
@@ -21,7 +21,6 @@
 #include "log/log.h"
 #include "math/crc.hpp"
 #include "rtti/class_rtti.hpp"
-#include <boost/type_index.hpp>
 #include <algorithm>
 #include <functional>
 #include <str>
@@ -226,7 +225,7 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
 tpool::TaskSPtr CxxEngine::iwyuTask(const doim::FsDirectorySPtr& directory,
                                     const doim::CxxFileSPtr& cxxFile)
 {
-    auto crcTask = task::CxxFileCrcTask::valid(cxxFile);
+    auto crcTask = task::CxxSourceCrcTask::valid(cxxFile, nullptr);
     task::gTPool->ensureScheduled(crcTask);
 
     auto self = shared_from_this();
@@ -238,7 +237,7 @@ tpool::TaskSPtr CxxEngine::iwyuTask(const doim::FsDirectorySPtr& directory,
         math::Crcsum crc;
         db::gDatabase->get(key->toString(), crc);
 
-        auto crcTask = std::static_pointer_cast<task::CxxFileCrcTask>(task);
+        auto crcTask = std::static_pointer_cast<task::CxxSourceCrcTask>(task);
         if (crcTask->crc() == crc)
         {
             DLOG("Iwyu '{}' is already checked.", cxxFile->file()->path(directory));

@@ -3,11 +3,8 @@
 
 #pragma once
 
-#include "doim/cxx/cxx_include_directory.h"
-#include "doim/cxx/cxx_object_file.h"
-#include "doim/cxx/cxx_program.h"
+#include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_directory.h"
-#include "doim/sys/sys_argument.h"
 #include "doim/sys/sys_command.h"
 #include "doim/sys/sys_executable.h"
 #include <memory>
