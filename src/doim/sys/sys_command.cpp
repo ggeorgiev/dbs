@@ -34,7 +34,8 @@ string SysCommand::toString(const FsDirectorySPtr& root) const
     string result;
 
     if (directory() != nullptr)
-        result += "pushd " + directory()->path(root) + " && \\\n";
+        if (directory() != root)
+            result += "pushd " + directory()->path(root) + " && \\\n";
 
     result += executable()->path(root);
     size_t line = result.size();
@@ -50,7 +51,8 @@ string SysCommand::toString(const FsDirectorySPtr& root) const
     }
 
     if (directory() != nullptr)
-        result += " && \\\npopd";
+        if (directory() != root)
+            result += " && \\\npopd";
 
     return result;
 }
