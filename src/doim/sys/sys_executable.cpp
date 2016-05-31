@@ -7,21 +7,17 @@
 
 namespace doim
 {
-SysExecutable::SysExecutable(const doim::FsFileSPtr& file,
-                             const doim::FsBinarySPtr& binary)
-    : Element(file, binary)
+SysExecutable::SysExecutable(const ApplicationSPtr& application)
+    : Element(application)
 {
-    ASSERT(file == nullptr || binary == nullptr);
-    ASSERT(file != nullptr || binary != nullptr);
+    ASSERT(apply_visitor(vst::isUnique, application));
 }
 
 string SysExecutable::path(const doim::FsDirectorySPtr& root) const
 {
-    const doim::FsFileSPtr& file = std::get<0>(mArgs);
-    if (file != nullptr)
-        return file->path(root);
+    if (application().type() == typeid(FsFileSPtr))
+        return boost::get<FsFileSPtr>(application())->path(root);
 
-    const doim::FsBinarySPtr& binary = std::get<1>(mArgs);
-    return binary->name();
+    return boost::get<FsBinarySPtr>(application())->name();
 }
 }

@@ -8,17 +8,29 @@
 #include "doim/element.hpp"
 #include <memory>
 #include <str>
+#include <variant>
 
 namespace doim
 {
 class SysExecutable;
 typedef shared_ptr<SysExecutable> SysExecutableSPtr;
 
-// TODO: switch to variant
-class SysExecutable : public Element<SysExecutable, doim::FsFileSPtr, doim::FsBinarySPtr>
+struct SysExecutableVariants
+{
+    typedef variant<doim::FsFileSPtr, doim::FsBinarySPtr> ApplicationSPtr;
+};
+
+class SysExecutable
+    : public SysExecutableVariants,
+      public Element<SysExecutable, SysExecutableVariants::ApplicationSPtr>
 {
 public:
-    SysExecutable(const doim::FsFileSPtr& file, const doim::FsBinarySPtr& binary);
+    SysExecutable(const ApplicationSPtr& application);
+
+    const ApplicationSPtr& application() const
+    {
+        return std::get<0>(mArgs);
+    }
 
     string path(const doim::FsDirectorySPtr& root) const;
 };

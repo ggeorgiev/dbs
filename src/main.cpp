@@ -75,19 +75,19 @@ int main(int argc, char* argv[])
     }
 
     const auto& clangFormatFile = doim::FsFile::obtain(cwd, "clang/bin/clang-format");
-    const auto& clangFormat = doim::SysExecutable::unique(clangFormatFile, nullptr);
+    const auto& clangFormat = doim::SysExecutable::unique(clangFormatFile);
     const auto& clangFormatTool = std::make_shared<tool::CxxClangFormat>(clangFormat);
 
     const auto& clangBinary = doim::FsBinary::unique("clang++");
-    const auto& clang = doim::SysExecutable::unique(nullptr, clangBinary);
+    const auto& clang = doim::SysExecutable::unique(clangBinary);
     const auto& compiler = std::make_shared<tool::CxxCompiler>(clang);
 
     const auto& iwyuFile = doim::FsFile::obtain(cwd, "clang/bin/include-what-you-use");
-    const auto& iwyu = doim::SysExecutable::unique(iwyuFile, nullptr);
+    const auto& iwyu = doim::SysExecutable::unique(iwyuFile);
     const auto& iwyuTool = std::make_shared<tool::CxxIwyu>(iwyu);
 
     const auto& protobufFile = doim::FsFile::obtain(cwd, "protobuf/bin/protoc");
-    const auto& protobuf = doim::SysExecutable::unique(protobufFile, nullptr);
+    const auto& protobuf = doim::SysExecutable::unique(protobufFile);
     const auto& protobufTool = std::make_shared<tool::ProtobufCompiler>(protobuf);
 
     const auto& engine = std::make_shared<engine::CxxEngine>(clangFormatTool,
