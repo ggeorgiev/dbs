@@ -62,8 +62,12 @@
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "build"
+            argument = "generate"
             isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "build"
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "iwyu"
@@ -75,7 +79,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "dbs-test"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>

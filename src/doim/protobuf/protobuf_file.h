@@ -16,14 +16,19 @@ typedef shared_ptr<ProtobufFile> ProtobufFileSPtr;
 typedef Set<ProtobufFile> ProtobufFileSet;
 typedef shared_ptr<ProtobufFileSet> ProtobufFileSetSPtr;
 
-class ProtobufFile : public Element<ProtobufFile, FsFileSPtr>
+class ProtobufFile : public Element<ProtobufFile, FsDirectorySPtr, FsFileSPtr>
 {
 public:
-    ProtobufFile(const FsFileSPtr& file);
+    ProtobufFile(const FsDirectorySPtr& directory, const FsFileSPtr& file);
+
+    const FsDirectorySPtr& directory() const
+    {
+        return std::get<0>(mArgs);
+    }
 
     const FsFileSPtr& file() const
     {
-        return std::get<0>(mArgs);
+        return std::get<1>(mArgs);
     }
 };
 }

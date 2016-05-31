@@ -23,8 +23,9 @@ class ProtobufsMixin
 public:
     typedef T Subject;
 
-    ECode updateProtobufsList(doim::FsFileSet& files)
+    ECode updateProtobufsList(doim::FsDirectorySPtr& directory, doim::FsFileSet& files)
     {
+        mProtobufsDirectory = directory;
         mProtobufsList.swap(files);
         EHEnd;
     }
@@ -56,7 +57,7 @@ public:
 
         for (const auto& fsFile : mProtobufsList)
         {
-            auto protobufFile = doim::ProtobufFile::unique(fsFile);
+            auto protobufFile = doim::ProtobufFile::unique(mProtobufsDirectory, fsFile);
             protobufFiles.insert(protobufFile);
 
             DLOG("generate protobuf file for: {0}", fsFile->path());
@@ -74,25 +75,26 @@ public:
 
         const auto& files = protobufFiles(root);
 
+        auto headers = doim::CxxHeaderSet::unique(doim::CxxHeaderSet::make());
+
         auto protobuflib = doim::CxxIncludeDirectory::unique(
             doim::CxxIncludeDirectory::EType::kSystem,
             doim::FsDirectory::obtain(root, "protobuf/include"),
-            doim::CxxHeaderSet::unique(doim::CxxHeaderSet::make()));
-
-        auto protobufGen =
-            doim::CxxIncludeDirectory::unique(doim::CxxIncludeDirectory::EType::kSystem,
-                                              root,
-                                              doim::CxxHeaderSet::unique(
-                                                  doim::CxxHeaderSet::make()));
-
-        auto cxxIncludeDirectories = doim::CxxIncludeDirectorySet::make();
-        cxxIncludeDirectories->insert(protobuflib);
-        cxxIncludeDirectories->insert(protobufGen);
-        cxxIncludeDirectories =
-            doim::CxxIncludeDirectorySet::unique(cxxIncludeDirectories);
+            headers);
 
         for (const auto& protobufFile : files)
         {
+            auto protobufGen = doim::CxxIncludeDirectory::unique(
+                doim::CxxIncludeDirectory::EType::kSystem,
+                protobufFile->directory(),
+                headers);
+
+            auto cxxIncludeDirectories = doim::CxxIncludeDirectorySet::make();
+            cxxIncludeDirectories->insert(protobuflib);
+            cxxIncludeDirectories->insert(protobufGen);
+            cxxIncludeDirectories =
+                doim::CxxIncludeDirectorySet::unique(cxxIncludeDirectories);
+
             const auto& directory =
                 doim::FsDirectory::corresponding(protobufFile->file()->directory(),
                                                  root,
@@ -110,6 +112,7 @@ public:
     }
 
 private:
+    doim::FsDirectorySPtr mProtobufsDirectory;
     doim::FsFileSet mProtobufsList;
 };
 }

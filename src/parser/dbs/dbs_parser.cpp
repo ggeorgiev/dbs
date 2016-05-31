@@ -131,19 +131,37 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     };
     auto r_objectCxxProgram = r_empty() >> e_ref(objTypeSetCxxProgramFn) & r_object;
 
-    // dom::CxxLibrary Object
+    // CxxLibrary Object
     dom::CxxLibrarySPtr cxxLibraryObject;
     auto cxxLibraryObjectFn = [&object, &cxxLibraryObject](I& i1, I& i2) {
         cxxLibraryObject = dom::CxxLibrary::obtain(object);
     };
     auto r_cxxLibraryObject = r_objectCxxLibrary >> e_ref(cxxLibraryObjectFn);
 
+    // CxxLibrary CxxHeader attrbutes
+    doim::AttributeSPtr cxxHeaderVisibility;
+    auto cxxHeaderInitFn = [&location, &directory, &cxxHeaderVisibility](I& i1, I& i2) {
+        directory = location;
+        cxxHeaderVisibility.reset();
+    };
+
+    auto cxxHeaderAttributeFn =
+        [&location, &attribute, &directory, &cxxHeaderVisibility](I& i1, I& i2) {
+            if (attribute->name() == dom::CxxLibrary::gVisibility)
+            {
+                cxxHeaderVisibility = attribute;
+            }
+            else if (attribute->name() == dom::CxxLibrary::gDirectory)
+            {
+                directory =
+                    doim::FsDirectory::obtain(location, attribute->value()->value());
+            }
+        };
+
+    auto r_cxxHeaderAttribute = r_attribute >> e_ref(cxxHeaderAttributeFn);
+
     // CxxFiles
     auto r_cxxFiles = *r_ws & r_cxxFileKeyword & r_he & r_setLocation & r_files & r_se;
-
-    // ProtobufFiles
-    auto r_protobufFiles =
-        *r_ws & r_protobufFileKeyword & r_he & r_setLocation & r_files & r_se;
 
     // CxxLibraries
 
@@ -176,25 +194,6 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
 
     // CxxLibrary
     dom::CxxLibrarySPtr cxxLibrary;
-
-    // CxxLibrary CxxHeader
-
-    doim::AttributeSPtr cxxHeaderVisibility;
-    auto cxxHeaderInitFn = [&location, &directory, &cxxHeaderVisibility](I& i1, I& i2) {
-        directory = location;
-        cxxHeaderVisibility.reset();
-    };
-
-    auto cxxHeaderAttributeFn =
-        [&location, &attribute, &directory, &cxxHeaderVisibility](I& i1, I& i2) {
-            if (attribute->name() == dom::CxxLibrary::gVisibility)
-                cxxHeaderVisibility = attribute;
-            else if (attribute->name() == dom::CxxLibrary::gDirectory)
-                directory =
-                    doim::FsDirectory::obtain(location, attribute->value()->value());
-        };
-
-    auto r_cxxHeaderAttribute = r_attribute >> e_ref(cxxHeaderAttributeFn);
 
     auto r_cxxHeaderCat = *r_ws & (r_cxxHeaderKeyword >> e_ref(cxxHeaderInitFn)) &
                           *r_cxxHeaderAttribute & r_he;
@@ -231,11 +230,19 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
         cxxLibrary->updateCxxFilesList(files);
     };
     auto r_cxxLibraryCxxFile = r_cxxFiles >> e_ref(cxxLibraryCxxFileFn);
+
     // CxxLibrary ProtobufFile
-    auto cxxLibraryProtobufFileFn = [&cxxLibrary, &files](I& i1, I& i2) {
-        cxxLibrary->updateProtobufsList(files);
+    auto cxxLibraryProtobufFileFn = [&cxxLibrary, &directory, &files](I& i1, I& i2) {
+        cxxLibrary->updateProtobufsList(directory, files);
     };
-    auto r_cxxLibraryProtobufFile = r_protobufFiles >> e_ref(cxxLibraryProtobufFileFn);
+
+    auto r_cxxLibraryProtobufFileCat = *r_ws &
+                                       (r_protobufFileKeyword >> e_ref(cxxHeaderInitFn)) &
+                                       *r_cxxHeaderAttribute & r_he;
+
+    auto r_cxxLibraryProtobufFile =
+        r_cxxLibraryProtobufFileCat & r_files >> e_ref(cxxLibraryProtobufFileFn) & r_se;
+    ;
 
     // CxxLibrary CxxBinary
     auto cxxBinaryFn = [&file, &cxxLibrary](I& i1, I& i2) {

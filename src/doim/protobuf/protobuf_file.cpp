@@ -6,9 +6,10 @@
 
 namespace doim
 {
-ProtobufFile::ProtobufFile(const FsFileSPtr& file)
-    : Element(file)
+ProtobufFile::ProtobufFile(const FsDirectorySPtr& directory, const FsFileSPtr& file)
+    : Element(directory, file)
 {
-    ASSERT(file->isUnique());
+    ASSERT(directory != nullptr && directory->isUnique());
+    ASSERT(file != nullptr && file->isUnique());
 }
 }

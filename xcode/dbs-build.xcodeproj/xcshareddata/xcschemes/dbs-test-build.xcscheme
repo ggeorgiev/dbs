@@ -58,8 +58,8 @@
       </MacroExpansion>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--gtest_filter=TPoolTest/0.Schedule"
-            isEnabled = "NO">
+            argument = "--gtest_filter=DbsParserTest.SLOW_CxxLibraryProtobufFile"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--gtest_filter=CxxLibraryTest.*"

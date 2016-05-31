@@ -37,7 +37,7 @@ string SysCommand::toString(const FsDirectorySPtr& root) const
         if (directory() != root)
             result += "pushd " + directory()->path(root) + " && \\\n";
 
-    result += executable()->path(root);
+    result += executable()->path(directory() == nullptr ? root : directory());
     size_t line = result.size();
     for (const auto& str : strings)
     {

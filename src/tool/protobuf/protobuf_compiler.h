@@ -19,8 +19,7 @@ class ProtobufCompiler : public std::enable_shared_from_this<ProtobufCompiler>
 public:
     ProtobufCompiler(const doim::SysExecutableSPtr& compiler);
 
-    doim::SysCommandSPtr compileCommand(const doim::FsDirectorySPtr& directory,
-                                        const doim::FsDirectorySPtr& destination,
+    doim::SysCommandSPtr compileCommand(const doim::FsDirectorySPtr& destination,
                                         const doim::ProtobufFileSPtr& protobufFile,
                                         const doim::CxxFileSPtr& cxxFile) const;
 

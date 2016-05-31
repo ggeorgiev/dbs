@@ -115,8 +115,10 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
             if (origin.type() == typeid(doim::ProtobufFileSPtr))
             {
                 const auto& protobufFile = boost::get<doim::ProtobufFileSPtr>(origin);
-                auto compileProtobufCommand = mProtobufCompiler->compileCommand(
-                    directory, directory, protobufFile, objectFile->cxxFile());
+                auto compileProtobufCommand =
+                    mProtobufCompiler->compileCommand(protobufFile->directory(),
+                                                      protobufFile,
+                                                      objectFile->cxxFile());
 
                 auto id = rtti::RttiInfo<CxxEngine, 2>::classId();
                 const string& description =
@@ -374,8 +376,10 @@ string CxxEngine::buildScript(EBuildFor buildFor,
             if (origin.type() == typeid(doim::ProtobufFileSPtr))
             {
                 const auto& protobufFile = boost::get<doim::ProtobufFileSPtr>(origin);
-                auto compileProtobufCommand = mProtobufCompiler->compileCommand(
-                    directory, directory, protobufFile, objectFile->cxxFile());
+                auto compileProtobufCommand =
+                    mProtobufCompiler->compileCommand(protobufFile->directory(),
+                                                      protobufFile,
+                                                      objectFile->cxxFile());
 
                 compileOrigin = compileProtobufCommand->toString(directory) + " && \\\n";
             }

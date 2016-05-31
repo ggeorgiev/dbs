@@ -39,7 +39,10 @@ cxx_library cxx_files:
 ;
 
 cxx_library cxx_protobufs:
-    protobuf_file:
+    protobuf_file
+        @visibility=public
+        @directory=.:
+
         foo.cpp
     ;
 ;

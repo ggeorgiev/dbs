@@ -1,12 +1,14 @@
 cxx_library rpc
     @type=user:
 
-    protobuf_file:
-        rpc.proto
+    protobuf_file
+        @visibility=public
+        @directory=..:
+
+        rpc/rpc.proto
     ;
-    
+
     cxx_library:
         /protobuf-lite
     ;
-
 ;
