@@ -330,8 +330,11 @@ static string makeDirectory(const doim::FsDirectorySPtr& directory,
             current = current->parent();
         }
         directories.insert(current);
-        stream << "if [ ! -e " << current->path(directory) << " ]; then mkdir "
-               << current->path(directory) << "; fi" << std::endl;
+        if (current != directory)
+        {
+            stream << "if [ ! -e " << current->path(directory) << " ]; then mkdir "
+                   << current->path(directory) << "; fi" << std::endl;
+        }
     }
     return stream.str();
 }

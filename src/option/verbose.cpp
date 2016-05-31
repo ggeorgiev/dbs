@@ -16,8 +16,8 @@ bool Verbose::isVisible(const doim::TagSet& tags)
         return false;
     if (tags.count(doim::gDbTag) > 0)
         return false;
-    if (tags.count(doim::gSysTag) > 0)
-        return false;
+    // if (tags.count(doim::gSysTag) > 0)
+    //  return false;
     return true;
 }
 

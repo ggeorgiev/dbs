@@ -132,8 +132,8 @@ TEST(FsDirectoryTest, obtain)
         const auto& directory = doim::FsDirectory::obtain(root, test.dir);
         ASSERT_NE(nullptr, directory);
 
-        ASSERT_EQ(test.absolute, directory->path(nullptr))
-            << "root: \"" << test.root << "\", dir: \"" << test.dir << "\"";
+        ASSERT_EQ(test.absolute, directory->path()) << "root: \"" << test.root
+                                                    << "\", dir: \"" << test.dir << "\"";
         ASSERT_EQ(test.relative, directory->path(root))
             << "root: \"" << test.root << "\", dir: \"" << test.dir << "\"";
     }

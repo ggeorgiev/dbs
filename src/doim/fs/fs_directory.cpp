@@ -165,6 +165,13 @@ string FsDirectory::path(const FsDirectorySPtr& directory) const
     return path;
 }
 
+string FsDirectory::nonEmptyPath(const FsDirectorySPtr& directory) const
+{
+    if (directory.get() == this)
+        return ".";
+    return path(directory);
+}
+
 void FsDirectory::calculate(FsDirectoryRPtr directory, size_t length, string& path) const
 {
     length += name().size() + 1;

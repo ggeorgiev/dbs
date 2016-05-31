@@ -43,7 +43,7 @@ public:
 
         for (const auto& directory : *directories)
         {
-            DLOG("include directory: {}", directory->directory()->path(root));
+            DLOG("include directory: {}", directory->directory()->nonEmptyPath(root));
             for (const auto& header : *directory->headerFiles())
                 DLOG("    header: {}", header->file()->path(root));
         }

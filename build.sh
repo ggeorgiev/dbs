@@ -199,7 +199,7 @@ clang++ -I src/ -O3 -c src/parser/dbs/dbs_parser.cpp \
 if [ ! -e build/release/src/rpc/ ]; then mkdir build/release/src/rpc/; fi
 echo Compile src/rpc/rpc.pb.cc
 protobuf/bin/protoc --cpp_out=. src/rpc/rpc.proto && \
-clang++ -O3 -c src/rpc/rpc.pb.cc -isystem protobuf/include/ \
+clang++ -O3 -c src/rpc/rpc.pb.cc -isystem . -isystem protobuf/include/ \
     -o build/release/src/rpc/rpc.proto.o -std=c++14 &
 if [ ! -e build/release/src/task/ ]; then mkdir build/release/src/task/; fi
 if [ ! -e build/release/src/task/cxx/ ]; then mkdir build/release/src/task/cxx/; fi

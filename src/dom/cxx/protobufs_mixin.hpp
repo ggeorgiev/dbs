@@ -79,8 +79,15 @@ public:
             doim::FsDirectory::obtain(root, "protobuf/include"),
             doim::CxxHeaderSet::unique(doim::CxxHeaderSet::make()));
 
+        auto protobufGen =
+            doim::CxxIncludeDirectory::unique(doim::CxxIncludeDirectory::EType::kSystem,
+                                              root,
+                                              doim::CxxHeaderSet::unique(
+                                                  doim::CxxHeaderSet::make()));
+
         auto cxxIncludeDirectories = doim::CxxIncludeDirectorySet::make();
         cxxIncludeDirectories->insert(protobuflib);
+        cxxIncludeDirectories->insert(protobufGen);
         cxxIncludeDirectories =
             doim::CxxIncludeDirectorySet::unique(cxxIncludeDirectories);
 

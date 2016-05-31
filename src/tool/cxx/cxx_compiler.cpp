@@ -53,7 +53,7 @@ doim::SysArgumentSetSPtr CxxCompiler::includeArguments(
                 break;
         }
 
-        value += includeDirectory->directory()->path(directory);
+        value += includeDirectory->directory()->nonEmptyPath(directory);
 
         arguments->insert(doim::SysArgument::unique(value));
     }
@@ -124,7 +124,7 @@ doim::SysCommandSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& direc
     for (const auto& cxxLibrary : *program->staticLibraries())
     {
         auto argument_L = doim::SysArgument::unique(
-            "-L " + cxxLibrary->binary()->directory()->path(directory));
+            "-L " + cxxLibrary->binary()->directory()->nonEmptyPath(directory));
         linkArguments->insert(argument_L);
 
         string name = cxxLibrary->binary()->name();

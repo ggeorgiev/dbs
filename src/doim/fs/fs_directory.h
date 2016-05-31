@@ -92,6 +92,10 @@ public:
     FsDirectorySPtr commonAncestor(const FsDirectorySPtr& directory) const;
     string path(const FsDirectorySPtr& directory = nullptr) const;
 
+    // This is almost the same as path, but in case the current and the root directories
+    // are the same instead of empty string it will return '.'
+    string nonEmptyPath(const FsDirectorySPtr& directory) const;
+
 private:
     void calculate(FsDirectoryRPtr directory, size_t length, string& path) const;
 
