@@ -48,16 +48,20 @@ public:
 
     void onStart() const override
     {
-        doim::TagSet runTags = tags();
-        runTags.insert(doim::gRunTag);
+        doim::TagSetSPtr runTags = doim::TagSet::make(tags());
+        runTags->insert(doim::gRunTag);
+        runTags = doim::TagSet::unique(runTags);
+
         if (opt::gVerbose->isVisible(runTags))
             ILOG("[ RUN      ] {}", description());
     }
 
     void onFinish(ECode code) const override
     {
-        doim::TagSet doneTags = tags();
-        doneTags.insert(doim::gDoneTag);
+        doim::TagSetSPtr doneTags = doim::TagSet::make(tags());
+        doneTags->insert(doim::gDoneTag);
+        doneTags = doim::TagSet::unique(doneTags);
+
         if (opt::gVerbose->isVisible(doneTags))
         {
             ILOG("{} {}",

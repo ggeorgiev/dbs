@@ -59,11 +59,11 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "--gtest_filter=DbsParserTest.SLOW_CxxLibraryProtobufFile"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--gtest_filter=CxxLibraryTest.*"
-            isEnabled = "NO">
+            argument = "--gtest_filter=VerboseTest.*"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--gtest_filter=DbsParserTest*.*"
