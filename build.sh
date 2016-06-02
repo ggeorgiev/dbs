@@ -129,6 +129,12 @@ clang++ -I src/ -O3 -c src/doim/tag/tag.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/doim/tag/tag.cpp.o -std=c++14 &
+echo Compile src/doim/tag/tag_expression.cpp
+clang++ -I src/ -O3 -c src/doim/tag/tag_expression.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/doim/tag/tag_expression.cpp.o \
+    -std=c++14 &
 if [ ! -e build/release/src/doim/tool/ ]; then mkdir build/release/src/doim/tool/; fi
 echo Compile src/doim/tool/tool_command.cpp
 clang++ -I src/ -O3 -c src/doim/tool/tool_command.cpp \
@@ -190,6 +196,12 @@ clang++ -I src/ -O3 -c src/parser/cxx/cxx_parser.cpp \
     -isystem spdlog/include/ -isystem src/system/ \
     -o build/release/src/parser/cxx/cxx_parser.cpp.o -std=c++14 &
 if [ ! -e build/release/src/parser/dbs/ ]; then mkdir build/release/src/parser/dbs/; fi
+echo Compile src/parser/dbs/dbs_config_parser.cpp
+clang++ -I src/ -O3 -c src/parser/dbs/dbs_config_parser.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
+    -isystem spdlog/include/ -isystem src/system/ \
+    -o build/release/src/parser/dbs/dbs_config_parser.cpp.o -std=c++14 &
 echo Compile src/parser/dbs/dbs_parser.cpp
 clang++ -I src/ -O3 -c src/parser/dbs/dbs_parser.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
@@ -342,6 +354,7 @@ clang++ -L boost/lib/ -L fmt/lib/ -L protobuf/lib/ -L rocksdb/lib/ \
     build/release/src/doim/sys/sys_command.cpp.o \
     build/release/src/doim/sys/sys_executable.cpp.o \
     build/release/src/doim/tag/tag.cpp.o \
+    build/release/src/doim/tag/tag_expression.cpp.o \
     build/release/src/doim/tool/tool_command.cpp.o \
     build/release/src/dom/cxx/cxx_library.cpp.o \
     build/release/src/dom/cxx/cxx_program.cpp.o \
@@ -349,6 +362,7 @@ clang++ -L boost/lib/ -L fmt/lib/ -L protobuf/lib/ -L rocksdb/lib/ \
     build/release/src/log/log.cpp.o build/release/src/main.cpp.o \
     build/release/src/option/verbose.cpp.o \
     build/release/src/parser/cxx/cxx_parser.cpp.o \
+    build/release/src/parser/dbs/dbs_config_parser.cpp.o \
     build/release/src/parser/dbs/dbs_parser.cpp.o \
     build/release/src/rpc/rpc.proto.o \
     build/release/src/task/cxx/cxx_object_file_crc_task.cpp.o \

@@ -62,7 +62,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--gtest_filter=VerboseTest.*"
+            argument = "--gtest_filter=DbsConfigParserTest.*"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

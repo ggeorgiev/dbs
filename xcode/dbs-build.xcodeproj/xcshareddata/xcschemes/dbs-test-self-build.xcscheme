@@ -63,11 +63,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "generate"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "build"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "iwyu"

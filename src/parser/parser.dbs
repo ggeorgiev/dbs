@@ -6,6 +6,7 @@ cxx_library parser
         @directory=..:
 
         parser/cxx/cxx_parser.h
+        parser/dbs/dbs_config_parser.h
         parser/dbs/dbs_parser.h
     ;
 
@@ -18,6 +19,7 @@ cxx_library parser
 
     cxx_file:
         cxx/cxx_parser.cpp
+        dbs/dbs_config_parser.cpp
         dbs/dbs_parser.cpp
     ;
 ;
@@ -36,6 +38,7 @@ cxx_library parser-test
 
     cxx_file:
         gtest/cxx/cxx_parser-utest.cpp
+        gtest/dbs/dbs_config_parser-utest.cpp
         gtest/dbs/dbs_parser-utest.cpp
     ;
 ;

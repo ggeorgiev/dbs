@@ -19,6 +19,7 @@ cxx_library doim
         doim/sys/sys_argument.h
         doim/sys/sys_command.h
         doim/sys/sys_executable.h
+        doim/tag/tag_expression.h
         doim/tag/tag.h
         doim/tool/tool_command.h
         doim/generic/attribute_name.h
@@ -63,6 +64,7 @@ cxx_library doim
         sys/sys_argument.cpp
         sys/sys_command.cpp
         sys/sys_executable.cpp
+        tag/tag_expression.cpp
         tag/tag.cpp
         tool/tool_command.cpp
     ;
@@ -83,6 +85,7 @@ cxx_library doim-test
     cxx_file:
         gtest/fs/fs_directory-utest.cpp
         gtest/fs/fs_file-ptest.cpp
+        gtest/tag/tag_expression-utest.cpp
         gtest/element_manager-utest.cpp
         gtest/set_manager-utest.cpp
         gtest/manager-mttest.cpp

@@ -12,7 +12,6 @@
 namespace doim
 {
 class Tag;
-
 typedef shared_ptr<Tag> TagSPtr;
 typedef Set<Tag> TagSet;
 typedef shared_ptr<TagSet> TagSetSPtr;
