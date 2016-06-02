@@ -5,6 +5,7 @@
 
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_directory.h"
+#include "doim/protobuf/protobuf_file.h"
 #include "doim/sys/sys_command.h"
 #include "doim/sys/sys_executable.h"
 #include <memory>

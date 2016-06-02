@@ -207,6 +207,7 @@
 		5E0C292E1CFF252300D7E849 /* tag_expression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tag_expression.h; sourceTree = "<group>"; };
 		5E0C29321CFFC4AA00D7E849 /* tag_expression-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "tag_expression-utest.cpp"; sourceTree = "<group>"; };
 		5E0C29351CFFCE9300D7E849 /* verbose.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = verbose.dbs; sourceTree = "<group>"; };
+		5E0C29361D00053400D7E849 /* config.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.dbs; sourceTree = "<group>"; };
 		5E10B3181C70F272009C73E4 /* boost.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = boost.dbs; sourceTree = "<group>"; };
 		5E10B3191C70F272009C73E4 /* fmt.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fmt.dbs; sourceTree = "<group>"; };
 		5E10B31A1C70F272009C73E4 /* gtest.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gtest.dbs; sourceTree = "<group>"; };
@@ -490,6 +491,7 @@
 				5E10B38B1C70F272009C73E4 /* task */,
 				5E10B3A31C70F272009C73E4 /* tool */,
 				5E10B3A61C70F272009C73E4 /* tpool */,
+				5E0C29361D00053400D7E849 /* config.dbs */,
 				5E10B3751C70F272009C73E4 /* main.dbs */,
 				5E5A04FE1CFA189300DA4443 /* main_gtest.cpp */,
 				5E10B3741C70F272009C73E4 /* main.cpp */,

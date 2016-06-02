@@ -10,6 +10,7 @@
 #include "tpool/task_group.h"
 #include "parser/dbs/dbs_parser.h"
 #include "dom/cxx/cxx_program.h"
+#include "option/verbose.h"
 #include "doim/fs/fs_binary.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
@@ -54,9 +55,20 @@ int main(int argc, char* argv[])
 
     ILOG("Load dbs file: {}", file->path(cwd));
 
+    auto config = doim::FsFile::obtain(file->directory(), "config.dbs");
+
+    ECode code = opt::gVerbose->config(config);
+    if (code != err::kSuccess)
+    {
+        std::cout << err::gError->message() << "\n";
+        std::cout << err::gError->callstack() << "\n";
+        EHReset;
+        return 1;
+    }
+
     auto db = doim::FsDirectory::obtain(cwd, "build/db");
 
-    ECode code = db::gDatabase->open(db->path());
+    code = db::gDatabase->open(db->path());
     if (code != err::kSuccess)
     {
         std::cout << err::gError->message() << "\n";

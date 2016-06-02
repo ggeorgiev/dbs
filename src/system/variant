@@ -3,7 +3,9 @@
 
 #pragma once
 
+#include <boost/type_index.hpp>      // IWYU pragma: export
 #include <boost/variant.hpp>         // IWYU pragma: export
+#include <boost/variant/get.hpp>     // IWYU pragma: export
 #include <boost/variant/variant.hpp> // IWYU pragma: export
 
 using boost::variant;

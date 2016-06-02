@@ -13,10 +13,12 @@
 #include "tpool/task_group.h"
 #include "doim/cxx/cxx_program.h"
 #include "doim/fs/fs_file.h"
+#include "doim/protobuf/protobuf_file.h"
 #include "doim/sys/sys_command.h"
 #include "doim/set.hpp"
 #include "db/database.h"
 #include "err/err.h"
+#include "err/err_assert.h"
 #include "im/initialization_manager.hpp"
 #include "log/log.h"
 #include "math/crc.hpp"
@@ -25,6 +27,7 @@
 #include <functional>
 #include <str>
 #include <unordered>
+#include <variant>
 #include <vector>
 
 namespace engine

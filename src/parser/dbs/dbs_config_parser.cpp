@@ -2,10 +2,18 @@
 //
 
 #include "parser/dbs/dbs_config_parser.h"
+#include "doim/tag/tag.h"
 #include "doim/tag/tag_expression.h"
+#include "doim/set.hpp"
 #include <boost/filesystem/operations.hpp>
 #include <fstream> // IWYU pragma: keep
-#include <axe.h>   // IWYU pragma: keep
+#include <iterator>
+#include <memory>
+#include <str>
+#include <utility>
+#include <vector>
+#include <axe.h> // IWYU pragma: keep
+#include <stddef.h>
 
 namespace parser
 {

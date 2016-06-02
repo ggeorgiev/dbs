@@ -6,6 +6,7 @@
 #include "doim/fs/fs_file.h"
 #include "doim/tag/tag_expression.h"
 #include "err/err.h"
+#include <str>
 
 namespace parser
 {

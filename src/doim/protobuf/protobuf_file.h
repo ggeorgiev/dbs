@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/element.hpp"
 #include "doim/set.hpp"

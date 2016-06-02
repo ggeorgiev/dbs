@@ -3,7 +3,12 @@
 
 #include "tool/protobuf/protobuf_compiler.h"
 #include "doim/cxx/cxx_file.h"
+#include "doim/fs/fs_file.h"
+#include "doim/sys/sys_argument.h"
 #include "doim/sys/sys_command.h"
+#include "doim/set.hpp"
+#include "err/err_assert.h"
+#include <string>
 
 namespace tool
 {

@@ -2,6 +2,8 @@
 //
 
 #include "doim/tag/tag_expression.h"
+#include "doim/set.hpp"
+#include "err/err_assert.h"
 
 namespace doim
 {

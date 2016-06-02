@@ -2,7 +2,9 @@
 //
 
 #include "doim/tag/tag_expression.h"
+#include "doim/tag/tag.h"
 #include "gtest/framework.h"
+#include <iosfwd>
 
 TEST(TagExpressionTest, patternMatch)
 {

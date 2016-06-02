@@ -4,9 +4,13 @@
 #include "parser/dbs/dbs_config_parser.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
+#include "doim/tag/tag.h"
+#include "doim/tag/tag_expression.h"
+#include "err/err.h"
 #include "err/gtest/err.h"
 #include "gtest/framework.h"
 #include "gtest/test_resource.h"
+#include <memory>
 
 TEST(DbsConfigParserTest, SLOW_verbose)
 {

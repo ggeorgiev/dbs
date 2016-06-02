@@ -9,6 +9,7 @@
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_file.h"
+#include "doim/protobuf/protobuf_file.h"
 #include "doim/element.hpp"
 #include "err/err.h"
 #include "err/err_assert.h"
