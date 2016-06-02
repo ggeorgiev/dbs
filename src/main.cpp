@@ -4,6 +4,7 @@
 #include "engine/cxx_engine.h"
 #include "tool/cxx/cxx_clang_format.h"
 #include "tool/cxx/cxx_compiler.h"
+#include "tool/protobuf/protobuf_compiler.h"
 #include "tool/cxx/cxx_iwyu.h"
 #include "task/tpool.h"
 #include "tpool/task.h"

@@ -313,6 +313,10 @@ tpool::TaskSPtr CxxEngine::iwyu(const doim::FsDirectorySPtr& directory,
     std::vector<tpool::TaskSPtr> allTasks;
     for (const auto& objectFile : *objectFiles)
     {
+        // Do not check generated files
+        if (!apply_visitor(vst::isNullptr, objectFile->cxxFile()->origin()))
+            continue;
+
         tpool::TaskSPtr task = iwyuTask(directory, objectFile->cxxFile());
         allTasks.push_back(task);
     }

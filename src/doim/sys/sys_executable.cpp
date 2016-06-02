@@ -3,7 +3,6 @@
 
 #include "doim/sys/sys_executable.h"
 #include "err/err_assert.h"
-#include <boost/type_index.hpp>
 
 namespace doim
 {
