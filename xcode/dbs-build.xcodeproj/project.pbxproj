@@ -206,6 +206,7 @@
 		5E0C292D1CFF252300D7E849 /* tag_expression.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tag_expression.cpp; sourceTree = "<group>"; };
 		5E0C292E1CFF252300D7E849 /* tag_expression.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tag_expression.h; sourceTree = "<group>"; };
 		5E0C29321CFFC4AA00D7E849 /* tag_expression-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "tag_expression-utest.cpp"; sourceTree = "<group>"; };
+		5E0C29351CFFCE9300D7E849 /* verbose.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = verbose.dbs; sourceTree = "<group>"; };
 		5E10B3181C70F272009C73E4 /* boost.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = boost.dbs; sourceTree = "<group>"; };
 		5E10B3191C70F272009C73E4 /* fmt.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fmt.dbs; sourceTree = "<group>"; };
 		5E10B31A1C70F272009C73E4 /* gtest.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = gtest.dbs; sourceTree = "<group>"; };
@@ -445,6 +446,14 @@
 				5E0C29321CFFC4AA00D7E849 /* tag_expression-utest.cpp */,
 			);
 			path = tag;
+			sourceTree = "<group>";
+		};
+		5E0C29341CFFCE9300D7E849 /* config */ = {
+			isa = PBXGroup;
+			children = (
+				5E0C29351CFFCE9300D7E849 /* verbose.dbs */,
+			);
+			path = config;
 			sourceTree = "<group>";
 		};
 		5E10B2F41C70E875009C73E4 = {
@@ -1132,6 +1141,7 @@
 		5E87B9E01CF1607300F042B4 /* dbs */ = {
 			isa = PBXGroup;
 			children = (
+				5E0C29341CFFCE9300D7E849 /* config */,
 				5E5A04FA1CF9735200DA4443 /* cxx_library_headers.dbs */,
 				5E87B9E21CF17A1F00F042B4 /* cxx_library.dbs */,
 				5E5A04FB1CF9FC5700DA4443 /* cxx_program_headers.dbs */,

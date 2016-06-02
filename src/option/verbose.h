@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "doim/tag/tag.h"
 #include "doim/tag/tag_expression.h"
 #include "im/initialization_manager.hpp"
 #include <memory>

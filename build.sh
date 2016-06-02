@@ -185,8 +185,9 @@ if [ ! -e build/release/src/option/ ]; then mkdir build/release/src/option/; fi
 echo Compile src/option/verbose.cpp
 clang++ -I src/ -O3 -c src/option/verbose.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
-    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
-    -isystem src/system/ -o build/release/src/option/verbose.cpp.o -std=c++14 &
+    -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
+    -isystem spdlog/include/ -isystem src/system/ \
+    -o build/release/src/option/verbose.cpp.o -std=c++14 &
 if [ ! -e build/release/src/parser/ ]; then mkdir build/release/src/parser/; fi
 if [ ! -e build/release/src/parser/cxx/ ]; then mkdir build/release/src/parser/cxx/; fi
 echo Compile src/parser/cxx/cxx_parser.cpp

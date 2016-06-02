@@ -66,6 +66,7 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     };
 
     auto r_ws = r_space | (r_endl >> e_ref(newlineFn));
+
     // Header end
     auto r_he = *r_ws & r_colon;
     // Structure end
@@ -298,6 +299,8 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     auto r_cxxProgram =
         r_cxxProgramCap & *(r_cxxProgramCxxFile | r_cxxProgramCxxLibrary) & r_se;
 
+    const auto& r_dbs = ~r_annex & *(r_cxxLibrary | r_cxxProgram) & *r_ws & r_end();
+
     // Dbs file
     const auto& path = dbsFile->path();
     if (!boost::filesystem::exists(path))
@@ -306,8 +309,6 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     std::ifstream fstream(dbsFile->path(nullptr).c_str());
     string content((std::istreambuf_iterator<char>(fstream)),
                    std::istreambuf_iterator<char>());
-
-    const auto& r_dbs = ~r_annex & *(r_cxxLibrary | r_cxxProgram) & *r_ws & r_end();
 
     r_dbs(content.begin(), content.end());
 

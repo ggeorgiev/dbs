@@ -6,7 +6,6 @@
 #include "doim/set.hpp"
 #include "err/err_assert.h"
 #include <algorithm>
-#include <functional>
 #include <str>
 #include <vector>
 #include <stddef.h>

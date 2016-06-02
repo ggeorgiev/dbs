@@ -5,9 +5,7 @@
 
 #include "doim/tag/tag.h"
 #include "doim/element.hpp"
-#include "doim/set.hpp"
 #include <memory>
-#include <str>
 #include <tuple>
 
 namespace doim

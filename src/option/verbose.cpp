@@ -2,6 +2,7 @@
 //
 
 #include "option/verbose.h"
+#include "parser/dbs/dbs_config_parser.h"
 #include <functional>
 
 namespace opt
@@ -10,32 +11,10 @@ VerboseSPtr gVerbose = im::InitializationManager::subscribe(gVerbose);
 
 Verbose::Verbose()
 {
-    auto task = doim::TagExpression::unique(doim::TagExpression::ETurn::kOn,
-                                            doim::TagSet::unique(doim::TagSet::make(
-                                                doim::TagSet{doim::gTaskTag})),
-                                            nullptr);
+    parser::DbsConfigParser parser;
+    parser.parse("verbose: -sys -db -crc -parse +task;");
 
-    auto parse = doim::TagExpression::unique(doim::TagExpression::ETurn::kOff,
-                                             doim::TagSet::unique(doim::TagSet::make(
-                                                 doim::TagSet{doim::gParseTag})),
-                                             task);
-
-    auto crc = doim::TagExpression::unique(doim::TagExpression::ETurn::kOff,
-                                           doim::TagSet::unique(doim::TagSet::make(
-                                               doim::TagSet{doim::gCrcTag})),
-                                           parse);
-
-    auto db = doim::TagExpression::unique(doim::TagExpression::ETurn::kOff,
-                                          doim::TagSet::unique(doim::TagSet::make(
-                                              doim::TagSet{doim::gDbTag})),
-                                          crc);
-
-    auto sys = doim::TagExpression::unique(doim::TagExpression::ETurn::kOff,
-                                           doim::TagSet::unique(doim::TagSet::make(
-                                               doim::TagSet{doim::gSysTag})),
-                                           db);
-
-    mTagExpression = sys;
+    mTagExpression = parser.mTagExpression;
 }
 
 bool Verbose::isVisible(const doim::TagSetSPtr& tags)

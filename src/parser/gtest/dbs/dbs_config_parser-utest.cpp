@@ -2,35 +2,45 @@
 //
 
 #include "parser/dbs/dbs_config_parser.h"
-#include "dom/cxx/cxx_library.h"
-#include "dom/cxx/cxx_program.h"
-#include "doim/cxx/cxx_header.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
-#include "doim/generic/object.h"
-#include "doim/set.hpp"
+#include "err/gtest/err.h"
 #include "gtest/framework.h"
 #include "gtest/test_resource.h"
-#include <memory>
-#include <str>
-
-static void parse()
-{
-    static bool parsed = false;
-    if (parsed)
-        return;
-
-    auto mDbsConfigDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs/config");
-    auto config = doim::FsFile::obtain(mDbsConfigDirectory, "config.dbs");
-
-    parser::DbsConfigParser parser;
-    parser.parse(config);
-
-    parsed = true;
-}
 
 TEST(DbsConfigParserTest, SLOW_verbose)
 {
-    parse();
+    auto mDbsConfigDirectory =
+        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs/config");
+    auto config = doim::FsFile::obtain(mDbsConfigDirectory, "verbose.dbs");
+
+    parser::DbsConfigParser parser;
+    ASSERT_OKAY(parser.parse(config));
+
+    auto task = doim::TagExpression::unique(doim::TagExpression::ETurn::kOn,
+                                            doim::TagSet::unique(doim::TagSet::make(
+                                                doim::TagSet{doim::gTaskTag})),
+                                            nullptr);
+
+    auto parse = doim::TagExpression::unique(doim::TagExpression::ETurn::kOff,
+                                             doim::TagSet::unique(doim::TagSet::make(
+                                                 doim::TagSet{doim::gParseTag})),
+                                             task);
+
+    auto crc = doim::TagExpression::unique(doim::TagExpression::ETurn::kOff,
+                                           doim::TagSet::unique(doim::TagSet::make(
+                                               doim::TagSet{doim::gCrcTag})),
+                                           parse);
+
+    auto db = doim::TagExpression::unique(doim::TagExpression::ETurn::kOff,
+                                          doim::TagSet::unique(doim::TagSet::make(
+                                              doim::TagSet{doim::gDbTag})),
+                                          crc);
+
+    auto sys = doim::TagExpression::unique(doim::TagExpression::ETurn::kOff,
+                                           doim::TagSet::unique(doim::TagSet::make(
+                                               doim::TagSet{doim::gSysTag})),
+                                           db);
+
+    ASSERT_EQ(sys, parser.mTagExpression);
 }
