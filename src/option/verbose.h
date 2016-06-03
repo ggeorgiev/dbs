@@ -24,7 +24,7 @@ public:
 
     ECode config(const doim::FsFileSPtr& file);
 
-    bool isVisible(const doim::TagSetSPtr& tags);
+    bool isVisible(const doim::TagSetSPtr& tags) const;
 
 private:
     doim::TagExpressionSPtr mTagExpression;

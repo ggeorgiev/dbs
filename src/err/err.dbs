@@ -11,6 +11,7 @@ cxx_library err
         err/err_serialize.h
         err/err_variadic.h
         err/macro.h
+        err/raii.hpp
 
     ;
 

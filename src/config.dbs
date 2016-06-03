@@ -1,1 +1,1 @@
-verbose: -sys -db -crc -parse +task;
+verbose: -crc -sys -db -parse +task;

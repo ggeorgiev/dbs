@@ -13,6 +13,7 @@
 #include "doim/element.hpp"
 #include "err/err.h"
 #include "err/err_assert.h"
+#include "err/raii.hpp"
 #include "log/log.h"
 #include "math/crc.hpp"
 #include <boost/filesystem/operations.hpp>
@@ -56,6 +57,8 @@ ECode CxxSourceCrcTask::operator()()
     }
 
     const auto& path = apply_visitor(doim::vst::path, cxxSource());
+
+    Defer defer([=] { DLOG("Crc for {0} is {1:x}", path, mCrcsum); });
 
     if (!boost::filesystem::exists(path))
     {
@@ -109,13 +112,17 @@ ECode CxxSourceCrcTask::operator()()
         auto unique = crcs.insert(n).second;
         if (!unique)
             EHBan(kTooMany, "There are at least two items with the same crc");
+
         x ^= n;
     }
 
-    crcProcessor.process_bytes(&x, sizeof(x));
+    math::Crcsum sum = 0;
+    for (size_t i = 0; i < sizeof(x); ++i)
+        sum = sum * 101 + reinterpret_cast<std::uint8_t*>(&x)[i];
+
+    crcProcessor.process_bytes(&sum, sizeof(sum));
     mCrcsum = crcProcessor.checksum();
 
-    DLOG("Crc for {0} is {1:x}", path, mCrcsum);
     EHEnd;
 }
 

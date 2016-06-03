@@ -108,7 +108,7 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromOneDirectory)
     task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
 
-    EXPECT_EQ(0x69cac3edebe20091, task->crc()) << std::hex << task->crc();
+    EXPECT_EQ(0x7ec565b7c26583ea, task->crc()) << std::hex << task->crc();
 }
 
 TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
@@ -154,5 +154,5 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
     task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
 
-    EXPECT_EQ(0x69cac3edebe20091, task->crc()) << std::hex << task->crc();
+    EXPECT_EQ(0x7ec565b7c26583ea, task->crc()) << std::hex << task->crc();
 }

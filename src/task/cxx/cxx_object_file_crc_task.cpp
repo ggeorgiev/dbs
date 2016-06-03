@@ -7,6 +7,7 @@
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
 #include "err/err_assert.h"
+#include "err/raii.hpp"
 #include "log/log.h"
 #include "math/crc.hpp"
 #include <boost/filesystem/operations.hpp>
@@ -24,6 +25,9 @@ CxxObjectFileCrcTask::CxxObjectFileCrcTask(const doim::CxxObjectFileSPtr& cxxObj
 
 ECode CxxObjectFileCrcTask::operator()()
 {
+    Defer defer(
+        [=] { DLOG("Crc for {0} is {1:x}", cxxObjectFile()->file()->name(), mCrcsum); });
+
     const auto& path = cxxObjectFile()->file()->path(nullptr);
     if (!boost::filesystem::exists(path))
     {
@@ -51,7 +55,6 @@ ECode CxxObjectFileCrcTask::operator()()
     crcProcessor.process_bytes(&crc, sizeof(crc));
     mCrcsum = crcProcessor.checksum();
 
-    DLOG("Crc for {0} is {1:x}", cxxObjectFile()->file()->name(), mCrcsum);
     EHEnd;
 }
 

@@ -4,8 +4,8 @@
 #include "engine/cxx_engine.h"
 #include "tool/cxx/cxx_clang_format.h"
 #include "tool/cxx/cxx_compiler.h"
-#include "tool/protobuf/protobuf_compiler.h"
 #include "tool/cxx/cxx_iwyu.h"
+#include "tool/protobuf/protobuf_compiler.h"
 #include "task/tpool.h"
 #include "tpool/task.h"
 #include "tpool/task_group.h"
@@ -159,6 +159,7 @@ int main(int argc, char* argv[])
     task::gTPool->ensureScheduled(group);
 
     code = group->join();
+
     task::gTPool->join();
 
     if (code != err::kSuccess)

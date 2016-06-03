@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5E057CA51CE2E4000042D252 /* db_key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E057CA31CE2E4000042D252 /* db_key.cpp */; };
 		5E057CA61CE2E4000042D252 /* db_key.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E057CA41CE2E4000042D252 /* db_key.h */; };
+		5E0AEFC11D0116140094AD34 /* raii.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E0AEFC01D0116140094AD34 /* raii.hpp */; };
 		5E0C29291CFE9F4B00D7E849 /* dbs_config_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C29271CFE9F4B00D7E849 /* dbs_config_parser.cpp */; };
 		5E0C292A1CFE9F4B00D7E849 /* dbs_config_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E0C29281CFE9F4B00D7E849 /* dbs_config_parser.h */; };
 		5E0C292C1CFE9F6E00D7E849 /* dbs_config_parser-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C292B1CFE9F6E00D7E849 /* dbs_config_parser-utest.cpp */; };
@@ -200,6 +201,7 @@
 /* Begin PBXFileReference section */
 		5E057CA31CE2E4000042D252 /* db_key.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = db_key.cpp; sourceTree = "<group>"; };
 		5E057CA41CE2E4000042D252 /* db_key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = db_key.h; sourceTree = "<group>"; };
+		5E0AEFC01D0116140094AD34 /* raii.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = raii.hpp; sourceTree = "<group>"; };
 		5E0C29271CFE9F4B00D7E849 /* dbs_config_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dbs_config_parser.cpp; sourceTree = "<group>"; };
 		5E0C29281CFE9F4B00D7E849 /* dbs_config_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dbs_config_parser.h; sourceTree = "<group>"; };
 		5E0C292B1CFE9F6E00D7E849 /* dbs_config_parser-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "dbs_config_parser-utest.cpp"; sourceTree = "<group>"; };
@@ -703,6 +705,7 @@
 				5E10B3561C70F272009C73E4 /* err_serialize.h */,
 				5E10B3571C70F272009C73E4 /* err_variadic.h */,
 				5E10B35E1C70F272009C73E4 /* macro.h */,
+				5E0AEFC01D0116140094AD34 /* raii.hpp */,
 				5E10B3581C70F272009C73E4 /* gtest */,
 			);
 			path = err;
@@ -1268,6 +1271,7 @@
 				5E10B3D61C70F272009C73E4 /* err.h in Headers */,
 				5E10B3E61C70F272009C73E4 /* log_function.hpp in Headers */,
 				5E3CA9B91CCF290600F6D7ED /* cxx_parser.h in Headers */,
+				5E0AEFC11D0116140094AD34 /* raii.hpp in Headers */,
 				5E290B281CB9EC3900F10210 /* tag.h in Headers */,
 				5E56926F1C726458000A233C /* cxx_file.h in Headers */,
 				5E342BF21CC5F57B00ABC49C /* reverse_lock.hpp in Headers */,

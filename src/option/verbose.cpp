@@ -31,7 +31,7 @@ ECode Verbose::config(const doim::FsFileSPtr& file)
     EHEnd;
 }
 
-bool Verbose::isVisible(const doim::TagSetSPtr& tags)
+bool Verbose::isVisible(const doim::TagSetSPtr& tags) const
 {
     return mTagExpression->match(tags);
 }
