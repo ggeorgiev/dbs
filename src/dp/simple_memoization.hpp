@@ -28,26 +28,26 @@ public:
 
     Value get(const CalculateFunction& calculate)
     {
-        boost::upgrade_lock<boost::shared_mutex> shared_lock(mContainerMutex);
+        boost::upgrade_lock<boost::upgrade_mutex> shared_lock(mContainerMutex);
         if (mHas)
             return mValue;
 
         // This is controversial but we prefer to block any other access while
         // calculating. This will prevent double calculation.
-        boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(shared_lock);
+        boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(shared_lock);
         mHas = true;
         return mValue = calculate();
     }
 
     void clear()
     {
-        boost::unique_lock<boost::shared_mutex> lock(mContainerMutex);
+        boost::unique_lock<boost::upgrade_mutex> lock(mContainerMutex);
         mHas = false;
         mValue = Value();
     }
 
 private:
-    mutable boost::shared_mutex mContainerMutex;
+    mutable boost::upgrade_mutex mContainerMutex;
     bool mHas = false;
     Value mValue;
 };

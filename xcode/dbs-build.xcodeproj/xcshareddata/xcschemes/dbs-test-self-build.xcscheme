@@ -34,8 +34,8 @@
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
-      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
-      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      selectedDebuggerIdentifier = ""
+      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       launchStyle = "0"
       useCustomWorkingDirectory = "YES"
       customWorkingDirectory = "/Users/george/github/dbs"
@@ -45,7 +45,7 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
-         FilePath = "/Users/george/github/dbs/dbs">
+         FilePath = "/Users/george/github/dbs/build/release/dbs">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference
@@ -79,7 +79,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "dbs-test"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
@@ -89,7 +89,8 @@
       buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
-      useCustomWorkingDirectory = "NO"
+      useCustomWorkingDirectory = "YES"
+      customWorkingDirectory = "/Users/george/github/dbs"
       debugDocumentVersioning = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"

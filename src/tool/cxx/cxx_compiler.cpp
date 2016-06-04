@@ -28,6 +28,8 @@ doim::SysArgumentSPtr CxxCompiler::gFProfileArcArgument =
     doim::SysArgument::global("-fprofile-arcs", CxxCompiler::gFProfileArcArgument);
 doim::SysArgumentSPtr CxxCompiler::gFTestCoverageArgument =
     doim::SysArgument::global("-ftest-coverage", CxxCompiler::gFTestCoverageArgument);
+doim::SysArgumentSPtr CxxCompiler::gDefineNDebugArgument =
+    doim::SysArgument::global("-D NDEBUG", CxxCompiler::gDefineNDebugArgument);
 
 doim::SysArgumentSPtr CxxCompiler::gCoverageArgument =
     doim::SysArgument::global("--coverage", CxxCompiler::gCoverageArgument);
@@ -84,6 +86,7 @@ doim::SysCommandSPtr CxxCompiler::compileCommand(
             break;
         case doim::CxxObjectFile::EPurpose::kRelease:
             compileArguments->insert(gOptimizationLevel3Argument);
+            compileArguments->insert(gDefineNDebugArgument);
             break;
         case doim::CxxObjectFile::EPurpose::kProfile:
             compileArguments->insert(gFProfileArcArgument);

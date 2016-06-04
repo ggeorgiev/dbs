@@ -27,6 +27,7 @@ public:
     static doim::SysArgumentSPtr gStdCpp14Argument;
     static doim::SysArgumentSPtr gFProfileArcArgument;
     static doim::SysArgumentSPtr gFTestCoverageArgument;
+    static doim::SysArgumentSPtr gDefineNDebugArgument;
 
     static doim::SysArgumentSPtr gCoverageArgument;
     static doim::SysArgumentSPtr gStdLibc11Argument;

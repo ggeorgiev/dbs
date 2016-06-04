@@ -21,5 +21,10 @@ class FsRelativeFile : public StringTreeLeaf<FsRelativeFile, FsRelativeDirectory
 {
 public:
     using StringTreeLeaf<FsRelativeFile, FsRelativeDirectory>::StringTreeLeaf;
+
+    auto path() const
+    {
+        return StringTreeLeaf<FsRelativeFile, FsRelativeDirectory>::toString();
+    }
 };
 }

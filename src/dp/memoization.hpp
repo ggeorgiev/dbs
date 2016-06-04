@@ -32,13 +32,13 @@ public:
 
     Value get(Args... args, const CalculateFunction& calculate)
     {
-        boost::upgrade_lock<boost::shared_mutex> shared_lock(mContainerMutex);
+        boost::upgrade_lock<boost::upgrade_mutex> shared_lock(mContainerMutex);
         if (mContainer.has())
             return mContainer.get();
 
         // This is controversial but we prefer to block any other access while
         // calculating. This will prevent double calculation.
-        boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(shared_lock);
+        boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(shared_lock);
 
         const Value& value = calculate(args...);
         mContainer.put(value);
@@ -89,18 +89,18 @@ public:
 
     size_t size() const
     {
-        boost::shared_lock<boost::shared_mutex> lock(mContainerMutex);
+        boost::shared_lock<boost::upgrade_mutex> lock(mContainerMutex);
         return mContainer.size();
     }
 
     void clear()
     {
-        boost::unique_lock<boost::shared_mutex> lock(mContainerMutex);
+        boost::unique_lock<boost::upgrade_mutex> lock(mContainerMutex);
         mContainer.clear();
     }
 
 private:
-    mutable boost::shared_mutex mContainerMutex;
+    mutable boost::upgrade_mutex mContainerMutex;
     Container mContainer;
 };
 } // namespace dp

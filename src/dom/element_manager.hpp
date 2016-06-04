@@ -40,12 +40,12 @@ public:
         if (object == nullptr)
             return nullptr;
 
-        boost::upgrade_lock<boost::shared_mutex> shared_lock(mElementsMutex);
+        boost::upgrade_lock<boost::upgrade_mutex> shared_lock(mElementsMutex);
         const auto& it = mElements.find(object);
         if (it != mElements.end())
             return it->second;
 
-        boost::upgrade_to_unique_lock<boost::shared_mutex> unique_lock(shared_lock);
+        boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(shared_lock);
         const auto& element = Element::make();
         mElements[object] = element;
         return element;
@@ -56,7 +56,7 @@ public:
         if (object == nullptr)
             return nullptr;
 
-        boost::shared_lock<boost::shared_mutex> lock(mElementsMutex);
+        boost::shared_lock<boost::upgrade_mutex> lock(mElementsMutex);
         const auto& it = mElements.find(object);
         if (it == mElements.end())
             return nullptr;
@@ -64,7 +64,7 @@ public:
     }
 
 protected:
-    mutable boost::shared_mutex mElementsMutex;
+    mutable boost::upgrade_mutex mElementsMutex;
     Map mElements;
 };
 }
