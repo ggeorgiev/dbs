@@ -4,6 +4,7 @@
 #pragma once
 
 #include "doim/fs/fs_directory.h"
+#include "doim/tree/tree_leaf.hpp"
 #include "doim/element.hpp"
 #include "doim/set.hpp"
 #include <memory>
@@ -18,7 +19,7 @@ typedef shared_ptr<FsFile> FsFileSPtr;
 typedef Set<FsFile> FsFileSet;
 typedef shared_ptr<FsFileSet> FsFileSetSPtr;
 
-class FsFile : public Element<FsFile, FsDirectorySPtr, string>
+class FsFile : public TreeLeaf<FsFile, FsDirectorySPtr, string>
 {
 public:
     using Element<FsFile, FsDirectorySPtr, string>::find;

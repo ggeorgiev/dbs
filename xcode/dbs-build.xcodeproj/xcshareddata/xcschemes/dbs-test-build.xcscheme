@@ -59,7 +59,7 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "--gtest_filter=CxxFileCrcTaskTest.VERYSLOW_includeFromTwoDirectories"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--gtest_filter=DbsConfigParserTest.*"

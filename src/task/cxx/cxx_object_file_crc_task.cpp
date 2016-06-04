@@ -27,7 +27,7 @@ ECode CxxObjectFileCrcTask::operator()()
 {
     defer(DLOG("Crc for {0} is {1:x}", cxxObjectFile()->file()->name(), mCrcsum));
 
-    const auto& path = cxxObjectFile()->file()->path(nullptr);
+    const auto& path = cxxObjectFile()->file()->path();
     if (!boost::filesystem::exists(path))
     {
         mCrcsum = 0;

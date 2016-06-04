@@ -2,7 +2,6 @@
 //
 
 #include "doim/fs/fs_file.h"
-
 #include "err/err_assert.h"
 #include "const/constants.h"
 
@@ -57,7 +56,7 @@ FsFileSPtr FsFile::obtain(const FsDirectorySPtr& base, const string_view& file)
 }
 
 FsFile::FsFile(const FsDirectorySPtr& directory, const string& name)
-    : Element(directory, name)
+    : TreeLeaf(directory, name)
 {
     ASSERT(directory->isUnique());
 }

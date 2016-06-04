@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "doim/tree/string_tree_node.hpp"
 #include "doim/element.hpp"
 #include <memory>
 #include <str>
@@ -13,7 +14,7 @@ namespace doim
 class DbKey;
 typedef shared_ptr<DbKey> DbKeySPtr;
 
-class DbKey : public Element<DbKey, DbKeySPtr, string>
+class DbKey : public StringTreeNode<DbKey, ':'>
 {
 public:
     static int constexpr rankLevels()
@@ -21,24 +22,12 @@ public:
         return 2;
     }
 
-    using Element<DbKey, DbKeySPtr, string>::global;
+    using StringTreeNode<DbKey, ':'>::global;
     static DbKeySPtr global(const DbKeySPtr& ancestor,
                             int level,
                             const string& name,
                             DbKeySPtr& key);
 
-    DbKey(const DbKeySPtr& ancestor, const string& name);
-
-    const DbKeySPtr& ancestor() const
-    {
-        return std::get<0>(mArgs);
-    }
-
-    const string& name() const
-    {
-        return std::get<1>(mArgs);
-    }
-
-    string toString() const;
+    using StringTreeNode<DbKey, ':'>::StringTreeNode;
 };
 }

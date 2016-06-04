@@ -26,17 +26,4 @@ DbKeySPtr DbKey::global(const DbKeySPtr& ancestor,
     im::InitializationManager::subscribe<DbKeySPtr>(rank, fn, nullptr);
     return nullptr;
 }
-
-DbKey::DbKey(const DbKeySPtr& ancestor, const string& name)
-    : Element(ancestor, name)
-{
-    ASSERT(ancestor->isUnique());
-}
-
-string DbKey::toString() const
-{
-    if (ancestor() == nullptr)
-        return name();
-    return ancestor()->toString() + ":" + name();
-}
 }

@@ -8,19 +8,6 @@
 
 namespace doim
 {
-FsDirectory::FsDirectory()
-    : Element(FsDirectorySPtr(), string())
-    , mLevel(1)
-{
-}
-
-FsDirectory::FsDirectory(const FsDirectorySPtr& parent, const string& name)
-    : Element(parent, name)
-    , mLevel(parent == nullptr ? 1 : parent->level() + 1)
-{
-    ASSERT(parent->isUnique());
-}
-
 template <typename Trace>
 FsDirectorySPtr traceDirectory(Trace&& trace,
                                const FsDirectorySPtr& base,
@@ -29,7 +16,6 @@ FsDirectorySPtr traceDirectory(Trace&& trace,
     if (directory.empty())
         return base;
 
-    FsDirectory::Builder builder;
     auto parent = directory.front() == slash() ? nullptr : base;
 
     ASSERT(parent != nullptr || directory.front() == slash());
@@ -51,18 +37,11 @@ FsDirectorySPtr traceDirectory(Trace&& trace,
             }
             else if (name != kCurrentDirectoryString)
             {
-                builder.ensure();
-                builder.set_parent(parent);
-                builder.set_name(name);
-
-                const auto& current = builder.reference();
+                const auto& current = FsDirectory::make(parent, name);
                 parent = trace(current);
 
                 if (parent == nullptr)
                     return parent;
-
-                if (parent == current)
-                    builder.reset();
             }
             if (next == directory.end())
                 return parent;
@@ -72,7 +51,7 @@ FsDirectorySPtr traceDirectory(Trace&& trace,
     }
 
     if (parent == nullptr)
-        parent = FsDirectory::make();
+        parent = FsDirectory::make(nullptr, string());
 
     return trace(parent);
 }
