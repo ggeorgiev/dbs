@@ -16,7 +16,7 @@
 namespace dp
 {
 template <template <typename, typename...> class C, typename V, typename... Args>
-class Memoization
+class Memoization : public enable_make_shared<Memoization<C, V, Args...>>
 {
 public:
     typedef C<V, Args...> Container;

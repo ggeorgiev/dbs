@@ -120,26 +120,25 @@ public:
         const doim::FsDirectorySPtr& root) const;
 
 private:
-    EType mType;
+    EType mType = EType::kUser;
     doim::FsFileSPtr mBinary;
 
     CxxLibrarySet mCxxLibraries;
 
-    void resetCxxIncludeDirectoriesMemoization();
+    struct CxxIncludeDirectoriesMemoization
+    {
+        typedef dp::Memoization<dp::MapContainer,
+                                doim::CxxIncludeDirectorySetSPtr,
+                                doim::FsDirectorySPtr>
+            Memoization;
+        typedef shared_ptr<Memoization> MemoizationSPtr;
 
-    typedef dp::Memoization<dp::MapContainer,
-                            doim::CxxIncludeDirectorySetSPtr,
-                            doim::FsDirectorySPtr>
-        RecursiveCxxIncludeDirectoriesMemoization;
-    typedef shared_ptr<RecursiveCxxIncludeDirectoriesMemoization>
-        RecursiveCxxIncludeDirectoriesMemoizationSPtr;
+        void reset();
 
-    dp::HandleSPtr mCxxIncludeDirectoriesMemoizationHandle;
-    RecursiveCxxIncludeDirectoriesMemoizationSPtr
-        mIndirectPublicCxxIncludeDirectoriesMemoization;
-    RecursiveCxxIncludeDirectoriesMemoizationSPtr
-        mRecursivePublicCxxIncludeDirectoriesMemoization;
-    RecursiveCxxIncludeDirectoriesMemoizationSPtr
-        mVisibleCxxIncludeDirectoriesMemoization;
+        dp::HandleSPtr mHandle;
+        MemoizationSPtr mIndirectPublic = Memoization::make();
+        MemoizationSPtr mRecursivePublic = Memoization::make();
+        MemoizationSPtr mVisible = Memoization::make();
+    } mCIDMemoization;
 };
 }

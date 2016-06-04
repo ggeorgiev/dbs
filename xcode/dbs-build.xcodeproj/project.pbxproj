@@ -10,6 +10,8 @@
 		5E057CA51CE2E4000042D252 /* db_key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E057CA31CE2E4000042D252 /* db_key.cpp */; };
 		5E057CA61CE2E4000042D252 /* db_key.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E057CA41CE2E4000042D252 /* db_key.h */; };
 		5E0AEFC11D0116140094AD34 /* raii.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E0AEFC01D0116140094AD34 /* raii.hpp */; };
+		5E0AEFC51D027FBD0094AD34 /* client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E0AEFC31D027FBD0094AD34 /* client.cpp */; };
+		5E0AEFC61D027FBD0094AD34 /* client.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E0AEFC41D027FBD0094AD34 /* client.h */; };
 		5E0C29291CFE9F4B00D7E849 /* dbs_config_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C29271CFE9F4B00D7E849 /* dbs_config_parser.cpp */; };
 		5E0C292A1CFE9F4B00D7E849 /* dbs_config_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E0C29281CFE9F4B00D7E849 /* dbs_config_parser.h */; };
 		5E0C292C1CFE9F6E00D7E849 /* dbs_config_parser-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C292B1CFE9F6E00D7E849 /* dbs_config_parser-utest.cpp */; };
@@ -202,6 +204,8 @@
 		5E057CA31CE2E4000042D252 /* db_key.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = db_key.cpp; sourceTree = "<group>"; };
 		5E057CA41CE2E4000042D252 /* db_key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = db_key.h; sourceTree = "<group>"; };
 		5E0AEFC01D0116140094AD34 /* raii.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = raii.hpp; sourceTree = "<group>"; };
+		5E0AEFC31D027FBD0094AD34 /* client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = client.cpp; sourceTree = "<group>"; };
+		5E0AEFC41D027FBD0094AD34 /* client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = client.h; sourceTree = "<group>"; };
 		5E0C29271CFE9F4B00D7E849 /* dbs_config_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dbs_config_parser.cpp; sourceTree = "<group>"; };
 		5E0C29281CFE9F4B00D7E849 /* dbs_config_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dbs_config_parser.h; sourceTree = "<group>"; };
 		5E0C292B1CFE9F6E00D7E849 /* dbs_config_parser-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "dbs_config_parser-utest.cpp"; sourceTree = "<group>"; };
@@ -443,6 +447,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5E0AEFC21D027FBD0094AD34 /* client */ = {
+			isa = PBXGroup;
+			children = (
+				5E0AEFC31D027FBD0094AD34 /* client.cpp */,
+				5E0AEFC41D027FBD0094AD34 /* client.h */,
+			);
+			path = client;
+			sourceTree = "<group>";
+		};
 		5E0C29311CFFC4AA00D7E849 /* tag */ = {
 			isa = PBXGroup;
 			children = (
@@ -1065,6 +1078,7 @@
 		5E5A050C1CFA82F500DA4443 /* rpc */ = {
 			isa = PBXGroup;
 			children = (
+				5E0AEFC21D027FBD0094AD34 /* client */,
 				5E5A050D1CFA835D00DA4443 /* rpc.dbs */,
 				5E5A050E1CFA835D00DA4443 /* rpc.proto */,
 			);
@@ -1255,6 +1269,7 @@
 				5E342BF81CC66E8600ABC49C /* task_group.h in Headers */,
 				5E10B3F91C70F272009C73E4 /* db_put_task.h in Headers */,
 				5EABCAB81CE054E000E79FFD /* fs_binary.h in Headers */,
+				5E0AEFC61D027FBD0094AD34 /* client.h in Headers */,
 				5E5A05061CFA4F2E00DA4443 /* protobufs_mixin.hpp in Headers */,
 				5E3CA9AC1CCEBF0500F6D7ED /* map_container.hpp in Headers */,
 				5E4205371C78DF5A0090FA05 /* sys_command.h in Headers */,
@@ -1403,6 +1418,7 @@
 				5E10B3DC1C70F272009C73E4 /* performance_arbiter.cpp in Sources */,
 				5E87B9DC1CF1603000F042B4 /* includes.cxx in Sources */,
 				5E10B3B21C70F272009C73E4 /* database-utest.cpp in Sources */,
+				5E0AEFC51D027FBD0094AD34 /* client.cpp in Sources */,
 				5E3CA9B81CCF290600F6D7ED /* cxx_parser.cpp in Sources */,
 				5E5A04FF1CFA189300DA4443 /* main_gtest.cpp in Sources */,
 				5E10B3FF1C70F272009C73E4 /* ensure_directory_task.cpp in Sources */,

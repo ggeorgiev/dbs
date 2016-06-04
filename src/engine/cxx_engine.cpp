@@ -123,7 +123,7 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
                                                       protobufFile,
                                                       objectFile->cxxFile());
 
-                auto id = rtti::RttiInfo<CxxEngine, 2>::classId();
+                auto id = rtti::RttiInfo<CxxEngine, __COUNTER__>::classId();
                 const string& description =
                     "Compile " + objectFile->cxxFile()->file()->path(directory);
                 auto compileTask = task::ParseStdoutTask::valid(
@@ -142,7 +142,7 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
 
         auto compileCommand = mCompiler->compileCommand(directory, objectFile);
 
-        auto id = rtti::RttiInfo<CxxEngine, 0>::classId();
+        auto id = rtti::RttiInfo<CxxEngine, __COUNTER__>::classId();
         const string& description =
             "Compile " + objectFile->cxxFile()->file()->path(directory);
         auto compileTask =
@@ -189,7 +189,7 @@ tpool::TaskSPtr CxxEngine::compileObjects(const doim::DbKeySPtr& ancenstor,
 
         auto linkCommand = mCompiler->linkCommand(directory, program);
 
-        auto id = rtti::RttiInfo<CxxEngine, 1>::classId();
+        auto id = rtti::RttiInfo<CxxEngine, __COUNTER__>::classId();
         const string& description = "Link " + program->file()->path(directory);
         auto linkTask = task::ParseStdoutTask::valid(linkCommand,
                                                      program->file()->directory(),

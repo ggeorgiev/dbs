@@ -23,7 +23,6 @@ public:
     typedef std::function<Value()> CalculateFunction;
 
     SimpleMemoization()
-        : mHas(false)
     {
     }
 
@@ -49,7 +48,7 @@ public:
 
 private:
     mutable boost::shared_mutex mContainerMutex;
-    bool mHas;
+    bool mHas = false;
     Value mValue;
 };
 } // namespace dp

@@ -27,7 +27,6 @@ public:
         struct HashItem
         {
             HashItem()
-                : mSeed(0)
             {
             }
 
@@ -38,7 +37,7 @@ public:
                 boost::hash_combine(mSeed, hash(item));
             }
 
-            mutable std::size_t mSeed;
+            mutable std::size_t mSeed = 0;
         };
 
         std::size_t operator()(const Tuple& tuple) const

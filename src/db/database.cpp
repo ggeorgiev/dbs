@@ -63,7 +63,7 @@ ECode Database::get(const string_view& key,
         const auto& msg = status.ToString();
         EHBan(kDatabase, msg);
     }
-    DLOG("Read key: \"{}\", value: \"{}\"", key.to_string(), value);
+    DLOG(R"(Read key: "{}", value: "{}")", key.to_string(), value);
     EHEnd;
 }
 
@@ -81,7 +81,7 @@ ECode Database::get(const string_view& key, string& value)
         EHBan(kDatabase, msg);
     }
 
-    DLOG("Read key: \"{}\", value: \"{}\"", key.to_string(), value);
+    DLOG(R"(Read key: "{}", value: "{}")", key.to_string(), value);
     EHEnd;
 }
 

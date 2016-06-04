@@ -12,3 +12,22 @@ cxx_library rpc
         /protobuf-lite
     ;
 ;
+
+cxx_library rpc_client
+    @type=user:
+
+    cxx_header
+        @visibility=public
+        @directory=..:
+
+        rpc/client/client.h
+    ;
+
+    cxx_file:
+        client/client.cpp
+    ;
+
+    cxx_library:
+        rpc
+    ;
+;

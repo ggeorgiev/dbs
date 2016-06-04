@@ -58,8 +58,8 @@
       </MacroExpansion>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--gtest_filter=DbsParserTest.SLOW_CxxLibraryProtobufFile"
-            isEnabled = "NO">
+            argument = "--gtest_filter=CxxFileCrcTaskTest.VERYSLOW_includeFromTwoDirectories"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--gtest_filter=DbsConfigParserTest.*"

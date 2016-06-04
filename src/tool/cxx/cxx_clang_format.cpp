@@ -33,7 +33,7 @@ tpool::TaskSPtr CxxClangFormat::formatCommand(const doim::FsDirectorySPtr& direc
 
     auto formatCommand = doim::SysCommand::unique(nullptr, mFormatter, arguments);
 
-    auto id = rtti::RttiInfo<CxxClangFormat, 0>::classId();
+    auto id = rtti::RttiInfo<CxxClangFormat, __COUNTER__>::classId();
     return task::ParseStdoutTask::valid(formatCommand,
                                         cxxFile->file()->directory(),
                                         id,

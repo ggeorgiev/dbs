@@ -46,17 +46,7 @@ enum ECode
     kFileSystem,
 };
 
-struct EnumHasher
-{
-    template <typename T>
-    std::size_t operator()(T t) const
-    {
-        return static_cast<std::size_t>(t);
-    }
-};
-
-typedef unordered_map<ECode, const char*, EnumHasher> NameMap;
-
+typedef unordered_map<ECode, const char*> NameMap;
 extern NameMap gNames;
 
 inline const char* name(ECode code)

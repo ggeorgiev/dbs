@@ -13,6 +13,7 @@
 #include <iterator>
 #include <str>
 #include <string_view>
+#include <unordered>
 #include <variant>
 
 namespace task
@@ -52,14 +53,18 @@ ECode CxxSourceHeadersTask::operator()()
         std::vector<CxxSourceHeadersTaskSPtr> newTasks;
         for (auto task : tasks)
         {
-            const auto& headersInfo = headersTask->headersInfo();
+            const auto& headersInfo = task->headersInfo();
             for (const auto& headerInfo : headersInfo)
             {
-                if (headers.count(headerInfo.mHeader) > 0)
+                if (headers.find(headerInfo.mHeader) != headers.end())
+                {
+                    DLOG("Is already in {}", headerInfo.mHeader->file()->path());
                     continue;
+                }
 
                 mHeadersInfo.push_back(headerInfo);
                 headers.insert(headerInfo.mHeader);
+                DLOG("Insert {}", headerInfo.mHeader->file()->path());
 
                 if (headerInfo.mHeader->type() == doim::CxxHeader::EType::kSystem)
                     continue;

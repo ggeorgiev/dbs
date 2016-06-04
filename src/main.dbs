@@ -38,7 +38,7 @@ cxx_program dbs:
         im/im
         log/log
         err/err
-        rpc/rpc
+        rpc/rpc_client
         engine/engine
     ;
 
