@@ -55,11 +55,13 @@ TEST_F(CxxHeaderCrcTaskTest, simple)
                                              mEmptyCxxIncludeDirectorySet,
                                              nullptr);
 
-    auto task = task::CxxSourceCrcTask::make(cxxHeader, nullptr);
+    auto task = task::CxxSourceCrcTask::make(task::CxxSourceCrcTask::EDepth::kAll,
+                                             cxxHeader,
+                                             nullptr);
 
     ASSERT_OKAY((*task)());
 
-    EXPECT_EQ(0x9946caabb97e05b3, task->crc()) << std::hex << task->crc();
+    EXPECT_EQ(0xe2ff549c235dc8a0, task->crc()) << std::hex << task->crc();
 }
 
 TEST_F(CxxHeaderCrcTaskTest, notFoundInclude)
@@ -77,6 +79,9 @@ TEST_F(CxxHeaderCrcTaskTest, notFoundInclude)
                                              mFsIncludesCxx,
                                              cxxIncludeDirectories,
                                              nullptr);
-    auto task = task::CxxSourceCrcTask::make(cxxHeader, nullptr);
+
+    auto task = task::CxxSourceCrcTask::make(task::CxxSourceCrcTask::EDepth::kAll,
+                                             cxxHeader,
+                                             nullptr);
     ASSERT_BANNED(kNotFound, (*task)());
 }

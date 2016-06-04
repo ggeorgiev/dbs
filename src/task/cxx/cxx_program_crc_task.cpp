@@ -33,7 +33,9 @@ ECode CxxProgramCrcTask::operator()()
 
     for (const auto& objectFile : *objectFiles)
     {
-        auto cxxTask = CxxSourceCrcTask::valid(objectFile->cxxFile(), nullptr);
+        auto cxxTask = CxxSourceCrcTask::valid(CxxSourceCrcTask::EDepth::kAll,
+                                               objectFile->cxxFile(),
+                                               nullptr);
         tasks.push_back(cxxTask);
     }
 

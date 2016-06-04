@@ -20,28 +20,45 @@ namespace task
 class CxxSourceHeadersTask;
 typedef shared_ptr<CxxSourceHeadersTask> CxxSourceHeadersTaskSPtr;
 
+struct CxxSourceHeadersTaskEnums
+{
+    enum class EDepth
+    {
+        kOne,
+        kAll
+    };
+};
+
 struct CxxSourceHeadersTaskVariants
 {
     typedef boost::variant<doim::CxxFileSPtr, doim::CxxHeaderSPtr> CxxSourceSPtr;
 };
 
-class CxxSourceHeadersTask : public CxxSourceHeadersTaskVariants,
+class CxxSourceHeadersTask : public CxxSourceHeadersTaskEnums,
+                             public CxxSourceHeadersTaskVariants,
                              public Element<CxxSourceHeadersTask,
+                                            CxxSourceHeadersTaskEnums::EDepth,
                                             CxxSourceHeadersTaskVariants::CxxSourceSPtr,
                                             doim::CxxIncludeDirectorySPtr>
 {
 public:
-    CxxSourceHeadersTask(const CxxSourceSPtr& cxxSource,
+    CxxSourceHeadersTask(const EDepth depth,
+                         const CxxSourceSPtr& cxxSource,
                          const doim::CxxIncludeDirectorySPtr& cxxIncludeDirectory);
 
-    const CxxSourceSPtr& cxxSource() const
+    EDepth depth() const
     {
         return std::get<0>(mArgs);
     }
 
-    const doim::CxxIncludeDirectorySPtr& cxxIncludeDirectory() const
+    const CxxSourceSPtr& cxxSource() const
     {
         return std::get<1>(mArgs);
+    }
+
+    const doim::CxxIncludeDirectorySPtr& cxxIncludeDirectory() const
+    {
+        return std::get<2>(mArgs);
     }
 
     const std::vector<doim::CxxIncludeDirectory::CxxHeaderInfo>& headersInfo() const
@@ -58,6 +75,8 @@ public:
     string description() const override;
 
 private:
+    ECode one();
+
     std::vector<doim::CxxIncludeDirectory::CxxHeaderInfo> mHeadersInfo;
 };
 }

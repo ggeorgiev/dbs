@@ -25,8 +25,7 @@ CxxObjectFileCrcTask::CxxObjectFileCrcTask(const doim::CxxObjectFileSPtr& cxxObj
 
 ECode CxxObjectFileCrcTask::operator()()
 {
-    Defer defer(
-        [=] { DLOG("Crc for {0} is {1:x}", cxxObjectFile()->file()->name(), mCrcsum); });
+    defer(DLOG("Crc for {0} is {1:x}", cxxObjectFile()->file()->name(), mCrcsum));
 
     const auto& path = cxxObjectFile()->file()->path(nullptr);
     if (!boost::filesystem::exists(path))
@@ -35,7 +34,9 @@ ECode CxxObjectFileCrcTask::operator()()
         EHEnd;
     }
 
-    auto task = CxxSourceCrcTask::valid(cxxObjectFile()->cxxFile(), nullptr);
+    auto task = CxxSourceCrcTask::valid(CxxSourceCrcTask::EDepth::kAll,
+                                        cxxObjectFile()->cxxFile(),
+                                        nullptr);
     task::gTPool->ensureScheduled(task);
 
     std::ifstream fstream(path.c_str());

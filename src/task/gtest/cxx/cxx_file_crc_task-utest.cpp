@@ -55,11 +55,13 @@ TEST_F(CxxFileCrcTaskTest, SLOW_simple)
 {
     auto cxxFile =
         doim::CxxFile::unique(mFsSimpleCxx, mEmptyCxxIncludeDirectorySet, nullptr);
-    auto task = task::CxxSourceCrcTask::make(cxxFile, nullptr);
+    auto task = task::CxxSourceCrcTask::make(task::CxxSourceCrcTask::EDepth::kAll,
+                                             cxxFile,
+                                             nullptr);
     task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
 
-    EXPECT_EQ(0x9946caabb97e05b3, task->crc()) << std::hex << task->crc();
+    EXPECT_EQ(0xe2ff549c235dc8a0, task->crc()) << std::hex << task->crc();
 }
 
 TEST_F(CxxFileCrcTaskTest, notFoundInclude)
@@ -74,7 +76,9 @@ TEST_F(CxxFileCrcTaskTest, notFoundInclude)
 
     auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories, nullptr);
 
-    auto task = task::CxxSourceCrcTask::make(cxxFile, nullptr);
+    auto task = task::CxxSourceCrcTask::make(task::CxxSourceCrcTask::EDepth::kAll,
+                                             cxxFile,
+                                             nullptr);
     task::gTPool->ensureScheduled(task);
     ASSERT_BANNED(kNotFound, task->join());
 }
@@ -104,11 +108,13 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromOneDirectory)
 
     auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories, nullptr);
 
-    auto task = task::CxxSourceCrcTask::make(cxxFile, nullptr);
+    auto task = task::CxxSourceCrcTask::make(task::CxxSourceCrcTask::EDepth::kAll,
+                                             cxxFile,
+                                             nullptr);
     task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
 
-    EXPECT_EQ(0x7ec565b7c26583ea, task->crc()) << std::hex << task->crc();
+    EXPECT_EQ(0x2dfba021a354396, task->crc()) << std::hex << task->crc();
 }
 
 TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
@@ -150,9 +156,11 @@ TEST_F(CxxFileCrcTaskTest, VERYSLOW_includeFromTwoDirectories)
 
     auto cxxFile = doim::CxxFile::unique(mFsIncludesCxx, cxxIncludeDirectories1, nullptr);
 
-    auto task = task::CxxSourceCrcTask::make(cxxFile, nullptr);
+    auto task = task::CxxSourceCrcTask::make(task::CxxSourceCrcTask::EDepth::kAll,
+                                             cxxFile,
+                                             nullptr);
     task::gTPool->ensureScheduled(task);
     ASSERT_OKAY(task->join());
 
-    EXPECT_EQ(0x7ec565b7c26583ea, task->crc()) << std::hex << task->crc();
+    EXPECT_EQ(0x2dfba021a354396, task->crc()) << std::hex << task->crc();
 }

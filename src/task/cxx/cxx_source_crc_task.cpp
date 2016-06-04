@@ -28,9 +28,10 @@
 namespace task
 {
 CxxSourceCrcTask::CxxSourceCrcTask(
+    const EDepth depth,
     const CxxSourceSPtr& cxxSource,
     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory)
-    : CrcTask(cxxSource, currentIncludeDirectory)
+    : CrcTask(depth, cxxSource, currentIncludeDirectory)
 {
     ASSERT(apply_visitor(doim::vst::isUnique, cxxSource));
     ASSERT(currentIncludeDirectory->isUnique());
@@ -56,45 +57,41 @@ ECode CxxSourceCrcTask::operator()()
         EHEnd;
     }
 
-    const auto& path = apply_visitor(doim::vst::path, cxxSource());
-
-    Defer defer([=] { DLOG("Crc for {0} is {1:x}", path, mCrcsum); });
-
-    if (!boost::filesystem::exists(path))
+    if (depth() == EDepth::kOne)
     {
-        mCrcsum = 0;
+        EHTest(one());
         EHEnd;
     }
 
-    std::ifstream fstream(path.c_str());
-    string content((std::istreambuf_iterator<char>(fstream)),
-                   std::istreambuf_iterator<char>());
+    auto crcTask = valid(EDepth::kOne, cxxSource(), currentIncludeDirectory());
+    gTPool->ensureScheduled(crcTask);
 
-    auto headersTask =
-        CxxSourceHeadersTask::valid(cxxSource(), currentIncludeDirectory());
+    auto headersTask = CxxSourceHeadersTask::valid(CxxSourceHeadersTask::EDepth::kAll,
+                                                   cxxSource(),
+                                                   currentIncludeDirectory());
     gTPool->ensureScheduled(headersTask);
     EHTest(headersTask->join());
 
     const auto& headersInfo = headersTask->headersInfo();
     std::vector<CxxSourceCrcTaskSPtr> tasks;
-    tasks.reserve(headersInfo.size());
+    tasks.reserve(headersInfo.size() + 1);
+
+    tasks.push_back(crcTask);
 
     for (const auto& headerInfo : headersInfo)
     {
         if (headerInfo.mHeader->type() == doim::CxxHeader::EType::kSystem)
             continue;
 
-        auto task =
-            CxxSourceCrcTask::valid(headerInfo.mHeader, headerInfo.mIncludeDirectory);
+        auto task = CxxSourceCrcTask::valid(CxxSourceCrcTask::EDepth::kOne,
+                                            headerInfo.mHeader,
+                                            headerInfo.mIncludeDirectory);
         task::gTPool->ensureScheduled(task);
         tasks.push_back(task);
     }
 
     auto group = tpool::TaskGroup::make(task::gTPool, 0, tasks);
     task::gTPool->ensureScheduled(group);
-
-    math::CrcProcessor crcProcessor;
-    crcProcessor.process_bytes(content.data(), content.size());
 
     EHTest(group->join());
 
@@ -116,11 +113,28 @@ ECode CxxSourceCrcTask::operator()()
         x ^= n;
     }
 
-    math::Crcsum sum = 0;
-    for (size_t i = 0; i < sizeof(x); ++i)
-        sum = sum * 101 + reinterpret_cast<std::uint8_t*>(&x)[i];
+    mCrcsum = math::obfuscate(x);
+    EHEnd;
+}
 
-    crcProcessor.process_bytes(&sum, sizeof(sum));
+ECode CxxSourceCrcTask::one()
+{
+    const auto& path = apply_visitor(doim::vst::path, cxxSource());
+
+    defer(DLOG("Crc for {0} is {1:x}", path, mCrcsum));
+
+    if (!boost::filesystem::exists(path))
+    {
+        mCrcsum = 0;
+        EHEnd;
+    }
+
+    std::ifstream fstream(path.c_str());
+    string content((std::istreambuf_iterator<char>(fstream)),
+                   std::istreambuf_iterator<char>());
+
+    math::CrcProcessor crcProcessor;
+    crcProcessor.process_bytes(content.data(), content.size());
     mCrcsum = crcProcessor.checksum();
 
     EHEnd;

@@ -258,7 +258,9 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
 tpool::TaskSPtr CxxEngine::iwyuTask(const doim::FsDirectorySPtr& directory,
                                     const doim::CxxFileSPtr& cxxFile)
 {
-    auto crcTask = task::CxxSourceCrcTask::valid(cxxFile, nullptr);
+    auto crcTask = task::CxxSourceCrcTask::valid(task::CxxSourceCrcTask::EDepth::kAll,
+                                                 cxxFile,
+                                                 nullptr);
     task::gTPool->ensureScheduled(crcTask);
 
     auto self = shared_from_this();

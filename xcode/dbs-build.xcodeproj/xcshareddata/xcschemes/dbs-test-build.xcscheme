@@ -63,7 +63,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--gtest_filter=DbsConfigParserTest.*"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--gtest_filter=DbsParserTest*.*"
@@ -94,7 +94,7 @@
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "--gtest_filter=CxxFileCrcTaskTest.*"
+            argument = "--gtest_filter=CxxHeaderCrcTaskTest.notFoundInclude"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>

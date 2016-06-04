@@ -20,28 +20,45 @@ namespace task
 class CxxSourceCrcTask;
 typedef shared_ptr<CxxSourceCrcTask> CxxSourceCrcTaskSPtr;
 
+struct CxxSourceCrcTaskEnums
+{
+    enum class EDepth
+    {
+        kOne,
+        kAll
+    };
+};
+
 struct CxxSourceCrcTaskVariants
 {
     typedef boost::variant<doim::CxxFileSPtr, doim::CxxHeaderSPtr> CxxSourceSPtr;
 };
 
-class CxxSourceCrcTask : public CxxSourceCrcTaskVariants,
+class CxxSourceCrcTask : public CxxSourceCrcTaskEnums,
+                         public CxxSourceCrcTaskVariants,
                          public CrcTask<CxxSourceCrcTask,
+                                        CxxSourceCrcTaskEnums::EDepth,
                                         CxxSourceCrcTaskVariants::CxxSourceSPtr,
                                         doim::CxxIncludeDirectorySPtr>
 {
 public:
-    CxxSourceCrcTask(const CxxSourceSPtr& cxxSource,
+    CxxSourceCrcTask(const EDepth depth,
+                     const CxxSourceSPtr& cxxSource,
                      const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory);
 
-    const CxxSourceSPtr& cxxSource() const
+    EDepth depth() const
     {
         return std::get<0>(mArgs);
     }
 
-    doim::CxxIncludeDirectorySPtr currentIncludeDirectory() const
+    const CxxSourceSPtr& cxxSource() const
     {
         return std::get<1>(mArgs);
+    }
+
+    doim::CxxIncludeDirectorySPtr currentIncludeDirectory() const
+    {
+        return std::get<2>(mArgs);
     }
 
     doim::TagSet tags() const override
@@ -51,5 +68,8 @@ public:
 
     ECode operator()() override;
     string description() const override;
+
+private:
+    ECode one();
 };
 }

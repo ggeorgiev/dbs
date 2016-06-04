@@ -6,21 +6,36 @@
 
 #pragma once
 
-typedef std::function<void()> DeferFn;
+#include <functional>
 
+namespace dtl
+{
+template <typename L>
 class Defer
 {
 public:
-    Defer(const DeferFn& func)
-        : mFunc(func)
+    Defer(L&& lambda)
+        : mLambda(std::forward<L>(lambda))
     {
     }
 
     ~Defer()
     {
-        mFunc();
+        mLambda();
     }
 
-private:
-    DeferFn mFunc;
+    L mLambda;
 };
+
+template <typename L>
+Defer<L> deferLambda(L&& lambda)
+{
+    return Defer<L>(std::forward<L>(lambda));
+}
+
+#define DEFER_1(x, y) x##y
+#define DEFER_2(x, y) DEFER_1(x, y)
+#define DEFER_3(x) DEFER_2(x, __COUNTER__)
+#define defer(code) auto DEFER_3(_defer_) = dtl::deferLambda([&]() { code; });
+
+} // namespace Impl

@@ -15,9 +15,12 @@ static bool init()
     gNames[kExpected] = "expected";
     gNames[kAssert] = "assert";
 
+    gNames[kFailed] = "failed";
     gNames[kNotFound] = "not found";
     gNames[kTooMany] = "too many";
     gNames[kUnable] = "unable";
+    gNames[kUnexpected] = "unexpected";
+    gNames[kUnknown] = "unknown";
 
     gNames[kDatabase] = "database";
     gNames[kFileSystem] = "file system";
