@@ -4,7 +4,7 @@
 #pragma once
 
 #include "doim/fs/fs_directory.h"
-#include "doim/tree/tree_leaf.hpp"
+#include "doim/tree/string_tree_leaf.hpp"
 #include "doim/element.hpp"
 #include "doim/set.hpp"
 #include <memory>
@@ -19,24 +19,19 @@ typedef shared_ptr<FsFile> FsFileSPtr;
 typedef Set<FsFile> FsFileSet;
 typedef shared_ptr<FsFileSet> FsFileSetSPtr;
 
-class FsFile : public TreeLeaf<FsFile, FsDirectorySPtr, string>
+class FsFile : public StringTreeLeaf<FsFile, FsDirectory>
 {
 public:
-    using Element<FsFile, FsDirectorySPtr, string>::find;
+    using StringTreeLeaf<FsFile, FsDirectory>::find;
     static FsFileSPtr find(const FsDirectorySPtr& base, const string_view& file);
 
     static FsFileSPtr obtain(const FsDirectorySPtr& base, const string_view& file);
 
-    FsFile(const FsDirectorySPtr& directory, const string& name);
+    using StringTreeLeaf<FsFile, FsDirectory>::StringTreeLeaf;
 
-    const FsDirectorySPtr& directory() const
+    auto directory() const
     {
-        return std::get<0>(mArgs);
-    }
-
-    const string& name() const
-    {
-        return std::get<1>(mArgs);
+        return ancestor();
     }
 
     string path(const FsDirectorySPtr& root = nullptr) const

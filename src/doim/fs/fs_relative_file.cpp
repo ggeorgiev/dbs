@@ -7,10 +7,4 @@
 
 namespace doim
 {
-FsRelativeFile::FsRelativeFile(const FsRelativeDirectorySPtr& directory,
-                               const string& name)
-    : TreeLeaf(directory, name)
-{
-    ASSERT(directory->isUnique());
-}
 }

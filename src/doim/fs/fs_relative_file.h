@@ -4,7 +4,7 @@
 #pragma once
 
 #include "doim/fs/fs_relative_directory.h"
-#include "doim/tree/tree_leaf.hpp"
+#include "doim/tree/string_tree_leaf.hpp"
 #include "doim/element.hpp"
 #include "doim/set.hpp"
 #include <memory>
@@ -17,11 +17,9 @@ namespace doim
 class FsRelativeFile;
 typedef shared_ptr<FsRelativeFile> FsRelativeFileSPtr;
 
-class FsRelativeFile : public TreeLeaf<FsRelativeFile, FsRelativeDirectorySPtr, string>
+class FsRelativeFile : public StringTreeLeaf<FsRelativeFile, FsRelativeDirectory>
 {
 public:
-    using TreeLeaf<FsRelativeFile, FsRelativeDirectorySPtr, string>::find;
-
-    FsRelativeFile(const FsRelativeDirectorySPtr& directory, const string& name);
+    using StringTreeLeaf<FsRelativeFile, FsRelativeDirectory>::StringTreeLeaf;
 };
 }

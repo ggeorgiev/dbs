@@ -56,11 +56,6 @@ clang++ -I src/ -O3 -c src/doim/db/db_key.cpp \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/doim/db/db_key.cpp.o -std=c++14 &
 if [ ! -e build/release/src/doim/fs/ ]; then mkdir build/release/src/doim/fs/; fi
-echo Compile src/doim/fs/fs_binary.cpp
-clang++ -I src/ -O3 -c src/doim/fs/fs_binary.cpp \
-    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
-    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
-    -isystem src/system/ -o build/release/src/doim/fs/fs_binary.cpp.o -std=c++14 &
 echo Compile src/doim/fs/fs_directory.cpp
 clang++ -I src/ -O3 -c src/doim/fs/fs_directory.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
@@ -359,7 +354,6 @@ clang++ -L boost/lib/ -L fmt/lib/ -L protobuf/lib/ -L rocksdb/lib/ \
     build/release/src/doim/cxx/cxx_program.cpp.o \
     build/release/src/doim/cxx/cxx_static_library.cpp.o \
     build/release/src/doim/db/db_key.cpp.o \
-    build/release/src/doim/fs/fs_binary.cpp.o \
     build/release/src/doim/fs/fs_directory.cpp.o \
     build/release/src/doim/fs/fs_file.cpp.o \
     build/release/src/doim/fs/fs_relative_directory.cpp.o \

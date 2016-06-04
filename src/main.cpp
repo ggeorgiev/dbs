@@ -12,7 +12,6 @@
 #include "parser/dbs/dbs_parser.h"
 #include "dom/cxx/cxx_program.h"
 #include "option/verbose.h"
-#include "doim/fs/fs_binary.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/object.h"
@@ -91,7 +90,7 @@ int main(int argc, char* argv[])
     const auto& clangFormat = doim::SysExecutable::unique(clangFormatFile);
     const auto& clangFormatTool = std::make_shared<tool::CxxClangFormat>(clangFormat);
 
-    const auto& clangBinary = doim::FsBinary::unique("clang++");
+    const auto& clangBinary = doim::FsRelativeFile::unique(nullptr, "clang++");
     const auto& clang = doim::SysExecutable::unique(clangBinary);
     const auto& compiler = std::make_shared<tool::CxxCompiler>(clang);
 

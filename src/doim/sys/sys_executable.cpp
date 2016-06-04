@@ -17,6 +17,6 @@ string SysExecutable::path(const doim::FsDirectorySPtr& root) const
     if (application().type() == typeid(FsFileSPtr))
         return boost::get<FsFileSPtr>(application())->path(root);
 
-    return boost::get<FsBinarySPtr>(application())->name();
+    return boost::get<FsRelativeFileSPtr>(application())->name();
 }
 }

@@ -19,6 +19,7 @@
 		5E0AEFD41D03243B0094AD34 /* fs_relative_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E0AEFD21D03243B0094AD34 /* fs_relative_file.cpp */; };
 		5E0AEFD51D03243B0094AD34 /* fs_relative_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E0AEFD31D03243B0094AD34 /* fs_relative_file.h */; };
 		5E0AEFD71D032F480094AD34 /* string_tree_node.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E0AEFD61D032F480094AD34 /* string_tree_node.hpp */; };
+		5E0AEFD91D03358B0094AD34 /* string_tree_leaf.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E0AEFD81D03358B0094AD34 /* string_tree_leaf.hpp */; };
 		5E0C29291CFE9F4B00D7E849 /* dbs_config_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C29271CFE9F4B00D7E849 /* dbs_config_parser.cpp */; };
 		5E0C292A1CFE9F4B00D7E849 /* dbs_config_parser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E0C29281CFE9F4B00D7E849 /* dbs_config_parser.h */; };
 		5E0C292C1CFE9F6E00D7E849 /* dbs_config_parser-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E0C292B1CFE9F6E00D7E849 /* dbs_config_parser-utest.cpp */; };
@@ -166,8 +167,6 @@
 		5E87B9EA1CF18E9100F042B4 /* attribute_value.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E87B9E81CF18E9100F042B4 /* attribute_value.h */; };
 		5E87B9ED1CF18F3000F042B4 /* attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E87B9EB1CF18F3000F042B4 /* attribute.cpp */; };
 		5E87B9EE1CF18F3000F042B4 /* attribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E87B9EC1CF18F3000F042B4 /* attribute.h */; };
-		5EABCAB71CE054E000E79FFD /* fs_binary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EABCAB51CE054E000E79FFD /* fs_binary.cpp */; };
-		5EABCAB81CE054E000E79FFD /* fs_binary.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EABCAB61CE054E000E79FFD /* fs_binary.h */; };
 		5EABCABB1CE057FD00E79FFD /* sys_executable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */; };
 		5EABCABC1CE057FD00E79FFD /* sys_executable.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EABCABA1CE057FD00E79FFD /* sys_executable.h */; };
 		5EAE67701C7295B2005B3F8D /* cxx_object_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAE676E1C7295B2005B3F8D /* cxx_object_file.cpp */; };
@@ -220,6 +219,7 @@
 		5E0AEFD21D03243B0094AD34 /* fs_relative_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fs_relative_file.cpp; sourceTree = "<group>"; };
 		5E0AEFD31D03243B0094AD34 /* fs_relative_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs_relative_file.h; sourceTree = "<group>"; };
 		5E0AEFD61D032F480094AD34 /* string_tree_node.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = string_tree_node.hpp; sourceTree = "<group>"; };
+		5E0AEFD81D03358B0094AD34 /* string_tree_leaf.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = string_tree_leaf.hpp; sourceTree = "<group>"; };
 		5E0C29271CFE9F4B00D7E849 /* dbs_config_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dbs_config_parser.cpp; sourceTree = "<group>"; };
 		5E0C29281CFE9F4B00D7E849 /* dbs_config_parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dbs_config_parser.h; sourceTree = "<group>"; };
 		5E0C292B1CFE9F6E00D7E849 /* dbs_config_parser-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "dbs_config_parser-utest.cpp"; sourceTree = "<group>"; };
@@ -414,8 +414,6 @@
 		5E87B9E81CF18E9100F042B4 /* attribute_value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attribute_value.h; sourceTree = "<group>"; };
 		5E87B9EB1CF18F3000F042B4 /* attribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attribute.cpp; sourceTree = "<group>"; };
 		5E87B9EC1CF18F3000F042B4 /* attribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attribute.h; sourceTree = "<group>"; };
-		5EABCAB51CE054E000E79FFD /* fs_binary.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fs_binary.cpp; sourceTree = "<group>"; };
-		5EABCAB61CE054E000E79FFD /* fs_binary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs_binary.h; sourceTree = "<group>"; };
 		5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sys_executable.cpp; sourceTree = "<group>"; };
 		5EABCABA1CE057FD00E79FFD /* sys_executable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sys_executable.h; sourceTree = "<group>"; };
 		5EAE676E1C7295B2005B3F8D /* cxx_object_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_object_file.cpp; sourceTree = "<group>"; };
@@ -473,6 +471,7 @@
 		5E0AEFC71D031C590094AD34 /* tree */ = {
 			isa = PBXGroup;
 			children = (
+				5E0AEFD81D03358B0094AD34 /* string_tree_leaf.hpp */,
 				5E0AEFD61D032F480094AD34 /* string_tree_node.hpp */,
 				5E0AEFCE1D0322460094AD34 /* tree_leaf.hpp */,
 				5E0AEFCF1D0322460094AD34 /* tree_node.hpp */,
@@ -636,8 +635,6 @@
 		5E10B3311C70F272009C73E4 /* fs */ = {
 			isa = PBXGroup;
 			children = (
-				5EABCAB51CE054E000E79FFD /* fs_binary.cpp */,
-				5EABCAB61CE054E000E79FFD /* fs_binary.h */,
 				5E42052C1C78CB200090FA05 /* fs_directory.cpp */,
 				5E42052D1C78CB200090FA05 /* fs_directory.h */,
 				5EAE67821C72E2B4005B3F8D /* fs_file.cpp */,
@@ -1256,6 +1253,7 @@
 				5E87B9EA1CF18E9100F042B4 /* attribute_value.h in Headers */,
 				5E4113C41CCBF95B00489DA7 /* task_callback.h in Headers */,
 				5E192E6B1CE5911600B1B747 /* string_view in Headers */,
+				5E0AEFD91D03358B0094AD34 /* string_tree_leaf.hpp in Headers */,
 				5E0AEFD51D03243B0094AD34 /* fs_relative_file.h in Headers */,
 				5E4113CA1CCD56AB00489DA7 /* cxx_library.h in Headers */,
 				5E10B3D91C70F272009C73E4 /* macro.h in Headers */,
@@ -1301,7 +1299,6 @@
 				5E10B4081C70F272009C73E4 /* tpool.h in Headers */,
 				5E342BF81CC66E8600ABC49C /* task_group.h in Headers */,
 				5E10B3F91C70F272009C73E4 /* db_put_task.h in Headers */,
-				5EABCAB81CE054E000E79FFD /* fs_binary.h in Headers */,
 				5E0AEFC61D027FBD0094AD34 /* client.h in Headers */,
 				5E5A05061CFA4F2E00DA4443 /* protobufs_mixin.hpp in Headers */,
 				5E3CA9AC1CCEBF0500F6D7ED /* map_container.hpp in Headers */,
@@ -1518,7 +1515,6 @@
 				5E10B3AE1C70F272009C73E4 /* constants.cpp in Sources */,
 				5E342C001CC8372E00ABC49C /* task_group-utest.cpp in Sources */,
 				5E10B3D81C70F272009C73E4 /* macro-utest.cpp in Sources */,
-				5EABCAB71CE054E000E79FFD /* fs_binary.cpp in Sources */,
 				5E56926E1C726458000A233C /* cxx_file.cpp in Sources */,
 				5E290B301CB9F4FC00F10210 /* verbose.cpp in Sources */,
 				5E4113C31CCBF95B00489DA7 /* task_callback.cpp in Sources */,

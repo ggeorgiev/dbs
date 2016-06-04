@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include "doim/fs/fs_binary.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
+#include "doim/fs/fs_relative_file.h"
 #include "doim/element.hpp"
 #include <memory>
 #include <str>
@@ -19,7 +19,7 @@ typedef shared_ptr<SysExecutable> SysExecutableSPtr;
 
 struct SysExecutableVariants
 {
-    typedef variant<doim::FsFileSPtr, doim::FsBinarySPtr> ApplicationSPtr;
+    typedef variant<doim::FsFileSPtr, doim::FsRelativeFileSPtr> ApplicationSPtr;
 };
 
 class SysExecutable

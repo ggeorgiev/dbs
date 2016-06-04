@@ -54,10 +54,4 @@ FsFileSPtr FsFile::obtain(const FsDirectorySPtr& base, const string_view& file)
 
     return traceFile(trace, traceDirectory, base, file);
 }
-
-FsFile::FsFile(const FsDirectorySPtr& directory, const string& name)
-    : TreeLeaf(directory, name)
-{
-    ASSERT(directory->isUnique());
-}
 }
