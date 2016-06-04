@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "doim/fs/fs_relative_directory.h"
 #include "doim/tree/string_tree_node.hpp"
 #include "doim/element.hpp"
 #include "doim/set.hpp"
@@ -24,6 +25,7 @@ typedef shared_ptr<FsDirectorySet> FsDirectorySetSPtr;
 class FsDirectory : public StringTreeNode<FsDirectory, '/'>
 {
 public:
+    using StringTreeNode<FsDirectory, '/'>::find;
     static FsDirectorySPtr find(const FsDirectorySPtr& base,
                                 const string_view& directory);
 
@@ -43,9 +45,8 @@ public:
         return ancestor();
     }
 
-    using StringTreeNode<FsDirectory, '/'>::find;
+    FsRelativeDirectorySPtr relative(const FsDirectorySPtr& directory) const;
 
-    FsDirectorySPtr commonAncestor(const FsDirectorySPtr& directory) const;
     string path(const FsDirectorySPtr& directory = nullptr) const;
 
     // This is almost the same as path, but in case the current and the root directories
@@ -53,6 +54,8 @@ public:
     string nonEmptyPath(const FsDirectorySPtr& directory) const;
 
 private:
+    FsRelativeDirectorySPtr relative(const FsDirectorySPtr& directory,
+                                     const FsRelativeDirectorySPtr& relative) const;
     void calculate(FsDirectoryRPtr directory, size_t length, string& path) const;
 };
 }

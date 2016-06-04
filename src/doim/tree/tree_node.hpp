@@ -29,6 +29,32 @@ public:
         return std::get<0>(Element<T, shared_ptr<T>, Args...>::mArgs);
     }
 
+    shared_ptr<T> firstCommonAncestor(const shared_ptr<T>& other) const
+    {
+        if (other == nullptr)
+            return nullptr;
+
+        shared_ptr<T> line1 = other;
+
+        while (line1->level() > level())
+            line1 = line1->ancestor();
+
+        if (line1.get() == this)
+            return line1;
+
+        const TreeNode* line2 = this;
+        while (line1->level() < line2->level())
+            line2 = line2->ancestor().get();
+
+        while (line1.get() != line2)
+        {
+            line1 = line1->ancestor();
+            line2 = line2->ancestor().get();
+        }
+
+        return line1;
+    }
+
 private:
     size_t mLevel = 1;
 };

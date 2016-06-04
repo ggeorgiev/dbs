@@ -20,6 +20,8 @@ public:
 
     using TreeNode<T, string>::TreeNode;
 
+    using TreeNode<T, string>::ancestor;
+
     const string& name() const
     {
         return std::get<1>(TreeNode<T, string>::mArgs);
@@ -27,9 +29,9 @@ public:
 
     string toString() const
     {
-        if (TreeNode<T, string>::ancestor() == nullptr)
-            return name();
-        return TreeNode<T, string>::ancestor()->toString() + delimiter() + name();
+        if (ancestor() == nullptr)
+            return name() + delimiter();
+        return ancestor()->toString() + name() + delimiter();
     }
 };
 }

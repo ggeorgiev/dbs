@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "doim/tree/tree_node.hpp"
+#include "doim/tree/string_tree_node.hpp"
 #include "doim/element.hpp"
 #include "doim/set.hpp"
 #include <memory>
@@ -17,17 +17,9 @@ namespace doim
 class FsRelativeDirectory;
 typedef shared_ptr<FsRelativeDirectory> FsRelativeDirectorySPtr;
 
-class FsRelativeDirectory : public TreeNode<FsRelativeDirectory, string>
+class FsRelativeDirectory : public StringTreeNode<FsRelativeDirectory, '/'>
 {
 public:
-    using TreeNode<FsRelativeDirectory, string>::find;
-
-    FsRelativeDirectory();
-    FsRelativeDirectory(const FsRelativeDirectorySPtr& parent, const string& name);
-
-    const string& name() const
-    {
-        return std::get<1>(mArgs);
-    }
+    using StringTreeNode<FsRelativeDirectory, '/'>::StringTreeNode;
 };
 }

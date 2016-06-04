@@ -8,15 +8,4 @@
 
 namespace doim
 {
-FsRelativeDirectory::FsRelativeDirectory()
-    : TreeNode(FsRelativeDirectorySPtr(), string())
-{
-}
-
-FsRelativeDirectory::FsRelativeDirectory(const FsRelativeDirectorySPtr& parent,
-                                         const string& name)
-    : TreeNode(parent, name)
-{
-    ASSERT(parent->isUnique());
-}
 }

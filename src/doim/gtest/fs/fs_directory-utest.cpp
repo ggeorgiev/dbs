@@ -38,14 +38,14 @@ TEST(FsDirectoryTest, level)
 TEST(FsDirectoryTest, commonAncestor)
 {
     auto root = doim::FsDirectory::unique(nullptr, "");
-    ASSERT_EQ(root, root->commonAncestor(root));
+    ASSERT_EQ(root, root->firstCommonAncestor(root));
 
     auto foo = doim::FsDirectory::make(root, "foo");
-    ASSERT_EQ(root, root->commonAncestor(foo));
-    ASSERT_EQ(root, foo->commonAncestor(root));
+    ASSERT_EQ(root, root->firstCommonAncestor(foo));
+    ASSERT_EQ(root, foo->firstCommonAncestor(root));
 
     auto bar = doim::FsDirectory::make(root, "bar");
-    ASSERT_EQ(root, bar->commonAncestor(foo));
+    ASSERT_EQ(root, bar->firstCommonAncestor(foo));
 }
 
 TEST(FsDirectoryTest, obtainEmpty)
@@ -123,19 +123,20 @@ TEST(FsDirectoryTest, obtain)
 
     for (const auto& test : tests)
     {
-        SCOPED_TRACE("root:" + test.root);
-        SCOPED_TRACE("dir:" + test.dir);
-        SCOPED_TRACE("absolute:" + test.absolute);
-        SCOPED_TRACE("relative:" + test.relative);
+        SCOPED_TRACE("relative: \"" + test.relative + "\"");
+        SCOPED_TRACE("absolute: \"" + test.absolute + "\"");
+        SCOPED_TRACE("dir:      \"" + test.dir + "\"");
+        SCOPED_TRACE("root:     \"" + test.root + "\"");
 
         const auto& root = doim::FsDirectory::obtain(nullptr, test.root);
         const auto& directory = doim::FsDirectory::obtain(root, test.dir);
         ASSERT_NE(nullptr, directory);
 
-        ASSERT_EQ(test.absolute, directory->path()) << "root: \"" << test.root
-                                                    << "\", dir: \"" << test.dir << "\"";
-        ASSERT_EQ(test.relative, directory->path(root))
-            << "root: \"" << test.root << "\", dir: \"" << test.dir << "\"";
+        ASSERT_EQ(test.absolute, directory->path());
+        ASSERT_EQ(test.relative, directory->path(root));
+
+        const auto& relative = directory->relative(root);
+        ASSERT_EQ(test.relative, relative == nullptr ? "" : relative->toString());
     }
 }
 

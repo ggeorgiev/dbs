@@ -29,7 +29,15 @@ FsDirectorySPtr traceDirectory(Trace&& trace,
         if (next != pos || parent == nullptr)
         {
             string name(pos, next);
-            if (name == kParentDirectoryString)
+            if (name.empty())
+            {
+                if (parent == nullptr)
+                {
+                    const auto& current = FsDirectory::make(parent, name);
+                    parent = trace(current);
+                }
+            }
+            else if (name == kParentDirectoryString)
             {
                 if (parent == nullptr)
                     return nullptr;
@@ -89,35 +97,49 @@ FsDirectorySPtr FsDirectory::corresponding(const FsDirectorySPtr& directory,
     return obtain(parent, directory->name());
 }
 
-FsDirectorySPtr FsDirectory::commonAncestor(const FsDirectorySPtr& directory) const
+FsRelativeDirectorySPtr FsDirectory::relative(const FsDirectorySPtr& directory) const
 {
-    if (directory == nullptr)
+    if (directory.get() == this)
         return nullptr;
 
-    FsDirectorySPtr line1 = directory;
+    FsRelativeDirectorySPtr current;
+    FsDirectorySPtr fca = firstCommonAncestor(directory);
 
-    while (line1->level() > level())
-        line1 = line1->parent();
-
-    if (line1.get() == this)
-        return line1;
-
-    FsDirectoryRCPtr line2 = this;
-    while (line1->level() < line2->level())
-        line2 = line2->parent().get();
-
-    while (line1.get() != line2)
+    if (fca != nullptr)
     {
-        line1 = line1->parent();
-        line2 = line2->parent().get();
+        if (fca->parent() == nullptr && fca != directory)
+        {
+            current = FsRelativeDirectory::unique(nullptr, "");
+        }
+        else
+        {
+            auto levels = (directory != nullptr ? directory->level() : 0) - fca->level();
+            for (auto i = 0; i < levels; ++i)
+                current = FsRelativeDirectory::unique(current, "..");
+        }
     }
 
-    return line1;
+    if (fca.get() == this)
+        return current;
+
+    return relative(fca, current);
+}
+
+FsRelativeDirectorySPtr FsDirectory::relative(
+    const FsDirectorySPtr& directory, const FsRelativeDirectorySPtr& current) const
+{
+    if (parent() == nullptr)
+        return FsRelativeDirectory::unique(nullptr, "");
+
+    if (parent() == directory)
+        return FsRelativeDirectory::unique(current, name());
+
+    return FsRelativeDirectory::unique(parent()->relative(directory, current), name());
 }
 
 string FsDirectory::path(const FsDirectorySPtr& directory) const
 {
-    FsDirectorySPtr base = commonAncestor(directory);
+    FsDirectorySPtr base = firstCommonAncestor(directory);
 
     string path;
     if (base != nullptr)
