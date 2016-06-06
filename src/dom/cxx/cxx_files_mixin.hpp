@@ -36,10 +36,11 @@ public:
     {
         TLOG_FUNCTION;
 
+        auto self = static_cast<const Subject*>(this);
+
         doim::CxxFileSet cxxFiles;
 
-        const auto& directories =
-            static_cast<const Subject*>(this)->visibleCxxIncludeDirectories(root);
+        const auto& directories = self->visibleCxxIncludeDirectories(root);
 
         for (const auto& directory : *directories)
         {

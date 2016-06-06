@@ -195,23 +195,6 @@ doim::CxxIncludeDirectorySetSPtr CxxLibrary::visibleCxxIncludeDirectories(
     return mCIDMemoization.mVisible->get(mCIDMemoization.mHandle, root, fn);
 }
 
-doim::CxxHeaderSetSPtr CxxLibrary::recursivePublicCxxHeaders(
-    const doim::FsDirectorySPtr& root) const
-{
-    auto headers = doim::CxxHeaderSet::make();
-
-    const auto& publicHeaders = cxxHeaders(doim::CxxHeader::EVisibility::kPublic, root);
-    if (publicHeaders != nullptr)
-        headers->insert(publicHeaders->begin(), publicHeaders->end());
-
-    for (const auto& cxxLibrary : mCxxLibraries)
-    {
-        const auto& libHeaders = cxxLibrary->recursivePublicCxxHeaders(root);
-        headers->insert(libHeaders->begin(), libHeaders->end());
-    }
-    return doim::CxxHeaderSet::unique(headers);
-}
-
 void CxxLibrary::CxxIncludeDirectoriesMemoization::reset()
 {
     auto indirect = mIndirectPublic;

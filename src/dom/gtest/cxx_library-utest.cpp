@@ -44,10 +44,6 @@ TEST(CxxLibraryTest, SLOW_CxxLibraryHeaders)
         cxxLibraryLib2->cxxHeaders(doim::CxxHeader::EVisibility::kPublic, mDbsDirectory);
     ASSERT_EQ(1, publicHeaders->size());
 
-    const auto& recursivePublicHeaders =
-        cxxLibraryLib2->recursivePublicCxxHeaders(mDbsDirectory);
-    ASSERT_EQ(2, recursivePublicHeaders->size());
-
     const auto& protectedHeaders =
         cxxLibraryLib2->cxxHeaders(doim::CxxHeader::EVisibility::kProtected,
                                    mDbsDirectory);

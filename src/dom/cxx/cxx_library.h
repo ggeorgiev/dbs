@@ -106,9 +106,6 @@ public:
     doim::CxxIncludeDirectorySetSPtr visibleCxxIncludeDirectories(
         const doim::FsDirectorySPtr& root) const;
 
-    doim::CxxHeaderSetSPtr recursivePublicCxxHeaders(
-        const doim::FsDirectorySPtr& root) const;
-
 private:
     EType mType = EType::kUser;
     doim::FsFileSPtr mBinary;
