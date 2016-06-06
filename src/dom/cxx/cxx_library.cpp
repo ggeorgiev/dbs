@@ -37,6 +37,7 @@ doim::AttributeValueSPtr CxxLibrary::gPrivate =
 
 CxxLibrary::CxxLibrary()
 {
+    mCLMemoization.reset();
     mCIDMemoization.reset();
 }
 
@@ -70,6 +71,7 @@ ECode CxxLibrary::updateBinary(const doim::FsFileSPtr& binary)
 
 ECode CxxLibrary::updateCxxLibraries(CxxLibrarySet& libraries)
 {
+    mCLMemoization.reset();
     mCIDMemoization.reset();
 
     mCxxLibraries.swap(libraries);
@@ -104,13 +106,17 @@ doim::CxxHeader::EType CxxLibrary::cxxHeaderType() const
 
 CxxLibrarySet CxxLibrary::recursiveCxxLibraries() const
 {
-    CxxLibrarySet libraries = mCxxLibraries;
-    for (const auto& cxxLibrary : mCxxLibraries)
-    {
-        const auto& libs = cxxLibrary->recursiveCxxLibraries();
-        libraries.insert(libs.begin(), libs.end());
-    }
-    return libraries;
+    auto fn = [this](std::vector<dp::Handle::ControllerSPtr>& dependencies) {
+        CxxLibrarySet libraries = mCxxLibraries;
+        for (const auto& cxxLibrary : mCxxLibraries)
+        {
+            const auto& libs = cxxLibrary->recursiveCxxLibraries();
+            libraries.insert(libs.begin(), libs.end());
+        }
+        return libraries;
+    };
+
+    return mCLMemoization.mRecursive->get(mCLMemoization.mHandle, fn);
 }
 
 doim::CxxIncludeDirectorySetSPtr CxxLibrary::indirectPublicCxxIncludeDirectories(
@@ -137,16 +143,22 @@ doim::CxxIncludeDirectorySetSPtr CxxLibrary::indirectPublicCxxIncludeDirectories
 doim::CxxIncludeDirectorySetSPtr CxxLibrary::recursiveProtectedCxxIncludeDirectories(
     const doim::FsDirectorySPtr& root) const
 {
-    auto directories = doim::CxxIncludeDirectorySet::make();
+    auto fn = [this](doim::FsDirectorySPtr root,
+                     std::vector<dp::Handle::ControllerSPtr>& dependencies) {
 
-    const auto& protectedDirectories =
-        cxxIncludeDirectories(doim::CxxHeader::EVisibility::kProtected, root);
-    directories->insert(protectedDirectories.begin(), protectedDirectories.end());
+        auto directories = doim::CxxIncludeDirectorySet::make();
 
-    const auto& libDirectories = indirectPublicCxxIncludeDirectories(root);
-    directories->insert(libDirectories->begin(), libDirectories->end());
+        const auto& protectedDirectories =
+            cxxIncludeDirectories(doim::CxxHeader::EVisibility::kProtected, root);
+        directories->insert(protectedDirectories.begin(), protectedDirectories.end());
 
-    return doim::CxxIncludeDirectorySet::unique(directories);
+        const auto& libDirectories = indirectPublicCxxIncludeDirectories(root);
+        directories->insert(libDirectories->begin(), libDirectories->end());
+
+        return doim::CxxIncludeDirectorySet::unique(directories);
+    };
+
+    return mCIDMemoization.mRecursiveProtected->get(mCIDMemoization.mHandle, root, fn);
 }
 
 doim::CxxIncludeDirectorySetSPtr CxxLibrary::recursivePublicCxxIncludeDirectories(
@@ -195,14 +207,22 @@ doim::CxxIncludeDirectorySetSPtr CxxLibrary::visibleCxxIncludeDirectories(
     return mCIDMemoization.mVisible->get(mCIDMemoization.mHandle, root, fn);
 }
 
+void CxxLibrary::CxxLibrariesMemoization::reset()
+{
+    auto recursive = mRecursive;
+    mHandle = dp::Handle::create([recursive] { recursive->clear(); });
+}
+
 void CxxLibrary::CxxIncludeDirectoriesMemoization::reset()
 {
     auto indirect = mIndirectPublic;
-    auto recursive = mRecursivePublic;
+    auto rPublic = mRecursivePublic;
+    auto rProtected = mRecursiveProtected;
     auto visible = mVisible;
-    mHandle = dp::Handle::create([indirect, recursive, visible] {
+    mHandle = dp::Handle::create([indirect, rPublic, rProtected, visible] {
         indirect->clear();
-        recursive->clear();
+        rPublic->clear();
+        rProtected->clear();
         visible->clear();
     });
 }

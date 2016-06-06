@@ -30,22 +30,6 @@ public:
     {
     }
 
-    Value get(Args... args, const CalculateFunction& calculate)
-    {
-        boost::upgrade_lock<boost::upgrade_mutex> shared_lock(mContainerMutex);
-        if (mContainer.has())
-            return mContainer.get();
-
-        // This is controversial but we prefer to block any other access while
-        // calculating. This will prevent double calculation.
-        boost::upgrade_to_unique_lock<boost::upgrade_mutex> unique_lock(shared_lock);
-
-        const Value& value = calculate(args...);
-        mContainer.put(value);
-
-        return value;
-    }
-
     Value get(const HandleSPtr& handle, Args... args, const CalculateFunction& calculate)
     {
         const auto& key = mContainer.key(handle, args...);

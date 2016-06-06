@@ -17,6 +17,7 @@
 #include "dp/handle.hpp"
 #include "dp/map_container.hpp"
 #include "dp/memoization.hpp"
+#include "dp/solitary_container.hpp"
 #include "err/err.h"
 #include <shared_ptr>
 #include <unordered>
@@ -112,6 +113,17 @@ private:
 
     CxxLibrarySet mCxxLibraries;
 
+    struct CxxLibrariesMemoization
+    {
+        typedef dp::Memoization<dp::SolitaryContainer, dom::CxxLibrarySet> Memoization;
+        typedef shared_ptr<Memoization> MemoizationSPtr;
+
+        void reset();
+
+        dp::HandleSPtr mHandle;
+        MemoizationSPtr mRecursive = Memoization::make();
+    } mCLMemoization;
+
     struct CxxIncludeDirectoriesMemoization
     {
         typedef dp::Memoization<dp::MapContainer,
@@ -125,6 +137,7 @@ private:
         dp::HandleSPtr mHandle;
         MemoizationSPtr mIndirectPublic = Memoization::make();
         MemoizationSPtr mRecursivePublic = Memoization::make();
+        MemoizationSPtr mRecursiveProtected = Memoization::make();
         MemoizationSPtr mVisible = Memoization::make();
     } mCIDMemoization;
 };
