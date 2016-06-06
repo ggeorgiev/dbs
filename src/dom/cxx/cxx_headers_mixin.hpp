@@ -21,34 +21,23 @@ class CxxHeadersMixin
 public:
     typedef T Subject;
 
-    struct Headers
-    {
-        doim::FsDirectorySPtr mDirectory;
-        doim::FsFileSetSPtr mFiles;
-    };
+    typedef unordered_map<doim::FsDirectorySPtr, doim::FsFileSet> HeaderSet;
+    typedef unordered_map<doim::CxxHeader::EVisibility, HeaderSet> VisibilitySet;
 
     ECode updateCxxHeaders(doim::CxxHeader::EVisibility visibility,
                            const doim::FsDirectorySPtr& directory,
                            doim::FsFileSet& files)
     {
-        mHeaders[visibility] = {directory, doim::FsFileSet::make(files)};
+        auto it = mHeaders.find(visibility);
+        if (it == mHeaders.end())
+            it = mHeaders.insert({visibility, HeaderSet()}).first;
+
+        auto& headerSet = it->second;
+        auto itd = headerSet.find(directory);
+        if (itd == headerSet.end())
+            itd = headerSet.insert({directory, files}).first;
+
         EHEnd;
-    }
-
-    doim::FsDirectorySPtr headersDirectory(doim::CxxHeader::EVisibility visibility) const
-    {
-        const auto it = mHeaders.find(visibility);
-        if (it == mHeaders.end())
-            return nullptr;
-        return it->second.mDirectory;
-    }
-
-    const doim::FsFileSetSPtr headerFiles(doim::CxxHeader::EVisibility visibility) const
-    {
-        const auto it = mHeaders.find(visibility);
-        if (it == mHeaders.end())
-            return nullptr;
-        return it->second.mFiles;
     }
 
     // Computations
@@ -59,28 +48,28 @@ public:
 
         doim::CxxIncludeDirectorySet set;
 
-        const auto& directory = headersDirectory(visibility);
-        if (directory != nullptr)
+        const auto& it = mHeaders.find(visibility);
+        if (it == mHeaders.end())
+            return set;
+
+        for (const auto& headerSet : it->second)
         {
+            const auto& headers = cxxHeaders(visibility, root, headerSet.second);
             set.insert(doim::CxxIncludeDirectory::unique(self->cxxIncludeDirectoryType(),
-                                                         directory,
-                                                         cxxHeaders(visibility, root)));
+                                                         headerSet.first,
+                                                         headers));
         }
 
         return set;
     }
 
     doim::CxxHeaderSetSPtr cxxHeaders(doim::CxxHeader::EVisibility visibility,
-                                      const doim::FsDirectorySPtr& root) const
+                                      const doim::FsDirectorySPtr& root,
+                                      const doim::FsFileSet& files) const
     {
         auto self = static_cast<const Subject*>(this);
 
         auto headers = doim::CxxHeaderSet::make();
-
-        const auto files = headerFiles(visibility);
-
-        if (files == nullptr)
-            return doim::CxxHeaderSet::unique(headers);
 
         auto type = self->cxxHeaderType();
 
@@ -98,7 +87,7 @@ public:
                 break;
         }
 
-        for (const auto& header : *files)
+        for (const auto& header : files)
         {
             const auto& cxxHeader =
                 doim::CxxHeader::unique(type, visibility, header, directories, nullptr);
@@ -108,6 +97,6 @@ public:
     }
 
 private:
-    std::map<doim::CxxHeader::EVisibility, Headers> mHeaders;
+    VisibilitySet mHeaders;
 };
 }

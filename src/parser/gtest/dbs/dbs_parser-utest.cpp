@@ -76,10 +76,12 @@ TEST(DbsParserTest, SLOW_CxxLibraryCxxHeader)
         dom::CxxLibrary::find(cxxLibraryCxxHeaderPublicObject);
     ASSERT_NE(nullptr, cxxLibraryCxxHeaderPublic);
 
-    auto headerFiles =
-        cxxLibraryCxxHeaderPublic->headerFiles(doim::CxxHeader::EVisibility::kPublic);
-    ASSERT_NE(nullptr, headerFiles);
-    ASSERT_EQ(1, headerFiles->size());
+    /*
+        auto headerFiles =
+            cxxLibraryCxxHeaderPublic->headerFiles(doim::CxxHeader::EVisibility::kPublic);
+        ASSERT_NE(nullptr, headerFiles);
+        ASSERT_EQ(1, headerFiles->size());
+    */
 }
 
 TEST(DbsParserTest, SLOW_CxxLibraryCxxLibrary)
