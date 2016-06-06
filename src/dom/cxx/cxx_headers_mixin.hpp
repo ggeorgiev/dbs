@@ -52,39 +52,56 @@ public:
     }
 
     // Computations
-    doim::CxxIncludeDirectorySPtr cxxPrivateIncludeDirectory(
-        const doim::FsDirectorySPtr& root) const
+    doim::CxxIncludeDirectorySet cxxIncludeDirectories(
+        doim::CxxHeader::EVisibility visibility, const doim::FsDirectorySPtr& root) const
     {
-        const auto& directory = headersDirectory(doim::CxxHeader::EVisibility::kPrivate);
-        if (directory == nullptr)
-            return nullptr;
+        auto self = static_cast<const Subject*>(this);
 
-        return doim::CxxIncludeDirectory::unique(
-            static_cast<const Subject*>(this)->cxxIncludeDirectoryType(),
-            directory,
-            privateCxxHeaders(root));
+        doim::CxxIncludeDirectorySet set;
+
+        const auto& directory = headersDirectory(visibility);
+        if (directory != nullptr)
+        {
+            set.insert(doim::CxxIncludeDirectory::unique(self->cxxIncludeDirectoryType(),
+                                                         directory,
+                                                         cxxHeaders(visibility, root)));
+        }
+
+        return set;
     }
 
-    doim::CxxHeaderSetSPtr privateCxxHeaders(const doim::FsDirectorySPtr& root) const
+    doim::CxxHeaderSetSPtr cxxHeaders(doim::CxxHeader::EVisibility visibility,
+                                      const doim::FsDirectorySPtr& root) const
     {
+        auto self = static_cast<const Subject*>(this);
+
         auto headers = doim::CxxHeaderSet::make();
 
-        const auto files = headerFiles(doim::CxxHeader::EVisibility::kPrivate);
+        const auto files = headerFiles(visibility);
 
         if (files == nullptr)
             return doim::CxxHeaderSet::unique(headers);
 
-        auto type = static_cast<const Subject*>(this)->cxxHeaderType();
-        const auto& directories =
-            static_cast<const Subject*>(this)->recursivePublicCxxIncludeDirectories(root);
+        auto type = self->cxxHeaderType();
+
+        doim::CxxIncludeDirectorySetSPtr directories;
+        switch (visibility)
+        {
+            case doim::CxxHeader::EVisibility::kPublic:
+                directories = self->recursiveProtectedCxxIncludeDirectories(root);
+                break;
+            case doim::CxxHeader::EVisibility::kProtected:
+                directories = self->indirectPublicCxxIncludeDirectories(root);
+                break;
+            case doim::CxxHeader::EVisibility::kPrivate:
+                directories = self->recursivePublicCxxIncludeDirectories(root);
+                break;
+        }
+
         for (const auto& header : *files)
         {
             const auto& cxxHeader =
-                doim::CxxHeader::unique(type,
-                                        doim::CxxHeader::EVisibility::kPrivate,
-                                        header,
-                                        directories,
-                                        nullptr);
+                doim::CxxHeader::unique(type, visibility, header, directories, nullptr);
             headers->insert(cxxHeader);
         }
         return doim::CxxHeaderSet::unique(headers);

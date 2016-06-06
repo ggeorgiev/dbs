@@ -40,17 +40,21 @@ TEST(CxxLibraryTest, SLOW_CxxLibraryHeaders)
     auto cxxLibraryLib2 = dom::CxxLibrary::find(cxxLibraryLib2Object);
     ASSERT_NE(nullptr, cxxLibraryLib2);
 
-    const auto& publicHeaders = cxxLibraryLib2->publicCxxHeaders(mDbsDirectory);
+    const auto& publicHeaders =
+        cxxLibraryLib2->cxxHeaders(doim::CxxHeader::EVisibility::kPublic, mDbsDirectory);
     ASSERT_EQ(1, publicHeaders->size());
 
     const auto& recursivePublicHeaders =
         cxxLibraryLib2->recursivePublicCxxHeaders(mDbsDirectory);
     ASSERT_EQ(2, recursivePublicHeaders->size());
 
-    const auto& protectedHeaders = cxxLibraryLib2->protectedCxxHeaders(mDbsDirectory);
+    const auto& protectedHeaders =
+        cxxLibraryLib2->cxxHeaders(doim::CxxHeader::EVisibility::kProtected,
+                                   mDbsDirectory);
     ASSERT_EQ(1, protectedHeaders->size());
 
-    const auto& privateHeaders = cxxLibraryLib2->privateCxxHeaders(mDbsDirectory);
+    const auto& privateHeaders =
+        cxxLibraryLib2->cxxHeaders(doim::CxxHeader::EVisibility::kPrivate, mDbsDirectory);
     ASSERT_EQ(1, privateHeaders->size());
 
     const auto& visibleDirectories =
@@ -80,7 +84,8 @@ TEST(CxxLibraryTest, publicCxxHeaders)
 
     const auto& directory = doim::FsDirectory::obtain(nullptr, "/foo/include");
 
-    const auto& cxxHeaders1 = library.publicCxxHeaders(directory);
+    const auto& cxxHeaders1 =
+        library.cxxHeaders(doim::CxxHeader::EVisibility::kPublic, directory);
     ASSERT_EQ(0U, cxxHeaders1->size());
 
     doim::FsFileSet files;
@@ -92,9 +97,11 @@ TEST(CxxLibraryTest, publicCxxHeaders)
                                          directory,
                                          files));
 
-    const auto& cxxHeaders2 = library.publicCxxHeaders(directory);
+    const auto& cxxHeaders2 =
+        library.cxxHeaders(doim::CxxHeader::EVisibility::kPublic, directory);
     ASSERT_EQ(1U, cxxHeaders2->size());
 
-    const auto& cxxIncludeDirectory = library.cxxPublicIncludeDirectory(directory);
-    ASSERT_NE(nullptr, cxxIncludeDirectory);
+    const auto& cxxIncludeDirectories =
+        library.cxxIncludeDirectories(doim::CxxHeader::EVisibility::kPublic, directory);
+    ASSERT_EQ(1U, cxxIncludeDirectories.size());
 }

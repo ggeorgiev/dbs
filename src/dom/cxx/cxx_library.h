@@ -87,12 +87,6 @@ public:
 
     CxxLibrarySet recursiveCxxLibraries() const;
 
-    doim::CxxIncludeDirectorySPtr cxxPublicIncludeDirectory(
-        const doim::FsDirectorySPtr& root) const;
-
-    doim::CxxIncludeDirectorySPtr cxxProtectedIncludeDirectory(
-        const doim::FsDirectorySPtr& root) const;
-
     // Returns indirect include directories that can be used from objects of this library
     doim::CxxIncludeDirectorySetSPtr indirectPublicCxxIncludeDirectories(
         const doim::FsDirectorySPtr& root) const;
@@ -111,10 +105,6 @@ public:
     // able to see. This includes private and all depending public.
     doim::CxxIncludeDirectorySetSPtr visibleCxxIncludeDirectories(
         const doim::FsDirectorySPtr& root) const;
-
-    doim::CxxHeaderSetSPtr publicCxxHeaders(const doim::FsDirectorySPtr& root) const;
-
-    doim::CxxHeaderSetSPtr protectedCxxHeaders(const doim::FsDirectorySPtr& root) const;
 
     doim::CxxHeaderSetSPtr recursivePublicCxxHeaders(
         const doim::FsDirectorySPtr& root) const;
