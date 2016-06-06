@@ -49,6 +49,25 @@ public:
         return doim::CxxFile::unique(fsfile, cxxIncludeDirectories, protobufFile);
     }
 
+    const doim::CxxHeaderSPtr headerFile(
+        const doim::CxxHeader::EType type,
+        const doim::ProtobufFileSPtr& protobufFile,
+        const doim::CxxIncludeDirectorySetSPtr& cxxIncludeDirectories) const
+    {
+        auto name = protobufFile->file()->name();
+
+        const auto& fsfile =
+            doim::FsFile::obtain(protobufFile->file()->directory(),
+                                 name.substr(0, name.length() - sizeof("proto")) +
+                                     ".pb.h");
+
+        return doim::CxxHeader::unique(type,
+                                       doim::CxxHeader::EVisibility::kPublic,
+                                       fsfile,
+                                       cxxIncludeDirectories,
+                                       protobufFile);
+    }
+
     doim::ProtobufFileSet protobufFiles(const doim::FsDirectorySPtr& root) const
     {
         TLOG_FUNCTION;
@@ -75,12 +94,30 @@ public:
 
         const auto& files = protobufFiles(root);
 
-        auto headers = doim::CxxHeaderSet::unique(doim::CxxHeaderSet::make());
-
         auto protobuflib = doim::CxxIncludeDirectory::unique(
             doim::CxxIncludeDirectory::EType::kSystem,
             doim::FsDirectory::obtain(root, "protobuf/include"),
-            headers);
+            doim::CxxHeaderSet::unique(doim::CxxHeaderSet::make()));
+
+        auto headers = doim::CxxHeaderSet::make();
+        for (const auto& protobufFile : files)
+        {
+            auto cxxIncludeDirectories = doim::CxxIncludeDirectorySet::make();
+            cxxIncludeDirectories->insert(protobuflib);
+            cxxIncludeDirectories =
+                doim::CxxIncludeDirectorySet::unique(cxxIncludeDirectories);
+
+            const auto& directory =
+                doim::FsDirectory::corresponding(protobufFile->file()->directory(),
+                                                 root,
+                                                 intermediate);
+            auto header = headerFile(doim::CxxHeader::EType::kUser,
+                                     protobufFile,
+                                     cxxIncludeDirectories);
+            headers->insert(header);
+        }
+
+        headers = doim::CxxHeaderSet::unique(headers);
 
         for (const auto& protobufFile : files)
         {

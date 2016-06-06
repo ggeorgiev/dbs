@@ -87,7 +87,7 @@ public:
 
     CxxLibrarySet recursiveCxxLibraries() const;
 
-    doim::CxxIncludeDirectorySPtr cxxPublicIncludeDirectory(
+    doim::CxxIncludeDirectorySet cxxPublicIncludeDirectories(
         const doim::FsDirectorySPtr& root) const;
 
     doim::CxxIncludeDirectorySPtr cxxProtectedIncludeDirectory(

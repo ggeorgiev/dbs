@@ -6,6 +6,7 @@
 #include "task/cxx/cxx_object_file_crc_task.h"
 #include "task/cxx/cxx_program_crc_task.h"
 #include "task/cxx/cxx_source_crc_task.h"
+#include "task/cxx/cxx_source_headers_task.h"
 #include "task/db/db_put_task.h"
 #include "task/sys/parse_stdout_task.h"
 #include "task/tpool.h"
@@ -112,32 +113,48 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
             EHEnd;
         }
 
-        auto origin = objectFile->cxxFile()->origin();
+        unordered_set<doim::ProtobufFileSPtr> protobufs;
+
+        const auto& origin = objectFile->cxxFile()->origin();
         if (!apply_visitor(vst::isNullptr, origin))
-        {
             if (origin.type() == typeid(doim::ProtobufFileSPtr))
-            {
-                const auto& protobufFile = boost::get<doim::ProtobufFileSPtr>(origin);
-                auto compileProtobufCommand =
-                    mProtobufCompiler->compileCommand(protobufFile->directory(),
-                                                      protobufFile,
-                                                      objectFile->cxxFile());
+                protobufs.insert(boost::get<doim::ProtobufFileSPtr>(origin));
 
-                auto id = rtti::RttiInfo<CxxEngine, __COUNTER__>::classId();
-                const string& description =
-                    "Compile " + objectFile->cxxFile()->file()->path(directory);
-                auto compileTask = task::ParseStdoutTask::valid(
-                    compileProtobufCommand,
-                    objectFile->cxxFile()->file()->directory(),
-                    id,
-                    task::ParseStdoutTask::logOnError(),
-                    description);
+        auto headersTask =
+            task::CxxSourceHeadersTask::valid(task::CxxSourceHeadersTask::EDepth::kAll,
+                                              objectFile->cxxFile(),
+                                              nullptr);
+        task::gTPool->ensureScheduled(headersTask);
+        EHTest(headersTask->join());
 
-                task::gTPool->ensureScheduled(compileTask);
-                EHTest(compileTask->join());
-            }
-            else
-                ASSERT(false);
+        auto headersInfo = headersTask->headersInfo();
+        for (const auto& headerInfo : headersInfo)
+        {
+            const auto& origin = headerInfo.mHeader->origin();
+            if (!apply_visitor(vst::isNullptr, origin))
+                if (origin.type() == typeid(doim::ProtobufFileSPtr))
+                    protobufs.insert(boost::get<doim::ProtobufFileSPtr>(origin));
+        }
+
+        for (const auto& protobufFile : protobufs)
+        {
+            auto compileProtobufCommand =
+                mProtobufCompiler->compileCommand(protobufFile->directory(),
+                                                  protobufFile,
+                                                  objectFile->cxxFile());
+
+            auto id = rtti::RttiInfo<CxxEngine, __COUNTER__>::classId();
+            const string& description =
+                "Compile " + objectFile->cxxFile()->file()->path(directory);
+            auto compileTask =
+                task::ParseStdoutTask::valid(compileProtobufCommand,
+                                             objectFile->cxxFile()->file()->directory(),
+                                             id,
+                                             task::ParseStdoutTask::logOnError(),
+                                             description);
+
+            task::gTPool->ensureScheduled(compileTask);
+            EHTest(compileTask->join());
         }
 
         auto compileCommand = mCompiler->compileCommand(directory, objectFile);

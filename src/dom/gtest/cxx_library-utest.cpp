@@ -95,6 +95,6 @@ TEST(CxxLibraryTest, publicCxxHeaders)
     const auto& cxxHeaders2 = library.publicCxxHeaders(directory);
     ASSERT_EQ(1U, cxxHeaders2->size());
 
-    const auto& cxxIncludeDirectory = library.cxxPublicIncludeDirectory(directory);
-    ASSERT_NE(nullptr, cxxIncludeDirectory);
+    const auto& cxxIncludeDirectories = library.cxxPublicIncludeDirectories(directory);
+    ASSERT_EQ(1U, cxxIncludeDirectories.size());
 }

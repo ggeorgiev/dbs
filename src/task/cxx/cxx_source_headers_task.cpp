@@ -29,13 +29,38 @@ CxxSourceHeadersTask::CxxSourceHeadersTask(
 
 ECode CxxSourceHeadersTask::operator()()
 {
+    auto origin =
+        apply_visitor([](auto const& element) { return element->origin(); }, cxxSource());
+
+    if (!apply_visitor(vst::isNullptr, origin))
+    {
+#if 0 // TODO:    
+        if (origin.type() == typeid(doim::ProtobufFileSPtr))
+        {
+            // When a source file is generated extracting the headers it depends on is not
+            // possible until the code is already generated or the source is analyzed 
+            // purposefully to determine what will be the set of headers the future result
+            // source will have.
+            //
+            // Whatever the strategy is it should not be decided here, but it should be 
+            // passed to a task that understands the specifics of the source.
+            auto originTask =
+                ProtobufFileHeadersTask::valid(boost::get<doim::ProtobufFileSPtr>(origin));
+            gTPool->ensureScheduled(originTask);
+            EHTest(originTask->join());
+            mCrcsum = originTask->crc();
+        }
+        else
+            ASSERT(false);
+#endif
+        EHEnd;
+    }
+
     if (depth() == EDepth::kOne)
     {
         EHTest(one());
         EHEnd;
     }
-
-    unordered_set<doim::CxxHeaderSPtr> headers;
 
     auto headersTask = valid(EDepth::kOne, cxxSource(), cxxIncludeDirectory());
     gTPool->ensureScheduled(headersTask);
@@ -48,6 +73,7 @@ ECode CxxSourceHeadersTask::operator()()
     // dependency. Instead the algorithm loops over the currently known headers and
     // appends obtains their direct dependencies. After a certain iterations all headers
     // that depends on directly and indirectly will accumulated and tracked.
+    unordered_set<doim::CxxHeaderSPtr> processed;
     for (;;)
     {
         std::vector<CxxSourceHeadersTaskSPtr> newTasks;
@@ -56,16 +82,14 @@ ECode CxxSourceHeadersTask::operator()()
             const auto& headersInfo = task->headersInfo();
             for (const auto& headerInfo : headersInfo)
             {
-                if (headers.find(headerInfo.mHeader) != headers.end())
-                {
-                    DLOG("Is already in {}", headerInfo.mHeader->file()->path());
+                // if the header is processed already we simply ignore it
+                if (processed.find(headerInfo.mHeader) != processed.end())
                     continue;
-                }
 
                 mHeadersInfo.push_back(headerInfo);
-                headers.insert(headerInfo.mHeader);
-                DLOG("Insert {}", headerInfo.mHeader->file()->path());
+                processed.insert(headerInfo.mHeader);
 
+                // do not follow system headers
                 if (headerInfo.mHeader->type() == doim::CxxHeader::EType::kSystem)
                     continue;
 
