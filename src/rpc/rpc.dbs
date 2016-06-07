@@ -9,6 +9,7 @@ cxx_library rpc
     ;
 
     cxx_library:
+        /stl
         /protobuf-lite
     ;
 ;

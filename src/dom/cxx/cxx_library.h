@@ -30,8 +30,8 @@ typedef unordered_set<CxxLibrarySPtr> CxxLibrarySet;
 typedef shared_ptr<CxxLibrarySet> CxxLibrarySetSPtr;
 
 class CxxLibrary : public Element<CxxLibrary>,
-                   public CxxFilesMixin<CxxLibrary>,
                    public ProtobufsMixin<CxxLibrary>,
+                   public CxxFilesMixin<CxxLibrary>,
                    public CxxHeadersMixin<CxxLibrary>
 {
 public:

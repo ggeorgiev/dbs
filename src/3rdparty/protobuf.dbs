@@ -6,6 +6,17 @@ cxx_library /protobuf-lite
         @directory=../../protobuf/include:
 
         google/protobuf/message_lite.h
+
+        google/protobuf/stubs/common.h
+        google/protobuf/extension_set.h
+        google/protobuf/generated_message_util.h
+        google/protobuf/repeated_field.h
+    ;
+
+    cxx_header
+        @visibility=protected
+        @directory=../../protobuf/include:
+
     ;
 
     cxx_library:

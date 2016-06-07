@@ -23,20 +23,11 @@ class CxxProgram;
 typedef shared_ptr<CxxProgram> CxxProgramSPtr;
 
 class CxxProgram : public Element<CxxProgram>,
+                   public ProtobufsMixin<CxxProgram>,
                    public CxxFilesMixin<CxxProgram>,
                    public CxxHeadersMixin<CxxProgram>
 {
 public:
-    template <typename T>
-    std::vector<T> difference(const unordered_set<T>& a, const unordered_set<T>& b)
-    {
-        std::vector<T> result;
-        std::copy_if(a.begin(), a.end(), back_inserter(result), [&b](T needle) {
-            return b.find(needle) == b.end();
-        });
-        return result;
-    }
-
     string name() const
     {
         return mName;

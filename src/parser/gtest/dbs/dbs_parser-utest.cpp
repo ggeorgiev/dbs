@@ -134,7 +134,7 @@ TEST(DbsParserTest, SLOW_CxxLibraryProtobufFile)
     auto cxxLibraryProtobufFiles = dom::CxxLibrary::find(cxxLibraryProtobufFilesObject);
     ASSERT_NE(nullptr, cxxLibraryProtobufFiles);
 
-    ASSERT_EQ(1, cxxLibraryProtobufFiles->protobufsList().size());
+    ASSERT_EQ(1, cxxLibraryProtobufFiles->cxxFiles(nullptr).size());
 }
 
 TEST(DbsParserTest, SLOW_CxxLibraryBinary)

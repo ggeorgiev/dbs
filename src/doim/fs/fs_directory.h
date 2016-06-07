@@ -15,6 +15,11 @@
 
 namespace doim
 {
+class FsFile;
+typedef shared_ptr<FsFile> FsFileSPtr;
+typedef Set<FsFile> FsFileSet;
+typedef shared_ptr<FsFileSet> FsFileSetSPtr;
+
 class FsDirectory;
 typedef FsDirectory* FsDirectoryRPtr;
 typedef FsDirectory const* FsDirectoryRCPtr;
@@ -25,6 +30,8 @@ typedef shared_ptr<FsDirectorySet> FsDirectorySetSPtr;
 class FsDirectory : public StringTreeNode<FsDirectory, '/'>
 {
 public:
+    typedef unordered_map<FsDirectorySPtr, FsFileSet> FsFileSetMap;
+
     using StringTreeNode<FsDirectory, '/'>::find;
     static FsDirectorySPtr find(const FsDirectorySPtr& base,
                                 const string_view& directory);

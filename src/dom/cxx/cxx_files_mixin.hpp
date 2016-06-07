@@ -38,23 +38,19 @@ public:
 
         auto self = static_cast<const Subject*>(this);
 
-        doim::CxxFileSet cxxFiles;
-
         const auto& directories = self->visibleCxxIncludeDirectories(root);
 
-        for (const auto& directory : *directories)
-        {
-            DLOG("include directory: {}", directory->directory()->nonEmptyPath(root));
-            for (const auto& header : *directory->headerFiles())
-                DLOG("    header: {}", header->file()->path(root));
-        }
+        doim::CxxFileSet cxxFiles;
+
+        const auto& protobufCxxFiles = self->protobufCxxFiles(root);
+        cxxFiles.insert(protobufCxxFiles.begin(), protobufCxxFiles.end());
 
         for (const auto& fsFile : mCxxFilesList)
         {
             auto cxxFile = doim::CxxFile::unique(fsFile, directories, nullptr);
             cxxFiles.insert(cxxFile);
 
-            DLOG("generate cxx file for: {0}", fsFile->path());
+            DLOG("generate cxx file for: {}", fsFile->path(root));
         }
 
         return cxxFiles;

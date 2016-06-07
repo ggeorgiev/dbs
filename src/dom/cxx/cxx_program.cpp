@@ -60,10 +60,6 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
             const auto& libObjectFiles =
                 cxxLibrary->cxxObjectFiles(objPurpose, root, intermediate);
             objectFiles->insert(libObjectFiles.begin(), libObjectFiles.end());
-            const auto& libProtobufObjectFiles =
-                cxxLibrary->protobufCxxObjectFiles(objPurpose, root, intermediate);
-            objectFiles->insert(libProtobufObjectFiles.begin(),
-                                libProtobufObjectFiles.end());
         }
     }
     objectFiles = doim::CxxObjectFileSet::unique(objectFiles);

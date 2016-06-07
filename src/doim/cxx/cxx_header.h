@@ -45,6 +45,7 @@ struct CxxHeaderEnums
 struct CxxHeaderVariants
 {
     typedef boost::variant<ProtobufFileSPtr> OriginSPtr;
+    typedef unordered_set<OriginSPtr> OriginSet;
 };
 
 class CxxHeader : public CxxHeaderEnums,
@@ -57,6 +58,9 @@ class CxxHeader : public CxxHeaderEnums,
                                  CxxHeaderVariants::OriginSPtr>
 {
 public:
+    typedef unordered_map<EVisibility, FsDirectory::FsFileSetMap>
+        VisibilityFsDirectoryFsFileSetMapMap;
+
     CxxHeader(const EType type,
               const EVisibility visibility,
               const FsFileSPtr& file,

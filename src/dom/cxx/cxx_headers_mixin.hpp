@@ -21,16 +21,13 @@ class CxxHeadersMixin
 public:
     typedef T Subject;
 
-    typedef unordered_map<doim::FsDirectorySPtr, doim::FsFileSet> HeaderSet;
-    typedef unordered_map<doim::CxxHeader::EVisibility, HeaderSet> VisibilitySet;
-
     ECode updateCxxHeaders(doim::CxxHeader::EVisibility visibility,
                            const doim::FsDirectorySPtr& directory,
                            doim::FsFileSet& files)
     {
         auto it = mHeaders.find(visibility);
         if (it == mHeaders.end())
-            it = mHeaders.insert({visibility, HeaderSet()}).first;
+            it = mHeaders.insert({visibility, doim::FsDirectory::FsFileSetMap()}).first;
 
         auto& headerSet = it->second;
         auto itd = headerSet.find(directory);
@@ -41,6 +38,9 @@ public:
     }
 
     // Computations
+
+    typedef unordered_map<doim::FsFileSPtr, doim::CxxHeader::OriginSPtr> FileOriginMap;
+
     doim::CxxIncludeDirectorySet cxxIncludeDirectories(
         doim::CxxHeader::EVisibility visibility, const doim::FsDirectorySPtr& root) const
     {
@@ -49,14 +49,43 @@ public:
         doim::CxxIncludeDirectorySet set;
 
         const auto& it = mHeaders.find(visibility);
-        if (it == mHeaders.end())
-            return set;
 
-        for (const auto& headerSet : it->second)
+        doim::FsDirectorySet directories;
+        if (it != mHeaders.end())
+            for (const auto& headerSet : it->second)
+                directories.insert(headerSet.first);
+
+        const auto& protobufs = self->protobufs();
+        const auto& protobufIt = protobufs.find(visibility);
+        if (protobufIt != protobufs.end())
+            for (const auto& headerSet : protobufIt->second)
+                directories.insert(headerSet.first);
+
+        for (const auto& directory : directories)
         {
-            const auto& headers = cxxHeaders(visibility, root, headerSet.second);
+            FileOriginMap files;
+
+            if (it != mHeaders.end())
+            {
+                const auto& fileSetIt = it->second.find(directory);
+                if (fileSetIt != it->second.end())
+                    for (const auto& file : fileSetIt->second)
+                        files.insert({file, nullptr});
+            }
+
+            if (protobufIt != protobufs.end())
+            {
+                const auto& protobufFileSetIt = protobufIt->second.find(directory);
+                if (protobufFileSetIt != protobufIt->second.end())
+                    for (const auto& file : protobufFileSetIt->second)
+                        files.insert({self->headerFile(file),
+                                      doim::ProtobufFile::unique(directory, file)});
+            }
+
+            const auto& headers = cxxHeaders(visibility, root, files);
+
             set.insert(doim::CxxIncludeDirectory::unique(self->cxxIncludeDirectoryType(),
-                                                         headerSet.first,
+                                                         directory,
                                                          headers));
         }
 
@@ -65,7 +94,7 @@ public:
 
     doim::CxxHeaderSetSPtr cxxHeaders(doim::CxxHeader::EVisibility visibility,
                                       const doim::FsDirectorySPtr& root,
-                                      const doim::FsFileSet& files) const
+                                      const FileOriginMap& files) const
     {
         auto self = static_cast<const Subject*>(this);
 
@@ -89,14 +118,14 @@ public:
 
         for (const auto& header : files)
         {
-            const auto& cxxHeader =
-                doim::CxxHeader::unique(type, visibility, header, directories, nullptr);
+            const auto& cxxHeader = doim::CxxHeader::unique(
+                type, visibility, header.first, directories, header.second);
             headers->insert(cxxHeader);
         }
         return doim::CxxHeaderSet::unique(headers);
     }
 
 private:
-    VisibilitySet mHeaders;
+    doim::CxxHeader::VisibilityFsDirectoryFsFileSetMapMap mHeaders;
 };
 }

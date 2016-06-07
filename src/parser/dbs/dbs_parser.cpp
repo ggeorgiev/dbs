@@ -233,9 +233,23 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     auto r_cxxLibraryCxxFile = r_cxxFiles >> e_ref(cxxLibraryCxxFileFn);
 
     // CxxLibrary ProtobufFile
-    auto cxxLibraryProtobufFileFn = [&cxxLibrary, &directory, &files](I& i1, I& i2) {
-        cxxLibrary->updateProtobufsList(directory, files);
-    };
+    auto cxxLibraryProtobufFileFn =
+        [&cxxLibrary, &directory, &files, &cxxHeaderVisibility](I& i1, I& i2) {
+            doim::CxxHeader::EVisibility visibility;
+            if (cxxHeaderVisibility == nullptr ||
+                cxxHeaderVisibility->value() == dom::CxxLibrary::gPrivate)
+                visibility = doim::CxxHeader::EVisibility::kPrivate;
+            else if (cxxHeaderVisibility->value() == dom::CxxLibrary::gPublic)
+                visibility = doim::CxxHeader::EVisibility::kPublic;
+            else if (cxxHeaderVisibility->value() == dom::CxxLibrary::gProtected)
+                visibility = doim::CxxHeader::EVisibility::kProtected;
+            else
+            {
+                // TODO
+            }
+
+            cxxLibrary->updateProtobufsList(visibility, directory, files);
+        };
 
     auto r_cxxLibraryProtobufFileCat = *r_ws &
                                        (r_protobufFileKeyword >> e_ref(cxxHeaderInitFn)) &

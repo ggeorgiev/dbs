@@ -220,14 +220,14 @@ if [ ! -e build/release/src/rpc/ ]; then mkdir build/release/src/rpc/; fi
 if [ ! -e build/release/src/rpc/client/ ]; then mkdir build/release/src/rpc/client/; fi
 echo Compile src/rpc/client/client.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/rpc/client/client.cpp \
-    -isystem protobuf/include/ -o build/release/src/rpc/client/client.cpp.o \
-    -std=c++14 &
+    -isystem protobuf/include/ -isystem src/system/ \
+    -o build/release/src/rpc/client/client.cpp.o -std=c++14 &
 echo Compile src/rpc/rpc.pb.cc
 pushd src/ && \
 ../protobuf/bin/protoc --cpp_out=. rpc/rpc.proto && \
 popd && \
-clang++ -D NDEBUG -O3 -c src/rpc/rpc.pb.cc -isystem protobuf/include/ \
-    -isystem src/ -o build/release/src/rpc/rpc.proto.o -std=c++14 &
+clang++ -D NDEBUG -I src/ -O3 -c src/rpc/rpc.pb.cc -isystem protobuf/include/ \
+    -isystem src/system/ -o build/release/src/rpc/rpc.pb.cc.o -std=c++14 &
 if [ ! -e build/release/src/task/ ]; then mkdir build/release/src/task/; fi
 if [ ! -e build/release/src/task/cxx/ ]; then mkdir build/release/src/task/cxx/; fi
 echo Compile src/task/cxx/cxx_object_file_crc_task.cpp
@@ -378,7 +378,7 @@ clang++ -L boost/lib/ -L fmt/lib/ -L protobuf/lib/ -L rocksdb/lib/ \
     build/release/src/parser/cxx/cxx_parser.cpp.o \
     build/release/src/parser/dbs/dbs_config_parser.cpp.o \
     build/release/src/parser/dbs/dbs_parser.cpp.o \
-    build/release/src/rpc/client/client.cpp.o build/release/src/rpc/rpc.proto.o \
+    build/release/src/rpc/client/client.cpp.o build/release/src/rpc/rpc.pb.cc.o \
     build/release/src/task/cxx/cxx_object_file_crc_task.cpp.o \
     build/release/src/task/cxx/cxx_program_crc_task.cpp.o \
     build/release/src/task/cxx/cxx_source_crc_task.cpp.o \
