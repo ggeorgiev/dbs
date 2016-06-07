@@ -397,28 +397,37 @@ string CxxEngine::buildScript(EBuildFor buildFor,
         string compileOrigin;
 
         auto origin = objectFile->cxxFile()->origin();
-        if (!apply_visitor(vst::isNullptr, origin))
+        if (apply_visitor(vst::isNullptr, origin))
+            continue;
+
+        string description;
+        doim::SysCommandSPtr compileCommand;
+
+        if (origin.type() == typeid(doim::ProtobufFileSPtr))
         {
-            if (origin.type() == typeid(doim::ProtobufFileSPtr))
-            {
-                const auto& protobufFile = boost::get<doim::ProtobufFileSPtr>(origin);
-                auto compileProtobufCommand =
-                    mProtobufCompiler->compileCommand(protobufFile->directory(),
-                                                      protobufFile,
-                                                      objectFile->cxxFile());
-
-                compileOrigin = compileProtobufCommand->toString(directory) + " && \\\n";
-            }
-            else
-                ASSERT(false);
+            const auto& protobufFile = boost::get<doim::ProtobufFileSPtr>(origin);
+            description = protobufFile->file()->path(directory);
+            compileCommand = mProtobufCompiler->compileCommand(protobufFile->directory(),
+                                                               protobufFile,
+                                                               objectFile->cxxFile());
         }
+        else
+            ASSERT(false);
 
+        stream << makeDirectory(directory, objectFile->file()->directory(), directories);
+        stream << "echo Compile " << description << std::endl;
+        stream << compileCommand->toString(directory) << " &" << std::endl;
+    }
+
+    stream << "wait" << std::endl;
+
+    for (const auto& objectFile : objects)
+    {
         stream << makeDirectory(directory, objectFile->file()->directory(), directories);
         stream << "echo Compile " << objectFile->cxxFile()->file()->path(directory)
                << std::endl;
         auto compileCommand = mCompiler->compileCommand(directory, objectFile);
-        stream << compileOrigin << compileCommand->toString(directory) << " &"
-               << std::endl;
+        stream << compileCommand->toString(directory) << " &" << std::endl;
     }
 
     stream << "wait" << std::endl;

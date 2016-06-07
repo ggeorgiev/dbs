@@ -1,6 +1,12 @@
 if [ ! -e build/ ]; then mkdir build/; fi
 if [ ! -e build/release/ ]; then mkdir build/release/; fi
 if [ ! -e build/release/src/ ]; then mkdir build/release/src/; fi
+if [ ! -e build/release/src/rpc/ ]; then mkdir build/release/src/rpc/; fi
+echo Compile src/rpc/rpc.proto
+pushd src/ > /dev/null && \
+../protobuf/bin/protoc --cpp_out=. rpc/rpc.proto && \
+popd > /dev/null &
+wait
 if [ ! -e build/release/src/const/ ]; then mkdir build/release/src/const/; fi
 echo Compile src/const/constants.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/const/constants.cpp -isystem src/system/ \
@@ -216,16 +222,12 @@ clang++ -D NDEBUG -I src/ -O3 -c src/parser/dbs/dbs_parser.cpp \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
     -o build/release/src/parser/dbs/dbs_parser.cpp.o -std=c++14 &
-if [ ! -e build/release/src/rpc/ ]; then mkdir build/release/src/rpc/; fi
 if [ ! -e build/release/src/rpc/client/ ]; then mkdir build/release/src/rpc/client/; fi
 echo Compile src/rpc/client/client.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/rpc/client/client.cpp \
     -isystem protobuf/include/ -isystem src/system/ \
     -o build/release/src/rpc/client/client.cpp.o -std=c++14 &
 echo Compile src/rpc/rpc.pb.cc
-pushd src/ && \
-../protobuf/bin/protoc --cpp_out=. rpc/rpc.proto && \
-popd && \
 clang++ -D NDEBUG -I src/ -O3 -c src/rpc/rpc.pb.cc -isystem protobuf/include/ \
     -isystem src/system/ -o build/release/src/rpc/rpc.pb.cc.o -std=c++14 &
 if [ ! -e build/release/src/task/ ]; then mkdir build/release/src/task/; fi
