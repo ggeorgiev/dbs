@@ -59,7 +59,7 @@
       <CommandLineArguments>
          <CommandLineArgument
             argument = "--gtest_filter=CxxLibraryTest.SLOW_CxxLibraryHeaders"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--gtest_filter=DbsConfigParserTest.*"
