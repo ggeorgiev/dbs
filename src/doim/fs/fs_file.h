@@ -7,6 +7,7 @@
 #include "doim/tree/string_tree_leaf.hpp"
 #include "doim/element.hpp"
 #include "doim/set.hpp"
+#include <boost/variant/variant.hpp>
 #include <memory>
 #include <str>
 #include <string_view>
@@ -42,6 +43,21 @@ public:
 
 namespace vst
 {
-auto path = [](auto const& element) { return element->file()->path(); };
+struct path : public boost::static_visitor<string>
+{
+    path(const FsDirectorySPtr& directory = nullptr)
+        : mDirectory(directory)
+    {
+    }
+
+    template <typename T>
+    string operator()(const T& element) const
+    {
+        return element->file()->path(mDirectory);
+    }
+
+private:
+    FsDirectorySPtr mDirectory;
+};
 }
 }

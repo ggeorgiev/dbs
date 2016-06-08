@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/protobuf/protobuf_file.h"
@@ -42,20 +43,13 @@ struct CxxHeaderEnums
     };
 };
 
-struct CxxHeaderVariants
-{
-    typedef boost::variant<ProtobufFileSPtr> OriginSPtr;
-    typedef unordered_set<OriginSPtr> OriginSet;
-};
-
 class CxxHeader : public CxxHeaderEnums,
-                  public CxxHeaderVariants,
                   public Element<CxxHeader,
                                  CxxHeaderEnums::EType,
                                  CxxHeaderEnums::EVisibility,
                                  FsFileSPtr,
                                  CxxIncludeDirectorySetSPtr,
-                                 CxxHeaderVariants::OriginSPtr>
+                                 CxxSourceOriginSPtr>
 {
 public:
     typedef unordered_map<EVisibility, FsDirectory::FsFileSetMap>
@@ -65,7 +59,7 @@ public:
               const EVisibility visibility,
               const FsFileSPtr& file,
               const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories,
-              const OriginSPtr& origin);
+              const CxxSourceOriginSPtr& origin);
 
     EType type() const
     {
@@ -87,7 +81,7 @@ public:
         return std::get<3>(mArgs);
     }
 
-    const OriginSPtr& origin() const
+    const CxxSourceOriginSPtr& origin() const
     {
         return std::get<4>(mArgs);
     }

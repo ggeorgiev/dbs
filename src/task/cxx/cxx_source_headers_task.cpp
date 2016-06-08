@@ -20,7 +20,7 @@ namespace task
 {
 CxxSourceHeadersTask::CxxSourceHeadersTask(
     const EDepth depth,
-    const CxxSourceSPtr& cxxSource,
+    const doim::CxxSourceSPtr& cxxSource,
     const doim::CxxIncludeDirectorySPtr& cxxIncludeDirectory)
     : Element(depth, cxxSource, cxxIncludeDirectory)
 {
@@ -116,7 +116,7 @@ ECode CxxSourceHeadersTask::operator()()
 
 ECode CxxSourceHeadersTask::one()
 {
-    const auto& path = apply_visitor(doim::vst::path, cxxSource());
+    const auto& path = apply_visitor(doim::vst::path(), cxxSource());
 
     std::ifstream fstream(path.c_str());
     string content((std::istreambuf_iterator<char>(fstream)),
@@ -146,7 +146,7 @@ ECode CxxSourceHeadersTask::one()
 
 string CxxSourceHeadersTask::description() const
 {
-    auto path = apply_visitor(doim::vst::path, cxxSource());
+    auto path = apply_visitor(doim::vst::path(), cxxSource());
     return "Cxx file headers " + path;
 }
 

@@ -39,7 +39,7 @@ public:
 
     // Computations
 
-    typedef unordered_map<doim::FsFileSPtr, doim::CxxHeader::OriginSPtr> FileOriginMap;
+    typedef unordered_map<doim::FsFileSPtr, doim::CxxSourceOriginSPtr> FileOriginMap;
 
     doim::CxxIncludeDirectorySet cxxIncludeDirectories(
         doim::CxxHeader::EVisibility visibility, const doim::FsDirectorySPtr& root) const

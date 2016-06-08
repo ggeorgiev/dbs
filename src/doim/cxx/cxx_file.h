@@ -19,21 +19,18 @@ typedef shared_ptr<CxxFile> CxxFileSPtr;
 typedef Set<CxxFile> CxxFileSet;
 typedef shared_ptr<CxxFileSet> CxxFileSetSPtr;
 
-struct CxxFileVariants
-{
-    typedef variant<ProtobufFileSPtr> OriginSPtr;
-};
+typedef boost::variant<doim::CxxFileSPtr, doim::CxxHeaderSPtr> CxxSourceSPtr;
 
-class CxxFile : public CxxFileVariants,
-                public Element<CxxFile,
-                               FsFileSPtr,
-                               CxxIncludeDirectorySetSPtr,
-                               CxxFileVariants::OriginSPtr>
+typedef boost::variant<ProtobufFileSPtr> CxxSourceOriginSPtr;
+typedef unordered_set<CxxSourceOriginSPtr> CxxSourceOriginSet;
+
+class CxxFile
+    : public Element<CxxFile, FsFileSPtr, CxxIncludeDirectorySetSPtr, CxxSourceOriginSPtr>
 {
 public:
     CxxFile(const FsFileSPtr& file,
             const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories,
-            const OriginSPtr& origin);
+            const CxxSourceOriginSPtr& origin);
 
     const FsFileSPtr& file() const
     {
@@ -45,7 +42,7 @@ public:
         return std::get<1>(mArgs);
     }
 
-    const OriginSPtr& origin() const
+    const CxxSourceOriginSPtr& origin() const
     {
         return std::get<2>(mArgs);
     }

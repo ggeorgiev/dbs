@@ -11,7 +11,7 @@ CxxHeader::CxxHeader(const EType type,
                      const EVisibility visibility,
                      const FsFileSPtr& file,
                      const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories,
-                     const OriginSPtr& origin)
+                     const CxxSourceOriginSPtr& origin)
     : Element(type, visibility, file, cxxIncludeDirectories, origin)
 {
     ASSERT(file->isUnique());

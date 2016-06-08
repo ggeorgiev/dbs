@@ -73,11 +73,15 @@ private:
                                  const doim::DbKeySPtr& key,
                                  const doim::DbValueSPtr& value) const;
 
-    tpool::TaskSPtr compileTask(const doim::DbKeySPtr& ancenstor,
+    tpool::TaskSPtr compileOrigin(const doim::DbKeySPtr& ancestor,
+                                  const doim::CxxSourceOriginSPtr& origin,
+                                  const doim::FsDirectorySPtr& directory);
+
+    tpool::TaskSPtr compileTask(const doim::DbKeySPtr& ancestor,
                                 const doim::FsDirectorySPtr& directory,
                                 const doim::CxxObjectFileSPtr& objectFile);
 
-    tpool::TaskSPtr compileObjects(const doim::DbKeySPtr& ancenstor,
+    tpool::TaskSPtr compileObjects(const doim::DbKeySPtr& ancestor,
                                    const doim::FsDirectorySPtr& directory,
                                    const doim::CxxProgramSPtr& program);
 

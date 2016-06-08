@@ -29,7 +29,7 @@ namespace task
 {
 CxxSourceCrcTask::CxxSourceCrcTask(
     const EDepth depth,
-    const CxxSourceSPtr& cxxSource,
+    const doim::CxxSourceSPtr& cxxSource,
     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory)
     : CrcTask(depth, cxxSource, currentIncludeDirectory)
 {
@@ -119,7 +119,7 @@ ECode CxxSourceCrcTask::operator()()
 
 ECode CxxSourceCrcTask::one()
 {
-    const auto& path = apply_visitor(doim::vst::path, cxxSource());
+    const auto& path = apply_visitor(doim::vst::path(), cxxSource());
 
     defer(DLOG("Crc for {0} is {1:x}", path, mCrcsum));
 
@@ -142,7 +142,7 @@ ECode CxxSourceCrcTask::one()
 
 string CxxSourceCrcTask::description() const
 {
-    auto path = apply_visitor(doim::vst::path, cxxSource());
+    auto path = apply_visitor(doim::vst::path(), cxxSource());
 
     return "Cxx source file crc " + path;
 }

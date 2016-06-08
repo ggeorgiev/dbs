@@ -9,7 +9,7 @@ namespace doim
 {
 CxxFile::CxxFile(const FsFileSPtr& file,
                  const CxxIncludeDirectorySetSPtr& cxxIncludeDirectories,
-                 const OriginSPtr& origin)
+                 const CxxSourceOriginSPtr& origin)
     : Element(file, cxxIncludeDirectories, origin)
 {
     ASSERT(file != nullptr && file->isUnique());

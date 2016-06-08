@@ -29,21 +29,15 @@ struct CxxSourceHeadersTaskEnums
     };
 };
 
-struct CxxSourceHeadersTaskVariants
-{
-    typedef boost::variant<doim::CxxFileSPtr, doim::CxxHeaderSPtr> CxxSourceSPtr;
-};
-
 class CxxSourceHeadersTask : public CxxSourceHeadersTaskEnums,
-                             public CxxSourceHeadersTaskVariants,
                              public Element<CxxSourceHeadersTask,
                                             CxxSourceHeadersTaskEnums::EDepth,
-                                            CxxSourceHeadersTaskVariants::CxxSourceSPtr,
+                                            doim::CxxSourceSPtr,
                                             doim::CxxIncludeDirectorySPtr>
 {
 public:
     CxxSourceHeadersTask(const EDepth depth,
-                         const CxxSourceSPtr& cxxSource,
+                         const doim::CxxSourceSPtr& cxxSource,
                          const doim::CxxIncludeDirectorySPtr& cxxIncludeDirectory);
 
     EDepth depth() const
@@ -51,7 +45,7 @@ public:
         return std::get<0>(mArgs);
     }
 
-    const CxxSourceSPtr& cxxSource() const
+    const doim::CxxSourceSPtr& cxxSource() const
     {
         return std::get<1>(mArgs);
     }

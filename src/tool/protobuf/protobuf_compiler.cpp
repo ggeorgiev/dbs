@@ -19,11 +19,9 @@ ProtobufCompiler::ProtobufCompiler(const doim::SysExecutableSPtr& compiler)
 
 doim::SysCommandSPtr ProtobufCompiler::compileCommand(
     const doim::FsDirectorySPtr& destination,
-    const doim::ProtobufFileSPtr& protobufFile,
-    const doim::CxxFileSPtr& cxxFile) const
+    const doim::ProtobufFileSPtr& protobufFile) const
 {
     ASSERT(protobufFile != nullptr);
-    ASSERT(cxxFile != nullptr);
 
     auto compileArguments = doim::SysArgumentSet::make();
 

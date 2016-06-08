@@ -21,8 +21,7 @@ public:
     ProtobufCompiler(const doim::SysExecutableSPtr& compiler);
 
     doim::SysCommandSPtr compileCommand(const doim::FsDirectorySPtr& destination,
-                                        const doim::ProtobufFileSPtr& protobufFile,
-                                        const doim::CxxFileSPtr& cxxFile) const;
+                                        const doim::ProtobufFileSPtr& protobufFile) const;
 
 private:
     doim::SysExecutableSPtr mCompiler;

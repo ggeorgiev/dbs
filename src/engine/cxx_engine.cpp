@@ -8,6 +8,7 @@
 #include "task/cxx/cxx_source_crc_task.h"
 #include "task/cxx/cxx_source_headers_task.h"
 #include "task/db/db_put_task.h"
+#include "task/protobuf/protobuf_file_crc_task.h"
 #include "task/sys/parse_stdout_task.h"
 #include "task/tpool.h"
 #include "tpool/task_callback.h"
@@ -88,7 +89,75 @@ tpool::TaskSPtr CxxEngine::updateDbTask(const tpool::TaskSPtr& task,
     return tpool::TaskCallback::make(0, task, onFinish, nullptr);
 }
 
-tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
+tpool::TaskSPtr CxxEngine::compileOrigin(const doim::DbKeySPtr& ancestor,
+                                         const doim::CxxSourceOriginSPtr& origin,
+                                         const doim::FsDirectorySPtr& directory)
+{
+    if (apply_visitor(vst::isNullptr, origin))
+        return nullptr;
+
+    if (origin.type() == typeid(doim::ProtobufFileSPtr))
+    {
+        const auto& protobufCxxKey = doim::DbKey::unique(ancestor, "protobuf-file:cxx");
+
+        const auto& protobufFile = boost::get<doim::ProtobufFileSPtr>(origin);
+
+        auto crcTask = task::ProtobufFileCrcTask::valid(protobufFile);
+        task::gTPool->ensureScheduled(crcTask);
+
+        auto self = shared_from_this();
+        tpool::TaskCallback::Function onFinish =
+            [this, self, protobufCxxKey, directory, protobufFile](
+                const tpool::TaskSPtr& task) -> ECode {
+
+            auto key = doim::DbKey::unique(protobufCxxKey, protobufFile->file()->path());
+
+            math::Crcsum crc;
+            db::gDatabase->get(key->toString(), crc);
+
+            auto crcTask = std::static_pointer_cast<task::ProtobufFileCrcTask>(task);
+            if (crcTask->crc() != 0 && crcTask->crc() == crc)
+            {
+                DLOG("Cxx artifacts for protobuf '{}' are already built.",
+                     protobufFile->file()->path(directory));
+                EHEnd;
+            }
+
+            auto compileProtobufCommand =
+                mProtobufCompiler->compileCommand(protobufFile->directory(),
+                                                  protobufFile);
+
+            auto id = rtti::RttiInfo<CxxEngine, __COUNTER__>::classId();
+            const string& description =
+                "Compile " + protobufFile->file()->path(directory);
+
+            auto compileTask =
+                task::ParseStdoutTask::valid(compileProtobufCommand,
+                                             protobufFile->directory(),
+                                             id,
+                                             task::ParseStdoutTask::logOnError(),
+                                             description);
+
+            task::gTPool->ensureScheduled(compileTask);
+
+            auto value = doim::DbValue::make(crcTask->crc());
+            auto compileCbTask = updateDbTask(compileTask, key, value);
+            task::gTPool->ensureScheduled(compileCbTask);
+            EHTest(compileCbTask->join());
+
+            EHEnd;
+        };
+
+        auto task = tpool::TaskCallback::make(0, crcTask, onFinish, nullptr);
+        task::gTPool->ensureScheduled(task);
+        return task;
+    }
+
+    ASSERT(false);
+    return nullptr;
+}
+
+tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancestor,
                                        const doim::FsDirectorySPtr& directory,
                                        const doim::CxxObjectFileSPtr& objectFile)
 {
@@ -97,10 +166,10 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
 
     auto self = shared_from_this();
     tpool::TaskCallback::Function onFinish =
-        [this, self, ancenstor, directory, objectFile](
+        [this, self, ancestor, directory, objectFile](
             const tpool::TaskSPtr& task) -> ECode {
 
-        auto key = doim::DbKey::unique(ancenstor, objectFile->file()->path());
+        auto key = doim::DbKey::unique(ancestor, objectFile->cxxFile()->file()->path());
 
         math::Crcsum crc;
         db::gDatabase->get(key->toString(), crc);
@@ -113,12 +182,13 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
             EHEnd;
         }
 
-        unordered_set<doim::ProtobufFileSPtr> protobufs;
+        std::vector<tpool::TaskSPtr> allTasks;
 
-        const auto& origin = objectFile->cxxFile()->origin();
-        if (!apply_visitor(vst::isNullptr, origin))
-            if (origin.type() == typeid(doim::ProtobufFileSPtr))
-                protobufs.insert(boost::get<doim::ProtobufFileSPtr>(origin));
+        const auto& originTask = compileOrigin(ancestor->ancestor(),
+                                               objectFile->cxxFile()->origin(),
+                                               directory);
+        if (originTask != nullptr)
+            allTasks.push_back(originTask);
 
         auto headersTask =
             task::CxxSourceHeadersTask::valid(task::CxxSourceHeadersTask::EDepth::kAll,
@@ -130,31 +200,18 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
         auto headersInfo = headersTask->headersInfo();
         for (const auto& headerInfo : headersInfo)
         {
-            const auto& origin = headerInfo.mHeader->origin();
-            if (!apply_visitor(vst::isNullptr, origin))
-                if (origin.type() == typeid(doim::ProtobufFileSPtr))
-                    protobufs.insert(boost::get<doim::ProtobufFileSPtr>(origin));
+            const auto& originTask = compileOrigin(ancestor->ancestor(),
+                                                   headerInfo.mHeader->origin(),
+                                                   directory);
+            if (originTask != nullptr)
+                allTasks.push_back(originTask);
         }
 
-        for (const auto& protobufFile : protobufs)
+        if (!allTasks.empty())
         {
-            auto compileProtobufCommand =
-                mProtobufCompiler->compileCommand(protobufFile->directory(),
-                                                  protobufFile,
-                                                  objectFile->cxxFile());
-
-            auto id = rtti::RttiInfo<CxxEngine, __COUNTER__>::classId();
-            const string& description =
-                "Compile " + objectFile->cxxFile()->file()->path(directory);
-            auto compileTask =
-                task::ParseStdoutTask::valid(compileProtobufCommand,
-                                             objectFile->cxxFile()->file()->directory(),
-                                             id,
-                                             task::ParseStdoutTask::logOnError(),
-                                             description);
-
-            task::gTPool->ensureScheduled(compileTask);
-            EHTest(compileTask->join());
+            auto group = tpool::TaskGroup::make(task::gTPool, 0, allTasks);
+            task::gTPool->ensureScheduled(group);
+            EHTest(group->join());
         }
 
         auto compileCommand = mCompiler->compileCommand(directory, objectFile);
@@ -184,11 +241,11 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancenstor,
     return task;
 }
 
-tpool::TaskSPtr CxxEngine::compileObjects(const doim::DbKeySPtr& ancenstor,
+tpool::TaskSPtr CxxEngine::compileObjects(const doim::DbKeySPtr& ancestor,
                                           const doim::FsDirectorySPtr& directory,
                                           const doim::CxxProgramSPtr& program)
 {
-    auto objectFileKey = doim::DbKey::unique(ancenstor, "object-file");
+    auto objectFileKey = doim::DbKey::unique(ancestor, "object-file");
 
     std::vector<tpool::TaskSPtr> allTasks;
     for (const auto& objectFile : *program->cxxObjectFiles())
@@ -408,8 +465,7 @@ string CxxEngine::buildScript(EBuildFor buildFor,
             const auto& protobufFile = boost::get<doim::ProtobufFileSPtr>(origin);
             description = protobufFile->file()->path(directory);
             compileCommand = mProtobufCompiler->compileCommand(protobufFile->directory(),
-                                                               protobufFile,
-                                                               objectFile->cxxFile());
+                                                               protobufFile);
         }
         else
             ASSERT(false);
