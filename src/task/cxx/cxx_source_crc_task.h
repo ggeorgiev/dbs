@@ -5,12 +5,10 @@
 
 #include "task/crc_task.hpp"
 #include "doim/cxx/cxx_file.h"
-#include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/tag/tag.h"
 #include "err/err.h"
 #include <fmt/format.h>
-#include <boost/variant/variant.hpp>
 #include <memory>
 #include <str>
 #include <tuple>

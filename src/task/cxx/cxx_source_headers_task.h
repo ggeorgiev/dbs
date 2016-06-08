@@ -9,7 +9,6 @@
 #include "doim/tag/tag.h"
 #include "err/err.h"
 #include <fmt/format.h>
-#include <boost/variant/variant.hpp>
 #include <memory>
 #include <str>
 #include <tuple>

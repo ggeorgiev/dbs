@@ -5,14 +5,14 @@
 
 #include "doim/cxx/cxx_file.h"
 #include "doim/cxx/cxx_include_directory.h"
+#include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
-#include "doim/protobuf/protobuf_file.h"
 #include "doim/element.hpp"
 #include "doim/set.hpp"
-#include <boost/variant/variant.hpp>
 #include <iosfwd>
 #include <memory>
 #include <tuple>
+#include <unordered>
 
 namespace doim
 {

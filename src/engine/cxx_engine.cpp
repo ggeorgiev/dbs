@@ -13,6 +13,8 @@
 #include "task/tpool.h"
 #include "tpool/task_callback.h"
 #include "tpool/task_group.h"
+#include "doim/cxx/cxx_header.h"
+#include "doim/cxx/cxx_include_directory.h"
 #include "doim/cxx/cxx_program.h"
 #include "doim/fs/fs_file.h"
 #include "doim/protobuf/protobuf_file.h"

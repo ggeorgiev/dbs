@@ -10,6 +10,7 @@
 #include "doim/set.hpp"
 #include <memory>
 #include <tuple>
+#include <unordered>
 #include <variant>
 
 namespace doim

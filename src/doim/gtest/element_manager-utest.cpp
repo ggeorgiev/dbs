@@ -6,6 +6,7 @@
 #include "gtest/framework.h"
 #include <memory>
 #include <ostream>
+#include <string>
 
 TEST(ElementManagerTest, unique)
 {

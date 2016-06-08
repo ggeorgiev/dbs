@@ -6,16 +6,14 @@
 #include "dom/cxx/cxx_files_mixin.hpp"
 #include "dom/cxx/cxx_headers_mixin.hpp"
 #include "dom/cxx/cxx_library.h"
+#include "dom/cxx/protobufs_mixin.hpp"
 #include "dom/element.hpp"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/cxx/cxx_program.h"
 #include "doim/fs/fs_directory.h"
 #include "err/err.h"
-#include <algorithm>
 #include <shared_ptr>
 #include <str>
-#include <unordered>
-#include <vector>
 
 namespace dom
 {

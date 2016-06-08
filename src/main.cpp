@@ -14,6 +14,7 @@
 #include "option/verbose.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
+#include "doim/fs/fs_relative_file.h"
 #include "doim/generic/object.h"
 #include "doim/sys/sys_executable.h"
 #include "doim/tool/tool_command.h"
