@@ -15,8 +15,8 @@ if [ ! -e build/release/src/db/ ]; then mkdir build/release/src/db/; fi
 echo Compile src/db/database.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/db/database.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
-    -isystem boost/include/ -isystem fmt/include/ -isystem rocksdb/include/ \
-    -isystem spdlog/include/ -isystem src/system/ \
+    -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
+    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
     -o build/release/src/db/database.cpp.o -std=c++14 &
 if [ ! -e build/release/src/doim/ ]; then mkdir build/release/src/doim/; fi
 if [ ! -e build/release/src/doim/cxx/ ]; then mkdir build/release/src/doim/cxx/; fi
@@ -187,6 +187,13 @@ echo Compile src/log/log.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/log/log.cpp -isystem boost/include/ \
     -isystem fmt/include/ -isystem spdlog/include/ -isystem src/system/ \
     -o build/release/src/log/log.cpp.o -std=c++14 &
+if [ ! -e build/release/src/logex/ ]; then mkdir build/release/src/logex/; fi
+echo Compile src/logex/log.cpp
+clang++ -D NDEBUG -I src/ -O3 -c src/logex/log.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
+    -isystem spdlog/include/ -isystem src/system/ \
+    -o build/release/src/logex/log.cpp.o -std=c++14 &
 echo Compile src/main.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/main.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
@@ -375,8 +382,8 @@ clang++ -L boost/lib/ -L fmt/lib/ -L protobuf/lib/ -L rocksdb/lib/ \
     build/release/src/dom/cxx/cxx_library.cpp.o \
     build/release/src/dom/cxx/cxx_program.cpp.o \
     build/release/src/engine/cxx_engine.cpp.o build/release/src/err/err.cpp.o \
-    build/release/src/log/log.cpp.o build/release/src/main.cpp.o \
-    build/release/src/option/verbose.cpp.o \
+    build/release/src/log/log.cpp.o build/release/src/logex/log.cpp.o \
+    build/release/src/main.cpp.o build/release/src/option/verbose.cpp.o \
     build/release/src/parser/cxx/cxx_parser.cpp.o \
     build/release/src/parser/dbs/dbs_config_parser.cpp.o \
     build/release/src/parser/dbs/dbs_parser.cpp.o \

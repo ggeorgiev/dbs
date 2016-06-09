@@ -5,6 +5,7 @@
 
 #include "doim/set_manager.hpp"
 #include "err/err_assert.h"
+#include "im/initialization_manager.hpp"
 #include <boost/functional/hash/hash.hpp>
 #include <algorithm>
 #include <initializer_list>
@@ -23,6 +24,11 @@ template <typename T>
 class Set : public enable_make_shared<Set<T>>, public std::unordered_set<shared_ptr<T>>
 {
 public:
+    static constexpr int rank()
+    {
+        return SetManager<T, Set<T>>::rank() + im::InitializationManager::step();
+    }
+
     static shared_ptr<Set<T>> unique(const shared_ptr<Set<T>>& set)
     {
         return gManagerSet->unique(set);
@@ -31,6 +37,22 @@ public:
     static shared_ptr<Set<T>> unique(const std::initializer_list<shared_ptr<T>>& list)
     {
         return gManagerSet->unique(enable_make_shared<Set<T>>::make(list));
+    }
+
+    static shared_ptr<Set<T>> global(const std::vector<const shared_ptr<T>*> vector,
+                                     shared_ptr<Set<T>>& set)
+    {
+        auto fn = [&set, vector]() -> bool {
+            set = Set<T>::make();
+            for (const auto& i : vector)
+                set->insert(*i);
+            set = Set<T>::unique(set);
+            return true;
+        };
+        im::InitializationManager::subscribe<shared_ptr<Set<T>>>(Set<T>::rank(),
+                                                                 fn,
+                                                                 nullptr);
+        return Set<T>::make();
     }
 
     using std::unordered_set<shared_ptr<T>>::unordered_set;
@@ -81,5 +103,5 @@ protected:
 
 template <typename T>
 shared_ptr<SetManager<T, Set<T>>> Set<T>::gManagerSet =
-    std::make_shared<SetManager<T, Set<T>>>();
+    im::InitializationManager::subscribe(gManagerSet);
 }

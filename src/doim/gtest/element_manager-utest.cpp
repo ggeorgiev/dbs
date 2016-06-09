@@ -1,12 +1,21 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
+#include "doim/db/db_key.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/generic/location.hpp"
 #include "gtest/framework.h"
 #include <memory>
 #include <ostream>
 #include <string>
+
+// Test globals - use DBKey that already have more than one level.
+// Note the order is reversed on purpuse. This is what this tests.
+extern doim::DbKeySPtr gLevelOne;
+doim::DbKeySPtr gLevelTwo = doim::DbKey::global<2>(gLevelOne, "test_level_2", gLevelTwo);
+
+doim::DbKeySPtr gLevelOne =
+    doim::DbKey::global(doim::DbKey::null, "test_level_1", gLevelOne);
 
 TEST(ElementManagerTest, unique)
 {

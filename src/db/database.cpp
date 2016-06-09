@@ -2,8 +2,8 @@
 //
 
 #include "db/database.h"
+#include "logex/log.h"
 #include "err/err.h"
-#include "log/log.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
 #include <rocksdb/options.h>
@@ -13,6 +13,9 @@
 
 namespace db
 {
+doim::TagSetSPtr Database::gDbLoadSet =
+    doim::TagSet::global({&doim::gDbTag, &doim::gLoadTag}, gDbLoadSet);
+
 DatabaseSPtr gDatabase = im::InitializationManager::subscribe(gDatabase);
 
 ECode Database::open(const string& file)
@@ -63,7 +66,10 @@ ECode Database::get(const string_view& key,
         const auto& msg = status.ToString();
         EHBan(kDatabase, msg);
     }
-    DLOG(R"(Read key: "{}", value: "{}")", key.to_string(), value);
+    LOGEX(gDbLoadSet,
+          "Read key: \"{}\", value:\n{}",
+          key.to_string(),
+          dbslog::dump(value));
     EHEnd;
 }
 

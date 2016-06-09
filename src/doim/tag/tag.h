@@ -39,4 +39,7 @@ extern TagSPtr gSysTag;
 
 extern TagSPtr gRunTag;
 extern TagSPtr gDoneTag;
+
+extern TagSPtr gLoadTag;
+extern TagSPtr gSaveTag;
 }

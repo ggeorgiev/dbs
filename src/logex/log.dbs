@@ -1,23 +1,17 @@
-cxx_library log
+cxx_library logex
     @type=user:
 
     cxx_header
         @visibility=public
         @directory=..:
 
-        log/hex.hpp
-        log/log.h
-        log/log_function.hpp
+        logex/log.h
     ;
 
     cxx_library:
-       /stl
-
-       /spdlog
-       /cppformat
-       /boost_template
-
        ../im/im
+       ../log/log
+       ../option/option
     ;
 
     cxx_file:
@@ -25,7 +19,7 @@ cxx_library log
     ;
 ;
 
-cxx_library log-test
+cxx_library logex-test
     @type=test:
 
     cxx_library:
@@ -33,7 +27,7 @@ cxx_library log-test
 
         ../gtest/gtest
 
-        log
+        logex
     ;
 
     cxx_file:

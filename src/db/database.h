@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "doim/tag/tag.h"
 #include "err/err.h"
 #include "im/initialization_manager.hpp"
 #include <rocksdb/db.h>
@@ -15,6 +16,8 @@ namespace db
 class Database
 {
 public:
+    static doim::TagSetSPtr gDbLoadSet;
+
     static constexpr int rank()
     {
         return im::InitializationManager::rank() + im::InitializationManager::step();

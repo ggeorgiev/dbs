@@ -24,6 +24,7 @@ annex:
     tpool/tpool.dbs
     doim/doim.dbs
     option/option.dbs
+    logex/log.dbs
     dom/dom.dbs
     parser/parser.dbs
     task/task.dbs

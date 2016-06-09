@@ -24,6 +24,8 @@ class Element : public enable_make_shared<T>
 public:
     typedef std::tuple<Args...> Tuple;
 
+    static shared_ptr<T> null;
+
     static shared_ptr<T> unique(const Args&... args)
     {
         return gElementManager->unique(enable_make_shared<T>::make(args...));
@@ -36,17 +38,25 @@ public:
 
     static int constexpr rank()
     {
-        return im::InitializationManager::rank() + im::InitializationManager::step();
+        return ElementManager<T>::rank() + im::InitializationManager::step();
     }
 
+    static int constexpr levels()
+    {
+        return 1;
+    }
+
+    template <int N = 0>
     static shared_ptr<T> global(const Args&... args, shared_ptr<T>& object)
     {
+        static_assert(N < T::levels(),
+                      "Initialization with level that is higher than the declared.");
         auto fn = [&object]() -> bool {
             object = gElementManager->unique(object);
             return true;
         };
         im::InitializationManager::subscribe<shared_ptr<T>>(
-            ElementManager<T>::rank() + im::InitializationManager::step(), fn, nullptr);
+            T::rank() + N * im::InitializationManager::step(), fn, nullptr);
         return std::make_shared<T>(args...);
     }
 
@@ -107,6 +117,9 @@ protected:
     static shared_ptr<ElementManager<T>> gElementManager;
     Tuple mArgs;
 };
+
+template <typename T, typename... Args>
+shared_ptr<T> Element<T, Args...>::null;
 
 template <typename T, typename... Args>
 shared_ptr<ElementManager<T>> Element<T, Args...>::gElementManager =

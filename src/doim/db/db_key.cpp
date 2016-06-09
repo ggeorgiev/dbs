@@ -11,19 +11,4 @@
 
 namespace doim
 {
-DbKeySPtr DbKey::global(const DbKeySPtr& ancestor,
-                        int level,
-                        const string& name,
-                        DbKeySPtr& key)
-{
-    ASSERT(level < rankLevels());
-    auto fn = [&ancestor, name, &key]() -> bool {
-        key = DbKey::unique(ancestor, name);
-        return true;
-    };
-
-    int rank = DbKey::rank() + level * im::InitializationManager::step();
-    im::InitializationManager::subscribe<DbKeySPtr>(rank, fn, nullptr);
-    return nullptr;
-}
 }

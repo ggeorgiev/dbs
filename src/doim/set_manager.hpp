@@ -4,6 +4,7 @@
 #pragma once
 
 #include "err/err_assert.h"
+#include "im/initialization_manager.hpp"
 #include <boost/functional/hash/hash.hpp>
 #include <boost/thread/locks.hpp>
 #include <boost/thread/shared_mutex.hpp>
@@ -29,6 +30,11 @@ public:
 
     typedef S ObjectSet;
     typedef shared_ptr<ObjectSet> ObjectSetSPtr;
+
+    static constexpr int rank()
+    {
+        return T::rank() + T::levels() * im::InitializationManager::step();
+    }
 
     struct Hasher
     {

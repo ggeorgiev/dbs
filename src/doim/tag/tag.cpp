@@ -14,4 +14,7 @@ TagSPtr gSysTag = Tag::global("sys", gSysTag);
 
 TagSPtr gRunTag = Tag::global("run", gRunTag);
 TagSPtr gDoneTag = Tag::global("done", gDoneTag);
+
+TagSPtr gLoadTag = Tag::global("load", gLoadTag);
+TagSPtr gSaveTag = Tag::global("save", gSaveTag);
 }

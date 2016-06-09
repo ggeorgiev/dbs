@@ -3,6 +3,6 @@
 
 option optimize_for = LITE_RUNTIME;
 
-message Rpc
+message Rpc1
 {
 }

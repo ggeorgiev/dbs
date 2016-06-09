@@ -65,47 +65,50 @@ IncludeCategories:
     Priority:        51
   - Regex:           '^"dom/.*'
     Priority:        50
+    
+  - Regex:           '^"logex/.*'
+    Priority:        60    
 
   - Regex:           '^"option/.*'
-    Priority:        60
-
-  - Regex:           '^"doim/[^/]*$'
-    Priority:        71
-  - Regex:           '^"doim/.*'
     Priority:        70
 
-  - Regex:           '^"dp/.*'
+  - Regex:           '^"doim/[^/]*$'
+    Priority:        81
+  - Regex:           '^"doim/.*'
     Priority:        80
+
+  - Regex:           '^"dp/.*'
+    Priority:        90
   - Regex:           '^"db/.*'
-    Priority:        90
+    Priority:        100
   - Regex:           '^"err/.*'
-    Priority:        90
+    Priority:        100
   - Regex:           '^"log/.*'
-    Priority:        100
+    Priority:        110
   - Regex:           '^"im/.*'
-    Priority:        100
+    Priority:        110
   - Regex:           '^"const/.*'
-    Priority:        110
-  - Regex:           '^"math/.*'
-    Priority:        110
-  - Regex:           '^"rtti/.*'
-    Priority:        110
-  - Regex:           '^"gtest/.*'
     Priority:        120
-  - Regex:           '^<gtest/.*'
+  - Regex:           '^"math/.*'
+    Priority:        120
+  - Regex:           '^"rtti/.*'
+    Priority:        120
+  - Regex:           '^"gtest/.*'
     Priority:        130
+  - Regex:           '^<gtest/.*'
+    Priority:        140
 #Note: that cppformat has to be on top of spdlog, even the real dependency is the opposite
 #      we need this to be able to override the internal version of spdlog
   - Regex:           '^<fmt/.*'
-    Priority:        140
+    Priority:        150
   - Regex:           '^<spdlog/details/.*'
-    Priority:        151
+    Priority:        161
   - Regex:           '^<spdlog/.*'
-    Priority:        150
+    Priority:        160
   - Regex:           '^<boost/.*'
-    Priority:        150
+    Priority:        160
   - Regex:           '^<rocksdb/.*'
-    Priority:        150
+    Priority:        160
   - Regex:           '^".*"$'
     Priority:        1000
   - Regex:           '<.*[.]h>'

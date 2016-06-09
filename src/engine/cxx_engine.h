@@ -31,7 +31,7 @@ public:
     static int constexpr rank()
     {
         return doim::DbKey::rank() +
-               doim::DbKey::rankLevels() * im::InitializationManager::step();
+               doim::DbKey::levels() * im::InitializationManager::step();
     }
 
     CxxEngine(const tool::CxxClangFormatSPtr& formatter,

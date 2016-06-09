@@ -17,16 +17,27 @@ typedef shared_ptr<DbKey> DbKeySPtr;
 class DbKey : public StringTreeNode<DbKey, ':'>
 {
 public:
-    static int constexpr rankLevels()
+    static int constexpr levels()
     {
         return 2;
     }
 
     using StringTreeNode<DbKey, ':'>::global;
-    static DbKeySPtr global(const DbKeySPtr& ancestor,
-                            int level,
-                            const string& name,
-                            DbKeySPtr& key);
+
+    template <int N = 1>
+    static DbKeySPtr global(const DbKeySPtr& ancestor, const string& name, DbKeySPtr& key)
+    {
+        static_assert(N <= levels(),
+                      "Initialization with level that is higher than the declared.");
+        auto fn = [&ancestor, name, &key]() -> bool {
+            key = DbKey::unique(ancestor, name);
+            return true;
+        };
+
+        int rank = DbKey::rank() + N * im::InitializationManager::step();
+        im::InitializationManager::subscribe<DbKeySPtr>(rank, fn, nullptr);
+        return nullptr;
+    }
 
     using StringTreeNode<DbKey, ':'>::StringTreeNode;
 };
