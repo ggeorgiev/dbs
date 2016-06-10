@@ -12,6 +12,11 @@
 
 namespace task
 {
+ProtobufFileCrcTask::ProtobufFileCrcTask(const ProtobufFileCrcTask& original)
+    : CrcTask(original)
+{
+}
+
 ProtobufFileCrcTask::ProtobufFileCrcTask(const doim::ProtobufFileSPtr& protobufFile)
     : CrcTask(protobufFile)
 {

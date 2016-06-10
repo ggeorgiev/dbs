@@ -20,6 +20,7 @@ typedef shared_ptr<ProtobufFileCrcTask> ProtobufFileCrcTaskSPtr;
 class ProtobufFileCrcTask : public CrcTask<ProtobufFileCrcTask, doim::ProtobufFileSPtr>
 {
 public:
+    ProtobufFileCrcTask(const ProtobufFileCrcTask& original);
     ProtobufFileCrcTask(const doim::ProtobufFileSPtr& protobufFile);
 
     doim::ProtobufFileSPtr protobufFile() const

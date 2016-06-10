@@ -78,11 +78,17 @@ CxxEngine::CxxEngine(const tool::CxxClangFormatSPtr& formatter,
 {
 }
 
+template <typename T>
 tpool::TaskSPtr CxxEngine::updateDbTask(const tpool::TaskSPtr& task,
                                         const doim::DbKeySPtr& key,
-                                        const doim::DbValueSPtr& value) const
+                                        const T& crcTask) const
 {
-    auto onFinish = [key, value](const tpool::TaskSPtr&) -> ECode {
+    auto onFinish = [crcTask, key](const tpool::TaskSPtr&) -> ECode {
+        auto task = crcTask->rerun();
+        task::gTPool->ensureScheduled(task);
+        EHTest(task->join());
+
+        auto value = doim::DbValue::make(crcTask->crc());
         auto updateTask = task::DbPutTask::make(key, value);
         EHTest(updateTask->execute());
         EHEnd;
@@ -142,8 +148,7 @@ tpool::TaskSPtr CxxEngine::compileOrigin(const doim::DbKeySPtr& ancestor,
 
             task::gTPool->ensureScheduled(compileTask);
 
-            auto value = doim::DbValue::make(crcTask->crc());
-            auto compileCbTask = updateDbTask(compileTask, key, value);
+            auto compileCbTask = updateDbTask(compileTask, key, crcTask);
             task::gTPool->ensureScheduled(compileCbTask);
             EHTest(compileCbTask->join());
 
@@ -230,8 +235,7 @@ tpool::TaskSPtr CxxEngine::compileTask(const doim::DbKeySPtr& ancestor,
 
         task::gTPool->ensureScheduled(compileTask);
 
-        auto value = doim::DbValue::make(crcTask->crc());
-        auto compileCbTask = updateDbTask(compileTask, key, value);
+        auto compileCbTask = updateDbTask(compileTask, key, crcTask);
         task::gTPool->ensureScheduled(compileCbTask);
         EHTest(compileCbTask->join());
 
@@ -318,9 +322,8 @@ tpool::TaskSPtr CxxEngine::build(EBuildFor buildFor,
             EHEnd;
         }
 
-        auto value = doim::DbValue::make(crcTask->crc());
         auto comTask = compileObjects(ancestor, directory, cxxProgram);
-        auto updateTask = updateDbTask(comTask, key, value);
+        auto updateTask = updateDbTask(comTask, key, crcTask);
         task::gTPool->ensureScheduled(updateTask);
         EHTest(updateTask->join());
         EHEnd;

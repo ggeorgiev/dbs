@@ -26,12 +26,17 @@ template <typename T, typename... Args>
 class Element : public enable_make_shared<T>, public tpool::Task, public rtti::RttiInfo<T>
 {
 public:
+    typedef std::tuple<Args...> Tuple;
+
+    static shared_ptr<T> valid(const T& original)
+    {
+        return gElementManager->valid(std::make_shared<T>(original));
+    }
+
     static shared_ptr<T> valid(const Args&... args)
     {
         return gElementManager->valid(enable_make_shared<T>::make(args...));
     }
-
-    typedef std::tuple<Args...> Tuple;
 
     Element(const Args&... args)
         : tpool::Task(0)
@@ -44,6 +49,16 @@ public:
     virtual doim::TagSet tags() const
     {
         return doim::TagSet{doim::gTaskTag};
+    }
+
+    shared_ptr<T> rerun()
+    {
+        shared_ptr<T> key(shared_ptr<T>(), static_cast<T*>(this));
+        gElementManager->erase(key);
+
+        const auto task = T::valid(*static_cast<T*>(this));
+
+        return task;
     }
 
     void onStart() const override

@@ -69,9 +69,10 @@ private:
     static bool initDbKeyPurpose();
     static std::map<EBuildFor, doim::DbKeySPtr> gDbKeyPurpose;
 
+    template <typename T>
     tpool::TaskSPtr updateDbTask(const tpool::TaskSPtr& task,
                                  const doim::DbKeySPtr& key,
-                                 const doim::DbValueSPtr& value) const;
+                                 const T& crcTask) const;
 
     tpool::TaskSPtr compileOrigin(const doim::DbKeySPtr& ancestor,
                                   const doim::CxxSourceOriginSPtr& origin,
