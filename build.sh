@@ -183,6 +183,10 @@ clang++ -D NDEBUG -I src/ -O3 -c src/err/err.cpp \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/err/err.cpp.o -std=c++14 &
 if [ ! -e build/release/src/log/ ]; then mkdir build/release/src/log/; fi
+echo Compile src/log/hex.cpp
+clang++ -D NDEBUG -I src/ -O3 -c src/log/hex.cpp -isystem boost/include/ \
+    -isystem fmt/include/ -isystem spdlog/include/ -isystem src/system/ \
+    -o build/release/src/log/hex.cpp.o -std=c++14 &
 echo Compile src/log/log.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/log/log.cpp -isystem boost/include/ \
     -isystem fmt/include/ -isystem spdlog/include/ -isystem src/system/ \
@@ -382,8 +386,9 @@ clang++ -L boost/lib/ -L fmt/lib/ -L protobuf/lib/ -L rocksdb/lib/ \
     build/release/src/dom/cxx/cxx_library.cpp.o \
     build/release/src/dom/cxx/cxx_program.cpp.o \
     build/release/src/engine/cxx_engine.cpp.o build/release/src/err/err.cpp.o \
-    build/release/src/log/log.cpp.o build/release/src/logex/log.cpp.o \
-    build/release/src/main.cpp.o build/release/src/option/verbose.cpp.o \
+    build/release/src/log/hex.cpp.o build/release/src/log/log.cpp.o \
+    build/release/src/logex/log.cpp.o build/release/src/main.cpp.o \
+    build/release/src/option/verbose.cpp.o \
     build/release/src/parser/cxx/cxx_parser.cpp.o \
     build/release/src/parser/dbs/dbs_config_parser.cpp.o \
     build/release/src/parser/dbs/dbs_parser.cpp.o \

@@ -1,1 +1,7 @@
-verbose: -crc -sys -load -db -parse +task;
+verbose: 
+    -crc 
+    -sys 
+    +db load 
+    -db 
+    -parse 
+    +task;

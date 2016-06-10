@@ -4,7 +4,7 @@
 #pragma once
 
 #include "im/initialization_manager.hpp"
-#include "log/hex.hpp"
+#include "log/hex.h"
 #include <fmt/format.h>                      // IWYU pragma: export
 #include <spdlog/common.h>                   // IWYU pragma: export
 #include <spdlog/logger.h>                   // IWYU pragma: export

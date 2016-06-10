@@ -5,7 +5,7 @@ cxx_library log
         @visibility=public
         @directory=..:
 
-        log/hex.hpp
+        log/hex.h
         log/log.h
         log/log_function.hpp
     ;
@@ -21,6 +21,7 @@ cxx_library log
     ;
 
     cxx_file:
+        hex.cpp
         log.cpp
     ;
 ;
@@ -37,6 +38,7 @@ cxx_library log-test
     ;
 
     cxx_file:
+        gtest/hex-utest.cpp
         gtest/log-utest.cpp
     ;
 ;

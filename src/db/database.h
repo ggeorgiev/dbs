@@ -17,6 +17,7 @@ class Database
 {
 public:
     static doim::TagSetSPtr gDbLoadSet;
+    static doim::TagSetSPtr gDbSaveSet;
 
     static constexpr int rank()
     {

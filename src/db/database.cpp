@@ -15,6 +15,8 @@ namespace db
 {
 doim::TagSetSPtr Database::gDbLoadSet =
     doim::TagSet::global({&doim::gDbTag, &doim::gLoadTag}, gDbLoadSet);
+doim::TagSetSPtr Database::gDbSaveSet =
+    doim::TagSet::global({&doim::gDbTag, &doim::gSaveTag}, gDbSaveSet);
 
 DatabaseSPtr gDatabase = im::InitializationManager::subscribe(gDatabase);
 
@@ -57,19 +59,17 @@ ECode Database::get(const string_view& key,
                                        &value);
     if (!status.ok())
     {
-        if (status.code() == rocksdb::Status::kNotFound)
+        if (status.code() != rocksdb::Status::kNotFound)
         {
-            value = defaultValue.to_string();
-            EHEnd;
+            const auto& msg = status.ToString();
+            EHBan(kDatabase, msg);
         }
-
-        const auto& msg = status.ToString();
-        EHBan(kDatabase, msg);
+        value = defaultValue.to_string();
     }
     LOGEX(gDbLoadSet,
           "Read key: \"{}\", value:\n{}",
           key.to_string(),
-          dbslog::dump(value));
+          dbslog::hexdump(value));
     EHEnd;
 }
 
@@ -87,7 +87,10 @@ ECode Database::get(const string_view& key, string& value)
         EHBan(kDatabase, msg);
     }
 
-    DLOG(R"(Read key: "{}", value: "{}")", key.to_string(), value);
+    LOGEX(gDbLoadSet,
+          "Read key: \"{}\", value:\n{}",
+          key.to_string(),
+          dbslog::hexdump(value));
     EHEnd;
 }
 
@@ -101,6 +104,11 @@ ECode Database::put(const string_view& key, const string_view& value)
         const auto& msg = status.ToString();
         EHBan(kDatabase, msg);
     }
+    LOGEX(gDbSaveSet,
+          "Put key: \"{}\", value:\n{}",
+          key.to_string(),
+          dbslog::hexdump(value));
+
     EHEnd;
 }
 

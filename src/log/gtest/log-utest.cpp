@@ -29,7 +29,7 @@ void baz()
     bar();
 }
 
-TEST(Log, SLOW_LOG_FUNCTION)
+TEST(Log, VERYSLOW_LOG_FUNCTION)
 {
     TLOG_FUNCTION;
     baz();
