@@ -76,8 +76,11 @@ then
 
     git submodule update --init tools/build          || exit 1
     git submodule update --init tools/inspect        || exit 1
+    
+    git submodule update --init libs/align           || exit 1
     git submodule update --init libs/algorithm       || exit 1
     git submodule update --init libs/array           || exit 1
+    git submodule update --init libs/asio            || exit 1
     git submodule update --init libs/assert          || exit 1
     git submodule update --init libs/atomic          || exit 1
     git submodule update --init libs/bind            || exit 1
@@ -93,7 +96,6 @@ then
     git submodule update --init libs/filesystem      || exit 1
     git submodule update --init libs/function        || exit 1
     git submodule update --init libs/functional      || exit 1
-    git submodule update --init libs/fusion          || exit 1
     git submodule update --init libs/hana            || exit 1
     git submodule update --init libs/heap            || exit 1
     git submodule update --init libs/integer         || exit 1
@@ -111,6 +113,7 @@ then
     git submodule update --init libs/preprocessor    || exit 1
     git submodule update --init libs/range           || exit 1
     git submodule update --init libs/ratio           || exit 1
+    git submodule update --init libs/regex           || exit 1
     git submodule update --init libs/throw_exception || exit 1
     git submodule update --init libs/thread          || exit 1
     git submodule update --init libs/tuple           || exit 1

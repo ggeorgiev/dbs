@@ -29,6 +29,31 @@ cxx_library rpc_client
     ;
 
     cxx_library:
+        /cstd
+        /boost_template
+        
+        rpc
+    ;
+;
+
+cxx_library rpc_server
+    @type=user:
+
+    cxx_header
+        @visibility=public
+        @directory=..:
+
+        rpc/server/server.h
+    ;
+
+    cxx_file:
+        server/server.cpp
+    ;
+
+    cxx_library:
+        /cstd
+        /boost_template
+        
         rpc
     ;
 ;

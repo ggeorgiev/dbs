@@ -238,7 +238,8 @@ clang++ -D NDEBUG -I src/ -O3 -c src/parser/dbs/dbs_parser.cpp \
 if [ ! -e build/release/src/rpc/client/ ]; then mkdir build/release/src/rpc/client/; fi
 echo Compile src/rpc/client/client.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/rpc/client/client.cpp \
-    -isystem protobuf/include/ -isystem src/system/ \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem protobuf/include/ -isystem src/system/ \
     -o build/release/src/rpc/client/client.cpp.o -std=c++14 &
 echo Compile src/rpc/rpc.pb.cc
 clang++ -D NDEBUG -I src/ -O3 -c src/rpc/rpc.pb.cc -isystem protobuf/include/ \

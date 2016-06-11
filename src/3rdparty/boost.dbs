@@ -5,6 +5,7 @@ cxx_library /boost_template
         @visibility=public
         @directory=../../boost/include:
 
+        boost/asio.hpp
         boost/crc.hpp
         boost/functional/hash.hpp
         boost/functional/hash/hash.hpp
@@ -15,9 +16,10 @@ cxx_library /boost_template
         boost/hana.hpp
         boost/hana/ext/std/tuple.hpp
         boost/hana/for_each.hpp
+        boost/regex_fwd.hpp
+        boost/type_index.hpp
         boost/variant/variant.hpp
         boost/variant/get.hpp
-        boost/type_index.hpp
     ;
     
     cxx_header

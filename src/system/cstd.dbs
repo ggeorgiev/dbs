@@ -10,6 +10,7 @@ cxx_library /cstd
         cstddef
         cstdio
         cstdint
+        cstdlib
         stddef.h
         stdio.h
         stdlib.h
