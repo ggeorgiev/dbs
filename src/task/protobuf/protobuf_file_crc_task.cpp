@@ -12,10 +12,9 @@
 
 namespace task
 {
-ProtobufFileCrcTask::ProtobufFileCrcTask(const doim::ProtobufFileSPtr& protobufFile)
-    : CrcTask(protobufFile)
+bool ProtobufFileCrcTask::check() const
 {
-    ASSERT(protobufFile->isUnique());
+    return protobufFile()->isUnique();
 }
 
 ECode ProtobufFileCrcTask::operator()()

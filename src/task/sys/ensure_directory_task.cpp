@@ -10,10 +10,9 @@
 
 namespace task
 {
-EnsureDirectoryTask::EnsureDirectoryTask(const doim::FsDirectorySPtr& directory)
-    : Element(directory)
+bool EnsureDirectoryTask::check() const
 {
-    ASSERT(directory->isUnique());
+    return directory()->isUnique();
 }
 
 ECode EnsureDirectoryTask::operator()()

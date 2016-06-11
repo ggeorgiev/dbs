@@ -35,9 +35,11 @@ class CxxSourceCrcTask : public CxxSourceCrcTaskEnums,
                                         doim::CxxIncludeDirectorySPtr>
 {
 public:
-    CxxSourceCrcTask(const EDepth depth,
-                     const doim::CxxSourceSPtr& cxxSource,
-                     const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory);
+    using CrcTask<CxxSourceCrcTask,
+                  CxxSourceCrcTaskEnums::EDepth,
+                  doim::CxxSourceSPtr,
+                  doim::CxxIncludeDirectorySPtr>::CrcTask;
+    bool check() const;
 
     EDepth depth() const
     {

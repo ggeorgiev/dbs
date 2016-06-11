@@ -40,6 +40,8 @@ public:
                     std::function<ECode(int, const string&)> parse,
                     const string& description);
 
+    bool check() const;
+
     doim::SysCommandSPtr command() const
     {
         return std::get<0>(mArgs);

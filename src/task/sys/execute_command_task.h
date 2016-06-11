@@ -22,8 +22,11 @@ class ExecuteCommandTask
     : public Element<ExecuteCommandTask, doim::SysCommandSPtr, doim::FsDirectorySPtr>
 {
 public:
-    ExecuteCommandTask(const doim::SysCommandSPtr& command,
-                       const doim::FsDirectorySPtr& targetDirectory);
+    using Element<ExecuteCommandTask,
+                  doim::SysCommandSPtr,
+                  doim::FsDirectorySPtr>::Element;
+
+    bool check() const;
 
     doim::SysCommandSPtr command() const
     {

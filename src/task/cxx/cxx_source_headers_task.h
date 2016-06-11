@@ -36,9 +36,12 @@ class CxxSourceHeadersTask : public CxxSourceHeadersTaskEnums,
                                             doim::CxxIncludeDirectorySPtr>
 {
 public:
-    CxxSourceHeadersTask(const EDepth depth,
-                         const doim::CxxSourceSPtr& cxxSource,
-                         const doim::CxxIncludeDirectorySPtr& cxxIncludeDirectory);
+    using Element<CxxSourceHeadersTask,
+                  CxxSourceHeadersTaskEnums::EDepth,
+                  doim::CxxSourceSPtr,
+                  doim::CxxIncludeDirectorySPtr>::Element;
+
+    bool check() const;
 
     EDepth depth() const
     {

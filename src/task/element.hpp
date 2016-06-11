@@ -35,6 +35,7 @@ public:
         : tpool::Task(0)
         , mArgs(args...)
     {
+        ASSERT(static_cast<T*>(this)->check());
     }
 
     virtual string description() const = 0;

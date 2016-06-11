@@ -17,10 +17,9 @@
 
 namespace task
 {
-CxxObjectFileCrcTask::CxxObjectFileCrcTask(const doim::CxxObjectFileSPtr& cxxObjectFile)
-    : CrcTask(cxxObjectFile)
+bool CxxObjectFileCrcTask::check() const
 {
-    ASSERT(cxxObjectFile->isUnique());
+    return cxxObjectFile() != nullptr && cxxObjectFile()->isUnique();
 }
 
 ECode CxxObjectFileCrcTask::operator()()

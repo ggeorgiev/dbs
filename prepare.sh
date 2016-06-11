@@ -145,7 +145,7 @@ then
             threading=multi link=static $1
     }
 
-    #build_boost headers || exit 1
+    build_boost headers || exit 1
     export C_INCLUDE_PATH=""
     export CPLUS_INCLUDE_PATH=""
     build_boost install || exit 1

@@ -20,7 +20,9 @@ typedef shared_ptr<CxxObjectFileCrcTask> CxxObjectFileCrcTaskSPtr;
 class CxxObjectFileCrcTask : public CrcTask<CxxObjectFileCrcTask, doim::CxxObjectFileSPtr>
 {
 public:
-    CxxObjectFileCrcTask(const doim::CxxObjectFileSPtr& cxxObjectFile);
+    using CrcTask<CxxObjectFileCrcTask, doim::CxxObjectFileSPtr>::CrcTask;
+
+    bool check() const;
 
     doim::CxxObjectFileSPtr cxxObjectFile() const
     {

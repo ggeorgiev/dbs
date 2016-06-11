@@ -23,6 +23,8 @@ class DbPutTask : public Element<DbPutTask, doim::DbKeySPtr>
 public:
     DbPutTask(const doim::DbKeySPtr& key, const doim::DbValueSPtr& value);
 
+    bool check() const;
+
     doim::DbKeySPtr key() const
     {
         return std::get<0>(mArgs);

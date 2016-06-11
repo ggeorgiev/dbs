@@ -20,7 +20,9 @@ typedef shared_ptr<ProtobufFileCrcTask> ProtobufFileCrcTaskSPtr;
 class ProtobufFileCrcTask : public CrcTask<ProtobufFileCrcTask, doim::ProtobufFileSPtr>
 {
 public:
-    ProtobufFileCrcTask(const doim::ProtobufFileSPtr& protobufFile);
+    using CrcTask<ProtobufFileCrcTask, doim::ProtobufFileSPtr>::CrcTask;
+
+    bool check() const;
 
     doim::ProtobufFileSPtr protobufFile() const
     {

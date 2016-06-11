@@ -18,13 +18,10 @@
 
 namespace task
 {
-CxxSourceHeadersTask::CxxSourceHeadersTask(
-    const EDepth depth,
-    const doim::CxxSourceSPtr& cxxSource,
-    const doim::CxxIncludeDirectorySPtr& cxxIncludeDirectory)
-    : Element(depth, cxxSource, cxxIncludeDirectory)
+bool CxxSourceHeadersTask::check() const
 {
-    ASSERT(apply_visitor(doim::vst::isUnique, cxxSource));
+    return apply_visitor(doim::vst::isUnique, cxxSource()) &&
+           (cxxIncludeDirectory() == nullptr || cxxIncludeDirectory()->isUnique());
 }
 
 ECode CxxSourceHeadersTask::operator()()

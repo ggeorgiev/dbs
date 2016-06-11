@@ -15,12 +15,9 @@
 
 namespace task
 {
-ExecuteCommandTask::ExecuteCommandTask(const doim::SysCommandSPtr& command,
-                                       const doim::FsDirectorySPtr& targetDirectory)
-    : Element(command, targetDirectory)
+bool ExecuteCommandTask::check() const
 {
-    ASSERT(command->isUnique());
-    ASSERT(targetDirectory->isUnique());
+    return command()->isUnique() && targetDirectory()->isUnique();
 }
 
 ECode ExecuteCommandTask::operator()()

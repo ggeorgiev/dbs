@@ -27,14 +27,11 @@
 
 namespace task
 {
-CxxSourceCrcTask::CxxSourceCrcTask(
-    const EDepth depth,
-    const doim::CxxSourceSPtr& cxxSource,
-    const doim::CxxIncludeDirectorySPtr& currentIncludeDirectory)
-    : CrcTask(depth, cxxSource, currentIncludeDirectory)
+bool CxxSourceCrcTask::check() const
 {
-    ASSERT(apply_visitor(doim::vst::isUnique, cxxSource));
-    ASSERT(currentIncludeDirectory->isUnique());
+    return apply_visitor(doim::vst::isUnique, cxxSource()) &&
+           (currentIncludeDirectory() == nullptr ||
+            currentIncludeDirectory()->isUnique());
 }
 
 ECode CxxSourceCrcTask::operator()()

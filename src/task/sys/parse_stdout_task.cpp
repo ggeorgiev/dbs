@@ -30,8 +30,11 @@ ParseStdoutTask::ParseStdoutTask(const doim::SysCommandSPtr& command,
     , mParse(parse)
     , mDescription(description)
 {
-    ASSERT(command->isUnique());
-    ASSERT(targetDirectory->isUnique());
+}
+
+bool ParseStdoutTask::check() const
+{
+    return command()->isUnique() && targetDirectory()->isUnique();
 }
 
 ECode ParseStdoutTask::operator()()

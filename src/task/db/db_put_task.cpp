@@ -13,7 +13,11 @@ DbPutTask::DbPutTask(const doim::DbKeySPtr& key, const doim::DbValueSPtr& value)
     : Element(key)
     , mValue(value)
 {
-    ASSERT(key->isUnique());
+}
+
+bool DbPutTask::check() const
+{
+    return key()->isUnique();
 }
 
 ECode DbPutTask::operator()()

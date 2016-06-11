@@ -20,7 +20,9 @@ typedef shared_ptr<CxxProgramCrcTask> CxxProgramCrcTaskSPtr;
 class CxxProgramCrcTask : public CrcTask<CxxProgramCrcTask, doim::CxxProgramSPtr>
 {
 public:
-    CxxProgramCrcTask(const doim::CxxProgramSPtr& cxxProgram);
+    using CrcTask<CxxProgramCrcTask, doim::CxxProgramSPtr>::CrcTask;
+
+    bool check() const;
 
     doim::CxxProgramSPtr cxxProgram() const
     {

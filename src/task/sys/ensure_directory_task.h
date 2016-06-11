@@ -21,7 +21,9 @@ typedef shared_ptr<EnsureDirectoryTask> EnsureDirectoryTaskSPtr;
 class EnsureDirectoryTask : public Element<EnsureDirectoryTask, doim::FsDirectorySPtr>
 {
 public:
-    EnsureDirectoryTask(const doim::FsDirectorySPtr& directory);
+    using Element<EnsureDirectoryTask, doim::FsDirectorySPtr>::Element;
+
+    bool check() const;
 
     doim::FsDirectorySPtr directory() const
     {

@@ -18,10 +18,9 @@
 
 namespace task
 {
-CxxProgramCrcTask::CxxProgramCrcTask(const doim::CxxProgramSPtr& cxxProgram)
-    : CrcTask(cxxProgram)
+bool CxxProgramCrcTask::check() const
 {
-    ASSERT(cxxProgram->isUnique());
+    return cxxProgram() != nullptr && cxxProgram()->isUnique();
 }
 
 ECode CxxProgramCrcTask::operator()()
