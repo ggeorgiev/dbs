@@ -53,6 +53,15 @@ public:
         return *mElements.insert(element).first;
     }
 
+    void erase(const ElementSPtr& element)
+    {
+        if (element == nullptr)
+            return;
+
+        std::unique_lock<std::mutex> lock(mElementMutex);
+        mElements.erase(element);
+    }
+
 protected:
     std::mutex mElementMutex;
     unordered_set<ElementSPtr, Hasher, Hasher> mElements;

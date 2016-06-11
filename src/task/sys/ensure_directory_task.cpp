@@ -12,7 +12,7 @@ namespace task
 {
 bool EnsureDirectoryTask::check() const
 {
-    return directory()->isUnique();
+    return directory() != nullptr && directory()->isUnique();
 }
 
 ECode EnsureDirectoryTask::operator()()

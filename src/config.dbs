@@ -3,4 +3,5 @@ verbose:
     -sys 
     -db 
     -parse 
-    +task;
+    +task
+;

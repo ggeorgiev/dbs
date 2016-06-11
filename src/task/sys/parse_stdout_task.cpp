@@ -34,7 +34,8 @@ ParseStdoutTask::ParseStdoutTask(const doim::SysCommandSPtr& command,
 
 bool ParseStdoutTask::check() const
 {
-    return command()->isUnique() && targetDirectory()->isUnique();
+    return command() != nullptr && command()->isUnique() &&
+           targetDirectory() != nullptr && targetDirectory()->isUnique();
 }
 
 ECode ParseStdoutTask::operator()()

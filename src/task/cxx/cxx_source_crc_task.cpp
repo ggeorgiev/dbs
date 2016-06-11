@@ -6,6 +6,7 @@
 #include "task/protobuf/protobuf_file_crc_task.h"
 #include "task/tpool.h"
 #include "tpool/task_group.h"
+#include "logex/log.h"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/fs/fs_file.h"
@@ -14,7 +15,6 @@
 #include "err/err.h"
 #include "err/err_assert.h"
 #include "err/raii.hpp"
-#include "log/log.h"
 #include "math/crc.hpp"
 #include <boost/filesystem/operations.hpp>
 #include <fstream> // IWYU pragma: keep
@@ -36,6 +36,18 @@ bool CxxSourceCrcTask::check() const
 
 ECode CxxSourceCrcTask::operator()()
 {
+    const auto& path = apply_visitor(doim::vst::path(), cxxSource());
+
+    doim::TagSetSPtr logTags = doim::TagSet::make(tags());
+    logTags->erase(doim::gTaskTag);
+    logTags = doim::TagSet::unique(logTags);
+
+    defer(LOGEX(logTags,
+                "{} for {} is {:x}",
+                depth() == EDepth::kOne ? "Crc" : "Deep Crc",
+                path,
+                mCrcsum));
+
     auto origin =
         apply_visitor([](auto const& element) { return element->origin(); }, cxxSource());
 
@@ -117,8 +129,6 @@ ECode CxxSourceCrcTask::operator()()
 ECode CxxSourceCrcTask::one()
 {
     const auto& path = apply_visitor(doim::vst::path(), cxxSource());
-
-    defer(DLOG("Crc for {0} is {1:x}", path, mCrcsum));
 
     if (!boost::filesystem::exists(path))
     {

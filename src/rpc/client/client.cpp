@@ -3,6 +3,6 @@
 
 #include "rpc/client/client.h"
 
-namespace rpc
+namespace rpc1
 {
 }

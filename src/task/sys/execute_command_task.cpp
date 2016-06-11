@@ -17,7 +17,8 @@ namespace task
 {
 bool ExecuteCommandTask::check() const
 {
-    return command()->isUnique() && targetDirectory()->isUnique();
+    return command() != nullptr && command()->isUnique() &&
+           targetDirectory() != nullptr && targetDirectory()->isUnique();
 }
 
 ECode ExecuteCommandTask::operator()()

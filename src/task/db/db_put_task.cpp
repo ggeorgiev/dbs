@@ -17,7 +17,7 @@ DbPutTask::DbPutTask(const doim::DbKeySPtr& key, const doim::DbValueSPtr& value)
 
 bool DbPutTask::check() const
 {
-    return key()->isUnique();
+    return key() != nullptr && key()->isUnique();
 }
 
 ECode DbPutTask::operator()()

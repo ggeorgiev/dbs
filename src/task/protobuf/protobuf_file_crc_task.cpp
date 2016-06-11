@@ -14,7 +14,7 @@ namespace task
 {
 bool ProtobufFileCrcTask::check() const
 {
-    return protobufFile()->isUnique();
+    return protobufFile() != nullptr && protobufFile()->isUnique();
 }
 
 ECode ProtobufFileCrcTask::operator()()
