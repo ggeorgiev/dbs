@@ -64,6 +64,8 @@ cxx_program dbs-test:
         dom/dom-test
         parser/parser-test
         task/task-test
+        rpc/rpc_client
+        rpc/rpc_server
     ;
 
     cxx_file:

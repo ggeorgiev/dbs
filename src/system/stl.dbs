@@ -12,6 +12,7 @@ cxx_library /stl
         chrono
         condition_variable
         cstring
+        deque
         fstream
         functional
         future
@@ -21,6 +22,7 @@ cxx_library /stl
         initializer_list
         iterator
         limits
+        list
         map
         memory
         mutex

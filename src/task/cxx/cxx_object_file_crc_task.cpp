@@ -4,11 +4,11 @@
 #include "task/cxx/cxx_object_file_crc_task.h"
 #include "task/cxx/cxx_source_crc_task.h"
 #include "task/tpool.h"
+#include "logex/log.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_file.h"
 #include "err/err_assert.h"
 #include "err/raii.hpp"
-#include "log/log.h"
 #include "math/crc.hpp"
 #include <boost/filesystem/operations.hpp>
 #include <fstream> // IWYU pragma: keep
@@ -24,9 +24,14 @@ bool CxxObjectFileCrcTask::check() const
 
 ECode CxxObjectFileCrcTask::operator()()
 {
-    defer(DLOG("Crc for {0} is {1:x}", cxxObjectFile()->file()->name(), mCrcsum));
-
     const auto& path = cxxObjectFile()->file()->path();
+
+    doim::TagSetSPtr logTags = doim::TagSet::make(tags());
+    logTags->erase(doim::gTaskTag);
+    logTags = doim::TagSet::unique(logTags);
+
+    defer(LOGEX(logTags, "Crc for {} is {:x}", path, mCrcsum));
+
     if (!boost::filesystem::exists(path))
     {
         mCrcsum = 0;

@@ -13,6 +13,7 @@
 #include "task/tpool.h"
 #include "tpool/task_callback.h"
 #include "tpool/task_group.h"
+#include "logex/log.h"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/cxx/cxx_program.h"
@@ -25,7 +26,6 @@
 #include "err/err.h"
 #include "err/err_assert.h"
 #include "im/initialization_manager.hpp"
-#include "log/log.h"
 #include "math/crc.hpp"
 #include "rtti/class_rtti.hpp"
 #include <algorithm>
@@ -89,7 +89,20 @@ tpool::TaskSPtr CxxEngine::updateDbTask(const tpool::TaskSPtr& task,
         task::gTPool->ensureScheduled(task);
         EHTest(task->join());
 
-        auto value = doim::DbValue::make(crcTask->crc());
+        doim::TagSetSPtr logTags = doim::TagSet::make(task->tags());
+        logTags->erase(doim::gTaskTag);
+        logTags = doim::TagSet::unique(logTags);
+
+        if (crcTask->crc() != task->crc())
+        {
+            LOGEX(logTags,
+                  "The crc for key {} changed {:x} -> {:x}",
+                  key->toString(),
+                  crcTask->crc(),
+                  task->crc());
+        }
+
+        auto value = doim::DbValue::make(task->crc());
         auto updateTask = task::DbPutTask::make(key, value);
         EHTest(updateTask->execute());
         EHEnd;
