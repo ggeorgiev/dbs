@@ -94,6 +94,7 @@ then
     git submodule update --init libs/function        || exit 1
     git submodule update --init libs/functional      || exit 1
     git submodule update --init libs/fusion          || exit 1
+    git submodule update --init libs/hana            || exit 1
     git submodule update --init libs/heap            || exit 1
     git submodule update --init libs/integer         || exit 1
     git submodule update --init libs/intrusive       || exit 1
@@ -121,7 +122,8 @@ then
     git submodule update --init libs/utility         || exit 1
     git submodule update --init libs/variant         || exit 1
 
-    git submodule foreach -q 'git checkout boost-1.59.0'
+    git submodule foreach -q 'git fetch' || exit 1
+    git submodule foreach -q 'git checkout boost-1.61.0' || exit 1
 
     echo Build boost ...
 
@@ -133,16 +135,19 @@ then
     build_boost() {
         BOOSTBUILD=\
             ./b2 \
-            toolset=clang \
-            cxxflags="-std=c++11 -stdlib=libc++ -isystem=$SYSROOT" \
+            toolset=clang-3.7 \
+            cxxflags="-std=c++14 -stdlib=libc++ -isystem=$SYSROOT" \
             linkflags="-stdlib=libc++" \
+            define=BOOST_SYSTEM_NO_DEPRECATED \
             --layout=system \
             --prefix=../../boost \
             --with-chrono --with-filesystem --with-system --with-thread \
             threading=multi link=static $1
     }
 
-    build_boost headers || exit 1
+    #build_boost headers || exit 1
+    export C_INCLUDE_PATH=""
+    export CPLUS_INCLUDE_PATH=""
     build_boost install || exit 1
 
     git clean -fdx

@@ -1,7 +1,6 @@
 verbose: 
     -crc 
     -sys 
-    +db load 
     -db 
     -parse 
     +task;
