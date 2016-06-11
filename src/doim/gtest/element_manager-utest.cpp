@@ -1,10 +1,13 @@
 //  Copyright © 2015-2016 George Georgiev. All rights reserved.
 //
 
+#include "doim/element.hpp"
 #include "doim/db/db_key.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/generic/location.hpp"
 #include "gtest/framework.h"
+#include <boost/hana/for_each.hpp>
+#include <functional>
 #include <memory>
 #include <ostream>
 #include <string>

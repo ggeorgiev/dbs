@@ -184,13 +184,15 @@ clang++ -D NDEBUG -I src/ -O3 -c src/err/err.cpp \
     -isystem src/system/ -o build/release/src/err/err.cpp.o -std=c++14 &
 if [ ! -e build/release/src/log/ ]; then mkdir build/release/src/log/; fi
 echo Compile src/log/hex.cpp
-clang++ -D NDEBUG -I src/ -O3 -c src/log/hex.cpp -isystem boost/include/ \
-    -isystem fmt/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/log/hex.cpp.o -std=c++14 &
+clang++ -D NDEBUG -I src/ -O3 -c src/log/hex.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/log/hex.cpp.o -std=c++14 &
 echo Compile src/log/log.cpp
-clang++ -D NDEBUG -I src/ -O3 -c src/log/log.cpp -isystem boost/include/ \
-    -isystem fmt/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/log/log.cpp.o -std=c++14 &
+clang++ -D NDEBUG -I src/ -O3 -c src/log/log.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/log/log.cpp.o -std=c++14 &
 if [ ! -e build/release/src/logex/ ]; then mkdir build/release/src/logex/; fi
 echo Compile src/logex/log.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/logex/log.cpp \

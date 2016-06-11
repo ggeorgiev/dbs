@@ -5,6 +5,7 @@
 #include "doim/fs/fs_relative_directory.h"
 #include "err/gtest/err_assert.h"
 #include "gtest/framework.h"
+#include <boost/hana/for_each.hpp>
 #include <memory>
 #include <stdexcept>
 #include <str>

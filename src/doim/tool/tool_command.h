@@ -4,6 +4,7 @@
 #pragma once
 
 #include "doim/element.hpp"
+#include <boost/hana/for_each.hpp>
 #include <memory>
 #include <str>
 #include <tuple>

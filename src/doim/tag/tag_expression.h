@@ -5,6 +5,7 @@
 
 #include "doim/tag/tag.h"
 #include "doim/element.hpp"
+#include <boost/hana/for_each.hpp>
 #include <memory>
 #include <tuple>
 

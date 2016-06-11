@@ -6,8 +6,8 @@
 #include "dp/handle.hpp"
 #include "err/err.h"
 #include <boost/functional/hash.hpp>
-#include <boost/fusion/adapted/std_tuple.hpp>
-#include <boost/fusion/algorithm.hpp>
+#include <boost/hana.hpp>
+#include <boost/hana/ext/std/tuple.hpp>
 #include <boost/thread/locks.hpp>
 #include <boost/thread/shared_mutex.hpp>
 #include <tuple>
@@ -43,7 +43,7 @@ public:
         std::size_t operator()(const Tuple& tuple) const
         {
             HashItem hashItem;
-            boost::fusion::for_each(tuple, hashItem);
+            boost::hana::for_each(tuple, hashItem);
             return hashItem.mSeed;
         }
     };

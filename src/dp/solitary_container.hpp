@@ -6,8 +6,6 @@
 #include "dp/handle.hpp"
 #include "err/err.h"
 #include <boost/functional/hash.hpp>
-#include <boost/fusion/adapted/std_tuple.hpp>
-#include <boost/fusion/algorithm.hpp>
 #include <boost/thread/locks.hpp>
 #include <boost/thread/shared_mutex.hpp>
 #include <tuple>

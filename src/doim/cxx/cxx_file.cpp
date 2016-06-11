@@ -3,6 +3,7 @@
 
 #include "doim/cxx/cxx_file.h"
 #include "err/err_assert.h"
+#include <boost/hana/for_each.hpp>
 #include <variant>
 
 namespace doim

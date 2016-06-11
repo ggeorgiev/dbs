@@ -9,6 +9,8 @@
 #include "doim/sys/sys_command.h"
 #include "doim/set.hpp"
 #include "err/err_assert.h"
+#include <boost/hana/for_each.hpp>
+#include <functional>
 #include <memory>
 #include <str>
 

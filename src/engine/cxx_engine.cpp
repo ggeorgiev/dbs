@@ -19,6 +19,7 @@
 #include "doim/fs/fs_file.h"
 #include "doim/protobuf/protobuf_file.h"
 #include "doim/sys/sys_command.h"
+#include "doim/element.hpp"
 #include "doim/set.hpp"
 #include "db/database.h"
 #include "err/err.h"

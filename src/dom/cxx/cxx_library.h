@@ -19,6 +19,7 @@
 #include "dp/memoization.hpp"
 #include "dp/solitary_container.hpp"
 #include "err/err.h"
+#include <boost/hana/for_each.hpp>
 #include <shared_ptr>
 #include <unordered>
 

@@ -5,6 +5,7 @@
 
 #include "doim/generic/location.hpp"
 #include "doim/element.hpp"
+#include <boost/hana/for_each.hpp>
 #include <memory>
 #include <str>
 #include <string_view>

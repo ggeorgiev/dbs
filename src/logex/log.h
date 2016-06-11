@@ -5,7 +5,9 @@
 
 #include "option/verbose.h"
 #include "doim/tag/tag.h"
+#include "im/initialization_manager.hpp"
 #include "log/log.h"
+#include <memory>
 
 namespace logex
 {

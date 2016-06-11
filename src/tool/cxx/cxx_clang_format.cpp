@@ -8,6 +8,8 @@
 #include "doim/sys/sys_command.h"
 #include "doim/set.hpp"
 #include "rtti/class_rtti.hpp"
+#include <boost/hana/for_each.hpp>
+#include <functional>
 #include <memory>
 #include <str>
 

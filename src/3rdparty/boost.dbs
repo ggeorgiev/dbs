@@ -12,8 +12,9 @@ cxx_library /boost_template
         boost/heap/fibonacci_heap.hpp
         boost/optional.hpp
         boost/current_function.hpp
-        boost/fusion/adapted/std_tuple.hpp
-        boost/fusion/algorithm.hpp
+        boost/hana.hpp
+        boost/hana/ext/std/tuple.hpp
+        boost/hana/for_each.hpp
         boost/variant/variant.hpp
         boost/variant/get.hpp
         boost/type_index.hpp

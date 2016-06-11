@@ -2,6 +2,7 @@
 //
 
 #include "doim/tool/tool_command.h"
+#include <functional>
 
 namespace doim
 {

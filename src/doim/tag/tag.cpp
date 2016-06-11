@@ -2,6 +2,7 @@
 //
 
 #include "doim/tag/tag.h"
+#include <functional>
 
 namespace doim
 {

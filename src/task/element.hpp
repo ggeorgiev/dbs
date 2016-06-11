@@ -10,8 +10,6 @@
 #include "log/log.h"
 #include "rtti/class_rtti.hpp"
 #include <boost/functional/hash.hpp>
-#include <boost/fusion/adapted/std_tuple.hpp>
-#include <boost/fusion/algorithm.hpp>
 #include <functional>
 #include <memory>
 #include <shared_ptr>
@@ -92,7 +90,7 @@ public:
         std::size_t operator()(const shared_ptr<T>& object) const
         {
             HashItem hashItem(mClassIdHasher(T::classId()));
-            boost::fusion::for_each(object->mArgs, hashItem);
+            boost::hana::for_each(object->mArgs, hashItem);
             return hashItem.mSeed;
         }
 

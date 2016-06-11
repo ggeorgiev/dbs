@@ -3,6 +3,7 @@
 
 #include "doim/sys/sys_executable.h"
 #include "err/err_assert.h"
+#include <boost/hana/for_each.hpp>
 
 namespace doim
 {

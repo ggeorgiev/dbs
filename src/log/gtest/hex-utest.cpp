@@ -3,7 +3,6 @@
 
 #include "log/hex.h"
 #include "gtest/framework.h"
-#include <memory>
 #include <str>
 
 TEST(HexTest, simple)

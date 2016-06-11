@@ -4,6 +4,7 @@
 #include "db/database.h"
 #include "logex/log.h"
 #include "err/err.h"
+#include "log/hex.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/path.hpp>
 #include <rocksdb/options.h>

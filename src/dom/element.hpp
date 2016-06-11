@@ -6,8 +6,6 @@
 #include "dom/element_manager.hpp"
 #include "im/initialization_manager.hpp"
 #include <boost/functional/hash.hpp>
-#include <boost/fusion/adapted/std_tuple.hpp>
-#include <boost/fusion/algorithm.hpp>
 #include <memory>
 #include <shared_ptr>
 #include <string_view>

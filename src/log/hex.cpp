@@ -1,11 +1,11 @@
 //  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
-#pragma once
-
+#include <algorithm>
 #include <sstream>
 #include <string>
 #include <string_view>
+#include <stddef.h>
 
 namespace dbslog
 {

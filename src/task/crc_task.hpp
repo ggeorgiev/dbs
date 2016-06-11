@@ -10,8 +10,6 @@
 #include "math/crc.hpp"
 #include "rtti/class_rtti.hpp"
 #include <boost/functional/hash.hpp>
-#include <boost/fusion/adapted/std_tuple.hpp>
-#include <boost/fusion/algorithm.hpp>
 #include <functional>
 #include <memory>
 #include <shared_ptr>

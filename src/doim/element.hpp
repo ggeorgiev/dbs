@@ -6,8 +6,8 @@
 #include "doim/element_manager.hpp"
 #include "im/initialization_manager.hpp"
 #include <boost/functional/hash.hpp>
-#include <boost/fusion/adapted/std_tuple.hpp>
-#include <boost/fusion/algorithm.hpp>
+#include <boost/hana.hpp>
+#include <boost/hana/ext/std/tuple.hpp>
 #include <memory>
 #include <shared_ptr>
 #include <string_view>
@@ -103,7 +103,7 @@ public:
         std::size_t operator()(const shared_ptr<T>& object) const
         {
             HashItem hashItem;
-            boost::fusion::for_each(object->mArgs, hashItem);
+            boost::hana::for_each(object->mArgs, hashItem);
             return hashItem.mSeed;
         }
 

@@ -12,6 +12,7 @@ cxx_library log
 
     cxx_library:
        /stl
+       /cstd
 
        /spdlog
        /cppformat

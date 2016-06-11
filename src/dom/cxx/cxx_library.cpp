@@ -7,6 +7,7 @@
 #include "err/err.h"
 #include <functional>
 #include <shared_ptr>
+#include <string>
 #include <unordered>
 #include <vector>
 
