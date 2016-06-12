@@ -24,6 +24,14 @@ bool CxxSourceHeadersTask::check() const
            (cxxIncludeDirectory() == nullptr || cxxIncludeDirectory()->isUnique());
 }
 
+static doim::TagSetSPtr gTags =
+    doim::TagSet::global({&doim::gDependTag, &doim::gCxxTag}, gTags);
+
+doim::TagSetSPtr CxxSourceHeadersTask::tags() const
+{
+    return gTags;
+}
+
 ECode CxxSourceHeadersTask::operator()()
 {
     auto origin =

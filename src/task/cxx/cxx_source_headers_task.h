@@ -63,11 +63,7 @@ public:
         return mHeadersInfo;
     }
 
-    doim::TagSet tags() const override
-    {
-        return doim::TagSet{doim::gTaskTag, doim::gParseTag};
-    }
-
+    doim::TagSetSPtr tags() const override;
     ECode operator()() override;
     string description() const override;
 

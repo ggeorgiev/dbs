@@ -89,7 +89,7 @@ tpool::TaskSPtr CxxEngine::updateDbTask(const tpool::TaskSPtr& task,
         task::gTPool->ensureScheduled(task);
         EHTest(task->join());
 
-        doim::TagSetSPtr logTags = doim::TagSet::make(task->tags());
+        doim::TagSetSPtr logTags = doim::TagSet::make(*task->tags());
         logTags->erase(doim::gTaskTag);
         logTags = doim::TagSet::unique(logTags);
 

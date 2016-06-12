@@ -38,14 +38,10 @@ public:
         return std::get<1>(mArgs);
     }
 
-    doim::TagSet tags() const override
-    {
-        return doim::TagSet{doim::gTaskTag, doim::gSysTag};
-    }
-
     int exit() const;
     ECode stdoutput(string& stdoutput) const;
 
+    doim::TagSetSPtr tags() const override;
     ECode operator()() override;
     string description() const override;
 

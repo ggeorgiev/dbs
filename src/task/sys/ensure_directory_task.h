@@ -30,6 +30,7 @@ public:
         return std::get<0>(mArgs);
     }
 
+    doim::TagSetSPtr tags() const override;
     ECode operator()() override;
     string description() const override;
 };

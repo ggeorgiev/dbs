@@ -29,11 +29,7 @@ public:
         return std::get<0>(mArgs);
     }
 
-    doim::TagSet tags() const override
-    {
-        return doim::TagSet{doim::gTaskTag, doim::gCrcTag};
-    }
-
+    doim::TagSetSPtr tags() const override;
     ECode operator()() override;
     string description() const override;
 };

@@ -34,11 +34,19 @@ bool CxxSourceCrcTask::check() const
             currentIncludeDirectory()->isUnique());
 }
 
+static doim::TagSetSPtr gTags =
+    doim::TagSet::global({&doim::gCrcTag, &doim::gCxxTag}, gTags);
+
+doim::TagSetSPtr CxxSourceCrcTask::tags() const
+{
+    return gTags;
+}
+
 ECode CxxSourceCrcTask::operator()()
 {
     const auto& path = apply_visitor(doim::vst::path(), cxxSource());
 
-    doim::TagSetSPtr logTags = doim::TagSet::make(tags());
+    doim::TagSetSPtr logTags = doim::TagSet::make(*tags());
     logTags->erase(doim::gTaskTag);
     logTags = doim::TagSet::unique(logTags);
 

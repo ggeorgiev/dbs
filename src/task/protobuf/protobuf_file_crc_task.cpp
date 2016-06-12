@@ -17,6 +17,14 @@ bool ProtobufFileCrcTask::check() const
     return protobufFile() != nullptr && protobufFile()->isUnique();
 }
 
+static doim::TagSetSPtr gTags =
+    doim::TagSet::global({&doim::gCrcTag, &doim::gProtobufTag}, gTags);
+
+doim::TagSetSPtr ProtobufFileCrcTask::tags() const
+{
+    return gTags;
+}
+
 ECode ProtobufFileCrcTask::operator()()
 {
     std::ifstream fstream(protobufFile()->file()->path().c_str());

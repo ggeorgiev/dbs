@@ -20,6 +20,13 @@ bool DbPutTask::check() const
     return key() != nullptr && key()->isUnique();
 }
 
+static doim::TagSetSPtr gTags = doim::TagSet::global({&doim::gDbTag}, gTags);
+
+doim::TagSetSPtr DbPutTask::tags() const
+{
+    return gTags;
+}
+
 ECode DbPutTask::operator()()
 {
     EHTest(db::gDatabase->put(key()->toString(), value()->bytes()));

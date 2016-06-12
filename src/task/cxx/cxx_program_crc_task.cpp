@@ -23,6 +23,14 @@ bool CxxProgramCrcTask::check() const
     return cxxProgram() != nullptr && cxxProgram()->isUnique();
 }
 
+static doim::TagSetSPtr gTags =
+    doim::TagSet::global({&doim::gCrcTag, &doim::gCxxTag, &doim::gProgramTag}, gTags);
+
+doim::TagSetSPtr CxxProgramCrcTask::tags() const
+{
+    return gTags;
+}
+
 ECode CxxProgramCrcTask::operator()()
 {
     const auto& objectFiles = cxxProgram()->cxxObjectFiles();

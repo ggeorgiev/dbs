@@ -51,10 +51,7 @@ public:
 
     virtual string description() const = 0;
 
-    virtual doim::TagSet tags() const
-    {
-        return doim::TagSet{doim::gTaskTag};
-    }
+    virtual doim::TagSetSPtr tags() const = 0;
 
     shared_ptr<T> rerun()
     {
@@ -68,7 +65,7 @@ public:
 
     void onStart() const override
     {
-        doim::TagSetSPtr runTags = doim::TagSet::make(tags());
+        doim::TagSetSPtr runTags = doim::TagSet::make(*tags());
         runTags->insert(doim::gRunTag);
         runTags = doim::TagSet::unique(runTags);
 
@@ -78,7 +75,7 @@ public:
 
     void onFinish(ECode code) const override
     {
-        doim::TagSetSPtr doneTags = doim::TagSet::make(tags());
+        doim::TagSetSPtr doneTags = doim::TagSet::make(*tags());
         doneTags->insert(doim::gDoneTag);
         doneTags = doim::TagSet::unique(doneTags);
 

@@ -35,11 +35,7 @@ public:
         return mValue;
     }
 
-    doim::TagSet tags() const override
-    {
-        return doim::TagSet{doim::gTaskTag, doim::gDbTag};
-    }
-
+    doim::TagSetSPtr tags() const override;
     ECode operator()() override;
     string description() const override;
 

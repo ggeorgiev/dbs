@@ -38,6 +38,13 @@ bool ParseStdoutTask::check() const
            targetDirectory() != nullptr && targetDirectory()->isUnique();
 }
 
+static doim::TagSetSPtr gTags = doim::TagSet::global({}, gTags);
+
+doim::TagSetSPtr ParseStdoutTask::tags() const
+{
+    return gTags;
+}
+
 ECode ParseStdoutTask::operator()()
 {
     auto executeTask = task::ExecuteCommandTask::valid(command(), targetDirectory());

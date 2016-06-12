@@ -21,6 +21,13 @@ bool ExecuteCommandTask::check() const
            targetDirectory() != nullptr && targetDirectory()->isUnique();
 }
 
+static doim::TagSetSPtr gTags = doim::TagSet::global({&doim::gSysTag}, gTags);
+
+doim::TagSetSPtr ExecuteCommandTask::tags() const
+{
+    return gTags;
+}
+
 ECode ExecuteCommandTask::operator()()
 {
     if (targetDirectory() != nullptr)

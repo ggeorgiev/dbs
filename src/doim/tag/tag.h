@@ -34,6 +34,8 @@ public:
 extern TagSPtr gTaskTag;
 
 extern TagSPtr gCrcTag;
+extern TagSPtr gDependTag;
+
 extern TagSPtr gDbTag;
 extern TagSPtr gParseTag;
 extern TagSPtr gSysTag;
@@ -43,4 +45,9 @@ extern TagSPtr gDoneTag;
 
 extern TagSPtr gLoadTag;
 extern TagSPtr gSaveTag;
+
+extern TagSPtr gCxxTag;
+extern TagSPtr gObjTag;
+extern TagSPtr gProgramTag;
+extern TagSPtr gProtobufTag;
 }

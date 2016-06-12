@@ -22,11 +22,19 @@ bool CxxObjectFileCrcTask::check() const
     return cxxObjectFile() != nullptr && cxxObjectFile()->isUnique();
 }
 
+static doim::TagSetSPtr gTags =
+    doim::TagSet::global({&doim::gCrcTag, &doim::gCxxTag, &doim::gObjTag}, gTags);
+
+doim::TagSetSPtr CxxObjectFileCrcTask::tags() const
+{
+    return gTags;
+}
+
 ECode CxxObjectFileCrcTask::operator()()
 {
     const auto& path = cxxObjectFile()->file()->path();
 
-    doim::TagSetSPtr logTags = doim::TagSet::make(tags());
+    doim::TagSetSPtr logTags = doim::TagSet::make(*tags());
     logTags->erase(doim::gTaskTag);
     logTags = doim::TagSet::unique(logTags);
 

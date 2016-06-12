@@ -15,6 +15,13 @@ bool EnsureDirectoryTask::check() const
     return directory() != nullptr && directory()->isUnique();
 }
 
+static doim::TagSetSPtr gTags = doim::TagSet::global({&doim::gSysTag}, gTags);
+
+doim::TagSetSPtr EnsureDirectoryTask::tags() const
+{
+    return gTags;
+}
+
 ECode EnsureDirectoryTask::operator()()
 {
     if (directory()->parent() != nullptr)
