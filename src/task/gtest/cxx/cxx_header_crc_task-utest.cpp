@@ -10,6 +10,7 @@
 #include "err/gtest/err.h"
 #include "gtest/framework.h"
 #include "gtest/test_resource.h"
+#include "fmt/format.h"
 #include <memory>
 #include <ostream>
 

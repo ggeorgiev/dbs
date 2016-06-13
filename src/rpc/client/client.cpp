@@ -2,6 +2,7 @@
 //
 
 #include "rpc/client/client.h"
+#include <boost/asio.hpp>
 #include <cstdlib>
 #include <iostream>
 #include <thread>

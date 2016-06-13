@@ -35,7 +35,7 @@ ParseStdoutTask::ParseStdoutTask(const doim::SysCommandSPtr& command,
 bool ParseStdoutTask::check() const
 {
     return command() != nullptr && command()->isUnique() &&
-           targetDirectory() != nullptr && targetDirectory()->isUnique();
+           (targetDirectory() == nullptr || targetDirectory()->isUnique());
 }
 
 static doim::TagSetSPtr gTags = doim::TagSet::global({}, gTags);

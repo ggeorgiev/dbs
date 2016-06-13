@@ -4,7 +4,6 @@
 #include "task/db/db_put_task.h"
 
 #include "db/database.h"
-#include "err/err_assert.h"
 #include <str>
 
 namespace task

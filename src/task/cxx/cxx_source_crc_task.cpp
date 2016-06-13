@@ -35,7 +35,7 @@ bool CxxSourceCrcTask::check() const
 }
 
 static doim::TagSetSPtr gTags =
-    doim::TagSet::global({&doim::gCrcTag, &doim::gCxxTag}, gTags);
+    doim::TagSet::global({&doim::gCrcTag, &doim::gInspectTag, &doim::gCxxTag}, gTags);
 
 doim::TagSetSPtr CxxSourceCrcTask::tags() const
 {

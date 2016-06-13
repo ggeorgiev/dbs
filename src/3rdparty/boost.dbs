@@ -6,6 +6,7 @@ cxx_library /boost_template
         @directory=../../boost/include:
 
         boost/asio.hpp
+        boost/asio/io_service.hpp
         boost/crc.hpp
         boost/functional/hash.hpp
         boost/functional/hash/hash.hpp
@@ -26,6 +27,7 @@ cxx_library /boost_template
         @visibility=protected
         @directory=../../boost/include:
         
+        boost/asio/impl/io_service.ipp
         boost/variant/detail/apply_visitor_unary.hpp
         boost/variant/detail/hash_variant.hpp
     ;

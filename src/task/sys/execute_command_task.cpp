@@ -18,7 +18,7 @@ namespace task
 bool ExecuteCommandTask::check() const
 {
     return command() != nullptr && command()->isUnique() &&
-           targetDirectory() != nullptr && targetDirectory()->isUnique();
+           (targetDirectory() == nullptr || targetDirectory()->isUnique());
 }
 
 static doim::TagSetSPtr gTags = doim::TagSet::global({&doim::gSysTag}, gTags);

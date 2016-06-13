@@ -6,9 +6,11 @@
 #include "doim/element.hpp"
 #include "doim/set.hpp"
 #include <boost/hana/for_each.hpp>
+#include <functional>
 #include <memory>
 #include <str>
 #include <tuple>
+#include <unordered>
 
 namespace doim
 {
@@ -32,7 +34,7 @@ public:
 };
 
 extern TagSPtr gCrcTag;
-extern TagSPtr gDependTag;
+extern TagSPtr gInspectTag;
 
 extern TagSPtr gDbTag;
 extern TagSPtr gParseTag;

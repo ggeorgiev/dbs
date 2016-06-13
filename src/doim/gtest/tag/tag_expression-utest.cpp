@@ -8,12 +8,10 @@
 
 TEST(TagExpressionTest, patternMatch)
 {
-    doim::TagSetSPtr pattern = doim::TagSet::unique(doim::TagSet::make(doim::TagSet{}));
+    doim::TagSetSPtr pattern = doim::TagSet::unique({});
 
-    doim::TagSetSPtr pattern1 =
-        doim::TagSet::unique(doim::TagSet::make(doim::TagSet{doim::gCrcTag}));
-    doim::TagSetSPtr pattern2 = doim::TagSet::unique(
-        doim::TagSet::make(doim::TagSet{doim::gCrcTag, doim::gDbTag}));
+    doim::TagSetSPtr pattern1 = doim::TagSet::unique({doim::gCrcTag});
+    doim::TagSetSPtr pattern2 = doim::TagSet::unique({doim::gCrcTag, doim::gDbTag});
 
     doim::TagSetSPtr tags = pattern;
     doim::TagSetSPtr tags1 = pattern1;

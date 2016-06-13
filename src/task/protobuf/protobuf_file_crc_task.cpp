@@ -18,7 +18,8 @@ bool ProtobufFileCrcTask::check() const
 }
 
 static doim::TagSetSPtr gTags =
-    doim::TagSet::global({&doim::gCrcTag, &doim::gProtobufTag}, gTags);
+    doim::TagSet::global({&doim::gCrcTag, &doim::gInspectTag, &doim::gProtobufTag},
+                         gTags);
 
 doim::TagSetSPtr ProtobufFileCrcTask::tags() const
 {

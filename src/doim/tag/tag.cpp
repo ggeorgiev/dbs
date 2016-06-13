@@ -7,7 +7,7 @@
 namespace doim
 {
 TagSPtr gCrcTag = Tag::global("crc", gCrcTag);
-TagSPtr gDependTag = Tag::global("depend", gDependTag);
+TagSPtr gInspectTag = Tag::global("inspect", gInspectTag);
 
 TagSPtr gDbTag = Tag::global("db", gDbTag);
 TagSPtr gParseTag = Tag::global("parse", gParseTag);

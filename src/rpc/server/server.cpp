@@ -1,14 +1,12 @@
 //  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
-#include <boost/asio.hpp>
+#include <boost/asio.hpp> // IWYU pragma: keep
 #include <cstdlib>
-#include <deque>
 #include <iostream>
 #include <list>
 #include <memory>
-#include <set>
-#include <utility>
+#include <type_traits>
 
 using boost::asio::ip::tcp;
 

@@ -61,10 +61,8 @@ TEST(SetManagerTest, find)
 
 TEST(SetManagerTest, combine)
 {
-    auto tags1 =
-        doim::TagSet::make(doim::TagSet{doim::gTaskTag, doim::gRunTag, doim::gDoneTag});
-    auto tags2 =
-        doim::TagSet::make(doim::TagSet{doim::gCrcTag, doim::gRunTag, doim::gDoneTag});
+    auto tags1 = doim::TagSet::unique({doim::gTaskTag, doim::gRunTag, doim::gDoneTag});
+    auto tags2 = doim::TagSet::unique({doim::gCrcTag, doim::gRunTag, doim::gDoneTag});
 
     auto comb1 = tags1->combine(tags2);
     auto comb2 = tags2->combine(tags1);

@@ -22,8 +22,8 @@ bool CxxObjectFileCrcTask::check() const
     return cxxObjectFile() != nullptr && cxxObjectFile()->isUnique();
 }
 
-static doim::TagSetSPtr gTags =
-    doim::TagSet::global({&doim::gCrcTag, &doim::gCxxTag, &doim::gObjTag}, gTags);
+static doim::TagSetSPtr gTags = doim::TagSet::global(
+    {&doim::gCrcTag, &doim::gInspectTag, &doim::gCxxTag, &doim::gObjTag}, gTags);
 
 doim::TagSetSPtr CxxObjectFileCrcTask::tags() const
 {

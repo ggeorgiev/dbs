@@ -17,6 +17,7 @@
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/cxx/cxx_program.h"
+#include "doim/db/db_value.hpp"
 #include "doim/fs/fs_file.h"
 #include "doim/protobuf/protobuf_file.h"
 #include "doim/sys/sys_command.h"
@@ -26,8 +27,10 @@
 #include "err/err.h"
 #include "err/err_assert.h"
 #include "im/initialization_manager.hpp"
+#include "log/log.h"
 #include "math/crc.hpp"
 #include "rtti/class_rtti.hpp"
+#include <boost/hana/for_each.hpp>
 #include <algorithm>
 #include <functional>
 #include <str>

@@ -23,8 +23,8 @@ bool CxxProgramCrcTask::check() const
     return cxxProgram() != nullptr && cxxProgram()->isUnique();
 }
 
-static doim::TagSetSPtr gTags =
-    doim::TagSet::global({&doim::gCrcTag, &doim::gCxxTag, &doim::gProgramTag}, gTags);
+static doim::TagSetSPtr gTags = doim::TagSet::global(
+    {&doim::gCrcTag, &doim::gInspectTag, &doim::gCxxTag, &doim::gProgramTag}, gTags);
 
 doim::TagSetSPtr CxxProgramCrcTask::tags() const
 {

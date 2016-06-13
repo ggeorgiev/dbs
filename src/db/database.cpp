@@ -10,6 +10,7 @@
 #include <rocksdb/options.h>
 #include <rocksdb/slice.h>
 #include <rocksdb/status.h>
+#include "fmt/format.h"
 #include <functional>
 
 namespace db
