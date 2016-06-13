@@ -34,11 +34,7 @@ ECode CxxObjectFileCrcTask::operator()()
 {
     const auto& path = cxxObjectFile()->file()->path();
 
-    doim::TagSetSPtr logTags = doim::TagSet::make(*tags());
-    logTags->erase(doim::gTaskTag);
-    logTags = doim::TagSet::unique(logTags);
-
-    defer(LOGEX(logTags, "Crc for {} is {:x}", path, mCrcsum));
+    defer(LOGEX(tags(), "Crc for {} is {:x}", path, mCrcsum));
 
     if (!boost::filesystem::exists(path))
     {

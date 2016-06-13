@@ -46,11 +46,7 @@ ECode CxxSourceCrcTask::operator()()
 {
     const auto& path = apply_visitor(doim::vst::path(), cxxSource());
 
-    doim::TagSetSPtr logTags = doim::TagSet::make(*tags());
-    logTags->erase(doim::gTaskTag);
-    logTags = doim::TagSet::unique(logTags);
-
-    defer(LOGEX(logTags,
+    defer(LOGEX(tags(),
                 "{} for {} is {:x}",
                 depth() == EDepth::kOne ? "Crc" : "Deep Crc",
                 path,

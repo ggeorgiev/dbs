@@ -6,8 +6,6 @@
 
 namespace doim
 {
-TagSPtr gTaskTag = Tag::global("task", gTaskTag);
-
 TagSPtr gCrcTag = Tag::global("crc", gCrcTag);
 TagSPtr gDependTag = Tag::global("depend", gDependTag);
 
@@ -15,8 +13,14 @@ TagSPtr gDbTag = Tag::global("db", gDbTag);
 TagSPtr gParseTag = Tag::global("parse", gParseTag);
 TagSPtr gSysTag = Tag::global("sys", gSysTag);
 
+TagSPtr gTaskTag = Tag::global("task", gTaskTag);
 TagSPtr gRunTag = Tag::global("run", gRunTag);
 TagSPtr gDoneTag = Tag::global("done", gDoneTag);
+
+doim::TagSetSPtr gRunTagSet =
+    doim::TagSet::global({&doim::gTaskTag, &doim::gRunTag}, gRunTagSet);
+doim::TagSetSPtr gDoneTagSet =
+    doim::TagSet::global({&doim::gTaskTag, &doim::gDoneTag}, gDoneTagSet);
 
 TagSPtr gLoadTag = Tag::global("load", gLoadTag);
 TagSPtr gSaveTag = Tag::global("save", gSaveTag);

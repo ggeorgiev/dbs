@@ -5,9 +5,9 @@
 
 #include "task/element_manager.hpp"
 #include "tpool/task.h"
+#include "logex/log.h"
 #include "option/verbose.h"
 #include "doim/tag/tag.h"
-#include "log/log.h"
 #include "rtti/class_rtti.hpp"
 #include <boost/functional/hash.hpp>
 #include <functional>
@@ -65,26 +65,15 @@ public:
 
     void onStart() const override
     {
-        doim::TagSetSPtr runTags = doim::TagSet::make(*tags());
-        runTags->insert(doim::gRunTag);
-        runTags = doim::TagSet::unique(runTags);
-
-        if (opt::gVerbose->isVisible(runTags))
-            ILOG("[ RUN      ] {}", description());
+        LOGEX(tags()->combine(doim::gRunTagSet), "[ RUN      ] {}", description());
     }
 
     void onFinish(ECode code) const override
     {
-        doim::TagSetSPtr doneTags = doim::TagSet::make(*tags());
-        doneTags->insert(doim::gDoneTag);
-        doneTags = doim::TagSet::unique(doneTags);
-
-        if (opt::gVerbose->isVisible(doneTags))
-        {
-            ILOG("{} {}",
-                 (code == err::kSuccess) ? "[       OK ]" : "[   FAILED ]",
-                 description());
-        }
+        LOGEX(tags()->combine(doim::gDoneTagSet),
+              "{} {}",
+              (code == err::kSuccess) ? "[       OK ]" : "[   FAILED ]",
+              description());
     }
 
     struct Hasher

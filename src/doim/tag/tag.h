@@ -31,8 +31,6 @@ public:
     }
 };
 
-extern TagSPtr gTaskTag;
-
 extern TagSPtr gCrcTag;
 extern TagSPtr gDependTag;
 
@@ -40,8 +38,12 @@ extern TagSPtr gDbTag;
 extern TagSPtr gParseTag;
 extern TagSPtr gSysTag;
 
+extern TagSPtr gTaskTag;
 extern TagSPtr gRunTag;
 extern TagSPtr gDoneTag;
+
+extern TagSetSPtr gRunTagSet;
+extern TagSetSPtr gDoneTagSet;
 
 extern TagSPtr gLoadTag;
 extern TagSPtr gSaveTag;

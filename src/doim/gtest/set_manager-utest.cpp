@@ -4,6 +4,7 @@
 #include "doim/set.hpp"
 #include "doim/fs/fs_directory.h"
 #include "doim/generic/location.hpp"
+#include "doim/tag/tag.h"
 #include "gtest/framework.h"
 #include <memory>
 #include <ostream>
@@ -56,4 +57,23 @@ TEST(SetManagerTest, find)
     locations1->insert(location);
 
     ASSERT_EQ(locations, locations1->find());
+}
+
+TEST(SetManagerTest, combine)
+{
+    auto tags1 =
+        doim::TagSet::make(doim::TagSet{doim::gTaskTag, doim::gRunTag, doim::gDoneTag});
+    auto tags2 =
+        doim::TagSet::make(doim::TagSet{doim::gCrcTag, doim::gRunTag, doim::gDoneTag});
+
+    auto comb1 = tags1->combine(tags2);
+    auto comb2 = tags2->combine(tags1);
+
+    EXPECT_EQ(comb1, comb2);
+    EXPECT_EQ(4, comb1->size());
+
+    EXPECT_TRUE(comb1->count(doim::gTaskTag) > 0);
+    EXPECT_TRUE(comb1->count(doim::gRunTag) > 0);
+    EXPECT_TRUE(comb1->count(doim::gDoneTag) > 0);
+    EXPECT_TRUE(comb1->count(doim::gCrcTag) > 0);
 }

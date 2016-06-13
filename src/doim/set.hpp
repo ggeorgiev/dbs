@@ -69,6 +69,15 @@ public:
         return gManagerSet->find(key);
     }
 
+    shared_ptr<Set<T>> combine(const shared_ptr<Set<T>> set)
+    {
+        ASSERT(set != nullptr && set->isUnique());
+        auto result = Set<T>::make(*set);
+        result->insert(std::unordered_set<shared_ptr<T>>::begin(),
+                       std::unordered_set<shared_ptr<T>>::end());
+        return gManagerSet->unique(result);
+    }
+
     struct Hasher
     {
         std::size_t operator()(const shared_ptr<Set<T>>& objects) const

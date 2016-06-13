@@ -89,13 +89,9 @@ tpool::TaskSPtr CxxEngine::updateDbTask(const tpool::TaskSPtr& task,
         task::gTPool->ensureScheduled(task);
         EHTest(task->join());
 
-        doim::TagSetSPtr logTags = doim::TagSet::make(*task->tags());
-        logTags->erase(doim::gTaskTag);
-        logTags = doim::TagSet::unique(logTags);
-
         if (crcTask->crc() != task->crc())
         {
-            LOGEX(logTags,
+            LOGEX(task->tags(),
                   "The crc for key {} changed {:x} -> {:x}",
                   key->toString(),
                   crcTask->crc(),
