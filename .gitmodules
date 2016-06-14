@@ -29,3 +29,6 @@
 [submodule "3rdparty/axe"]
 	path = 3rdparty/axe
 	url = https://github.com/ggeorgiev/axe.git
+[submodule "3rdparty/grpc"]
+	path = 3rdparty/grpc
+	url = https://github.com/grpc/grpc.git
