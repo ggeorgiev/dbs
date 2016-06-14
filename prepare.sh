@@ -37,6 +37,11 @@ then
     git clean -fdx
 
     cd ../../../..
+
+    if [ "$TRAVIS" == "true"]
+    then
+        exit 0
+    fi    
 fi
 
 if [ ! -e grpc -o ! "$(ls -A grpc)" ]
@@ -57,7 +62,7 @@ then
 
     cd ../..
     
-    if [ "$TRAVIS" == "1"]
+    if [ "$TRAVIS" == "true"]
     then
         exit 0
     fi
