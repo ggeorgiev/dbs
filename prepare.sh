@@ -16,7 +16,11 @@ if [ ! -e protobuf -o ! "$(ls -A protobuf)" ]
 then
     git submodule update --init 3rdparty/grpc || exit 1
     
-    cd 3rdparty/grpc/third_party/protobuf || exit 1
+    cd 3rdparty/grpc || exit 1
+    
+    git submodule update --init || exit 1
+    
+    cd third_party/protobuf || exit 1
     
     echo Build protobuf ...
     
