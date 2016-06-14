@@ -38,7 +38,7 @@ then
 
     cd ../../../..
 
-    if [ "$TRAVIS" == "true"]
+    if [ "$TRAVIS" == "true" ]
     then
         exit 0
     fi    
@@ -62,7 +62,7 @@ then
 
     cd ../..
     
-    if [ "$TRAVIS" == "true"]
+    if [ "$TRAVIS" == "true" ]
     then
         exit 0
     fi
