@@ -45,6 +45,8 @@ then
     
     cd 3rdparty/grpc || exit 1
     
+    git submodule update --init || exit 1
+    
     echo Build grpc ...
         
     make CC=clang CXX=clang++ install prefix=`pwd`/../../grpc \
