@@ -27,7 +27,8 @@ then
     git clean -fdx
     
     ./autogen.sh || exit 1
-    ./configure --prefix=`pwd`/../../../../protobuf CC=clang CXX=clang++ \
+    ./configure --disable-shared \
+        --prefix=`pwd`/../../../../protobuf CC=clang CXX=clang++ \
         CXXFLAGS='-std=c++14 -stdlib=libc++ -O3 -g' \
         LDFLAGS='-stdlib=libc++' LIBS="-lc++ -lc++abi" || exit 1
     
