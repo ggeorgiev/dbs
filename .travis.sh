@@ -5,7 +5,7 @@ cd $BASEDIR
 
 # This is a test if all 3rdparty libraries are build. They might not be because we split
 # the builds of them in travis, because it takes too long.
-if [ ! -e rocksdb ]
+if [ ! -e rocksdb -o ! "$(ls -A rocksdb)" ]
 then
     exit 0
 fi
