@@ -14,19 +14,38 @@ fi
 
 if [ ! -e protobuf -o ! "$(ls -A protobuf)" ]
 then
-    git submodule update --init 3rdparty/protobuf || exit 1
+    git submodule update --init 3rdparty/grpc || exit 1
     
-    cd 3rdparty/protobuf || exit 1
+    cd 3rdparty/grpc/third_party/protobuf || exit 1
     
     echo Build protobuf ...
     
+    git clean -fdx
+    
     ./autogen.sh || exit 1
-    ./configure --prefix=`pwd`/../../protobuf CC=clang CXX=clang++ \
-        CXXFLAGS='-std=c++11 -stdlib=libc++ -O3 -g' \
+    ./configure --prefix=`pwd`/../../../../protobuf CC=clang CXX=clang++ \
+        CXXFLAGS='-std=c++14 -stdlib=libc++ -O3 -g' \
         LDFLAGS='-stdlib=libc++' LIBS="-lc++ -lc++abi" || exit 1
     
     make || exit 1
     make install || exit 1
+    
+    git clean -fdx
+
+    cd ../../../..
+fi
+
+if [ ! -e grpc -o ! "$(ls -A grpc)" ]
+then
+    git submodule update --init 3rdparty/grpc || exit 1
+    
+    cd 3rdparty/grpc || exit 1
+    
+    echo Build grpc ...
+        
+    make CC=clang CXX=clang++ install prefix=`pwd`/../../grpc \
+        PROTOBUF_CPPFLAGS_EXTRA='-stdlib=libc++ -O3' \
+        PROTOBUF_LDFLAGS_EXTRA='-stdlib=libc++' || exit 1
     
     git clean -fdx
 

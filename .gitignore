@@ -8,6 +8,7 @@
 /rocksdb/
 /spdlog/
 /protobuf/
+/grpc/
 /build/
 
 xcuserdata/
