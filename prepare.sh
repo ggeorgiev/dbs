@@ -56,6 +56,11 @@ then
     git clean -fdx
 
     cd ../..
+    
+    if [ "$TRAVIS" == "1"]
+    then
+        exit 0
+    fi
 fi
 
 if [ ! -e gtest -o ! "$(ls -A gtest)" ]
