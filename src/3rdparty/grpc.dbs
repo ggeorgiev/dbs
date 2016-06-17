@@ -1,0 +1,12 @@
+cxx_library /grpc
+    @type=system:
+
+    cxx_header
+        @visibility=public
+        @directory=../../grpc/include:
+
+        grpc++/grpc++.h
+    ;
+
+    binary: ../../grpc/lib/libgrpc++.a;
+;
