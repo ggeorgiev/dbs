@@ -3,18 +3,11 @@
 
 #pragma once
 
-#include <boost/asio/io_service.hpp>
-
 namespace rpc
 {
 class Client
 {
 public:
     Client();
-
-    bool connect(int port);
-
-private:
-    boost::asio::io_service mIoService;
 };
 }

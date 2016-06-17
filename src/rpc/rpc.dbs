@@ -30,7 +30,7 @@ cxx_library rpc_client
 
     cxx_library:
         /cstd
-        /boost_template
+        /grpc
         
         rpc
     ;
@@ -52,7 +52,7 @@ cxx_library rpc_server
 
     cxx_library:
         /cstd
-        /boost_template
+        /grpc
         
         rpc
     ;

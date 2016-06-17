@@ -4,7 +4,6 @@
 #include "task/sys/parse_stdout_task.h"
 #include "task/sys/execute_command_task.h"
 #include "task/tpool.h"
-#include "err/err_assert.h"
 #include "log/log.h"
 
 namespace task

@@ -8,6 +8,7 @@ annex:
     3rdparty/boost.dbs
     3rdparty/fmt.dbs
     3rdparty/rocksdb.dbs
+    3rdparty/grpc.dbs
     3rdparty/gtest.dbs
     3rdparty/protobuf.dbs
     3rdparty/spdlog.dbs
@@ -40,6 +41,7 @@ cxx_program dbs:
         log/log
         err/err
         rpc/rpc_client
+        rpc/rpc_server
         engine/engine
     ;
 
@@ -64,8 +66,6 @@ cxx_program dbs-test:
         dom/dom-test
         parser/parser-test
         task/task-test
-        rpc/rpc_client
-        rpc/rpc_server
     ;
 
     cxx_file:

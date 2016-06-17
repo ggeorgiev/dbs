@@ -128,13 +128,8 @@ doim::SysCommandSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& direc
 
     for (const auto& cxxLibrary : *program->staticLibraries())
     {
-        auto argument_L = doim::SysArgument::unique(
-            "-L " + cxxLibrary->binary()->directory()->nonEmptyPath(directory));
-        linkArguments->insert(argument_L);
-
-        string name = cxxLibrary->binary()->name();
-        auto argument_l =
-            doim::SysArgument::unique("-l" + name.substr(3, name.size() - 5));
+        string path = cxxLibrary->binary()->path(directory);
+        auto argument_l = doim::SysArgument::unique(path);
         linkArguments->insert(argument_l);
     }
 

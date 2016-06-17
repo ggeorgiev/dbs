@@ -445,6 +445,7 @@
 		5EAE677D1C72BE59005B3F8D /* cxx_static_library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_static_library.h; sourceTree = "<group>"; };
 		5EAE67821C72E2B4005B3F8D /* fs_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fs_file.cpp; sourceTree = "<group>"; };
 		5EAE67831C72E2B4005B3F8D /* fs_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fs_file.h; sourceTree = "<group>"; };
+		5EB7CBF01D110823002E87D7 /* grpc.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = grpc.dbs; sourceTree = "<group>"; };
 		5EC659AE1CCD9EB600E99E04 /* dp.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dp.dbs; sourceTree = "<group>"; };
 		5EC659B01CCD9EB600E99E04 /* memoization-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "memoization-utest.cpp"; sourceTree = "<group>"; };
 		5EC659B11CCD9EB600E99E04 /* memoization.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = memoization.hpp; sourceTree = "<group>"; };
@@ -563,6 +564,7 @@
 				5E87B9CD1CF1106500F042B4 /* axe.dbs */,
 				5E10B3181C70F272009C73E4 /* boost.dbs */,
 				5E10B3191C70F272009C73E4 /* fmt.dbs */,
+				5EB7CBF01D110823002E87D7 /* grpc.dbs */,
 				5E10B31A1C70F272009C73E4 /* gtest.dbs */,
 				5E874FAC1CEC347A00C7C123 /* protobuf.dbs */,
 				5E10B31B1C70F272009C73E4 /* rocksdb.dbs */,

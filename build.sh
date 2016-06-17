@@ -204,7 +204,7 @@ echo Compile src/main.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/main.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem protobuf/include/ -isystem rocksdb/include/ \
+    -isystem grpc/include/ -isystem protobuf/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
     -o build/release/src/main.cpp.o -std=c++14 &
 if [ ! -e build/release/src/option/ ]; then mkdir build/release/src/option/; fi
@@ -239,11 +239,17 @@ if [ ! -e build/release/src/rpc/client/ ]; then mkdir build/release/src/rpc/clie
 echo Compile src/rpc/client/client.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/rpc/client/client.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
-    -isystem boost/include/ -isystem protobuf/include/ -isystem src/system/ \
+    -isystem grpc/include/ -isystem protobuf/include/ -isystem src/system/ \
     -o build/release/src/rpc/client/client.cpp.o -std=c++14 &
 echo Compile src/rpc/rpc.pb.cc
 clang++ -D NDEBUG -I src/ -O3 -c src/rpc/rpc.pb.cc -isystem protobuf/include/ \
     -isystem src/system/ -o build/release/src/rpc/rpc.pb.cc.o -std=c++14 &
+if [ ! -e build/release/src/rpc/server/ ]; then mkdir build/release/src/rpc/server/; fi
+echo Compile src/rpc/server/server.cpp
+clang++ -D NDEBUG -I src/ -O3 -c src/rpc/server/server.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem grpc/include/ -isystem protobuf/include/ -isystem src/system/ \
+    -o build/release/src/rpc/server/server.cpp.o -std=c++14 &
 if [ ! -e build/release/src/task/ ]; then mkdir build/release/src/task/; fi
 if [ ! -e build/release/src/task/cxx/ ]; then mkdir build/release/src/task/cxx/; fi
 echo Compile src/task/cxx/cxx_object_file_crc_task.cpp
@@ -360,9 +366,9 @@ clang++ -D NDEBUG -I src/ -O3 -c src/tpool/tpool.cpp \
     -isystem src/system/ -o build/release/src/tpool/tpool.cpp.o -std=c++14 &
 wait
 echo Link build/release/dbs
-clang++ -L boost/lib/ -L fmt/lib/ -L protobuf/lib/ -L rocksdb/lib/ \
-    -L src/system/ -lboost_filesystem -lboost_system -lboost_thread -lbz2 -lfmt \
-    -lprotobuf-lite -lrocksdb -lz -o build/release/dbs -stdlib=libc++ \
+clang++ -o build/release/dbs -stdlib=libc++ /opt/local/lib/libbz2.a \
+    /opt/local/lib/libz.a boost/lib/libboost_filesystem.a \
+    boost/lib/libboost_system.a boost/lib/libboost_thread.a \
     build/release/src/const/constants.cpp.o build/release/src/db/database.cpp.o \
     build/release/src/doim/cxx/cxx_file.cpp.o \
     build/release/src/doim/cxx/cxx_header.cpp.o \
@@ -396,6 +402,7 @@ clang++ -L boost/lib/ -L fmt/lib/ -L protobuf/lib/ -L rocksdb/lib/ \
     build/release/src/parser/dbs/dbs_config_parser.cpp.o \
     build/release/src/parser/dbs/dbs_parser.cpp.o \
     build/release/src/rpc/client/client.cpp.o build/release/src/rpc/rpc.pb.cc.o \
+    build/release/src/rpc/server/server.cpp.o \
     build/release/src/task/cxx/cxx_object_file_crc_task.cpp.o \
     build/release/src/task/cxx/cxx_program_crc_task.cpp.o \
     build/release/src/task/cxx/cxx_source_crc_task.cpp.o \
@@ -412,4 +419,6 @@ clang++ -L boost/lib/ -L fmt/lib/ -L protobuf/lib/ -L rocksdb/lib/ \
     build/release/src/tool/protobuf/protobuf_compiler.cpp.o \
     build/release/src/tpool/task.cpp.o \
     build/release/src/tpool/task_callback.cpp.o \
-    build/release/src/tpool/task_group.cpp.o build/release/src/tpool/tpool.cpp.o
+    build/release/src/tpool/task_group.cpp.o build/release/src/tpool/tpool.cpp.o \
+    fmt/lib/libfmt.a grpc/lib/libgrpc++.a protobuf/lib/libprotobuf-lite.a \
+    rocksdb/lib/librocksdb.a

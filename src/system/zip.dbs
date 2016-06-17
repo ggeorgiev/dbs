@@ -1,5 +1,5 @@
 cxx_library /zip
     @type=system:
 
-    binary: libz.a;
+    binary: /opt/local/lib/libz.a;
 ;

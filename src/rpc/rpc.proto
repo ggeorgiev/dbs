@@ -1,10 +1,24 @@
 //  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
-option optimize_for = LITE_RUNTIME;
+syntax = "proto3";
 
 package rpc;
 
-message Command
+option optimize_for = LITE_RUNTIME;
+
+service Dbs
 {
+    rpc info(InfoRequest) returns (InfoReply)
+    {
+    }
+}
+
+message InfoRequest
+{
+}
+
+message InfoReply
+{
+    string copyright = 1;
 }

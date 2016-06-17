@@ -55,7 +55,9 @@ then
     
     echo Build grpc ...
         
-    make CC=clang CXX=clang++ install prefix=`pwd`/../../grpc \
+    make CC=clang CXX=clang++ \
+        install \
+        prefix=`pwd`/../../grpc \
         PROTOBUF_CPPFLAGS_EXTRA='-stdlib=libc++ -O3' \
         PROTOBUF_LDFLAGS_EXTRA='-stdlib=libc++' || exit 1
     

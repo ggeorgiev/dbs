@@ -1,5 +1,5 @@
 cxx_library /bz2
     @type=system:
 
-    binary: libbz2.a;
+    binary: /opt/local/lib/libbz2.a;
 ;
