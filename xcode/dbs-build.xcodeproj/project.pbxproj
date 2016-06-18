@@ -186,6 +186,7 @@
 		5E8E18381D15F527009783BD /* e_annex.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18371D15F527009783BD /* e_annex.hpp */; };
 		5E8E183A1D15F6B1009783BD /* e_cxx_library.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18391D15F6B1009783BD /* e_cxx_library.hpp */; };
 		5E8E183C1D15F87E009783BD /* e_cxx_program.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E183B1D15F87E009783BD /* e_cxx_program.hpp */; };
+		5E8E183E1D1601C6009783BD /* e_particle.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E183D1D1601C6009783BD /* e_particle.hpp */; };
 		5EABCABB1CE057FD00E79FFD /* sys_executable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */; };
 		5EABCABC1CE057FD00E79FFD /* sys_executable.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EABCABA1CE057FD00E79FFD /* sys_executable.h */; };
 		5EAE67701C7295B2005B3F8D /* cxx_object_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAE676E1C7295B2005B3F8D /* cxx_object_file.cpp */; };
@@ -453,6 +454,7 @@
 		5E8E18371D15F527009783BD /* e_annex.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_annex.hpp; sourceTree = "<group>"; };
 		5E8E18391D15F6B1009783BD /* e_cxx_library.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_cxx_library.hpp; sourceTree = "<group>"; };
 		5E8E183B1D15F87E009783BD /* e_cxx_program.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_cxx_program.hpp; sourceTree = "<group>"; };
+		5E8E183D1D1601C6009783BD /* e_particle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_particle.hpp; sourceTree = "<group>"; };
 		5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sys_executable.cpp; sourceTree = "<group>"; };
 		5EABCABA1CE057FD00E79FFD /* sys_executable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sys_executable.h; sourceTree = "<group>"; };
 		5EAE676E1C7295B2005B3F8D /* cxx_object_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_object_file.cpp; sourceTree = "<group>"; };
@@ -1242,6 +1244,7 @@
 				5E8E18331D15F39C009783BD /* e_file_set.hpp */,
 				5E8E18311D15F274009783BD /* e_file.hpp */,
 				5E8E18351D15F45B009783BD /* e_object.hpp */,
+				5E8E183D1D1601C6009783BD /* e_particle.hpp */,
 				5E8E182B1D15EFAA009783BD /* e_position.hpp */,
 			);
 			path = dbs;
@@ -1374,6 +1377,7 @@
 				5E42053F1C79097C0090FA05 /* element_manager.hpp in Headers */,
 				5E875BB71CFAA3CD008AC423 /* crc_task.hpp in Headers */,
 				5E0C29301CFF252300D7E849 /* tag_expression.h in Headers */,
+				5E8E183E1D1601C6009783BD /* e_particle.hpp in Headers */,
 				5E875BBB1CFAC7EB008AC423 /* element_manager.hpp in Headers */,
 				5E283C1A1CF23BC600852F24 /* element_manager.hpp in Headers */,
 				5E290B391CBAB92500F10210 /* tpool.h in Headers */,

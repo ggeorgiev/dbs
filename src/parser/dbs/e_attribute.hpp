@@ -12,6 +12,9 @@
 
 namespace parser
 {
+static auto r_at = r_char('@');
+static auto r_equal = r_char('=');
+
 struct Attribute
 {
     auto name()

@@ -16,6 +16,7 @@ cxx_library parser
         parser/dbs/e_file_set.hpp
         parser/dbs/e_file.hpp
         parser/dbs/e_object.hpp
+        parser/dbs/e_particle.hpp
         parser/dbs/e_position.hpp
     ;
 

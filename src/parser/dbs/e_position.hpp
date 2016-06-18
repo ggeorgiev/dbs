@@ -23,6 +23,11 @@ struct Position
         ++line;
     }
 
+    auto r_ws()
+    {
+        return *(r_space | (r_endl >> e_ref(*this)));
+    }
+
     size_t line;
     string::const_iterator lineIterator;
 };

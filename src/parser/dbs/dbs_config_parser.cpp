@@ -2,6 +2,8 @@
 //
 
 #include "parser/dbs/dbs_config_parser.h"
+#include "parser/dbs/e_particle.hpp"
+#include "parser/dbs/e_position.hpp"
 #include "doim/tag/tag.h"
 #include "doim/tag/tag_expression.h"
 #include "doim/set.hpp"
@@ -17,13 +19,6 @@
 
 namespace parser
 {
-using namespace axe;
-static auto r_endl = r_str("\r\n") | r_str("\n\r") | r_char('\n');
-static auto r_space = r_char(' ') | r_char('\t');
-
-static auto r_colon = r_char(':');
-static auto r_semicolon = r_char(';');
-
 static auto r_verboseKeyword = r_str("verbose");
 static auto r_turnChar = r_char('+') | r_char('-');
 
@@ -44,29 +39,16 @@ ECode DbsConfigParser::parse(const doim::FsFileSPtr& dbsFile)
 
 ECode DbsConfigParser::parse(const string& content)
 {
-    typedef const string::const_iterator I;
-
     // White space
-    size_t line;
-    string::const_iterator lineIterator;
-
-    auto newlineFn = [&line, &lineIterator](I& i1, I& i2) {
-        lineIterator = i2;
-        ++line;
-    };
-
-    auto r_ws = r_space | (r_endl >> e_ref(newlineFn));
-
-    // Header end
-    auto r_he = *r_ws & r_colon;
-
-    // Structure end
-    auto r_se = *r_ws & r_semicolon;
+    Position position;
+    const auto& r_ws = position.r_ws();
+    const auto& r_he = Particle::r_he(r_ws);
+    const auto& r_se = Particle::r_se(r_ws);
 
     // Tag Expression
     doim::TagSPtr tag;
     auto tagFn = [&tag](I& i1, I& i2) { tag = doim::Tag::unique(string(i1, i2)); };
-    auto r_tag = *r_ws & r_ident() >> e_ref(tagFn);
+    auto r_tag = r_ws & r_ident() >> e_ref(tagFn);
 
     doim::TagSetSPtr tags;
     auto tagsInitFn = [&tags](I& i1, I& i2) { tags = doim::TagSet::make(); };
@@ -79,7 +61,7 @@ ECode DbsConfigParser::parse(const string& content)
         turn = *i1 == '+' ? doim::TagExpression::ETurn::kOn
                           : doim::TagExpression::ETurn::kOff;
     };
-    auto r_turn = *r_ws & r_turnChar >> e_ref(turnFn);
+    auto r_turn = r_ws & r_turnChar >> e_ref(turnFn);
 
     std::vector<std::pair<doim::TagExpression::ETurn, doim::TagSetSPtr>> tagsSection;
     auto tagsSectionFn = [&turn, &tags, &tagsSection](I& i1, I& i2) {
@@ -98,7 +80,7 @@ ECode DbsConfigParser::parse(const string& content)
 
     auto r_tagExpression = r_turn & +(r_tags >> e_ref(tagsSectionFn));
 
-    auto r_verbose = *r_ws & r_verboseKeyword & r_he &
+    auto r_verbose = r_ws & r_verboseKeyword & r_he &
                      (+r_tagExpression >> e_ref(tagExpressionFn)) & r_se;
 
     auto r_config = r_verbose;

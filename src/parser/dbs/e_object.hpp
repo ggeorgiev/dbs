@@ -13,12 +13,6 @@
 
 namespace parser
 {
-static auto r_colon = r_char(':');
-static auto r_semicolon = r_char(';');
-
-static auto r_at = r_char('@');
-static auto r_equal = r_char('=');
-
 struct Object
 {
     Object(const doim::FsDirectorySPtr& location)
