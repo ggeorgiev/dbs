@@ -2,14 +2,7 @@
 //
 
 #include "dom/protobuf/protobuf_plugin.h"
-#include "doim/generic/attribute.h"
-#include "doim/set.hpp"
 #include "err/err.h"
-#include <functional>
-#include <shared_ptr>
-#include <string>
-#include <unordered>
-#include <vector>
 
 namespace dom
 {
