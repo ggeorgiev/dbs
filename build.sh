@@ -169,6 +169,13 @@ clang++ -D NDEBUG -I src/ -O3 -c src/dom/cxx/cxx_program.cpp \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/dom/cxx/cxx_program.cpp.o \
     -std=c++14 &
+if [ ! -e build/release/src/dom/protobuf/ ]; then mkdir build/release/src/dom/protobuf/; fi
+echo Compile src/dom/protobuf/protobuf_plugin.cpp
+clang++ -D NDEBUG -I src/ -O3 -c src/dom/protobuf/protobuf_plugin.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/dom/protobuf/protobuf_plugin.cpp.o \
+    -std=c++14 &
 if [ ! -e build/release/src/engine/ ]; then mkdir build/release/src/engine/; fi
 echo Compile src/engine/cxx_engine.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/engine/cxx_engine.cpp \
@@ -204,7 +211,7 @@ echo Compile src/main.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/main.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem grpc/include/ -isystem protobuf/include/ -isystem rocksdb/include/ \
+    -isystem protobuf/include/ -isystem rocksdb/include/ \
     -isystem spdlog/include/ -isystem src/system/ \
     -o build/release/src/main.cpp.o -std=c++14 &
 if [ ! -e build/release/src/option/ ]; then mkdir build/release/src/option/; fi
@@ -239,7 +246,7 @@ if [ ! -e build/release/src/rpc/client/ ]; then mkdir build/release/src/rpc/clie
 echo Compile src/rpc/client/client.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/rpc/client/client.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
-    -isystem grpc/include/ -isystem protobuf/include/ -isystem src/system/ \
+    -isystem protobuf/include/ -isystem src/system/ \
     -o build/release/src/rpc/client/client.cpp.o -std=c++14 &
 echo Compile src/rpc/rpc.pb.cc
 clang++ -D NDEBUG -I src/ -O3 -c src/rpc/rpc.pb.cc -isystem protobuf/include/ \
@@ -248,7 +255,7 @@ if [ ! -e build/release/src/rpc/server/ ]; then mkdir build/release/src/rpc/serv
 echo Compile src/rpc/server/server.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/rpc/server/server.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
-    -isystem grpc/include/ -isystem protobuf/include/ -isystem src/system/ \
+    -isystem protobuf/include/ -isystem src/system/ \
     -o build/release/src/rpc/server/server.cpp.o -std=c++14 &
 if [ ! -e build/release/src/task/ ]; then mkdir build/release/src/task/; fi
 if [ ! -e build/release/src/task/cxx/ ]; then mkdir build/release/src/task/cxx/; fi
@@ -394,6 +401,7 @@ clang++ -o build/release/dbs -stdlib=libc++ /opt/local/lib/libbz2.a \
     build/release/src/doim/tool/tool_command.cpp.o \
     build/release/src/dom/cxx/cxx_library.cpp.o \
     build/release/src/dom/cxx/cxx_program.cpp.o \
+    build/release/src/dom/protobuf/protobuf_plugin.cpp.o \
     build/release/src/engine/cxx_engine.cpp.o build/release/src/err/err.cpp.o \
     build/release/src/log/hex.cpp.o build/release/src/log/log.cpp.o \
     build/release/src/logex/log.cpp.o build/release/src/main.cpp.o \
@@ -420,5 +428,4 @@ clang++ -o build/release/dbs -stdlib=libc++ /opt/local/lib/libbz2.a \
     build/release/src/tpool/task.cpp.o \
     build/release/src/tpool/task_callback.cpp.o \
     build/release/src/tpool/task_group.cpp.o build/release/src/tpool/tpool.cpp.o \
-    fmt/lib/libfmt.a grpc/lib/libgrpc++.a protobuf/lib/libprotobuf-lite.a \
-    rocksdb/lib/librocksdb.a
+    fmt/lib/libfmt.a protobuf/lib/libprotobuf-lite.a rocksdb/lib/librocksdb.a

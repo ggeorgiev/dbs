@@ -1,3 +1,7 @@
+protobuf_plugin /grpc:
+    binary: ../../grpc/bin/grpc_cpp_plugin;
+;
+
 cxx_library /grpc
     @type=system:
 

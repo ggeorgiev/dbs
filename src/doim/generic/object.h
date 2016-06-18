@@ -28,6 +28,7 @@ struct ObjectEnums
     {
         kCxxLibrary,
         kCxxProgram,
+        kProtobufPlugin,
     };
 };
 

@@ -175,6 +175,8 @@
 		5E87B9EA1CF18E9100F042B4 /* attribute_value.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E87B9E81CF18E9100F042B4 /* attribute_value.h */; };
 		5E87B9ED1CF18F3000F042B4 /* attribute.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E87B9EB1CF18F3000F042B4 /* attribute.cpp */; };
 		5E87B9EE1CF18F3000F042B4 /* attribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E87B9EC1CF18F3000F042B4 /* attribute.h */; };
+		5E8E18291D13B20D009783BD /* protobuf_plugin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8E18271D13B20D009783BD /* protobuf_plugin.cpp */; };
+		5E8E182A1D13B20D009783BD /* protobuf_plugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18281D13B20D009783BD /* protobuf_plugin.h */; };
 		5EABCABB1CE057FD00E79FFD /* sys_executable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */; };
 		5EABCABC1CE057FD00E79FFD /* sys_executable.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EABCABA1CE057FD00E79FFD /* sys_executable.h */; };
 		5EAE67701C7295B2005B3F8D /* cxx_object_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAE676E1C7295B2005B3F8D /* cxx_object_file.cpp */; };
@@ -431,6 +433,8 @@
 		5E87B9E81CF18E9100F042B4 /* attribute_value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attribute_value.h; sourceTree = "<group>"; };
 		5E87B9EB1CF18F3000F042B4 /* attribute.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = attribute.cpp; sourceTree = "<group>"; };
 		5E87B9EC1CF18F3000F042B4 /* attribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = attribute.h; sourceTree = "<group>"; };
+		5E8E18271D13B20D009783BD /* protobuf_plugin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protobuf_plugin.cpp; sourceTree = "<group>"; };
+		5E8E18281D13B20D009783BD /* protobuf_plugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protobuf_plugin.h; sourceTree = "<group>"; };
 		5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sys_executable.cpp; sourceTree = "<group>"; };
 		5EABCABA1CE057FD00E79FFD /* sys_executable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sys_executable.h; sourceTree = "<group>"; };
 		5EAE676E1C7295B2005B3F8D /* cxx_object_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_object_file.cpp; sourceTree = "<group>"; };
@@ -723,6 +727,7 @@
 			isa = PBXGroup;
 			children = (
 				5E10B3431C70F272009C73E4 /* cxx */,
+				5E8E18261D13B20D009783BD /* protobuf */,
 				5E10B3481C70F272009C73E4 /* dom.dbs */,
 				5E283C181CF23BC600852F24 /* element_manager.hpp */,
 				5E283C191CF23BC600852F24 /* element.hpp */,
@@ -1249,6 +1254,15 @@
 			path = dbs;
 			sourceTree = "<group>";
 		};
+		5E8E18261D13B20D009783BD /* protobuf */ = {
+			isa = PBXGroup;
+			children = (
+				5E8E18271D13B20D009783BD /* protobuf_plugin.cpp */,
+				5E8E18281D13B20D009783BD /* protobuf_plugin.h */,
+			);
+			path = protobuf;
+			sourceTree = "<group>";
+		};
 		5EC659AD1CCD9EB600E99E04 /* dp */ = {
 			isa = PBXGroup;
 			children = (
@@ -1304,6 +1318,7 @@
 				5E10B3DA1C70F272009C73E4 /* intermittent.h in Headers */,
 				5E87B9D51CF15BFC00F042B4 /* dbs_parser.h in Headers */,
 				5E87B9EA1CF18E9100F042B4 /* attribute_value.h in Headers */,
+				5E8E182A1D13B20D009783BD /* protobuf_plugin.h in Headers */,
 				5E4113C41CCBF95B00489DA7 /* task_callback.h in Headers */,
 				5E192E6B1CE5911600B1B747 /* string_view in Headers */,
 				5E0AEFD91D03358B0094AD34 /* string_tree_leaf.hpp in Headers */,
@@ -1496,6 +1511,7 @@
 				5E875BD01CFC0F33008AC423 /* cxx_source_headers_task.cpp in Sources */,
 				5EE328641CD846880042B6FF /* simple_memoization-utest.cpp in Sources */,
 				5EC659B21CCD9EB600E99E04 /* memoization-utest.cpp in Sources */,
+				5E8E18291D13B20D009783BD /* protobuf_plugin.cpp in Sources */,
 				5E42052E1C78CB200090FA05 /* fs_directory.cpp in Sources */,
 				5E10B3CE1C70F272009C73E4 /* err.cpp in Sources */,
 				5E290B251CB9B87700F10210 /* task.cpp in Sources */,
