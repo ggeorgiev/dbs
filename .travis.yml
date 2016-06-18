@@ -50,6 +50,6 @@ cache:
       - fmt
       - gtest
       - zlib
-      - lbzip2
+      - bzip2
       - rocksdb
       - spdlog
