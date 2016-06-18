@@ -8,6 +8,15 @@ cxx_library parser
         parser/cxx/cxx_parser.h
         parser/dbs/dbs_config_parser.h
         parser/dbs/dbs_parser.h
+        parser/dbs/e_annex.hpp
+        parser/dbs/e_attribute.hpp
+        parser/dbs/e_cxx_library.hpp
+        parser/dbs/e_cxx_program.hpp
+        parser/dbs/e_directory.hpp
+        parser/dbs/e_file_set.hpp
+        parser/dbs/e_file.hpp
+        parser/dbs/e_object.hpp
+        parser/dbs/e_position.hpp
     ;
 
     cxx_library:
