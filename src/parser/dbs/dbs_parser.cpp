@@ -12,13 +12,10 @@
 #include "parser/dbs/e_object.hpp"
 #include "parser/dbs/e_particle.hpp"
 #include "parser/dbs/e_position.hpp"
-#include "dom/cxx/cxx_program.h"
 #include "doim/fs/fs_directory.h"
-#include "doim/generic/object.h"
 #include <boost/filesystem/operations.hpp>
 #include <fstream> // IWYU pragma: keep
 #include <iterator>
-#include <memory>
 #include <str>
 #include <vector>
 #include <axe.h> // IWYU pragma: keep

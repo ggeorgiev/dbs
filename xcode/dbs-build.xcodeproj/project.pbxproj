@@ -187,6 +187,9 @@
 		5E8E183A1D15F6B1009783BD /* e_cxx_library.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18391D15F6B1009783BD /* e_cxx_library.hpp */; };
 		5E8E183C1D15F87E009783BD /* e_cxx_program.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E183B1D15F87E009783BD /* e_cxx_program.hpp */; };
 		5E8E183E1D1601C6009783BD /* e_particle.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E183D1D1601C6009783BD /* e_particle.hpp */; };
+		5E8E18401D160EA3009783BD /* e_tag.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E183F1D160EA3009783BD /* e_tag.hpp */; };
+		5E8E18421D160F6F009783BD /* e_tag_set.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18411D160F6F009783BD /* e_tag_set.hpp */; };
+		5E8E18441D16130B009783BD /* e_tag_expression.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18431D16130B009783BD /* e_tag_expression.hpp */; };
 		5EABCABB1CE057FD00E79FFD /* sys_executable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */; };
 		5EABCABC1CE057FD00E79FFD /* sys_executable.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EABCABA1CE057FD00E79FFD /* sys_executable.h */; };
 		5EAE67701C7295B2005B3F8D /* cxx_object_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAE676E1C7295B2005B3F8D /* cxx_object_file.cpp */; };
@@ -455,6 +458,9 @@
 		5E8E18391D15F6B1009783BD /* e_cxx_library.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_cxx_library.hpp; sourceTree = "<group>"; };
 		5E8E183B1D15F87E009783BD /* e_cxx_program.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_cxx_program.hpp; sourceTree = "<group>"; };
 		5E8E183D1D1601C6009783BD /* e_particle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_particle.hpp; sourceTree = "<group>"; };
+		5E8E183F1D160EA3009783BD /* e_tag.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_tag.hpp; sourceTree = "<group>"; };
+		5E8E18411D160F6F009783BD /* e_tag_set.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_tag_set.hpp; sourceTree = "<group>"; };
+		5E8E18431D16130B009783BD /* e_tag_expression.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_tag_expression.hpp; sourceTree = "<group>"; };
 		5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sys_executable.cpp; sourceTree = "<group>"; };
 		5EABCABA1CE057FD00E79FFD /* sys_executable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sys_executable.h; sourceTree = "<group>"; };
 		5EAE676E1C7295B2005B3F8D /* cxx_object_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_object_file.cpp; sourceTree = "<group>"; };
@@ -1246,6 +1252,9 @@
 				5E8E18351D15F45B009783BD /* e_object.hpp */,
 				5E8E183D1D1601C6009783BD /* e_particle.hpp */,
 				5E8E182B1D15EFAA009783BD /* e_position.hpp */,
+				5E8E18431D16130B009783BD /* e_tag_expression.hpp */,
+				5E8E18411D160F6F009783BD /* e_tag_set.hpp */,
+				5E8E183F1D160EA3009783BD /* e_tag.hpp */,
 			);
 			path = dbs;
 			sourceTree = "<group>";
@@ -1370,12 +1379,15 @@
 				5E290B481CBAD26100F10210 /* cxx_engine.h in Headers */,
 				5E0C292A1CFE9F4B00D7E849 /* dbs_config_parser.h in Headers */,
 				5E87B9DE1CF1603000F042B4 /* user1.h in Headers */,
+				5E8E18401D160EA3009783BD /* e_tag.hpp in Headers */,
 				5E10B3E21C70F272009C73E4 /* initialization_manager.hpp in Headers */,
 				5E8079AA1D090A1A00BB6C1C /* log.h in Headers */,
+				5E8E18421D160F6F009783BD /* e_tag_set.hpp in Headers */,
 				5EAE677F1C72BE59005B3F8D /* cxx_program.h in Headers */,
 				5E3CA9AE1CCEC90600F6D7ED /* solitary_container.hpp in Headers */,
 				5E42053F1C79097C0090FA05 /* element_manager.hpp in Headers */,
 				5E875BB71CFAA3CD008AC423 /* crc_task.hpp in Headers */,
+				5E8E18441D16130B009783BD /* e_tag_expression.hpp in Headers */,
 				5E0C29301CFF252300D7E849 /* tag_expression.h in Headers */,
 				5E8E183E1D1601C6009783BD /* e_particle.hpp in Headers */,
 				5E875BBB1CFAC7EB008AC423 /* element_manager.hpp in Headers */,
