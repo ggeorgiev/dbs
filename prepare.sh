@@ -11,6 +11,25 @@ then
     rm  clang.zip
 fi
 
+if [ ! -e zlib -o ! "$(ls -A zlib)" ]
+then
+    git submodule update --init 3rdparty/zlib || exit 1
+    
+    cd 3rdparty/zlib || exit 1
+    
+    echo Build zlib ...
+    
+    make distclean || exit 1
+    ./configure --disable-shared \
+        --prefix=`pwd`/../../zlib CC=clang CXX=clang++ || exit 1
+    
+    make || exit 1
+    make install || exit 1
+    
+    git clean -fdx
+
+    cd ../..
+fi
 
 if [ ! -e protobuf -o ! "$(ls -A protobuf)" ]
 then
