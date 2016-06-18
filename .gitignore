@@ -9,6 +9,8 @@
 /spdlog/
 /protobuf/
 /grpc/
+/zlib/
+/bzip2/
 /build/
 
 xcuserdata/

@@ -20,11 +20,24 @@ then
     echo Build zlib ...
     
     make distclean || exit 1
-    ./configure --disable-shared \
-        --prefix=`pwd`/../../zlib CC=clang CXX=clang++ || exit 1
+    ./configure --prefix=`pwd`/../../zlib  || exit 1
     
-    make || exit 1
+    CC=clang CXX=clang++ make || exit 1
     make install || exit 1
+    
+    git clean -fdx
+
+    cd ../..
+fi
+
+if [ ! -e bzip2 -o ! "$(ls -A bzip2)" ]
+then
+    cd 3rdparty/bzip2 || exit 1
+    
+    echo Build bzip2 ...
+    
+    CC=clang CXX=clang++ make || exit 1
+    make install PREFIX=`pwd`/../../bzip2 || exit 1
     
     git clean -fdx
 

@@ -373,8 +373,7 @@ clang++ -D NDEBUG -I src/ -O3 -c src/tpool/tpool.cpp \
     -isystem src/system/ -o build/release/src/tpool/tpool.cpp.o -std=c++14 &
 wait
 echo Link build/release/dbs
-clang++ -o build/release/dbs -stdlib=libc++ /opt/local/lib/libbz2.a \
-    /opt/local/lib/libz.a boost/lib/libboost_filesystem.a \
+clang++ -o build/release/dbs -stdlib=libc++ boost/lib/libboost_filesystem.a \
     boost/lib/libboost_system.a boost/lib/libboost_thread.a \
     build/release/src/const/constants.cpp.o build/release/src/db/database.cpp.o \
     build/release/src/doim/cxx/cxx_file.cpp.o \
@@ -428,4 +427,5 @@ clang++ -o build/release/dbs -stdlib=libc++ /opt/local/lib/libbz2.a \
     build/release/src/tpool/task.cpp.o \
     build/release/src/tpool/task_callback.cpp.o \
     build/release/src/tpool/task_group.cpp.o build/release/src/tpool/tpool.cpp.o \
-    fmt/lib/libfmt.a protobuf/lib/libprotobuf-lite.a rocksdb/lib/librocksdb.a
+    bzip2/lib/libbz2.a fmt/lib/libfmt.a protobuf/lib/libprotobuf-lite.a \
+    rocksdb/lib/librocksdb.a zlib/lib/libz.a

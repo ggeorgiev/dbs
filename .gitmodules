@@ -32,6 +32,3 @@
 [submodule "3rdparty/zlib"]
 	path = 3rdparty/zlib
 	url = https://github.com/madler/zlib.git
-[submodule "3rdparty/lbzip2"]
-	path = 3rdparty/lbzip2
-	url = https://github.com/kjn/lbzip2.git

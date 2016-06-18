@@ -49,5 +49,7 @@ cache:
       - boost
       - fmt
       - gtest
+      - zlib
+      - lbzip2
       - rocksdb
       - spdlog
