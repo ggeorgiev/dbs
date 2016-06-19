@@ -5,12 +5,9 @@
 
 #include "doim/element.hpp"
 #include "doim/set.hpp"
-#include <boost/hana/for_each.hpp>
-#include <functional>
 #include <memory>
 #include <str>
 #include <tuple>
-#include <unordered>
 
 namespace doim
 {

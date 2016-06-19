@@ -4,6 +4,7 @@
 #include "parser/dbs/dbs_parser.h"
 #include "dom/cxx/cxx_library.h"
 #include "dom/cxx/cxx_program.h"
+#include "dom/prj/depository.h"
 #include "doim/cxx/cxx_file.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
@@ -219,4 +220,19 @@ TEST(DbsParserTest, SLOW_CxxProgramCxxFile)
     ASSERT_NE(nullptr, cxxProgramCxxFiles);
 
     ASSERT_EQ(1, cxxProgramCxxFiles->cxxFilesList().size());
+}
+
+TEST(DbsParserTest, SLOW_Depository)
+{
+    parse();
+
+    auto mDbsDirectory =
+        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+
+    auto depositoryObject =
+        doim::Object::obtain(doim::Object::EType::kDepository, mDbsDirectory, "depo");
+
+    auto depo = dom::Depository::find(depositoryObject);
+    ASSERT_NE(nullptr, depo);
+    ASSERT_NE(nullptr, depo->gitUrl());
 }

@@ -3,4 +3,6 @@ annex:
     
     cxx_library.dbs
     cxx_program.dbs
+    
+    depository.dbs
 ; 

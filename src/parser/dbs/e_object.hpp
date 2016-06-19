@@ -32,6 +32,12 @@ struct Object
             [this](I& i1, I& i2) { mObjType = doim::Object::EType::kCxxProgram; });
     }
 
+    auto depository()
+    {
+        return e_ref(
+            [this](I& i1, I& i2) { mObjType = doim::Object::EType::kDepository; });
+    }
+
     void operator()(I& i1, I& i2)
     {
         auto size = std::distance(i1, i2);

@@ -6,12 +6,14 @@
 #include "parser/dbs/e_attribute.hpp"
 #include "parser/dbs/e_cxx_library.hpp"
 #include "parser/dbs/e_cxx_program.hpp"
+#include "parser/dbs/e_depository.hpp"
 #include "parser/dbs/e_directory.hpp"
 #include "parser/dbs/e_file.hpp"
 #include "parser/dbs/e_file_set.hpp"
 #include "parser/dbs/e_object.hpp"
 #include "parser/dbs/e_particle.hpp"
 #include "parser/dbs/e_position.hpp"
+#include "parser/dbs/e_url.hpp"
 #include "doim/fs/fs_directory.h"
 #include <boost/filesystem/operations.hpp>
 #include <fstream> // IWYU pragma: keep
@@ -57,16 +59,31 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     FileSet files(file);
     auto r_files = r_empty() >> files.reset() & *(r_file >> e_ref(files));
 
+    // Url
+    Url url;
+    auto r_url = r_ws & (r_ident() & r_colon & r_slash & r_slash & r_path) >> e_ref(url);
+
     // Object
     Object object(location);
     auto r_object = r_ws & r_path >> e_ref(object);
     auto r_objectCxxLibrary = r_empty() >> object.cxxLibrary() & r_object;
     auto r_objectCxxProgram = r_empty() >> object.cxxProgram() & r_object;
+    auto r_objectDepository = r_empty() >> object.depository() & r_object;
 
     // Annex
     Annex annex(errors, file);
     auto r_annex =
         r_ws & r_annexKw & r_he & r_resetDir & *(r_file >> e_ref(annex)) & r_se;
+
+    // Depository Ref
+    DepositoryRef depositoryRef(object);
+    auto r_depositoryRef = r_objectDepository >> e_ref(depositoryRef);
+
+    // Depository
+    Depository depository(url, depositoryRef);
+    auto r_depositoryName = r_depositoryRef >> depository.name();
+    auto r_git = r_ws & r_gitKw & r_he & r_url >> depository.gitUrl() & r_se;
+    auto r_depository = r_ws & r_depositoryKw & r_depositoryName & r_he & r_git & r_se;
 
     // CxxLibrary Ref
     CxxLibraryRef cxxLibraryRef(object);
@@ -126,7 +143,8 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     auto r_cxxProgram = r_ws & r_cxxProgramKw & r_cxxProgramName & r_he &
                         *(r_cxxProgramCxxFile | r_cxxProgramCxxLibrary) & r_se;
 
-    const auto& r_dbs = ~r_annex & *(r_cxxLibrary | r_cxxProgram) & r_ws & r_end();
+    const auto& r_dbs =
+        ~r_annex & *(r_depository | r_cxxLibrary | r_cxxProgram) & r_ws & r_end();
 
     // Dbs file
     const auto& path = dbsFile->path();

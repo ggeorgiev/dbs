@@ -2,7 +2,6 @@
 //
 
 #include "doim/url/url.h"
-#include <functional>
 
 namespace doim
 {

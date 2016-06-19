@@ -12,10 +12,12 @@ Depository::Depository()
 ECode Depository::updateType(const EType& type)
 {
     mType = type;
+    EHEnd;
 }
 
-ECode Depository::updateUrl(const doim::UrlSPtr& url)
+ECode Depository::updateGitUrl(const doim::UrlSPtr& url)
 {
-    mUrl = url;
+    mGitUrl = url;
+    EHEnd;
 }
 }

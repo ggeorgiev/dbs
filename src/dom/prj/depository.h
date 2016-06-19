@@ -7,8 +7,6 @@
 #include "doim/url/url.h"
 #include "err/err.h"
 #include <memory>
-#include <str>
-#include <tuple>
 
 namespace dom
 {
@@ -31,18 +29,18 @@ public:
         return mType;
     }
 
-    doim::UrlSPtr url()
+    doim::UrlSPtr gitUrl()
     {
-        return mUrl;
+        return mGitUrl;
     }
 
     // Updates
     ECode updateType(const EType& type);
 
-    ECode updateUrl(const doim::UrlSPtr& url);
+    ECode updateGitUrl(const doim::UrlSPtr& url);
 
 private:
     EType mType;
-    doim::UrlSPtr mUrl;
+    doim::UrlSPtr mGitUrl;
 };
 }

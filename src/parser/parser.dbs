@@ -13,6 +13,7 @@ cxx_library parser
         parser/dbs/e_cxx_library.hpp
         parser/dbs/e_cxx_program.hpp
         parser/dbs/e_directory.hpp
+        parser/dbs/e_depository.hpp
         parser/dbs/e_file_set.hpp
         parser/dbs/e_file.hpp
         parser/dbs/e_object.hpp
@@ -21,6 +22,7 @@ cxx_library parser
         parser/dbs/e_tag_expression.hpp
         parser/dbs/e_tag_set.hpp
         parser/dbs/e_tag.hpp
+        parser/dbs/e_url.hpp
     ;
 
     cxx_library:
