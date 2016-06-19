@@ -44,37 +44,36 @@ then
     cd ../..
 fi
 
-if [ ! -e protobuf -o ! "$(ls -A protobuf)" ]
+if [ ! -e bzip2 -o ! "$(ls -A bzip2)" ]
 then
-    git submodule update --init 3rdparty/grpc || exit 1
+    cd 3rdparty/bzip2 || exit 1
     
-    cd 3rdparty/grpc || exit 1
+    echo Build bzip2 ...
     
-    git submodule update --init || exit 1
-    
-    cd third_party/protobuf || exit 1
-    
-    echo Build protobuf ...
-    
-    git clean -fdx
-    
-    ./autogen.sh || exit 1
-    ./configure --disable-shared \
-        --prefix=`pwd`/../../../../protobuf CC=clang CXX=clang++ \
-        CXXFLAGS='-std=c++14 -stdlib=libc++ -O3 -g' \
-        LDFLAGS='-stdlib=libc++' LIBS="-lc++ -lc++abi" || exit 1
-    
-    make || exit 1
-    make install || exit 1
+    CC=clang CXX=clang++ make || exit 1
+    make install PREFIX=`pwd`/../../bzip2 || exit 1
     
     git clean -fdx
 
-    cd ../../../..
+    cd ../..
+fi
 
-    if [ "$TRAVIS" == "true" ]
-    then
-        exit 0
-    fi    
+
+if [ ! -e libgit2 -o ! "$(ls -A libgit2)" ]
+then
+    git submodule update --init 3rdparty/libgit2 || exit 1
+    
+    cd 3rdparty/libgit2 || exit 1
+    
+    echo Build libgit2 ...
+    
+    mkdir build && cd build
+    cmake .. -DCMAKE_INSTALL_PREFIX=`pwd`/../../../libgit2 || exit 2
+    cmake --build . --target install || exit 2
+        
+    git clean -fdx
+
+    cd ../../..
 fi
 
 if [ ! -e grpc -o ! "$(ls -A grpc)" ]

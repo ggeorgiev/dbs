@@ -60,6 +60,20 @@ TEST(DbsParserTest, SLOW_CxxLibrary)
     EXPECT_EQ(dom::CxxLibrary::EType::kUser, cxxLibraryUser->type());
 }
 
+TEST(DbsParserTest, SLOW_CxxLibraryDepo)
+{
+    parse();
+
+    auto mDbsDirectory =
+        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+
+    auto cxxLibraryDepoObject =
+        doim::Object::obtain(doim::Object::EType::kCxxLibrary, mDbsDirectory, "cxx_depo");
+
+    auto cxxLibraryDepo = dom::CxxLibrary::find(cxxLibraryDepoObject);
+    ASSERT_NE(nullptr, cxxLibraryDepo->depository());
+}
+
 TEST(DbsParserTest, SLOW_CxxLibraryCxxHeader)
 {
     parse();

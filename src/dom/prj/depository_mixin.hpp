@@ -19,6 +19,11 @@ class DepositoryMixin
 public:
     typedef T Subject;
 
+    const dom::DepositorySPtr& depository()
+    {
+        return mDepository;
+    }
+
     ECode updateDepository(const dom::DepositorySPtr& depository)
     {
         mDepository = depository;

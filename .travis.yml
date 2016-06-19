@@ -49,6 +49,7 @@ cache:
       - boost
       - fmt
       - gtest
+      - libgit2
       - zlib
       - bzip2
       - rocksdb
