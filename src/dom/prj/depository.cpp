@@ -20,4 +20,10 @@ ECode Depository::updateGitUrl(const doim::UrlSPtr& url)
     mGitUrl = url;
     EHEnd;
 }
+
+ECode Depository::updateGitTag(const std::string& tag)
+{
+    mGitTag = tag;
+    EHEnd;
+}
 }

@@ -34,13 +34,21 @@ public:
         return mGitUrl;
     }
 
+    string gitTag()
+    {
+        return mGitTag;
+    }
+
     // Updates
     ECode updateType(const EType& type);
 
     ECode updateGitUrl(const doim::UrlSPtr& url);
 
+    ECode updateGitTag(const std::string& tag);
+
 private:
     EType mType;
     doim::UrlSPtr mGitUrl;
+    string mGitTag;
 };
 }

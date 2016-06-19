@@ -6,6 +6,7 @@
 #include "dom/cxx/cxx_files_mixin.hpp"
 #include "dom/cxx/cxx_headers_mixin.hpp"
 #include "dom/cxx/protobufs_mixin.hpp"
+#include "dom/prj/depository_mixin.hpp"
 #include "dom/element.hpp"
 #include "doim/cxx/cxx_header.h"
 #include "doim/cxx/cxx_include_directory.h"
@@ -33,7 +34,8 @@ typedef shared_ptr<CxxLibrarySet> CxxLibrarySetSPtr;
 class CxxLibrary : public Element<CxxLibrary>,
                    public ProtobufsMixin<CxxLibrary>,
                    public CxxFilesMixin<CxxLibrary>,
-                   public CxxHeadersMixin<CxxLibrary>
+                   public CxxHeadersMixin<CxxLibrary>,
+                   public DepositoryMixin<CxxLibrary>
 {
 public:
     static doim::AttributeNameSPtr gType;

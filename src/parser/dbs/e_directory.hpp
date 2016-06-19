@@ -13,8 +13,8 @@
 namespace parser
 {
 static auto r_slash = r_char('/');
-static auto r_illegal = r_any("/?<>\\:;*|\"");
-static auto r_pathChars = r_any() - r_illegal - r_space - r_endl;
+static auto r_pathIllegal = r_any("/?<>\\:;*|\"");
+static auto r_pathChars = r_any() - r_pathIllegal - r_space - r_endl;
 static auto r_path = ~r_slash & +r_pathChars & *(r_slash & +r_pathChars) & ~r_slash;
 
 struct Directory

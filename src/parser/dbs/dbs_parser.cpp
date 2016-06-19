@@ -82,7 +82,10 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     // Depository
     Depository depository(url, depositoryRef);
     auto r_depositoryName = r_depositoryRef >> depository.name();
-    auto r_git = r_ws & r_gitKw & r_he & r_url >> depository.gitUrl() & r_se;
+    auto r_giturl = r_ws & r_urlKw & r_he & r_url >> depository.gitUrl() & r_se;
+    auto r_gittag =
+        r_ws & r_tagKw & r_he & r_ws & r_gittagValue >> depository.gitTag() & r_se;
+    auto r_git = r_ws & r_gitKw & r_he & r_giturl & r_gittag & r_se;
     auto r_depository = r_ws & r_depositoryKw & r_depositoryName & r_he & r_git & r_se;
 
     // CxxLibrary Ref

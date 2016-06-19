@@ -235,4 +235,5 @@ TEST(DbsParserTest, SLOW_Depository)
     auto depo = dom::Depository::find(depositoryObject);
     ASSERT_NE(nullptr, depo);
     ASSERT_NE(nullptr, depo->gitUrl());
+    ASSERT_EQ("v1.2.8", depo->gitTag());
 }

@@ -17,6 +17,16 @@ namespace parser
 {
 static auto r_depositoryKw = r_str("depository");
 static auto r_gitKw = r_str("git");
+static auto r_tagKw = r_str("tag");
+static auto r_urlKw = r_str("url");
+
+static auto r_dot = r_char('.');
+
+static auto r_gittagIllegal = r_any("~^:*?[\\;");
+static auto r_gittagChars = r_any() - r_gittagIllegal - r_space - r_endl;
+static auto r_gittagStartChars = r_gittagChars - r_slash;
+static auto r_gittagEndChars = r_gittagChars - r_slash - r_dot;
+static auto r_gittagValue = r_gittagStartChars & *r_gittagChars;
 
 struct DepositoryRef
 {
@@ -45,6 +55,11 @@ struct Depository
     auto gitUrl()
     {
         return e_ref([this](I& i1, I& i2) { mDepository->updateGitUrl(mUrl.mUrl); });
+    }
+
+    auto gitTag()
+    {
+        return e_ref([this](I& i1, I& i2) { mDepository->updateGitTag(string(i1, i2)); });
     }
 
     auto name()
