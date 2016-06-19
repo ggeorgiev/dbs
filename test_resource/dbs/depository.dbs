@@ -4,3 +4,22 @@ depository depo:
         tag: v1.2.8;
     ;
 ; 
+
+cxx_library cxx_depo:
+
+    depository: depo;
+
+    cxx_library:
+        foo
+    ;
+
+    cxx_header
+        @visibility=public
+        @directory=..:
+
+        bar/foo.h
+    ;
+    
+    binary: libfoo.a;
+
+;

@@ -99,7 +99,8 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
         r_ws & r_cxxLibraryKw >> cxxLibraries.reset() & r_he & *r_cxxLibraryItem & r_se;
 
     // CxxLibrary
-    CxxLibrary cxxLibrary(attribute, directory, file, files, cxxLibraries, cxxLibraryRef);
+    CxxLibrary cxxLibrary(
+        attribute, directory, depository, file, files, cxxLibraries, cxxLibraryRef);
     auto r_cxxHeaderAttribute = r_attribute >> cxxLibrary.attribute();
 
     // CxxHeaders
@@ -111,6 +112,9 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     auto r_cxxFiles = r_ws & r_cxxFileKw & r_he & r_resetDir & r_files & r_se;
     auto r_cxxLibraryCxxFile = r_cxxFiles >> cxxLibrary.files();
 
+    // CxxLibrary Depository
+    auto r_cxxLibraryDepository =
+        r_ws & r_depositoryKw & r_he & r_depositoryName >> cxxLibrary.depository() & r_se;
     // CxxLibrary CxxLibrary
     auto r_cxxLibraryX2 = r_cxxLibraries >> cxxLibrary.libraries();
 
@@ -126,11 +130,11 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     // ... CxxLibrary
     auto r_cxxLibraryName = r_cxxLibraryRef >> cxxLibrary.name();
     auto r_cxxLibraryAttribute = r_attribute >> cxxLibrary.updateAttribute();
-    auto r_cxxLibrary = r_ws & r_cxxLibraryKw & r_cxxLibraryName &
-                        *r_cxxLibraryAttribute & r_he &
-                        *(r_cxxLibraryCxxFile | r_cxxLibraryProtobufFile | r_cxxHeader |
-                          r_cxxLibraryX2 | r_binary) &
-                        r_se;
+    auto r_cxxLibrary =
+        r_ws & r_cxxLibraryKw & r_cxxLibraryName & *r_cxxLibraryAttribute & r_he &
+        *(r_cxxLibraryDepository | r_cxxLibraryCxxFile | r_cxxLibraryProtobufFile |
+          r_cxxHeader | r_cxxLibraryX2 | r_binary) &
+        r_se;
 
     // CxxProgram
     CxxProgram cxxProgram(object, files, cxxLibraries);

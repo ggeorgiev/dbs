@@ -5,6 +5,7 @@
 
 #include "parser/dbs/e_annex.hpp"
 #include "parser/dbs/e_attribute.hpp"
+#include "parser/dbs/e_depository.hpp"
 #include "parser/dbs/e_directory.hpp"
 #include "parser/dbs/e_file.hpp"
 #include "parser/dbs/e_file_set.hpp"
@@ -60,12 +61,14 @@ struct CxxLibrary
 {
     CxxLibrary(Attribute& attribute,
                Directory& directory,
+               Depository& depository,
                File& file,
                FileSet& files,
                CxxLibrarySet& cxxLibraries,
                CxxLibraryRef& cxxLibraryRef)
         : mAttribute(attribute)
         , mDirectory(directory)
+        , mDepository(depository)
         , mFile(file)
         , mFiles(files)
         , mCxxLibraries(cxxLibraries)
@@ -107,6 +110,13 @@ struct CxxLibrary
             return doim::CxxHeader::EVisibility::kProtected;
         ASSERT(false);
         return doim::CxxHeader::EVisibility::kProtected;
+    }
+
+    auto depository()
+    {
+        return e_ref([this](I& i1, I& i2) {
+            mCxxLibrary->updateDepository(mDepository.mDepository);
+        });
     }
 
     auto cxxHeaders()
@@ -159,6 +169,7 @@ struct CxxLibrary
 
     Attribute& mAttribute;
     Directory& mDirectory;
+    Depository& mDepository;
     File& mFile;
     FileSet& mFiles;
     CxxLibrarySet& mCxxLibraries;

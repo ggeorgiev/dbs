@@ -42,7 +42,7 @@ public:
     }
 };
 
-TEST(TaskGroupTest, scheduled)
+TEST(TaskGroupTest, SLOW_scheduled)
 {
     auto pool = TPool::create(10);
 
