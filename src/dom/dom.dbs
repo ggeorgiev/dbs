@@ -10,6 +10,7 @@ cxx_library dom
         dom/cxx/cxx_headers_mixin.hpp
         dom/cxx/cxx_program.h
         dom/cxx/protobufs_mixin.hpp
+        dom/prj/depository.h
         dom/protobuf/protobuf_plugin.h
         dom/element_manager.hpp
         dom/element.hpp
@@ -26,6 +27,7 @@ cxx_library dom
     cxx_file:
         cxx/cxx_library.cpp
         cxx/cxx_program.cpp
+        prj/depository.cpp
         protobuf/protobuf_plugin.cpp
     ;
 ;

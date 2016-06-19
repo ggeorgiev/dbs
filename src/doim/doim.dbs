@@ -37,6 +37,7 @@ cxx_library doim
         doim/tree/string_tree_node.hpp
         doim/tree/tree_leaf.hpp
         doim/tree/tree_node.hpp
+        doim/url/url.h
     ;
 
     cxx_library:
@@ -73,6 +74,7 @@ cxx_library doim
         tag/tag_expression.cpp
         tag/tag.cpp
         tool/tool_command.cpp
+        url/url.cpp
     ;
 ;
 

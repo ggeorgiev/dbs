@@ -39,6 +39,7 @@ protected:
 public:
     static TPoolSPtr create(size_t maxThreads);
 
+    ~TPool();
     void ensureScheduled(const TaskSPtr& task);
     void updatePriority(const TaskSPtr& task);
     void run();

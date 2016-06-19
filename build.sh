@@ -155,6 +155,12 @@ clang++ -D NDEBUG -I src/ -O3 -c src/doim/tool/tool_command.cpp \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/doim/tool/tool_command.cpp.o \
     -std=c++14 &
+if [ ! -e build/release/src/doim/url/ ]; then mkdir build/release/src/doim/url/; fi
+echo Compile src/doim/url/url.cpp
+clang++ -D NDEBUG -I src/ -O3 -c src/doim/url/url.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/doim/url/url.cpp.o -std=c++14 &
 if [ ! -e build/release/src/dom/ ]; then mkdir build/release/src/dom/; fi
 if [ ! -e build/release/src/dom/cxx/ ]; then mkdir build/release/src/dom/cxx/; fi
 echo Compile src/dom/cxx/cxx_library.cpp
@@ -168,6 +174,13 @@ clang++ -D NDEBUG -I src/ -O3 -c src/dom/cxx/cxx_program.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/dom/cxx/cxx_program.cpp.o \
+    -std=c++14 &
+if [ ! -e build/release/src/dom/prj/ ]; then mkdir build/release/src/dom/prj/; fi
+echo Compile src/dom/prj/depository.cpp
+clang++ -D NDEBUG -I src/ -O3 -c src/dom/prj/depository.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/dom/prj/depository.cpp.o \
     -std=c++14 &
 if [ ! -e build/release/src/dom/protobuf/ ]; then mkdir build/release/src/dom/protobuf/; fi
 echo Compile src/dom/protobuf/protobuf_plugin.cpp
@@ -398,8 +411,10 @@ clang++ -o build/release/dbs -stdlib=libc++ boost/lib/libboost_filesystem.a \
     build/release/src/doim/tag/tag.cpp.o \
     build/release/src/doim/tag/tag_expression.cpp.o \
     build/release/src/doim/tool/tool_command.cpp.o \
+    build/release/src/doim/url/url.cpp.o \
     build/release/src/dom/cxx/cxx_library.cpp.o \
     build/release/src/dom/cxx/cxx_program.cpp.o \
+    build/release/src/dom/prj/depository.cpp.o \
     build/release/src/dom/protobuf/protobuf_plugin.cpp.o \
     build/release/src/engine/cxx_engine.cpp.o build/release/src/err/err.cpp.o \
     build/release/src/log/hex.cpp.o build/release/src/log/log.cpp.o \

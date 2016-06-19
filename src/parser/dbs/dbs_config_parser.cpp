@@ -7,20 +7,16 @@
 #include "parser/dbs/e_tag.hpp"
 #include "parser/dbs/e_tag_expression.hpp"
 #include "parser/dbs/e_tag_set.hpp"
-#include "doim/tag/tag.h"
 #include "doim/tag/tag_expression.h"
 #include <boost/filesystem/operations.hpp>
 #include <fstream> // IWYU pragma: keep
 #include <iterator>
-#include <memory>
 #include <str>
-#include <utility>
-#include <vector>
 #include <axe.h> // IWYU pragma: keep
 
 namespace parser
 {
-static auto r_verboseKeyword = r_str("verbose");
+static auto r_verboseKw = r_str("verbose");
 
 ECode DbsConfigParser::parse(const doim::FsFileSPtr& dbsFile)
 {
@@ -53,12 +49,11 @@ ECode DbsConfigParser::parse(const string& content)
     auto r_tags = r_empty() >> tags.reset() & +(r_tag >> e_ref(tags));
 
     TagExpression tagExpression(tags);
-    auto r_turn = r_ws & r_turnChar >> tagExpression.turn();
-
-    auto r_tagExpression = r_turn & +(r_tags >> tagExpression.section());
+    auto r_tagExpression =
+        r_ws & r_turnChar >> tagExpression.turn() & +(r_tags >> tagExpression.section());
 
     auto r_verbose =
-        r_ws & r_verboseKeyword & r_he & +r_tagExpression >> e_ref(tagExpression) & r_se;
+        r_ws & r_verboseKw & r_he & +r_tagExpression >> e_ref(tagExpression) & r_se;
 
     auto r_config = r_verbose;
 

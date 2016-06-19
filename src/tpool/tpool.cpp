@@ -11,6 +11,13 @@
 
 namespace tpool
 {
+TPoolSPtr TPool::create(size_t maxThreads)
+{
+    // Thread pools are created rarely. No need of any tricks to allow make_shared
+    // for a protected method.
+    return TPoolSPtr(new TPool(maxThreads));
+}
+
 TPool::TPool(size_t maxThreads)
     : mMaxThreads(maxThreads)
     , mFreeThreads(0)
@@ -19,11 +26,9 @@ TPool::TPool(size_t maxThreads)
 {
 }
 
-TPoolSPtr TPool::create(size_t maxThreads)
+TPool::~TPool()
 {
-    // Thread pools are created rarely. No need of any tricks to allow make_shared
-    // for a protected method.
-    return TPoolSPtr(new TPool(maxThreads));
+    join();
 }
 
 void TPool::ensureScheduled(const TaskSPtr& task)
