@@ -68,12 +68,15 @@ then
     echo Build libgit2 ...
     
     mkdir build && cd build
-    cmake .. -DCMAKE_INSTALL_PREFIX=`pwd`/../../../libgit2 || exit 2
+    cmake .. -DCMAKE_INSTALL_PREFIX=`pwd`/../../../libgit2 \
+        -DBUILD_SHARED_LIBS=OFF || exit 2
     cmake --build . --target install || exit 2
+    
+    cd ..
         
     git clean -fdx
 
-    cd ../../..
+    cd ../..
 fi
 
 if [ ! -e grpc -o ! "$(ls -A grpc)" ]

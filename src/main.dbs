@@ -6,6 +6,7 @@ annex:
 
     3rdparty/axe.dbs
     3rdparty/boost.dbs
+    3rdparty/git2.dbs
     3rdparty/fmt.dbs
     3rdparty/rocksdb.dbs
     3rdparty/grpc.dbs

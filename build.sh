@@ -194,8 +194,8 @@ echo Compile src/engine/cxx_engine.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/engine/cxx_engine.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/engine/cxx_engine.cpp.o -std=c++14 &
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/engine/cxx_engine.cpp.o -std=c++14 &
 if [ ! -e build/release/src/err/ ]; then mkdir build/release/src/err/; fi
 echo Compile src/err/err.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/err/err.cpp \
@@ -224,8 +224,8 @@ echo Compile src/main.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/main.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem protobuf/include/ -isystem rocksdb/include/ \
-    -isystem spdlog/include/ -isystem src/system/ \
+    -isystem libgit2/include/ -isystem protobuf/include/ \
+    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
     -o build/release/src/main.cpp.o -std=c++14 &
 if [ ! -e build/release/src/option/ ]; then mkdir build/release/src/option/; fi
 echo Compile src/option/verbose.cpp
@@ -276,91 +276,111 @@ echo Compile src/task/cxx/cxx_object_file_crc_task.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/task/cxx/cxx_object_file_crc_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ \
     -o build/release/src/task/cxx/cxx_object_file_crc_task.cpp.o -std=c++14 &
 echo Compile src/task/cxx/cxx_program_crc_task.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/task/cxx/cxx_program_crc_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ \
     -o build/release/src/task/cxx/cxx_program_crc_task.cpp.o -std=c++14 &
 echo Compile src/task/cxx/cxx_source_crc_task.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/task/cxx/cxx_source_crc_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/cxx/cxx_source_crc_task.cpp.o -std=c++14 &
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/task/cxx/cxx_source_crc_task.cpp.o \
+    -std=c++14 &
 echo Compile src/task/cxx/cxx_source_headers_task.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/task/cxx/cxx_source_headers_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ \
     -o build/release/src/task/cxx/cxx_source_headers_task.cpp.o -std=c++14 &
 if [ ! -e build/release/src/task/db/ ]; then mkdir build/release/src/task/db/; fi
 echo Compile src/task/db/db_put_task.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/task/db/db_put_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/db/db_put_task.cpp.o -std=c++14 &
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/task/db/db_put_task.cpp.o \
+    -std=c++14 &
+if [ ! -e build/release/src/task/git/ ]; then mkdir build/release/src/task/git/; fi
+echo Compile src/task/git/git_fetch_task.cpp
+clang++ -D NDEBUG -I src/ -O3 -c src/task/git/git_fetch_task.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/task/git/git_fetch_task.cpp.o \
+    -std=c++14 &
 if [ ! -e build/release/src/task/protobuf/ ]; then mkdir build/release/src/task/protobuf/; fi
 echo Compile src/task/protobuf/protobuf_file_crc_task.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/task/protobuf/protobuf_file_crc_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ \
     -o build/release/src/task/protobuf/protobuf_file_crc_task.cpp.o -std=c++14 &
 if [ ! -e build/release/src/task/sys/ ]; then mkdir build/release/src/task/sys/; fi
 echo Compile src/task/sys/ensure_directory_task.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/task/sys/ensure_directory_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ \
     -o build/release/src/task/sys/ensure_directory_task.cpp.o -std=c++14 &
 echo Compile src/task/sys/execute_command_task.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/task/sys/execute_command_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ \
     -o build/release/src/task/sys/execute_command_task.cpp.o -std=c++14 &
 echo Compile src/task/sys/parse_stdout_task.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/task/sys/parse_stdout_task.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/sys/parse_stdout_task.cpp.o -std=c++14 &
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/task/sys/parse_stdout_task.cpp.o \
+    -std=c++14 &
 echo Compile src/task/tpool.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/task/tpool.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/task/tpool.cpp.o -std=c++14 &
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/task/tpool.cpp.o -std=c++14 &
 if [ ! -e build/release/src/tool/ ]; then mkdir build/release/src/tool/; fi
 if [ ! -e build/release/src/tool/cxx/ ]; then mkdir build/release/src/tool/cxx/; fi
 echo Compile src/tool/cxx/cxx_clang_format.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/tool/cxx/cxx_clang_format.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/tool/cxx/cxx_clang_format.cpp.o -std=c++14 &
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/tool/cxx/cxx_clang_format.cpp.o \
+    -std=c++14 &
 echo Compile src/tool/cxx/cxx_compiler.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/tool/cxx/cxx_compiler.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/tool/cxx/cxx_compiler.cpp.o -std=c++14 &
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/tool/cxx/cxx_compiler.cpp.o \
+    -std=c++14 &
 echo Compile src/tool/cxx/cxx_iwyu.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/tool/cxx/cxx_iwyu.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
-    -o build/release/src/tool/cxx/cxx_iwyu.cpp.o -std=c++14 &
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/tool/cxx/cxx_iwyu.cpp.o -std=c++14 &
 if [ ! -e build/release/src/tool/protobuf/ ]; then mkdir build/release/src/tool/protobuf/; fi
 echo Compile src/tool/protobuf/protobuf_compiler.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/tool/protobuf/protobuf_compiler.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem rocksdb/include/ -isystem spdlog/include/ -isystem src/system/ \
+    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
+    -isystem src/system/ \
     -o build/release/src/tool/protobuf/protobuf_compiler.cpp.o -std=c++14 &
 if [ ! -e build/release/src/tpool/ ]; then mkdir build/release/src/tpool/; fi
 echo Compile src/tpool/task.cpp
@@ -430,6 +450,7 @@ clang++ -o build/release/dbs -stdlib=libc++ boost/lib/libboost_filesystem.a \
     build/release/src/task/cxx/cxx_source_crc_task.cpp.o \
     build/release/src/task/cxx/cxx_source_headers_task.cpp.o \
     build/release/src/task/db/db_put_task.cpp.o \
+    build/release/src/task/git/git_fetch_task.cpp.o \
     build/release/src/task/protobuf/protobuf_file_crc_task.cpp.o \
     build/release/src/task/sys/ensure_directory_task.cpp.o \
     build/release/src/task/sys/execute_command_task.cpp.o \
@@ -442,5 +463,5 @@ clang++ -o build/release/dbs -stdlib=libc++ boost/lib/libboost_filesystem.a \
     build/release/src/tpool/task.cpp.o \
     build/release/src/tpool/task_callback.cpp.o \
     build/release/src/tpool/task_group.cpp.o build/release/src/tpool/tpool.cpp.o \
-    bzip2/lib/libbz2.a fmt/lib/libfmt.a protobuf/lib/libprotobuf-lite.a \
-    rocksdb/lib/librocksdb.a zlib/lib/libz.a
+    bzip2/lib/libbz2.a fmt/lib/libfmt.a libgit2/lib/libgit2.a \
+    protobuf/lib/libprotobuf-lite.a rocksdb/lib/librocksdb.a zlib/lib/libz.a

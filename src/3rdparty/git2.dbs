@@ -1,0 +1,12 @@
+cxx_library /git2
+    @type=system:
+
+    cxx_header
+        @visibility=public
+        @directory=../../libgit2/include:
+
+        git2.h
+    ;
+
+    binary: ../../libgit2/lib/libgit2.a;
+;

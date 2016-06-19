@@ -197,6 +197,8 @@
 		5E8E18561D1649A0009783BD /* e_depository.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18551D1649A0009783BD /* e_depository.hpp */; };
 		5E8E18581D165A93009783BD /* e_url.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18571D165A93009783BD /* e_url.hpp */; };
 		5E8E185A1D171F52009783BD /* depository_mixin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18591D171F52009783BD /* depository_mixin.hpp */; };
+		5E8E185E1D1740A6009783BD /* git_fetch_task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8E185C1D1740A6009783BD /* git_fetch_task.cpp */; };
+		5E8E185F1D1740A6009783BD /* git_fetch_task.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E185D1D1740A6009783BD /* git_fetch_task.h */; };
 		5EABCABB1CE057FD00E79FFD /* sys_executable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */; };
 		5EABCABC1CE057FD00E79FFD /* sys_executable.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EABCABA1CE057FD00E79FFD /* sys_executable.h */; };
 		5EAE67701C7295B2005B3F8D /* cxx_object_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EAE676E1C7295B2005B3F8D /* cxx_object_file.cpp */; };
@@ -476,6 +478,9 @@
 		5E8E18551D1649A0009783BD /* e_depository.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_depository.hpp; sourceTree = "<group>"; };
 		5E8E18571D165A93009783BD /* e_url.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_url.hpp; sourceTree = "<group>"; };
 		5E8E18591D171F52009783BD /* depository_mixin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = depository_mixin.hpp; sourceTree = "<group>"; };
+		5E8E185C1D1740A6009783BD /* git_fetch_task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = git_fetch_task.cpp; sourceTree = "<group>"; };
+		5E8E185D1D1740A6009783BD /* git_fetch_task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = git_fetch_task.h; sourceTree = "<group>"; };
+		5E8E18601D1742DA009783BD /* git2.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = git2.dbs; sourceTree = "<group>"; };
 		5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sys_executable.cpp; sourceTree = "<group>"; };
 		5EABCABA1CE057FD00E79FFD /* sys_executable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sys_executable.h; sourceTree = "<group>"; };
 		5EAE676E1C7295B2005B3F8D /* cxx_object_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_object_file.cpp; sourceTree = "<group>"; };
@@ -609,6 +614,7 @@
 				5E87B9CD1CF1106500F042B4 /* axe.dbs */,
 				5E10B3181C70F272009C73E4 /* boost.dbs */,
 				5E10B3191C70F272009C73E4 /* fmt.dbs */,
+				5E8E18601D1742DA009783BD /* git2.dbs */,
 				5EB7CBF01D110823002E87D7 /* grpc.dbs */,
 				5E10B31A1C70F272009C73E4 /* gtest.dbs */,
 				5E874FAC1CEC347A00C7C123 /* protobuf.dbs */,
@@ -946,6 +952,7 @@
 			children = (
 				5E10B38C1C70F272009C73E4 /* cxx */,
 				5E10B3921C70F272009C73E4 /* db */,
+				5E8E185B1D1740A6009783BD /* git */,
 				5E5A05071CFA723A00DA4443 /* protobuf */,
 				5E10B39D1C70F272009C73E4 /* sys */,
 				5E10B3A21C70F272009C73E4 /* task.dbs */,
@@ -1341,6 +1348,15 @@
 			path = url;
 			sourceTree = "<group>";
 		};
+		5E8E185B1D1740A6009783BD /* git */ = {
+			isa = PBXGroup;
+			children = (
+				5E8E185C1D1740A6009783BD /* git_fetch_task.cpp */,
+				5E8E185D1D1740A6009783BD /* git_fetch_task.h */,
+			);
+			path = git;
+			sourceTree = "<group>";
+		};
 		5EC659AD1CCD9EB600E99E04 /* dp */ = {
 			isa = PBXGroup;
 			children = (
@@ -1448,6 +1464,7 @@
 				5E5A050B1CFA727900DA4443 /* protobuf_file_crc_task.h in Headers */,
 				5EAE67811C72BE59005B3F8D /* cxx_static_library.h in Headers */,
 				5E4205391C78EB620090FA05 /* element.hpp in Headers */,
+				5E8E185F1D1740A6009783BD /* git_fetch_task.h in Headers */,
 				5E83145F1CDC5A7F00344DB5 /* framework.h in Headers */,
 				5EAE67851C72E2B4005B3F8D /* fs_file.h in Headers */,
 				5E8E183C1D15F87E009783BD /* e_cxx_program.hpp in Headers */,
@@ -1655,6 +1672,7 @@
 				5E10B3E31C70F272009C73E4 /* log-utest.cpp in Sources */,
 				5EABCABB1CE057FD00E79FFD /* sys_executable.cpp in Sources */,
 				5E290B3C1CBAC1B000F10210 /* cxx_object_file_crc_task.cpp in Sources */,
+				5E8E185E1D1740A6009783BD /* git_fetch_task.cpp in Sources */,
 				5E8E18521D1634C2009783BD /* url.cpp in Sources */,
 				5EC91C8D1CDEAE2400613226 /* sys_argument.cpp in Sources */,
 				5E87B9DD1CF1603000F042B4 /* simple.cxx in Sources */,

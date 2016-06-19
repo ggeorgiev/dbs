@@ -13,6 +13,7 @@ cxx_library task
         task/cxx/cxx_source_crc_task.h
         task/cxx/cxx_source_headers_task.h
         task/db/db_put_task.h
+        task/git/git_fetch_task.h
         task/protobuf/protobuf_file_crc_task.h
         task/sys/ensure_directory_task.h
         task/sys/execute_command_task.h
@@ -20,12 +21,12 @@ cxx_library task
         task/tpool.h
     ;
 
-    cxx_library:
-        ../im/im
-
+    cxx_library:        
+        /git2
         /boost_template
         /boost_filesystem
 
+        ../im/im
         ../rtti/rtti
         ../log/log
         ../err/err
@@ -43,6 +44,7 @@ cxx_library task
         cxx/cxx_source_crc_task.cpp
         cxx/cxx_source_headers_task.cpp
         db/db_put_task.cpp
+        git/git_fetch_task.cpp
         protobuf/protobuf_file_crc_task.cpp
         sys/ensure_directory_task.cpp
         sys/execute_command_task.cpp
