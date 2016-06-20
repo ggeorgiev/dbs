@@ -61,6 +61,7 @@ struct CxxLibrary
 {
     CxxLibrary(Attribute& attribute,
                Directory& directory,
+               FrameworkSet& frameworks,
                Depository& depository,
                File& file,
                FileSet& files,
@@ -68,6 +69,7 @@ struct CxxLibrary
                CxxLibraryRef& cxxLibraryRef)
         : mAttribute(attribute)
         , mDirectory(directory)
+        , mFrameworks(frameworks)
         , mDepository(depository)
         , mFile(file)
         , mFiles(files)
@@ -110,6 +112,13 @@ struct CxxLibrary
             return doim::CxxHeader::EVisibility::kProtected;
         ASSERT(false);
         return doim::CxxHeader::EVisibility::kProtected;
+    }
+
+    auto frameworks()
+    {
+        return e_ref([this](I& i1, I& i2) {
+            mCxxLibrary->updateFrameworkList(mFrameworks.mFrameworks);
+        });
     }
 
     auto depository()
@@ -169,6 +178,7 @@ struct CxxLibrary
 
     Attribute& mAttribute;
     Directory& mDirectory;
+    FrameworkSet& mFrameworks;
     Depository& mDepository;
     File& mFile;
     FileSet& mFiles;

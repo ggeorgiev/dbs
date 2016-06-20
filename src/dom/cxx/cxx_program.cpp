@@ -44,12 +44,16 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
     auto objPurpose = objectPurpose(purpose);
     *objectFiles = cxxObjectFiles(objPurpose, root, intermediate);
 
+    auto frameworks = doim::CxxFrameworkSet::make();
     auto staticLibraries = doim::CxxStaticLibrarySet::make();
 
     auto libraries = recursiveCxxLibraries();
 
     for (const auto& cxxLibrary : libraries)
     {
+        const auto& libFrameworks = cxxLibrary->frameworks();
+        frameworks->insert(libFrameworks.begin(), libFrameworks.end());
+
         if (cxxLibrary->binary() != nullptr)
         {
             auto staticLibrary = doim::CxxStaticLibrary::unique(cxxLibrary->binary());
@@ -63,10 +67,13 @@ doim::CxxProgramSPtr CxxProgram::cxxProgram(
         }
     }
     objectFiles = doim::CxxObjectFileSet::unique(objectFiles);
+
+    frameworks = doim::CxxFrameworkSet::unique(frameworks);
     staticLibraries = doim::CxxStaticLibrarySet::unique(staticLibraries);
 
     const auto& programFile = doim::FsFile::obtain(intermediate, name());
-    return doim::CxxProgram::unique(purpose, programFile, staticLibraries, objectFiles);
+    return doim::CxxProgram::unique(
+        purpose, programFile, staticLibraries, frameworks, objectFiles);
 }
 
 CxxLibrarySet CxxProgram::recursiveCxxLibraries() const

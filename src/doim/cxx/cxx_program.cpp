@@ -9,11 +9,13 @@ namespace doim
 CxxProgram::CxxProgram(EPurpose purpose,
                        const FsFileSPtr& file,
                        const CxxStaticLibrarySetSPtr& staticLibraries,
+                       const CxxFrameworkSetSPtr& cxxFrameworks,
                        const CxxObjectFileSetSPtr& cxxObjectFiles)
-    : Element(purpose, file, staticLibraries, cxxObjectFiles)
+    : Element(purpose, file, staticLibraries, cxxFrameworks, cxxObjectFiles)
 {
     ASSERT(file->isUnique());
     ASSERT(staticLibraries->isUnique());
+    ASSERT(cxxFrameworks->isUnique());
     ASSERT(cxxObjectFiles->isUnique());
 }
 }

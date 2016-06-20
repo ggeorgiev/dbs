@@ -133,6 +133,13 @@ doim::SysCommandSPtr CxxCompiler::linkCommand(const doim::FsDirectorySPtr& direc
         linkArguments->insert(argument_l);
     }
 
+    for (const auto& framework : *program->cxxFrameworks())
+    {
+        auto argument_framework =
+            doim::SysArgument::unique("-framework " + framework->name());
+        linkArguments->insert(argument_framework);
+    }
+
     for (const auto& objectFile : *program->cxxObjectFiles())
     {
         auto argument_obj =

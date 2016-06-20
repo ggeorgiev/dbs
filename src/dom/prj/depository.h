@@ -7,6 +7,7 @@
 #include "doim/url/url.h"
 #include "err/err.h"
 #include <memory>
+#include <str>
 
 namespace dom
 {

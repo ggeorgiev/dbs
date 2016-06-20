@@ -116,6 +116,24 @@ TEST(DbsParserTest, SLOW_CxxLibraryCxxLibrary)
     ASSERT_EQ(1, cxxLibraryCxxLibraries->cxxLibraries().size());
 }
 
+TEST(DbsParserTest, SLOW_CxxLibraryCxxFramework)
+{
+    parse();
+
+    auto mDbsDirectory =
+        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+
+    auto cxxLibraryCxxLibrariesObject =
+        doim::Object::obtain(doim::Object::EType::kCxxLibrary,
+                             mDbsDirectory,
+                             "cxx_framework");
+
+    auto cxxLibraryCxxLibraries = dom::CxxLibrary::find(cxxLibraryCxxLibrariesObject);
+    ASSERT_NE(nullptr, cxxLibraryCxxLibraries);
+
+    ASSERT_EQ(1, cxxLibraryCxxLibraries->frameworks().size());
+}
+
 TEST(DbsParserTest, SLOW_CxxLibraryCxxFile)
 {
     parse();

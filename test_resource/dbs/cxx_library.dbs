@@ -18,6 +18,12 @@ cxx_library cxx_header_public:
     ;
 ; 
 
+cxx_library cxx_framework:
+    cxx_framework:
+        Security
+    ;
+; 
+
 cxx_library cxx_header_private:
     cxx_header
         @visibility=private:

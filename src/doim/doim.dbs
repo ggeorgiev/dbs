@@ -6,6 +6,7 @@ cxx_library doim
         @directory=..:
 
         doim/cxx/cxx_file.h
+        doim/cxx/cxx_framework.h
         doim/cxx/cxx_header.h
         doim/cxx/cxx_include_directory.h
         doim/cxx/cxx_object_file.h
@@ -53,6 +54,7 @@ cxx_library doim
 
     cxx_file:
         cxx/cxx_file.cpp
+        cxx/cxx_framework.cpp
         cxx/cxx_header.cpp
         cxx/cxx_include_directory.cpp
         cxx/cxx_object_file.cpp

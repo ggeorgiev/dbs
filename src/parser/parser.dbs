@@ -10,6 +10,7 @@ cxx_library parser
         parser/dbs/dbs_parser.h
         parser/dbs/e_annex.hpp
         parser/dbs/e_attribute.hpp
+        parser/dbs/e_cxx_framework.hpp
         parser/dbs/e_cxx_library.hpp
         parser/dbs/e_cxx_program.hpp
         parser/dbs/e_directory.hpp

@@ -25,6 +25,12 @@ clang++ -D NDEBUG -I src/ -O3 -c src/doim/cxx/cxx_file.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/doim/cxx/cxx_file.cpp.o -std=c++14 &
+echo Compile src/doim/cxx/cxx_framework.cpp
+clang++ -D NDEBUG -I src/ -O3 -c src/doim/cxx/cxx_framework.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/doim/cxx/cxx_framework.cpp.o \
+    -std=c++14 &
 echo Compile src/doim/cxx/cxx_header.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/doim/cxx/cxx_header.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
@@ -412,10 +418,12 @@ clang++ -D NDEBUG -I src/ -O3 -c src/tpool/tpool.cpp \
     -isystem src/system/ -o build/release/src/tpool/tpool.cpp.o -std=c++14 &
 wait
 echo Link build/release/dbs
-clang++ -o build/release/dbs -stdlib=libc++ boost/lib/libboost_filesystem.a \
-    boost/lib/libboost_system.a boost/lib/libboost_thread.a \
-    build/release/src/const/constants.cpp.o build/release/src/db/database.cpp.o \
+clang++ -framework Security -o build/release/dbs -stdlib=libc++ \
+    boost/lib/libboost_filesystem.a boost/lib/libboost_system.a \
+    boost/lib/libboost_thread.a build/release/src/const/constants.cpp.o \
+    build/release/src/db/database.cpp.o \
     build/release/src/doim/cxx/cxx_file.cpp.o \
+    build/release/src/doim/cxx/cxx_framework.cpp.o \
     build/release/src/doim/cxx/cxx_header.cpp.o \
     build/release/src/doim/cxx/cxx_include_directory.cpp.o \
     build/release/src/doim/cxx/cxx_object_file.cpp.o \

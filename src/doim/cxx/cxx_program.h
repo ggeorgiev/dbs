@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "doim/cxx/cxx_framework.h"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/cxx/cxx_static_library.h"
 #include "doim/fs/fs_file.h"
@@ -33,12 +34,14 @@ class CxxProgram : public CxxProgramEnums,
                                   CxxProgramEnums::EPurpose,
                                   FsFileSPtr,
                                   CxxStaticLibrarySetSPtr,
+                                  CxxFrameworkSetSPtr,
                                   CxxObjectFileSetSPtr>
 {
 public:
     CxxProgram(EPurpose purpose,
                const FsFileSPtr& file,
                const CxxStaticLibrarySetSPtr& staticLibraries,
+               const CxxFrameworkSetSPtr& cxxFramework,
                const CxxObjectFileSetSPtr& cxxObjectFiles);
 
     EPurpose purpose() const
@@ -56,9 +59,14 @@ public:
         return std::get<2>(mArgs);
     }
 
-    const CxxObjectFileSetSPtr& cxxObjectFiles()
+    const CxxFrameworkSetSPtr& cxxFrameworks()
     {
         return std::get<3>(mArgs);
+    }
+
+    const CxxObjectFileSetSPtr& cxxObjectFiles()
+    {
+        return std::get<4>(mArgs);
     }
 };
 }

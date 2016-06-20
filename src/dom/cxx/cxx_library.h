@@ -4,6 +4,7 @@
 #pragma once
 
 #include "dom/cxx/cxx_files_mixin.hpp"
+#include "dom/cxx/cxx_framework_mixin.hpp"
 #include "dom/cxx/cxx_headers_mixin.hpp"
 #include "dom/cxx/protobufs_mixin.hpp"
 #include "dom/prj/depository_mixin.hpp"
@@ -35,6 +36,7 @@ class CxxLibrary : public Element<CxxLibrary>,
                    public ProtobufsMixin<CxxLibrary>,
                    public CxxFilesMixin<CxxLibrary>,
                    public CxxHeadersMixin<CxxLibrary>,
+                   public CxxFrameworkMixin<CxxLibrary>,
                    public DepositoryMixin<CxxLibrary>
 {
 public:

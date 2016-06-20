@@ -2,8 +2,7 @@
 //
 
 #include "task/git/git2.h"
-#include "task/tpool.h"
-#include "log/log.h"
+#include <functional>
 #include <git2.h>
 
 namespace task
