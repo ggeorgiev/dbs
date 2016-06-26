@@ -17,6 +17,11 @@ typedef shared_ptr<Depository> DepositorySPtr;
 class Depository : public Element<Depository>
 {
 public:
+    static doim::Object::EType objectType()
+    {
+        return doim::Object::EType::kDepository;
+    }
+
     enum class EType
     {
         kGitRepository,

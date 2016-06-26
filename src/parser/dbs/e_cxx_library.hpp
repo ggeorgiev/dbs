@@ -8,7 +8,6 @@
 #include "parser/dbs/e_depository.hpp"
 #include "parser/dbs/e_directory.hpp"
 #include "parser/dbs/e_file.hpp"
-#include "parser/dbs/e_file_set.hpp"
 #include "parser/dbs/e_object.hpp"
 #include "parser/dbs/e_position.hpp"
 #include "dom/cxx/cxx_library.h"
@@ -20,26 +19,12 @@ static auto r_cxxFileKw = r_str("cxx_file");
 static auto r_protobufFileKw = r_str("protobuf_file");
 static auto r_cxxHeaderKw = r_str("cxx_header");
 
-struct CxxLibraryRef
-{
-    CxxLibraryRef(Object& object)
-        : mObject(object)
-    {
-    }
-
-    void operator()(I& i1, I& i2)
-    {
-        mCxxLibrary = dom::CxxLibrary::obtain(mObject.mObject);
-    }
-
-    Object& mObject;
-    dom::CxxLibrarySPtr mCxxLibrary;
-};
+typedef ObjectRef<dom::CxxLibrary> CxxLibraryRef;
 
 struct CxxLibrarySet
 {
-    CxxLibrarySet(CxxLibraryRef& cxxLibraryRef)
-        : mCxxLibraryRef(cxxLibraryRef)
+    CxxLibrarySet(const doim::FsDirectorySPtr& location)
+        : mCxxLibraryRef(location)
     {
     }
 
@@ -48,33 +33,31 @@ struct CxxLibrarySet
         return e_ref([this](I& i1, I& i2) { mCxxLibraries.clear(); });
     }
 
-    void operator()(I& i1, I& i2)
+    auto insert()
     {
-        mCxxLibraries.insert(mCxxLibraryRef.mCxxLibrary);
-    };
+        return e_ref(
+            [this](I& i1, I& i2) { mCxxLibraries.insert(mCxxLibraryRef.mObjectRef); });
+    }
 
-    CxxLibraryRef& mCxxLibraryRef;
+    template <typename WS>
+    auto rule(const WS& r_ws)
+    {
+        return r_ws & r_cxxLibraryKw & r_ws & r_colon & r_empty() >> reset() &
+               *(mCxxLibraryRef.rule(r_ws) >> insert()) & r_ws & r_semicolon;
+    }
+
+    CxxLibraryRef mCxxLibraryRef;
     dom::CxxLibrarySet mCxxLibraries;
 };
 
 struct CxxLibrary
 {
-    CxxLibrary(Attribute& attribute,
-               Directory& directory,
-               FrameworkSet& frameworks,
-               Depository& depository,
-               File& file,
-               FileSet& files,
-               CxxLibrarySet& cxxLibraries,
-               CxxLibraryRef& cxxLibraryRef)
-        : mAttribute(attribute)
-        , mDirectory(directory)
-        , mFrameworks(frameworks)
-        , mDepository(depository)
-        , mFile(file)
-        , mFiles(files)
-        , mCxxLibraries(cxxLibraries)
-        , mCxxLibraryRef(cxxLibraryRef)
+    CxxLibrary(const doim::FsDirectorySPtr& location)
+        : mDepositoryRef(location)
+        , mFile(location)
+        , mFiles(location)
+        , mCxxLibraries(location)
+        , mCxxLibraryRef(location)
     {
     }
 
@@ -82,7 +65,7 @@ struct CxxLibrary
     {
         return e_ref([this](I& i1, I& i2) {
             mVisibility.reset();
-            mDirectory.reset();
+            mFiles.mFile.mDirectory.reset();
         });
     }
 
@@ -95,9 +78,7 @@ struct CxxLibrary
             }
             else if (mAttribute.mName == dom::CxxLibrary::gDirectory)
             {
-                mDirectory.mDirectory =
-                    doim::FsDirectory::obtain(mDirectory.mDefaultDirectory,
-                                              mAttribute.mValue->value());
+                mFiles.mFile.mDirectory.set(mAttribute.mValue->value());
             }
         });
     }
@@ -124,7 +105,7 @@ struct CxxLibrary
     auto depository()
     {
         return e_ref([this](I& i1, I& i2) {
-            mCxxLibrary->updateDepository(mDepository.mDepository);
+            mCxxLibrary->updateDepository(mDepositoryRef.mObjectRef);
         });
     }
 
@@ -132,7 +113,7 @@ struct CxxLibrary
     {
         return e_ref([this](I& i1, I& i2) {
             mCxxLibrary->updateCxxHeaders(visibility(mVisibility),
-                                          mDirectory.mDirectory,
+                                          mFiles.mFile.mDirectory.mDirectory,
                                           mFiles.mFiles);
         });
     }
@@ -141,7 +122,7 @@ struct CxxLibrary
     {
         return e_ref([this](I& i1, I& i2) {
             mCxxLibrary->updateProtobufsList(visibility(mVisibility),
-                                             mDirectory.mDirectory,
+                                             mFiles.mFile.mDirectory.mDirectory,
                                              mFiles.mFiles);
         });
     }
@@ -166,7 +147,7 @@ struct CxxLibrary
 
     auto name()
     {
-        return e_ref([this](I& i1, I& i2) { mCxxLibrary = mCxxLibraryRef.mCxxLibrary; });
+        return e_ref([this](I& i1, I& i2) { mCxxLibrary = mCxxLibraryRef.mObjectRef; });
     }
 
     auto updateAttribute()
@@ -176,14 +157,80 @@ struct CxxLibrary
         });
     }
 
-    Attribute& mAttribute;
-    Directory& mDirectory;
-    FrameworkSet& mFrameworks;
-    Depository& mDepository;
-    File& mFile;
-    FileSet& mFiles;
-    CxxLibrarySet& mCxxLibraries;
-    CxxLibraryRef& mCxxLibraryRef;
+    template <typename WS>
+    auto r_cxxHeaderAttributes(const WS& r_ws)
+    {
+        return *(mAttribute.rule(r_ws) >> attribute());
+    }
+
+    template <typename WS>
+    auto r_cxxHeader(const WS& r_ws)
+    {
+        return (r_ws & r_cxxHeaderKw >> resetHeader() & r_cxxHeaderAttributes(r_ws) &
+                r_ws & r_colon & mFiles.rule(r_ws) & r_ws & r_semicolon) >>
+               cxxHeaders();
+    }
+
+    template <typename WS>
+    auto r_cxxFiles(const WS& r_ws)
+    {
+        return (r_ws & r_cxxFileKw & r_ws & r_colon & mFiles.mFile.mDirectory.r_reset() &
+                mFiles.rule(r_ws) & r_ws & r_semicolon) >>
+               files();
+    }
+
+    template <typename WS>
+    auto r_frameworks(const WS& r_ws)
+    {
+        return r_ws & r_frameworkKw & r_ws & r_colon &
+               mFrameworks.rule(r_ws) >> frameworks() & r_ws & r_semicolon;
+    }
+
+    template <typename WS>
+    auto r_depository(const WS& r_ws)
+    {
+        return r_ws & r_depositoryKw & r_ws & r_colon &
+               mDepositoryRef.rule(r_ws) >> depository() & r_ws & r_semicolon;
+    }
+
+    template <typename WS>
+    auto r_cxxLibrary(const WS& r_ws)
+    {
+        return mCxxLibraries.rule(r_ws) >> libraries();
+    }
+
+    template <typename WS>
+    auto r_protobufFile(const WS& r_ws)
+    {
+        return r_ws & r_protobufFileKw >> resetHeader() & r_cxxHeaderAttributes(r_ws) &
+               r_ws & r_colon & mFiles.rule(r_ws) >> protobufs() & r_ws & r_semicolon;
+    }
+
+    template <typename WS>
+    auto r_binary(const WS& r_ws)
+    {
+        return r_ws & r_binaryKw & r_ws & r_colon & mFile.mDirectory.r_reset() &
+               mFile.rule(r_ws) >> binary() & r_ws & r_semicolon;
+    }
+
+    template <typename WS>
+    auto rule(const WS& r_ws)
+    {
+        return r_ws & r_cxxLibraryKw & mCxxLibraryRef.rule(r_ws) >> name() &
+               *(mAttribute.rule(r_ws) >> updateAttribute()) & r_ws & r_colon &
+               *(r_frameworks(r_ws) | r_depository(r_ws) | r_cxxFiles(r_ws) |
+                 r_protobufFile(r_ws) | r_cxxHeader(r_ws) | r_cxxLibrary(r_ws) |
+                 r_binary(r_ws)) &
+               r_ws & r_semicolon;
+    }
+
+    Attribute mAttribute;
+    CxxFrameworkSet mFrameworks;
+    DepositoryRef mDepositoryRef;
+    File mFile;
+    FileSet mFiles;
+    CxxLibrarySet mCxxLibraries;
+    CxxLibraryRef mCxxLibraryRef;
 
     doim::AttributeSPtr mVisibility;
     dom::CxxLibrarySPtr mCxxLibrary;

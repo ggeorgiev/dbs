@@ -7,7 +7,6 @@
 #include "parser/dbs/e_attribute.hpp"
 #include "parser/dbs/e_directory.hpp"
 #include "parser/dbs/e_file.hpp"
-#include "parser/dbs/e_file_set.hpp"
 #include "parser/dbs/e_object.hpp"
 #include "parser/dbs/e_position.hpp"
 #include "parser/dbs/e_url.hpp"
@@ -18,24 +17,27 @@ namespace parser
 {
 static auto r_frameworkKw = r_str("cxx_framework");
 
-struct Framework
+struct CxxFramework
 {
-    Framework()
+    auto set()
     {
+        return e_ref([this](I& i1, I& i2) {
+            mFramework = doim::CxxFramework::unique(string(i1, i2));
+        });
     }
 
-    void operator()(I& i1, I& i2)
+    template <typename WS>
+    auto rule(const WS& r_ws)
     {
-        mFramework = doim::CxxFramework::unique(string(i1, i2));
+        return r_ws & r_ident() >> set();
     }
 
     doim::CxxFrameworkSPtr mFramework;
 };
 
-struct FrameworkSet
+struct CxxFrameworkSet
 {
-    FrameworkSet(Framework& framework)
-        : mFramework(framework)
+    CxxFrameworkSet()
     {
     }
 
@@ -44,12 +46,19 @@ struct FrameworkSet
         return e_ref([this](I& i1, I& i2) { mFrameworks.clear(); });
     }
 
-    void operator()(I& i1, I& i2)
+    auto insert()
     {
-        mFrameworks.insert(mFramework.mFramework);
-    };
+        return e_ref([this](I& i1, I& i2) { mFrameworks.insert(mFramework.mFramework); });
+    }
+
+    template <typename WS>
+    auto rule(const WS& r_ws)
+    {
+        return r_empty() >> reset() & *(mFramework.rule(r_ws) >> insert());
+    }
 
     doim::CxxFrameworkSet mFrameworks;
-    Framework& mFramework;
+
+    CxxFramework mFramework;
 };
 }

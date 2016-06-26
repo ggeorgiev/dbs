@@ -31,9 +31,19 @@ struct Attribute
         });
     }
 
-    void operator()(I& i1, I& i2)
+    auto set()
     {
-        mAttribute = doim::Attribute::unique(mName, mValue);
+        return e_ref([this](I& i1, I& i2) {
+            mAttribute = doim::Attribute::unique(mName, mValue);
+        });
+    }
+
+    template <typename WS>
+    auto rule(const WS& r_ws)
+    {
+        return (r_ws & r_at & r_ws & r_ident() >> name() & r_ws & r_equal & r_ws &
+                (r_ident() | r_path) >> value()) >>
+               set();
     }
 
     doim::AttributeNameSPtr mName;

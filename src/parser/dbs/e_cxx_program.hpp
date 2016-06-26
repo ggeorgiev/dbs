@@ -7,7 +7,6 @@
 #include "parser/dbs/e_attribute.hpp"
 #include "parser/dbs/e_directory.hpp"
 #include "parser/dbs/e_file.hpp"
-#include "parser/dbs/e_file_set.hpp"
 #include "parser/dbs/e_object.hpp"
 #include "parser/dbs/e_position.hpp"
 #include "dom/cxx/cxx_program.h"
@@ -16,12 +15,14 @@ namespace parser
 {
 static auto r_cxxProgramKw = r_str("cxx_program");
 
+typedef ObjectRef<dom::CxxProgram> CxxProgramRef;
+
 struct CxxProgram
 {
-    CxxProgram(Object& object, FileSet& files, CxxLibrarySet& cxxLibraries)
-        : mObject(object)
-        , mFiles(files)
-        , mCxxLibraries(cxxLibraries)
+    CxxProgram(const doim::FsDirectorySPtr& location)
+        : mCxxProgramRef(location)
+        , mFiles(location)
+        , mCxxLibraries(location)
     {
     }
 
@@ -41,14 +42,35 @@ struct CxxProgram
     auto name()
     {
         return e_ref([this](I& i1, I& i2) {
-            mCxxProgram = dom::CxxProgram::obtain(mObject.mObject);
-            mCxxProgram->updateName(mObject.mObject->name());
+            mCxxProgram = mCxxProgramRef.mObjectRef;
+            mCxxProgram->updateName(mCxxProgramRef.mObject.mObject->name());
         });
     }
 
-    Object& mObject;
-    FileSet& mFiles;
-    CxxLibrarySet& mCxxLibraries;
+    template <typename WS>
+    auto r_cxxFiles(const WS& r_ws)
+    {
+        return (r_ws & r_cxxFileKw & r_ws & r_colon & mFiles.mFile.mDirectory.r_reset() &
+                mFiles.rule(r_ws) & r_ws & r_semicolon) >>
+               files();
+    }
+
+    template <typename WS>
+    auto r_cxxLibrary(const WS& r_ws)
+    {
+        return mCxxLibraries.rule(r_ws) >> libraries();
+    }
+
+    template <typename WS>
+    auto rule(const WS& r_ws)
+    {
+        return r_ws & r_cxxProgramKw & mCxxProgramRef.rule(r_ws) >> name() & r_ws &
+               r_colon & *(r_cxxFiles(r_ws) | r_cxxLibrary(r_ws)) & r_ws & r_semicolon;
+    }
+
+    CxxProgramRef mCxxProgramRef;
+    FileSet mFiles;
+    CxxLibrarySet mCxxLibraries;
 
     dom::CxxProgramSPtr mCxxProgram;
 };

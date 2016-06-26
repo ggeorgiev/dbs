@@ -181,7 +181,6 @@
 		5E8E182E1D15F0BA009783BD /* e_attribute.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E182D1D15F0BA009783BD /* e_attribute.hpp */; };
 		5E8E18301D15F1FE009783BD /* e_directory.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E182F1D15F1FE009783BD /* e_directory.hpp */; };
 		5E8E18321D15F274009783BD /* e_file.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18311D15F274009783BD /* e_file.hpp */; };
-		5E8E18341D15F39C009783BD /* e_file_set.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18331D15F39C009783BD /* e_file_set.hpp */; };
 		5E8E18361D15F45B009783BD /* e_object.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18351D15F45B009783BD /* e_object.hpp */; };
 		5E8E18381D15F527009783BD /* e_annex.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18371D15F527009783BD /* e_annex.hpp */; };
 		5E8E183A1D15F6B1009783BD /* e_cxx_library.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18391D15F6B1009783BD /* e_cxx_library.hpp */; };
@@ -467,7 +466,6 @@
 		5E8E182D1D15F0BA009783BD /* e_attribute.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_attribute.hpp; sourceTree = "<group>"; };
 		5E8E182F1D15F1FE009783BD /* e_directory.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_directory.hpp; sourceTree = "<group>"; };
 		5E8E18311D15F274009783BD /* e_file.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_file.hpp; sourceTree = "<group>"; };
-		5E8E18331D15F39C009783BD /* e_file_set.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_file_set.hpp; sourceTree = "<group>"; };
 		5E8E18351D15F45B009783BD /* e_object.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_object.hpp; sourceTree = "<group>"; };
 		5E8E18371D15F527009783BD /* e_annex.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_annex.hpp; sourceTree = "<group>"; };
 		5E8E18391D15F6B1009783BD /* e_cxx_library.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_cxx_library.hpp; sourceTree = "<group>"; };
@@ -1292,7 +1290,6 @@
 				5E8E183B1D15F87E009783BD /* e_cxx_program.hpp */,
 				5E8E18551D1649A0009783BD /* e_depository.hpp */,
 				5E8E182F1D15F1FE009783BD /* e_directory.hpp */,
-				5E8E18331D15F39C009783BD /* e_file_set.hpp */,
 				5E8E18311D15F274009783BD /* e_file.hpp */,
 				5E8E18351D15F45B009783BD /* e_object.hpp */,
 				5E8E183D1D1601C6009783BD /* e_particle.hpp */,
@@ -1420,7 +1417,6 @@
 				5E8E182E1D15F0BA009783BD /* e_attribute.hpp in Headers */,
 				5E10B3B11C70F272009C73E4 /* database.h in Headers */,
 				5E10B3DD1C70F272009C73E4 /* performance_arbiter.h in Headers */,
-				5E8E18341D15F39C009783BD /* e_file_set.hpp in Headers */,
 				5E10B3E01C70F272009C73E4 /* time_monitor.h in Headers */,
 				5E5692641C724929000A233C /* crc.hpp in Headers */,
 				5E283C1B1CF23BC600852F24 /* element.hpp in Headers */,

@@ -26,6 +26,11 @@ class CxxProgram : public Element<CxxProgram>,
                    public CxxHeadersMixin<CxxProgram>
 {
 public:
+    static doim::Object::EType objectType()
+    {
+        return doim::Object::EType::kCxxProgram;
+    }
+
     string name() const
     {
         return mName;

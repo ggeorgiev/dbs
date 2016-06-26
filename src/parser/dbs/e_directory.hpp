@@ -19,17 +19,28 @@ static auto r_path = ~r_slash & +r_pathChars & *(r_slash & +r_pathChars) & ~r_sl
 
 struct Directory
 {
-    Directory(const doim::FsDirectorySPtr& directory)
-        : mDefaultDirectory(directory)
+    Directory(const doim::FsDirectorySPtr& location)
+        : mLocation(location)
     {
     }
 
     auto reset()
     {
-        return e_ref([this](I& i1, I& i2) { mDirectory = mDefaultDirectory; });
+        return e_ref([this](I& i1, I& i2) { mDirectory = mLocation; });
     }
 
+    void set(const string& path)
+    {
+        mDirectory = doim::FsDirectory::obtain(mLocation, path);
+    }
+
+    auto r_reset()
+    {
+        return r_empty() >> reset();
+    }
+
+    doim::FsDirectorySPtr mLocation;
+
     doim::FsDirectorySPtr mDirectory;
-    doim::FsDirectorySPtr mDefaultDirectory;
 };
 }

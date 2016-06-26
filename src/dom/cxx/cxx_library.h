@@ -40,6 +40,11 @@ class CxxLibrary : public Element<CxxLibrary>,
                    public DepositoryMixin<CxxLibrary>
 {
 public:
+    static doim::Object::EType objectType()
+    {
+        return doim::Object::EType::kCxxLibrary;
+    }
+
     static doim::AttributeNameSPtr gType;
     static doim::AttributeValueSPtr gSystem;
     static doim::AttributeValueSPtr gTest;

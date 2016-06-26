@@ -17,15 +17,17 @@ static auto r_space = r_char(' ') | r_char('\t');
 
 struct Position
 {
-    void operator()(I& i1, I& i2)
+    auto move()
     {
-        lineIterator = i2;
-        ++line;
+        return e_ref([this](I& i1, I& i2) {
+            lineIterator = i2;
+            ++line;
+        });
     }
 
     auto r_ws()
     {
-        return *(r_space | (r_endl >> e_ref(*this)));
+        return *(r_space | (r_endl >> move()));
     }
 
     size_t line;
