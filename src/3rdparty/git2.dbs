@@ -12,6 +12,11 @@ cxx_library /git2
         CoreFoundation
         Security
     ;
+    
+    cxx_library:
+        /curl
+    ;
+
 
     binary: ../../libgit2/lib/libgit2.a;
 ;

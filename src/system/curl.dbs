@@ -1,0 +1,46 @@
+cxx_library /ssl
+    @type=system:
+
+    binary: /usr/local/lib/libssl.a;
+;
+
+cxx_library /crypto
+    @type=system:
+
+    binary: /usr/local/lib/libcrypto.a;
+;
+
+cxx_library /intl
+    @type=system:
+
+    binary: /opt/local/lib/libintl.a;
+;
+
+cxx_library /idn
+    @type=system:
+    
+    cxx_library:
+        /intl
+    ;
+
+    binary: /opt/local/lib/libidn.a;
+;
+
+
+
+
+cxx_library /curl
+    @type=system:
+    
+    cxx_library:
+        /idn
+        /ssl
+        /crypto
+    ;
+    
+    cxx_framework:
+        LDAP
+    ;
+
+    binary: ../../curl/lib/libcurl.a;
+;

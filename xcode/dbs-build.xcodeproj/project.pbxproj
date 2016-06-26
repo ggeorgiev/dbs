@@ -493,6 +493,8 @@
 		5E8E18661D176092009783BD /* cxx_framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_framework.h; sourceTree = "<group>"; };
 		5E8E18691D1762B4009783BD /* cxx_framework_mixin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cxx_framework_mixin.hpp; sourceTree = "<group>"; };
 		5E8E186B1D1764D4009783BD /* e_cxx_framework.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_cxx_framework.hpp; sourceTree = "<group>"; };
+		5E8E186D1D177F7E009783BD /* curl.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = curl.dbs; sourceTree = "<group>"; };
+		5E8E186E1D17818D009783BD /* iconv.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = iconv.dbs; sourceTree = "<group>"; };
 		5EABCAB91CE057FD00E79FFD /* sys_executable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sys_executable.cpp; sourceTree = "<group>"; };
 		5EABCABA1CE057FD00E79FFD /* sys_executable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sys_executable.h; sourceTree = "<group>"; };
 		5EAE676E1C7295B2005B3F8D /* cxx_object_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_object_file.cpp; sourceTree = "<group>"; };
@@ -951,6 +953,8 @@
 			children = (
 				5E10B3871C70F272009C73E4 /* bz2.dbs */,
 				5E10B3881C70F272009C73E4 /* cstd.dbs */,
+				5E8E186D1D177F7E009783BD /* curl.dbs */,
+				5E8E186E1D17818D009783BD /* iconv.dbs */,
 				5E10B3891C70F272009C73E4 /* stl.dbs */,
 				5E10B38A1C70F272009C73E4 /* zip.dbs */,
 				5EE51C231CE6CC0F00DB0DDA /* shared_ptr */,

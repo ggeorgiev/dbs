@@ -24,6 +24,8 @@ cxx_library task
 
     cxx_library:        
         /git2
+        /iconv
+        /curl
         /boost_template
         /boost_filesystem
 

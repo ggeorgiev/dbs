@@ -418,7 +418,9 @@ clang++ -D NDEBUG -I src/ -O3 -c src/tpool/tpool.cpp \
     -isystem src/system/ -o build/release/src/tpool/tpool.cpp.o -std=c++14 &
 wait
 echo Link build/release/dbs
-clang++ -framework Security -o build/release/dbs -stdlib=libc++ \
+clang++ -framework CoreFoundation -framework LDAP -framework Security \
+    -o build/release/dbs -stdlib=libc++ /opt/local/lib/libidn.a \
+    /opt/local/lib/libintl.a /usr/local/lib/libcrypto.a /usr/local/lib/libssl.a \
     boost/lib/libboost_filesystem.a boost/lib/libboost_system.a \
     boost/lib/libboost_thread.a build/release/src/const/constants.cpp.o \
     build/release/src/db/database.cpp.o \
@@ -478,5 +480,6 @@ clang++ -framework Security -o build/release/dbs -stdlib=libc++ \
     build/release/src/tpool/task.cpp.o \
     build/release/src/tpool/task_callback.cpp.o \
     build/release/src/tpool/task_group.cpp.o build/release/src/tpool/tpool.cpp.o \
-    bzip2/lib/libbz2.a fmt/lib/libfmt.a libgit2/lib/libgit2.a \
-    protobuf/lib/libprotobuf-lite.a rocksdb/lib/librocksdb.a zlib/lib/libz.a
+    bzip2/lib/libbz2.a curl/lib/libcurl.a fmt/lib/libfmt.a iconv/lib/libiconv.a \
+    libgit2/lib/libgit2.a protobuf/lib/libprotobuf-lite.a \
+    rocksdb/lib/librocksdb.a zlib/lib/libz.a

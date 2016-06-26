@@ -1,5 +1,7 @@
 annex:
     system/cstd.dbs
+    system/curl.dbs
+    system/iconv.dbs
     system/zip.dbs
     system/bz2.dbs
     system/stl.dbs
@@ -38,6 +40,7 @@ annex:
 
 cxx_program dbs:
     cxx_library:
+        /curl
         im/im
         log/log
         err/err

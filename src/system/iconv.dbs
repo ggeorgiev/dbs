@@ -1,0 +1,5 @@
+cxx_library /iconv
+    @type=system:
+
+    binary: ../../iconv/lib/libiconv.a;
+;

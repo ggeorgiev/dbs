@@ -2,9 +2,11 @@
 /boost/
 /clang/
 /cmake/
+/curl/
 /fmt/
 /gtest/
 /iwyu/
+/iconv/
 /rocksdb/
 /spdlog/
 /protobuf/

@@ -11,7 +11,7 @@ Git2SPtr gGit = im::InitializationManager::subscribe(gGit);
 
 Git2::Git2()
 {
-    // git_libgit2_init();
+    git_libgit2_init();
 }
 
 Git2::~Git2()
