@@ -187,7 +187,6 @@
 		5E8E183C1D15F87E009783BD /* e_cxx_program.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E183B1D15F87E009783BD /* e_cxx_program.hpp */; };
 		5E8E183E1D1601C6009783BD /* e_particle.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E183D1D1601C6009783BD /* e_particle.hpp */; };
 		5E8E18401D160EA3009783BD /* e_tag.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E183F1D160EA3009783BD /* e_tag.hpp */; };
-		5E8E18421D160F6F009783BD /* e_tag_set.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18411D160F6F009783BD /* e_tag_set.hpp */; };
 		5E8E18441D16130B009783BD /* e_tag_expression.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18431D16130B009783BD /* e_tag_expression.hpp */; };
 		5E8E184D1D1626FF009783BD /* depository.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8E184B1D1626FF009783BD /* depository.cpp */; };
 		5E8E184E1D1626FF009783BD /* depository.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E184C1D1626FF009783BD /* depository.h */; };
@@ -472,7 +471,6 @@
 		5E8E183B1D15F87E009783BD /* e_cxx_program.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_cxx_program.hpp; sourceTree = "<group>"; };
 		5E8E183D1D1601C6009783BD /* e_particle.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_particle.hpp; sourceTree = "<group>"; };
 		5E8E183F1D160EA3009783BD /* e_tag.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_tag.hpp; sourceTree = "<group>"; };
-		5E8E18411D160F6F009783BD /* e_tag_set.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_tag_set.hpp; sourceTree = "<group>"; };
 		5E8E18431D16130B009783BD /* e_tag_expression.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = e_tag_expression.hpp; sourceTree = "<group>"; };
 		5E8E184B1D1626FF009783BD /* depository.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = depository.cpp; sourceTree = "<group>"; };
 		5E8E184C1D1626FF009783BD /* depository.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = depository.h; sourceTree = "<group>"; };
@@ -1295,7 +1293,6 @@
 				5E8E183D1D1601C6009783BD /* e_particle.hpp */,
 				5E8E182B1D15EFAA009783BD /* e_position.hpp */,
 				5E8E18431D16130B009783BD /* e_tag_expression.hpp */,
-				5E8E18411D160F6F009783BD /* e_tag_set.hpp */,
 				5E8E183F1D160EA3009783BD /* e_tag.hpp */,
 				5E8E18571D165A93009783BD /* e_url.hpp */,
 			);
@@ -1460,7 +1457,6 @@
 				5E8E18401D160EA3009783BD /* e_tag.hpp in Headers */,
 				5E10B3E21C70F272009C73E4 /* initialization_manager.hpp in Headers */,
 				5E8079AA1D090A1A00BB6C1C /* log.h in Headers */,
-				5E8E18421D160F6F009783BD /* e_tag_set.hpp in Headers */,
 				5EAE677F1C72BE59005B3F8D /* cxx_program.h in Headers */,
 				5E8E18641D1748F6009783BD /* git2.h in Headers */,
 				5E3CA9AE1CCEC90600F6D7ED /* solitary_container.hpp in Headers */,

@@ -20,7 +20,6 @@ cxx_library parser
         parser/dbs/e_particle.hpp
         parser/dbs/e_position.hpp
         parser/dbs/e_tag_expression.hpp
-        parser/dbs/e_tag_set.hpp
         parser/dbs/e_tag.hpp
         parser/dbs/e_url.hpp
     ;

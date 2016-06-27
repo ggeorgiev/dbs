@@ -33,18 +33,13 @@ ECode DbsParser::parse(const doim::FsFileSPtr& dbsFile)
     doim::FsDirectorySPtr location = dbsFile->directory();
     std::vector<string> errors;
 
-    // White space
     Position position;
     const auto& r_ws = position.r_ws();
 
-    // CxxLibrary
-    CxxLibrary cxxLibrary(location);
-
-    // CxxProgram
-    CxxProgram cxxProgram(location);
-
     Annex annex(location, errors);
     Depository depository(location);
+    CxxLibrary cxxLibrary(location);
+    CxxProgram cxxProgram(location);
 
     const auto& r_dbs =
         ~annex.rule(r_ws) &

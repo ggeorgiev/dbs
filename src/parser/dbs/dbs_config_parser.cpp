@@ -6,7 +6,6 @@
 #include "parser/dbs/e_position.hpp"
 #include "parser/dbs/e_tag.hpp"
 #include "parser/dbs/e_tag_expression.hpp"
-#include "parser/dbs/e_tag_set.hpp"
 #include "doim/tag/tag_expression.h"
 #include <boost/filesystem/operations.hpp>
 #include <fstream> // IWYU pragma: keep
@@ -38,22 +37,14 @@ ECode DbsConfigParser::parse(const string& content)
     // White space
     Position position;
     const auto& r_ws = position.r_ws();
-    const auto& r_he = Particle::r_he(r_ws);
-    const auto& r_se = Particle::r_se(r_ws);
 
     // Tag Expression
-    Tag tag;
-    auto r_tag = r_ws & r_ident() >> e_ref(tag);
+    TagSet tags;
 
-    TagSet tags(tag);
-    auto r_tags = r_empty() >> tags.reset() & +(r_tag >> e_ref(tags));
+    TagExpression tagExpression;
 
-    TagExpression tagExpression(tags);
-    auto r_tagExpression =
-        r_ws & r_turnChar >> tagExpression.turn() & +(r_tags >> tagExpression.section());
-
-    auto r_verbose =
-        r_ws & r_verboseKw & r_he & +r_tagExpression >> e_ref(tagExpression) & r_se;
+    auto r_verbose = r_ws & r_verboseKw & r_ws & r_colon & tagExpression.rule(r_ws) &
+                     r_ws & r_semicolon;
 
     auto r_config = r_verbose;
 
