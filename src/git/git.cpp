@@ -1,7 +1,7 @@
 //  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
-#include "task/git/git2.h"
+#include "git/git.h"
 #include <functional>
 #include <str>
 

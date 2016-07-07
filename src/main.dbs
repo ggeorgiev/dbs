@@ -26,6 +26,7 @@ annex:
     platform/tpool/tpool.dbs
     
     rpc/rpc.dbs
+    git/git.dbs
     db/db.dbs
     doim/doim.dbs
     option/option.dbs

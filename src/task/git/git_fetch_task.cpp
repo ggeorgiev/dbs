@@ -2,7 +2,6 @@
 //
 
 #include "task/git/git_fetch_task.h"
-#include "task/git/git2.h"
 
 namespace task
 {

@@ -25,6 +25,7 @@ cxx_library /git2
     
     cxx_library:
         /curl
+        /iconv
     ;
 
 

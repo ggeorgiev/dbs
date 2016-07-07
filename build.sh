@@ -358,12 +358,6 @@ clang++ -D NDEBUG -I src/ -I src/platform/ -O3 -c src/task/db/db_put_task.cpp \
     -isystem src/system/ -o build/release/src/task/db/db_put_task.cpp.o \
     -std=c++14 &
 if [ ! -e build/release/src/task/git/ ]; then mkdir build/release/src/task/git/; fi
-echo Compile src/task/git/git2.cpp
-clang++ -D NDEBUG -I src/ -I src/platform/ -O3 -c src/task/git/git2.cpp \
-    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
-    -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
-    -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
-    -isystem src/system/ -o build/release/src/task/git/git2.cpp.o -std=c++14 &
 echo Compile src/task/git/git_fetch_task.cpp
 clang++ -D NDEBUG -I src/ -I src/platform/ -O3 \
     -c src/task/git/git_fetch_task.cpp \
@@ -499,7 +493,6 @@ clang++ -framework CoreFoundation -framework LDAP -framework Security \
     build/release/src/task/cxx/cxx_source_crc_task.cpp.o \
     build/release/src/task/cxx/cxx_source_headers_task.cpp.o \
     build/release/src/task/db/db_put_task.cpp.o \
-    build/release/src/task/git/git2.cpp.o \
     build/release/src/task/git/git_fetch_task.cpp.o \
     build/release/src/task/protobuf/protobuf_file_crc_task.cpp.o \
     build/release/src/task/sys/ensure_directory_task.cpp.o \

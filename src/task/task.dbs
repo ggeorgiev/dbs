@@ -14,7 +14,6 @@ cxx_library task
         task/cxx/cxx_source_headers_task.h
         task/db/db_put_task.h
         task/git/git_fetch_task.h
-        task/git/git2.h
         task/protobuf/protobuf_file_crc_task.h
         task/sys/ensure_directory_task.h
         task/sys/execute_command_task.h
@@ -23,9 +22,6 @@ cxx_library task
     ;
 
     cxx_library:        
-        /git2
-        /iconv
-        /curl
         /boost_template
         /boost_filesystem
 
@@ -36,6 +32,7 @@ cxx_library task
         ../platform/math/math
         ../platform/tpool/tpool
         
+        ../git/git
         ../parser/parser
         ../doim/doim
         ../option/option
@@ -49,7 +46,6 @@ cxx_library task
         cxx/cxx_source_headers_task.cpp
         db/db_put_task.cpp
         git/git_fetch_task.cpp
-        git/git2.cpp
         protobuf/protobuf_file_crc_task.cpp
         sys/ensure_directory_task.cpp
         sys/execute_command_task.cpp
@@ -74,6 +70,5 @@ cxx_library task-test
         gtest/cxx/cxx_file_crc_task-utest.cpp
         gtest/cxx/cxx_header_crc_task-utest.cpp
         gtest/db/db_put_task-utest.cpp
-        gtest/git/git2-utest.cpp
     ;
 ;

@@ -1,7 +1,7 @@
-//  Copyright © 2015-2016 George Georgiev. All rights reserved.
+//  Copyright © 2016 George Georgiev. All rights reserved.
 //
 
-#include "task/git/git2.h"
+#include "git/git.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/url/url.h"
 #include "err/err.h"

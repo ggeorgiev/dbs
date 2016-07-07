@@ -152,8 +152,6 @@
 		5E8E185A1D171F52009783BD /* depository_mixin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18591D171F52009783BD /* depository_mixin.hpp */; };
 		5E8E185E1D1740A6009783BD /* git_fetch_task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8E185C1D1740A6009783BD /* git_fetch_task.cpp */; };
 		5E8E185F1D1740A6009783BD /* git_fetch_task.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E185D1D1740A6009783BD /* git_fetch_task.h */; };
-		5E8E18631D1748F6009783BD /* git2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8E18611D1748F6009783BD /* git2.cpp */; };
-		5E8E18641D1748F6009783BD /* git2.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18621D1748F6009783BD /* git2.h */; };
 		5E8E18671D176092009783BD /* cxx_framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8E18651D176092009783BD /* cxx_framework.cpp */; };
 		5E8E18681D176092009783BD /* cxx_framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18661D176092009783BD /* cxx_framework.h */; };
 		5E8E186A1D1762B4009783BD /* cxx_framework_mixin.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E8E18691D1762B4009783BD /* cxx_framework_mixin.hpp */; };
@@ -223,11 +221,13 @@
 		5ED6160E1D2ED00700DE6432 /* task_group.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ED615FE1D2ED00700DE6432 /* task_group.h */; };
 		5ED6160F1D2ED00700DE6432 /* tpool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5ED615FF1D2ED00700DE6432 /* tpool.cpp */; };
 		5ED616101D2ED00700DE6432 /* tpool.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ED616011D2ED00700DE6432 /* tpool.h */; };
+		5ED616171D2EDAE500DE6432 /* git.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5ED616131D2EDAE500DE6432 /* git.cpp */; };
+		5ED616181D2EDAE500DE6432 /* git.h in Headers */ = {isa = PBXBuildFile; fileRef = 5ED616141D2EDAE500DE6432 /* git.h */; };
+		5ED616191D2EDAE500DE6432 /* git-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5ED616161D2EDAE500DE6432 /* git-utest.cpp */; };
 		5EE351941CE45FA6003305CC /* element_manager-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE351921CE45FA6003305CC /* element_manager-utest.cpp */; };
 		5EE351951CE45FA6003305CC /* set_manager-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE351931CE45FA6003305CC /* set_manager-utest.cpp */; };
 		5EE51C271CE84B3700DB0DDA /* set.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EE51C261CE84B3700DB0DDA /* set.hpp */; };
 		5EE51C291CE9087300DB0DDA /* set_manager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EE51C281CE9087300DB0DDA /* set_manager.hpp */; };
-		5EF022701D20D48E00BE8084 /* git2-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EF0226F1D20D48E00BE8084 /* git2-utest.cpp */; };
 		5EFDAF5D1CDB89B70092AAD2 /* parse_stdout_task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDAF5B1CDB89B70092AAD2 /* parse_stdout_task.cpp */; };
 		5EFDAF5E1CDB89B70092AAD2 /* parse_stdout_task.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDAF5C1CDB89B70092AAD2 /* parse_stdout_task.h */; };
 /* End PBXBuildFile section */
@@ -432,8 +432,6 @@
 		5E8E185C1D1740A6009783BD /* git_fetch_task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = git_fetch_task.cpp; sourceTree = "<group>"; };
 		5E8E185D1D1740A6009783BD /* git_fetch_task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = git_fetch_task.h; sourceTree = "<group>"; };
 		5E8E18601D1742DA009783BD /* git2.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = git2.dbs; sourceTree = "<group>"; };
-		5E8E18611D1748F6009783BD /* git2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = git2.cpp; sourceTree = "<group>"; };
-		5E8E18621D1748F6009783BD /* git2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = git2.h; sourceTree = "<group>"; };
 		5E8E18651D176092009783BD /* cxx_framework.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cxx_framework.cpp; sourceTree = "<group>"; };
 		5E8E18661D176092009783BD /* cxx_framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cxx_framework.h; sourceTree = "<group>"; };
 		5E8E18691D1762B4009783BD /* cxx_framework_mixin.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cxx_framework_mixin.hpp; sourceTree = "<group>"; };
@@ -514,6 +512,10 @@
 		5ED615FF1D2ED00700DE6432 /* tpool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tpool.cpp; sourceTree = "<group>"; };
 		5ED616001D2ED00700DE6432 /* tpool.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tpool.dbs; sourceTree = "<group>"; };
 		5ED616011D2ED00700DE6432 /* tpool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tpool.h; sourceTree = "<group>"; };
+		5ED616121D2EDAE500DE6432 /* git.dbs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = git.dbs; sourceTree = "<group>"; };
+		5ED616131D2EDAE500DE6432 /* git.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = git.cpp; sourceTree = "<group>"; };
+		5ED616141D2EDAE500DE6432 /* git.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = git.h; sourceTree = "<group>"; };
+		5ED616161D2EDAE500DE6432 /* git-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "git-utest.cpp"; sourceTree = "<group>"; };
 		5EE351921CE45FA6003305CC /* element_manager-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "element_manager-utest.cpp"; sourceTree = "<group>"; };
 		5EE351931CE45FA6003305CC /* set_manager-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "set_manager-utest.cpp"; sourceTree = "<group>"; };
 		5EE51C231CE6CC0F00DB0DDA /* shared_ptr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = shared_ptr; sourceTree = "<group>"; };
@@ -522,7 +524,6 @@
 		5EE51C261CE84B3700DB0DDA /* set.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = set.hpp; sourceTree = "<group>"; };
 		5EE51C281CE9087300DB0DDA /* set_manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = set_manager.hpp; sourceTree = "<group>"; };
 		5EEBDB371CF3FD9D008E1848 /* cxx_program.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = cxx_program.dbs; sourceTree = "<group>"; };
-		5EF0226F1D20D48E00BE8084 /* git2-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "git2-utest.cpp"; sourceTree = "<group>"; };
 		5EFDAF5B1CDB89B70092AAD2 /* parse_stdout_task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = parse_stdout_task.cpp; sourceTree = "<group>"; };
 		5EFDAF5C1CDB89B70092AAD2 /* parse_stdout_task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parse_stdout_task.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -595,6 +596,7 @@
 				5E10B3271C70F272009C73E4 /* doim */,
 				5E10B3421C70F272009C73E4 /* dom */,
 				5E290B431CBAD26100F10210 /* engine */,
+				5ED616111D2EDAE500DE6432 /* git */,
 				5E10B35F1C70F272009C73E4 /* gtest */,
 				5E8079A21D090A1A00BB6C1C /* logex */,
 				5E5692611C724929000A233C /* math */,
@@ -923,7 +925,6 @@
 			children = (
 				5E10B3961C70F272009C73E4 /* cxx */,
 				5E10B3991C70F272009C73E4 /* db */,
-				5EF0226E1D20D48E00BE8084 /* git */,
 			);
 			path = gtest;
 			sourceTree = "<group>";
@@ -1223,8 +1224,6 @@
 			children = (
 				5E8E185C1D1740A6009783BD /* git_fetch_task.cpp */,
 				5E8E185D1D1740A6009783BD /* git_fetch_task.h */,
-				5E8E18611D1748F6009783BD /* git2.cpp */,
-				5E8E18621D1748F6009783BD /* git2.h */,
 			);
 			path = git;
 			sourceTree = "<group>";
@@ -1406,12 +1405,23 @@
 			path = tpool/gtest;
 			sourceTree = "<group>";
 		};
-		5EF0226E1D20D48E00BE8084 /* git */ = {
+		5ED616111D2EDAE500DE6432 /* git */ = {
 			isa = PBXGroup;
 			children = (
-				5EF0226F1D20D48E00BE8084 /* git2-utest.cpp */,
+				5ED616121D2EDAE500DE6432 /* git.dbs */,
+				5ED616131D2EDAE500DE6432 /* git.cpp */,
+				5ED616141D2EDAE500DE6432 /* git.h */,
+				5ED616151D2EDAE500DE6432 /* gtest */,
 			);
 			path = git;
+			sourceTree = "<group>";
+		};
+		5ED616151D2EDAE500DE6432 /* gtest */ = {
+			isa = PBXGroup;
+			children = (
+				5ED616161D2EDAE500DE6432 /* git-utest.cpp */,
+			);
+			path = gtest;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1472,7 +1482,6 @@
 				5E8E18401D160EA3009783BD /* e_tag.hpp in Headers */,
 				5E8079AA1D090A1A00BB6C1C /* log.h in Headers */,
 				5EAE677F1C72BE59005B3F8D /* cxx_program.h in Headers */,
-				5E8E18641D1748F6009783BD /* git2.h in Headers */,
 				5ED6159C1D2EC34300DE6432 /* err_cppformat.h in Headers */,
 				5E42053F1C79097C0090FA05 /* element_manager.hpp in Headers */,
 				5E8E185A1D171F52009783BD /* depository_mixin.hpp in Headers */,
@@ -1486,6 +1495,7 @@
 				5ED6159B1D2EC34300DE6432 /* err_assert.h in Headers */,
 				5E290B391CBAB92500F10210 /* tpool.h in Headers */,
 				5E8079B71D0C693F00BB6C1C /* server.h in Headers */,
+				5ED616181D2EDAE500DE6432 /* git.h in Headers */,
 				5ED615881D2EC25600DE6432 /* initialization_manager.hpp in Headers */,
 				5E875BC81CFBBDE8008AC423 /* cxx_iwyu.h in Headers */,
 				5E8E18581D165A93009783BD /* e_url.hpp in Headers */,
@@ -1659,8 +1669,8 @@
 			files = (
 				5E875BD01CFC0F33008AC423 /* cxx_source_headers_task.cpp in Sources */,
 				5E8E18671D176092009783BD /* cxx_framework.cpp in Sources */,
-				5E8E18631D1748F6009783BD /* git2.cpp in Sources */,
 				5E8E18291D13B20D009783BD /* protobuf_plugin.cpp in Sources */,
+				5ED616171D2EDAE500DE6432 /* git.cpp in Sources */,
 				5E42052E1C78CB200090FA05 /* fs_directory.cpp in Sources */,
 				5ED615CD1D2EC3E500DE6432 /* hex-utest.cpp in Sources */,
 				5ED616051D2ED00700DE6432 /* task_group-utest.cpp in Sources */,
@@ -1676,6 +1686,7 @@
 				5ED615801D2EC0F000DE6432 /* constants.cpp in Sources */,
 				5E5A04FF1CFA189300DA4443 /* main_gtest.cpp in Sources */,
 				5E10B3FF1C70F272009C73E4 /* ensure_directory_task.cpp in Sources */,
+				5ED616191D2EDAE500DE6432 /* git-utest.cpp in Sources */,
 				5E5A050A1CFA727900DA4443 /* protobuf_file_crc_task.cpp in Sources */,
 				5ED616031D2ED00700DE6432 /* task-utest.cpp in Sources */,
 				5E10B3FB1C70F272009C73E4 /* cxx_header_crc_task-utest.cpp in Sources */,
@@ -1701,7 +1712,6 @@
 				5E290B2F1CB9F4FC00F10210 /* verbose-utest.cpp in Sources */,
 				5E217B681C713CDC00F082A1 /* cxx_program_crc_task.cpp in Sources */,
 				5E8079B61D0C693F00BB6C1C /* server.cpp in Sources */,
-				5EF022701D20D48E00BE8084 /* git2-utest.cpp in Sources */,
 				5EAE67781C72AFE4005B3F8D /* cxx_include_directory.cpp in Sources */,
 				5E5A050F1CFA835D00DA4443 /* rpc.proto in Sources */,
 				5E0C29331CFFC4AA00D7E849 /* tag_expression-utest.cpp in Sources */,

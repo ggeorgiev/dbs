@@ -1,0 +1,37 @@
+cxx_library git
+    @type=user:
+
+    cxx_header
+        @visibility=public
+        @directory=..:
+
+        git/git.h
+    ;
+
+    cxx_library:
+        /stl
+        
+        /git2
+        
+        ../doim/doim
+    ;
+
+    cxx_file:
+        git.cpp
+    ;
+;
+
+cxx_library rtti-test
+    @type=test:
+
+    cxx_library:
+        /gtest
+        
+        git
+    ;
+
+    cxx_file:
+        gtest/git-utest.cpp
+    ;
+;
+
