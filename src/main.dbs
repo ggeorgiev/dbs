@@ -23,10 +23,10 @@ annex:
     platform/math/math.dbs
     platform/log/log.dbs
     platform/err/err.dbs
+    platform/tpool/tpool.dbs
     
     rpc/rpc.dbs
     db/db.dbs
-    tpool/tpool.dbs
     doim/doim.dbs
     option/option.dbs
     logex/log.dbs

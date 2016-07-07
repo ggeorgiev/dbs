@@ -275,6 +275,31 @@ clang++ -D NDEBUG -I src/platform/ -O3 -c src/platform/log/log.cpp \
     -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
     -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/platform/log/log.cpp.o -std=c++14 &
+if [ ! -e build/release/src/platform/tpool/ ]; then mkdir build/release/src/platform/tpool/; fi
+echo Compile src/platform/tpool/task.cpp
+clang++ -D NDEBUG -I src/platform/ -O3 -c src/platform/tpool/task.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/platform/tpool/task.cpp.o \
+    -std=c++14 &
+echo Compile src/platform/tpool/task_callback.cpp
+clang++ -D NDEBUG -I src/platform/ -O3 -c src/platform/tpool/task_callback.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/platform/tpool/task_callback.cpp.o \
+    -std=c++14 &
+echo Compile src/platform/tpool/task_group.cpp
+clang++ -D NDEBUG -I src/platform/ -O3 -c src/platform/tpool/task_group.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/platform/tpool/task_group.cpp.o \
+    -std=c++14 &
+echo Compile src/platform/tpool/tpool.cpp
+clang++ -D NDEBUG -I src/platform/ -O3 -c src/platform/tpool/tpool.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
+    -isystem src/system/ -o build/release/src/platform/tpool/tpool.cpp.o \
+    -std=c++14 &
 if [ ! -e build/release/src/rpc/client/ ]; then mkdir build/release/src/rpc/client/; fi
 echo Compile src/rpc/client/client.cpp
 clang++ -D NDEBUG -I src/ -O3 -c src/rpc/client/client.cpp \
@@ -419,28 +444,6 @@ clang++ -D NDEBUG -I src/ -I src/platform/ -O3 \
     -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
     -isystem src/system/ \
     -o build/release/src/tool/protobuf/protobuf_compiler.cpp.o -std=c++14 &
-if [ ! -e build/release/src/tpool/ ]; then mkdir build/release/src/tpool/; fi
-echo Compile src/tpool/task.cpp
-clang++ -D NDEBUG -I src/ -I src/platform/ -O3 -c src/tpool/task.cpp \
-    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
-    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
-    -isystem src/system/ -o build/release/src/tpool/task.cpp.o -std=c++14 &
-echo Compile src/tpool/task_callback.cpp
-clang++ -D NDEBUG -I src/ -I src/platform/ -O3 -c src/tpool/task_callback.cpp \
-    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
-    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
-    -isystem src/system/ -o build/release/src/tpool/task_callback.cpp.o \
-    -std=c++14 &
-echo Compile src/tpool/task_group.cpp
-clang++ -D NDEBUG -I src/ -I src/platform/ -O3 -c src/tpool/task_group.cpp \
-    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
-    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
-    -isystem src/system/ -o build/release/src/tpool/task_group.cpp.o -std=c++14 &
-echo Compile src/tpool/tpool.cpp
-clang++ -D NDEBUG -I src/ -I src/platform/ -O3 -c src/tpool/tpool.cpp \
-    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
-    -isystem boost/include/ -isystem fmt/include/ -isystem spdlog/include/ \
-    -isystem src/system/ -o build/release/src/tpool/tpool.cpp.o -std=c++14 &
 wait
 echo Link build/release/dbs
 clang++ -framework CoreFoundation -framework LDAP -framework Security \
@@ -485,6 +488,10 @@ clang++ -framework CoreFoundation -framework LDAP -framework Security \
     build/release/src/platform/err/err.cpp.o \
     build/release/src/platform/log/hex.cpp.o \
     build/release/src/platform/log/log.cpp.o \
+    build/release/src/platform/tpool/task.cpp.o \
+    build/release/src/platform/tpool/task_callback.cpp.o \
+    build/release/src/platform/tpool/task_group.cpp.o \
+    build/release/src/platform/tpool/tpool.cpp.o \
     build/release/src/rpc/client/client.cpp.o build/release/src/rpc/rpc.pb.cc.o \
     build/release/src/rpc/server/server.cpp.o \
     build/release/src/task/cxx/cxx_object_file_crc_task.cpp.o \
@@ -502,10 +509,7 @@ clang++ -framework CoreFoundation -framework LDAP -framework Security \
     build/release/src/tool/cxx/cxx_clang_format.cpp.o \
     build/release/src/tool/cxx/cxx_compiler.cpp.o \
     build/release/src/tool/cxx/cxx_iwyu.cpp.o \
-    build/release/src/tool/protobuf/protobuf_compiler.cpp.o \
-    build/release/src/tpool/task.cpp.o \
-    build/release/src/tpool/task_callback.cpp.o \
-    build/release/src/tpool/task_group.cpp.o build/release/src/tpool/tpool.cpp.o \
-    bzip2/lib/libbz2.a curl/lib/libcurl.a fmt/lib/libfmt.a iconv/lib/libiconv.a \
+    build/release/src/tool/protobuf/protobuf_compiler.cpp.o bzip2/lib/libbz2.a \
+    curl/lib/libcurl.a fmt/lib/libfmt.a iconv/lib/libiconv.a \
     libgit2/lib/libgit2.a protobuf/lib/libprotobuf-lite.a \
     rocksdb/lib/librocksdb.a zlib/lib/libz.a

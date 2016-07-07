@@ -34,8 +34,8 @@ cxx_library task
         ../platform/log/log
         ../platform/err/err
         ../platform/math/math
+        ../platform/tpool/tpool
         
-        ../tpool/tpool
         ../parser/parser
         ../doim/doim
         ../option/option
