@@ -9,8 +9,8 @@ cxx_library logex
     ;
 
     cxx_library:
-       ../im/im
-       ../log/log
+       ../platform/im/im
+       ../platform/log/log
        ../option/option
     ;
 

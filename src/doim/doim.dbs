@@ -45,11 +45,11 @@ cxx_library doim
         /boost_template
         /boost_thread
 
-        ../const/const
-        ../im/im
-        ../err/err
-        ../dp/dp
-        ../log/log
+        ../platform/const/const
+        ../platform/im/im
+        ../platform/err/err
+        ../platform/dp/dp
+        ../platform/log/log
     ;
 
     cxx_file:
@@ -87,7 +87,7 @@ cxx_library doim-test
         /gtest
 
         ../gtest/gtest
-        ../err/err-test
+        ../platform/err/err-test
 
         doim
     ;

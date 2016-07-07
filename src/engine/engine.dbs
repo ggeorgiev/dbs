@@ -9,7 +9,7 @@ cxx_library engine
     ;
 
     cxx_library:
-        ../log/log
+        ../platform/log/log
         ../db/db
         ../task/task
         ../tool/tool

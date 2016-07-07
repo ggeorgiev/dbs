@@ -7,7 +7,7 @@
 #include "err/err.h"
 #include "err/gtest/err.h"
 #include "err/gtest/err_assert.h"
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 #include <memory>
 #include <stdexcept>
 #include <vector>

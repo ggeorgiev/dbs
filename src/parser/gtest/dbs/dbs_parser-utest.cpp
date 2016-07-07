@@ -10,8 +10,8 @@
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/object.h"
-#include "gtest/framework.h"
 #include "gtest/test_resource.h"
+#include <gtest/gtest.h>
 #include <memory>
 #include <str>
 

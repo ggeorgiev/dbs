@@ -1,6 +1,6 @@
 #include "err/err.h"
 #include "err/err_serialize.h"
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 #include <cstdio>
 #include <str>
 

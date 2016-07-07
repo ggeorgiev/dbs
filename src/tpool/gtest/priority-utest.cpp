@@ -2,7 +2,7 @@
 //
 
 #include "tpool/priority.hpp"
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 #include <iosfwd>
 #include <limits>
 #include <memory>

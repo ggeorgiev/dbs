@@ -1,33 +1,28 @@
-cxx_library rtti
+cxx_library im
     @type=user:
 
     cxx_header
         @visibility=public
         @directory=..:
 
-        rtti/class_rtti.hpp
+        im/initialization_manager.hpp
     ;
 
     cxx_library:
-    ;
-
-    cxx_file:
+        /stl
     ;
 ;
 
-cxx_library rtti-test
+cxx_library im-test
     @type=test:
 
     cxx_library:
         /gtest
 
-        ../gtest/gtest
-
-        rtti
+        im
     ;
 
     cxx_file:
-        gtest/class_rtti-utest.cpp
+        gtest/initialization_manager-utest.cpp
     ;
 ;
-

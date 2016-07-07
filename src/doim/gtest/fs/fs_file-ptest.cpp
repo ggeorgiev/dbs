@@ -3,7 +3,7 @@
 
 #include "doim/fs/fs_file.h"
 #include "doim/fs/fs_directory.h"
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 #include <boost/hana/for_each.hpp>
 #include <shared_ptr>
 

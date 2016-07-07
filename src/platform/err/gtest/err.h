@@ -5,7 +5,7 @@
 
 #include "err/err.h"
 
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 
 #define ASSERT_BANNED(expected, expression)                                              \
     do                                                                                   \

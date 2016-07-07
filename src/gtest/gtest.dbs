@@ -5,7 +5,6 @@ cxx_library gtest
         @visibility=public
         @directory=..:
 
-        gtest/framework.h
         gtest/intermittent.h
         gtest/test_resource.h
     ;
@@ -25,7 +24,7 @@ cxx_library gtest
         /boost_chrono
         /gtest
 
-        ../im/im
+        ../platform/im/im
         ../doim/doim
         ../db/db
     ;

@@ -12,10 +12,11 @@ cxx_library tool
     ;
 
     cxx_library:
-        ../log/log
+        ../platform/log/log
+        ../platform/rtti/rtti
+
         ../db/db
         ../task/task
-        ../rtti/rtti
     ;
 
     cxx_file:

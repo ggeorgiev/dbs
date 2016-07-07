@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 #include <boost/chrono/process_cpu_clocks.hpp>
 #include <str>
 #include <unordered>

@@ -2,7 +2,7 @@
 //
 
 #include "err/macro.h"
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 
 TEST(MacroTest, PP_STRINGIZE)
 {

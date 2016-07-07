@@ -6,8 +6,8 @@
 #include "doim/url/url.h"
 #include "err/err.h"
 #include "err/gtest/err.h"
-#include "gtest/framework.h"
 #include "gtest/test_resource.h"
+#include <gtest/gtest.h>
 #include <boost/filesystem/operations.hpp>
 #include <memory>
 #include <str>

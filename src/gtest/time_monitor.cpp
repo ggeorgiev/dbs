@@ -2,7 +2,7 @@
 //
 
 #include "gtest/time_monitor.h"
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 #include <limits>
 #include <str>
 #include <string.h>

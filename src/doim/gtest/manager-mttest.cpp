@@ -3,7 +3,7 @@
 
 #include "doim/fs/fs_directory.h"
 #include "doim/tag/tag.h"
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 #include <boost/thread/barrier.hpp>
 #include <memory>
 #include <thread>

@@ -4,8 +4,8 @@
 #include "db/database.h"
 #include "err/err.h"
 #include "err/gtest/err.h"
-#include "gtest/framework.h"
 #include "gtest/intermittent.h"
+#include <gtest/gtest.h>
 #include <str>
 
 TEST(DatabaseTest, VERYSLOW_open)

@@ -19,9 +19,10 @@ cxx_library dom
     ;
 
     cxx_library:
-        ../im/im
-        ../log/log
-        ../dp/dp
+        ../platform/im/im
+        ../platform/log/log
+        ../platform/dp/dp
+        
         ../doim/doim
         ../logex/log
     ;
@@ -41,7 +42,7 @@ cxx_library dom-test
         /gtest
 
         ../gtest/gtest
-        ../err/err-test
+        ../platform/err/err-test
 
         dom
         

@@ -6,6 +6,12 @@ cxx_library /gtest
         @directory=../../gtest/include:
 
         gtest/gtest.h
+    ;
+
+    cxx_header
+        @visibility=protected
+        @directory=../../gtest/include:
+
         gtest/gtest-message.h
         gtest/gtest-test-part.h
         gtest/gtest-typed-test.h

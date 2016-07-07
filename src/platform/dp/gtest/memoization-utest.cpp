@@ -5,7 +5,7 @@
 #include "dp/handle.hpp"
 #include "dp/map_container.hpp"
 #include "dp/solitary_container.hpp"
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 #include <boost/hana/for_each.hpp>
 #include <functional>
 #include <memory>

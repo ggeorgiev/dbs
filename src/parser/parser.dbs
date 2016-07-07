@@ -45,7 +45,7 @@ cxx_library parser-test
         /gtest
 
         ../gtest/gtest
-        ../err/err-test
+        ../platform/err/err-test
 
         parser
     ;

@@ -29,16 +29,17 @@ cxx_library task
         /boost_template
         /boost_filesystem
 
-        ../im/im
-        ../rtti/rtti
-        ../log/log
-        ../err/err
+        ../platform/im/im
+        ../platform/rtti/rtti
+        ../platform/log/log
+        ../platform/err/err
+        ../platform/math/math
+        
         ../tpool/tpool
         ../parser/parser
         ../doim/doim
         ../option/option
         ../db/db
-        ../math/math
     ;
 
     cxx_file:
@@ -64,7 +65,7 @@ cxx_library task-test
         /gtest
 
         ../gtest/gtest
-        ../err/err-test
+        ../platform/err/err-test
 
         task
     ;

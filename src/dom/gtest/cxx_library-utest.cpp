@@ -10,8 +10,8 @@
 #include "doim/set.hpp"
 #include "err/err.h"
 #include "err/gtest/err.h"
-#include "gtest/framework.h"
 #include "gtest/test_resource.h"
+#include <gtest/gtest.h>
 #include <memory>
 #include <str>
 #include <unordered>

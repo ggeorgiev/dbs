@@ -14,9 +14,9 @@ cxx_library db
         /boost_filesystem
         /rocksdb
 
-        ../im/im
-        ../log/log
-        ../err/err
+        ../platform/im/im
+        ../platform/log/log
+        ../platform/err/err
         ../doim/doim
         ../logex/logex
     ;
@@ -33,7 +33,7 @@ cxx_library db-test
         /gtest
 
         ../gtest/gtest
-        ../err/err-test
+        ../platform/err/err-test
 
         db
     ;

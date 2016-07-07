@@ -5,7 +5,7 @@
 #include "doim/fs/fs_directory.h"
 #include "doim/generic/location.hpp"
 #include "doim/tag/tag.h"
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 #include <memory>
 #include <ostream>
 

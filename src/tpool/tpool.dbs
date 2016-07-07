@@ -17,8 +17,8 @@ cxx_library tpool
         /boost_template
         /boost_thread
 
-        ../log/log
-        ../err/err
+        ../platform/log/log
+        ../platform/err/err
     ;
 
     cxx_file:
@@ -36,7 +36,7 @@ cxx_library tpool-test
         /gtest
 
         ../gtest/gtest
-        ../err/err-test
+        ../platform/err/err-test
 
         tpool
     ;

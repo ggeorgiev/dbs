@@ -45,8 +45,6 @@ cxx_library err-test
     cxx_library:
         /gtest
 
-        ../gtest/gtest
-
         err
     ;
 

@@ -5,7 +5,7 @@
 #include "tpool/task.h"
 #include "err/err.h"
 #include "err/gtest/err.h"
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 #include <shared_ptr>
 
 namespace tpool

@@ -33,7 +33,6 @@ cxx_library dp-test
     cxx_library:
         /gtest
 
-        ../gtest/gtest
         ../err/err-test
         
         dp

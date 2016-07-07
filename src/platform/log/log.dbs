@@ -33,8 +33,6 @@ cxx_library log-test
     cxx_library:
         /gtest
 
-        ../gtest/gtest
-
         log
     ;
 

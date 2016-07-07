@@ -3,7 +3,7 @@
 
 #include "doim/generic/location.hpp"
 #include "doim/generic/object.h"
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 #include <memory>
 #include <str>
 

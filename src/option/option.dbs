@@ -11,8 +11,8 @@ cxx_library option
     cxx_library:
         /stl
 
-        ../im/im
-        ../err/err
+        ../platform/im/im
+        ../platform/err/err
         ../doim/doim
         ../parser/parser
     ;
@@ -29,7 +29,7 @@ cxx_library option-test
         /gtest
 
         ../gtest/gtest
-        ../err/err-test
+        ../platform/err/err-test
 
         option
     ;

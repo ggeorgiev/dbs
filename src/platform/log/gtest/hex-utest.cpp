@@ -2,7 +2,7 @@
 //
 
 #include "log/hex.h"
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 #include <str>
 
 TEST(HexTest, simple)

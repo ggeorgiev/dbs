@@ -2,7 +2,7 @@
 //
 
 #include "rtti/class_rtti.hpp"
-#include "gtest/framework.h"
+#include <gtest/gtest.h>
 
 namespace rtti
 {

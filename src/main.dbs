@@ -16,14 +16,15 @@ annex:
     3rdparty/protobuf.dbs
     3rdparty/spdlog.dbs
 
-    const/const.dbs
-    rtti/rtti.dbs
-    im/im.dbs
-    log/log.dbs
-    err/err.dbs
+    platform/const/const.dbs
+    platform/dp/dp.dbs
+    platform/rtti/rtti.dbs
+    platform/im/im.dbs
+    platform/math/math.dbs
+    platform/log/log.dbs
+    platform/err/err.dbs
+    
     rpc/rpc.dbs
-    dp/dp.dbs
-    math/math.dbs
     db/db.dbs
     tpool/tpool.dbs
     doim/doim.dbs
