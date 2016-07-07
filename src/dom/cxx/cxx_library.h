@@ -16,6 +16,7 @@
 #include "doim/generic/attribute.h"
 #include "doim/generic/attribute_name.h"
 #include "doim/generic/attribute_value.h"
+#include "doim/generic/object.h"
 #include "dp/handle.hpp"
 #include "dp/map_container.hpp"
 #include "dp/memoization.hpp"

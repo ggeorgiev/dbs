@@ -73,5 +73,6 @@ cxx_library task-test
         gtest/cxx/cxx_file_crc_task-utest.cpp
         gtest/cxx/cxx_header_crc_task-utest.cpp
         gtest/db/db_put_task-utest.cpp
+        gtest/git/git2-utest.cpp
     ;
 ;

@@ -8,6 +8,10 @@
 #include "gtest/gtest.h"
 #include "gtest/performance_arbiter.h"
 #include "gtest/time_monitor.h"
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/hana/for_each.hpp>
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <str>
@@ -20,7 +24,11 @@ namespace testing
 string gIntermittentDirectory;
 doim::FsDirectorySPtr gIntermittentFsDirectory;
 
-doim::FsDirectorySPtr gTestResourceDirectory;
+doim::FsDirectorySPtr gResourceDirectory;
+doim::FsDirectorySPtr gTempDirectory =
+    doim::FsDirectory::global(nullptr,
+                              boost::filesystem::temp_directory_path().string() + "test",
+                              gTempDirectory);
 
 int run(int argc, char* argv[])
 {
@@ -44,7 +52,7 @@ int run(int argc, char* argv[])
         return 1;
     }
 
-    testing::gTestResourceDirectory = doim::FsDirectory::obtain(cwd, "test_resource");
+    testing::gResourceDirectory = doim::FsDirectory::obtain(cwd, "test_resource");
 
     auto timeMonitor = new testing::TimeMonitor();
     auto performanceArbiter = new testing::PerformanceArbiter();

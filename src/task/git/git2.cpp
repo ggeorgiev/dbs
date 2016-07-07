@@ -3,25 +3,58 @@
 
 #include "task/git/git2.h"
 #include <functional>
-#include <git2.h>
+#include <str>
 
-namespace task
+#define EHGitTest(expression, ...)      \
+    do                                  \
+    {                                   \
+        int error = (expression);       \
+        if (error < 0)                  \
+            EHBan(kGit, ##__VA_ARGS__); \
+    } while (false)
+
+namespace git
 {
-Git2SPtr gGit = im::InitializationManager::subscribe(gGit);
+MgrSPtr gMgr = im::InitializationManager::subscribe(gMgr);
 
-Git2::Git2()
+Mgr::Mgr()
 {
     git_libgit2_init();
 }
 
-Git2::~Git2()
+Mgr::~Mgr()
 {
-    // git_libgit2_shutdown();
+    git_libgit2_shutdown();
 }
 
-doim::UrlSPtr Git2::url(const doim::FsDirectorySPtr& repoDir)
+ECode Mgr::initRepo(const doim::FsDirectorySPtr& repoDir, RepoSPtr& repo)
 {
-    return nullptr;
+    auto result = std::make_shared<Repo>();
+    EHGitTest(git_repository_init(&result->repo, repoDir->path().c_str(), false));
+
+    repo = result;
+    EHEnd;
 }
 
-} // namespace task
+ECode Mgr::openRepo(const doim::FsDirectorySPtr& repoDir, RepoSPtr& repo)
+{
+    auto result = std::make_shared<Repo>();
+    EHGitTest(git_repository_open(&result->repo, repoDir->path().c_str()));
+
+    repo = result;
+    EHEnd;
+}
+
+ECode Mgr::cloneRepo(const doim::UrlSPtr& url,
+                     const doim::FsDirectorySPtr& repoDir,
+                     RepoSPtr& repo)
+{
+    auto result = std::make_shared<Repo>();
+    EHGitTest(
+        git_clone(&result->repo, url->path().c_str(), repoDir->path().c_str(), nullptr));
+
+    repo = result;
+    EHEnd;
+}
+
+} // namespace git

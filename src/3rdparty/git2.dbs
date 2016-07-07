@@ -7,6 +7,16 @@ cxx_library /git2
 
         git2.h
     ;
+
+    cxx_header
+        @visibility=protected
+        @directory=../../libgit2/include:
+
+        git2/clone.h
+        git2/global.h
+        git2/repository.h
+        git2/types.h 
+    ;
     
     cxx_framework:
         CoreFoundation

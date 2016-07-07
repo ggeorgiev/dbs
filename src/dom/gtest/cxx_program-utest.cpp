@@ -13,8 +13,7 @@
 
 static void parse(string name)
 {
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
     auto file = doim::FsFile::obtain(mDbsDirectory, name);
 
     parser::DbsParser parser;
@@ -25,8 +24,7 @@ TEST(CxxProgramTest, SLOW_CxxProgramHeaders)
 {
     parse("cxx_program_headers.dbs");
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
 
     auto cxxProgramCxxLibrariesObject =
         doim::Object::obtain(doim::Object::EType::kCxxProgram,

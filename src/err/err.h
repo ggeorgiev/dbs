@@ -43,6 +43,7 @@ enum ECode
 
     // Subsystems error codes
     kDatabase = 20,
+    kGit,
     kFileSystem,
 };
 

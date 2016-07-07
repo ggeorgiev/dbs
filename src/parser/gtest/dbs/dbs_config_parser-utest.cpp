@@ -15,7 +15,7 @@
 TEST(DbsConfigParserTest, SLOW_verbose)
 {
     auto mDbsConfigDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs/config");
+        doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs/config");
     auto config = doim::FsFile::obtain(mDbsConfigDirectory, "verbose.dbs");
 
     parser::DbsConfigParser parser;

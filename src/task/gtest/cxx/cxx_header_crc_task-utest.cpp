@@ -23,7 +23,7 @@ public:
 
     void SetUp()
     {
-        mCxxDirectory = doim::FsDirectory::obtain(testing::gTestResourceDirectory, "cxx");
+        mCxxDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "cxx");
         mFsSimpleCxx = doim::FsFile::obtain(mCxxDirectory, "simple.cxx");
         mFsIncludesCxx = doim::FsFile::obtain(mCxxDirectory, "includes.cxx");
         mFsUserH = doim::FsFile::obtain(mCxxDirectory, "user.h");

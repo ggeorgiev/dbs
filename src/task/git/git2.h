@@ -5,27 +5,49 @@
 
 #include "doim/fs/fs_directory.h"
 #include "doim/url/url.h"
+#include "err/err.h"
 #include "im/initialization_manager.hpp"
 #include "log/log.h"
 #include <shared_ptr>
+#include <git2.h> // IWYU pragma: keep
+#include <stddef.h>
 
-namespace task
+namespace git
 {
-class Git2;
-typedef shared_ptr<Git2> Git2SPtr;
+class Mgr;
+typedef shared_ptr<Mgr> MgrSPtr;
 
-class Git2
+struct Repo
+{
+    ~Repo()
+    {
+        if (repo != nullptr)
+        {
+            git_repository_free(repo);
+        }
+    }
+
+    git_repository* repo = NULL;
+};
+
+typedef shared_ptr<Repo> RepoSPtr;
+
+class Mgr
 {
 public:
     static constexpr int rank()
     {
         return dbslog::rank() + im::InitializationManager::step();
     }
-    Git2();
-    ~Git2();
+    Mgr();
+    ~Mgr();
 
-    doim::UrlSPtr url(const doim::FsDirectorySPtr& repoDir);
+    ECode initRepo(const doim::FsDirectorySPtr& repoDir, RepoSPtr& repo);
+    ECode openRepo(const doim::FsDirectorySPtr& repoDir, RepoSPtr& repo);
+    ECode cloneRepo(const doim::UrlSPtr& url,
+                    const doim::FsDirectorySPtr& repoDir,
+                    RepoSPtr& repo);
 };
 
-extern Git2SPtr gGit;
+extern MgrSPtr gMgr;
 }

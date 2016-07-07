@@ -17,17 +17,20 @@ TimeMonitor::TimeMonitor()
 }
 
 static const char kPerformance[] = "PERFORMANCE_";
+static const char kIntegration[] = "INTEGRATION_";
 static const char kSlow[] = "SLOW_";
 static const char kVerySlow[] = "VERYSLOW_";
 
 size_t TimeMonitor::limit(const TestInfo& test_info)
 {
-    if (::strncmp(test_info.name(), kPerformance, sizeof(kPerformance) - 1) == 0)
-        return std::numeric_limits<size_t>::max();
     if (::strncmp(test_info.name(), kSlow, sizeof(kSlow) - 1) == 0)
         return 100U;
     if (::strncmp(test_info.name(), kVerySlow, sizeof(kVerySlow) - 1) == 0)
         return 1000U;
+    if (::strncmp(test_info.name(), kIntegration, sizeof(kIntegration) - 1) == 0)
+        return std::numeric_limits<size_t>::max();
+    if (::strncmp(test_info.name(), kPerformance, sizeof(kPerformance) - 1) == 0)
+        return std::numeric_limits<size_t>::max();
     return 15U;
 }
 

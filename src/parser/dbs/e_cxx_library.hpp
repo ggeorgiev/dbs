@@ -5,6 +5,7 @@
 
 #include "parser/dbs/e_annex.hpp"
 #include "parser/dbs/e_attribute.hpp"
+#include "parser/dbs/e_cxx_framework.hpp"
 #include "parser/dbs/e_depository.hpp"
 #include "parser/dbs/e_directory.hpp"
 #include "parser/dbs/e_file.hpp"

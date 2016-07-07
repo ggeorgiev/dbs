@@ -228,6 +228,7 @@
 		5EE351951CE45FA6003305CC /* set_manager-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EE351931CE45FA6003305CC /* set_manager-utest.cpp */; };
 		5EE51C271CE84B3700DB0DDA /* set.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EE51C261CE84B3700DB0DDA /* set.hpp */; };
 		5EE51C291CE9087300DB0DDA /* set_manager.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5EE51C281CE9087300DB0DDA /* set_manager.hpp */; };
+		5EF022701D20D48E00BE8084 /* git2-utest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EF0226F1D20D48E00BE8084 /* git2-utest.cpp */; };
 		5EFDAF5D1CDB89B70092AAD2 /* parse_stdout_task.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDAF5B1CDB89B70092AAD2 /* parse_stdout_task.cpp */; };
 		5EFDAF5E1CDB89B70092AAD2 /* parse_stdout_task.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EFDAF5C1CDB89B70092AAD2 /* parse_stdout_task.h */; };
 /* End PBXBuildFile section */
@@ -522,6 +523,7 @@
 		5EE51C261CE84B3700DB0DDA /* set.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = set.hpp; sourceTree = "<group>"; };
 		5EE51C281CE9087300DB0DDA /* set_manager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = set_manager.hpp; sourceTree = "<group>"; };
 		5EEBDB371CF3FD9D008E1848 /* cxx_program.dbs */ = {isa = PBXFileReference; lastKnownFileType = text; path = cxx_program.dbs; sourceTree = "<group>"; };
+		5EF0226F1D20D48E00BE8084 /* git2-utest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "git2-utest.cpp"; sourceTree = "<group>"; };
 		5EFDAF5B1CDB89B70092AAD2 /* parse_stdout_task.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = parse_stdout_task.cpp; sourceTree = "<group>"; };
 		5EFDAF5C1CDB89B70092AAD2 /* parse_stdout_task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parse_stdout_task.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1010,6 +1012,7 @@
 			children = (
 				5E10B3961C70F272009C73E4 /* cxx */,
 				5E10B3991C70F272009C73E4 /* db */,
+				5EF0226E1D20D48E00BE8084 /* git */,
 			);
 			path = gtest;
 			sourceTree = "<group>";
@@ -1396,6 +1399,14 @@
 			path = gtest;
 			sourceTree = "<group>";
 		};
+		5EF0226E1D20D48E00BE8084 /* git */ = {
+			isa = PBXGroup;
+			children = (
+				5EF0226F1D20D48E00BE8084 /* git2-utest.cpp */,
+			);
+			path = git;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1682,6 +1693,7 @@
 				5E217B681C713CDC00F082A1 /* cxx_program_crc_task.cpp in Sources */,
 				5E10B3D51C70F272009C73E4 /* err-utest.cpp in Sources */,
 				5E8079B61D0C693F00BB6C1C /* server.cpp in Sources */,
+				5EF022701D20D48E00BE8084 /* git2-utest.cpp in Sources */,
 				5EAE67781C72AFE4005B3F8D /* cxx_include_directory.cpp in Sources */,
 				5E10B4041C70F272009C73E4 /* priority-utest.cpp in Sources */,
 				5E5A050F1CFA835D00DA4443 /* rpc.proto in Sources */,

@@ -3,6 +3,7 @@
 
 #include "tool/cxx/cxx_compiler.h"
 #include "doim/cxx/cxx_file.h"
+#include "doim/cxx/cxx_framework.h"
 #include "doim/cxx/cxx_static_library.h"
 #include "doim/fs/fs_file.h"
 #include "doim/sys/sys_argument.h"

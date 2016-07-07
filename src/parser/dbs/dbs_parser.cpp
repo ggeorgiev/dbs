@@ -3,17 +3,10 @@
 
 #include "parser/dbs/dbs_parser.h"
 #include "parser/dbs/e_annex.hpp"
-#include "parser/dbs/e_attribute.hpp"
-#include "parser/dbs/e_cxx_framework.hpp"
 #include "parser/dbs/e_cxx_library.hpp"
 #include "parser/dbs/e_cxx_program.hpp"
 #include "parser/dbs/e_depository.hpp"
-#include "parser/dbs/e_directory.hpp"
-#include "parser/dbs/e_file.hpp"
-#include "parser/dbs/e_object.hpp"
-#include "parser/dbs/e_particle.hpp"
 #include "parser/dbs/e_position.hpp"
-#include "parser/dbs/e_url.hpp"
 #include "doim/fs/fs_directory.h"
 #include <boost/filesystem/operations.hpp>
 #include <fstream> // IWYU pragma: keep

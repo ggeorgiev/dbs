@@ -11,6 +11,7 @@
 #include "doim/cxx/cxx_include_directory.h"
 #include "doim/cxx/cxx_program.h"
 #include "doim/fs/fs_directory.h"
+#include "doim/generic/object.h"
 #include "err/err.h"
 #include <shared_ptr>
 #include <str>

@@ -4,6 +4,7 @@
 #pragma once
 
 #include "dom/element.hpp"
+#include "doim/generic/object.h"
 #include "doim/url/url.h"
 #include "err/err.h"
 #include <memory>

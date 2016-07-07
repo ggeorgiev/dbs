@@ -6,6 +6,7 @@
 #include "dom/cxx/cxx_program.h"
 #include "dom/prj/depository.h"
 #include "doim/cxx/cxx_file.h"
+#include "doim/cxx/cxx_framework.h"
 #include "doim/fs/fs_directory.h"
 #include "doim/fs/fs_file.h"
 #include "doim/generic/object.h"
@@ -20,8 +21,7 @@ static void parse()
     if (parsed)
         return;
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
     auto main = doim::FsFile::obtain(mDbsDirectory, "main.dbs");
 
     parser::DbsParser parser;
@@ -34,8 +34,7 @@ TEST(DbsParserTest, SLOW_CxxLibrary)
 {
     parse();
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
 
     auto cxxLibraryEmptyObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary, mDbsDirectory, "empty");
@@ -64,8 +63,7 @@ TEST(DbsParserTest, SLOW_CxxLibraryDepo)
 {
     parse();
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
 
     auto cxxLibraryDepoObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary, mDbsDirectory, "cxx_depo");
@@ -78,8 +76,7 @@ TEST(DbsParserTest, SLOW_CxxLibraryCxxHeader)
 {
     parse();
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
 
     auto cxxLibraryCxxHeaderPublicObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary,
@@ -102,8 +99,7 @@ TEST(DbsParserTest, SLOW_CxxLibraryCxxLibrary)
 {
     parse();
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
 
     auto cxxLibraryCxxLibrariesObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary,
@@ -120,8 +116,7 @@ TEST(DbsParserTest, SLOW_CxxLibraryCxxFramework)
 {
     parse();
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
 
     auto cxxLibraryCxxLibrariesObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary,
@@ -138,8 +133,7 @@ TEST(DbsParserTest, SLOW_CxxLibraryCxxFile)
 {
     parse();
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
 
     auto cxxLibraryCxxFilesObject = doim::Object::obtain(doim::Object::EType::kCxxLibrary,
                                                          mDbsDirectory,
@@ -155,8 +149,7 @@ TEST(DbsParserTest, SLOW_CxxLibraryProtobufFile)
 {
     parse();
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
 
     auto cxxLibraryProtobufFilesObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary,
@@ -173,8 +166,7 @@ TEST(DbsParserTest, SLOW_CxxLibraryBinary)
 {
     parse();
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
 
     auto cxxLibraryBinaryObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary, mDbsDirectory, "binary");
@@ -183,15 +175,14 @@ TEST(DbsParserTest, SLOW_CxxLibraryBinary)
     ASSERT_NE(nullptr, cxxLibraryBinary);
     ASSERT_NE(nullptr, cxxLibraryBinary->binary());
     ASSERT_EQ("dbs/libfoo.a",
-              cxxLibraryBinary->binary()->path(testing::gTestResourceDirectory));
+              cxxLibraryBinary->binary()->path(testing::gResourceDirectory));
 }
 
 TEST(DbsParserTest, SLOW_CxxLibraryAll)
 {
     parse();
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
 
     auto cxxLibraryAllObject =
         doim::Object::obtain(doim::Object::EType::kCxxLibrary, mDbsDirectory, "cxx_all");
@@ -201,16 +192,14 @@ TEST(DbsParserTest, SLOW_CxxLibraryAll)
     ASSERT_EQ(1, cxxLibraryAll->cxxLibraries().size());
     ASSERT_NE(nullptr, cxxLibraryAll);
     ASSERT_NE(nullptr, cxxLibraryAll->binary());
-    ASSERT_EQ("dbs/libfoo.a",
-              cxxLibraryAll->binary()->path(testing::gTestResourceDirectory));
+    ASSERT_EQ("dbs/libfoo.a", cxxLibraryAll->binary()->path(testing::gResourceDirectory));
 }
 
 TEST(DbsParserTest, SLOW_CxxProgramEmpty)
 {
     parse();
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
 
     auto cxxProgramEmptyObject =
         doim::Object::obtain(doim::Object::EType::kCxxProgram, mDbsDirectory, "empty");
@@ -223,8 +212,7 @@ TEST(DbsParserTest, SLOW_CxxProgramCxxLibrary)
 {
     parse();
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
 
     auto cxxProgramCxxLibrariesObject =
         doim::Object::obtain(doim::Object::EType::kCxxProgram,
@@ -241,8 +229,7 @@ TEST(DbsParserTest, SLOW_CxxProgramCxxFile)
 {
     parse();
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
 
     auto cxxProgramCxxFilesObject = doim::Object::obtain(doim::Object::EType::kCxxProgram,
                                                          mDbsDirectory,
@@ -258,8 +245,7 @@ TEST(DbsParserTest, SLOW_Depository)
 {
     parse();
 
-    auto mDbsDirectory =
-        doim::FsDirectory::obtain(testing::gTestResourceDirectory, "dbs");
+    auto mDbsDirectory = doim::FsDirectory::obtain(testing::gResourceDirectory, "dbs");
 
     auto depositoryObject =
         doim::Object::obtain(doim::Object::EType::kDepository, mDbsDirectory, "depo");

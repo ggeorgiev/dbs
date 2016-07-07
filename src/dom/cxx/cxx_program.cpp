@@ -2,6 +2,7 @@
 //
 
 #include "dom/cxx/cxx_program.h"
+#include "doim/cxx/cxx_framework.h"
 #include "doim/cxx/cxx_object_file.h"
 #include "doim/cxx/cxx_static_library.h"
 #include "doim/fs/fs_file.h"
