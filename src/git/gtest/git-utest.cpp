@@ -12,7 +12,7 @@
 #include <memory>
 #include <str>
 
-TEST(Git2Test, SLOW_initRepo)
+TEST(GitTest, SLOW_initRepo)
 {
     auto repoDir = doim::FsDirectory::obtain(testing::gTempDirectory, "init_repo");
     boost::filesystem::remove_all(repoDir->path().c_str());
@@ -22,7 +22,7 @@ TEST(Git2Test, SLOW_initRepo)
     ASSERT_NE(nullptr, repo);
 }
 
-TEST(Git2Test, SLOW_openRepo)
+TEST(GitTest, SLOW_openRepo)
 {
     auto repoDir = doim::FsDirectory::obtain(testing::gTempDirectory, "open_repo");
     boost::filesystem::remove_all(repoDir->path().c_str());
@@ -33,7 +33,7 @@ TEST(Git2Test, SLOW_openRepo)
     ASSERT_NE(nullptr, repo);
 }
 
-TEST(Git2Test, INTEGRATION_cloneRepo)
+TEST(GitTest, INTEGRATION_cloneRepo)
 {
     auto repoDir = doim::FsDirectory::obtain(testing::gTempDirectory, "clone_repo");
     boost::filesystem::remove_all(repoDir->path().c_str());

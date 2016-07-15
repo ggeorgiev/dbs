@@ -5,7 +5,10 @@ cxx_library git
         @visibility=public
         @directory=..:
 
+        git/err.h
         git/git.h
+        git/repo.h
+        git/object.h
     ;
 
     cxx_library:
@@ -13,25 +16,34 @@ cxx_library git
         
         /git2
         
+        ../platform/err/err
+        
         ../doim/doim
     ;
 
     cxx_file:
         git.cpp
+        object.cpp
+        repo.cpp
     ;
 ;
 
-cxx_library rtti-test
+cxx_library git-test
     @type=test:
 
     cxx_library:
         /gtest
+        
+        ../platform/err/err-test
+        
+        ../gtest/gtest
         
         git
     ;
 
     cxx_file:
         gtest/git-utest.cpp
+        gtest/repo-utest.cpp
     ;
 ;
 

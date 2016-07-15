@@ -8,6 +8,7 @@
 #include "err/err.h"
 #include "im/initialization_manager.hpp"
 #include "log/log.h"
+#include "git/repo.h"
 #include <shared_ptr>
 #include <git2.h> // IWYU pragma: keep
 #include <stddef.h>
@@ -16,21 +17,6 @@ namespace git
 {
 class Mgr;
 typedef shared_ptr<Mgr> MgrSPtr;
-
-struct Repo
-{
-    ~Repo()
-    {
-        if (repo != nullptr)
-        {
-            git_repository_free(repo);
-        }
-    }
-
-    git_repository* repo = NULL;
-};
-
-typedef shared_ptr<Repo> RepoSPtr;
 
 class Mgr
 {

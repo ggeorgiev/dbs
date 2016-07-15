@@ -181,12 +181,14 @@ using err::ECode;
 #define EHEnd return err::kSuccess
 
 #define EHBan(...)                              \
+    do                                          \
     {                                           \
         EHAssert(err::gError.get() == nullptr); \
         EHBan_(__VA_ARGS__);                    \
-    }
+    } while (false)
 
 #define EHBan_(...)                                               \
+    do                                                            \
     {                                                             \
         auto __EHBan__code = EH_CODE(__VA_ARGS__);                \
         auto error = new err::Error(__EHBan__code, EH_LOCATION);  \
@@ -194,7 +196,7 @@ using err::ECode;
             error->message_stream() << EH_CPPFORMAT(__VA_ARGS__); \
         err::gError.reset(error);                                 \
         return __EHBan__code;                                     \
-    }
+    } while (false)
 
 #define EHTest(expression, ...)                                       \
     do                                                                \

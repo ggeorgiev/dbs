@@ -2,16 +2,9 @@
 //
 
 #include "git/git.h"
+#include "git/err.h"
 #include <functional>
 #include <str>
-
-#define EHGitTest(expression, ...)      \
-    do                                  \
-    {                                   \
-        int error = (expression);       \
-        if (error < 0)                  \
-            EHBan(kGit, ##__VA_ARGS__); \
-    } while (false)
 
 namespace git
 {
@@ -29,19 +22,17 @@ Mgr::~Mgr()
 
 ECode Mgr::initRepo(const doim::FsDirectorySPtr& repoDir, RepoSPtr& repo)
 {
-    auto result = std::make_shared<Repo>();
-    EHGitTest(git_repository_init(&result->repo, repoDir->path().c_str(), false));
-
-    repo = result;
+    git_repository* raw;
+    EHGitTest(git_repository_init(&raw, repoDir->path().c_str(), false));
+    repo = std::make_shared<Repo>(raw);
     EHEnd;
 }
 
 ECode Mgr::openRepo(const doim::FsDirectorySPtr& repoDir, RepoSPtr& repo)
 {
-    auto result = std::make_shared<Repo>();
-    EHGitTest(git_repository_open(&result->repo, repoDir->path().c_str()));
-
-    repo = result;
+    git_repository* raw;
+    EHGitTest(git_repository_open(&raw, repoDir->path().c_str()));
+    repo = std::make_shared<Repo>(raw);
     EHEnd;
 }
 
@@ -49,11 +40,9 @@ ECode Mgr::cloneRepo(const doim::UrlSPtr& url,
                      const doim::FsDirectorySPtr& repoDir,
                      RepoSPtr& repo)
 {
-    auto result = std::make_shared<Repo>();
-    EHGitTest(
-        git_clone(&result->repo, url->path().c_str(), repoDir->path().c_str(), nullptr));
-
-    repo = result;
+    git_repository* raw;
+    EHGitTest(git_clone(&raw, url->path().c_str(), repoDir->path().c_str(), nullptr));
+    repo = std::make_shared<Repo>(raw);
     EHEnd;
 }
 

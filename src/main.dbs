@@ -57,16 +57,18 @@ cxx_program dbs:
 ;
 
 cxx_program dbs-test:
-    cxx_library:
+    cxx_library:        
         gtest/gtest
 
-        rtti/rtti-test
-        im/im-test
-        log/log-test
-        err/err-test
-        dp/dp-test
+        platform/rtti/rtti-test
+        platform/im/im-test
+        platform/log/log-test
+        platform/err/err-test
+        platform/dp/dp-test
+        platform/tpool/tpool-test
+        
         db/db-test
-        tpool/tpool-test
+        git/git-test
         doim/doim-test
         option/option-test
         dom/dom-test

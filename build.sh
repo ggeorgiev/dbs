@@ -209,6 +209,25 @@ clang++ -D NDEBUG -I src/ -I src/platform/ -O3 -c src/engine/cxx_engine.cpp \
     -isystem axe/include/ -isystem boost/include/ -isystem fmt/include/ \
     -isystem libgit2/include/ -isystem rocksdb/include/ -isystem spdlog/include/ \
     -isystem src/system/ -o build/release/src/engine/cxx_engine.cpp.o -std=c++14 &
+if [ ! -e build/release/src/git/ ]; then mkdir build/release/src/git/; fi
+echo Compile src/git/git.cpp
+clang++ -D NDEBUG -I src/ -I src/platform/ -O3 -c src/git/git.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem libgit2/include/ \
+    -isystem spdlog/include/ -isystem src/system/ \
+    -o build/release/src/git/git.cpp.o -std=c++14 &
+echo Compile src/git/object.cpp
+clang++ -D NDEBUG -I src/ -I src/platform/ -O3 -c src/git/object.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem libgit2/include/ \
+    -isystem spdlog/include/ -isystem src/system/ \
+    -o build/release/src/git/object.cpp.o -std=c++14 &
+echo Compile src/git/repo.cpp
+clang++ -D NDEBUG -I src/ -I src/platform/ -O3 -c src/git/repo.cpp \
+    -isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/ \
+    -isystem boost/include/ -isystem fmt/include/ -isystem libgit2/include/ \
+    -isystem spdlog/include/ -isystem src/system/ \
+    -o build/release/src/git/repo.cpp.o -std=c++14 &
 if [ ! -e build/release/src/logex/ ]; then mkdir build/release/src/logex/; fi
 echo Compile src/logex/log.cpp
 clang++ -D NDEBUG -I src/ -I src/platform/ -O3 -c src/logex/log.cpp \
@@ -473,8 +492,10 @@ clang++ -framework CoreFoundation -framework LDAP -framework Security \
     build/release/src/dom/cxx/cxx_program.cpp.o \
     build/release/src/dom/prj/depository.cpp.o \
     build/release/src/dom/protobuf/protobuf_plugin.cpp.o \
-    build/release/src/engine/cxx_engine.cpp.o build/release/src/logex/log.cpp.o \
-    build/release/src/main.cpp.o build/release/src/option/verbose.cpp.o \
+    build/release/src/engine/cxx_engine.cpp.o build/release/src/git/git.cpp.o \
+    build/release/src/git/object.cpp.o build/release/src/git/repo.cpp.o \
+    build/release/src/logex/log.cpp.o build/release/src/main.cpp.o \
+    build/release/src/option/verbose.cpp.o \
     build/release/src/parser/cxx/cxx_parser.cpp.o \
     build/release/src/parser/dbs/dbs_config_parser.cpp.o \
     build/release/src/parser/dbs/dbs_parser.cpp.o \

@@ -23,6 +23,7 @@ static bool init()
     gNames[kUnknown] = "unknown";
 
     gNames[kDatabase] = "database";
+    gNames[kGit] = "git";
     gNames[kFileSystem] = "file system";
 
     return true;
